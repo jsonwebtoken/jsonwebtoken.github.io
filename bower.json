@@ -2,7 +2,7 @@
   "name": "jwt.io",
   "version": "0.0.1",
   "dependencies": {
-    "codemirror": "git@github.com:marijnh/CodeMirror.git#4.0.1"
+    "codemirror": "git@github.com:marijnh/CodeMirror.git#4.0.1",
+    "jws.js":     "https://raw.github.com/kjur/jsjws/master/jws-3.0.js"
   }
-
 }
