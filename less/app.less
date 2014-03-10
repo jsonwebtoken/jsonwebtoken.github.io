@@ -3,9 +3,10 @@
 @jwtSignatureColor:           #dc322f;
 @jwtExplainedBackgroundColor: #eee8d5;
 
-@backgroundColor: #fdf6e3;
+@backgroundColor:             #fdf6e3;
 
 body {
+  font-family: Helvetica;
   background: @backgroundColor;
 }
 
@@ -13,6 +14,12 @@ body {
     -webkit-box-sizing: @prop; /* Safari/Chrome, other WebKit */
        -moz-box-sizing: @prop; /* Firefox, other Gecko */
             box-sizing: @prop; /* Opera/IE 8+ */
+}
+
+.box-shadow(@prop) {
+  -webkit-box-shadow: @prop;
+     -moz-box-shadow: @prop;
+          box-shadow: @prop;
 }
 
 .jwt-playground {
@@ -44,6 +51,10 @@ body {
       background: @jwtExplainedBackgroundColor;
       padding: inherit;
       margin: 5px;
+
+        &:hover {
+          .box-shadow(1px 1px 5px #888888 inset);
+        }
     }
 
     .jwt-header {
