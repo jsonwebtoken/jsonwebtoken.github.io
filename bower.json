@@ -1,0 +1,8 @@
+{
+  "name": "jwt.io",
+  "version": "0.0.1",
+  "dependencies": {
+    "codemirror": "git@github.com:marijnh/CodeMirror.git#4.0.1"
+  }
+
+}
