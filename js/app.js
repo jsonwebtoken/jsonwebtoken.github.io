@@ -63,11 +63,21 @@ window.jsonParse = JSON.parse;
     };
   });
 
-  var editor = CodeMirror(document.getElementsByClassName('input')[0], {
+  var tokenEditor = CodeMirror(document.getElementsByClassName('js-input')[0], {
     mode:           'jwt',
     theme:          'night',
     lineWrapping:   true,
     autofocus:      true
+  });
+
+  var headerEditor = CodeMirror(document.getElementsByClassName('js-header')[0], {
+    mode:           'application/json',
+    lineWrapping:   true
+  });
+
+  var payloadEditor = CodeMirror(document.getElementsByClassName('js-payload')[0], {
+    mode:           'application/json',
+    lineWrapping:   true
   });
 
   function getFirstElementByClassName(selector) {
@@ -95,7 +105,7 @@ window.jsonParse = JSON.parse;
     return value.replace(/\s/g, '');
   }
 
-  editor.on('change', function (instance, changeObj) {
+  tokenEditor.on('change', function (instance, changeObj) {
 
     var value = getTrimmedValue(instance);
 
@@ -105,21 +115,21 @@ window.jsonParse = JSON.parse;
     if (parts.length !== 3) { return null; }
 
     var secretElement = document.getElementsByName('secret')[0];
-    var headerElement = getFirstElementByClassName('js-header');
-    var payloadElement = getFirstElementByClassName('js-payload');
+    //var headerElement = getFirstElementByClassName('js-header');
+    //var payloadElement = getFirstElementByClassName('js-payload');
     var signatureElement = getFirstElementByClassName('js-signature');
 
-    if (!headerElement || !payloadElement || !signatureElement) {
+    if (/*!headerElement || !payloadElement || */!signatureElement) {
       return;
     }
 
-    headerElement.innerText = decode(parts[0]);
-    payloadElement.innerText = decode(parts[1]);
+    headerEditor.setValue(decode(parts[0]));
+    payloadEditor.setValue(decode(parts[1]));
     signatureElement.innerText =   KJUR.jws.JWS.verify(value, secretElement.value);
 
   });
 
-  editor.setValue('eyJhbGciOiJIUzI1NiIsICJjdHkiOiJKV1QifQ.eyJhZ2UiOiAyMX0.vcimDRCLttYBHsO7M0S_tCvUIOGz26Ti5nkRuj1QcHc');
+  tokenEditor.setValue('eyJhbGciOiJIUzI1NiIsICJjdHkiOiJKV1QifQ.eyJhZ2UiOiAyMX0.vcimDRCLttYBHsO7M0S_tCvUIOGz26Ti5nkRuj1QcHc');
 
   var secretElement = document.getElementsByName('secret')[0];
   secretElement.addEventListener('change', function (event) {
@@ -127,7 +137,7 @@ window.jsonParse = JSON.parse;
     if (!signatureElement) {
       return;
     }
-    var value = getTrimmedValue(editor);
+    var value = getTrimmedValue(tokenEditor);
     signatureElement.innerText = KJUR.jws.JWS.verify(value, secretElement.value);
   }, false);
 

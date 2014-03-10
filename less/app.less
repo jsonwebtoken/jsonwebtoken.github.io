@@ -18,13 +18,19 @@ body {
 .jwt-playground {
   width: 100%;
 
-  .CodeMirror {
+  .input {
     width: 50%;
     float: left;
-    .cm-jwt-dot { }
-    .cm-jwt-header    { color: @jwtHeaderColor;     }
-    .cm-jwt-payload   { color: @jwtPayloadColor;    }
-    .cm-jwt-signature { color: @jwtSignatureColor;  }
+    margin-top: 15px;
+
+    .CodeMirror {
+      width: 100%;
+      float: left;
+      .cm-jwt-dot { }
+      .cm-jwt-header    { color: @jwtHeaderColor;     }
+      .cm-jwt-payload   { color: @jwtPayloadColor;    }
+      .cm-jwt-signature { color: @jwtSignatureColor;  }
+    }
   }
 
   .output {
@@ -40,17 +46,37 @@ body {
       margin: 5px;
     }
 
-    .jwt-header     { color: @jwtHeaderColor;    }
-    .jwt-payload    { color: @jwtPayloadColor;   }
+    .jwt-header {
+      color: @jwtHeaderColor;
+
+      .CodeMirror {
+        width: 100%;
+        height: auto;
+        background: none;
+        color: inherit;
+      }
+
+    }
+    .jwt-payload {
+      color: @jwtPayloadColor;
+
+      .CodeMirror {
+        width: 100%;
+        height: auto;
+        background: none;
+        color: inherit;
+      }
+
+    }
     .jwt-signature  {
       color: @jwtSignatureColor;
 
       label[for="secret"] {
-        clear: both;
+        clear: left;
         display: block;
       }
       input {
-        clear: both;
+        clear: right;
         display: block;
       }
     }
