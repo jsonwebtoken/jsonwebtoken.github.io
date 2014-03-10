@@ -34,7 +34,6 @@ module.exports = function (grunt) {
       dev: {
         options: {
           hostname: '0.0.0.0',
-          base: 'dist',
           livereload: true,
           protocol: 'http',
           passphrase: ''
@@ -86,8 +85,9 @@ module.exports = function (grunt) {
       }
     },
     useminPrepare: {
-      html: 'index.html',
+      html: 'html/index.html',
       options: {
+        root: '.',
         dest: 'dist/'
       }
     },
@@ -100,10 +100,9 @@ module.exports = function (grunt) {
     htmlmin: {
       dist: {
         files: [ {
-          expand: true,
-          //cwd: '',
-          src: ['*.html'],
-          dest: 'dist/'
+          expand: false,
+          src: 'html/index.html',
+          dest: 'index.html'
         }]
       }
     },
