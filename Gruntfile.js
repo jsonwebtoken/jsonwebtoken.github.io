@@ -88,22 +88,18 @@ module.exports = function (grunt) {
       html: 'html/index.html',
       options: {
         root: '.',
-        dest: 'dist/'
+        dest: '.'
       }
     },
     usemin: {
-      html: ['dist/{,*/}*.html'],
+      html: 'index.html',
       options: {
-        dest: 'dist/'
+        assetsDir: ['dist/']
       }
     },
     htmlmin: {
       dist: {
-        files: [ {
-          expand: false,
-          src: 'html/index.html',
-          dest: 'index.html'
-        }]
+        files:  { 'index.html': 'html/index.html' }
       }
     },
   });
