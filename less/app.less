@@ -1,44 +1,47 @@
-.jwt-playground {
+@jwtHeaderColor:              #859900;
+@jwtPayloadColor:             #268bd2;
+@jwtSignatureColor:           #dc322f;
+@jwtExplainedBackgroundColor: #eee8d5;
 
+@backgroundColor: #fdf6e3;
+
+body {
+  background: @backgroundColor;
+}
+
+.box-sizing(@prop) {
+    -webkit-box-sizing: @prop; /* Safari/Chrome, other WebKit */
+       -moz-box-sizing: @prop; /* Firefox, other Gecko */
+            box-sizing: @prop; /* Opera/IE 8+ */
+}
+
+.jwt-playground {
   width: 100%;
 
   .CodeMirror {
     width: 50%;
     float: left;
-  }
-
-  .input {
+    .cm-jwt-dot { }
+    .cm-jwt-header    { color: @jwtHeaderColor;     }
+    .cm-jwt-payload   { color: @jwtPayloadColor;    }
+    .cm-jwt-signature { color: @jwtSignatureColor;  }
   }
 
   .output {
     width: 50%;
     float: left;
-    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
-    box-sizing: border-box;         /* Opera/IE 8+ */
     padding: 10px;
     font-family: Helvetica;
+    .box-sizing(border-box);
 
-    .jwt-header {
-      background: lightgray;
-      color: green;
+    .jwt-explained {
+      background: @jwtExplainedBackgroundColor;
       padding: inherit;
       margin: 5px;
     }
 
-    .jwt-payload {
-      background: lightgray;
-      color: blue;
-      padding: inherit;
-      margin: 5px;
-    }
-
-    .jwt-signature {
-      background: lightgray;
-      color: red;
-      padding: inherit;
-      margin: 5px;
-    }
-    
+    .jwt-header     { color: @jwtHeaderColor;    }
+    .jwt-payload    { color: @jwtPayloadColor;   }
+    .jwt-signature  { color: @jwtSignatureColor; }
   }
 }
