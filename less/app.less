@@ -42,6 +42,17 @@ body {
 
     .jwt-header     { color: @jwtHeaderColor;    }
     .jwt-payload    { color: @jwtPayloadColor;   }
-    .jwt-signature  { color: @jwtSignatureColor; }
+    .jwt-signature  {
+      color: @jwtSignatureColor;
+
+      label[for="secret"] {
+        clear: both;
+        display: block;
+      }
+      input {
+        clear: both;
+        display: block;
+      }
+    }
   }
 }
