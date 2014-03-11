@@ -145,10 +145,12 @@
       return;
     }
     var value = getTrimmedValue(tokenEditor);
-    signatureElement.innerText = window.verify(value, secretElement.value).result;
+    var result = window.verify(value, secretElement.value).result;
+    signatureElement.innerText = result;
   }
   secretElement.addEventListener('change', updateSignature, false);
+  secretElement.addEventListener('keyup', updateSignature, false);
 
-  tokenEditor.setValue('eyJhbGciOiJIUzI1NiIsICJjdHkiOiJKV1QifQ.eyJhZ2UiOiAyMX0.vcimDRCLttYBHsO7M0S_tCvUIOGz26Ti5nkRuj1QcHc');
+  tokenEditor.setValue('eyJhbGciOiJIUzI1NiIsImN0eSI6IkpXVCJ9.eyJhZ2UiOjIxfQ.pLem30ReEpeXgMt6e3gjZ6QYSpLBbhd_NB-Afud1m4A');
 
 }());

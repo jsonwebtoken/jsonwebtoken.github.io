@@ -31,12 +31,12 @@ window.sign = function (header, payload, secret) {
   var value = '', error = null, headerAsJSON, payloadAsJSON;
 
   try {
-    headerAsJSON = header;
+    headerAsJSON = JSON.stringify(JSON.parse(header));
   } catch (e) {
     error = {result: null, error: {cause: e, who: ['header']}};
   }
   try {
-    payloadAsJSON = payload;
+    payloadAsJSON = JSON.stringify(JSON.parse(payload));
   } catch (e) {
     if (error) {
       error.error.who.push('payload');
