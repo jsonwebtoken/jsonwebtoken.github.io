@@ -11,9 +11,11 @@
     <div class="jwt-playground">
       <div class="input js-input"></div>
       <div class="output">
-        <div class="jwt-explained jwt-header">Header<div class="js-header"></div></div>
-        <div class="jwt-explained jwt-payload">Payload<div class="js-payload"></div></div>
-          <div class="jwt-explained jwt-signature">Signature<label for="secret">Secret</label><input type="text" name="secret" id="" value="616161">Is valid? <span class="js-signature"></span></div>
+        <div class="jwt-explained jwt-header"><div class="js-header"></div></div>
+        <div class="jwt-explained jwt-payload"><div class="js-payload"></div></div>
+          <div class="jwt-explained jwt-signature"><label for="secret">HMACSHA256(base64UrlEncode(header) . base64UrlEncode(payload), (</label><input type="text" name="secret" id="" value="616161">) </div>
+      </div>
+      <div class="validation-status js-signature">
       </div>
     </div>
 

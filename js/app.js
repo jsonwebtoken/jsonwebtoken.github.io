@@ -147,7 +147,6 @@
     var value = getTrimmedValue(tokenEditor);
     signatureElement.innerText = window.verify(value, secretElement.value).result;
   }
-  secretElement.addEventListener('keydown', updateSignature, false);
   secretElement.addEventListener('change', updateSignature, false);
 
   tokenEditor.setValue('eyJhbGciOiJIUzI1NiIsICJjdHkiOiJKV1QifQ.eyJhZ2UiOiAyMX0.vcimDRCLttYBHsO7M0S_tCvUIOGz26Ti5nkRuj1QcHc');

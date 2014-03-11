@@ -93,14 +93,21 @@ body {
     .jwt-signature  {
       color: @jwtSignatureColor;
 
+      font-family: monospace;
+
       label[for="secret"] {
-        clear: left;
-        display: block;
       }
       input {
-        clear: right;
-        display: block;
       }
     }
+  }
+
+  .validation-status {
+    background: @jwtExplainedBackgroundColor;
+    margin: 20px;
+    float: left;
+    clear: both;
+    text-align: center;
+    width: 100%;
   }
 }
