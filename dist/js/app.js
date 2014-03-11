@@ -17713,6 +17713,14 @@ window.decode = function(base64json) {
     };
 };
 
+function asciiToHex(s) {
+    var i = 0, hexSecret = "";
+    for (i = 0; i < s.length; i++) {
+        hexSecret += s.charCodeAt(i).toString(16);
+    }
+    return hexSecret;
+}
+
 window.sign = function(header, payload, secret) {
     var value = "", error = null, headerAsJSON, payloadAsJSON;
     try {
@@ -17745,7 +17753,7 @@ window.sign = function(header, payload, secret) {
         return error;
     }
     try {
-        value = KJUR.jws.JWS.sign(null, headerAsJSON, payloadAsJSON, secret);
+        value = KJUR.jws.JWS.sign(null, headerAsJSON, payloadAsJSON, asciiToHex(secret));
     } catch (e) {
         error = e;
     }
@@ -17758,7 +17766,7 @@ window.sign = function(header, payload, secret) {
 window.verify = function(value, secret) {
     var result = "", error = null;
     try {
-        result = KJUR.jws.JWS.verify(value, secret);
+        result = KJUR.jws.JWS.verify(value, asciiToHex(secret));
     } catch (e) {
         error = e;
     }
