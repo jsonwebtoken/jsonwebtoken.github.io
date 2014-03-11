@@ -30,6 +30,10 @@ body {
     float: left;
     margin-top: 15px;
 
+    &.error {
+      background: pink;
+    }
+
     .CodeMirror {
       width: 100%;
       float: left;
@@ -52,33 +56,40 @@ body {
       padding: inherit;
       margin: 5px;
 
-        &:hover {
-          .box-shadow(1px 1px 5px #888888 inset);
-        }
+      &.error {
+        background: rgba(100,0,0,0.1);
+      }
+
+      &:hover {
+        .box-shadow(1px 1px 5px #888888 inset);
+      }
+      .CodeMirror {
+        width: 100%;
+        height: auto;
+        background: none;
+      }
+    }
+
+    .syntaxHighlightingOverride(@color) {
+      .CodeMirror,
+      .CodeMirror .cm-property,
+      .CodeMirror .cm-string,
+      .CodeMirror .cm-atom,
+      .CodeMirror .cm-number{
+        color: @color;
+      }
     }
 
     .jwt-header {
       color: @jwtHeaderColor;
-
-      .CodeMirror {
-        width: 100%;
-        height: auto;
-        background: none;
-        color: inherit;
-      }
-
+      .syntaxHighlightingOverride(@jwtHeaderColor);
     }
+
     .jwt-payload {
       color: @jwtPayloadColor;
-
-      .CodeMirror {
-        width: 100%;
-        height: auto;
-        background: none;
-        color: inherit;
-      }
-
+      .syntaxHighlightingOverride(@jwtPayloadColor);
     }
+
     .jwt-signature  {
       color: @jwtSignatureColor;
 

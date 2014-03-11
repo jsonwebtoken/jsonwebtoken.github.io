@@ -16,31 +16,55 @@ function url_base64_decode(str) {
   return window.atob(output); //polifyll https://github.com/davidchambers/Base64.js
 }
 
-
 window.decode = function (base64json) {
-  var json = null;
+  var json = null, error = null;
   try {
     json = url_base64_decode(base64json);
     json = JSON.stringify(JSON.parse(json), undefined, 2);
-  } catch (e) { }
-  return json;
+  } catch (e) {
+    error = e;
+  }
+  return {result: json, error: error};
 };
 
 window.sign = function (header, payload, secret) {
-  var value = '';
+  var value = '', error = null, headerAsJSON, payloadAsJSON;
+
   try {
-    value = KJUR.jws.JWS.sign(null, JSON.stringify(JSON.parse(header)), JSON.stringify(JSON.parse(payload)), secret);
+    headerAsJSON = JSON.stringify(JSON.parse(header));
   } catch (e) {
+    error = {result: null, error: {cause: e, who: ['header']}};
+  }
+  try {
+    payloadAsJSON = JSON.stringify(JSON.parse(payload));
+  } catch (e) {
+    if (error) {
+      error.error.who.push('payload');
+    } else {
+      error = {result: null, error: {cause: e, who: ['payload']}};
+    }
   }
 
-  return value;
+  if (error) {
+    return error;
+  }
+
+  try {
+    value = KJUR.jws.JWS.sign(null, headerAsJSON, payloadAsJSON, secret);
+  } catch (e) {
+    error = e;
+  }
+
+  return {result: value, error: error};
 };
 
 window.verify = function (value, secret) {
-  var result = '';
+  var result = '', error = null;
   try {
     result = KJUR.jws.JWS.verify(value, secret);
-  } catch (e) { }
+  } catch (e) {
+    error = e;
+  }
 
-  return result;
+  return {result: result, error: error};
 };
