@@ -24,12 +24,6 @@ module.exports = function (grunt) {
         }
       },
     },
-    uglify: {
-      options: {
-        compress: false,
-        beautify: true
-      }
-    },
     less: {
       production: {
         options: {
