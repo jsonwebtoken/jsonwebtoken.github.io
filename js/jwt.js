@@ -37,7 +37,7 @@ function asciiToHex(s) {
 
 }
 
-window.sign = function (header, payload, secret) {
+window.sign = function (header, payload, secret, isSecretBase64Encoded) {
   var value = '', error = null, headerAsJSON, payloadAsJSON;
 
   try {
@@ -59,6 +59,10 @@ window.sign = function (header, payload, secret) {
     return error;
   }
 
+  if (isSecretBase64Encoded) {
+    secret = url_base64_decode(secret);
+  }
+
   try {
     value = KJUR.jws.JWS.sign(null, headerAsJSON, payloadAsJSON, asciiToHex(secret));
   } catch (e) {
@@ -68,8 +72,13 @@ window.sign = function (header, payload, secret) {
   return {result: value, error: error};
 };
 
-window.verify = function (value, secret) {
+window.verify = function (value, secret, isSecretBase64Encoded) {
   var result = '', error = null;
+
+  if (isSecretBase64Encoded) {
+    secret = url_base64_decode(secret);
+  }
+
   try {
     result = KJUR.jws.JWS.verify(value, asciiToHex(secret));
   } catch (e) {

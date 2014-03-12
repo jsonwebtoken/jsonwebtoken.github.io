@@ -91,7 +91,9 @@
   function refreshTokenEditor(instance) {
     tokenEditor.off('change', tokenEditorOnChangeListener);
     var secretElement = document.getElementsByName('secret')[0];
-    var signResult = window.sign(headerEditor.getValue(), payloadEditor.getValue(), secretElement.value);
+    var isBase64EncodedElement = document.getElementsByName('is-base64-encoded')[0];
+    var signResult = window.sign(headerEditor.getValue(), payloadEditor.getValue(), secretElement.value,
+                                 isBase64EncodedElement.checked);
 
     if (signResult.error) {
       tokenEditor.setValue('');
@@ -137,13 +139,16 @@
   headerEditor.on('change',   refreshTokenEditor);
 
   var secretElement = document.getElementsByName('secret')[0];
+  var isBase64EncodedElement = document.getElementsByName('is-base64-encoded')[0];
+
   function updateSignature () {
     var signatureElement = getFirstElementByClassName('js-signature');
+
     if (!signatureElement) {
       return;
     }
     var value = getTrimmedValue(tokenEditor);
-    var result = window.verify(value, secretElement.value).result;
+    var result = window.verify(value, secretElement.value, isBase64EncodedElement.checked).result;
     if (result) {
       $(signatureElement).removeClass('invalid-token');
       $(signatureElement).addClass('valid-token');
@@ -156,6 +161,7 @@
   }
   secretElement.addEventListener('change', updateSignature, false);
   secretElement.addEventListener('keyup', updateSignature, false);
+  isBase64EncodedElement.addEventListener('change', updateSignature, false);
 
   tokenEditor.setValue('eyJhbGciOiJIUzI1NiIsImN0eSI6IkpXVCJ9.eyJhZ2UiOjIxfQ.8nqb61Mdqdama9pZQz07HiIySY6FZC9UjHMKHg6zhjw');
 
