@@ -8,10 +8,21 @@
 @validColor: green;
 @invalidColor: red;
 
+@wholePageZoom: 1.7;
+
+/* Hack: CodeMirror zoom bug that prevents clicking from working right with zoom != 1 */
+@codeMirrorZoom: 1/@wholePageZoom;
+
 body {
   font-family: Helvetica;
   background: @backgroundColor;
-  zoom: 1.7;
+  zoom: @wholePageZoom;
+}
+
+.CodeMirror { zoom: @codeMirrorZoom; }
+
+h1 {
+  margin-bottom: 0;
 }
 
 .box-sizing(@prop) {
@@ -41,11 +52,12 @@ body {
     .CodeMirror {
       width: 100%;
       float: left;
-      font-size: x-large;
+      font-size: 40px;
       .cm-jwt-dot { }
       .cm-jwt-header    { color: @jwtHeaderColor;     }
       .cm-jwt-payload   { color: @jwtPayloadColor;    }
       .cm-jwt-signature { color: @jwtSignatureColor;  }
+      height: 412px;
     }
   }
 
@@ -72,6 +84,7 @@ body {
         width: 100%;
         height: auto;
         background: none;
+        font-size: 20px;
       }
     }
 
@@ -98,12 +111,16 @@ body {
     .jwt-signature  {
       color: @jwtSignatureColor;
       font-family: monospace;
+
+      pre {
+        padding: 0;
+        margin: 0;
+      }
     }
   }
 
   .validation-status {
     background: @jwtExplainedBackgroundColor;
-    margin-top: 20px;
     padding: 15px;
     float: left;
     clear: both;

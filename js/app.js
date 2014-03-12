@@ -70,7 +70,6 @@
     if (!value) { return; }
 
     var parts = value.split('.');
-    if (parts.length !== 3) { return null; }
 
     var secretElement = document.getElementsByName('secret')[0];
     var signatureElement = getFirstElementByClassName('js-signature');
@@ -148,11 +147,11 @@
     if (result) {
       $(signatureElement).removeClass('invalid-token');
       $(signatureElement).addClass('valid-token');
-      signatureElement.innerText = 'signature is valid';
+      signatureElement.innerText = 'signature verified';
     } else {
       $(signatureElement).removeClass('valid-token');
       $(signatureElement).addClass('invalid-token');
-      signatureElement.innerText = 'signature verified';
+      signatureElement.innerText = 'invalid signature';
     }
   }
   secretElement.addEventListener('change', updateSignature, false);
