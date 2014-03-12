@@ -48,6 +48,21 @@
     lint: true
   });
 
+  function setJSONEditorContent(jsonEditor, decodedJSON, selector) {
+    jsonEditor.off('change', refreshTokenEditor);
+    if (decodedJSON.result !== null && decodedJSON.result !== undefined) {
+      jsonEditor.setValue(decodedJSON.result);
+    } else {
+      jsonEditor.setValue('');
+    }
+    if (decodedJSON.error) {
+      selector.addClass('error');
+    } else {
+      selector.removeClass('error');
+    }
+    jsonEditor.on('change', refreshTokenEditor);
+  }
+
 
   function tokenEditorOnChangeListener(instance) {
     var value = getTrimmedValue(instance);
@@ -64,32 +79,13 @@
       return;
     }
     
-    headerEditor.off('change', refreshTokenEditor);
     var decodedHeader = window.decode(parts[0]);
-    if (decodedHeader.result !== null && decodedHeader.result !== undefined) {
-      headerEditor.setValue(decodedHeader.result);
-    } else {
-      headerEditor.setValue('');
-    }
-    if (decodedHeader.error) {
-      $('.jwt-header').addClass('error');
-    } else {
-      $('.jwt-header').removeClass('error');
-    }
-    headerEditor.on('change', refreshTokenEditor);
-    payloadEditor.off('change', refreshTokenEditor);
+    var selector = $('.jwt-header');
+    setJSONEditorContent(headerEditor, decodedHeader, selector);
     var decodedPayload = window.decode(parts[1]);
-    if (decodedPayload.result !== null && decodedPayload.result !== undefined) {
-      payloadEditor.setValue(decodedPayload.result);
-    } else {
-      payloadEditor.setValue('');
-    }
-    if (decodedPayload.error) {
-      $('.jwt-payload').addClass('error');
-    } else {
-      $('.jwt-payload').removeClass('error');
-    }
-    payloadEditor.on('change', refreshTokenEditor);
+    selector = $('.jwt-payload');
+    setJSONEditorContent(payloadEditor, decodedPayload, selector);
+
     fireEvent(secretElement);
   }
 
@@ -152,16 +148,16 @@
     if (result) {
       $(signatureElement).removeClass('invalid-token');
       $(signatureElement).addClass('valid-token');
-      signatureElement.innerText = 'The token is valid';
+      signatureElement.innerText = 'signature is valid';
     } else {
       $(signatureElement).removeClass('valid-token');
       $(signatureElement).addClass('invalid-token');
-      signatureElement.innerText = 'The token is invalid';
+      signatureElement.innerText = 'signature verified';
     }
   }
   secretElement.addEventListener('change', updateSignature, false);
   secretElement.addEventListener('keyup', updateSignature, false);
 
-  tokenEditor.setValue('eyJhbGciOiJIUzI1NiIsImN0eSI6IkpXVCJ9.eyJhZ2UiOjIxfQ.pLem30ReEpeXgMt6e3gjZ6QYSpLBbhd_NB-Afud1m4A');
+  tokenEditor.setValue('eyJhbGciOiJIUzI1NiIsImN0eSI6IkpXVCJ9.eyJhZ2UiOjIxfQ.8nqb61Mdqdama9pZQz07HiIySY6FZC9UjHMKHg6zhjw');
 
 }());

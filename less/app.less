@@ -11,6 +11,7 @@
 body {
   font-family: Helvetica;
   background: @backgroundColor;
+  zoom: 1.7;
 }
 
 .box-sizing(@prop) {
@@ -40,6 +41,7 @@ body {
     .CodeMirror {
       width: 100%;
       float: left;
+      font-size: x-large;
       .cm-jwt-dot { }
       .cm-jwt-header    { color: @jwtHeaderColor;     }
       .cm-jwt-payload   { color: @jwtPayloadColor;    }
@@ -95,23 +97,20 @@ body {
 
     .jwt-signature  {
       color: @jwtSignatureColor;
-
       font-family: monospace;
-
-      label[for="secret"] {
-      }
-      input {
-      }
     }
   }
 
   .validation-status {
     background: @jwtExplainedBackgroundColor;
-    margin: 20px;
+    margin-top: 20px;
+    padding: 15px;
     float: left;
     clear: both;
     text-align: center;
     width: 100%;
+    text-transform: uppercase;
+    .box-sizing(border-box);
 
     &.valid-token {
       background: @validColor;

@@ -18,7 +18,13 @@
       <div class="output">
         <div class="jwt-explained jwt-header"><div class="js-header"></div></div>
         <div class="jwt-explained jwt-payload"><div class="js-payload"></div></div>
-          <div class="jwt-explained jwt-signature"><label for="secret">HMACSHA256(base64UrlEncode(header) . base64UrlEncode(payload), (</label><input type="text" name="secret" id="" value="aaa" />) </div>
+        <div class="jwt-explained jwt-signature">
+<pre>
+HMACSHA256(
+  base64UrlEncode(header) .
+  base64UrlEncode(payload),
+  <input type="text" name="secret" value="secret" />
+)</pre></div>
       </div>
       <div class="validation-status js-signature">
       </div>
