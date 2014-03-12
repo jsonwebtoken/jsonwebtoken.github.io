@@ -1,7 +1,4 @@
 (function () {
-
-  var $ = window.$;
-
   // Taken from http://stackoverflow.com/questions/2490825/how-to-trigger-event-in-javascript
   function fireEvent(element) {
     var event; // The custom event that will be created
@@ -69,21 +66,27 @@
     
     headerEditor.off('change', refreshTokenEditor);
     var decodedHeader = window.decode(parts[0]);
-    if (decodedHeader.error) {
+    if (decodedHeader.result !== null && decodedHeader.result !== undefined) {
       headerEditor.setValue(decodedHeader.result);
+    } else {
+      headerEditor.setValue('');
+    }
+    if (decodedHeader.error) {
       $('.jwt-header').addClass('error');
     } else {
-      headerEditor.setValue(decodedHeader.result);
       $('.jwt-header').removeClass('error');
     }
     headerEditor.on('change', refreshTokenEditor);
     payloadEditor.off('change', refreshTokenEditor);
     var decodedPayload = window.decode(parts[1]);
+    if (decodedPayload.result !== null && decodedPayload.result !== undefined) {
+      payloadEditor.setValue(decodedPayload.result);
+    } else {
+      payloadEditor.setValue('');
+    }
     if (decodedPayload.error) {
-      payloadEditor.setValue(decodedHeader.result);
       $('.jwt-payload').addClass('error');
     } else {
-      payloadEditor.setValue(decodedPayload.result);
       $('.jwt-payload').removeClass('error');
     }
     payloadEditor.on('change', refreshTokenEditor);
@@ -146,7 +149,15 @@
     }
     var value = getTrimmedValue(tokenEditor);
     var result = window.verify(value, secretElement.value).result;
-    signatureElement.innerText = result;
+    if (result) {
+      $(signatureElement).removeClass('invalid-token');
+      $(signatureElement).addClass('valid-token');
+      signatureElement.innerText = 'The token is valid';
+    } else {
+      $(signatureElement).removeClass('valid-token');
+      $(signatureElement).addClass('invalid-token');
+      signatureElement.innerText = 'The token is invalid';
+    }
   }
   secretElement.addEventListener('change', updateSignature, false);
   secretElement.addEventListener('keyup', updateSignature, false);

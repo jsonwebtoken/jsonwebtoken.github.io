@@ -35,6 +35,7 @@
     "it": false,
     "define": false,
     "CodeMirror": false,
-    "KJUR": false
+    "KJUR": false,
+    "$": false
   }
 }

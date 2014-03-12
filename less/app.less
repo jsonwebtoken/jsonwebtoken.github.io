@@ -5,6 +5,9 @@
 
 @backgroundColor:             #fdf6e3;
 
+@validColor: green;
+@invalidColor: red;
+
 body {
   font-family: Helvetica;
   background: @backgroundColor;
@@ -109,5 +112,13 @@ body {
     clear: both;
     text-align: center;
     width: 100%;
+
+    &.valid-token {
+      background: @validColor;
+    }
+
+    &.invalid-token {
+      background: @invalidColor;
+    }
   }
 }
