@@ -27,16 +27,6 @@ window.decode = function (base64json) {
   return {result: json, error: error};
 };
 
-function asciiToHex(s) {
-  var i = 0, hexSecret = '';
-  for (i = 0; i < s.length; i++) {
-    hexSecret += s.charCodeAt(i).toString(16);
-  }
-
-  return hexSecret;
-
-}
-
 window.sign = function (header, payload, secret, isSecretBase64Encoded) {
   var value = '', error = null, headerAsJSON, payloadAsJSON;
 
@@ -60,11 +50,19 @@ window.sign = function (header, payload, secret, isSecretBase64Encoded) {
   }
 
   if (isSecretBase64Encoded) {
-    secret = url_base64_decode(secret);
+    try {
+      secret = window.b64utob64(secret);
+      secret = window.CryptoJS.enc.Base64.parse(secret);
+    } catch (e) {
+      return {result: '', error: e};
+    }
+  } else {
+    secret = window.CryptoJS.enc.Latin1.parse(secret);
+    //secret = asciiToHex(secret);
   }
 
   try {
-    value = KJUR.jws.JWS.sign(null, headerAsJSON, payloadAsJSON, asciiToHex(secret));
+    value = KJUR.jws.JWS.sign(null, headerAsJSON, payloadAsJSON, secret);
   } catch (e) {
     error = e;
   }
@@ -72,15 +70,32 @@ window.sign = function (header, payload, secret, isSecretBase64Encoded) {
   return {result: value, error: error};
 };
 
+window.isValidBase64String = function (s) {
+  try {
+    s = window.b64utob64(s);
+    window.CryptoJS.enc.Base64.parse(s);
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
+
 window.verify = function (value, secret, isSecretBase64Encoded) {
   var result = '', error = null;
 
   if (isSecretBase64Encoded) {
-    secret = url_base64_decode(secret);
+    try {
+      secret = window.b64utob64(secret);
+      secret = window.CryptoJS.enc.Base64.parse(secret);
+    } catch (e) {
+      return {result: '', error: e};
+    }
+  } else {
+    secret = window.CryptoJS.enc.Latin1.parse(secret);
   }
 
   try {
-    result = KJUR.jws.JWS.verify(value, asciiToHex(secret));
+    result = KJUR.jws.JWS.verify(value, secret);
   } catch (e) {
     error = e;
   }

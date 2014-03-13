@@ -108,7 +108,11 @@
           });
       }
       $('.input').addClass('error');
-      tokenEditor.setValue(signResult.result);
+      if (signResult.result) {
+        tokenEditor.setValue(signResult.result);
+      } else {
+        tokenEditor.setValue('');
+      }
     } else {
       tokenEditor.setValue(signResult.result);
       $('.input').removeClass('error');
@@ -143,13 +147,23 @@
 
   function updateSignature () {
     var signatureElement = getFirstElementByClassName('js-signature');
+    var signatureContainerElement = getFirstElementByClassName('jwt-signature');
 
     if (!signatureElement) {
       return;
     }
     var value = getTrimmedValue(tokenEditor);
-    var result = window.verify(value, secretElement.value, isBase64EncodedElement.checked).result;
-    if (result) {
+    var isBase64 = isBase64EncodedElement.checked;
+    if (isBase64 && !window.isValidBase64String(secretElement.value)) {
+      $(signatureContainerElement).addClass('error');
+      return;
+    } else {
+      $(signatureContainerElement).removeClass('error');
+    }
+    var result = window.verify(value, secretElement.value, isBase64);
+    var error = result.error;
+    result = result.result;
+    if (!error && result) {
       $(signatureElement).removeClass('invalid-token');
       $(signatureElement).addClass('valid-token');
       signatureElement.innerText = 'signature verified';
