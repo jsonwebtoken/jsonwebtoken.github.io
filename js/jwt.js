@@ -69,7 +69,6 @@ window.sign = function (header, payload, secret, isSecretBase64Encoded) {
     }
   } else {
     secret = window.CryptoJS.enc.Latin1.parse(secret).toString();
-    //secret = asciiToHex(secret);
   }
 
   try {
