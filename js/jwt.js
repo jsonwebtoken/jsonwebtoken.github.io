@@ -1,3 +1,14 @@
+
+// XXX Hack to prevent hextorstr function used by JWS send a string instead of
+// a Word Array. On this way, no string decoding needs to take place and Crypto
+// takes care of everything.
+// Note that it should not affect the other algorithms as hextorstr is exclusively
+// used on Hmac family (that invokes CryptoJS library).
+window.hextorstr = function (c) {
+  return window.CryptoJS.enc.Hex.parse(c);
+};
+
+
 //this is used to parse base64
 function url_base64_decode(str) {
   var output = str.replace('-', '+').replace('_', '/');
@@ -52,12 +63,12 @@ window.sign = function (header, payload, secret, isSecretBase64Encoded) {
   if (isSecretBase64Encoded) {
     try {
       secret = window.b64utob64(secret);
-      secret = window.CryptoJS.enc.Base64.parse(secret);
+      secret = window.CryptoJS.enc.Base64.parse(secret).toString();
     } catch (e) {
       return {result: '', error: e};
     }
   } else {
-    secret = window.CryptoJS.enc.Latin1.parse(secret);
+    secret = window.CryptoJS.enc.Latin1.parse(secret).toString();
     //secret = asciiToHex(secret);
   }
 
@@ -73,7 +84,7 @@ window.sign = function (header, payload, secret, isSecretBase64Encoded) {
 window.isValidBase64String = function (s) {
   try {
     s = window.b64utob64(s);
-    window.CryptoJS.enc.Base64.parse(s);
+    window.CryptoJS.enc.Base64.parse(s).toString();
     return true;
   } catch (e) {
     return false;
@@ -86,12 +97,12 @@ window.verify = function (value, secret, isSecretBase64Encoded) {
   if (isSecretBase64Encoded) {
     try {
       secret = window.b64utob64(secret);
-      secret = window.CryptoJS.enc.Base64.parse(secret);
+      secret = window.CryptoJS.enc.Base64.parse(secret).toString();
     } catch (e) {
       return {result: '', error: e};
     }
   } else {
-    secret = window.CryptoJS.enc.Latin1.parse(secret);
+    secret = window.CryptoJS.enc.Latin1.parse(secret).toString();
   }
 
   try {
