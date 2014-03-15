@@ -52,8 +52,11 @@ module.exports = function (grunt) {
         files:  { 'index.html': 'html/index.html' }
       }
     },
+    mocha_phantomjs: {
+      all: ['test/**/*.html']
+    }
   });
 
-  grunt.registerTask('build', ['clean', 'less', 'useminPrepare', 'concat', 'uglify', 'cssmin', 'htmlmin', 'usemin']);
+  grunt.registerTask('build', ['clean', 'less', 'useminPrepare', 'concat', 'uglify', 'cssmin', 'htmlmin', 'usemin', 'mocha_phantomjs']);
   grunt.registerTask('default', ['build', 'connect', 'watch']);
 };
