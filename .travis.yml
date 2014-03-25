@@ -6,3 +6,4 @@ before_script:
     - echo "  StrictHostKeyChecking no" >> ~/.ssh/config
     - echo "  CheckHostIP no" >> ~/.ssh/config
     - npm install -g bower grunt-cli
+    - bower install -f

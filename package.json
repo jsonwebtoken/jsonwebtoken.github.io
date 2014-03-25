@@ -18,6 +18,6 @@
     "grunt-mocha-phantomjs": "^0.4.3"
   },
   "scripts": {
-    "test": "bower install && grunt build --verbose"
+    "test": "grunt test --verbose"
   }
 }
