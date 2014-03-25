@@ -5,7 +5,7 @@
     "jsrsasign": "http://kjur.github.io/jsrsasign/jsrsasign-4.1.4-all-min.js",
     "json-sans-eval-min": "http://kjur.github.io/jsjws/ext/json-sans-eval-min.js",
     "codemirror": "git@github.com:marijnh/CodeMirror.git#4.0.1",
-    "jws.js": "https://raw.github.com/kjur/jsjws/master/jws-3.0.js",
+    "jws.js": "https://rawgithub.com/kjur/jsjws/master/jws-3.0.js",
     "jsonlint": "1.6.0",
     "zepto": "~1.1.3"
   }
