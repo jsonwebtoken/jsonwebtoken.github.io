@@ -2,6 +2,7 @@
   "name": "jwt.io",
   "version": "0.0.1",
   "devDependencies": {
+    "expect.js": "^0.3.1",
     "grunt": "~0.4.2",
     "grunt-contrib-clean": "~0.5.0",
     "grunt-contrib-connect": "~0.6.0",
