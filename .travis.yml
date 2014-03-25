@@ -2,5 +2,7 @@ language: node_js
 node_js:
     - "0.10"
 before_script:
-    - echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+    - echo "Host github.com" >> ~/.ssh/config
+    - echo "  StrictHostKeyChecking no" >> ~/.ssh/config
+    - echo "  CheckHostIP no" >> ~/.ssh/config
     - npm install -g bower grunt-cli
