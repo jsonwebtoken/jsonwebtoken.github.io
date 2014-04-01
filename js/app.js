@@ -118,6 +118,9 @@
       $('.input').removeClass('error');
       $('.jwt-payload').removeClass('error');
       $('.jwt-header').removeClass('error');
+
+      // Save last valid jwt value for refresh
+      sessionStorage.jwtValue = signResult.result;
     }
     tokenEditor.on('change', tokenEditorOnChangeListener);
     fireEvent(secretElement);
@@ -177,6 +180,9 @@
   secretElement.addEventListener('keyup', updateSignature, false);
   isBase64EncodedElement.addEventListener('change', updateSignature, false);
 
-  tokenEditor.setValue('eyJhbGciOiJIUzI1NiIsImN0eSI6IkpXVCJ9.eyJhZ2UiOjIxfQ.8nqb61Mdqdama9pZQz07HiIySY6FZC9UjHMKHg6zhjw');
+  tokenEditor.setValue(
+    sessionStorage.jwtValue ||
+    'eyJhbGciOiJIUzI1NiIsImN0eSI6IkpXVCJ9.eyJhZ2UiOjIxfQ.8nqb61Mdqdama9pZQz07HiIySY6FZC9UjHMKHg6zhjw'
+  );
 
 }());
