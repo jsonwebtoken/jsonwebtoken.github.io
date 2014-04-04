@@ -88,6 +88,16 @@
     fireEvent(secretElement);
   }
 
+  function saveToStorage(jwt) {
+    // Save last valid jwt value for refresh
+    localStorage.jwtValue = jwt;
+  }
+
+  function loadFromStorage(cb) {
+    cb(localStorage.jwtValue);
+    localStorage.clear();
+  }
+
   function refreshTokenEditor(instance) {
     tokenEditor.off('change', tokenEditorOnChangeListener);
     var secretElement = document.getElementsByName('secret')[0];
@@ -119,8 +129,7 @@
       $('.jwt-payload').removeClass('error');
       $('.jwt-header').removeClass('error');
 
-      // Save last valid jwt value for refresh
-      sessionStorage.jwtValue = signResult.result;
+      saveToStorage(signResult.result);
     }
     tokenEditor.on('change', tokenEditorOnChangeListener);
     fireEvent(secretElement);
@@ -180,9 +189,11 @@
   secretElement.addEventListener('keyup', updateSignature, false);
   isBase64EncodedElement.addEventListener('change', updateSignature, false);
 
-  tokenEditor.setValue(
-    sessionStorage.jwtValue ||
-    'eyJhbGciOiJIUzI1NiIsImN0eSI6IkpXVCJ9.eyJhZ2UiOjIxfQ.8nqb61Mdqdama9pZQz07HiIySY6FZC9UjHMKHg6zhjw'
-  );
+  loadFromStorage(function (jwt) {
+    tokenEditor.setValue(
+      jwt || 'eyJhbGciOiJIUzI1NiIsImN0eSI6IkpXVCJ9.eyJhZ2UiOjIxfQ.8nqb61Mdqdama9pZQz07HiIySY6FZC9UjHMKHg6zhjw'
+    );
+
+  });
 
 }());
