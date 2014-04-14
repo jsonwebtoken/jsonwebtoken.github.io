@@ -178,11 +178,11 @@
     if (!error && result) {
       $(signatureElement).removeClass('invalid-token');
       $(signatureElement).addClass('valid-token');
-      signatureElement.innerText = 'signature verified';
+      signatureElement.innerHTML = '<i class="fa fa-check-circle-o"></i> signature verified';
     } else {
       $(signatureElement).removeClass('valid-token');
       $(signatureElement).addClass('invalid-token');
-      signatureElement.innerText = 'invalid signature';
+      signatureElement.innerHTML = '<i class="fa fa-times-circle-o"></i> invalid signature';
     }
   }
   secretElement.addEventListener('change', updateSignature, false);
@@ -191,7 +191,7 @@
 
   loadFromStorage(function (jwt) {
     tokenEditor.setValue(
-      jwt || 'eyJhbGciOiJIUzI1NiIsImN0eSI6IkpXVCJ9.eyJhZ2UiOjIxfQ.8nqb61Mdqdama9pZQz07HiIySY6FZC9UjHMKHg6zhjw'
+      jwt || 'eyJhbGciOiJIUzI1NiIsImN0eSI6IkpXVCJ9.eyJzdWIiOjEyMzQ1Njc4OTAsIm5hbWUiOiJKb2huIERvZSIsImFkbWluIjp0cnVlfQ.Qb8vkCubb6B4vTn2jsmQcsUTej7XB5abeIY9sUXfU0A'
     );
 
   });

@@ -1,29 +1,32 @@
 @jwtHeaderColor:              #859900;
 @jwtPayloadColor:             #268bd2;
+@jwtDotColor:                 #000;
 @jwtSignatureColor:           #dc322f;
-@jwtExplainedBackgroundColor: #eee8d5;
+@jwtExplainedBackgroundColor: #fff;
 
-@backgroundColor:             #fdf6e3;
+@backgroundColor:             #fff;
 
 @validColor: green;
 @invalidColor: red;
 
-@wholePageZoom: 1.7;
+@wholePageZoom: 1.2;
 
 /* Hack: CodeMirror zoom bug that prevents clicking from working right with zoom != 1 */
 @codeMirrorZoom: 1/@wholePageZoom;
 
 body {
-  font-family: Helvetica;
+  font-family: 'Roboto', sans-serif, Helvetica;
   background: @backgroundColor;
   zoom: @wholePageZoom;
 }
 
-.CodeMirror { zoom: @codeMirrorZoom; }
+.CodeMirror { zoom: @codeMirrorZoom; font-family: 'Source Code Pro' }
 
 h1 {
   margin-bottom: 0;
 }
+
+pre, code { padding: 0; margin: 0; font-family: 'Source Code Pro', Consolas; }
 
 .box-sizing(@prop) {
     -webkit-box-sizing: @prop; /* Safari/Chrome, other WebKit */
@@ -41,44 +44,49 @@ h1 {
   width: 100%;
 
   .input {
-    width: 50%;
-    float: left;
-    margin-top: 15px;
+
+    border: 1px solid #ECECEC;
+    padding: 10px;
+    margin-bottom: 2px;
+    background: @jwtExplainedBackgroundColor;
 
     &.error {
       background: pink;
     }
 
+    &:hover {
+      .box-shadow(0px 0px 4px #54A1E9);
+    }
+
     .CodeMirror {
       width: 100%;
-      float: left;
-      font-size: 40px;
-      .cm-jwt-dot { }
+      background: none;
+      font-size: 20px;
+      .cm-jwt-dot       { color: @jwtDotColor; }
       .cm-jwt-header    { color: @jwtHeaderColor;     }
       .cm-jwt-payload   { color: @jwtPayloadColor;    }
       .cm-jwt-signature { color: @jwtSignatureColor;  }
-      height: 412px;
+      min-height: 369px;
+      height: auto;
     }
   }
 
   .output {
-    width: 50%;
-    float: left;
-    padding: 10px;
-    font-family: Helvetica;
     .box-sizing(border-box);
 
     .jwt-explained {
       background: @jwtExplainedBackgroundColor;
       padding: inherit;
-      margin: 5px;
+      border: 1px solid #ECECEC;
+      padding: 10px;
+      margin-bottom: 2px;
 
       &.error {
         background: rgba(100,0,0,0.1);
       }
 
       &:hover {
-        .box-shadow(1px 1px 5px #888888 inset);
+        .box-shadow(0px 0px 4px #54A1E9);
       }
       .CodeMirror {
         width: 100%;
@@ -112,7 +120,8 @@ h1 {
       color: @jwtSignatureColor;
       font-family: monospace;
 
-      pre { padding: 0; margin: 0; }
+      pre { background-color: transparent; border: 0; color: @jwtSignatureColor; }
+
       span.is-base64-encoded-label {
         font-size: x-small;
       }
@@ -122,7 +131,7 @@ h1 {
   .validation-status {
     background: @jwtExplainedBackgroundColor;
     padding: 15px;
-    float: left;
+    margin-top: 20px;
     clear: both;
     text-align: center;
     width: 100%;
@@ -138,4 +147,48 @@ h1 {
       background: @invalidColor;
     }
   }
+}
+
+.library div i {
+  padding-right: 10px;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #f5f5f5;
+}
+
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+body > .container {
+  padding: 60px 15px 0;
+}
+.container .text-muted {
+  margin: 20px 0;
+}
+
+#footer > .container {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+code {
+  font-size: 80%;
 }

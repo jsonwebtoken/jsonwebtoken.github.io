@@ -1,35 +1,440 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <title>JWT.io</title>
-    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>JSON Web Tokens - jwt.io</title>
+
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro:400,500,600|Roboto:400,100,300,500,700' rel='stylesheet' type='text/css'>
     <!-- build:css dist/css/app.css -->
     <link rel="stylesheet" href="vendor/codemirror/lib/codemirror.css" type="text/css" media="all" />
-    <link rel="stylesheet" href="vendor/codemirror/theme/night.css" type="text/css" media="all" />
     <link rel="stylesheet" href="vendor/codemirror/addon/lint/lint.css" type="text/css" media="all" />
     <link rel="stylesheet" href="css/app.css" type="text/css" media="all" />
     <!-- endbuild -->
+
+    <!-- Bootstrap core CSS -->
+    
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
   </head>
-  <body>
-    <h1>JSON Web Tokens</h1>
-    <div class="jwt-playground">
-      <div class="input js-input"></div>
-      <div class="output">
-        <div class="jwt-explained jwt-header"><div class="js-header"></div></div>
-        <div class="jwt-explained jwt-payload"><div class="js-payload"></div></div>
-        <div class="jwt-explained jwt-signature">
-<pre>
-HMACSHA256(
-  base64UrlEncode(header) .
-  base64UrlEncode(payload),
-  <input type="text" name="secret" value="secret" />
-) <span class="is-base64-encoded-label"> <input type="checkbox" name="is-base64-encoded" />secret base64 encoded</span></pre></div>
+
+  <body data-spy="scroll" data-target=".navbar-default">
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#"><img src="https://cloudup.com/c48DvUqJ1vt+" style="width: 30px;margin-right: 10px;margin-top: -4px;">JSON Web Token</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#debugger">Debugger</a></li>
+            <li><a href="#libraries">Libraries</a></li>
+          </ul>
+          <p class="navbar-text navbar-right">
+            Made with <span class="fa fa-heart"></span> by <a href="https://auth0.com">Auth0</a>
+          </p>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+
+    <!-- Begin page content -->
+    <div class="container">
+      <div class="page-header">
+        <h1>What is it?</h1>
       </div>
-      <div class="validation-status js-signature">
+      <p class="lead">JSON Web Token (JWT) is a compact URL-safe means of representing claims to be transferred between two parties. The claims in a JWT are encoded as a JSON object that is digitally signed using JSON Web Signature (JWS). - <a href="http://tools.ietf.org/html/draft-jones-json-web-token">IETF</a>.</p>
+      <div class="page-header">
+        <a name="debugger"></a>
+        <h1 id="debugger">Debugger</h1>
+      </div>
+      
+      <div class="jwt-playground">
+        <div class="row">
+          <div class="col-md-6">
+            <h4>Encoded <small class="pull-right">paste a token here</small></h4>
+          </div>
+          <div class="col-md-6">
+            <h4>Decoded <small class="pull-right">edit the payload and secret (only HS256 supported)</small></h4>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="input js-input"></div>
+          </div>
+          <div class="col-md-6">
+
+            <div class="output">
+              <div class="jwt-explained jwt-header"><div class="js-header"></div></div>
+              <div class="jwt-explained jwt-payload"><div class="js-payload"></div></div>
+              <div class="jwt-explained jwt-signature">
+  <pre>
+  HMACSHA256(
+    base64UrlEncode(header) + "." +
+    base64UrlEncode(payload),
+    <input type="text" name="secret" value="secret">
+  ) <span class="is-base64-encoded-label"> <input type="checkbox" name="is-base64-encoded">secret base64 encoded</span></pre></div>
+              </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="validation-status js-signature">
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
+    <div class="container">
+      <div class="page-header">
+        <a name="libraries"></a>
+        <h1 id="libraries">Libraries <small>for Token Signing/Verification</small></h1>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">.NET</h3>
+            </div>
+            <div class="panel-body library">
+              <div class="row">
+                <div class="col-md-6">
+                  <div><i class="fa fa-check-square-o"></i>Sign</div>
+                  <div><i class="fa fa-check-square-o"></i>Verify</div>
+                  <div><i class="fa fa-check-square-o"></i><code>exp</code> check</div>
+                  <div><i class="fa fa-check-square-o"></i><code>aud</code> check</div>
+                  <div><i class="fa fa-check-square-o"></i><code>iss</code> check</div>
+                </div>
+                <div class="col-md-6">
+
+                  <div><i class="fa fa-check-square-o"></i>HS256</div>
+                  <div><i class="fa fa-check-square-o"></i>HS384</div>
+                  <div><i class="fa fa-check-square-o"></i>HS512</div>
+                  <div><i class="fa fa-check-square-o"></i>RS256</div>
+                  <div><i class="fa fa-check-square-o"></i>RS384</div>
+                  <div><i class="fa fa-check-square-o"></i>RS512</div>
+                  <div><i class="fa fa-square-o"></i>ES256</div>
+                  <div><i class="fa fa-square-o"></i>ES384</div>
+                  <div><i class="fa fa-square-o"></i>ES512</div>
+                </div>
+              </div>
+              <div><i class="fa fa-group"></i>Mantainer: Microsoft</div>
+              <div><i class="fa fa-code"></i>Usage: <a href="#">Sign</a> · <a href="#">Verify</a></div>
+            </div>
+            <div class="panel-footer">
+              <div>
+                <code>Install-Package <a href="https://www.nuget.org/packages/System.IdentityModel.Tokens.Jwt/">System.IdentityModel.Tokens.Jwt</a></code>
+              </div>
+              <div><i class="fa fa-github"></i> N/A</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Python</h3>
+            </div>
+            <div class="panel-body library">
+              <div class="row">
+                <div class="col-md-6">
+                  <div><i class="fa fa-check-square-o"></i>Sign</div>
+                  <div><i class="fa fa-check-square-o"></i>Verify</div>
+                  <div><i class="fa fa-check-square-o"></i><code>exp</code> check</div>
+                  <div><i class="fa fa-square-o"></i><code>aud</code> check</div>
+                  <div><i class="fa fa-square-o"></i><code>iss</code> check</div>
+                </div>
+                <div class="col-md-6">
+
+                  <div><i class="fa fa-check-square-o"></i>HS256</div>
+                  <div><i class="fa fa-check-square-o"></i>HS384</div>
+                  <div><i class="fa fa-check-square-o"></i>HS512</div>
+                  <div><i class="fa fa-check-square-o"></i>RS256</div>
+                  <div><i class="fa fa-check-square-o"></i>RS384</div>
+                  <div><i class="fa fa-check-square-o"></i>RS512</div>
+                  <div><i class="fa fa-square-o"></i>ES256</div>
+                  <div><i class="fa fa-square-o"></i>ES384</div>
+                  <div><i class="fa fa-square-o"></i>ES512</div>
+                </div>
+              </div>
+              <div><i class="fa fa-group"></i>Mantainer: <a href="https://github.com/progrium">Jeff Lindsay (progrium)</a></div>
+              <div><i class="fa fa-code"></i>Usage: <a href="#">Sign</a> · <a href="#">Verify</a></div>
+            </div>
+            <div class="panel-footer">
+              <div>
+                <code>pip install pyjwt</code>
+              </div>
+              <div>
+                <i class="fa fa-github"></i> <a href="https://github.com/progrium/pyjwt/">progrium/pyjwt</a>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Node.js</h3>
+            </div>
+            <div class="panel-body library">
+              <div class="row">
+                <div class="col-md-6">
+                  <div><i class="fa fa-check-square-o"></i>Sign</div>
+                  <div><i class="fa fa-check-square-o"></i>Verify</div>
+                  <div><i class="fa fa-check-square-o"></i><code>exp</code> check</div>
+                  <div><i class="fa fa-check-square-o"></i><code>aud</code> check</div>
+                  <div><i class="fa fa-check-square-o"></i><code>iss</code> check</div>
+                </div>
+                <div class="col-md-6">
+
+                  <div><i class="fa fa-check-square-o"></i>HS256</div>
+                  <div><i class="fa fa-check-square-o"></i>HS384</div>
+                  <div><i class="fa fa-check-square-o"></i>HS512</div>
+                  <div><i class="fa fa-check-square-o"></i>RS256</div>
+                  <div><i class="fa fa-check-square-o"></i>RS384</div>
+                  <div><i class="fa fa-check-square-o"></i>RS512</div>
+                  <div><i class="fa fa-check-square-o"></i>ES256</div>
+                  <div><i class="fa fa-check-square-o"></i>ES384</div>
+                  <div><i class="fa fa-check-square-o"></i>ES512</div>
+                </div>
+              </div>
+              <div><i class="fa fa-group"></i>Mantainer: <a href="https://github.com/auth0">Auth0</a></div>
+              <div><i class="fa fa-code"></i>Usage: <a href="#">Sign</a> · <a href="#">Verify</a></div>
+            </div>
+            <div class="panel-footer">
+              <div>
+                <code>npm install jsonwebtoken</code>
+              </div>
+              <div>
+                <i class="fa fa-github"></i> <a href="https://github.com/auth0/node-jsonwebtoken">auth0/node-jsonwebtoken</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Java</h3>
+            </div>
+            <div class="panel-body library">
+              <div class="col-md-6">
+                <div><i class="fa fa-square-o"></i>Sign</div>
+                <div><i class="fa fa-check-square-o"></i>Verify</div>
+                <div><i class="fa fa-check-square-o"></i><code>exp</code> check</div>
+                <div><i class="fa fa-check-square-o"></i><code>aud</code> check</div>
+                <div><i class="fa fa-check-square-o"></i><code>iss</code> check</div>
+              </div>
+              <div class="col-md-6">
+
+                <div><i class="fa fa-check-square-o"></i>HS256</div>
+                <div><i class="fa fa-square-o"></i>HS384</div>
+                <div><i class="fa fa-square-o"></i>HS512</div>
+                <div><i class="fa fa-square-o"></i>RS256</div>
+                <div><i class="fa fa-square-o"></i>RS384</div>
+                <div><i class="fa fa-square-o"></i>RS512</div>
+                <div><i class="fa fa-square-o"></i>ES256</div>
+                <div><i class="fa fa-square-o"></i>ES384</div>
+                <div><i class="fa fa-square-o"></i>ES512</div>
+              </div>
+              <div><i class="fa fa-group"></i>Mantainer: <a href="https://github.com/auth0">Auth0</a></div>
+              <div><i class="fa fa-code"></i>Usage: <a href="#">Sign</a> · <a href="#">Verify</a></div>
+            </div>
+            
+            <div class="panel-footer">
+              <div>
+                <code>maven: com.auth0 / java-jwt / 0.2</code>
+              </div>
+              <div>
+                <i class="fa fa-github"></i> <a href="https://github.com/auth0/java-jwt">auth0/java-jwt</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">PHP</h3>
+            </div>
+            <div class="panel-body library">
+              <div class="col-md-6">
+                <div><i class="fa fa-check-square-o"></i>Sign</div>
+                <div><i class="fa fa-check-square-o"></i>Verify</div>
+                <div><i class="fa fa-square-o"></i><code>exp</code> check</div>
+                <div><i class="fa fa-square-o"></i><code>aud</code> check</div>
+                <div><i class="fa fa-square-o"></i><code>iss</code> check</div>
+              </div>
+              <div class="col-md-6">
+
+                <div><i class="fa fa-check-square-o"></i>HS256</div>
+                <div><i class="fa fa-check-square-o"></i>HS384</div>
+                <div><i class="fa fa-check-square-o"></i>HS512</div>
+                <div><i class="fa fa-square-o"></i>RS256</div>
+                <div><i class="fa fa-square-o"></i>RS384</div>
+                <div><i class="fa fa-square-o"></i>RS512</div>
+                <div><i class="fa fa-square-o"></i>ES256</div>
+                <div><i class="fa fa-square-o"></i>ES384</div>
+                <div><i class="fa fa-square-o"></i>ES512</div>
+              </div>
+              <div><i class="fa fa-group"></i>Mantainer: <a href="https://github.com/firebase">Firebase</a></div>
+              <div><i class="fa fa-code"></i>Usage: <a href="#">Sign</a> · <a href="#">Verify</a></div>
+            </div>
+            
+            <div class="panel-footer">
+              <div>
+                <code>php composer require firebase/php-jwt</code>
+              </div>
+              <div>
+                <i class="fa fa-github"></i> <a href="https://github.com/firebase/php-jwt">firebase/php-jwt</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Ruby</h3>
+            </div>
+            <div class="panel-body library">
+              <div class="col-md-6">
+                <div><i class="fa fa-check-square-o"></i>Sign</div>
+                <div><i class="fa fa-check-square-o"></i>Verify</div>
+                <div><i class="fa fa-square-o"></i><code>exp</code> check</div>
+                <div><i class="fa fa-square-o"></i><code>aud</code> check</div>
+                <div><i class="fa fa-square-o"></i><code>iss</code> check</div>
+              </div>
+              <div class="col-md-6">
+                <div><i class="fa fa-check-square-o"></i>HS256</div>
+                <div><i class="fa fa-check-square-o"></i>HS384</div>
+                <div><i class="fa fa-check-square-o"></i>HS512</div>
+                <div><i class="fa fa-check-square-o"></i>RS256</div>
+                <div><i class="fa fa-check-square-o"></i>RS384</div>
+                <div><i class="fa fa-check-square-o"></i>RS512</div>
+                <div><i class="fa fa-check-square-o"></i>ES256</div>
+                <div><i class="fa fa-check-square-o"></i>ES384</div>
+                <div><i class="fa fa-square-o"></i>ES512</div>
+              </div>
+              <div><i class="fa fa-group"></i>Mantainer: <a href="https://github.com/progrium">Jeff Lindsay (progrium)</a></div>
+              <div><i class="fa fa-code"></i>Usage: <a href="#">Sign</a> · <a href="#">Verify</a></div>
+            </div>
+            
+            <div class="panel-footer">
+              <div>
+                <code>gem install jwt</code>
+              </div>
+              <div>
+                <i class="fa fa-github"></i> <a href="https://github.com/progrium/ruby-jwt">progrium/ruby-jwt</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Go</h3>
+            </div>
+            <div class="panel-body library">
+              <div class="col-md-6">
+                <div><i class="fa fa-check-square-o"></i>Sign</div>
+                <div><i class="fa fa-check-square-o"></i>Verify</div>
+                <div><i class="fa fa-check-square-o"></i><code>exp</code> check</div>
+                <div><i class="fa fa-square-o"></i><code>aud</code> check</div>
+                <div><i class="fa fa-square-o"></i><code>iss</code> check</div>
+              </div>
+              <div class="col-md-6">
+
+                <div><i class="fa fa-check-square-o"></i>HS256</div>
+                <div><i class="fa fa-square-o"></i>HS384</div>
+                <div><i class="fa fa-square-o"></i>HS512</div>
+                <div><i class="fa fa-check-square-o"></i>RS256</div>
+                <div><i class="fa fa-square-o"></i>RS384</div>
+                <div><i class="fa fa-square-o"></i>RS512</div>
+                <div><i class="fa fa-square-o"></i>ES256</div>
+                <div><i class="fa fa-square-o"></i>ES384</div>
+                <div><i class="fa fa-square-o"></i>ES512</div>
+              </div>
+              <div><i class="fa fa-group"></i>Mantainer: <a href="https://github.com/dgrijalva">dgrijalva</a></div>
+              <div><i class="fa fa-code"></i>Usage: <a href="#">Sign</a> · <a href="#">Verify</a></div>
+            </div>
+            
+            <div class="panel-footer">
+              <div>
+                <code>import "github.com/dgrijalva/jwt-go"</code>
+              </div>
+              <div>
+                <i class="fa fa-github"></i> <a href="https://github.com/dgrijalva/jwt-go">dgrijalva/jwt-go</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">JavaScript</h3>
+            </div>
+            <div class="panel-body library">
+              <div class="col-md-6">
+                <div><i class="fa fa-check-square-o"></i>Sign</div>
+                <div><i class="fa fa-check-square-o"></i>Verify</div>
+                <div><i class="fa fa-square-o"></i><code>exp</code> check</div>
+                <div><i class="fa fa-square-o"></i><code>aud</code> check</div>
+                <div><i class="fa fa-square-o"></i><code>iss</code> check</div>
+              </div>
+              <div class="col-md-6">
+
+                <div><i class="fa fa-check-square-o"></i>HS256</div>
+                <div><i class="fa fa-check-square-o"></i>HS384</div>
+                <div><i class="fa fa-check-square-o"></i>HS512</div>
+                <div><i class="fa fa-check-square-o"></i>RS256</div>
+                <div><i class="fa fa-check-square-o"></i>RS384</div>
+                <div><i class="fa fa-check-square-o"></i>RS512</div>
+                <div><i class="fa fa-check-square-o"></i>ES256</div>
+                <div><i class="fa fa-check-square-o"></i>ES384</div>
+                <div><i class="fa fa-square-o"></i>ES512</div>
+              </div>
+              <div><i class="fa fa-group"></i>Mantainer: <a href="https://github.com/kjur">Kenji Urushima (Xerox)</a></div>
+              <div><i class="fa fa-code"></i>Usage: <a href="#">Sign</a> · <a href="#">Verify</a></div>
+            </div>
+            
+            <div class="panel-footer">
+              <div>
+                <code>bower install jsjws</code>
+              </div>
+              <div>
+                <i class="fa fa-github"></i> <a href="https://github.com/kjur/jsjws">kjur/jsjws</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
     <!-- build:js dist/js/app.js -->
     <script src="vendor/zepto/zepto.js"></script>
     <script src="vendor/jsonlint/lib/jsonlint.js"></script>
@@ -45,5 +450,7 @@ HMACSHA256(
     <script src="js/jwt.js"></script>
     <script src="js/app.js"></script>
     <!-- endbuild -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
   </body>
 </html>
