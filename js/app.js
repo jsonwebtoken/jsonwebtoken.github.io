@@ -77,7 +77,7 @@
     if (!signatureElement) {
       return;
     }
-    
+
     var decodedHeader = window.decode(parts[0]);
     var selector = $('.jwt-header');
     setJSONEditorContent(headerEditor, decodedHeader, selector);
@@ -191,7 +191,7 @@
 
   loadFromStorage(function (jwt) {
     tokenEditor.setValue(
-      jwt || 'eyJhbGciOiJIUzI1NiIsImN0eSI6IkpXVCJ9.eyJzdWIiOjEyMzQ1Njc4OTAsIm5hbWUiOiJKb2huIERvZSIsImFkbWluIjp0cnVlfQ.Qb8vkCubb6B4vTn2jsmQcsUTej7XB5abeIY9sUXfU0A'
+      jwt || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEyMzQ1Njc4OTAsIm5hbWUiOiJKb2huIERvZSIsImFkbWluIjp0cnVlfQ.eoaDVGTClRdfxUZXiPs3f8FmJDkDE_VCQFXqKxpLsts'
     );
 
   });
