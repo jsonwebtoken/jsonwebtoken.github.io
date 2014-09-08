@@ -31,7 +31,7 @@
 .banner-jwt{
   position: relative;
   margin-top: 50px;
-  padding: 40px 20px;
+  padding: 20px 20px;
   background: #D0D2D3;
   color: black;
   overflow: hidden;
@@ -44,15 +44,15 @@
   // }
   p {
     color: white;
-    font-size: 36px;
+    font-size: 32px;
     font-weight: 100;
-    line-height: 62px;
+    line-height: 52px;
   }
   a{
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
     color: white;
-    opacity: .6;
+    opacity: .8;
     display: inline-block;
   }
 
@@ -104,6 +104,20 @@ body>.container{
           box-shadow: @prop;
 }
 
+.panel{
+  box-shadow: none;
+  border: 0;
+  overflow: hidden;
+  .panel-heading{
+    background: none;
+  }
+  .icon-budicon-333{
+    position: relative;
+    top: 2px;
+    opacity: .5;
+  }
+}
+
 .panel-footer{
   font-size: 14px;
 }
@@ -113,6 +127,54 @@ body>.container{
 }
 .panel-title{
   font-weight: bold;
+}
+
+.panel-body{
+  padding: 0;
+  .row{
+    padding: 15px;
+    div{
+      margin-bottom: 4px;
+      i{
+        position: relative;
+        top: 2px;
+      }
+    }
+  }
+}
+
+.icon-budicon-500{
+  color: #65a52f;
+}
+.panel-footer{
+  
+  padding: 0;
+  code {
+    background: #222;
+    color: #ccc;
+    display: block;
+    padding: 15px;
+    border-radius: 0;
+    color: white;
+    font-size: 12px;
+    a {
+      color: white;
+    }
+  }
+}
+
+.author-info{
+  border-top: 1px solid #f1f1f1;
+  padding: 15px;
+  .maintainer, .repository{
+    display: inline-block;
+  }
+
+
+  .repository{
+    float: right;
+
+  }
 }
 
 .container{
@@ -129,11 +191,18 @@ body>.container{
     color: white;
   }
 
+  p{
+    font-size: 150%;
+  }
+  .btn{
+    min-width: 200px;
+  }
 }
 
 .bg-grey{
   background: #f6f6f6;
   margin-top: 60px;
+  padding-bottom: 40px
 }
 
 .jwt-playground {
@@ -258,7 +327,7 @@ body>.container{
 }
 
 .library div i {
-  padding-right: 10px;
+  padding-right: 4px;
 }
 
 /* Sticky footer styles
