@@ -14,10 +14,6 @@
 /* Hack: CodeMirror zoom bug that prevents clicking from working right with zoom != 1 */
 @codeMirrorZoom: 1/@wholePageZoom;
 
-body{
-  // -webkit-font-smoothing: inherit;
-}
-
 .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover{
   background-color: none;
   color: black;
@@ -36,15 +32,21 @@ body{
   position: relative;
   margin-top: 50px;
   padding: 40px 20px;
-  background: #EB5424;
+  background: #D0D2D3;
+  color: black;
   overflow: hidden;
-  // background: linear-gradient(120deg, #14204d 0%, #3cc8f4 100%);
+  background: linear-gradient(120deg, #848DB4 0%, #3cc8f4 100%);
 
+  // ::after{
+  //   background: linear-gradient(50deg,#16214d 0%,#eb5424 50%,#16214d 100%);
+  //   height: 1px;
+  //   width: 100%;
+  // }
   p {
     color: white;
-    font-size: 34px;
+    font-size: 36px;
     font-weight: 100;
-    line-height: 60px;
+    line-height: 62px;
   }
   a{
     font-size: 14px;
@@ -53,6 +55,19 @@ body{
     opacity: .6;
     display: inline-block;
   }
+
+  canvas{
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: .3;
+    height: 1000px;
+    width: 100%;
+  }
+
 }
 
 
@@ -74,17 +89,7 @@ body>.container{
   padding-top: 0 !important;
 }
 
-canvas{
-  position: absolute;
-  z-index: 0;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  opacity: .5;
-  height: 1000px;
-  width: 100%;
-}
+
 
 
 .navbar-default.navbar-fixed-top{
@@ -123,16 +128,28 @@ canvas{
   a{
     color: white;
   }
+
+}
+
+.bg-grey{
+  background: #f6f6f6;
+  margin-top: 60px;
 }
 
 .jwt-playground {
   width: 100%;
 
+  h4{
+    font-size: 14px;
+    text-transform: uppercase;
+  }  
+
   .input {
 
-    border: 1px solid #ECECEC;
+    border: 1px solid #44C7F4;
     padding: 10px;
     margin-bottom: 2px;
+    border-radius: 3px;
     background: @jwtExplainedBackgroundColor;
 
     &.error {
@@ -147,12 +164,15 @@ canvas{
       width: 100%;
       background: none;
       font-size: 20px;
+      line-height: 30px;
+
       .cm-jwt-dot       { color: @jwtDotColor; }
       .cm-jwt-header    { color: @jwtHeaderColor;     }
       .cm-jwt-payload   { color: @jwtPayloadColor;    }
       .cm-jwt-signature { color: @jwtSignatureColor;  }
-      min-height: 369px;
+      min-height: 434px;
       height: auto;
+
     }
   }
 
@@ -165,6 +185,10 @@ canvas{
       border: 1px solid #ECECEC;
       padding: 10px;
       margin-bottom: 2px;
+      pre{
+        font-size: 16px;
+        line-height: 26px;
+      }
 
       &.error {
         background: rgba(100,0,0,0.1);
@@ -177,7 +201,6 @@ canvas{
         width: 100%;
         height: auto;
         background: none;
-        font-size: 20px;
       }
     }
 
