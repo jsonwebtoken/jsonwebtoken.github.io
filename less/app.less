@@ -15,7 +15,7 @@
 @codeMirrorZoom: 1/@wholePageZoom;
 
 body {
-  font-family: 'Lucida Grande', sans-serif, Helvetica;
+  font-family: 'Helvetica Neue', sans-serif, Helvetica;
   background: @backgroundColor;
   zoom: @wholePageZoom;
   font-size: large;
@@ -39,6 +39,26 @@ pre, code { padding: 0; margin: 0; font-family: 'Source Code Pro', Consolas; }
   -webkit-box-shadow: @prop;
      -moz-box-shadow: @prop;
           box-shadow: @prop;
+}
+
+.panel-footer{
+  font-size: 14px;
+}
+
+
+.container{
+  min-width: 1280px
+}
+
+.banner{
+  background: linear-gradient(120deg, #14204d 0%, #3cc8f4 100%);
+  // padding: 20px;
+}
+
+.navbar{
+  // background-color: #EB5424;
+  // background: linear-gradient(120deg, #14204d 0%, #3cc8f4 100%);
+  // color: white;
 }
 
 .jwt-playground {
