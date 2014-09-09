@@ -1,5 +1,7 @@
 ##JWT.io
 
+<img src="https://cloudup.com/csK82bzTY8j+"/>
+
 [![Build Status](https://travis-ci.org/jsonwebtoken/jsonwebtoken.github.io.png?branch=master)](https://travis-ci.org/jsonwebtoken/jsonwebtoken.github.io)
 
 ### How to build
