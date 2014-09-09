@@ -14,8 +14,11 @@
 /* Hack: CodeMirror zoom bug that prevents clicking from working right with zoom != 1 */
 @codeMirrorZoom: 1/@wholePageZoom;
 
+.container{
+  // min-width: 980px;
+}
+
 .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover{
-  background-color: none;
   color: black;
 }
 .navbar-default .navbar-brand{
@@ -42,11 +45,13 @@
   //   height: 1px;
   //   width: 100%;
   // }
+
   p {
     color: white;
     font-size: 28px;
     font-weight: 100;
     line-height: 52px;
+    position: relative;
   }
   a{
     font-size: 16px;
@@ -54,6 +59,7 @@
     color: white;
     opacity: .8;
     display: inline-block;
+    position: relative;
   }
 
   canvas{
@@ -84,11 +90,6 @@ pre, code { padding: 0; margin: 0; font-family:  Menlo !important; }
        -moz-box-sizing: @prop; /* Firefox, other Gecko */
             box-sizing: @prop; /* Opera/IE 8+ */
 }
-
-body>.container{
-  padding-top: 0 !important;
-}
-
 
 
 
@@ -177,9 +178,7 @@ body>.container{
   }
 }
 
-.container{
-  min-width: 1020px
-}
+
 
 .banner{
   background: linear-gradient(120deg, #14204d 0%, #3cc8f4 100%);
@@ -354,9 +353,6 @@ body {
 -------------------------------------------------- */
 /* Not required for template or sticky footer method. */
 
-body > .container {
-  padding: 60px 15px 0;
-}
 .container .text-muted {
   margin: 20px 0;
 }
@@ -370,6 +366,6 @@ code {
   font-size: 80%;
 }
 
-.navbar {
-  height: 50px;
+.navbar-right {
+  height: 20px;
 }
