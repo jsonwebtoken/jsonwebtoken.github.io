@@ -27,15 +27,14 @@ function url_base64_decode(str) {
   return window.atob(output); //polifyll https://github.com/davidchambers/Base64.js
 }
 
-window.decode = function (base64json) {
-  var json = null, error = null;
+window.decode = function (base64token) {
+  var xml = null, error = null;
   try {
-    json = url_base64_decode(base64json);
-    json = JSON.stringify(JSON.parse(json), undefined, 2);
+    xml = url_base64_decode(base64token);
   } catch (e) {
     error = e;
   }
-  return {result: json, error: error};
+  return {result: xml, error: error};
 };
 
 window.sign = function (header, payload, secret, isSecretBase64Encoded) {
