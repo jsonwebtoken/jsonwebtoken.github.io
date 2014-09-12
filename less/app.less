@@ -214,7 +214,8 @@ body>.container{
   }  
 
   .input {
-
+    max-height: 420px;
+    overflow-y: auto;
     border: 1px solid #44C7F4;
     padding: 10px;
     margin-bottom: 2px;
@@ -235,10 +236,19 @@ body>.container{
       font-size: 20px;
       line-height: 30px;
 
-      .cm-jwt-dot       { color: @jwtDotColor; }
-      .cm-jwt-header    { color: @jwtHeaderColor;     }
-      .cm-jwt-payload   { color: @jwtPayloadColor;    }
-      .cm-jwt-signature { color: @jwtSignatureColor;  }
+      pre span  {
+        color: @jwtDotColor;
+        font-family: proxima-nova, 'Helvetica Neue', sans-serif;
+        font-size: 15px;
+      }
+
+      * {
+        line-height: 16px;
+      }
+
+      .cm-tag    { color: @jwtHeaderColor;     }
+      .cm-attribute   { color: @jwtPayloadColor;    }
+      .cm-string { color: @jwtSignatureColor;  }
       min-height: 434px;
       height: auto;
 
