@@ -189,6 +189,17 @@
   secretElement.addEventListener('keyup', updateSignature, false);
   isBase64EncodedElement.addEventListener('change', updateSignature, false);
 
+  if (document.location.search) {
+    var qs = document.location.search.slice(1);
+    var d = {};
+    qs = qs.split('&');
+    qs.forEach(function (kv) { kv = kv.split('='); d[kv[0]] = kv[1]; });
+    if (d.value) {
+      tokenEditor.setValue(decodeURIComponent(d.value));
+      return;
+    }
+  }
+
   loadFromStorage(function (jwt) {
     tokenEditor.setValue(
       jwt || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEyMzQ1Njc4OTAsIm5hbWUiOiJKb2huIERvZSIsImFkbWluIjp0cnVlfQ.eoaDVGTClRdfxUZXiPs3f8FmJDkDE_VCQFXqKxpLsts'
