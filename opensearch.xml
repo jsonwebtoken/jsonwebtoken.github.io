@@ -1,0 +1,8 @@
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/" xmlns:moz="http://www.mozilla.org/2006/browser/search/">
+  <ShortName>JWT.io</ShortName>
+  <Description>
+    Type your token to be decoded.
+  </Description>
+  <InputEncoding>UTF-8</InputEncoding>
+  <Url type="text/html" template="http://jwt.io/?value={searchTerms}"/>
+</OpenSearchDescription>
