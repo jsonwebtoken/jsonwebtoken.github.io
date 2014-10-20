@@ -306,7 +306,10 @@ $(function(){
   function createDots(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     for(i = 0; i < dots.nb; i++){
-      dots.array.push(new Dot());
+      // Prevent memory leak
+      if (!dots.array[i]) {
+        dots.array[i] = new Dot();
+      }
       dot = dots.array[i];
 
       dot.create();
@@ -326,5 +329,5 @@ $(function(){
       mousePosition.y = canvas.height / 2;
     }
   });
-  setInterval(createDots, 1000/30); 
+  setInterval(createDots, 1000/30);
 });
