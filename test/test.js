@@ -16,4 +16,9 @@ describe('jwt library wrapper (jwt.js)', function () {
     expect(result.error).to.be.equal(null);
     expect(result.result).to.be(true);
   });
+  it('should decode with two underscores', function () {
+    var result = window.decode('eyI_IjoiYWE_In0');
+    expect(result.error).to.be.equal(null);
+    expect(result.result).to.be('{\n  "?": "aa?"\n}');
+  });
 });
