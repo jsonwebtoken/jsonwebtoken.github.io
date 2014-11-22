@@ -11,7 +11,7 @@ window.hextorstr = function (c) {
 
 //this is used to parse base64
 function url_base64_decode(str) {
-  var output = str.replace('-', '+').replace('_', '/');
+  var output = str.replace(/-/g, '+').replace(/_/g, '/');
   switch (output.length % 4) {
     case 0:
       break;
