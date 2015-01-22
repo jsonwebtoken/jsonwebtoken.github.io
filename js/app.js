@@ -200,6 +200,17 @@
     }
   }
 
+  if (document.location.hash) {
+    var qs = document.location.hash.slice(1);
+    var d = {};
+    qs = qs.split('&');
+    qs.forEach(function (kv) { kv = kv.split('='); d[kv[0]] = kv[1]; });
+    if (d.id_token) {
+      tokenEditor.setValue(decodeURIComponent(d.id_token));
+      return;
+    }
+  }
+
   loadFromStorage(function (jwt) {
     tokenEditor.setValue(
       jwt || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEyMzQ1Njc4OTAsIm5hbWUiOiJKb2huIERvZSIsImFkbWluIjp0cnVlfQ.eoaDVGTClRdfxUZXiPs3f8FmJDkDE_VCQFXqKxpLsts'
