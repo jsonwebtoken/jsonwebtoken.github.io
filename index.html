@@ -131,6 +131,7 @@
         <a name="libraries"></a>
         <h1 id="libraries">Libraries for Token Signing/Verification</h1>
       </div>
+
       <div class="row">
         <!-- .NET System.IdentityModel.Tokens.Jwt -->
         <div class="col-md-4">
@@ -210,11 +211,11 @@
               </div>
               <div class="author-info">
                 <div class="maintainer">
-                  <i class="icon-budicon-333"></i>Maintainer: <a href="https://github.com/progrium">Jeff Lindsay</a>
+                  <i class="icon-budicon-333"></i>Maintainer: <a href="https://github.com/jpadilla">José Padilla</a>
                 </div>
 
                 <div class="repository">
-                  <i class="fa fa-github"></i> <a href="https://github.com/progrium/pyjwt/">View Repo</a>
+                  <i class="fa fa-github"></i> <a href="https://github.com/jpadilla/pyjwt/">View Repo</a>
                 </div>
               </div>
               <!-- <div><i class="fa fa-code"></i>Usage: <a href="#">Sign</a> · <a href="#">Verify</a></div> -->
@@ -278,6 +279,57 @@
       </div>
 
       <div class="row">
+        <!-- Java jose4j -->
+        <div class="col-md-4">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Java</h3>
+            </div>
+            <div class="panel-body library">
+              <div class="row">
+
+                <div class="col-md-6">
+                  <div><i class="icon-budicon-500"></i>Sign</div>
+                  <div><i class="icon-budicon-500"></i>Verify</div>
+                  <div><i class="icon-budicon-500"></i><code>iss</code> check</div>
+                  <div><i class="icon-budicon-500"></i><code>sub</code> check</div>
+                  <div><i class="icon-budicon-500"></i><code>aud</code> check</div>
+                  <div><i class="icon-budicon-500"></i><code>exp</code> check</div>
+                  <div><i class="icon-budicon-500"></i><code>nbf</code> check</div>
+                  <div><i class="icon-budicon-500"></i><code>iat</code> check</div>
+                  <div><i class="icon-budicon-500"></i><code>jti</code> check</div>
+                </div>
+                <div class="col-md-6">
+
+                  <div><i class="icon-budicon-500"></i>HS256</div>
+                  <div><i class="icon-budicon-500"></i>HS384</div>
+                  <div><i class="icon-budicon-500"></i>HS512</div>
+                  <div><i class="icon-budicon-500"></i>RS256</div>
+                  <div><i class="icon-budicon-500"></i>RS384</div>
+                  <div><i class="icon-budicon-500"></i>RS512</div>
+                  <div><i class="icon-budicon-500"></i>ES256</div>
+                  <div><i class="icon-budicon-500"></i>ES384</div>
+                  <div><i class="icon-budicon-500"></i>ES512</div>
+                </div>
+
+              </div>
+              <div class="author-info">
+
+                <div class="maintainer"><i class="icon-budicon-333"></i>Maintainer: <a href="https://twitter.com/__b_c">__b_c</a></div>
+
+                <div class="repository">
+                  <i class="fa fa-github"></i> <a href="https://bitbucket.org/b_c/jose4j">View Repo</a>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="panel-footer">
+                <code>maven: org.bitbucket.b_c / jose4j / 0.4.0</code>
+            </div>
+          </div>
+        </div>
+
         <!-- Java auth0/java-jwt -->
         <div class="col-md-4">
           <div class="panel panel-default">
@@ -384,7 +436,9 @@
             </div>
           </div>
         </div>
+      </div>
 
+      <div class="row">
         <!-- Ruby progrium/ruby-jwt -->
         <div class="col-md-4">
           <div class="panel panel-default">
@@ -438,9 +492,6 @@
           </div>
           </div>
         </div>
-      </div>
-
-      <div class="row">
 
         <!-- Go dgrijalva/jwt-go -->
         <div class="col-md-4">
@@ -549,7 +600,9 @@
             </div>
           </div>
         </div>
+      </div>
 
+      <div class="row">
         <!-- Haskell ssaasen/haskell-jwt -->
         <div class="col-md-4">
           <div class="panel panel-default">
@@ -558,54 +611,46 @@
             </div>
             <div class="panel-body library">
               <div class="row">
-
-              <div class="col-md-6">
-                <div><i class="icon-budicon-500"></i>Sign</div>
-                <div><i class="icon-budicon-500"></i>Verify</div>
-                <div><i class="icon-budicon-501"></i><code>iss</code> check</div>
-                <div><i class="icon-budicon-501"></i><code>sub</code> check</div>
-                <div><i class="icon-budicon-501"></i><code>aud</code> check</div>
-                <div><i class="icon-budicon-501"></i><code>exp</code> check</div>
-                <div><i class="icon-budicon-501"></i><code>nbf</code> check</div>
-                <div><i class="icon-budicon-501"></i><code>iat</code> check</div>
-                <div><i class="icon-budicon-501"></i><code>jti</code> check</div>
-              </div>
-              <div class="col-md-6">
-
-                <div><i class="icon-budicon-500"></i>HS256</div>
-                <div><i class="icon-budicon-501"></i>HS384</div>
-                <div><i class="icon-budicon-501"></i>HS512</div>
-                <div><i class="icon-budicon-501"></i>RS256</div>
-                <div><i class="icon-budicon-501"></i>RS384</div>
-                <div><i class="icon-budicon-501"></i>RS512</div>
-                <div><i class="icon-budicon-501"></i>ES256</div>
-                <div><i class="icon-budicon-501"></i>ES384</div>
-                <div><i class="icon-budicon-501"></i>ES512</div>
-              </div>
-
+                <div class="col-md-6">
+                  <div><i class="icon-budicon-500"></i>Sign</div>
+                  <div><i class="icon-budicon-500"></i>Verify</div>
+                  <div><i class="icon-budicon-501"></i><code>iss</code> check</div>
+                  <div><i class="icon-budicon-501"></i><code>sub</code> check</div>
+                  <div><i class="icon-budicon-501"></i><code>aud</code> check</div>
+                  <div><i class="icon-budicon-501"></i><code>exp</code> check</div>
+                  <div><i class="icon-budicon-501"></i><code>nbf</code> check</div>
+                  <div><i class="icon-budicon-501"></i><code>iat</code> check</div>
+                  <div><i class="icon-budicon-501"></i><code>jti</code> check</div>
+                </div>
+                <div class="col-md-6">
+                  <div><i class="icon-budicon-500"></i>HS256</div>
+                  <div><i class="icon-budicon-501"></i>HS384</div>
+                  <div><i class="icon-budicon-501"></i>HS512</div>
+                  <div><i class="icon-budicon-501"></i>RS256</div>
+                  <div><i class="icon-budicon-501"></i>RS384</div>
+                  <div><i class="icon-budicon-501"></i>RS512</div>
+                  <div><i class="icon-budicon-501"></i>ES256</div>
+                  <div><i class="icon-budicon-501"></i>ES384</div>
+                  <div><i class="icon-budicon-501"></i>ES512</div>
+                </div>
               </div>
 
               <div class="author-info">
-
                 <div class="maintainer"><i class="icon-budicon-333"></i>Maintainer: <a href="https://bitbucket.org/ssaasen">Stefan Saasen</a></div>
 
                 <div class="repository">
                   <i class="fa fa-bitbucket"></i> <a href="https://bitbucket.org/ssaasen/haskell-jwt">View Repo</a>
                 </div>
-
-            </div>
+              </div>
 
             <div class="panel-footer">
               <div>
                 <code>cabal install jwt</code>
               </div>
-
             </div>
           </div>
         </div>
-      </div>
-
-      <div class="row">
+        </div>
 
         <!-- Rust GildedHonour/rust-jwt -->
         <div class="col-md-4">
@@ -613,6 +658,7 @@
             <div class="panel-heading">
               <h3 class="panel-title">Rust</h3>
             </div>
+
             <div class="panel-body library">
               <div class="row">
 
@@ -642,13 +688,11 @@
 
               </div>
               <div class="author-info">
-
                 <div class="maintainer"><i class="icon-budicon-333"></i>Maintainer: <a href="https://github.com/GildedHonour">GildedHonour</a></div>
 
                 <div class="repository">
                   <i class="fa fa-github"></i> <a href="https://github.com/GildedHonour/rust-jwt">View Repo</a>
                 </div>
-
               </div>
             </div>
 
@@ -713,66 +757,62 @@
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- Ruby Notsew/ruby_jwt -->
+      <div class="row">
+        <!-- Lua (openresty) SkyLothar/lua-resty-jwt -->
         <div class="col-md-4">
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title">Ruby</h3>
+              <h3 class="panel-title">Lua (openresty)</h3>
             </div>
             <div class="panel-body library">
               <div class="row">
 
-              <div class="col-md-6">
-                <div><i class="icon-budicon-500"></i>Sign</div>
-                <div><i class="icon-budicon-500"></i>Verify</div>
-                <div><i class="icon-budicon-500"></i><code>iss</code> check</div>
-                <div><i class="icon-budicon-501"></i><code>sub</code> check</div>
-                <div><i class="icon-budicon-500"></i><code>aud</code> check</div>
-                <div><i class="icon-budicon-500"></i><code>exp</code> check</div>
-                <div><i class="icon-budicon-500"></i><code>nbf</code> check</div>
-                <div><i class="icon-budicon-501"></i><code>iat</code> check</div>
-                <div><i class="icon-budicon-501"></i><code>jti</code> check</div>
-              </div>
-              <div class="col-md-6">
-                <div><i class="icon-budicon-500"></i>HS256</div>
-                <div><i class="icon-budicon-500"></i>HS384</div>
-                <div><i class="icon-budicon-500"></i>HS512</div>
-                <div><i class="icon-budicon-500"></i>RS256</div>
-                <div><i class="icon-budicon-500"></i>RS384</div>
-                <div><i class="icon-budicon-500"></i>RS512</div>
-                <div><i class="icon-budicon-500"></i>ES256</div>
-                <div><i class="icon-budicon-500"></i>ES384</div>
-                <div><i class="icon-budicon-500"></i>ES512</div>
-              </div>
+                <div class="col-md-6">
+                  <div><i class="icon-budicon-500"></i>Sign</div>
+                  <div><i class="icon-budicon-500"></i>Verify</div>
+                  <div><i class="icon-budicon-501"></i><code>iss</code> check</div>
+                  <div><i class="icon-budicon-501"></i><code>sub</code> check</div>
+                  <div><i class="icon-budicon-501"></i><code>aud</code> check</div>
+                  <div><i class="icon-budicon-500"></i><code>exp</code> check</div>
+                  <div><i class="icon-budicon-500"></i><code>nbf</code> check</div>
+                  <div><i class="icon-budicon-501"></i><code>iat</code> check</div>
+                  <div><i class="icon-budicon-501"></i><code>jti</code> check</div>
+                </div>
+                <div class="col-md-6">
 
-              </div>
-
-              <div class="author-info">
-                <div class="maintainer"><i class="icon-budicon-333"></i>Maintainer: <a href="https://github.com/Notsew">Chris Weston</a></div>
-
-
-                <div class="repository">
-                  <i class="fa fa-github"></i> <a href="https://github.com/Notsew/ruby_jwt">View Repo</a>
+                  <div><i class="icon-budicon-500"></i>HS256</div>
+                  <div><i class="icon-budicon-501"></i>HS384</div>
+                  <div><i class="icon-budicon-500"></i>HS512</div>
+                  <div><i class="icon-budicon-501"></i>RS256</div>
+                  <div><i class="icon-budicon-501"></i>RS384</div>
+                  <div><i class="icon-budicon-501"></i>RS512</div>
+                  <div><i class="icon-budicon-501"></i>ES256</div>
+                  <div><i class="icon-budicon-501"></i>ES384</div>
+                  <div><i class="icon-budicon-501"></i>ES512</div>
                 </div>
 
+              </div>
+              <div class="author-info">
+
+                <div class="maintainer"><i class="icon-budicon-333"></i>Maintainer: <a href="https://github.com/jasongoodwin">jasongoodwin</a></div>
+
+                <div class="repository">
+                  <i class="fa fa-github"></i> <a href="https://github.com/jasongoodwin/authentikat-jwt">View Repo</a>
+                </div>
+
+              </div>
             </div>
 
             <div class="panel-footer">
-              <div>
-                <code>gem install ruby_jwt</code>
-              </div>
-
+              <code>sbt: "com.jason-goodwin" %% "authentikat-jwt" % "0.3.5" </code>
             </div>
-          </div>
           </div>
         </div>
 
-      </div>
-
-      <div class="row">
         <!-- Java auth0/java-jwt -->
-        <div class="col-md-4 col-md-offset-2">
+        <div class="col-md-4">
           <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title">Java</h3>
@@ -872,8 +912,6 @@
             </div>
           </div>
         </div>
-
-      </div>
 
       </div>
     </div>
