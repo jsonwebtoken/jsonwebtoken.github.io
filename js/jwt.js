@@ -24,7 +24,12 @@ function url_base64_decode(str) {
     default:
       throw 'Illegal base64url string!';
   }
-  return window.atob(output); //polifyll https://github.com/davidchambers/Base64.js
+  var result = window.atob(output); //polifyll https://github.com/davidchambers/Base64.js
+  try{
+    return decodeURIComponent(escape(result));
+  } catch (err) {
+    return result;
+  }
 }
 
 window.decode = function (base64json) {
