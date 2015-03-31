@@ -87,9 +87,6 @@
 
     <div class="container">
 
-
-
-
       <div class="page-header">
         <a name="debugger"></a>
         <h1 id="debugger">Debugger</h1>
@@ -136,6 +133,9 @@
         <a name="libraries"></a>
         <h1 id="libraries">Libraries for Token Signing/Verification</h1>
       </div>
+        <div class="alert alert-danger" role="alert">
+          <em style="font-weight: bolder;">Warning</em> Critical vulnerabilities in JSON Web Token libraries with asymmetric keys (<a href="#">learn more</a>)
+        </div>
 
       <div class="row">
         <!-- .NET System.IdentityModel.Tokens.Jwt -->
@@ -183,10 +183,11 @@
           </div>
         </div>
 
-        <!-- Python progrium/pyjwt -->
+        <!-- Python jpadilla/pyjwt -->
         <div class="col-md-4">
-          <div class="panel panel-default">
+          <div class="panel panel-default patched">
             <div class="panel-heading">
+              <span class="patched-badge">Update to ≥1.0.1 (<a href="#" title="We discourage the use of this library until is security issues are fixed." target="_blank">?</a>)</span>
               <h3 class="panel-title">Python</h3>
             </div>
             <div class="panel-body library">
@@ -234,8 +235,9 @@
 
         <!-- Node.js jsonwebtoken -->
         <div class="col-md-4">
-          <div class="panel panel-default">
+          <div class="panel panel-default patched">
             <div class="panel-heading">
+              <span class="patched-badge">Update to ≥4.2.2 (<a href="#" title="We discourage the use of this library until is security issues are fixed." target="_blank">?</a>)</span>
               <h3 class="panel-title">Node.js</h3>
             </div>
             <div class="panel-body library">
@@ -335,61 +337,69 @@
           </div>
         </div>
 
-        <!-- Java auth0/java-jwt -->
+        <!-- Javascript kjur/jsjws -->
         <div class="col-md-4">
-          <div class="panel panel-default">
+          <div class="panel panel-default vulnerable">
             <div class="panel-heading">
-              <h3 class="panel-title">Java</h3>
+              <span class="vulnerable-badge">Vulnerable (<a href="#" title="We discourage the use of this library until is security issues are fixed." target="_blank">?</a>)</span>
+              <h3 class="panel-title">JavaScript</h3>
             </div>
             <div class="panel-body library">
+
               <div class="row">
 
-                <div class="col-md-6">
-                  <div><i class="icon-budicon-500"></i>Sign</div>
-                  <div><i class="icon-budicon-500"></i>Verify</div>
-                  <div><i class="icon-budicon-500"></i><code>iss</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>sub</code> check</div>
-                  <div><i class="icon-budicon-500"></i><code>aud</code> check</div>
-                  <div><i class="icon-budicon-500"></i><code>exp</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>nbf</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>iat</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>jti</code> check</div>
-                </div>
-                <div class="col-md-6">
+              <div class="col-md-6">
+                <div><i class="icon-budicon-500"></i>Sign</div>
+                <div><i class="icon-budicon-500"></i>Verify</div>
+                <div><i class="icon-budicon-501"></i><code>iss</code> check</div>
+                <div><i class="icon-budicon-501"></i><code>sub</code> check</div>
+                <div><i class="icon-budicon-501"></i><code>aud</code> check</div>
+                <div><i class="icon-budicon-501"></i><code>exp</code> check</div>
+                <div><i class="icon-budicon-501"></i><code>nbf</code> check</div>
+                <div><i class="icon-budicon-501"></i><code>iat</code> check</div>
+                <div><i class="icon-budicon-501"></i><code>jti</code> check</div>
+              </div>
+              <div class="col-md-6">
 
-                  <div><i class="icon-budicon-500"></i>HS256</div>
-                  <div><i class="icon-budicon-500"></i>HS384</div>
-                  <div><i class="icon-budicon-500"></i>HS512</div>
-                  <div><i class="icon-budicon-501"></i>RS256</div>
-                  <div><i class="icon-budicon-501"></i>RS384</div>
-                  <div><i class="icon-budicon-501"></i>RS512</div>
-                  <div><i class="icon-budicon-501"></i>ES256</div>
-                  <div><i class="icon-budicon-501"></i>ES384</div>
-                  <div><i class="icon-budicon-501"></i>ES512</div>
-                </div>
+                <div><i class="icon-budicon-500"></i>HS256</div>
+                <div><i class="icon-budicon-500"></i>HS384</div>
+                <div><i class="icon-budicon-500"></i>HS512</div>
+                <div><i class="icon-budicon-500"></i>RS256</div>
+                <div><i class="icon-budicon-500"></i>RS384</div>
+                <div><i class="icon-budicon-500"></i>RS512</div>
+                <div><i class="icon-budicon-500"></i>ES256</div>
+                <div><i class="icon-budicon-500"></i>ES384</div>
+                <div><i class="icon-budicon-501"></i>ES512</div>
+              </div>
 
               </div>
+
               <div class="author-info">
 
-                <div class='maintainer'><i class="icon-budicon-333"></i>Maintainer: <a href="https://github.com/auth0">Auth0</a></div>
+                <div class="maintainer"><i class="icon-budicon-333"></i>Maintainer: <a href="https://github.com/kjur">Kenji Urushima</a></div>
 
                 <div class="repository">
-                  <i class="fa fa-github"></i> <a href="https://github.com/auth0/java-jwt">View Repo</a>
+                  <i class="fa fa-github"></i> <a href="https://github.com/kjur/jsjws">View Repo</a>
                 </div>
 
               </div>
+
             </div>
 
             <div class="panel-footer">
-                <code>maven: com.auth0 / java-jwt / 0.4</code>
+              <div>
+                <code>bower install jsjws</code>
+              </div>
+
             </div>
           </div>
         </div>
 
         <!-- PHP firebase/php-jwt -->
         <div class="col-md-4">
-          <div class="panel panel-default">
+          <div class="panel panel-default vulnerable">
             <div class="panel-heading">
+              <span class="vulnerable-badge">Vulnerable (<a href="#" title="We discourage the use of this library until is security issues are fixed." target="_blank">?</a>)</span>
               <h3 class="panel-title">PHP</h3>
             </div>
             <div class="panel-body library">
@@ -411,7 +421,7 @@
                 <div><i class="icon-budicon-500"></i>HS256</div>
                 <div><i class="icon-budicon-500"></i>HS384</div>
                 <div><i class="icon-budicon-500"></i>HS512</div>
-                <div><i class="icon-budicon-501"></i>RS256</div>
+                <div><i class="icon-budicon-500"></i>RS256</div>
                 <div><i class="icon-budicon-501"></i>RS384</div>
                 <div><i class="icon-budicon-501"></i>RS512</div>
                 <div><i class="icon-budicon-501"></i>ES256</div>
@@ -486,6 +496,7 @@
                   <i class="fa fa-github"></i> <a href="https://github.com/progrium/ruby-jwt">View Repo</a>
                 </div>
 
+              </div>
             </div>
 
             <div class="panel-footer">
@@ -496,7 +507,6 @@
             </div>
           </div>
           </div>
-        </div>
 
         <!-- Go dgrijalva/jwt-go -->
         <div class="col-md-4">
@@ -549,59 +559,54 @@
           </div>
         </div>
 
-        <!-- Javascript kjur/jsjws -->
+
+        <!-- Java auth0/java-jwt -->
         <div class="col-md-4">
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title">JavaScript</h3>
+              <h3 class="panel-title">Java</h3>
             </div>
             <div class="panel-body library">
-
               <div class="row">
 
-              <div class="col-md-6">
-                <div><i class="icon-budicon-500"></i>Sign</div>
-                <div><i class="icon-budicon-500"></i>Verify</div>
-                <div><i class="icon-budicon-501"></i><code>iss</code> check</div>
-                <div><i class="icon-budicon-501"></i><code>sub</code> check</div>
-                <div><i class="icon-budicon-501"></i><code>aud</code> check</div>
-                <div><i class="icon-budicon-501"></i><code>exp</code> check</div>
-                <div><i class="icon-budicon-501"></i><code>nbf</code> check</div>
-                <div><i class="icon-budicon-501"></i><code>iat</code> check</div>
-                <div><i class="icon-budicon-501"></i><code>jti</code> check</div>
-              </div>
-              <div class="col-md-6">
+                <div class="col-md-6">
+                  <div><i class="icon-budicon-500"></i>Sign</div>
+                  <div><i class="icon-budicon-500"></i>Verify</div>
+                  <div><i class="icon-budicon-500"></i><code>iss</code> check</div>
+                  <div><i class="icon-budicon-501"></i><code>sub</code> check</div>
+                  <div><i class="icon-budicon-500"></i><code>aud</code> check</div>
+                  <div><i class="icon-budicon-500"></i><code>exp</code> check</div>
+                  <div><i class="icon-budicon-501"></i><code>nbf</code> check</div>
+                  <div><i class="icon-budicon-501"></i><code>iat</code> check</div>
+                  <div><i class="icon-budicon-501"></i><code>jti</code> check</div>
+                </div>
+                <div class="col-md-6">
 
-                <div><i class="icon-budicon-500"></i>HS256</div>
-                <div><i class="icon-budicon-500"></i>HS384</div>
-                <div><i class="icon-budicon-500"></i>HS512</div>
-                <div><i class="icon-budicon-500"></i>RS256</div>
-                <div><i class="icon-budicon-500"></i>RS384</div>
-                <div><i class="icon-budicon-500"></i>RS512</div>
-                <div><i class="icon-budicon-500"></i>ES256</div>
-                <div><i class="icon-budicon-500"></i>ES384</div>
-                <div><i class="icon-budicon-501"></i>ES512</div>
-              </div>
-
-              </div>
-
-              <div class="author-info">
-
-                <div class="maintainer"><i class="icon-budicon-333"></i>Maintainer: <a href="https://github.com/kjur">Kenji Urushima</a></div>
-
-                <div class="repository">
-                  <i class="fa fa-github"></i> <a href="https://github.com/kjur/jsjws">View Repo</a>
+                  <div><i class="icon-budicon-500"></i>HS256</div>
+                  <div><i class="icon-budicon-500"></i>HS384</div>
+                  <div><i class="icon-budicon-500"></i>HS512</div>
+                  <div><i class="icon-budicon-501"></i>RS256</div>
+                  <div><i class="icon-budicon-501"></i>RS384</div>
+                  <div><i class="icon-budicon-501"></i>RS512</div>
+                  <div><i class="icon-budicon-501"></i>ES256</div>
+                  <div><i class="icon-budicon-501"></i>ES384</div>
+                  <div><i class="icon-budicon-501"></i>ES512</div>
                 </div>
 
               </div>
+              <div class="author-info">
 
+                <div class='maintainer'><i class="icon-budicon-333"></i>Maintainer: <a href="https://github.com/auth0">Auth0</a></div>
+
+                <div class="repository">
+                  <i class="fa fa-github"></i> <a href="https://github.com/auth0/java-jwt">View Repo</a>
+                </div>
+
+              </div>
             </div>
 
             <div class="panel-footer">
-              <div>
-                <code>bower install jsjws</code>
-              </div>
-
+                <code>maven: com.auth0 / java-jwt / 0.4</code>
             </div>
           </div>
         </div>
@@ -681,8 +686,8 @@
                 <div class="col-md-6">
 
                   <div><i class="icon-budicon-500"></i>HS256</div>
-                  <div><i class="icon-budicon-501"></i>HS384</div>
-                  <div><i class="icon-budicon-501"></i>HS512</div>
+                  <div><i class="icon-budicon-500"></i>HS384</div>
+                  <div><i class="icon-budicon-500"></i>HS512</div>
                   <div><i class="icon-budicon-501"></i>RS256</div>
                   <div><i class="icon-budicon-501"></i>RS384</div>
                   <div><i class="icon-budicon-501"></i>RS512</div>

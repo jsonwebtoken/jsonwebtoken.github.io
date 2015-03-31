@@ -109,7 +109,50 @@ pre, code { padding: 0; margin: 0; font-family:  Menlo !important; }
           box-shadow: @prop;
 }
 
+.vulnerable-badge {
+  text-align: right;
+  float: right;
+  line-height: 17px;
+  text-transform: uppercase;
+  color: red;
+}
+
+.patched-badge {
+  text-align: right;
+  float: right;
+  line-height: 17px;
+  text-transform: uppercase;
+  color: orange;
+}
+
 .panel{
+
+  &.vulnerable {
+    // background: none;
+    border: 2px solid red;
+    .panel-heading {
+      background: none;
+    }
+    .panel-body {
+      code {
+        background: none;
+      }
+    }
+  }
+
+  &.patched {
+    // background: none;
+    border: 2px solid orange;
+    .panel-heading {
+      background: none;
+    }
+    .panel-body {
+      code {
+        background: none;
+      }
+    }
+  }
+
   box-shadow: none;
   border: 0;
   overflow: hidden;
