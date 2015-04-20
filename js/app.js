@@ -20,6 +20,37 @@
     }
   }
 
+  var DEFAULT_HS_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ';
+
+  var DEFAULT_RS_TOKEN = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.EkN-DOsnsuRjRO6BxXemmJDm3HbxrbRzXglbN2S4sOkopdU4IsDxTI8jO19W_A4K8ZPJijNLis4EZsHeY559a4DFOd50_OqgHGuERTqYZyuhtF39yxJPAjUESwxk2J5k_4zM3O-vtd1Ghyo4IbqKKSy6J9mTniYJPenn5-HIirE';
+
+  var DEFAULT_PUBLIC_RSA = "\
+-----BEGIN PUBLIC KEY-----\n\
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDdlatRjRjogo3WojgGHFHYLugd\
+UWAY9iR3fy4arWNA1KoS8kVw33cJibXr8bvwUAUparCwlvdbH6dvEOfou0/gCFQs\
+HUfQrSDv+MuSUMAe8jzKE4qW+jK+xQU9a03GUnKHkkle+Q0pX/g6jXZ7r1/xAK5D\
+o2kQ+X5xK9cipRgEKwIDAQAB\n\
+-----END PUBLIC KEY-----\
+  ";
+
+  var DEFAULT_PRIVATE_RSA = "\
+-----BEGIN RSA PRIVATE KEY-----\n\
+MIICWwIBAAKBgQDdlatRjRjogo3WojgGHFHYLugdUWAY9iR3fy4arWNA1KoS8kVw\
+33cJibXr8bvwUAUparCwlvdbH6dvEOfou0/gCFQsHUfQrSDv+MuSUMAe8jzKE4qW\
++jK+xQU9a03GUnKHkkle+Q0pX/g6jXZ7r1/xAK5Do2kQ+X5xK9cipRgEKwIDAQAB\
+AoGAD+onAtVye4ic7VR7V50DF9bOnwRwNXrARcDhq9LWNRrRGElESYYTQ6EbatXS\
+3MCyjjX2eMhu/aF5YhXBwkppwxg+EOmXeh+MzL7Zh284OuPbkglAaGhV9bb6/5Cp\
+uGb1esyPbYW+Ty2PC0GSZfIXkXs76jXAu9TOBvD0ybc2YlkCQQDywg2R/7t3Q2OE\
+2+yo382CLJdrlSLVROWKwb4tb2PjhY4XAwV8d1vy0RenxTB+K5Mu57uVSTHtrMK0\
+GAtFr833AkEA6avx20OHo61Yela/4k5kQDtjEf1N0LfI+BcWZtxsS3jDM3i1Hp0K\
+Su5rsCPb8acJo5RO26gGVrfAsDcIXKC+bQJAZZ2XIpsitLyPpuiMOvBbzPavd4gY\
+6Z8KWrfYzJoI/Q9FuBo6rKwl4BFoToD7WIUS+hpkagwWiz+6zLoX1dbOZwJACmH5\
+fSSjAkLRi54PKJ8TFUeOP15h9sQzydI8zJU+upvDEKZsZc/UhT/SySDOxQ4G/523\
+Y0sz/OZtSWcol/UMgQJALesy++GdvoIDLfJX5GBQpuFgFenRiRDabxrE9MNUZ2aP\
+FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
+  -----END RSA PRIVATE KEY-----\
+  ";
+
   var codeMirror = CodeMirror;
 
   function tabHack(instance) {
@@ -47,6 +78,9 @@
     extraKeys: { 'Tab':  tabHack},
     lint: true
   });
+
+  var algorithmRadios = $('input[name="algorithm"]'),
+      lastRestoredToken;
 
   function setJSONEditorContent(jsonEditor, decodedJSON, selector) {
     jsonEditor.off('change', refreshTokenEditor);
@@ -79,6 +113,13 @@
     }
 
     var decodedHeader = window.decode(parts[0]);
+
+    try {
+        selectDetectedAlgorithm(JSON.parse(decodedHeader.result).alg);
+    }catch (e){
+        console.log('Invalid header decoded');
+    }
+
     var selector = $('.jwt-header');
     setJSONEditorContent(headerEditor, decodedHeader, selector);
     var decodedPayload = window.decode(parts[1]);
@@ -86,6 +127,15 @@
     setJSONEditorContent(payloadEditor, decodedPayload, selector);
 
     fireEvent(secretElement);
+  }
+
+  function selectDetectedAlgorithm(alg){
+
+      var $algRadio = $('.algorithm input[value="'+alg+'"]');
+      $algRadio.prop('checked', true);
+
+      fireEvent($algRadio.get(0));
+
   }
 
   function saveToStorage(jwt) {
@@ -99,11 +149,20 @@
   }
 
   function refreshTokenEditor(instance) {
+
     tokenEditor.off('change', tokenEditorOnChangeListener);
+
+    var algorithm = getAlgorithm();
     var secretElement = document.getElementsByName('secret')[0];
     var isBase64EncodedElement = document.getElementsByName('is-base64-encoded')[0];
-    var signResult = window.sign(headerEditor.getValue(), payloadEditor.getValue(), secretElement.value,
-                                 isBase64EncodedElement.checked);
+
+    var signResult = window.sign(
+            algorithm,
+            headerEditor.getValue(),
+            payloadEditor.getValue(),
+            getKey(algorithm, 'sign'),
+            isBase64EncodedElement.checked);
+
 
     if (signResult.error) {
       tokenEditor.setValue('');
@@ -158,6 +217,8 @@
   var isBase64EncodedElement = document.getElementsByName('is-base64-encoded')[0];
 
   function updateSignature () {
+
+    var algorithm = getAlgorithm();
     var signatureElement = getFirstElementByClassName('js-signature');
     var signatureContainerElement = getFirstElementByClassName('jwt-signature');
 
@@ -172,7 +233,14 @@
     } else {
       $(signatureContainerElement).removeClass('error');
     }
-    var result = window.verify(value, secretElement.value, isBase64);
+
+    var result = window.verify(
+            algorithm,
+            value,
+            getKey(algorithm, 'verify'),
+            isBase64);
+
+
     var error = result.error;
     result = result.result;
     if (!error && result) {
@@ -185,9 +253,91 @@
       signatureElement.innerHTML = '<i class="fa fa-times-circle-o"></i> invalid signature';
     }
   }
+
+  function getKey(algorithm, action){
+
+    var secretElement = $('input[name="secret"]'),
+        privateKeyElement = $('textarea[name="private-key"]'),
+        publicKeyElement = $('textarea[name="public-key"]');
+
+    if(algorithm === 'HS256'){
+        return secretElement.val();
+    }else{
+        return action === 'sign' ? privateKeyElement.val() : publicKeyElement.val();
+    }
+  
+  }
+
+  function getAlgorithm(){
+
+    return algorithmRadios.filter(':checked').val();
+  }
+
+  function updateAlgorithm () {
+
+    var algorithm = algorithmRadios.filter(':checked').val();
+
+    $('.jwt-signature pre')
+        .hide()
+        .filter('.' + algorithm)
+        .show();
+
+    if(getTrimmedValue(tokenEditor) === DEFAULT_HS_TOKEN &&
+            algorithm === 'RS256'){
+        setDefaultsForRSA();
+    }else if(getTrimmedValue(tokenEditor) === DEFAULT_RS_TOKEN &&
+            algorithm === 'HS256'){
+        setDefaultsForHMAC();
+    }
+
+  }
+
+  function setDefaultsForRSA(){
+
+      tokenEditor.setValue(DEFAULT_RS_TOKEN);
+
+      $('.jwt-signature textarea[name=public-key]').val(DEFAULT_PUBLIC_RSA);
+      $('.jwt-signature textarea[name=private-key]').val(DEFAULT_PRIVATE_RSA);
+  }
+
+  function setDefaultsForHMAC(){
+
+      tokenEditor.setValue(DEFAULT_HS_TOKEN);
+  }
+
+  updateAlgorithm();
+
+  algorithmRadios.on('change', function(){
+      updateAlgorithm();
+      updateSignature();
+  });
+
+  $('.jwt-signature textarea').on('change', updateSignature, false);
+  $('.jwt-signature textarea').on('keyup', updateSignature, false);
+  $('.jwt-signature textarea').on('keyup', validateKey, false);
+
   secretElement.addEventListener('change', updateSignature, false);
   secretElement.addEventListener('keyup', updateSignature, false);
   isBase64EncodedElement.addEventListener('change', updateSignature, false);
+
+  function validateKey(){
+
+    $textarea = $(this);
+    var valid;
+
+    if($textarea.prop('name') === 'public-key'){
+      valid = /-----BEGIN (PUBLIC KEY|CERTIFICATE)-----(.|\n)*-----END (PUBLIC KEY|CERTIFICATE)-----/.test($textarea.val());
+    }else{
+      valid = /-----BEGIN RSA PRIVATE KEY-----(.|\n)*-----END RSA PRIVATE KEY-----/.test($textarea.val());
+    }
+
+    if (valid) {
+        $textarea.removeClass('error');
+    }else{
+        $textarea.addClass('error');
+    }
+
+  }
 
   if (document.location.search) {
     var qs = document.location.search.slice(1);
@@ -212,8 +362,11 @@
   }
 
   loadFromStorage(function (jwt) {
+
+    lastRestoredToken = jwt || DEFAULT_HS_TOKEN;
+
     tokenEditor.setValue(
-      jwt || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ'
+        lastRestoredToken
     );
   });
 
@@ -229,6 +382,29 @@
     return $('#time').text(((now - timestamp) / 1000).toFixed(0));
   }, 1000);
 }).call(this);
+
+
+//Inizialize bootstrap widgets
+$('[data-toggle="tooltip"]').tooltip();
+
+// Fetch stargazers count for each repo from GitHub's API
+$('.stars').each(function(idx, element){
+
+    var $el = $(element);
+    var repo = $el.attr('data-repo');
+
+    if (repo){
+        $.getJSON('http://api.github.com/repos/' + repo, function(repoData){
+
+            var $count = $('<span>');
+            $count.text(repoData.stargazers_count);
+
+            $el.find('i').after($count);
+
+            $el.show();
+        });
+    }
+});
 
 //CANVAS
 // $(function(){
