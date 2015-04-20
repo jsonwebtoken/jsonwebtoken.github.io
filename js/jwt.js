@@ -43,7 +43,13 @@ window.decode = function (base64json) {
   return {result: json, error: error};
 };
 
-window.sign = function (header, payload, secret, isSecretBase64Encoded) {
+window.sign = function (
+        algorithm,
+        header,
+        payload,
+        key,
+        isSecretBase64Encoded) {
+
   var value = '', error = null, headerAsJSON, payloadAsJSON;
 
   try {
@@ -65,19 +71,21 @@ window.sign = function (header, payload, secret, isSecretBase64Encoded) {
     return error;
   }
 
-  if (isSecretBase64Encoded) {
-    try {
-      secret = window.b64utob64(secret);
-      secret = window.CryptoJS.enc.Base64.parse(secret).toString();
-    } catch (e) {
-      return {result: '', error: e};
+  if(algorithm === 'HS256'){
+    if (isSecretBase64Encoded) {
+      try {
+        key = window.b64utob64(key);
+        key = window.CryptoJS.enc.Base64.parse(key).toString();
+      } catch (e) {
+        return {result: '', error: e};
+      }
+    } else {
+      key = window.CryptoJS.enc.Latin1.parse(key).toString();
     }
-  } else {
-    secret = window.CryptoJS.enc.Latin1.parse(secret).toString();
   }
 
   try {
-    value = KJUR.jws.JWS.sign(null, headerAsJSON, payloadAsJSON, secret);
+    value = KJUR.jws.JWS.sign(algorithm, headerAsJSON, payloadAsJSON, key);
   } catch (e) {
     error = e;
   }
@@ -95,22 +103,25 @@ window.isValidBase64String = function (s) {
   }
 };
 
-window.verify = function (value, secret, isSecretBase64Encoded) {
+window.verify = function (algorithm, value, key, isSecretBase64Encoded) {
+
   var result = '', error = null;
 
-  if (isSecretBase64Encoded) {
-    try {
-      secret = window.b64utob64(secret);
-      secret = window.CryptoJS.enc.Base64.parse(secret).toString();
-    } catch (e) {
-      return {result: '', error: e};
+  if (algorithm === 'HS256'){
+    if (isSecretBase64Encoded) {
+      try {
+        key = window.b64utob64(key);
+        key = window.CryptoJS.enc.Base64.parse(key).toString();
+      } catch (e) {
+        return {result: '', error: e};
+      }
+    } else {
+      key = window.CryptoJS.enc.Latin1.parse(key).toString();
     }
-  } else {
-    secret = window.CryptoJS.enc.Latin1.parse(secret).toString();
   }
 
   try {
-    result = KJUR.jws.JWS.verify(value, secret);
+    result = KJUR.jws.JWS.verify(value, key, 'passwd');
   } catch (e) {
     error = e;
   }
