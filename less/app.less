@@ -159,10 +159,20 @@ pre, code { padding: 0; margin: 0; font-family:  Menlo !important; }
   .panel-heading{
     background: none;
   }
+  .icon-budicon-466,
   .icon-budicon-333{
     position: relative;
     top: 2px;
     opacity: .5;
+  }
+
+  .author-info .maintainer > a,
+  .author-info > a {
+    color: #4d4d4d;
+  }
+
+  .stars {
+    display: none;
   }
 }
 
@@ -291,6 +301,11 @@ pre, code { padding: 0; margin: 0; font-family:  Menlo !important; }
       height: auto;
 
     }
+
+  }
+
+  .algorithm-label {
+    margin-right: 20px;
   }
 
   .output {
@@ -349,6 +364,26 @@ pre, code { padding: 0; margin: 0; font-family:  Menlo !important; }
 
       span.is-base64-encoded-label {
         font-size: x-small;
+      }
+
+      input[name='secret'] {
+        border-radius: 4px;
+        border: 1px solid rgb(223, 223, 223);
+      }
+
+      textarea {
+
+        border: 1px solid rgb(223, 223, 223);
+        font-size: 12px;
+        line-height: 18px;
+        width: 350px;
+        max-width: 100%;
+        border-radius: 4px;
+
+        &.error {
+            border: 1px solid red;
+        }
+
       }
     }
   }
