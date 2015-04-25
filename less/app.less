@@ -297,7 +297,7 @@ pre, code { padding: 0; margin: 0; font-family:  Menlo !important; }
       .cm-jwt-header    { color: @jwtHeaderColor;     }
       .cm-jwt-payload   { color: @jwtPayloadColor;    }
       .cm-jwt-signature { color: @jwtSignatureColor;  }
-      min-height: 434px;
+      min-height: 460px;
       height: auto;
 
     }
@@ -431,6 +431,14 @@ body {
   /* Set the fixed height of the footer here */
   height: 60px;
   background-color: #f5f5f5;
+}
+
+.jwt-playground .input[data-alg="RS256"] .CodeMirror {
+  min-height: 617px;
+}
+
+h4 small {
+  line-height: 1.8;
 }
 
 

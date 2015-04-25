@@ -277,6 +277,8 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
 
     var algorithm = algorithmRadios.filter(':checked').val();
 
+    $('.js-input').attr('data-alg', algorithm);
+
     $('.jwt-signature pre')
         .hide()
         .filter('.' + algorithm)
