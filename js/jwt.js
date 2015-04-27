@@ -121,7 +121,7 @@ window.verify = function (algorithm, value, key, isSecretBase64Encoded) {
   }
 
   try {
-    result = KJUR.jws.JWS.verify(value, key, 'passwd');
+    result = KJUR.jws.JWS.verify(value, key);
   } catch (e) {
     error = e;
   }
