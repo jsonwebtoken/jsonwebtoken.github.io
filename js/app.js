@@ -115,9 +115,9 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     var decodedHeader = window.decode(parts[0]);
 
     try {
-        selectDetectedAlgorithm(JSON.parse(decodedHeader.result).alg);
+      selectDetectedAlgorithm(JSON.parse(decodedHeader.result).alg);
     }catch (e){
-        console.log('Invalid header decoded');
+      console.error('Invalid header decoded');
     }
 
     var selector = $('.jwt-header');
@@ -130,12 +130,10 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
   }
 
   function selectDetectedAlgorithm(alg){
+    var $algRadio = $('.algorithm input[value="'+alg+'"]');
+    $algRadio.prop('checked', true);
 
-      var $algRadio = $('.algorithm input[value="'+alg+'"]');
-      $algRadio.prop('checked', true);
-
-      fireEvent($algRadio.get(0));
-
+    fireEvent($algRadio.get(0));
   }
 
   function saveToStorage(jwt) {
@@ -149,7 +147,6 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
   }
 
   function refreshTokenEditor(instance) {
-
     tokenEditor.off('change', tokenEditorOnChangeListener);
 
     var algorithm = getAlgorithm();
@@ -157,12 +154,12 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     var isBase64EncodedElement = document.getElementsByName('is-base64-encoded')[0];
 
     var signResult = window.sign(
-            algorithm,
-            headerEditor.getValue(),
-            payloadEditor.getValue(),
-            getKey(algorithm, 'sign'),
-            isBase64EncodedElement.checked);
-
+      algorithm,
+      headerEditor.getValue(),
+      payloadEditor.getValue(),
+      getKey(algorithm, 'sign'),
+      isBase64EncodedElement.checked
+    );
 
     if (signResult.error) {
       tokenEditor.setValue('');
@@ -217,7 +214,6 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
   var isBase64EncodedElement = document.getElementsByName('is-base64-encoded')[0];
 
   function updateSignature () {
-
     var algorithm = getAlgorithm();
     var signatureElement = getFirstElementByClassName('js-signature');
     var signatureContainerElement = getFirstElementByClassName('jwt-signature');
@@ -235,10 +231,11 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     }
 
     var result = window.verify(
-            algorithm,
-            value,
-            getKey(algorithm, 'verify'),
-            isBase64);
+      algorithm,
+      value,
+      getKey(algorithm, 'verify'),
+      isBase64
+    );
 
 
     var error = result.error;
@@ -254,27 +251,23 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     }
   }
 
-  function getKey(algorithm, action){
+  function getKey(algorithm, action) {
+    var secretElement = $('input[name="secret"]');
+    var privateKeyElement = $('textarea[name="private-key"]');
+    var publicKeyElement = $('textarea[name="public-key"]');
 
-    var secretElement = $('input[name="secret"]'),
-        privateKeyElement = $('textarea[name="private-key"]'),
-        publicKeyElement = $('textarea[name="public-key"]');
-
-    if(algorithm === 'HS256'){
+    if(algorithm === 'HS256') {
         return secretElement.val();
-    }else{
+    } else {
         return action === 'sign' ? privateKeyElement.val() : publicKeyElement.val();
     }
-  
   }
 
-  function getAlgorithm(){
-
+  function getAlgorithm() {
     return algorithmRadios.filter(':checked').val();
   }
 
   function updateAlgorithm () {
-
     var algorithm = algorithmRadios.filter(':checked').val();
 
     $('.js-input').attr('data-alg', algorithm);
@@ -285,33 +278,47 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
         .show();
 
     if(getTrimmedValue(tokenEditor) === DEFAULT_HS_TOKEN &&
-            algorithm === 'RS256'){
+      algorithm === 'RS256'){
         setDefaultsForRSA();
     }else if(getTrimmedValue(tokenEditor) === DEFAULT_RS_TOKEN &&
-            algorithm === 'HS256'){
+      algorithm === 'HS256'){
         setDefaultsForHMAC();
     }
-
   }
 
-  function setDefaultsForRSA(){
+  function setDefaultsForRSA() {
+    tokenEditor.setValue(DEFAULT_RS_TOKEN);
 
-      tokenEditor.setValue(DEFAULT_RS_TOKEN);
-
-      $('.jwt-signature textarea[name=public-key]').val(DEFAULT_PUBLIC_RSA);
-      $('.jwt-signature textarea[name=private-key]').val(DEFAULT_PRIVATE_RSA);
+    $('.jwt-signature textarea[name=public-key]').val(DEFAULT_PUBLIC_RSA);
+    $('.jwt-signature textarea[name=private-key]').val(DEFAULT_PRIVATE_RSA);
   }
 
   function setDefaultsForHMAC(){
+    tokenEditor.setValue(DEFAULT_HS_TOKEN);
+  }
 
-      tokenEditor.setValue(DEFAULT_HS_TOKEN);
+  function validateKey() {
+    var $textarea = $(this);
+    var valid;
+
+    if($textarea.prop('name') === 'public-key') {
+      valid = /-----BEGIN (PUBLIC KEY|CERTIFICATE)-----(.|\n)*-----END (PUBLIC KEY|CERTIFICATE)-----/.test($textarea.val());
+    } else {
+      valid = /-----BEGIN RSA PRIVATE KEY-----(.|\n)*-----END RSA PRIVATE KEY-----/.test($textarea.val());
+    }
+
+    if (valid) {
+      $textarea.removeClass('error');
+    } else {
+      $textarea.addClass('error');
+    }
   }
 
   updateAlgorithm();
 
   algorithmRadios.on('change', function(){
-      updateAlgorithm();
-      updateSignature();
+    updateAlgorithm();
+    updateSignature();
   });
 
   $('.jwt-signature textarea').on('change', updateSignature, false);
@@ -321,25 +328,6 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
   secretElement.addEventListener('change', updateSignature, false);
   secretElement.addEventListener('keyup', updateSignature, false);
   isBase64EncodedElement.addEventListener('change', updateSignature, false);
-
-  function validateKey(){
-
-    $textarea = $(this);
-    var valid;
-
-    if($textarea.prop('name') === 'public-key'){
-      valid = /-----BEGIN (PUBLIC KEY|CERTIFICATE)-----(.|\n)*-----END (PUBLIC KEY|CERTIFICATE)-----/.test($textarea.val());
-    }else{
-      valid = /-----BEGIN RSA PRIVATE KEY-----(.|\n)*-----END RSA PRIVATE KEY-----/.test($textarea.val());
-    }
-
-    if (valid) {
-        $textarea.removeClass('error');
-    }else{
-        $textarea.addClass('error');
-    }
-
-  }
 
   if (document.location.search) {
     var qs = document.location.search.slice(1);
@@ -364,11 +352,10 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
   }
 
   loadFromStorage(function (jwt) {
-
     lastRestoredToken = jwt || DEFAULT_HS_TOKEN;
 
     tokenEditor.setValue(
-        lastRestoredToken
+      lastRestoredToken
     );
   });
 
@@ -385,26 +372,23 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
   }, 1000);
 }).call(this);
 
-
 //Inizialize bootstrap widgets
 $('[data-toggle="tooltip"]').tooltip();
 
 // Fetch stargazers count for each repo from GitHub's API
 $('.stars').each(function(idx, element){
-
     var $el = $(element);
     var repo = $el.attr('data-repo');
 
     if (repo){
-        $.getJSON('http://api.github.com/repos/' + repo, function(repoData){
+      $.getJSON('http://api.github.com/repos/' + repo, function(repoData){
+        var $count = $('<span>');
+        $count.text(repoData.stargazers_count);
 
-            var $count = $('<span>');
-            $count.text(repoData.stargazers_count);
+        $el.find('i').after($count);
 
-            $el.find('i').after($count);
-
-            $el.show();
-        });
+        $el.show();
+      });
     }
 });
 
