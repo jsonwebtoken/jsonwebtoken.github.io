@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1">
+    <meta name="author" content="auth0.com">
+    <meta name="description" content="JSON Web Token (JWT) is a compact URL-safe means of representing claims to be transferred between two parties. The claims in a JWT are encoded as a JSON object that is digitally signed using JSON Web Signature (JWS).">
+
+    <title>JSON Web Tokens - jwt.io</title>
+
+    <script type="text/javascript" src="//use.typekit.net/iws6ohy.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+    <link rel="stylesheet" href="//assets.auth0.com.s3.amazonaws.com/styleguide/1.0.0/index.min.css" type="text/css" media="all">
+
+    <link rel="stylesheet" href="dist/css/app.css" media="all">
+    <link rel="search" type="application/opensearchdescription+xml" title="JWT.io" href="/opensearch.xml">
+
+    <!-- Bootstrap core CSS -->
+
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body data-spy="scroll" data-target=".navbar-default">
+
+  <!-- Fixed navbar -->
+  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container"> 
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+        <a class="navbar-brand" href="#"><img src="img/pic_logo.svg" class="hid-m" alt=""><img src="img/logo.svg" alt=""></a>
+      </div>
+      
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#debugger">Debugger</a></li>
+          <li><a href="#libraries">Libraries</a></li>
+          <li><a href="#">Support</a></li>
+          <li><a href="https://ask.auth0.com/category/jwt" target="_blank">Ask</a></li>
+        </ul>
+        <a class="design" href="#">Supported by <img src="img/ico_logo.svg" alt=""></a>
+        <a class="twitter mobile-no" href="#"><img src="img/ico_twitter.svg" alt=""></a>
+      </div>
+      <!-- /.navbar-collapse --> 
+    </div>
+    <!-- /.container-fluid --> 
+  </nav>
+  
+  <!-- Begin page content -->
+  
+  <div class="banner-jwt">
+    <div class="container">
+      <a class="logo" href="#"><img src="img/pic_logo.svg" alt=""></a>
+      <p>The anatomy of a JSON Web Token</p>
+      <a href="#" class="btn btn-purple btn-lg hidden-lg">STAR USING THE TOOL</a>
+    </div>
+  </div>
+  <div class="container">
+    <div class="steps mobile-only">
+      <a class="select" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+      Introduction
+      </a>
+      <div class="collapse" id="collapseExample">
+        <ul>
+          <li><a href="#">Introduction</a></li>
+          <li><a href="#">What are JSON Web Tokens?</a></li>
+          <li><a href="#">What does a JWT look like?</a></li>
+          <li><a href="#">Breaking down a JWT</a></li>
+          <li><a href="#">Header</a></li>
+          <li><a href="#">Payload</a></li>
+          <li><a href="#">Signature</a></li>
+          <li><a href="#">Conclusion</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="clearfix">
+    <div class="entry">
+      <h2>Introduction to <span class="desktop-only">JSON Web Tokens</span><span class="mobile-only">JWT</span></h2>
+      <p>The API model has been used a great amount recently in applications. This has come about because applications can’t just rely on their own data anymore, for a project to fully see its potential, it must be able to have third-party applications, intermingle with other applications, and have its data easily accessilbe by developers. </p>
+      <p>Think of how Facebook provides an API to grab its data (as long as you are authenticated of course). Facebook also allows third-party applications and other services to access its data. This is all done through an API. Now when we talk about building our own APIs, there’s always going to be the topic of how to secure our own API. We’ve talked a bit on token based authentication, and built our own RESTful Node.js API.</p>
+      <p>Today we’ll be looking at a standard (JSON Web Tokens) and how to create them.</p>
+      <pre><code>compile 'com.auth0.android:lock:1.5.+'
+<br>compile 'com.auth0.android:lock-facebook:1.5.+'
+<br>compile 'com.auth0.android:lock-googleplus:1.5.+'</code></pre>
+      <h2>What are JSON Web Tokens</h2>
+      <p>Add the <span class="label label-danger">android.permission.INTERNET</span> <span class="desktop-only">permission:</span></p>
+      <pre><code>&lt;!--Auth0 Lock--&gt;
+<br>&lt;activity
+<br><span></span>android:name=&quot;com.auth0.lock.LockActivity&quot;
+<br><span></span>android:theme=&quot;@style/Lock.Theme&quot;
+<br><span></span>android:screenOrientation=&quot;portrait&quot;
+<br><span></span>android:launchMode=&quot;singleTask&quot;&gt;
+<br><span></span>&lt;intent-filter&gt;
+<br><span></span><span></span>&lt;action android:name=&quot;android.intent.action.VIEW&quot;/&gt;
+<br><span></span><span></span>&lt;category android:name=&quot;android.intent.category.DEFAULT&quot;/&gt;
+<br><span></span><span></span>&lt;category android:name=&quot;android.intent.category.BROWSABLE&quot;/&gt;
+<br><span></span><span></span>&lt;data android:scheme=&quot;a03nXP1XLD5zdi55kU2bdLC2kkTMI9oVmN&quot; android:host=&quot;lalal.auth0.com&quot;/&gt;
+<br><span></span>&lt;/intent-filter&gt;
+<br>&lt;/activity&gt;
+<br>&lt;meta-data android:name=&quot;com.auth0.lock.client-id&quot; android:value=&quot;3nXP1XLD5zdi55kU2bdLC2kkTMI9oVmN&quot;/&gt;
+<br>&lt;meta-data android:name=&quot;com.auth0.lock.domain-url&quot; android:value=&quot;lalal.auth0.com&quot;/&gt;
+<br>&lt;!--Auth0 Lock End--&gt;
+</code></pre>
+    </div>
+    <div class="sidebar">
+      <div class="wrap">
+        <p>Lorem ipsum dolor sit amet consectetur saraza assalsd aks ki do:</p>
+        <a href="#" class="btn btn-purple">START USING THE TOOL</a>
+        <h4>STEP BY STEP</h4>
+        <ul>
+          <li class="current"><a href="#">Introduction</a></li>
+          <li><a href="#">What are JSON Web Tokens?</a></li>
+          <li><a href="#">What does a JWT look like?</a></li>
+          <li><a href="#">Breaking down a JWT</a></li>
+          <li><a href="#">Header</a></li>
+          <li><a href="#">Payload</a></li>
+          <li><a href="#">Signature</a></li>
+          <li><a href="#">Conclusion</a></li>
+        </ul>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <div id="footer" class="static">
+    <div class="container">
+      <div class="ft-note"> Missing something? <a href="https://github.com/jsonwebtoken/jsonwebtoken.github.io/edit/master/html/index.html">Send a Pull Request</a> </div>
+      <div class="design"><a href="#">Supported by <img src="img/ico_logo.svg" alt=""></a></div>
+      <div class="twitter"><a href="#"></a></div>
+
+    </div>
+  </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="dist/js/app.js"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-37952868-2', 'auto');
+      ga('send', 'pageview');
+  </script>
+  </body>
+</html>

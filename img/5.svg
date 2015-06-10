@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="90px" height="90px" viewBox="0 0 90 90" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3 (11970) - http://www.bohemiancoding.com/sketch -->
+    <title>Oval 1 + php-icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <circle id="path-1" cx="45" cy="45" r="45"></circle>
+        <radialGradient cx="25.5273232%" cy="4.62090951%" fx="25.5273232%" fy="4.62090951%" r="50%" id="radialGradient-3">
+            <stop stop-color="#DDDCE9" offset="0%"></stop>
+            <stop stop-color="#5664A3" offset="37%"></stop>
+            <stop stop-color="#000000" offset="100%"></stop>
+        </radialGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Desktop" sketch:type="MSArtboardGroup" transform="translate(-676.000000, -2407.000000)">
+            <g id="Rectangle-154-+-Group" sketch:type="MSLayerGroup" transform="translate(0.000000, 600.000000)">
+                <g id="Group" transform="translate(0.000000, 58.000000)">
+                    <g id="Group-Copy-3-+-Rectangle-118-+-Oval-1-+-asp_net_icon_transparent-Copy-+-nodejs-Copy" transform="translate(533.000000, 1749.000000)">
+                        <g id="Group-Copy-3-+-Rectangle-118-+-Oval-1-+-asp_net_icon_transparent-Copy">
+                            <g id="Oval-1-+-php-icon" transform="translate(143.000000, 0.000000)">
+                                <mask id="mask-2" sketch:name="Mask" fill="white">
+                                    <use xlink:href="#path-1"></use>
+                                </mask>
+                                <use id="Mask" fill="#FFFFFF" sketch:type="MSShapeGroup" xlink:href="#path-1"></use>
+                                <g id="PHP-logo" mask="url(#mask-2)">
+                                    <g transform="translate(16.000000, 30.000000)">
+                                        <ellipse id="ellipse3860" stroke="url(#radialGradient-3)" stroke-width="1.08552632" fill="#6C7EB7" sketch:type="MSShapeGroup" cx="29" cy="15" rx="29" ry="15"></ellipse>
+                                        <path d="M8.14383562,23.8815789 L11.3219178,7.89473684 L18.6712329,7.89473684 C21.8493151,8.09210526 23.4383562,9.67105263 23.4383562,12.4342105 C23.4383562,17.1710526 19.6643836,19.9342105 16.2876712,19.7368421 L12.7123288,19.7368421 L11.9178082,23.8815789 L8.14383562,23.8815789 L8.14383562,23.8815789 Z M13.5068493,16.7763158 L14.5,10.8552632 L17.0821918,10.8552632 C18.4726027,10.8552632 19.4657534,11.4473684 19.4657534,12.6315789 C19.2671233,15.9868421 17.6780822,16.5789474 15.890411,16.7763158 L13.5068493,16.7763158 L13.5068493,16.7763158 Z" id="p" stroke="#FFFFFF" stroke-width="0.6" fill="#000000" sketch:type="MSShapeGroup"></path>
+                                        <path d="M22.2465753,19.7368421 L25.4246575,3.75 L29.1986301,3.75 L28.4041096,7.89473684 L31.9794521,7.89473684 C35.1575342,8.09210526 36.3493151,9.67105263 35.9520548,11.6447368 L34.5616438,19.7368421 L30.5890411,19.7368421 L31.9794521,12.4342105 C32.1780822,11.4473684 32.1780822,10.8552632 30.7876712,10.8552632 L27.8082192,10.8552632 L26.0205479,19.7368421 L22.2465753,19.7368421 L22.2465753,19.7368421 Z" id="h" stroke="#FFFFFF" stroke-width="0.6" fill="#000000" sketch:type="MSShapeGroup"></path>
+                                        <g id="p2" stroke="none" stroke-width="1" fill="none" sketch:type="MSLayerGroup" transform="translate(34.760274, 7.894737)">
+                                            <path d="M0,15.9868421 L3.17808219,0 L10.5273973,0 C13.7054795,0.197368421 15.2945205,1.77631579 15.2945205,4.53947368 C15.2945205,9.27631579 11.5205479,12.0394737 8.14383562,11.8421053 L4.56849315,11.8421053 L3.7739726,15.9868421 L0,15.9868421 L0,15.9868421 Z M5.3630137,8.88157895 L6.35616438,2.96052632 L8.93835616,2.96052632 C10.3287671,2.96052632 11.3219178,3.55263158 11.3219178,4.73684211 C11.1232877,8.09210526 9.53424658,8.68421053 7.74657534,8.88157895 L5.3630137,8.88157895 L5.3630137,8.88157895 Z" id="p" stroke="#FFFFFF" stroke-width="0.6" fill="#000000" sketch:type="MSShapeGroup"></path>
+                                        </g>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

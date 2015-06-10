@@ -43,13 +43,7 @@ window.decode = function (base64json) {
   return {result: json, error: error};
 };
 
-window.sign = function (
-        algorithm,
-        header,
-        payload,
-        key,
-        isSecretBase64Encoded) {
-
+window.sign = function (algorithm, header, payload, key, isSecretBase64Encoded) {
   var value = '', error = null, headerAsJSON, payloadAsJSON;
 
   try {
@@ -121,7 +115,7 @@ window.verify = function (algorithm, value, key, isSecretBase64Encoded) {
   }
 
   try {
-    result = KJUR.jws.JWS.verify(value, key, 'passwd');
+    result = KJUR.jws.JWS.verify(value, key);
   } catch (e) {
     error = e;
   }

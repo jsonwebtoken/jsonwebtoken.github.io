@@ -1,3 +1,83 @@
+
+
+function equalHeight(group) {
+  var tallest = 0;
+  group.css({ minHeight: 0 })
+  group.each(function() {
+    var thisHeight = $(this).outerHeight();
+    if(thisHeight > tallest) {
+      tallest = thisHeight;
+    }
+  });
+  group.css({ minHeight: tallest })
+};
+
+var clock = $('.counter').FlipClock(12323800, {
+  clockFace: 'Counter'
+});
+
+$(window).resize(function() {
+    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
+});
+
+setTimeout(function() {
+  setInterval(function() {
+    clock.increment();
+  }, 1000);
+});
+if (navigator.userAgent.indexOf('Mac OS X') != -1) {
+  $("body").addClass("mac");
+} else {
+  $("body").addClass("pc");
+}
+$(".jwt-playground .tab-link a").click(function() {
+  var container = $(this).parentsUntil(".jwt-playground").parent();
+  if (!$(this).parent().hasClass("current")) {
+    container.find(".tab-nav .current").removeClass("current")
+    $(this).parent().addClass("current")
+    container.find(".tab-content").hide()
+    $($(this).attr("href")).show();
+  };
+  return false;
+});
+$('.bt-con .text-hold').each(function() {  
+  var tett = $(this).find("p").text();
+  $(this).zclip({
+  path:'ZeroClipboard.swf',
+  copy: tett
+  });
+});
+  var $grid = $('.filter-set').isotope({
+    layoutMode: 'fitRows',
+    itemSelector: '.col-md-4',
+    masonry: {
+      columnWidth: 1
+    }
+  });
+
+    var offsetheight = $(".banner-jwt").height();
+    $(window).scroll(function() {
+      if ($(window).scrollTop() > offsetheight) {
+        $(".navbar-fixed-top").addClass("moved")
+      } else {
+        $(".navbar-fixed-top").removeClass("moved")
+      };
+    });
+  $('#filter').on( 'change', function() {
+    $grid.isotope({ filter: $(this).val() });
+  });
+$(".panel-default .panel-heading").click(function() {
+  if ($(this).hasClass("active")) {
+    $(".panel-default .panel-heading").removeClass("active");
+    $(".panel-default .panel-wrap").slideUp(300);
+  } else {
+    $(".panel-default .panel-heading").removeClass("active");
+    $(".panel-default .panel-wrap").slideUp(300);
+    $(this).addClass("active");
+    $(this).next(".panel-wrap").slideDown(300);
+  };
+  return false;
+});
 (function () {
   // Taken from http://stackoverflow.com/questions/2490825/how-to-trigger-event-in-javascript
   function fireEvent(element) {
@@ -84,6 +164,7 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
 
   function setJSONEditorContent(jsonEditor, decodedJSON, selector) {
     jsonEditor.off('change', refreshTokenEditor);
+    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
     if (decodedJSON.result !== null && decodedJSON.result !== undefined) {
       jsonEditor.setValue(decodedJSON.result);
     } else {
@@ -94,7 +175,9 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     } else {
       selector.removeClass('error');
     }
+    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
     jsonEditor.on('change', refreshTokenEditor);
+    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
   }
 
 
@@ -115,9 +198,9 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     var decodedHeader = window.decode(parts[0]);
 
     try {
-        selectDetectedAlgorithm(JSON.parse(decodedHeader.result).alg);
+      selectDetectedAlgorithm(JSON.parse(decodedHeader.result).alg);
     }catch (e){
-        console.log('Invalid header decoded');
+      console.error('Invalid header decoded');
     }
 
     var selector = $('.jwt-header');
@@ -127,20 +210,21 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     setJSONEditorContent(payloadEditor, decodedPayload, selector);
 
     fireEvent(secretElement);
+    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
   }
 
   function selectDetectedAlgorithm(alg){
+    var $algRadio = $('.algorithm input[value="'+alg+'"]');
+    $algRadio.prop('checked', true);
 
-      var $algRadio = $('.algorithm input[value="'+alg+'"]');
-      $algRadio.prop('checked', true);
-
-      fireEvent($algRadio.get(0));
-
+    fireEvent($algRadio.get(0));
+    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
   }
 
   function saveToStorage(jwt) {
     // Save last valid jwt value for refresh
     localStorage.jwtValue = jwt;
+    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
   }
 
   function loadFromStorage(cb) {
@@ -149,7 +233,6 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
   }
 
   function refreshTokenEditor(instance) {
-
     tokenEditor.off('change', tokenEditorOnChangeListener);
 
     var algorithm = getAlgorithm();
@@ -157,12 +240,12 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     var isBase64EncodedElement = document.getElementsByName('is-base64-encoded')[0];
 
     var signResult = window.sign(
-            algorithm,
-            headerEditor.getValue(),
-            payloadEditor.getValue(),
-            getKey(algorithm, 'sign'),
-            isBase64EncodedElement.checked);
-
+      algorithm,
+      headerEditor.getValue(),
+      payloadEditor.getValue(),
+      getKey(algorithm, 'sign'),
+      isBase64EncodedElement.checked
+    );
 
     if (signResult.error) {
       tokenEditor.setValue('');
@@ -192,6 +275,7 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     }
     tokenEditor.on('change', tokenEditorOnChangeListener);
     fireEvent(secretElement);
+    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
   }
 
   function getFirstElementByClassName(selector) {
@@ -217,11 +301,10 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
   var isBase64EncodedElement = document.getElementsByName('is-base64-encoded')[0];
 
   function updateSignature () {
-
     var algorithm = getAlgorithm();
     var signatureElement = getFirstElementByClassName('js-signature');
     var signatureContainerElement = getFirstElementByClassName('jwt-signature');
-
+    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
     if (!signatureElement) {
       return;
     }
@@ -235,11 +318,12 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     }
 
     var result = window.verify(
-            algorithm,
-            value,
-            getKey(algorithm, 'verify'),
-            isBase64);
-
+      algorithm,
+      value,
+      getKey(algorithm, 'verify'),
+      isBase64
+    );
+    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
 
     var error = result.error;
     result = result.result;
@@ -252,30 +336,30 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
       $(signatureElement).addClass('invalid-token');
       signatureElement.innerHTML = '<i class="fa fa-times-circle-o"></i> invalid signature';
     }
+    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
   }
 
-  function getKey(algorithm, action){
+  function getKey(algorithm, action) {
+    var secretElement = $('input[name="secret"]');
+    var privateKeyElement = $('textarea[name="private-key"]');
+    var publicKeyElement = $('textarea[name="public-key"]');
 
-    var secretElement = $('input[name="secret"]'),
-        privateKeyElement = $('textarea[name="private-key"]'),
-        publicKeyElement = $('textarea[name="public-key"]');
-
-    if(algorithm === 'HS256'){
+    if(algorithm === 'HS256') {
         return secretElement.val();
-    }else{
+    } else {
         return action === 'sign' ? privateKeyElement.val() : publicKeyElement.val();
     }
-  
+    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
   }
 
-  function getAlgorithm(){
-
+  function getAlgorithm() {
     return algorithmRadios.filter(':checked').val();
   }
 
   function updateAlgorithm () {
-
     var algorithm = algorithmRadios.filter(':checked').val();
+
+    $('.js-input').attr('data-alg', algorithm);
 
     $('.jwt-signature pre')
         .hide()
@@ -283,33 +367,52 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
         .show();
 
     if(getTrimmedValue(tokenEditor) === DEFAULT_HS_TOKEN &&
-            algorithm === 'RS256'){
+      algorithm === 'RS256'){
         setDefaultsForRSA();
     }else if(getTrimmedValue(tokenEditor) === DEFAULT_RS_TOKEN &&
-            algorithm === 'HS256'){
+      algorithm === 'HS256'){
         setDefaultsForHMAC();
     }
-
+    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
   }
 
-  function setDefaultsForRSA(){
+  function setDefaultsForRSA() {
+    tokenEditor.setValue(DEFAULT_RS_TOKEN);
 
-      tokenEditor.setValue(DEFAULT_RS_TOKEN);
-
-      $('.jwt-signature textarea[name=public-key]').val(DEFAULT_PUBLIC_RSA);
-      $('.jwt-signature textarea[name=private-key]').val(DEFAULT_PRIVATE_RSA);
+    $('.jwt-signature textarea[name=public-key]').val(DEFAULT_PUBLIC_RSA);
+    $('.jwt-signature textarea[name=private-key]').val(DEFAULT_PRIVATE_RSA);
+    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
   }
 
   function setDefaultsForHMAC(){
+    tokenEditor.setValue(DEFAULT_HS_TOKEN);
+    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
+  }
 
-      tokenEditor.setValue(DEFAULT_HS_TOKEN);
+  function validateKey() {
+    var $textarea = $(this);
+    var valid;
+
+    if($textarea.prop('name') === 'public-key') {
+      valid = /-----BEGIN (PUBLIC KEY|CERTIFICATE)-----(.|\n)*-----END (PUBLIC KEY|CERTIFICATE)-----/.test($textarea.val());
+    } else {
+      valid = /-----BEGIN RSA PRIVATE KEY-----(.|\n)*-----END RSA PRIVATE KEY-----/.test($textarea.val());
+    }
+
+    if (valid) {
+      $textarea.removeClass('error');
+    } else {
+      $textarea.addClass('error');
+    }
+    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
   }
 
   updateAlgorithm();
 
   algorithmRadios.on('change', function(){
-      updateAlgorithm();
-      updateSignature();
+    updateAlgorithm();
+    updateSignature();
+    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
   });
 
   $('.jwt-signature textarea').on('change', updateSignature, false);
@@ -319,25 +422,6 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
   secretElement.addEventListener('change', updateSignature, false);
   secretElement.addEventListener('keyup', updateSignature, false);
   isBase64EncodedElement.addEventListener('change', updateSignature, false);
-
-  function validateKey(){
-
-    $textarea = $(this);
-    var valid;
-
-    if($textarea.prop('name') === 'public-key'){
-      valid = /-----BEGIN (PUBLIC KEY|CERTIFICATE)-----(.|\n)*-----END (PUBLIC KEY|CERTIFICATE)-----/.test($textarea.val());
-    }else{
-      valid = /-----BEGIN RSA PRIVATE KEY-----(.|\n)*-----END RSA PRIVATE KEY-----/.test($textarea.val());
-    }
-
-    if (valid) {
-        $textarea.removeClass('error');
-    }else{
-        $textarea.addClass('error');
-    }
-
-  }
 
   if (document.location.search) {
     var qs = document.location.search.slice(1);
@@ -362,11 +446,10 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
   }
 
   loadFromStorage(function (jwt) {
-
     lastRestoredToken = jwt || DEFAULT_HS_TOKEN;
 
     tokenEditor.setValue(
-        lastRestoredToken
+      lastRestoredToken
     );
   });
 
@@ -383,26 +466,34 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
   }, 1000);
 }).call(this);
 
-
 //Inizialize bootstrap widgets
 $('[data-toggle="tooltip"]').tooltip();
 
+$("#selectAl").change(function() {
+   $('.algorithm input[value="'+$(this).val()+'"]').parent().trigger("click");
+   $('.algorithm input[value="'+$(this).val()+'"]').change();
+    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
+});
+
+$(".algorithm input").change(function() {
+  $(".jwt-playground .btn .filter-option").text($(this).val());
+    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
+});
+$("#selectAl").change(function(){var a=$('.algorithm input[value="'+$(this).val()+'"]');a.prop("checked",!0)})
 // Fetch stargazers count for each repo from GitHub's API
 $('.stars').each(function(idx, element){
-
     var $el = $(element);
     var repo = $el.attr('data-repo');
 
     if (repo){
-        $.getJSON('http://api.github.com/repos/' + repo, function(repoData){
+      $.getJSON('http://api.github.com/repos/' + repo, function(repoData){
+        var $count = $('<span>');
+        $count.text(repoData.stargazers_count);
 
-            var $count = $('<span>');
-            $count.text(repoData.stargazers_count);
+        $el.find('i').after($count);
 
-            $el.find('i').after($count);
-
-            $el.show();
-        });
+        $el.show();
+      });
     }
 });
 

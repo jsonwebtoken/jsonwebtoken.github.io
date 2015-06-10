@@ -10,7 +10,7 @@ module.exports = function (grunt) {
         options: {
           livereload: true
         },
-        files: ['Gruntfile.js', 'js/**/*.js', 'less/**/*.less', 'html/index.html'],
+        files: ['Gruntfile.js', 'js/**/*.js', 'stylus/**/*.styl', 'html/index.html'],
         tasks: ['build']
       }
     },
@@ -24,13 +24,10 @@ module.exports = function (grunt) {
         }
       },
     },
-    less: {
-      production: {
-        options: {
-          cleancss: true
-        },
+    stylus: {
+      compile: {
         files: {
-          'css/app.css': 'less/app.less'
+          'css/app.css': 'stylus/app.styl'
         }
       }
     },
@@ -57,7 +54,7 @@ module.exports = function (grunt) {
     }
   });
 
-  grunt.registerTask('build', ['clean', 'less', 'useminPrepare', 'concat', 'uglify', 'cssmin', 'htmlmin', 'usemin']);
+  grunt.registerTask('build', ['clean', 'stylus', 'useminPrepare', 'concat', 'uglify', 'cssmin', 'htmlmin', 'usemin']);
   grunt.registerTask('test', ['build', 'mocha_phantomjs']);
   grunt.registerTask('default', ['build', 'connect', 'watch']);
 };
