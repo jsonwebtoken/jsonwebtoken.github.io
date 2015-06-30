@@ -10,7 +10,7 @@ module.exports = function (grunt) {
         options: {
           livereload: true
         },
-        files: ['Gruntfile.js', 'js/**/*.js', 'stylus/**/*.styl', 'html/index.html'],
+        files: ['Gruntfile.js', 'js/**/*.js', 'stylus/**/*.styl', 'html/**/*.jade', 'html/index.html'],
         tasks: ['build']
       }
     },
@@ -28,6 +28,13 @@ module.exports = function (grunt) {
       compile: {
         files: {
           'css/app.css': 'stylus/app.styl'
+        }
+      }
+    },
+    jade: {
+      compile: {
+        files: {
+          'new.html': 'html/new.jade'
         }
       }
     },
@@ -56,5 +63,5 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', ['clean', 'stylus', 'useminPrepare', 'concat', 'uglify', 'cssmin', 'htmlmin', 'usemin']);
   grunt.registerTask('test', ['build', 'mocha_phantomjs']);
-  grunt.registerTask('default', ['build', 'connect', 'watch']);
+  grunt.registerTask('default', ['build', 'jade', 'connect', 'watch']);
 };
