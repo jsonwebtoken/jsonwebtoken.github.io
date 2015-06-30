@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="17px" height="20px" viewBox="0 0 17 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3 (11970) - http://www.bohemiancoding.com/sketch -->
+    <title>Shape</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Desktop" sketch:type="MSArtboardGroup" transform="translate(-449.000000, -4662.000000)" fill="#FFFFFF">
+            <g id="Group" sketch:type="MSLayerGroup" transform="translate(180.000000, 4399.000000)">
+                <g transform="translate(0.000000, 66.000000)" id="ic_content_copy_24px-copy" sketch:type="MSShapeGroup">
+                    <g transform="translate(268.000000, 197.000000)">
+                        <path d="M13.3333333,0.833333333 L3.33333333,0.833333333 C2.41666667,0.833333333 1.66666667,1.58333333 1.66666667,2.5 L1.66666667,14.1666667 L3.33333333,14.1666667 L3.33333333,2.5 L13.3333333,2.5 L13.3333333,0.833333333 L13.3333333,0.833333333 Z M6.66666667,4.16666667 C5.75,4.16666667 5,4.91666667 5,5.83333333 L5,17.5 C5,18.4166667 5.75,19.1666667 6.66666667,19.1666667 L15.8333333,19.1666667 C16.75,19.1666667 17.5,18.4166667 17.5,17.5 L17.5,5.83333333 C17.5,4.91666667 16.75,4.16666667 15.8333333,4.16666667 L6.66666667,4.16666667 Z M15.8333333,17.5 L6.66666667,17.5 L6.66666667,5.83333333 L15.8333333,5.83333333 L15.8333333,17.5 L15.8333333,17.5 Z" id="Shape"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

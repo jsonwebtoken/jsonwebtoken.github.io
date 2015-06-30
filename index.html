@@ -33,1012 +33,814 @@
 
   <body data-spy="scroll" data-target=".navbar-default">
 
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+          <a class="navbar-brand" href="#"><img src="img/pic_logo.svg" class="hid-m" alt=""><img src="img/logo.svg" alt=""></a>
+        </div>
 
-      <!-- Fixed navbar -->
-      <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-        <div class="container">
-          <!-- Brand and toggle get grouped for better mobile display -->
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#"><img src="https://cdn.auth0.com/jwt/logo.png" style="width: 28px;margin-right: 10px;margin-top: -4px">JSON Web Token</a>
-          </div>
-
-          <!-- Collect the nav links, forms, and other content for toggling -->
-          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-              <li class="active"><a href="#debugger">Debugger</a></li>
-              <li><a href="#libraries">Libraries</a></li>
-              <li><a href="https://ask.auth0.com/category/jwt" target="_blank">Ask</a></li>
-            </ul>
-            <p class="navbar-text navbar-right">
-
-            <a href="https://news.ycombinator.com/submit" class="hn-button" data-title="JWT" data-url="jwt.io" data-count="horizontal">Vote on Hacker News</a>
-<script type="text/javascript">var HN=[];HN.factory=function(e){return function(){HN.push([e].concat(Array.prototype.slice.call(arguments,0)))};},HN.on=HN.factory("on"),HN.once=HN.factory("once"),HN.off=HN.factory("off"),HN.emit=HN.factory("emit"),HN.load=function(){var e="hn-button.js";if(document.getElementById(e))return;var t=document.createElement("script");t.id=e,t.src="//hn-button.herokuapp.com/hn-button.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(t,n)},HN.load();</script>
-
-
-            <a href="https://twitter.com/auth0" class="twitter-follow-button" data-show-count="true">Follow @auth0</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-            </p>
-          </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
-      </nav>
-
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#debugger">Debugger</a></li>
+            <li><a href="#libraries">Libraries</a></li>
+            <li><a href="#">Support</a></li>
+            <li><a href="https://ask.auth0.com/category/jwt" target="_blank">Ask</a></li>
+          </ul>
+          <a class="design" href="#">Supported by <img src="img/ico_logo.svg" alt=""></a>
+          <a class="twitter mobile-no" href="#"><img src="img/ico_twitter.svg" alt=""></a>
+        </div>
+        <!-- /.navbar-collapse -->
+      </div>
+      <!-- /.container-fluid -->
+    </nav>
 
     <!-- Begin page content -->
 
     <div class="banner-jwt">
       <canvas></canvas>
       <div class="container">
-        <p><strong>JSON Web Token (JWT)</strong> is a compact URL-safe means of representing claims to be transferred between two parties. The claims in a JWT are encoded as a JSON object that is digitally signed using JSON Web Signature (JWS). <a href="http://tools.ietf.org/html/rfc7519" target="_blank">IETF</a></p>
-
-
-
+        <a class="logo" href="#"><img src="img/pic_logo.svg" alt=""></a>
+        <p><strong>JSON Web Tokens</strong> are an open, industry standard <span>[RFC 7519]</span> method for representing claims securely between two parties. <strong>JWT.IO</strong> allows you to decode, verify and generate JWT.</p>
+        <a href="#" class="btn btn-purple btn-lg">LEARN MORE</a>
       </div>
     </div>
-
-
     <div class="container">
-
-      <div class="page-header">
-        <a name="debugger"></a>
+      <div class="page-header"> <a name="debugger"></a>
         <h1 id="debugger">Debugger</h1>
       </div>
-
       <div class="jwt-playground">
-
         <div class="row">
           <div class="col-md-12">
-              <div class="algorithm">
-                <label class="algorithm-label">Algorithm: </label>
-                <label class="radio-inline">
-                    <input type="radio" name="algorithm" value="HS256" checked="checked"> HS256
-                </label>
-                <label class="radio-inline">
-                    <input type="radio" name="algorithm" value="RS256"> RS256
-                </label>
+            <div class="algorithm">
+              <label class="algorithm-label">Algorithm: </label>
+              <div class="hide">
+
+                  <label class="radio-inline">
+                      <input type="radio" name="algorithm" value="HS256" checked="checked"> HS256
+                  </label>
+                  <label class="radio-inline">
+                      <input type="radio" name="algorithm" value="RS256"> RS256
+                  </label>
               </div>
+              <select id="selectAl" class="selectpicker">
+                <option selected="selected" value="HS256">HS256</option>
+                <option value="RS256">RS256</option>
+              </select>
+            </div>
           </div>
-          <div class="col-md-6">
-            <h4>Encoded <small class="pull-right">paste a token here</small></h4>
-
-            <div class="input js-input"></div>
-          </div>
-          <div class="col-md-6">
-            <h4>Decoded <small class="pull-right">edit the payload and secret (only HS256 and RS256 supported)</small></h4>
-
-            <div class="output">
-
-              <div class="jwt-explained jwt-header"><div class="js-header"></div></div>
-              <div class="jwt-explained jwt-payload"><div class="js-payload"></div></div>
+          <div class="tabs">
+            <div class="tab-nav">
+              <ul>
+                <li class="tab-link current"><a href="#tab-1">Encoded <small class="pull-right">paste a token here</small></a></li>
+                <li class="tab-link"><a href="#tab-2">Decoded <small class="pull-right">edit the payload and secret (only HS256 supported)</small></a></li>
+              </ul>
+            </div>
+            <div id="tab-1" class="input js-input tab-content" style="display: block"></div>
+            <div id="tab-2" class="output tab-content">
+              <div class="jwt-explained jwt-header">
+                <p class="text-line"><span>HEADER:</span> ALGORITHM &amp; TOKEN TYPE <a href="#">LEARN MORE</a></p>
+                <div class="js-header"></div>
+              </div>
+              <div class="jwt-explained jwt-payload">
+                <p class="text-line"><span>PAYLOAD:</span> DATA <a href="#">LEARN MORE</a></p>
+                <div class="js-payload"></div>
+              </div>
               <div class="jwt-explained jwt-signature">
-  <pre class="HS256">
+                <p class="text-line"><span>VERIFY SIGNATURE:</span>  LOREM IPSUM DOLOR SIT <a href="#">LEARN MORE</a></p>
+                <pre class="HS256">
   HMACSHA256(
     base64UrlEncode(header) + "." +
     base64UrlEncode(payload),
     <input type="text" name="secret" value="secret">
-  ) <span class="is-base64-encoded-label"> <input type="checkbox" name="is-base64-encoded">secret base64 encoded</span>
-  </pre>
-  <pre class="RS256">
+  )<span class="is-base64-encoded-label"> <input type="checkbox" name="is-base64-encoded">secret base64 encoded</span>
+                </pre>
+                <pre class="RS256">
   RSASHA256(
     base64UrlEncode(header) + "." +
     base64UrlEncode(payload),
     <textarea rows="4" name="public-key" placeholder="Public Key or Certificate. Enter it in plain text only if you want to verify a token"></textarea>,
     <textarea rows="5" name="private-key" placeholder="Private Key (RSA). Enter the it in plain text only if you want to generate a new token. The key never leaves your browser."></textarea>
   )
-  </pre>
+                </pre>
               </div>
-              </div>
+            </div>
           </div>
         </div>
         <div class="row">
           <div class="col-md-12">
-            <div class="validation-status js-signature">
-            </div>
+            <div class="validation-status js-signature"> </div>
           </div>
         </div>
       </div>
     </div>
-
-
-<div class="bg-grey">
-
-    <div class="container">
-      <div class="page-header">
-        <a name="libraries"></a>
-        <h1 id="libraries">Libraries for Token Signing/Verification</h1>
-      </div>
-        <div class="alert alert-danger" role="alert">
-          <em style="font-weight: bolder">Warning</em> Critical vulnerabilities in JSON Web Token libraries with asymmetric keys (<a href="https://auth0.com/blog/2015/03/31/critical-vulnerabilities-in-json-web-token-libraries/">learn more</a>)
+    <div class="bg-grey">
+      <div class="container">
+        <div class="page-header"> <a name="libraries"></a>
+          <div class="algorithm mobile-no">
+            <label class="algorithm-label">FILTER BY </label>
+            <select class="selectpicker" id="filter">
+              <option selected="selected" value="*">All</option>
+              <option value=".set1">.NET</option>
+              <option value=".set2">set2</option>
+            </select>
+          </div>
+          <h1 id="libraries">Libraries for Token Signing/Verification</h1>
         </div>
-
-      <div class="row">
-        <!-- .NET System.IdentityModel.Tokens.Jwt -->
-        <div class="col-md-4">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">.NET</h3>
-            </div>
-            <div class="panel-body library">
-              <div class="row">
-                <div class="col-md-6">
-                  <div><i class="icon-budicon-500"></i>Sign</div>
-                  <div><i class="icon-budicon-500"></i>Verify</div>
-                  <div><i class="icon-budicon-500"></i><code>iss</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>sub</code> check</div>
-                  <div><i class="icon-budicon-500"></i><code>aud</code> check</div>
-                  <div><i class="icon-budicon-500"></i><code>exp</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>nbf</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>iat</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>jti</code> check</div>
-                </div>
-                <div class="col-md-6">
-
-                  <div><i class="icon-budicon-500"></i>HS256</div>
-                  <div><i class="icon-budicon-500"></i>HS384</div>
-                  <div><i class="icon-budicon-500"></i>HS512</div>
-                  <div><i class="icon-budicon-500"></i>RS256</div>
-                  <div><i class="icon-budicon-500"></i>RS384</div>
-                  <div><i class="icon-budicon-500"></i>RS512</div>
-                  <div><i class="icon-budicon-501"></i>ES256</div>
-                  <div><i class="icon-budicon-501"></i>ES384</div>
-                  <div><i class="icon-budicon-501"></i>ES512</div>
-                </div>
+        <div class="alert alert-danger" role="alert"> <em style="font-weight: bolder">Warning</em> Critical vulnerabilities in JSON Web Token libraries with asymmetric keys <a class="more" href="https://auth0.com/blog/2015/03/31/critical-vulnerabilities-in-json-web-token-libraries/">learn more</a> </div>
+         <div class="filter-set">
+        <div class="row">
+          <!-- .NET System.IdentityModel.Tokens.Jwt -->
+          <div class="col-md-4 set2">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title"><img src="img/1.svg" alt="">.NET</h3>
               </div>
-              <div class="author-info">
-                  <div class="maintainer">
-                      <i class="icon-budicon-333" data-toggle="tooltip" title="Maintainer: Microsoft"></i>
+              <div class="panel-wrap" style="display: block">
+                <div class="panel-body library">
+                  <div class="row">
+                    <div class="col-xs-6">
+                      <div><span class="icon-check"></span>Sign</div>
+                      <div><span class="icon-check"></span>Verify</div>
+                      <div class="grey"><span class="icon-cross"></span>iss check</div>
+                      <div class="grey"><span class="icon-cross"></span>sub check</div>
+                      <div><span class="icon-check"></span>aud check</div>
+                      <div class="grey"><span class="icon-cross"></span>exp check</div>
+                      <div><span class="icon-check"></span>nbf check</div>
+                      <div class="grey"><span class="icon-cross"></span>iat check</div>
+                      <div class="grey"><span class="icon-cross"></span>jti check</div>
+                    </div>
+                    <div class="col-xs-6 right">
+                      <div><span class="icon-check"></span>HS256</div>
+                      <div><span class="icon-check"></span>HS384</div>
+                      <div class="grey"><span class="icon-cross"></span>HS512</div>
+                      <div class="grey"><span class="icon-cross"></span>RS256</div>
+                      <div><span class="icon-check"></span>RS384</div>
+                      <div class="grey"><span class="icon-cross"></span>RS512</div>
+                      <div><span class="icon-check"></span>ES256</div>
+                      <div class="grey"><span class="icon-cross"></span>ES384</div>
+                      <div class="grey"><span class="icon-cross"></span>ES512</div>
+                    </div>
+                  </div>
+                  <div class="author-info type-2">
+                    <div class="maintainer"> <i class="icon-budicon-333" data-toggle="tooltip" title="Maintainer: Microsoft"></i><span>Microsoft</span></div>
+                    <div class="repository"><i class="fa fa-github"></i> <a href="https://github.com/MSOpenTech/azure-activedirectory-identitymodel-extensions-for-dotnet"></a></div>
+                    <div class="star-ico">
 
-                      <span class="stars" data-repo="AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet">
-                          <i class="icon-budicon-466"></i>
-                      </span>
+                    <span class="stars" data-repo="AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet">
+                        <i class="icon-budicon-466"></i>
+                    </span>
+                    </div>
                   </div>
 
-                <div class="repository"><i class="fa fa-github"></i> <a href="https://github.com/MSOpenTech/azure-activedirectory-identitymodel-extensions-for-dotnet">View Repo</a></div>
+                  <!-- <div><i class="fa fa-code"></i>Usage: <a href="#">Sign</a> · <a href="#">Verify</a></div> -->
+                </div>
+                <div class="panel-footer"> <code>Install-PackageSystem. <a href="https://www.nuget.org/packages/System.IdentityModel.Tokens.Jwt/">IdentityModel.Tokens.Jwt</a></code> </div>
               </div>
-              <!-- <div><i class="fa fa-code"></i>Usage: <a href="#">Sign</a> · <a href="#">Verify</a></div> -->
             </div>
-            <div class="panel-footer">
-              <code>Install-Package <a href="https://www.nuget.org/packages/System.IdentityModel.Tokens.Jwt/">System.IdentityModel.Tokens.Jwt</a></code>
+          </div>
+
+          <!-- Python jpadilla/pyjwt -->
+          <div class="col-md-4 set1">
+            <div class="panel panel-default patched">
+              <div class="panel-heading color-2">
+                <h3 class="panel-title"><img src="img/2.svg" alt="">Node.js</h3>
+              </div>
+              <div class="panel-wrap">
+                <div class="panel-body library">
+                  <div class="row">
+                    <div class="col-xs-6">
+                    <div><span class="icon-check"></span>Sign</div>
+                    <div><span class="icon-check"></span>Verify</div>
+                    <div><span class="icon-check"></span>iss check</div>
+                    <div class="grey"><span class="icon-cross"></span>sub check</div>
+                    <div><span class="icon-check"></span>aud check</div>
+                    <div><span class="icon-check"></span>exp check</div>
+                    <div class="grey"><span class="icon-cross"></span>nbf check</div>
+                    <div class="grey"><span class="icon-cross"></span>iat check</div>
+                    <div class="grey"><span class="icon-cross"></span>jti check</div>
+                    </div>
+                    <div class="col-xs-6 right">
+                    <div><span class="icon-check"></span>HS256</div>
+                    <div><span class="icon-check"></span>HS384</div>
+                    <div><span class="icon-check"></span>HS512</div>
+                    <div><span class="icon-check"></span>RS256</div>
+                    <div><span class="icon-check"></span>RS384</div>
+                    <div><span class="icon-check"></span>RS512</div>
+                    <div><span class="icon-check"></span>ES256</div>
+                    <div><span class="icon-check"></span>ES384</div>
+                    <div><span class="icon-check"></span>ES512</div>
+                    </div>
+                  </div>
+                  <div class="author-info">
+                    <a href="https://github.com/auth0">
+                        <i class="icon-budicon-333" data-toggle="tooltip" title="Maintainer: Auth0"></i>
+                    </a>
+                    <span class="stars" data-repo="auth0/node-jsonwebtoken">
+                        <i class="icon-budicon-466"></i>
+                    </span>
+
+                  <div class="repository">
+                    <i class="fa fa-github"></i> <a href="https://github.com/auth0/node-jsonwebtoken">View Repo</a>
+                  </div>
+                  </div>
+                  <!-- <div><i class="fa fa-code"></i>Usage: <a href="#">Sign</a> · <a href="#">Verify</a></div> -->
+                </div>
+                <div class="panel-footer">
+                <code>npm install jsonwebtoken</code></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Node.js jsonwebtoken -->
+          <div class="col-md-4">
+            <div class="panel panel-default patched">
+              <div class="panel-heading color-3">
+                <h3 class="panel-title"><img src="img/3.svg" alt="">Java</h3>
+              </div>
+              <div class="panel-wrap">
+                <div class="panel-body library">
+                  <div class="row">
+                    <div class="col-xs-6">
+                    <div><span class="icon-check"></span>Sign</div>
+                    <div><span class="icon-check"></span>Verify</div>
+                    <div><span class="icon-check"></span>iss check</div>
+                    <div><span class="icon-check"></span>sub check</div>
+                    <div><span class="icon-check"></span>aud check</div>
+                    <div><span class="icon-check"></span>exp check</div>
+                    <div><span class="icon-check"></span>nbf check</div>
+                    <div><span class="icon-check"></span>iat check</div>
+                    <div><span class="icon-check"></span>jti check</div>
+                    </div>
+                    <div class="col-xs-6 right">
+                    <div><span class="icon-check"></span>HS256</div>
+                    <div><span class="icon-check"></span>HS384</div>
+                    <div><span class="icon-check"></span>HS512</div>
+                    <div><span class="icon-check"></span>RS256</div>
+                    <div><span class="icon-check"></span>RS384</div>
+                    <div><span class="icon-check"></span>RS512</div>
+                    <div><span class="icon-check"></span>ES256</div>
+                    <div><span class="icon-check"></span>ES384</div>
+                    <div><span class="icon-check"></span>ES512</div>
+                    </div>
+                  </div>
+                  <div class="author-info">
+
+                    <a href="https://twitter.com/__b_c">
+                        <i class="icon-budicon-333" data-toggle="tooltip" title="Maintainer: __b_c"></i>
+                    </a>
+
+                  <span class="stars">
+                  </span>
+                  <div class="repository">
+                    <i class="fa fa-bitbucket"></i> <a href="https://bitbucket.org/b_c/jose4j">View Repo</a>
+                  </div>
+
+                  </div>
+                </div>
+              <div class="panel-footer">
+                  <code>maven: org.bitbucket.b_c / jose4j / 0.4.2</code>
+              </div>
+              </div>
             </div>
           </div>
         </div>
+        <div class="row">
+          <!-- Java jose4j -->
+          <div class="col-md-4">
+            <div class="panel panel-default">
+              <div class="panel-heading color-4">
+                <h3 class="panel-title"><img src="img/4.svg" alt="">Python</h3>
+              </div>
+              <div class="panel-wrap">
+                <div class="panel-body library">
+                  <div class="row">
+                    <div class="col-xs-6">
+                    <div><span class="icon-check"></span>Sign</div>
+                    <div><span class="icon-check"></span>Verify</div>
+                    <div><span class="icon-check"></span>iss check</div>
+                    <div class="grey"><span class="icon-cross"></span>sub check</div>
+                    <div><span class="icon-check"></span>aud check</div>
+                    <div><span class="icon-check"></span>exp check</div>
+                    <div><span class="icon-check"></span>nbf check</div>
+                    <div class="grey"><span class="icon-cross"></span>iat check</div>
+                    <div class="grey"><span class="icon-cross"></span>jti check</div>
+                    </div>
+                    <div class="col-xs-6 right">
+                    <div><span class="icon-check"></span>HS256</div>
+                    <div><span class="icon-check"></span>HS384</div>
+                    <div><span class="icon-check"></span>HS512</div>
+                    <div><span class="icon-check"></span>RS256</div>
+                    <div><span class="icon-check"></span>RS384</div>
+                    <div><span class="icon-check"></span>RS512</div>
+                    <div><span class="icon-check"></span>ES256</div>
+                    <div><span class="icon-check"></span>ES384</div>
+                    <div><span class="icon-check"></span>ES512</div>
+                    </div>
+                  </div>
+                  <div class="author-info">
+                    <a href="https://github.com/jpadilla">
+                        <i class="icon-budicon-333" data-toggle="tooltip" title="Maintainer: José Padilla"></i>
+                    </a>
+                    <span class="stars" data-repo="jpadilla/pyjwt">
+                        <i class="icon-budicon-466"></i>
+                    </span>
 
-        <!-- Python jpadilla/pyjwt -->
-        <div class="col-md-4">
-          <div class="panel panel-default patched">
-            <div class="panel-heading">
-              <span class="patched-badge">Update to ≥1.0.1 (<a href="https://auth0.com/blog/2015/03/31/critical-vulnerabilities-in-json-web-token-libraries/" title="Patched versions contain security fixes." target="_blank">?</a>)</span>
-              <h3 class="panel-title">Python</h3>
-            </div>
-            <div class="panel-body library">
-              <div class="row">
-                <div class="col-md-6">
-                  <div><i class="icon-budicon-500"></i>Sign</div>
-                  <div><i class="icon-budicon-500"></i>Verify</div>
-                  <div><i class="icon-budicon-500"></i><code>iss</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>sub</code> check</div>
-                  <div><i class="icon-budicon-500"></i><code>aud</code> check</div>
-                  <div><i class="icon-budicon-500"></i><code>exp</code> check</div>
-                  <div><i class="icon-budicon-500"></i><code>nbf</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>iat</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>jti</code> check</div>
+                  <div class="repository">
+                    <i class="fa fa-github"></i> <a href="https://github.com/jpadilla/pyjwt/">View Repo</a>
+                  </div>
+                  </div>
                 </div>
-                <div class="col-md-6">
-                  <div><i class="icon-budicon-500"></i>HS256</div>
-                  <div><i class="icon-budicon-500"></i>HS384</div>
-                  <div><i class="icon-budicon-500"></i>HS512</div>
-                  <div><i class="icon-budicon-500"></i>RS256</div>
-                  <div><i class="icon-budicon-500"></i>RS384</div>
-                  <div><i class="icon-budicon-500"></i>RS512</div>
-                  <div><i class="icon-budicon-500"></i>ES256</div>
-                  <div><i class="icon-budicon-500"></i>ES384</div>
-                  <div><i class="icon-budicon-500"></i>ES512</div>
+                <div class="panel-footer">
+                  <code>pip install pyjwt</code>
                 </div>
               </div>
-              <div class="author-info">
+            </div>
+          </div>
 
-                  <a href="https://github.com/jpadilla">
-                      <i class="icon-budicon-333" data-toggle="tooltip" title="Maintainer: José Padilla"></i>
+          <!-- PHP firebase/php-jwt -->
+          <div class="col-md-4">
+            <div class="panel panel-default patched">
+              <div class="panel-heading color-5">
+                <h3 class="panel-title"><img src="img/5.svg" alt="">PHP</h3>
+              </div>
+              <div class="panel-wrap">
+                <div class="panel-body library">
+                  <div class="row">
+                    <div class="col-xs-6">
+                  <div><span class="icon-check"></span>Sign</div>
+                  <div><span class="icon-check"></span>Verify</div>
+                  <div class="grey"><span class="icon-cross"></span>iss check</div>
+                  <div class="grey"><span class="icon-cross"></span>sub check</div>
+                  <div class="grey"><span class="icon-cross"></span>aud check</div>
+                  <div><span class="icon-check"></span>exp check</div>
+                  <div><span class="icon-check"></span>nbf check</div>
+                  <div><span class="icon-check"></span>iat check</div>
+                  <div class="grey"><span class="icon-cross"></span>jti check</div>
+                    </div>
+                    <div class="col-xs-6 right">
+                  <div><span class="icon-check"></span>HS256</div>
+                  <div><span class="icon-check"></span>HS384</div>
+                  <div><span class="icon-check"></span>HS512</div>
+                  <div><span class="icon-check"></span>RS256</div>
+                  <div class="grey"><span class="icon-cross"></span>RS384</div>
+                  <div class="grey"><span class="icon-cross"></span>RS512</div>
+                  <div class="grey"><span class="icon-cross"></span>ES256</div>
+                  <div class="grey"><span class="icon-cross"></span>ES384</div>
+                  <div class="grey"><span class="icon-cross"></span>ES512</div>
+                    </div>
+                  </div>
+                  <div class="author-info">
+
+                  <a href="https://github.com/firebase">
+                      <i class="icon-budicon-333" data-toggle="tooltip" title="Maintainer: Firebase"></i>
                   </a>
-                  <span class="stars" data-repo="jpadilla/pyjwt">
+                  <span class="stars" data-repo="firebase/php-jwt">
                       <i class="icon-budicon-466"></i>
                   </span>
 
-                <div class="repository">
-                  <i class="fa fa-github"></i> <a href="https://github.com/jpadilla/pyjwt/">View Repo</a>
+                  <div class="repository">
+                    <i class="fa fa-github"></i> <a href="https://github.com/firebase/php-jwt">View Repo</a>
+                  </div>
+
+                  </div>
+                </div>
+                <div class="panel-footer">
+                  <code>composer require firebase/php-jwt</code>
                 </div>
               </div>
-              <!-- <div><i class="fa fa-code"></i>Usage: <a href="#">Sign</a> · <a href="#">Verify</a></div> -->
             </div>
-            <div class="panel-footer">
-              <code>pip install pyjwt</code>
-            </div>
+          </div>
 
+          <!-- Javascript kjur/jsjws -->
+          <div class="col-md-4">
+            <div class="panel panel-default patched">
+              <div class="panel-heading color-6">
+                <h3 class="panel-title"><img src="img/6.svg" alt="">JavaScript</h3>
+              </div>
+              <div class="panel-wrap">
+              <div class="panel-body library">
+                <div class="row">
+                  <div class="col-xs-6">
+                  <div><span class="icon-check"></span>Sign</div>
+                  <div><span class="icon-check"></span>Verify</div>
+                  <div class="grey"><span class="icon-cross"></span>iss check</div>
+                  <div class="grey"><span class="icon-cross"></span>sub check</div>
+                  <div class="grey"><span class="icon-cross"></span>aud check</div>
+                  <div class="grey"><span class="icon-cross"></span>exp check</div>
+                  <div class="grey"><span class="icon-cross"></span>nbf check</div>
+                  <div class="grey"><span class="icon-cross"></span>iat check</div>
+                  <div class="grey"><span class="icon-cross"></span>jti check</div>
+                  </div>
+                  <div class="col-xs-6 right">
+                  <div><span class="icon-check"></span>HS256</div>
+                  <div><span class="icon-check"></span>HS384</div>
+                  <div><span class="icon-check"></span>HS512</div>
+                  <div><span class="icon-check"></span>RS256</div>
+                  <div><span class="icon-check"></span>RS384</div>
+                  <div><span class="icon-check"></span>RS512</div>
+                  <div><span class="icon-check"></span>ES256</div>
+                  <div><span class="icon-check"></span>ES384</div>
+                  <div class="grey"><span class="icon-cross"></span>ES512</div>
+                  </div>
+                </div>
+                  <div class="author-info">
+
+                    <a href="https://github.com/kjur">
+                        <i class="icon-budicon-333" data-toggle="tooltip" title="Maintainer: Kenji Urushima"></i>
+                    </a>
+                    <span class="stars" data-repo="kjur/jsjws">
+                        <i class="icon-budicon-466"></i>
+                    </span>
+
+                  <div class="repository">
+                    <i class="fa fa-github"></i> <a href="https://github.com/kjur/jsjws">View Repo</a>
+                  </div>
+
+                </div>
+              </div>
+                <div class="panel-footer">
+                  <code>bower install jsjws</code></div>
+            </div>
+            </div>
           </div>
         </div>
+        <div class="row">
+          <!-- Ruby progrium/ruby-jwt -->
+          <div class="col-md-4">
+            <div class="panel panel-default">
+              <div class="panel-heading color-7">
+                <h3 class="panel-title"><img src="img/7.svg" alt="">Ruby</h3>
+              </div>
+              <div class="panel-wrap">
+                <div class="panel-body library">
+                  <div class="row">
+                    <div class="col-xs-6">
+                      <div><span class="icon-check"></span>Sign</div>
+                      <div><span class="icon-check"></span>Verify</div>
+                      <div><span class="icon-check"></span>iss check</div>
+                      <div><span class="icon-check"></span>sub check</div>
+                      <div><span class="icon-check"></span>aud check</div>
+                      <div><span class="icon-check"></span>exp check</div>
+                      <div><span class="icon-check"></span>nbf check</div>
+                      <div><span class="icon-check"></span>iat check</div>
+                      <div><span class="icon-check"></span>jti check</div>
+                    </div>
+                    <div class="col-xs-6 right">
+                      <div><span class="icon-check"></span>HS256</div>
+                      <div><span class="icon-check"></span>HS384</div>
+                      <div><span class="icon-check"></span>HS512</div>
+                      <div><span class="icon-check"></span>RS256</div>
+                      <div><span class="icon-check"></span>RS384</div>
+                      <div><span class="icon-check"></span>RS512</div>
+                      <div class="grey"><span class="icon-cross"></span>ES256</div>
+                      <div class="grey"><span class="icon-cross"></span>ES384</div>
+                      <div class="grey"><span class="icon-cross"></span>ES512</div>
+                    </div>
+                  </div>
+                  <div class="author-info">
+                    <i class="icon-budicon-333" data-toggle="tooltip" title="Maintainer: Jeff Lindsay & Tim Rudat"></i>
 
-        <!-- Node.js jsonwebtoken -->
-        <div class="col-md-4">
-          <div class="panel panel-default patched">
-            <div class="panel-heading">
-              <span class="patched-badge">Update to ≥4.2.2 (<a href="https://auth0.com/blog/2015/03/31/critical-vulnerabilities-in-json-web-token-libraries/" title="Patched versions contain security fixes." target="_blank">?</a>)</span>
-              <h3 class="panel-title">Node.js</h3>
-            </div>
-            <div class="panel-body library">
-              <div class="row">
-                <div class="col-md-6">
-                  <div><i class="icon-budicon-500"></i>Sign</div>
-                  <div><i class="icon-budicon-500"></i>Verify</div>
-                  <div><i class="icon-budicon-500"></i><code>iss</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>sub</code> check</div>
-                  <div><i class="icon-budicon-500"></i><code>aud</code> check</div>
-                  <div><i class="icon-budicon-500"></i><code>exp</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>nbf</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>iat</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>jti</code> check</div>
-                </div>
-                <div class="col-md-6">
+                    <span class="stars" data-repo="progrium/ruby-jwt">
+                        <i class="icon-budicon-466"></i>
+                    </span>
 
-                  <div><i class="icon-budicon-500"></i>HS256</div>
-                  <div><i class="icon-budicon-500"></i>HS384</div>
-                  <div><i class="icon-budicon-500"></i>HS512</div>
-                  <div><i class="icon-budicon-500"></i>RS256</div>
-                  <div><i class="icon-budicon-500"></i>RS384</div>
-                  <div><i class="icon-budicon-500"></i>RS512</div>
-                  <div><i class="icon-budicon-500"></i>ES256</div>
-                  <div><i class="icon-budicon-500"></i>ES384</div>
-                  <div><i class="icon-budicon-500"></i>ES512</div>
+                    <div class="repository">
+                      <i class="fa fa-github"></i> <a href="https://github.com/progrium/ruby-jwt">View Repo</a>
+                    </div>
+                  </div>
+                  <div class="panel-footer">
+                    <code>gem install jwt</code>
+                  </div>
                 </div>
               </div>
+            </div>
+          </div>
 
-              <div class="author-info">
+          <!-- Go dgrijalva/jwt-go -->
+          <div class="col-md-4">
+            <div class="panel panel-default">
+              <div class="panel-heading color-8">
+                <h3 class="panel-title"><img src="img/8.svg" alt="">Go</h3>
+              </div>
+              <div class="panel-wrap">
+              <div class="panel-body library">
+                <div class="row">
+                  <div class="col-xs-6">
+                  <div><span class="icon-check"></span>Sign</div>
+                  <div><span class="icon-check"></span>Verify</div>
+                  <div class="grey"><span class="icon-cross"></span>iss check</div>
+                  <div class="grey"><span class="icon-cross"></span>sub check</div>
+                  <div class="grey"><span class="icon-cross"></span>aud check</div>
+                  <div><span class="icon-check"></span>exp check</div>
+                  <div><span class="icon-check"></span>nbf check</div>
+                  <div class="grey"><span class="icon-cross"></span>iat check</div>
+                  <div class="grey"><span class="icon-cross"></span>jti check</div>
+                  </div>
+                  <div class="col-xs-6 right">
+                  <div><span class="icon-check"></span>HS256</div>
+                  <div class="grey"><span class="icon-cross"></span>HS384</div>
+                  <div class="grey"><span class="icon-cross"></span>HS512</div>
+                  <div><span class="icon-check"></span>RS256</div>
+                  <div class="grey"><span class="icon-cross"></span>RS384</div>
+                  <div class="grey"><span class="icon-cross"></span>RS512</div>
+                  <div class="grey"><span class="icon-cross"></span>ES256</div>
+                  <div class="grey"><span class="icon-cross"></span>ES384</div>
+                  <div class="grey"><span class="icon-cross"></span>ES512</div>
+                  </div>
+                </div>
+                <div class="author-info">
 
-                <div class="maintainer">
-
-                  <a href="https://github.com/auth0">
-                      <i class="icon-budicon-333" data-toggle="tooltip" title="Maintainer: Auth0"></i>
+                  <a href="https://github.com/dgrijalva">
+                      <i class="icon-budicon-333" data-toggle="tooltip" title="Maintainer: dgrijalva"></i>
                   </a>
-                  <span class="stars" data-repo="auth0/node-jsonwebtoken">
+                  <span class="stars" data-repo="dgrijalva/jwt-go">
                       <i class="icon-budicon-466"></i>
                   </span>
 
-                </div>
-
-                <div class="repository">
-                  <i class="fa fa-github"></i> <a href="https://github.com/auth0/node-jsonwebtoken">View Repo</a>
+                  <div class="repository">
+                    <i class="fa fa-github"></i> <a href="https://github.com/dgrijalva/jwt-go">View Repo</a>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="panel-footer">
-              <code>npm install jsonwebtoken</code>
+                <div class="panel-footer">
+                  <code>go get github.com/dgrijalva/jwt-go</code></div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <div class="row">
-        <!-- Java jose4j -->
-        <div class="col-md-4">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">Java</h3>
-            </div>
-            <div class="panel-body library">
-              <div class="row">
-
-                <div class="col-md-6">
-                  <div><i class="icon-budicon-500"></i>Sign</div>
-                  <div><i class="icon-budicon-500"></i>Verify</div>
-                  <div><i class="icon-budicon-500"></i><code>iss</code> check</div>
-                  <div><i class="icon-budicon-500"></i><code>sub</code> check</div>
-                  <div><i class="icon-budicon-500"></i><code>aud</code> check</div>
-                  <div><i class="icon-budicon-500"></i><code>exp</code> check</div>
-                  <div><i class="icon-budicon-500"></i><code>nbf</code> check</div>
-                  <div><i class="icon-budicon-500"></i><code>iat</code> check</div>
-                  <div><i class="icon-budicon-500"></i><code>jti</code> check</div>
-                </div>
-                <div class="col-md-6">
-
-                  <div><i class="icon-budicon-500"></i>HS256</div>
-                  <div><i class="icon-budicon-500"></i>HS384</div>
-                  <div><i class="icon-budicon-500"></i>HS512</div>
-                  <div><i class="icon-budicon-500"></i>RS256</div>
-                  <div><i class="icon-budicon-500"></i>RS384</div>
-                  <div><i class="icon-budicon-500"></i>RS512</div>
-                  <div><i class="icon-budicon-500"></i>ES256</div>
-                  <div><i class="icon-budicon-500"></i>ES384</div>
-                  <div><i class="icon-budicon-500"></i>ES512</div>
-                </div>
-
+          <!-- Haskell ssaasen/haskell-jwt -->
+          <div class="col-md-4">
+            <div class="panel panel-default">
+              <div class="panel-heading color-9">
+                <h3 class="panel-title"><img src="img/9.svg" alt="">Haskell</h3>
               </div>
-              <div class="author-info">
+              <div class="panel-wrap">
+                <div class="panel-body library">
+                  <div class="row">
+                    <div class="col-xs-6">
+                    <div><span class="icon-check"></span>Sign</div>
+                    <div><span class="icon-check"></span>Verify</div>
+                    <div class="grey"><span class="icon-cross"></span>iss check</div>
+                    <div class="grey"><span class="icon-cross"></span>sub check</div>
+                    <div class="grey"><span class="icon-cross"></span>aud check</div>
+                    <div class="grey"><span class="icon-cross"></span>exp check</div>
+                    <div class="grey"><span class="icon-cross"></span>nbf check</div>
+                    <div class="grey"><span class="icon-cross"></span>iat check</div>
+                    <div class="grey"><span class="icon-cross"></span>jti check</div>
+                    </div>
+                    <div class="col-xs-6 right">
+                    <div><span class="icon-check"></span>HS256</div>
+                    <div class="grey"><span class="icon-cross"></span>HS384</div>
+                    <div class="grey"><span class="icon-cross"></span>HS512</div>
+                    <div class="grey"><span class="icon-cross"></span>RS256</div>
+                    <div class="grey"><span class="icon-cross"></span>RS384</div>
+                    <div class="grey"><span class="icon-cross"></span>RS512</div>
+                    <div class="grey"><span class="icon-cross"></span>ES256</div>
+                    <div class="grey"><span class="icon-cross"></span>ES384</div>
+                    <div class="grey"><span class="icon-cross"></span>ES512</div>
+                    </div>
+                  </div>
+                  <div class="author-info">
 
-                  <a href="https://twitter.com/__b_c">
-                      <i class="icon-budicon-333" data-toggle="tooltip" title="Maintainer: __b_c"></i>
+                  <a href="https://bitbucket.org/ssaasen">
+                      <i class="icon-budicon-333" data-toggle="tooltip" title="Maintainer: Stefan Saasen"></i>
                   </a>
+                  <span class="stars">
+                  </span>
 
-                <div class="repository">
-                  <i class="fa fa-bitbucket"></i> <a href="https://bitbucket.org/b_c/jose4j">View Repo</a>
+                  <div class="repository">
+                    <i class="fa fa-bitbucket"></i> <a href="https://bitbucket.org/ssaasen/haskell-jwt">View Repo</a>
+                  </div>
+                  </div>
                 </div>
-
+                <div class="panel-footer">
+                  <code>cabal install jwt</code></div>
               </div>
-            </div>
-
-            <div class="panel-footer">
-                <code>maven: org.bitbucket.b_c / jose4j / 0.4.2</code>
             </div>
           </div>
+
         </div>
-
-        <!-- Javascript kjur/jsjws -->
-        <div class="col-md-4">
-          <div class="panel panel-default patched">
-            <div class="panel-heading">
-              <span class="patched-badge">Update to ≥3.2.0 (<a href="https://auth0.com/blog/2015/03/31/critical-vulnerabilities-in-json-web-token-libraries/" title="Patched versions contain security fixes." target="_blank">?</a>)</span>
-              <h3 class="panel-title">JavaScript</h3>
-            </div>
-            <div class="panel-body library">
-
-              <div class="row">
-
-              <div class="col-md-6">
-                <div><i class="icon-budicon-500"></i>Sign</div>
-                <div><i class="icon-budicon-500"></i>Verify</div>
-                <div><i class="icon-budicon-501"></i><code>iss</code> check</div>
-                <div><i class="icon-budicon-501"></i><code>sub</code> check</div>
-                <div><i class="icon-budicon-501"></i><code>aud</code> check</div>
-                <div><i class="icon-budicon-501"></i><code>exp</code> check</div>
-                <div><i class="icon-budicon-501"></i><code>nbf</code> check</div>
-                <div><i class="icon-budicon-501"></i><code>iat</code> check</div>
-                <div><i class="icon-budicon-501"></i><code>jti</code> check</div>
+        <div class="row">
+          <!-- Rust GildedHonour/rust-jwt -->
+          <div class="col-md-4">
+            <div class="panel panel-default">
+              <div class="panel-heading color-10">
+                <h3 class="panel-title"><img src="img/10.svg" alt="">Rust</h3>
               </div>
-              <div class="col-md-6">
-
-                <div><i class="icon-budicon-500"></i>HS256</div>
-                <div><i class="icon-budicon-500"></i>HS384</div>
-                <div><i class="icon-budicon-500"></i>HS512</div>
-                <div><i class="icon-budicon-500"></i>RS256</div>
-                <div><i class="icon-budicon-500"></i>RS384</div>
-                <div><i class="icon-budicon-500"></i>RS512</div>
-                <div><i class="icon-budicon-500"></i>ES256</div>
-                <div><i class="icon-budicon-500"></i>ES384</div>
-                <div><i class="icon-budicon-501"></i>ES512</div>
-              </div>
-
-              </div>
-
-              <div class="author-info">
-
-                  <a href="https://github.com/kjur">
-                      <i class="icon-budicon-333" data-toggle="tooltip" title="Maintainer: Kenji Urushima"></i>
+              <div class="panel-wrap">
+                <div class="panel-body library">
+                  <div class="row">
+                    <div class="col-xs-6">
+                    <div><span class="icon-check"></span>Sign</div>
+                    <div><span class="icon-check"></span>Verify</div>
+                    <div class="grey"><span class="icon-cross"></span>iss check</div>
+                    <div class="grey"><span class="icon-cross"></span>sub check</div>
+                    <div class="grey"><span class="icon-cross"></span>aud check</div>
+                    <div><span class="icon-check"></span>exp check</div>
+                    <div class="grey"><span class="icon-cross"></span>nbf check</div>
+                    <div class="grey"><span class="icon-cross"></span>iat check</div>
+                    <div class="grey"><span class="icon-cross"></span>jti check</div>
+                    </div>
+                    <div class="col-xs-6 right">
+                    <div><span class="icon-check"></span>HS256</div>
+                    <div><span class="icon-check"></span>HS384</div>
+                    <div><span class="icon-check"></span>HS512</div>
+                    <div class="grey"><span class="icon-cross"></span>RS256</div>
+                    <div class="grey"><span class="icon-cross"></span>RS384</div>
+                    <div class="grey"><span class="icon-cross"></span>RS512</div>
+                    <div class="grey"><span class="icon-cross"></span>ES256</div>
+                    <div class="grey"><span class="icon-cross"></span>ES384</div>
+                    <div class="grey"><span class="icon-cross"></span>ES512</div>
+                    </div>
+                  </div>
+                  <div class="author-info">
+                  <a href="https://github.com/GildedHonour">
+                      <i class="icon-budicon-333" data-toggle="tooltip" title="Maintainer: GildedHonour"></i>
                   </a>
-                  <span class="stars" data-repo="kjur/jsjws">
+                  <span class="stars" data-repo="auth0/java-jwt">
                       <i class="icon-budicon-466"></i>
                   </span>
 
-                <div class="repository">
-                  <i class="fa fa-github"></i> <a href="https://github.com/kjur/jsjws">View Repo</a>
+                  <div class="repository">
+                    <i class="fa fa-github"></i> <a href="https://github.com/GildedHonour/rust-jwt">View Repo</a>
+                  </div>
+                  </div>
                 </div>
-
+                <div class="panel-footer">
+                  <code>cargo: name = "jwt" version = "*"</code> </div>
               </div>
-
             </div>
+          </div>
 
-            <div class="panel-footer">
-              <div>
-                <code>bower install jsjws</code>
+          <!-- Lua (openresty) SkyLothar/lua-resty-jwt -->
+          <div class="col-md-4 mobile-no">
+            <div class="panel panel-default">
+              <div class="panel-heading color-11">
+                <h3 class="panel-title"><img src="img/11.svg" alt="">Lua (openresty)</h3>
               </div>
+              <div class="panel-wrap">
+                <div class="panel-body library">
+                  <div class="row">
+                    <div class="col-xs-6">
+                    <div><span class="icon-check"></span>Sign</div>
+                    <div><span class="icon-check"></span>Verify</div>
+                    <div class="grey"><span class="icon-cross"></span>iss check</div>
+                    <div class="grey"><span class="icon-cross"></span>sub check</div>
+                    <div class="grey"><span class="icon-cross"></span>aud check</div>
+                    <div><span class="icon-check"></span>exp check</div>
+                    <div><span class="icon-check"></span>nbf check</div>
+                    <div class="grey"><span class="icon-cross"></span>iat check</div>
+                    <div class="grey"><span class="icon-cross"></span>jti check</div>
+                    </div>
+                    <div class="col-xs-6 right">
+                    <div><span class="icon-check"></span>HS256</div>
+                    <div class="grey"><span class="icon-cross"></span>HS384</div>
+                    <div><span class="icon-check"></span>HS512</div>
+                    <div class="grey"><span class="icon-cross"></span>RS256</div>
+                    <div class="grey"><span class="icon-cross"></span>RS384</div>
+                    <div class="grey"><span class="icon-cross"></span>RS512</div>
+                    <div class="grey"><span class="icon-cross"></span>ES256</div>
+                    <div class="grey"><span class="icon-cross"></span>ES384</div>
+                    <div class="grey"><span class="icon-cross"></span>ES512</div>
+                    </div>
+                  </div>
+                  <div class="author-info">
+                  <a href="https://github.com/SkyLothar">
+                      <i class="icon-budicon-333" data-toggle="tooltip" title="Maintainer: SkyLothar"></i>
+                  </a>
+                  <span class="stars" data-repo="SkyLothar/lua-resty-jwt">
+                      <i class="icon-budicon-466"></i>
+                  </span>
 
+                  <div class="repository">
+                    <i class="fa fa-github"></i> <a href="https://github.com/SkyLothar/lua-resty-jwt">View Repo</a>
+                  </div>
+                  </div>
+                </div>
+                <div class="panel-footer">
+                <code>sbt: "com.jason-goodwin" %% "authentikat-jwt" % "0.3.5" </code> </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Scala jasongoodwin/authentikat-jwt -->
+          <div class="col-md-4">
+            <div class="panel panel-default">
+              <div class="panel-heading color-12">
+                <h3 class="panel-title"><img src="img/12.svg" alt="">Scala</h3>
+              </div>
+              <div class="panel-wrap">
+              <div class="panel-body library">
+                <div class="row">
+                  <div class="col-xs-6">
+                    <div><span class="icon-check"></span>Sign</div>
+                    <div><span class="icon-check"></span>Verify</div>
+                    <div class="grey"><span class="icon-cross"></span>iss check</div>
+                    <div class="grey"><span class="icon-cross"></span>sub check</div>
+                    <div class="grey"><span class="icon-cross"></span>aud check</div>
+                    <div class="grey"><span class="icon-cross"></span>exp check</div>
+                    <div class="grey"><span class="icon-cross"></span>nbf check</div>
+                    <div class="grey"><span class="icon-cross"></span>iat check</div>
+                    <div class="grey"><span class="icon-cross"></span>jti check</div>
+                  </div>
+                  <div class="col-xs-6 right">
+                    <div><span class="icon-check"></span>HS256</div>
+                    <div><span class="icon-check"></span>HS384</div>
+                    <div><span class="icon-check"></span>HS512</div>
+                    <div class="grey"><span class="icon-cross"></span>RS256</div>
+                    <div class="grey"><span class="icon-cross"></span>RS384</div>
+                    <div class="grey"><span class="icon-cross"></span>RS512</div>
+                    <div class="grey"><span class="icon-cross"></span>ES256</div>
+                    <div class="grey"><span class="icon-cross"></span>ES384</div>
+                    <div class="grey"><span class="icon-cross"></span>ES512</div>
+                  </div>
+                </div>
+                  <div class="author-info">
+                  <a href="https://github.com/jasongoodwin">
+                      <i class="icon-budicon-333" data-toggle="tooltip" title="Maintainer: jasongoodwin"></i>
+                  </a>
+                  <span class="stars" data-repo="jasongoodwin/authentikat-jwt">
+                      <i class="icon-budicon-466"></i>
+                  </span>
+
+                  <div class="repository">
+                    <i class="fa fa-github"></i> <a href="https://github.com/jasongoodwin/authentikat-jwt">View Repo</a>
+                  </div>
+                </div>
+              </div>
+                <div class="panel-footer">               <code>sbt: "com.jason-goodwin" %% "authentikat-jwt" % "0.3.5" </code>
+  </div>
+            </div>
+            </div>
             </div>
           </div>
         </div>
-
-        <!-- PHP firebase/php-jwt -->
-        <div class="col-md-4">
-          <div class="panel panel-default patched">
-            <div class="panel-heading">
-              <span class="patched-badge">Update to ≥2.0.0 (<a href="https://auth0.com/blog/2015/03/31/critical-vulnerabilities-in-json-web-token-libraries/" title="Patched versions contain security fixes." target="_blank">?</a>)</span>
-              <h3 class="panel-title">PHP</h3>
-            </div>
-            <div class="panel-body library">
-              <div class="row">
-
-              <div class="col-md-6">
-                <div><i class="icon-budicon-500"></i>Sign</div>
-                <div><i class="icon-budicon-500"></i>Verify</div>
-                <div><i class="icon-budicon-501"></i><code>iss</code> check</div>
-                <div><i class="icon-budicon-501"></i><code>sub</code> check</div>
-                <div><i class="icon-budicon-501"></i><code>aud</code> check</div>
-                <div><i class="icon-budicon-500"></i><code>exp</code> check</div>
-                <div><i class="icon-budicon-500"></i><code>nbf</code> check</div>
-                <div><i class="icon-budicon-500"></i><code>iat</code> check</div>
-                <div><i class="icon-budicon-501"></i><code>jti</code> check</div>
-              </div>
-              <div class="col-md-6">
-
-                <div><i class="icon-budicon-500"></i>HS256</div>
-                <div><i class="icon-budicon-500"></i>HS384</div>
-                <div><i class="icon-budicon-500"></i>HS512</div>
-                <div><i class="icon-budicon-500"></i>RS256</div>
-                <div><i class="icon-budicon-501"></i>RS384</div>
-                <div><i class="icon-budicon-501"></i>RS512</div>
-                <div><i class="icon-budicon-501"></i>ES256</div>
-                <div><i class="icon-budicon-501"></i>ES384</div>
-                <div><i class="icon-budicon-501"></i>ES512</div>
-              </div>
-
-              </div>
-
-              <div class="author-info">
-
-                <a href="https://github.com/firebase">
-                    <i class="icon-budicon-333" data-toggle="tooltip" title="Maintainer: Firebase"></i>
-                </a>
-                <span class="stars" data-repo="firebase/php-jwt">
-                    <i class="icon-budicon-466"></i>
-                </span>
-
-                <div class="repository">
-                  <i class="fa fa-github"></i> <a href="https://github.com/firebase/php-jwt">View Repo</a>
-                </div>
-
-              </div>
-
-            </div>
-
-            <div class="panel-footer">
-              <div>
-                <code>composer require firebase/php-jwt</code>
-              </div>
-
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <!-- Ruby progrium/ruby-jwt -->
-        <div class="col-md-4">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">Ruby</h3>
-            </div>
-            <div class="panel-body library">
-              <div class="row">
-
-              <div class="col-md-6">
-                <div><i class="icon-budicon-500"></i>Sign</div>
-                <div><i class="icon-budicon-500"></i>Verify</div>
-                <div><i class="icon-budicon-500"></i><code>iss</code> check</div>
-                <div><i class="icon-budicon-500"></i><code>sub</code> check</div>
-                <div><i class="icon-budicon-500"></i><code>aud</code> check</div>
-                <div><i class="icon-budicon-500"></i><code>exp</code> check</div>
-                <div><i class="icon-budicon-500"></i><code>nbf</code> check</div>
-                <div><i class="icon-budicon-500"></i><code>iat</code> check</div>
-                <div><i class="icon-budicon-500"></i><code>jti</code> check</div>
-              </div>
-              <div class="col-md-6">
-                <div><i class="icon-budicon-500"></i>HS256</div>
-                <div><i class="icon-budicon-500"></i>HS384</div>
-                <div><i class="icon-budicon-500"></i>HS512</div>
-                <div><i class="icon-budicon-500"></i>RS256</div>
-                <div><i class="icon-budicon-500"></i>RS384</div>
-                <div><i class="icon-budicon-500"></i>RS512</div>
-                <div><i class="icon-budicon-501"></i>ES256</div>
-                <div><i class="icon-budicon-501"></i>ES384</div>
-                <div><i class="icon-budicon-501"></i>ES512</div>
-              </div>
-
-              </div>
-
-              <div class="author-info">
-
-                <i class="icon-budicon-333" data-toggle="tooltip" title="Maintainer: Jeff Lindsay & Tim Rudat"></i>
-
-                <span class="stars" data-repo="progrium/ruby-jwt">
-                    <i class="icon-budicon-466"></i>
-                </span>
-
-                <div class="repository">
-                  <i class="fa fa-github"></i> <a href="https://github.com/progrium/ruby-jwt">View Repo</a>
-                </div>
-
-              </div>
-            </div>
-
-            <div class="panel-footer">
-              <div>
-                <code>gem install jwt</code>
-              </div>
-
-            </div>
-          </div>
-          </div>
-
-        <!-- Go dgrijalva/jwt-go -->
-        <div class="col-md-4">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">Go</h3>
-            </div>
-            <div class="panel-body library">
-              <div class="row">
-
-              <div class="col-md-6">
-                <div><i class="icon-budicon-500"></i>Sign</div>
-                <div><i class="icon-budicon-500"></i>Verify</div>
-                <div><i class="icon-budicon-501"></i><code>iss</code> check</div>
-                <div><i class="icon-budicon-501"></i><code>sub</code> check</div>
-                <div><i class="icon-budicon-501"></i><code>aud</code> check</div>
-                <div><i class="icon-budicon-500"></i><code>exp</code> check</div>
-                <div><i class="icon-budicon-500"></i><code>nbf</code> check</div>
-                <div><i class="icon-budicon-501"></i><code>iat</code> check</div>
-                <div><i class="icon-budicon-501"></i><code>jti</code> check</div>
-              </div>
-              <div class="col-md-6">
-
-                <div><i class="icon-budicon-500"></i>HS256</div>
-                <div><i class="icon-budicon-501"></i>HS384</div>
-                <div><i class="icon-budicon-501"></i>HS512</div>
-                <div><i class="icon-budicon-500"></i>RS256</div>
-                <div><i class="icon-budicon-501"></i>RS384</div>
-                <div><i class="icon-budicon-501"></i>RS512</div>
-                <div><i class="icon-budicon-501"></i>ES256</div>
-                <div><i class="icon-budicon-501"></i>ES384</div>
-                <div><i class="icon-budicon-501"></i>ES512</div>
-              </div>
-              </div>
-              <div class="author-info">
-
-                <a href="https://github.com/dgrijalva">
-                    <i class="icon-budicon-333" data-toggle="tooltip" title="Maintainer: dgrijalva"></i>
-                </a>
-                <span class="stars" data-repo="dgrijalva/jwt-go">
-                    <i class="icon-budicon-466"></i>
-                </span>
-
-                <div class="repository">
-                  <i class="fa fa-github"></i> <a href="https://github.com/dgrijalva/jwt-go">View Repo</a>
-                </div>
-              </div>
-            </div>
-
-            <div class="panel-footer">
-              <div>
-                <code>go get github.com/dgrijalva/jwt-go</code>
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-
-        <!-- Java auth0/java-jwt -->
-        <div class="col-md-4">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">Java</h3>
-            </div>
-            <div class="panel-body library">
-              <div class="row">
-
-                <div class="col-md-6">
-                  <div><i class="icon-budicon-500"></i>Sign</div>
-                  <div><i class="icon-budicon-500"></i>Verify</div>
-                  <div><i class="icon-budicon-500"></i><code>iss</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>sub</code> check</div>
-                  <div><i class="icon-budicon-500"></i><code>aud</code> check</div>
-                  <div><i class="icon-budicon-500"></i><code>exp</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>nbf</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>iat</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>jti</code> check</div>
-                </div>
-                <div class="col-md-6">
-
-                  <div><i class="icon-budicon-500"></i>HS256</div>
-                  <div><i class="icon-budicon-500"></i>HS384</div>
-                  <div><i class="icon-budicon-500"></i>HS512</div>
-                  <div><i class="icon-budicon-501"></i>RS256</div>
-                  <div><i class="icon-budicon-501"></i>RS384</div>
-                  <div><i class="icon-budicon-501"></i>RS512</div>
-                  <div><i class="icon-budicon-501"></i>ES256</div>
-                  <div><i class="icon-budicon-501"></i>ES384</div>
-                  <div><i class="icon-budicon-501"></i>ES512</div>
-                </div>
-
-              </div>
-              <div class="author-info">
-
-                <a href="https://github.com/auth0">
-                    <i class="icon-budicon-333" data-toggle="tooltip" title="Maintainer: Auth0"></i>
-                </a>
-                <span class="stars" data-repo="auth0/java-jwt">
-                    <i class="icon-budicon-466"></i>
-                </span>
-
-                <div class="repository">
-                  <i class="fa fa-github"></i> <a href="https://github.com/auth0/java-jwt">View Repo</a>
-                </div>
-
-              </div>
-            </div>
-
-            <div class="panel-footer">
-                <code>maven: com.auth0 / java-jwt / 0.4</code>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <!-- Haskell ssaasen/haskell-jwt -->
-        <div class="col-md-4">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">Haskell</h3>
-            </div>
-            <div class="panel-body library">
-              <div class="row">
-                <div class="col-md-6">
-                  <div><i class="icon-budicon-500"></i>Sign</div>
-                  <div><i class="icon-budicon-500"></i>Verify</div>
-                  <div><i class="icon-budicon-501"></i><code>iss</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>sub</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>aud</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>exp</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>nbf</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>iat</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>jti</code> check</div>
-                </div>
-                <div class="col-md-6">
-                  <div><i class="icon-budicon-500"></i>HS256</div>
-                  <div><i class="icon-budicon-501"></i>HS384</div>
-                  <div><i class="icon-budicon-501"></i>HS512</div>
-                  <div><i class="icon-budicon-501"></i>RS256</div>
-                  <div><i class="icon-budicon-501"></i>RS384</div>
-                  <div><i class="icon-budicon-501"></i>RS512</div>
-                  <div><i class="icon-budicon-501"></i>ES256</div>
-                  <div><i class="icon-budicon-501"></i>ES384</div>
-                  <div><i class="icon-budicon-501"></i>ES512</div>
-                </div>
-              </div>
-
-              <div class="author-info">
-
-                <a href="https://bitbucket.org/ssaasen">
-                    <i class="icon-budicon-333" data-toggle="tooltip" title="Maintainer: Stefan Saasen"></i>
-                </a>
-
-                <div class="repository">
-                  <i class="fa fa-bitbucket"></i> <a href="https://bitbucket.org/ssaasen/haskell-jwt">View Repo</a>
-                </div>
-              </div>
-
-            <div class="panel-footer">
-              <div>
-                <code>cabal install jwt</code>
-              </div>
-            </div>
-          </div>
-        </div>
-        </div>
-
-        <!-- Rust GildedHonour/rust-jwt -->
-        <div class="col-md-4">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">Rust</h3>
-            </div>
-
-            <div class="panel-body library">
-              <div class="row">
-
-                <div class="col-md-6">
-                  <div><i class="icon-budicon-500"></i>Sign</div>
-                  <div><i class="icon-budicon-500"></i>Verify</div>
-                  <div><i class="icon-budicon-501"></i><code>iss</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>sub</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>aud</code> check</div>
-                  <div><i class="icon-budicon-500"></i><code>exp</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>nbf</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>iat</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>jti</code> check</div>
-                </div>
-                <div class="col-md-6">
-
-                  <div><i class="icon-budicon-500"></i>HS256</div>
-                  <div><i class="icon-budicon-500"></i>HS384</div>
-                  <div><i class="icon-budicon-500"></i>HS512</div>
-                  <div><i class="icon-budicon-501"></i>RS256</div>
-                  <div><i class="icon-budicon-501"></i>RS384</div>
-                  <div><i class="icon-budicon-501"></i>RS512</div>
-                  <div><i class="icon-budicon-501"></i>ES256</div>
-                  <div><i class="icon-budicon-501"></i>ES384</div>
-                  <div><i class="icon-budicon-501"></i>ES512</div>
-                </div>
-
-              </div>
-              <div class="author-info">
-
-                <a href="https://github.com/GildedHonour">
-                    <i class="icon-budicon-333" data-toggle="tooltip" title="Maintainer: GildedHonour"></i>
-                </a>
-                <span class="stars" data-repo="auth0/java-jwt">
-                    <i class="icon-budicon-466"></i>
-                </span>
-
-                <div class="repository">
-                  <i class="fa fa-github"></i> <a href="https://github.com/GildedHonour/rust-jwt">View Repo</a>
-                </div>
-              </div>
-            </div>
-
-            <div class="panel-footer">
-                <code>cargo: name = "jwt" version = "*"</code>
-            </div>
-          </div>
-        </div>
-
-        <!--PHP namshi/jose -->
-        <div class="col-md-4">
-          <div class="panel panel-default patched">
-            <div class="panel-heading">
-              <span class="patched-badge">Update to ≥2.2.0 (<a href="https://auth0.com/blog/2015/03/31/critical-vulnerabilities-in-json-web-token-libraries/" title="Patched versions contain security fixes." target="_blank">?</a>)</span>
-              <h3 class="panel-title">PHP</h3>
-            </div>
-            <div class="panel-body library">
-              <div class="row">
-
-              <div class="col-md-6">
-                <div><i class="icon-budicon-500"></i>Sign</div>
-                <div><i class="icon-budicon-500"></i>Verify</div>
-                <div><i class="icon-budicon-500"></i><code>iss</code> check</div>
-                <div><i class="icon-budicon-501"></i><code>sub</code> check</div>
-                <div><i class="icon-budicon-501"></i><code>aud</code> check</div>
-                <div><i class="icon-budicon-500"></i><code>exp</code> check</div>
-                <div><i class="icon-budicon-500"></i><code>nbf</code> check</div>
-                <div><i class="icon-budicon-500"></i><code>iat</code> check</div>
-                <div><i class="icon-budicon-501"></i><code>jti</code> check</div>
-              </div>
-              <div class="col-md-6">
-
-                <div><i class="icon-budicon-500"></i>HS256</div>
-                <div><i class="icon-budicon-500"></i>HS384</div>
-                <div><i class="icon-budicon-500"></i>HS512</div>
-                <div><i class="icon-budicon-500"></i>RS256</div>
-                <div><i class="icon-budicon-500"></i>RS384</div>
-                <div><i class="icon-budicon-500"></i>RS512</div>
-                <div><i class="icon-budicon-501"></i>ES256</div>
-                <div><i class="icon-budicon-501"></i>ES384</div>
-                <div><i class="icon-budicon-501"></i>ES512</div>
-              </div>
-
-              </div>
-
-              <div class="author-info">
-
-                <a href="https://github.com/namshi">
-                    <i class="icon-budicon-333" data-toggle="tooltip" title="Maintainer: Namshi"></i>
-                </a>
-                <span class="stars" data-repo="namshi/jose">
-                    <i class="icon-budicon-466"></i>
-                </span>
-
-                <div class="repository">
-                  <i class="fa fa-github"></i> <a href="https://github.com/namshi/jose">View Repo</a>
-                </div>
-
-              </div>
-
-            </div>
-
-            <div class="panel-footer">
-              <div>
-                <code>composer namshi/jose</code>
-              </div>
-
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <!-- Lua (openresty) SkyLothar/lua-resty-jwt -->
-        <div class="col-md-4">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">Lua (openresty)</h3>
-            </div>
-            <div class="panel-body library">
-              <div class="row">
-
-                <div class="col-md-6">
-                  <div><i class="icon-budicon-500"></i>Sign</div>
-                  <div><i class="icon-budicon-500"></i>Verify</div>
-                  <div><i class="icon-budicon-501"></i><code>iss</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>sub</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>aud</code> check</div>
-                  <div><i class="icon-budicon-500"></i><code>exp</code> check</div>
-                  <div><i class="icon-budicon-500"></i><code>nbf</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>iat</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>jti</code> check</div>
-                </div>
-                <div class="col-md-6">
-
-                  <div><i class="icon-budicon-500"></i>HS256</div>
-                  <div><i class="icon-budicon-501"></i>HS384</div>
-                  <div><i class="icon-budicon-500"></i>HS512</div>
-                  <div><i class="icon-budicon-501"></i>RS256</div>
-                  <div><i class="icon-budicon-501"></i>RS384</div>
-                  <div><i class="icon-budicon-501"></i>RS512</div>
-                  <div><i class="icon-budicon-501"></i>ES256</div>
-                  <div><i class="icon-budicon-501"></i>ES384</div>
-                  <div><i class="icon-budicon-501"></i>ES512</div>
-                </div>
-
-              </div>
-              <div class="author-info">
-
-                <a href="https://github.com/SkyLothar">
-                    <i class="icon-budicon-333" data-toggle="tooltip" title="Maintainer: SkyLothar"></i>
-                </a>
-                <span class="stars" data-repo="SkyLothar/lua-resty-jwt">
-                    <i class="icon-budicon-466"></i>
-                </span>
-
-                <div class="repository">
-                  <i class="fa fa-github"></i> <a href="https://github.com/SkyLothar/lua-resty-jwt">View Repo</a>
-                </div>
-
-              </div>
-            </div>
-
-            <div class="panel-footer">
-              <code>sbt: "com.jason-goodwin" %% "authentikat-jwt" % "0.3.5" </code>
-            </div>
-          </div>
-        </div>
-
-        <!-- Java auth0/java-jwt -->
-        <div class="col-md-4">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">Java</h3>
-            </div>
-            <div class="panel-body library">
-              <div class="row">
-
-                <div class="col-md-6">
-                  <div><i class="icon-budicon-500"></i>Sign</div>
-                  <div><i class="icon-budicon-500"></i>Verify</div>
-                  <div><i class="icon-budicon-500"></i><code>iss</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>sub</code> check</div>
-                  <div><i class="icon-budicon-500"></i><code>aud</code> check</div>
-                  <div><i class="icon-budicon-500"></i><code>exp</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>nbf</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>iat</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>jti</code> check</div>
-                </div>
-                <div class="col-md-6">
-
-                  <div><i class="icon-budicon-500"></i>HS256</div>
-                  <div><i class="icon-budicon-500"></i>HS384</div>
-                  <div><i class="icon-budicon-500"></i>HS512</div>
-                  <div><i class="icon-budicon-500"></i>RS256</div>
-                  <div><i class="icon-budicon-500"></i>RS384</div>
-                  <div><i class="icon-budicon-500"></i>RS512</div>
-                  <div><i class="icon-budicon-500"></i>ES256</div>
-                  <div><i class="icon-budicon-500"></i>ES384</div>
-                  <div><i class="icon-budicon-500"></i>ES512</div>
-                </div>
-
-              </div>
-              <div class="author-info">
-
-                <a href="https://github.com/connect2id">
-                    <i class="icon-budicon-333" data-toggle="tooltip" title="Maintainer: connect2id"></i>
-                </a>
-
-                <div class="repository">
-                  <i class="fa fa-bitbucket"></i> <a href="https://bitbucket.org/connect2id/nimbus-jose-jwt">View Repo</a>
-                </div>
-
-              </div>
-            </div>
-
-            <div class="panel-footer">
-              <code>maven: com.nimbusds / nimbus-jose-jwt / 3.6 </code>
-            </div>
-          </div>
-        </div>
-
-        <!-- Scala jasongoodwin/authentikat-jwt -->
-        <div class="col-md-4">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">Scala</h3>
-            </div>
-            <div class="panel-body library">
-              <div class="row">
-
-                <div class="col-md-6">
-                  <div><i class="icon-budicon-500"></i>Sign</div>
-                  <div><i class="icon-budicon-500"></i>Verify</div>
-                  <div><i class="icon-budicon-501"></i><code>iss</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>sub</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>aud</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>exp</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>nbf</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>iat</code> check</div>
-                  <div><i class="icon-budicon-501"></i><code>jti</code> check</div>
-                </div>
-                <div class="col-md-6">
-
-                  <div><i class="icon-budicon-500"></i>HS256</div>
-                  <div><i class="icon-budicon-500"></i>HS384</div>
-                  <div><i class="icon-budicon-500"></i>HS512</div>
-                  <div><i class="icon-budicon-501"></i>RS256</div>
-                  <div><i class="icon-budicon-501"></i>RS384</div>
-                  <div><i class="icon-budicon-501"></i>RS512</div>
-                  <div><i class="icon-budicon-501"></i>ES256</div>
-                  <div><i class="icon-budicon-501"></i>ES384</div>
-                  <div><i class="icon-budicon-501"></i>ES512</div>
-                </div>
-
-              </div>
-              <div class="author-info">
-
-                <a href="https://github.com/jasongoodwin">
-                    <i class="icon-budicon-333" data-toggle="tooltip" title="Maintainer: jasongoodwin"></i>
-                </a>
-                <span class="stars" data-repo="jasongoodwin/authentikat-jwt">
-                    <i class="icon-budicon-466"></i>
-                </span>
-
-                <div class="repository">
-                  <i class="fa fa-github"></i> <a href="https://github.com/jasongoodwin/authentikat-jwt">View Repo</a>
-                </div>
-
-              </div>
-            </div>
-
-            <div class="panel-footer">
-              <code>sbt: "com.jason-goodwin" %% "authentikat-jwt" % "0.3.5" </code>
-            </div>
-          </div>
-        </div>
-
       </div>
     </div>
 
-</div>
+    <div class="bt-con">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <h3>Badges</h3>
+            <div class="hold">
+              <a href="#"><img src="img/pic_logo3.svg" alt="">View on JWT.IO</a>
+              <div class="text-hold">
+                <p>https://jwt.io/assets/viewonjtwio.svg</p>
+              </div>
+            </div>
+            <div class="hold">
+              <a href="#"><img src="img/pic_logo3.svg" alt="">We support JWT</a>
+              <div class="text-hold">
+                <p>https://jwt.io/assets/wesupportjwt.svg</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-2">
+            <h3>Logotype</h3>
+            <div class="hold type-2">
+              <a href="#"><img src="img/pic_logo2.svg" alt=""></a>
+              <div class="text-hold">
+                <p>https://jwt.io/assets/isotype.svg</p>
+              </div>
+            </div>
+            <div class="hold type-3">
+              <a href="#"><img src="img/pic_logo4.svg" alt=""></a>
+              <div class="text-hold">
+                <p>https://jwt.io/assets/logotype.svg</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="tshirts">
+              <img src="img/pic_tshirt.png" class="normal" alt="">
+              <img src="img/pic_tshirt_b.png" class="hover" alt="">
+              <a class="buy" href="#">BUY T-SHIRT</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
     <div class="banner">
-      <img src="https://cdn.auth0.com/jwt/logo-auth0.png">
-
-      <p>JWT.io is brought to you by <a href="https://auth0.com">Auth0</a></p>
-      <p>A cloud service, APIs and tools that eliminate the friction of identity for your applications and APIs.</p>
-      <p><a href="https://auth0.com" target="_blank" class="btn btn-success btn-lg">Learn More</a></p>
+      <img src="img/pic_logo_ft.svg" alt="">
+      <div class="container">
+        <p>JWT.io is brought to you by Auth0 A cloud service, APIs and tools that eliminate the friction of identity for your applications and APIs.</p>
+        <div class="counter"></div>
+        <p class="note">TOKENS CREATED</p>
+      </div>
     </div>
-
-
     <div id="footer">
       <div class="container">
-        <p class="text-muted">
+        <div class="ft-note"> Missing something? <a href="https://github.com/jsonwebtoken/jsonwebtoken.github.io/edit/master/html/index.html">Send a Pull Request</a> </div>
+        <div class="design"><a href="#">Supported by <img src="img/ico_logo.svg" alt=""></a></div>
+        <div class="twitter"><a href="#"></a></div>
 
-          <div class="float-right">
-            Missing something? <a href="https://github.com/jsonwebtoken/jsonwebtoken.github.io/edit/master/html/index.html">Send a Pull Request</a>
-          </div>
-
-          Made with <span class="fa fa-heart"></span> by <a href="https://auth0.com">Auth0</a>
-
-
-          </p>
       </div>
     </div>
 
