@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="90px" height="90px" viewBox="0 0 90 90" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3 (11970) - http://www.bohemiancoding.com/sketch -->
+    <title>Mask + Bitmap</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <circle id="path-1" cx="45" cy="45" r="45"></circle>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Desktop" sketch:type="MSArtboardGroup" transform="translate(-1081.000000, -2407.000000)">
+            <g id="Rectangle-154-+-Group" sketch:type="MSLayerGroup" transform="translate(0.000000, 600.000000)">
+                <g id="Group" transform="translate(0.000000, 58.000000)">
+                    <g id="Group-Copy-3-+-Rectangle-118-+-Oval-1-+-asp_net_icon_transparent-Copy-Copy-Copy" transform="translate(938.000000, 1749.000000)">
+                        <g id="Mask-+-Bitmap" transform="translate(143.000000, 0.000000)">
+                            <mask id="mask-2" sketch:name="Mask" fill="white">
+                                <use xlink:href="#path-1"></use>
+                            </mask>
+                            <use id="Mask" fill="#FFFFFF" sketch:type="MSShapeGroup" xlink:href="#path-1"></use>
+                            <g id="javascript" mask="url(#mask-2)" sketch:type="MSShapeGroup">
+                                <g transform="translate(20.000000, 20.000000)">
+                                    <rect id="Rectangle-path" fill="#F7DF1E" x="0" y="0" width="50" height="50"></rect>
+                                    <path d="M33.5873016,39.0626984 C34.5944444,40.7071429 35.9047619,41.915873 38.2222222,41.915873 C40.1690476,41.915873 41.4126984,40.9428571 41.4126984,39.5984127 C41.4126984,37.9873016 40.1349206,37.4166667 37.9920635,36.4793651 L36.8174603,35.9753968 C33.4269841,34.5309524 31.1746032,32.7214286 31.1746032,28.8960317 C31.1746032,25.3722222 33.8595238,22.6896825 38.0555556,22.6896825 C41.0428571,22.6896825 43.1904762,23.7293651 44.7380952,26.4515873 L41.0793651,28.8007937 C40.2738095,27.3563492 39.4047619,26.7873016 38.0555556,26.7873016 C36.6793651,26.7873016 35.8071429,27.6603175 35.8071429,28.8007937 C35.8071429,30.2103175 36.6801587,30.7809524 38.6960317,31.6539683 L39.8706349,32.1571429 C43.8626984,33.8690476 46.1166667,35.6142857 46.1166667,39.5380952 C46.1166667,43.768254 42.7936508,46.0857143 38.3309524,46.0857143 C33.9674603,46.0857143 31.1484127,44.0063492 29.7690476,41.2809524 L33.5873016,39.0626984 Z M16.9896825,39.4698413 C17.7277778,40.7793651 18.3992063,41.8865079 20.0134921,41.8865079 C21.5571429,41.8865079 22.5309524,41.2825397 22.5309524,38.934127 L22.5309524,22.9579365 L27.2293651,22.9579365 L27.2293651,38.997619 C27.2293651,43.8626984 24.3769841,46.0769841 20.2134921,46.0769841 C16.4515873,46.0769841 14.2730159,44.1301587 13.1650794,41.7853175 L16.9896825,39.4698413 Z" id="Shape" fill="#000000"></path>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
