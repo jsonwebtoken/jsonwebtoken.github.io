@@ -25,6 +25,6 @@
   "scripts": {
     "test": "grunt test --verbose",
     "start": "serve . --port $PORT",
-    "postinstall": "./node_modules/bower/bin/bower install"
+    "postinstall": "bower install"
   }
 }
