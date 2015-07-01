@@ -104,6 +104,7 @@ html(lang='en')
                     | Decoded
                     small.pull-right edit the payload and secret (only HS256 supported)
             #tab-1.input.js-input.tab-content(style='display: block;')
+
             #tab-2.output.tab-content
               .jwt-explained.jwt-header
                 p.text-line
@@ -111,12 +112,14 @@ html(lang='en')
                   |  ALGORITHM & TOKEN TYPE
                   a(href='#') LEARN MORE
                 .js-header
+
               .jwt-explained.jwt-payload
                 p.text-line
                   span PAYLOAD:
                   |  DATA
                   a(href='#') LEARN MORE
                 .js-payload
+
               .jwt-explained.jwt-signature
                 p.text-line
                   span VERIFY SIGNATURE:
@@ -126,12 +129,14 @@ html(lang='en')
                   HMACSHA256(
                     base64UrlEncode(header) + "." +
                     base64UrlEncode(payload),
-                  )
+                    <input type="text" name="secret" value="secret">
+                  )<span class="is-base64-encoded-label"> <input type="checkbox" name="is-base64-encoded">secret base64 encoded</span>
                 pre.RS256.
                   RSASHA256(
                     base64UrlEncode(header) + "." +
                     base64UrlEncode(payload),
-                                  ,
+                    <textarea rows="4" name="public-key" placeholder="Public Key or Certificate. Enter it in plain text only if you want to verify a token"></textarea>,
+                    <textarea rows="5" name="private-key" placeholder="Private Key (RSA). Enter the it in plain text only if you want to generate a new token. The key never leaves your browser."></textarea>
                   )
         .row
           .col-md-12

@@ -61,7 +61,7 @@ module.exports = function (grunt) {
     }
   });
 
-  grunt.registerTask('build', ['clean', 'stylus', 'useminPrepare', 'concat', 'uglify', 'cssmin', 'htmlmin', 'usemin']);
+  grunt.registerTask('build', ['clean', 'stylus', 'jade', 'useminPrepare', 'concat', 'uglify', 'cssmin', 'htmlmin', 'usemin']);
   grunt.registerTask('test', ['build', 'mocha_phantomjs']);
   grunt.registerTask('default', ['build', 'jade', 'connect', 'watch']);
 };

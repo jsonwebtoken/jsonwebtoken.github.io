@@ -116,19 +116,19 @@
             <div class="jwt-explained jwt-signature">
               <p class="text-line"><span>VERIFY SIGNATURE:</span>  LOREM IPSUM DOLOR SIT <a href="#">LEARN MORE</a></p>
               <pre class="HS256">
-HMACSHA256(
-  base64UrlEncode(header) + "." +
-  base64UrlEncode(payload),
-  <input type="text" name="secret" value="secret">
-)<span class="is-base64-encoded-label"> <input type="checkbox" name="is-base64-encoded">secret base64 encoded</span>
+                HMACSHA256(
+                  base64UrlEncode(header) + "." +
+                  base64UrlEncode(payload),
+                  <input type="text" name="secret" value="secret">
+                )<span class="is-base64-encoded-label"> <input type="checkbox" name="is-base64-encoded">secret base64 encoded</span>
               </pre>
               <pre class="RS256">
-RSASHA256(
-  base64UrlEncode(header) + "." +
-  base64UrlEncode(payload),
-  <textarea rows="4" name="public-key" placeholder="Public Key or Certificate. Enter it in plain text only if you want to verify a token"></textarea>,
-  <textarea rows="5" name="private-key" placeholder="Private Key (RSA). Enter the it in plain text only if you want to generate a new token. The key never leaves your browser."></textarea>
-)
+                RSASHA256(
+                  base64UrlEncode(header) + "." +
+                  base64UrlEncode(payload),
+                  <textarea rows="4" name="public-key" placeholder="Public Key or Certificate. Enter it in plain text only if you want to verify a token"></textarea>,
+                  <textarea rows="5" name="private-key" placeholder="Private Key (RSA). Enter the it in plain text only if you want to generate a new token. The key never leaves your browser."></textarea>
+                )
               </pre>
             </div>
           </div>
@@ -141,6 +141,7 @@ RSASHA256(
       </div>
     </div>
   </div>
+
   <div class="bg-grey">
     <div class="container">
       <div class="page-header"> <a name="libraries"></a>
