@@ -1,3 +1,85 @@
+// 07012015 **
+function equalHeight(group) {
+  var tallest = 0;
+  group.css({ minHeight: 0 })
+  group.each(function() {
+    var thisHeight = $(this).outerHeight();
+    if(thisHeight > tallest) {
+      tallest = thisHeight;
+    }
+  });
+  group.css({ minHeight: tallest })
+};
+
+var clock = $('.counter').FlipClock(12323800, {
+  clockFace: 'Counter'
+});
+
+$(window).resize(function() {
+    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
+});
+
+setTimeout(function() {
+  setInterval(function() {
+    clock.increment();
+  }, 1000);
+});
+if (navigator.userAgent.indexOf('Mac OS X') != -1) {
+  $("body").addClass("mac");
+} else {
+  $("body").addClass("pc");
+}
+$(".jwt-playground .tab-link a").click(function() {
+  var container = $(this).parentsUntil(".jwt-playground").parent();
+  if (!$(this).parent().hasClass("current")) {
+    container.find(".tab-nav .current").removeClass("current")
+    $(this).parent().addClass("current")
+    container.find(".tab-content").hide()
+    $($(this).attr("href")).show();
+  };
+  return false;
+});
+// $('.bt-con .text-hold').each(function() {
+//   var tett = $(this).find("p").text();
+//   $(this).zclip({
+//   path:'ZeroClipboard.swf',
+//   copy: tett
+//   });
+// });
+  var $grid = $('.filter-set').isotope({
+    layoutMode: 'fitRows',
+    itemSelector: '.col-md-4',
+    masonry: {
+      columnWidth: 1
+    }
+  });
+
+    var offsetheight = $(".banner-jwt").height();
+    $(window).scroll(function() {
+      if ($(window).scrollTop() > offsetheight) {
+        $(".navbar-fixed-top").addClass("moved")
+      } else {
+        $(".navbar-fixed-top").removeClass("moved")
+      };
+    });
+  $('#filter').on( 'change', function() {
+    $grid.isotope({ filter: $(this).val() });
+  });
+$(".panel-default .panel-heading").click(function() {
+  if ($(this).hasClass("active")) {
+    $(".panel-default .panel-heading").removeClass("active");
+    $(".panel-default .panel-wrap").slideUp(300);
+  } else {
+    $(".panel-default .panel-heading").removeClass("active");
+    $(".panel-default .panel-wrap").slideUp(300);
+    $(this).addClass("active");
+    $(this).next(".panel-wrap").slideDown(300);
+  };
+  return false;
+});
+
+// Principal JS **
+
 (function () {
   // Taken from http://stackoverflow.com/questions/2490825/how-to-trigger-event-in-javascript
   function fireEvent(element) {
@@ -84,6 +166,11 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
 
   function setJSONEditorContent(jsonEditor, decodedJSON, selector) {
     jsonEditor.off('change', refreshTokenEditor);
+
+    // 07012015
+    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
+    // end 07012015
+
     if (decodedJSON.result !== null && decodedJSON.result !== undefined) {
       jsonEditor.setValue(decodedJSON.result);
     } else {
@@ -94,7 +181,16 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     } else {
       selector.removeClass('error');
     }
+
+    // 07012015
+    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
+    // end 07012015
+
     jsonEditor.on('change', refreshTokenEditor);
+
+    // 07012015
+    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
+    // end 07012015
   }
 
 
@@ -127,6 +223,10 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     setJSONEditorContent(payloadEditor, decodedPayload, selector);
 
     fireEvent(secretElement);
+
+    // 07012015
+    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
+    // end 07012015
   }
 
   function selectDetectedAlgorithm(alg){
@@ -134,11 +234,19 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     $algRadio.prop('checked', true);
 
     fireEvent($algRadio.get(0));
+
+    // 07012015
+    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
+    // end 07012015
   }
 
   function saveToStorage(jwt) {
     // Save last valid jwt value for refresh
     localStorage.jwtValue = jwt;
+
+    // 07012015
+    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
+    // end 07012015
   }
 
   function loadFromStorage(cb) {
@@ -189,6 +297,10 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     }
     tokenEditor.on('change', tokenEditorOnChangeListener);
     fireEvent(secretElement);
+
+    // 07012015
+    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
+    // end 07012015
   }
 
   function getFirstElementByClassName(selector) {
@@ -237,6 +349,9 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
       isBase64
     );
 
+    // 07012015
+    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
+    // end 07012015
 
     var error = result.error;
     result = result.result;
@@ -249,6 +364,10 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
       $(signatureElement).addClass('invalid-token');
       signatureElement.innerHTML = '<i class="fa fa-times-circle-o"></i> invalid signature';
     }
+
+    // 07012015
+    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
+    // end 07012015
   }
 
   function getKey(algorithm, action) {
@@ -261,6 +380,10 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     } else {
         return action === 'sign' ? privateKeyElement.val() : publicKeyElement.val();
     }
+
+    // 07012015
+    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
+    // end 07012015
   }
 
   function getAlgorithm() {
@@ -284,6 +407,10 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
       algorithm === 'HS256'){
         setDefaultsForHMAC();
     }
+
+    // 07012015
+    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
+    // end 07012015
   }
 
   function setDefaultsForRSA() {
@@ -291,10 +418,18 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
 
     $('.jwt-signature textarea[name=public-key]').val(DEFAULT_PUBLIC_RSA);
     $('.jwt-signature textarea[name=private-key]').val(DEFAULT_PRIVATE_RSA);
+
+    // 07012015
+    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
+    // end 07012015
   }
 
   function setDefaultsForHMAC(){
     tokenEditor.setValue(DEFAULT_HS_TOKEN);
+
+    // 07012015
+    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
+    // end 07012015
   }
 
   function validateKey() {
@@ -312,6 +447,10 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     } else {
       $textarea.addClass('error');
     }
+
+    // 07012015
+    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
+    // end 07012015
   }
 
   updateAlgorithm();
@@ -319,6 +458,10 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
   algorithmRadios.on('change', function(){
     updateAlgorithm();
     updateSignature();
+
+    // 07012015
+    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
+    // end 07012015
   });
 
   $('.jwt-signature textarea').on('change', updateSignature, false);
@@ -375,6 +518,20 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
 //Inizialize bootstrap widgets
 $('[data-toggle="tooltip"]').tooltip();
 
+// 07012015
+$("#selectAl").change(function() {
+   $('.algorithm input[value="'+$(this).val()+'"]').parent().trigger("click");
+   $('.algorithm input[value="'+$(this).val()+'"]').change();
+    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
+});
+
+$(".algorithm input").change(function() {
+  $(".jwt-playground .btn .filter-option").text($(this).val());
+    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
+});
+$("#selectAl").change(function(){var a=$('.algorithm input[value="'+$(this).val()+'"]');a.prop("checked",!0)})
+// end 07012015
+
 // Fetch stargazers count for each repo from GitHub's API
 $('.stars').each(function(idx, element){
     var $el = $(element);
@@ -403,41 +560,41 @@ $('.stars').each(function(idx, element){
 //   ctx.fillStyle = color;
 //   ctx.lineWidth = .1;
 //   ctx.strokeStyle = color;
-// 
+//
 //   var mousePosition = {
 //     x: 30 * canvas.width / 100,
 //     y: 30 * canvas.height / 100
 //   };
-// 
+//
 //   var dots = {
 //     nb: 300,
 //     distance: 100,
 //     d_radius: 150,
 //     array: []
 //   };
-// 
+//
 //   function Dot(){
 //     this.x = Math.random() * canvas.width;
 //     this.y = Math.random() * canvas.height;
-// 
+//
 //     this.vx = -.5 + Math.random();
 //     this.vy = -.5 + Math.random();
-// 
+//
 //     this.radius = Math.random();
 //   }
-// 
+//
 //   Dot.prototype = {
 //     create: function(){
 //       ctx.beginPath();
 //       ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
 //       ctx.fill();
 //     },
-// 
+//
 //     animate: function(){
 //       for(i = 0; i < dots.nb; i++){
-// 
+//
 //         var dot = dots.array[i];
-// 
+//
 //         if(dot.y < 0 || dot.y > canvas.height){
 //           dot.vx = dot.vx;
 //           dot.vy = - dot.vy;
@@ -450,13 +607,13 @@ $('.stars').each(function(idx, element){
 //         dot.y += dot.vy;
 //       }
 //     },
-// 
+//
 //     line: function(){
 //       for(i = 0; i < dots.nb; i++){
 //         for(j = 0; j < dots.nb; j++){
 //           i_dot = dots.array[i];
 //           j_dot = dots.array[j];
-// 
+//
 //           if((i_dot.x - j_dot.x) < dots.distance && (i_dot.y - j_dot.y) < dots.distance && (i_dot.x - j_dot.x) > - dots.distance && (i_dot.y - j_dot.y) > - dots.distance){
 //             if((i_dot.x - mousePosition.x) < dots.d_radius && (i_dot.y - mousePosition.y) < dots.d_radius && (i_dot.x - mousePosition.x) > - dots.d_radius && (i_dot.y - mousePosition.y) > - dots.d_radius){
 //               ctx.beginPath();
@@ -470,7 +627,7 @@ $('.stars').each(function(idx, element){
 //       }
 //     }
 //   };
-// 
+//
 //   function createDots(){
 //     ctx.clearRect(0, 0, canvas.width, canvas.height);
 //     for(i = 0; i < dots.nb; i++){
@@ -479,14 +636,14 @@ $('.stars').each(function(idx, element){
 //         dots.array[i] = new Dot();
 //       }
 //       dot = dots.array[i];
-// 
+//
 //       dot.create();
 //     }
-// 
+//
 //     dot.line();
 //     dot.animate();
 //   }
-// 
+//
 //   $('canvas').on('mousemove mouseleave', function(e){
 //     if(e.type == 'mousemove'){
 //       mousePosition.x = e.pageX;
