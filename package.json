@@ -1,10 +1,12 @@
 {
   "name": "jwt.io",
   "version": "0.0.1",
+  "dependencies": {
+    "bower": "^1.4.1"
+  },
   "devDependencies": {
     "expect.js": "^0.3.1",
     "grunt": "^0.4.2",
-    "bower": "^1.4.1",
     "grunt-contrib-clean": "^0.6.0",
     "grunt-contrib-concat": "^0.5.0",
     "grunt-contrib-connect": "^0.8.0",
@@ -21,6 +23,6 @@
   },
   "scripts": {
     "test": "grunt test --verbose",
-    "postinstall": "bower install"
+    "postinstall": "./node_modules/bower/bin/bower install"
   }
 }
