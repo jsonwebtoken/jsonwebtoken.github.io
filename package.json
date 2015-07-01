@@ -24,6 +24,6 @@
   "scripts": {
     "test": "grunt test --verbose",
     "start": "node server.js",
-    "postinstall": "bash ./post_install.sh"
+    "postinstall": "./node_modules/bower/bin/bower install"
   }
 }
