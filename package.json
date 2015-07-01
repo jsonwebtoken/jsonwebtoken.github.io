@@ -2,6 +2,7 @@
   "name": "jwt.io",
   "version": "0.0.1",
   "dependencies": {
+    "serve": "*",
     "bower": "^1.4.1",
     "grunt": "^0.4.5"
   },
@@ -23,6 +24,7 @@
   },
   "scripts": {
     "test": "grunt test --verbose",
+    "start": "serve . --port $PORT",
     "postinstall": "./node_modules/bower/bin/bower install"
   }
 }
