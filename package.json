@@ -23,7 +23,6 @@
   },
   "scripts": {
     "test": "grunt test --verbose",
-    "start": "node server.js",
     "postinstall": "./node_modules/bower/bin/bower install"
   }
 }
