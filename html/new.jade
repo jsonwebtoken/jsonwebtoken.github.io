@@ -10,8 +10,9 @@ html(lang='en')
     script(type='text/javascript', src='//use.typekit.net/iws6ohy.js')
     script(type='text/javascript').
       try{Typekit.load();}catch(e){}
-    link(rel='stylesheet', href='//cdn.auth0.com/styleguide/1.0.0/index.min.css', type='text/css', media='all')
-
+      
+    link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css")
+      
     // build:css dist/css/app.css
     link(rel='stylesheet', href='/vendor/codemirror/lib/codemirror.css', type='text/css', media='all')
     link(rel='stylesheet', href='/vendor/codemirror/addon/lint/lint.css', type='text/css', media='all')
@@ -19,11 +20,10 @@ html(lang='en')
 
     link(rel='search', type='application/opensearchdescription+xml', title='JWT.io', href='/opensearch.xml')
 
-    // Bootstrap core CSS
-    link(href='//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css', rel='stylesheet')
-
     // Just for debugging purposes. Don't actually copy this line!
     | <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    link(rel="stylesheet", type="text/css", href="//cloud.typography.com/7834932/650606/css/fonts.css")
 
     // HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries
     | <!--[if lt IE 9]><script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script><script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script><![endif]-->
@@ -1166,4 +1166,3 @@ html(lang='en')
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
       ga('create', 'UA-37952868-2', 'auto');
       ga('send', 'pageview');
-
