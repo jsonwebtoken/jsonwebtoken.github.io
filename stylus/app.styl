@@ -138,7 +138,7 @@ code
     .twitter
       position: absolute
       top: 38px;
-      right: 30px;
+      right: 0;
 
 
 .banner-jwt
@@ -429,14 +429,10 @@ code
 
 .tabs
   clear both
-  +breakpoint("desktop")
-    margin 0 -5px
+
 
 .jwt-playground
-  padding 0 24px
-  // margin 0 -15px
   position relative
-  overflow hidden
   width auto
   .output
     float right
@@ -835,7 +831,6 @@ pre
   color #4A4A4A
   background-color #fffcd3
   border none
-  margin 0 -15px
   font-size 12px
   line-height 18px
   padding 20px 60px 20px 36px
@@ -844,18 +839,17 @@ pre
     color #4A4A4A
     background-color #fffcd3
     border none
-    margin 0 -15px
-    padding 24px;
-    font-size 16px
+    padding 20px 24px ;
+    font-size 13px
     color #4A4A4A
-    line-height 14px
-    margin-bottom 90px
+    margin-bottom 70px
   em
     +breakpoint("desktop")
       font-style normal
   .more
     border-bottom: 1px solid #ccc;
     text-decoration: none;
+    color: #333;
 
 .panel
   margin 0 -15px
