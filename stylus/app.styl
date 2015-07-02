@@ -634,23 +634,29 @@ body
   padding-bottom 28px
 
   +breakpoint("desktop")
-    padding 220px 0 120px 0;
+    padding 200px 0 100px 0;
 
   p
     font-size 22px
     line-height 29px
-    margin 0 -10px
     +breakpoint("desktop")
-      font-size 32px
+      font-size 30px
       color #FFFFFF
-      line-height 50px
-      padding 0 40px
+      line-height 56px
       font-weight 300
+      max-width: 900px;
+      margin: auto;
       strong
         font-weight normal
       span
         font-size 32px
         font-weight normal
+
+    &:last-child
+      margin-bottom: 0;
+      +breakpoint("desktop")
+        margin-top: 10px;
+
   .logo
     width 67px
     display block
