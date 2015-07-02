@@ -70,139 +70,76 @@ code
 // navbar-fixed-top
 
 .navbar
-  margin 0
+  background black
   +breakpoint("desktop")
-    height 100px
-    background #000000
-
-.navbar-default .navbar-nav > .active > a,
-.navbar-default .navbar-nav > .active > a:focus,
-.navbar-default .navbar-nav > .active > a:hover
-  color black
-
-.navbar-default
-  .navbar-brand
-    font-weight bold
-    color black
-    text-transform uppercase
-    color black
-    font-size 14px
-    letter-spacing .5px
-    margin-right 30px
-
-  &.navbar-fixed-top
-    background rgba(255, 255, 255, 0.9)
+    width 100%
+    min-height 100px
+    margin 0
+    border-radius 0
     border 0
-    color white
+    border-bottom 1px solid rgba(#4A4A4A,.6)
+    position fixed
+    top 0
+    z-index 100
 
-  &.moved .navbar-brand
-    +breakpoint("desktop")
-      margin-right -38px
-
-.navbar-default
-
-  &.navbar-fixed-top
-    +breakpoint("desktop")
-      background #000
-      border-bottom 1px solid #2c2c2c
-  .navbar-toggle
-    border none
-    margin-top 16px
-    background url(../../img/ico_close.svg) no-repeat 50% 50%
-    background-size 22px 22px
-    .icon-bar
-      background-color transparent
-    &.collapsed
-      background transparent
-      .icon-bar
-        background-color #fff
-  .navbar-brand
-    img
-      +breakpoint("desktop")
-        height: 26px;
-        margin-top: 13px;
-
-.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover
-  background-color transparent !important
-
-
-.container-fluid>.navbar-collapse, .container-fluid>.navbar-header, .container>.navbar-collapse, .container>.navbar-header
-  height 65px
-  background #000000
-  border-top 1px solid #2d2d2d
-  max-height none
-  +breakpoint("desktop")
-    height 100px
-    background none
-
-.navbar-brand
-  height auto
-  padding 0
-  margin 23px 0 0 25px
-
-
-.moved.navbar-default .navbar-brand img.hid-m
-  +breakpoint("desktop")
-    display block !important
-    float left
-    width 54px
-    height 54px
-    margin-right 14px
-    margin-top -1px
-
-.navbar-toggle:not(.collapsed) + .navbar-brand .hid-m
-  display block
-  float left
-  width 26px
-  height 26px
-  margin-right 8px
-  margin-top -4px
-
-
-.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover
-  color #FFFFFF
-  background none
-
-.navbar-nav
-  padding-top 79px
-  padding-bottom 63px
-  +breakpoint("desktop")
-    padding-top 0
-    padding-bottom 0
-    float left
-    margin 29px 0 0 325px
-  & > li
-    & > a
-      text-align center
-      color #fff
-      font-size 34px
-      line-height 34px
-      color #fff
-      margin-bottom 15px
-      +breakpoint("desktop")
-        font-size 14px
-        color #FFFFFF
-        line-height 14px
-
-.navbar-collapse
-  .design
-    color #fff
-    font-size 12px
+  .navbar-header
+    width 100%
     text-align center
-    display block
-    border-top 1px solid #2d2d2d
-    margin 0 -15px
-    padding 24px 0 29px 0
-    +breakpoint("desktop")
-      display none
-    img
-      width 15px
-      margin-left 4px
+    clearfix()
+    position relative
 
-  +breakpoint("desktop")
-    .twitter
-      float right
-      margin 36px -15px 0 0
+  .brand
+    +breakpoint("desktop")
+      position absolute
+      left 0
+      top 20px
+    .icon
+      +breakpoint("desktop")
+        width 60px
+
+        opacity 0
+        transform(translateX(-60px))
+    .logo
+      +breakpoint("desktop")
+        transition(.3s ease-in-out)
+        width 100px
+        transform(translateX(-60px))
+
+  .navbar-nav
+    display inline-block
+    float none
+    li
+      display inline-block
+      float none
+      line-height 7
+      a
+        background none
+        color #9B9B9B
+        padding 0 15px
+        display inline-block
+        &:hover
+          color rgba(white,.8)
+      &.active
+        a
+          color white
+
+  .social
+    +breakpoint("desktop")
+      position absolute
+      right 0
+      top 38px
+
+  &.fixed
+    .brand
+      .icon
+        +breakpoint("desktop")
+          transition(.3s ease-in)
+          opacity 1
+          transform(translateX(0))
+      .logo
+        +breakpoint("desktop")
+          transition(.3s ease-in)
+          transform(translateX(20px))
 
 
 // banner-jwt
@@ -1048,11 +985,6 @@ pre
         top 4px
         left 3px
 
-.hid-m
-  display none
-  +breakpoint("desktop")
-    display none !important
-
 
 .panel .icon-budicon-466, .panel .icon-budicon-333
   opacity 1
@@ -1585,3 +1517,4 @@ pre
 .filter-set
   +breakpoint("desktop-big")
     margin 0 -33px
+
