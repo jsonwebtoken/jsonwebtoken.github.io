@@ -630,7 +630,7 @@ body
 
 .jwt-playground
   padding 0 24px
-  margin 0 -15px
+  // margin 0 -15px
   position relative
   overflow hidden
   width auto
@@ -871,9 +871,7 @@ body
     background #000000
 
 .navbar-default
-  .navbar-brand
-    img
-      width 41px
+
   &.navbar-fixed-top
     +breakpoint("desktop")
       background #000
@@ -892,7 +890,8 @@ body
   .navbar-brand
     img
       +breakpoint("desktop")
-        width auto
+        height: 26px;
+        margin-top: 13px;
 
 .navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover
   background-color transparent !important
