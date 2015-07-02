@@ -1,32 +1,8 @@
-breakpoint(point, value = 0)
-  if point == "mobile"
-    @media (min-width: 320px)
-      {block}
+@import 'mixins'
 
-  else if point == "mobile-landscape"
-    @media (min-width: 568px)
-      {block}
-
-  else if point == "tablet"
-    @media (min-width: 768px)
-      {block}
-
-  else if point == "desktop"
-    @media (min-width: 992px)
-      {block}
-
-  else if point == "desktop-big"
-    @media (min-width: 1280px)
-      {block}
-
-  else if point == "retina-only"
-    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)
-      {block}
-
-  else
-    @media (point: value)
-      {block}
-
+/*
+ * Webfont
+ */
 
 font-url(file)
   return '../../fonts/' + file
@@ -42,6 +18,11 @@ webfont(family, file, weight = 'normal')
     font-weight weight
     font-style normal
 
+webfont('DINCondensedBold', 'DINCondensedBold', 'normal')
+
+/*
+ * Principal style
+ */
 
 body
   font-family: 'Whitney SSm A', 'Whitney SSm B', "Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -611,17 +592,16 @@ code
   height 100% !important
   opacity 0
 
-webfont('DINCondensedBold', 'DINCondensedBold', 'normal')
+///+++++++======
 
 body
   margin 0
 
 .container
-  +breakpoint("desktop")
-    width 100%
-    max-width 1200px
-    padding 0 15px
-    margin auto
+  width 100%
+  max-width 1200px
+  padding 0 15px
+  margin auto
 
 .tabs
   clear both
@@ -1794,12 +1774,6 @@ pre
       margin-left -160px
       font-size 16px
       line-height 16px
-
-.banner .container,
-.bt-con .container,
-#footer .container
-  +breakpoint("desktop")
-    padding 0 15px
 
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover
   color #FFFFFF
