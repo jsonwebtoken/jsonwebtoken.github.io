@@ -214,3 +214,20 @@
 .bootstrap-select.show-menu-arrow.open > .dropdown-toggle:before,
 .bootstrap-select.show-menu-arrow.open > .dropdown-toggle:after
   display block
+
+.bootstrap-select
+  &:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn)
+    width 87px
+    display inline-block
+    height 31px
+    +breakpoint("desktop")
+      width 101px
+      height 37px
+  & > .btn
+    font-size 10px
+    height 33px
+    padding-left 10px
+    letter-spacing 0
+    +breakpoint("desktop")
+      font-size 12px
+      height 37px

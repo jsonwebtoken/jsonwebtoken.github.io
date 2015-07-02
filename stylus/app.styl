@@ -33,13 +33,20 @@ html
   min-height 100%
 
 body
-  margin-bottom 60px
-
-body
   font-family: 'Whitney SSm A', 'Whitney SSm B', "Helvetica Neue", Helvetica, Arial, sans-serif;
 
 h1
   margin-bottom 0
+  font-size 34px
+  color #000000
+  line-height 38px
+  font-weight normal
+  text-align center
+  +breakpoint("desktop")
+    font-size 40px
+    line-height 48px
+    padding-top 22px
+    padding-bottom 4px
 
 h4
   small
@@ -53,6 +60,20 @@ code
 
 code
   font-size 80%
+
+.container
+  width 100%
+  max-width 1200px
+  padding 0 15px
+  margin auto
+
+// navbar-fixed-top
+
+.navbar
+  margin 0
+  +breakpoint("desktop")
+    height 100px
+    background #000000
 
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > .active > a:focus,
@@ -77,6 +98,154 @@ code
   &.moved .navbar-brand
     +breakpoint("desktop")
       margin-right -38px
+
+.navbar-default
+
+  &.navbar-fixed-top
+    +breakpoint("desktop")
+      background #000
+      border-bottom 1px solid #2c2c2c
+  .navbar-toggle
+    border none
+    margin-top 16px
+    background url(../../img/ico_close.svg) no-repeat 50% 50%
+    background-size 22px 22px
+    .icon-bar
+      background-color transparent
+    &.collapsed
+      background transparent
+      .icon-bar
+        background-color #fff
+  .navbar-brand
+    img
+      +breakpoint("desktop")
+        height: 26px;
+        margin-top: 13px;
+
+.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover
+  background-color transparent !important
+
+
+.container-fluid>.navbar-collapse, .container-fluid>.navbar-header, .container>.navbar-collapse, .container>.navbar-header
+  height 65px
+  background #000000
+  border-top 1px solid #2d2d2d
+  max-height none
+  +breakpoint("desktop")
+    height 100px
+    background none
+
+.navbar-brand
+  height auto
+  padding 0
+  margin 23px 0 0 25px
+
+
+.moved.navbar-default .navbar-brand img.hid-m
+  +breakpoint("desktop")
+    display block !important
+    float left
+    width 54px
+    height 54px
+    margin-right 14px
+    margin-top -1px
+
+.navbar-toggle:not(.collapsed) + .navbar-brand .hid-m
+  display block
+  float left
+  width 26px
+  height 26px
+  margin-right 8px
+  margin-top -4px
+
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover
+  color #FFFFFF
+  background none
+
+.navbar-nav
+  padding-top 79px
+  padding-bottom 63px
+  +breakpoint("desktop")
+    padding-top 0
+    padding-bottom 0
+    float left
+    margin 29px 0 0 325px
+  & > li
+    & > a
+      text-align center
+      color #fff
+      font-size 34px
+      line-height 34px
+      color #fff
+      margin-bottom 15px
+      +breakpoint("desktop")
+        font-size 14px
+        color #FFFFFF
+        line-height 14px
+
+.navbar-collapse
+  .design
+    color #fff
+    font-size 12px
+    text-align center
+    display block
+    border-top 1px solid #2d2d2d
+    margin 0 -15px
+    padding 24px 0 29px 0
+    +breakpoint("desktop")
+      display none
+    img
+      width 15px
+      margin-left 4px
+
+  +breakpoint("desktop")
+    .twitter
+      float right
+      margin 36px -15px 0 0
+
+
+// banner-jwt
+
+.banner-jwt
+  background #000
+  text-align center
+  position relative
+  z-index 9
+  padding-bottom 28px
+
+  +breakpoint("desktop")
+    padding 220px 0 120px 0;
+
+  p
+    font-size 22px
+    line-height 29px
+    margin 0 -10px
+    +breakpoint("desktop")
+      font-size 32px
+      color white
+      line-height 50px
+      font-weight 300
+      strong
+        font-weight normal
+      span
+        font-size 32px
+        font-weight normal
+  .logo
+    width 67px
+    display block
+    margin -7px auto 23px auto
+    +breakpoint("desktop")
+      width 90px
+      margin 0 auto 45px auto
+    img
+      width 100%
+      height 77px
+      +breakpoint("desktop")
+        height auto
+
+
+
 
 .vulnerable-badge
   text-align right
@@ -344,14 +513,7 @@ code
 
 ///+++++++======
 
-body
-  margin 0
 
-.container
-  width 100%
-  max-width 1200px
-  padding 0 15px
-  margin auto
 
 .tabs
   clear both
@@ -581,117 +743,7 @@ body
 .jwt-playground .output .jwt-payload .CodeMirror .cm-string
   color #D63AFF
 
-.container-fluid>.navbar-collapse, .container-fluid>.navbar-header, .container>.navbar-collapse, .container>.navbar-header
-  height 65px
-  background #000000
-  border-top 1px solid #2d2d2d
-  max-height none
-  +breakpoint("desktop")
-    height 100px
-    background none
 
-.navbar-brand
-  height auto
-  padding 0
-  margin 23px 0 0 25px
-
-.navbar
-  +breakpoint("desktop")
-    height 100px
-    background #000000
-
-.navbar-default
-
-  &.navbar-fixed-top
-    +breakpoint("desktop")
-      background #000
-      border-bottom 1px solid #2c2c2c
-  .navbar-toggle
-    border none
-    margin-top 16px
-    background url(../../img/ico_close.svg) no-repeat 50% 50%
-    background-size 22px 22px
-    .icon-bar
-      background-color transparent
-    &.collapsed
-      background transparent
-      .icon-bar
-        background-color #fff
-  .navbar-brand
-    img
-      +breakpoint("desktop")
-        height: 26px;
-        margin-top: 13px;
-
-.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover
-  background-color transparent !important
-
-.banner-jwt
-  background #000
-  text-align center
-  position relative
-  z-index 9
-  padding-bottom 28px
-
-  +breakpoint("desktop")
-    padding 220px 0 120px 0;
-
-  p
-    font-size 22px
-    line-height 29px
-    margin 0 -10px
-    +breakpoint("desktop")
-      font-size 32px
-      color #FFFFFF
-      line-height 50px
-      padding 0 40px
-      font-weight 300
-      strong
-        font-weight normal
-      span
-        font-size 32px
-        font-weight normal
-  .logo
-    width 67px
-    display block
-    margin -7px auto 23px auto
-    +breakpoint("desktop")
-      width 90px
-      margin 0 auto 45px auto
-    img
-      width 100%
-      height 77px
-      +breakpoint("desktop")
-        height auto
-
-h1
-  font-size 34px
-  color #000000
-  line-height 38px
-  font-weight normal
-  text-align center
-  +breakpoint("desktop")
-    font-size 40px
-    line-height 48px
-    padding-top 22px
-    padding-bottom 4px
-
-.bootstrap-select
-  &:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn)
-    width 87px
-    display inline-block
-    height 31px
-    +breakpoint("desktop")
-      width 101px
-      height 37px
-  & > .btn
-    font-size 10px
-    height 33px
-    padding-left 10px
-    letter-spacing 0
-    +breakpoint("desktop")
-      font-size 12px
-      height 37px
 
 .bg-grey
   border none
@@ -1001,22 +1053,7 @@ pre
   display none
   +breakpoint("desktop")
     display none !important
-.moved.navbar-default .navbar-brand img.hid-m
-  +breakpoint("desktop")
-    display block !important
-    float left
-    width 54px
-    height 54px
-    margin-right 14px
-    margin-top -1px
 
-.navbar-toggle:not(.collapsed) + .navbar-brand .hid-m
-  display block
-  float left
-  width 26px
-  height 26px
-  margin-right 8px
-  margin-top -4px
 
 .panel .icon-budicon-466, .panel .icon-budicon-333
   opacity 1
@@ -1529,50 +1566,7 @@ pre
       font-size 16px
       line-height 16px
 
-.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover
-  color #FFFFFF
-  background none
 
-.navbar-nav
-  padding-top 79px
-  padding-bottom 63px
-  +breakpoint("desktop")
-    padding-top 0
-    padding-bottom 0
-    float left
-    margin 29px 0 0 325px
-  & > li
-    & > a
-      text-align center
-      color #fff
-      font-size 34px
-      line-height 34px
-      color #fff
-      margin-bottom 15px
-      +breakpoint("desktop")
-        font-size 14px
-        color #FFFFFF
-        line-height 14px
-
-.navbar-collapse
-  .design
-    color #fff
-    font-size 12px
-    text-align center
-    display block
-    border-top 1px solid #2d2d2d
-    margin 0 -15px
-    padding 24px 0 29px 0
-    +breakpoint("desktop")
-      display none
-    img
-      width 15px
-      margin-left 4px
-
-  +breakpoint("desktop")
-    .twitter
-      float right
-      margin 36px -15px 0 0
 
 @media (max-width: 994px)
   .jwt-playground .input, .jwt-playground .output
