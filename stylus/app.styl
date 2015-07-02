@@ -77,7 +77,7 @@ code
     float left
     width 54px
     height 54px
-    margin-right 14px
+    margin-right 20px
     margin-top: -1px;
 
 .navbar-toggle:not(.collapsed) + .navbar-brand .hid-m
@@ -269,16 +269,7 @@ code
 .author-info .repository
   display inline-block
 
-.banner
-  background linear-gradient(120deg, #14204d 0%, #3cc8f4 100%)
-  img
-    width 140px
-  a
-    color white
-  p
-    font-size 150%
-  .btn
-    min-width 200px
+
 
 .bg-grey
   background #f6f6f6
@@ -1282,14 +1273,14 @@ pre
   p
     font-size 17px
     line-height 26px
-    padding 0 20px
     color: #ccc;
     +breakpoint("desktop")
       font-size 26px
       line-height 40px
       padding 0
-      max-width 800px
       margin auto
+    &:first-child
+      margin-bottom: 20px;
 
   .note
     font-size 10px
@@ -1302,7 +1293,7 @@ pre
     +breakpoint("desktop")
       font-size 14px
       line-height 24px
-      margin 7px 0 40px 0
+      margin 7px 0 0 0
       max-width none
   .counter
     margin 39px 0 0 0
