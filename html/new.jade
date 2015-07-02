@@ -7,9 +7,9 @@ html(lang='en')
     meta(name='author', content='auth0.com')
     meta(name='description', content='JSON Web Token (JWT) is a compact URL-safe means of representing claims to be transferred between two parties. The claims in a JWT are encoded as a JSON object that is digitally signed using JSON Web Signature (JWS).')
     title JSON Web Tokens - jwt.io
-    script(type='text/javascript', src='//use.typekit.net/iws6ohy.js')
-    script(type='text/javascript').
-      try{Typekit.load();}catch(e){}
+    //- script(type='text/javascript', src='//use.typekit.net/iws6ohy.js')
+    //- script(type='text/javascript').
+    //-   try{Typekit.load();}catch(e){}
 
     link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css")
 
@@ -41,8 +41,8 @@ html(lang='en')
             span.icon-bar
             span.icon-bar
           a.navbar-brand(href='#')
-            img.hid-m(src='img/pic_logo.svg', alt='')
-            img(src='img/logo.svg', alt='')
+            img.hid-m(src='img/pic_logo.svg', alt='').icon
+            img(src='img/logo.svg', alt='').logotype
       
         // Collect the nav links, forms, and other content for toggling
         #bs-example-navbar-collapse-1.collapse.navbar-collapse
@@ -73,6 +73,7 @@ html(lang='en')
           |  method for representing claims securely between two parties.
           strong  JWT.IO
           |  allows you to decode, verify and generate JWT.
+          
         //- a.btn.btn-purple.btn-lg(href='#') LEARN MORE
 
     .container
@@ -157,8 +158,8 @@ html(lang='en')
           h1#libraries Libraries for Token Signing/Verification
         .alert.alert-danger(role='alert')
           em(style='font-weight: bolder') Warning
-          |  Critical vulnerabilities in JSON Web Token libraries with asymmetric keys
-          a.more(href='https://auth0.com/blog/2015/03/31/critical-vulnerabilities-in-json-web-token-libraries/') learn more
+          |  Critical vulnerabilities in JSON Web Token libraries with asymmetric keys.
+          a.more(href='https://auth0.com/blog/2015/03/31/critical-vulnerabilities-in-json-web-token-libraries/') Learn more
         .filter-set
           .row
             // .NET System.IdentityModel.Tokens.Jwt
