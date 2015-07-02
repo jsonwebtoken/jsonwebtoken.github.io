@@ -99,9 +99,13 @@ code
   +breakpoint("desktop")
     padding-top 0
     padding-bottom 0
-    float left
-    margin 29px 0 0 325px
+    float: none;
+    max-width: 400px
+    margin: 28px auto;
+    text-align: center;
   & > li
+    display: inline-block
+    float: none;
     & > a
       text-align center
       color #fff
@@ -115,6 +119,7 @@ code
         line-height 14px
 
 .navbar-collapse
+  position: relative;
   .design
     color #fff
     font-size 12px
@@ -131,8 +136,9 @@ code
 
   +breakpoint("desktop")
     .twitter
-      float right
-      margin 36px -15px 0 0
+      position: absolute
+      top: 38px;
+      right: 30px;
 
 
 .banner-jwt
