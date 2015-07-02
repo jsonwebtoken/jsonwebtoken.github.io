@@ -158,8 +158,8 @@ html(lang='en')
               option(value='.set2') set2
           h1#libraries Libraries for Token Signing/Verification
         .alert.alert-danger(role='alert')
-          em(style='font-weight: bolder') Warning
-          |  Critical vulnerabilities in JSON Web Token libraries with asymmetric keys.
+          em(style='font-weight: bolder') Warning:
+          |  Critical vulnerabilities in JSON Web Token libraries with asymmetric keys. 
           a.more(href='https://auth0.com/blog/2015/03/31/critical-vulnerabilities-in-json-web-token-libraries/') Learn more
         .filter-set
           .row
@@ -1117,24 +1117,29 @@ html(lang='en')
               img.hover(src='img/pic_tshirt_b.png', alt='')
               a.buy(href='#') BUY T-SHIRT
 
-    .banner
+    .banner.clearfix
       img(src='img/pic_logo_ft.svg', alt='')
       .container
         p
-          | JWT.io is brought to you by Auth0 A cloud service, APIs and tools that eliminate the friction of identity for your applications and APIs.
+          | JWT.io is brought to you by Auth0.
+        p A cloud service, APIs and tools that eliminate the friction of identity for your applications and APIs.
         .counter
         p.note TOKENS CREATED
 
     #footer
       .container
-        .ft-note
-          | Missing something?
-          a(href='https://github.com/jsonwebtoken/jsonwebtoken.github.io/edit/master/html/index.html') Send a Pull Request
-        .design
+
+        .design.col-sm-4
           a(href='#')
             | Supported by
             img(src='img/ico_logo.svg', alt='')
-        .twitter
+
+        .ft-note.col-sm-4
+          | Missing something? 
+          a(href='https://github.com/jsonwebtoken/jsonwebtoken.github.io/edit/master/html/index.html') Send a Pull Request
+          
+          
+        .twitter.col-sm-4
           a(href='#')
 
     //
@@ -1160,10 +1165,10 @@ html(lang='en')
     script(src='js/bootstrap-select.js')
     script(src='js/isotope.pkgd.min.js')
     script(src='js/flipclock.js')
-    script(src='js/blur.min.js')
 
     script(src='js/app.js')
     // endbuild
+    
     script.
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

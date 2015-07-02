@@ -291,16 +291,6 @@ code
       padding-right 4px
 
 
-#footer
-  position absolute
-  bottom 0
-  width 100%
-  height 60px
-  background-color #f5f5f5
-  & > .container
-    padding-right 15px
-    padding-left 15px
-
 
 
 .container
@@ -584,7 +574,6 @@ body
 .container-fluid>.navbar-collapse, .container-fluid>.navbar-header, .container>.navbar-collapse, .container>.navbar-header
   height 65px
   background #000000
-  border-top 1px solid #2d2d2d
   max-height none
   +breakpoint("desktop")
     height 100px
@@ -605,7 +594,8 @@ body
   &.navbar-fixed-top
     +breakpoint("desktop")
       background #000
-      border-bottom 1px solid #2c2c2c
+      border: 0;
+
   .navbar-toggle
     border none
     margin-top 16px
@@ -632,7 +622,6 @@ body
   position relative
   z-index 9
   padding-bottom 28px
-
   +breakpoint("desktop")
     padding 200px 0 100px 0;
 
@@ -642,7 +631,7 @@ body
     +breakpoint("desktop")
       font-size 30px
       color #FFFFFF
-      line-height 56px
+      line-height 52px
       font-weight 300
       max-width: 900px;
       margin: auto;
@@ -1046,9 +1035,9 @@ pre
     display block !important
 
 .bt-con
-  background #232228
+  background #111
   text-align center
-  padding 19px 0 0 0
+  padding 50px 0 50px 0
   .container
     padding 0
   .col-md-4
@@ -1209,7 +1198,7 @@ pre
   margin 0
   text-align: center;
   +breakpoint("desktop")
-    padding 78px 0 252px 0
+    padding 120px 0 120px 0
   .container
     padding 0
   img
@@ -1475,14 +1464,13 @@ pre
       background #a829c9
 
 #footer
-  height 82px
-  border-top 1px solid #313131
+  border-top 1px solid #222
   background #000
+  overflow: hidden;
+  +breakpoint("desktop")
+    padding: 50px 0px
   &.static
     position relative
-  +breakpoint("desktop")
-    height 120px
-    border-top 2px solid #313131
   .container
     padding 0
   .design
@@ -1492,8 +1480,6 @@ pre
       float left
       font-size 14px
       color #FFFFFF
-      line-height 17px
-      margin 45px 0 0 34px
     a
       +breakpoint("desktop")
         color #FFFFFF
@@ -1502,6 +1488,11 @@ pre
           position relative
           top -2px
           right -7px
+
+  .ft-note
+    text-align: center;
+    color: #999;
+
   .twitter
     display none
     +breakpoint("desktop")
@@ -1510,30 +1501,13 @@ pre
       background url(../../img/ico_twitter.svg) no-repeat
       height 25px
       width 25px
-      margin 45px 0 0 0
-    +breakpoint("desktop-big")
-      margin 45px -18px 0 0
+
     a
       +breakpoint("desktop")
         display block
         height 25px
         width 25px
-  .ft-note
-    width 300px
-    position absolute
-    top 33px
-    left 50%
-    text-align center
-    margin-left -150px
-    font-size 14px
-    line-height 14px
-    color #fff
-    +breakpoint("desktop")
-      width 320px
-      top 48px
-      margin-left -160px
-      font-size 16px
-      line-height 16px
+
 
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover
   color #FFFFFF
