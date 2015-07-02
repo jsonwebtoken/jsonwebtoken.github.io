@@ -67,78 +67,9 @@ code
   padding 0 15px
   margin auto
 
-// navbar-fixed-top
-
-.navbar
-  margin 0
-  +breakpoint("desktop")
-    height 100px
-    background #000000
-
-.navbar-default .navbar-nav > .active > a,
-.navbar-default .navbar-nav > .active > a:focus,
-.navbar-default .navbar-nav > .active > a:hover
-  color black
-
-.navbar-default
-  .navbar-brand
-    font-weight bold
-    color black
-    text-transform uppercase
-    color black
-    font-size 14px
-    letter-spacing .5px
-    margin-right 30px
-
-  &.navbar-fixed-top
-    background rgba(255, 255, 255, 0.9)
-    border 0
-    color white
-
-  &.moved .navbar-brand
-    +breakpoint("desktop")
-      margin-right -38px
-
-.navbar-default
-
-  &.navbar-fixed-top
-    +breakpoint("desktop")
-      background #000
-      border-bottom 1px solid #2c2c2c
-  .navbar-toggle
-    border none
-    margin-top 16px
-    background url(../../img/ico_close.svg) no-repeat 50% 50%
-    background-size 22px 22px
-    .icon-bar
-      background-color transparent
-    &.collapsed
-      background transparent
-      .icon-bar
-        background-color #fff
-  .navbar-brand
-    img
-      +breakpoint("desktop")
-        height: 26px;
-        margin-top: 13px;
-
-.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover
-  background-color transparent !important
-
-
-.container-fluid>.navbar-collapse, .container-fluid>.navbar-header, .container>.navbar-collapse, .container>.navbar-header
-  height 65px
-  background #000000
-  border-top 1px solid #2d2d2d
-  max-height none
-  +breakpoint("desktop")
-    height 100px
-    background none
 
 .navbar-brand
-  height auto
-  padding 0
-  margin 23px 0 0 25px
+  margin 25px 0 0 25px
 
 
 .moved.navbar-default .navbar-brand img.hid-m
@@ -204,8 +135,6 @@ code
       float right
       margin 36px -15px 0 0
 
-
-// banner-jwt
 
 .banner-jwt
   background #000
