@@ -71,7 +71,6 @@ code
 .navbar-brand
   margin 25px 0 0 25px
 
-
 .moved.navbar-default .navbar-brand img.hid-m
   +breakpoint("desktop")
     display block !important
@@ -79,7 +78,7 @@ code
     width 54px
     height 54px
     margin-right 14px
-    margin-top -1px
+    margin-top: -1px;
 
 .navbar-toggle:not(.collapsed) + .navbar-brand .hid-m
   display block
@@ -149,14 +148,11 @@ code
   p
     font-size 22px
     line-height 29px
-    margin 0 -10px
     +breakpoint("desktop")
       font-size 32px
       color white
       line-height 50px
       font-weight 300
-      strong
-        font-weight normal
       span
         font-size 32px
         font-weight normal
@@ -684,7 +680,7 @@ code
 
   &.navbar-fixed-top
     +breakpoint("desktop")
-      background #000
+      background rgba(0,0,0,.9)
       border: 0;
 
   .navbar-toggle
