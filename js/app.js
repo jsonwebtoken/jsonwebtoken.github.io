@@ -16,7 +16,7 @@ var clock = $('.counter').FlipClock(12323800, {
 });
 
 $(window).resize(function() {
-    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
+  equalHeight($(".jwt-playground .input, .jwt-playground .output"));
 });
 
 setTimeout(function() {
@@ -24,11 +24,13 @@ setTimeout(function() {
     clock.increment();
   }, 1000);
 });
+
 if (navigator.userAgent.indexOf('Mac OS X') != -1) {
   $("body").addClass("mac");
 } else {
   $("body").addClass("pc");
 }
+
 $(".jwt-playground .tab-link a").click(function() {
   var container = $(this).parentsUntil(".jwt-playground").parent();
   if (!$(this).parent().hasClass("current")) {
@@ -39,6 +41,7 @@ $(".jwt-playground .tab-link a").click(function() {
   };
   return false;
 });
+
 // $('.bt-con .text-hold').each(function() {
 //   var tett = $(this).find("p").text();
 //   $(this).zclip({
@@ -46,6 +49,7 @@ $(".jwt-playground .tab-link a").click(function() {
 //   copy: tett
 //   });
 // });
+
 var $grid = $('.filter-set').isotope({
   layoutMode: 'fitRows',
   itemSelector: '.col-md-4',
@@ -80,7 +84,7 @@ $(".panel-default .panel-heading").click(function() {
   return false;
 });
 
-// Principal JS **
+// Principal JWT JS **
 
 (function () {
   // Taken from http://stackoverflow.com/questions/2490825/how-to-trigger-event-in-javascript

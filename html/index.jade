@@ -56,26 +56,24 @@ html(lang='en')
         p JSON Web Tokens are an open, industry standard [RFC 7519] method for representing claims securely between two parties.
         p JWT.IO allows you to decode, verify and generate JWT.
 
-    .container
-      .page-header
-        a(name='debugger')
-        h1#debugger Debugger
-      .jwt-playground
-        .row
-          .col-md-12
-            .algorithm
-              label.algorithm-label Algorithm:
-              .hide
-                label.radio-inline
-                  input(type='radio', name='algorithm', value='HS256', checked='checked')
-                  |  HS256
-                label.radio-inline
-                  input(type='radio', name='algorithm', value='RS256')
-                  |  RS256
-              select#selectAl.selectpicker
-                option(selected='', value='HS256') HS256
-                option(value='RS256') RS256
-          .tabs.col-md-12
+    section.debugger-jwt
+      .container
+        //- a(name='debugger')
+        h1 Debugger
+        .jwt-playground
+          .algorithm
+            label.algorithm-label Algorithm:
+            .hide
+              label.radio-inline
+                input(type='radio', name='algorithm', value='HS256', checked='checked')
+                |  HS256
+              label.radio-inline
+                input(type='radio', name='algorithm', value='RS256')
+                |  RS256
+            select#selectAl.selectpicker
+              option(name='algorithm',value='HS256', selected='') HS256
+              option(name='algorithm',value='RS256') RS256
+          .tabs
             .tab-nav
               ul
                 li.tab-link.current
@@ -121,9 +119,9 @@ html(lang='en')
                     <textarea rows="4" name="public-key" placeholder="Public Key or Certificate. Enter it in plain text only if you want to verify a token"></textarea>,
                     <textarea rows="5" name="private-key" placeholder="Private Key (RSA). Enter the it in plain text only if you want to generate a new token. The key never leaves your browser."></textarea>
                   )
-        .row
-          .col-md-12
-            .validation-status.js-signature
+          .row
+            .col-md-12
+              .validation-status.js-signature
 
     .bg-grey
       .container
