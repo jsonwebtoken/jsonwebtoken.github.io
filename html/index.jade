@@ -62,7 +62,7 @@ html(lang='en')
         h1 Debugger
         .jwt-playground
           .algorithm
-            label.algorithm-label Algorithm:
+            label.algorithm-label Algorithm
             .hide
               label.radio-inline
                 input(type='radio', name='algorithm', value='HS256', checked='checked')
@@ -70,9 +70,10 @@ html(lang='en')
               label.radio-inline
                 input(type='radio', name='algorithm', value='RS256')
                 |  RS256
-            select#selectAl.selectpicker
-              option(name='algorithm',value='HS256', selected='') HS256
-              option(name='algorithm',value='RS256') RS256
+            .jwt-select
+              select#selectAl.selectpicker
+                option(name='algorithm',value='HS256', selected='') HS256
+                option(name='algorithm',value='RS256') RS256
           .tabs
             .tab-nav
               ul

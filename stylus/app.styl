@@ -185,6 +185,36 @@ code
     img
       width 100%
 
+// jwt-playground
+
+.jwt-select
+  display inline-block
+  position relative
+  select
+    background transparent
+    width 100px
+    height 38px
+    font-size 12px
+    padding 0 10px
+    border 1px solid #D8D8D8
+    border-radius 3px
+    -webkit-appearance none
+    outline 0
+  &:after
+    background url(/img/bg_arrow_select.svg) no-repeat
+    width 8px
+    height 6px
+    content ''
+    display inline-block
+    position absolute
+    top 16px
+    right 10px
+
+.jwt-playground
+  .algorithm
+    .jwt-select
+      margin-left 5px
+
 
 
 
