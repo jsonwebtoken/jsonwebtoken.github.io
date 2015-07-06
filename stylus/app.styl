@@ -34,19 +34,6 @@ html
 body
   font-family: 'Whitney SSm A', 'Whitney SSm B', "Helvetica Neue", Helvetica, Arial, sans-serif;
 
-h1
-  margin-bottom 0
-  font-size 34px
-  color #000000
-  line-height 38px
-  font-weight normal
-  text-align center
-  +breakpoint("desktop")
-    font-size 40px
-    line-height 48px
-    padding-top 22px
-    padding-bottom 4px
-
 h4
   small
     line-height 1.8
@@ -65,6 +52,15 @@ code
   max-width 1200px
   padding 0 15px
   margin auto
+
+section
+  padding 60px 0
+  h1
+    color black
+    text-align center
+    margin 0 0 30px
+    +breakpoint("tablet")
+      font-size 40px
 
 // navbar-fixed-top
 
@@ -185,6 +181,7 @@ code
     img
       width 100%
 
+
 // jwt-playground
 
 .jwt-select
@@ -213,11 +210,342 @@ code
 
 .jwt-playground
   .algorithm
+    text-align center
+    span
+      font-weight bold
+      text-transform uppercase
+      font-size 12px
+      vertical-align middle
     .jwt-select
-      margin-left 5px
+      margin-left 10px
+
+  .algorithm-code
+    margin-top 35px
+    .tab-nav
+      grid(2, 0, '.tab-link')
+      margin-bottom 20px
+
+      a
+        font-size 30px
+        color black
+        text-decoration none
+        display block
+        cursor default
+        small
+          font-size 12px
+          color #979797
+          text-transform uppercase
+          margin-left 20px
+
+    .tab-content
+      +breakpoint("tablet")
+        grid(2, 30px, '.box-content')
+
+      .box-content
+        display none
+        +breakpoint("tablet")
+          display block
+        &.current
+          display block
+
+      .input, .output
+        border 1px solid rgba(#9B9B9B,.5)
+        border-radius 3px
+
+      .input
+        padding 20px
+
+      .output
+        none none
+      .jwt-explained
+        .text-line
+          margin 0
+          font-size 12px
+          color #979797
+          clearfix()
+          border-top 1px solid rgba(#9B9B9B,.5)
+          border-bottom 1px solid rgba(#9B9B9B,.5)
+          line-height 2.5
+          padding 0 10px
+          span
+            color black
+          a
+            float right
+
+        &.jwt-header
+          .text-line
+            border-top none
+
+        .CodeMirror-wrap
+          padding 20px
+
+        .pre-encode
+          border none
+          padding 20px
+          input, textarea
+            border 1px solid #D0D2D3
+            border-radius 3px
+          textarea
+            width 100%
+            max-width 266px
+            resize none
+
+  .validation-status
+    text-transform capitalize
+    color white
+    font-size 30px
+    text-align center
+    border-radius 3px
+    padding 10px 0
+    margin-top 30px
+    &.valid-token
+      background-color #00B9F1
+    &.invalid-token
+      background-color red
+    i
+      font-size 24px
+      vertical-align bottom
+      display inline-block
+      margin-right 5px
 
 
+// .jwt-playground
+//   .input
+//     border 1px solid #44C7F4
+//     padding 10px
+//     margin-bottom 2px
+//     border-radius 3px
+//     background #ffffff
+//     &.error
+//       background pink
+//     .CodeMirror
+//       width 100%
+//       background none
+//       font-size 20px
+//       line-height 30px
+//       height auto
+//       .cm-jwt-dot
+//         color #000000
+//       .cm-jwt-header
+//         color #859900
+//       .cm-jwt-payload
+//         color #268bd2
+//       .cm-jwt-signature
+//         color #dc322f
 
+//   .output
+//     -webkit-box-sizing border-box
+//     -moz-box-sizing border-box
+//     box-sizing border-box
+//     .jwt-explained
+//       background #ffffff
+//       padding inherit
+//       border 1px solid #ECECEC
+//       padding 10px
+//       margin-bottom 2px
+//       pre
+//         font-size 16px
+//         line-height 26px
+//       &.error
+//         background rgba(100, 0, 0, 0.1)
+//       .CodeMirror
+//         width 100%
+//         height auto
+//         background none
+//     .jwt-header
+//       color #859900
+//     .jwt-payload
+//       color #268bd2
+//     .jwt-signature
+//       color #dc322f
+//       font-family monospace
+//       pre
+//         background-color transparent
+//         border 0
+//         color #dc322f
+//       span
+//         &.is-base64-encoded-label
+//           font-size x-small
+//       input[name='secret']
+//         border-radius 4px
+//         border 1px solid #dfdfdf
+//       textarea
+//         border 1px solid #dfdfdf
+//         font-size 12px
+//         line-height 18px
+//         width 350px
+//         max-width 100%
+//         border-radius 4px
+//         &.error
+//           border 1px solid red
+//   .validation-status
+//     background #ffffff
+//     padding 15px
+//     margin-top 20px
+//     clear both
+//     text-align center
+//     width 100%
+//     font-size 20px
+//     color white
+//     text-transform uppercase
+//     -webkit-box-sizing border-box
+//     -moz-box-sizing border-box
+//     box-sizing border-box
+//     &.valid-token
+//       background #7ed321
+//     &.invalid-token
+//       background #ff0000
+
+
+// .jwt-playground
+//   .output
+//     float right
+//     margin 10px 0 0 0
+//     height auto
+//     padding 0
+//     width 100%
+//     border 1px solid rgba(155,155,155,0.50)
+//     border-radius 3px
+//     overflow hidden
+//     +breakpoint("desktop")
+//       float right
+//       display block !important
+//       margin 0 -3px
+//       height auto
+//       padding 0
+//       width 49%
+//       border 1px solid rgba(155,155,155,0.50)
+//       border-radius 3px
+//       overflow hidden
+//     .text-line
+//       font-size 12px
+//       color #979797
+//       line-height 12px
+//       border-top 1px solid rgba(155,155,155,0.50)
+//       border-bottom 1px solid rgba(155,155,155,0.50)
+//       margin -12px -12px
+//       padding 10px 13px 8px 13px
+//       a
+//         display none
+//         +breakpoint("desktop")
+//           display block
+//           float right
+//       +breakpoint("desktop")
+//         font-size 12px
+//         color #979797
+//         line-height 12px
+//         border-top 1px solid rgba(155,155,155,0.50)
+//         border-bottom 1px solid rgba(155,155,155,0.50)
+//         margin -12px -12px
+//         padding 10px 13px 8px 13px
+//       span
+//         color #000000
+//     .jwt-signature
+//       pre
+//         color #00B9F1
+//         font-size 14px
+//         line-height 19px
+//         margin 28px 0 0 18px
+//     .jwt-explained
+//       border none
+//       background #ffffff
+//       box-shadow none
+
+//   .CodeMirror-code
+//     margin 30px 0 7px 0
+//     padding 0
+//   .CodeMirror-wrap
+//     +breakpoint("desktop")
+//       padding 0 0 0 20px
+//   .algorithm
+//     text-align center
+//     position relative
+//     z-index 99
+//   .algorithm-label
+//     margin 0 3px 0 0
+//     display inline-block
+//     font-size 10px
+//     line-height 18px
+//     text-transform uppercase
+//     color #000
+//     +breakpoint("desktop")
+//       margin 0 4px 0 0
+//       font-size 12px
+//       line-height 18px
+
+//   .CodeMirror-wrap
+//     +breakpoint("desktop")
+//       padding 0 0 0 20px
+//   .input
+//     border none
+//     padding 0
+//     margin-bottom 0
+//     background #ffffff
+//     box-shadow none
+//     margin 0 -3px
+
+//     height 146px
+//     padding-top 20px
+//     +breakpoint("desktop")
+//       margin 0 -3px
+//       padding 0 10px
+//       width 49%
+//       border 1px solid rgba(155,155,155,0.50)
+//       border-radius 3px
+//       display block !important
+//       float left
+//     .CodeMirror-code
+//       +breakpoint("desktop")
+//         margin 22px 0 7px 0
+//         padding 0
+//     &:hover
+//       box-shadow none
+//     .CodeMirror
+//       .cm-jwt-header
+
+//         font-size 15.5px
+//         color #FB015B
+//         line-height 25px
+//         +breakpoint("desktop")
+//           font-size 18px
+//           line-height 30px
+//       .cm-jwt-payload
+
+//         color #E05EFF
+//         font-size 15.5px
+//         line-height 25px
+//         +breakpoint("desktop")
+//           font-size 18px
+//           line-height 30px
+//       .cm-jwt-signature
+
+//         color #00B9F1
+//         font-size 15.5px
+//         line-height 25px
+//         +breakpoint("desktop")
+//           font-size 18px
+//           line-height 30px
+//   .validation-status
+//     &.valid-token
+//       display none
+//       +breakpoint("desktop")
+//         display block
+//     &.invalid-token
+//       display none
+//       +breakpoint("desktop")
+//         display block
+//         margin 30px -27px
+//         width auto
+//         background #00B9F1
+//         border-radius 3px
+//         font-size 30px
+//         color #FFFFFF
+//         line-height 86px
+//         height 80px
+//         padding 0
+//         text-transform none
+// .jwt-playground .output .jwt-explained
+//   margin-bottom 0
 
 .vulnerable-badge
   text-align right
@@ -329,101 +657,7 @@ code
 
 .bg-grey
   background #f6f6f6
-  margin-top 60px
   padding-bottom 40px
-
-
-.jwt-playground
-  width 100%
-  h4
-    font-size 14px
-    text-transform uppercase
-  .input
-    border 1px solid #44C7F4
-    padding 10px
-    margin-bottom 2px
-    border-radius 3px
-    background #ffffff
-    &.error
-      background pink
-    .CodeMirror
-      width 100%
-      background none
-      font-size 20px
-      line-height 30px
-      height auto
-      .cm-jwt-dot
-        color #000000
-      .cm-jwt-header
-        color #859900
-      .cm-jwt-payload
-        color #268bd2
-      .cm-jwt-signature
-        color #dc322f
-  .algorithm-label
-    margin-right 20px
-  .output
-    -webkit-box-sizing border-box
-    -moz-box-sizing border-box
-    box-sizing border-box
-    .jwt-explained
-      background #ffffff
-      padding inherit
-      border 1px solid #ECECEC
-      padding 10px
-      margin-bottom 2px
-      pre
-        font-size 16px
-        line-height 26px
-      &.error
-        background rgba(100, 0, 0, 0.1)
-      .CodeMirror
-        width 100%
-        height auto
-        background none
-    .jwt-header
-      color #859900
-    .jwt-payload
-      color #268bd2
-    .jwt-signature
-      color #dc322f
-      font-family monospace
-      pre
-        background-color transparent
-        border 0
-        color #dc322f
-      span
-        &.is-base64-encoded-label
-          font-size x-small
-      input[name='secret']
-        border-radius 4px
-        border 1px solid #dfdfdf
-      textarea
-        border 1px solid #dfdfdf
-        font-size 12px
-        line-height 18px
-        width 350px
-        max-width 100%
-        border-radius 4px
-        &.error
-          border 1px solid red
-  .validation-status
-    background #ffffff
-    padding 15px
-    margin-top 20px
-    clear both
-    text-align center
-    width 100%
-    font-size 20px
-    color white
-    text-transform uppercase
-    -webkit-box-sizing border-box
-    -moz-box-sizing border-box
-    box-sizing border-box
-    &.valid-token
-      background #7ed321
-    &.invalid-token
-      background #ff0000
 
 
 .library
@@ -492,235 +726,11 @@ code
   +breakpoint("desktop")
     margin 0 -5px
 
-.jwt-playground
-  padding 0 24px
-  // margin 0 -15px
-  position relative
-  overflow hidden
-  width auto
-  .output
-    float right
-    margin 10px 0 0 0
-    height auto
-    padding 0
-    width 100%
-    border 1px solid rgba(155,155,155,0.50)
-    border-radius 3px
-    overflow hidden
-    +breakpoint("desktop")
-      float right
-      display block !important
-      margin 0 -3px
-      height auto
-      padding 0
-      width 49%
-      border 1px solid rgba(155,155,155,0.50)
-      border-radius 3px
-      overflow hidden
-    .text-line
-      font-size 12px
-      color #979797
-      line-height 12px
-      border-top 1px solid rgba(155,155,155,0.50)
-      border-bottom 1px solid rgba(155,155,155,0.50)
-      margin -12px -12px
-      padding 10px 13px 8px 13px
-      a
-        display none
-        +breakpoint("desktop")
-          display block
-          float right
-      +breakpoint("desktop")
-        font-size 12px
-        color #979797
-        line-height 12px
-        border-top 1px solid rgba(155,155,155,0.50)
-        border-bottom 1px solid rgba(155,155,155,0.50)
-        margin -12px -12px
-        padding 10px 13px 8px 13px
-      span
-        color #000000
-    .jwt-signature
-      pre
-        color #00B9F1
-        font-size 14px
-        line-height 19px
-        margin 28px 0 0 18px
-    .jwt-explained
-      border none
-      background #ffffff
-      box-shadow none
-
-  .CodeMirror-code
-    margin 30px 0 7px 0
-    padding 0
-  .CodeMirror-wrap
-    +breakpoint("desktop")
-      padding 0 0 0 20px
-  .algorithm
-    text-align center
-    position relative
-    z-index 99
-  .algorithm-label
-    margin 0 3px 0 0
-    display inline-block
-    font-size 10px
-    line-height 18px
-    text-transform uppercase
-    color #000
-    +breakpoint("desktop")
-      margin 0 4px 0 0
-      font-size 12px
-      line-height 18px
-  .tab-nav
-    position relative
-    z-index 9
-    ul
-      padding 31px 0 0 0
-      margin 0
-      overflow hidden
-      border-bottom 1px solid #979797
-      margin 0 -24px
-      padding 31px 24px 0 24px
-      +breakpoint("desktop")
-        border-bottom none
-        margin 0 -24px
-        padding 43px 24px 0 24px
-    li
-      width 50%
-      float left
-      padding 0
-      margin 0
-      list-style none
-      +breakpoint("desktop")
-        padding 0 5px 13px 5px
-      &:nth-child(2)
-        +breakpoint("desktop")
-          padding-left 26px
-      a
-        font-size 26px
-        color #000000
-        line-height 32px
-        text-transform none
-        font-weight normal
-        text-align center
-        padding-bottom 6px
-        display block
-        position relative
-        +breakpoint("desktop")
-          text-align left
-          font-size 30px
-          color #000000
-          line-height 36px
-        small
-          display none
-          +breakpoint("desktop")
-            display inline-block
-            font-size 12px
-            color #979797
-            line-height 12px
-            float none !important
-            text-transform uppercase
-            margin 0 10px
-            position relative
-            top -2px
-      &.current
-        a
-          border-bottom 5px solid #FB015B
-          +breakpoint("desktop")
-            border-bottom none
-  .CodeMirror-wrap
-    +breakpoint("desktop")
-      padding 0 0 0 20px
-  .input
-    border none
-    padding 0
-    margin-bottom 0
-    background #ffffff
-    box-shadow none
-    margin 0 -3px
-
-    height 146px
-    padding-top 20px
-    +breakpoint("desktop")
-      margin 0 -3px
-      padding 0 10px
-      width 49%
-      border 1px solid rgba(155,155,155,0.50)
-      border-radius 3px
-      display block !important
-      float left
-    .CodeMirror-code
-      +breakpoint("desktop")
-        margin 22px 0 7px 0
-        padding 0
-    &:hover
-      box-shadow none
-    .CodeMirror
-      .cm-jwt-header
-
-        font-size 15.5px
-        color #FB015B
-        line-height 25px
-        +breakpoint("desktop")
-          font-size 18px
-          line-height 30px
-      .cm-jwt-payload
-
-        color #E05EFF
-        font-size 15.5px
-        line-height 25px
-        +breakpoint("desktop")
-          font-size 18px
-          line-height 30px
-      .cm-jwt-signature
-
-        color #00B9F1
-        font-size 15.5px
-        line-height 25px
-        +breakpoint("desktop")
-          font-size 18px
-          line-height 30px
-  .tab-content
-    display none
-  .validation-status
-    &.valid-token
-      display none
-      +breakpoint("desktop")
-        display block
-    &.invalid-token
-      display none
-      +breakpoint("desktop")
-        display block
-        margin 30px -27px
-        width auto
-        background #00B9F1
-        border-radius 3px
-        font-size 30px
-        color #FFFFFF
-        line-height 86px
-        height 80px
-        padding 0
-        text-transform none
-.jwt-playground .output .jwt-explained
-  margin-bottom 0
-.jwt-playground .output .jwt-explained pre,
-.jwt-playground .output .jwt-header .CodeMirror .cm-property
-  color #FB015B
-  font-size 14px
-  line-height 19px
-
-.jwt-playground .output .jwt-payload .CodeMirror .cm-atom,
-.jwt-playground .output .jwt-payload pre,
-.jwt-playground .output .jwt-payload .CodeMirror .cm-string
-  color #D63AFF
-
 
 .bg-grey
   border none
   padding 0
   +breakpoint("desktop")
-    margin-top 52px
     background #eaeaea
     padding-bottom 56px
   h1

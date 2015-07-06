@@ -36,8 +36,8 @@ $(".jwt-playground .tab-link a").click(function() {
   if (!$(this).parent().hasClass("current")) {
     container.find(".tab-nav .current").removeClass("current")
     $(this).parent().addClass("current")
-    container.find(".tab-content").hide()
-    $($(this).attr("href")).show();
+    container.find(".tab-content .content").removeClass('current')
+    $($(this).attr("href")).addClass('current');
   };
   return false;
 });
@@ -364,11 +364,11 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     if (!error && result) {
       $(signatureElement).removeClass('invalid-token');
       $(signatureElement).addClass('valid-token');
-      signatureElement.innerHTML = '<i class="fa fa-check-circle-o"></i> signature verified';
+      signatureElement.innerHTML = '<i class="icon-budicon-499"></i> signature verified';
     } else {
       $(signatureElement).removeClass('valid-token');
       $(signatureElement).addClass('invalid-token');
-      signatureElement.innerHTML = '<i class="fa fa-times-circle-o"></i> invalid signature';
+      signatureElement.innerHTML = '<i class="icon-budicon-501"></i> invalid signature';
     }
 
     // 07012015
@@ -525,7 +525,7 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
 $('[data-toggle="tooltip"]').tooltip();
 
 // 07012015
-$("#selectAl").change(function() {
+$(".algorithm select").change(function() {
    $('.algorithm input[value="'+$(this).val()+'"]').parent().trigger("click");
    $('.algorithm input[value="'+$(this).val()+'"]').change();
     equalHeight($(".jwt-playground .input, .jwt-playground .output"));
@@ -535,7 +535,8 @@ $(".algorithm input").change(function() {
   $(".jwt-playground .btn .filter-option").text($(this).val());
     equalHeight($(".jwt-playground .input, .jwt-playground .output"));
 });
-$("#selectAl").change(function(){var a=$('.algorithm input[value="'+$(this).val()+'"]');a.prop("checked",!0)})
+
+$(".algorithm select").change(function(){var a=$('.algorithm input[value="'+$(this).val()+'"]');a.prop("checked",!0)})
 // end 07012015
 
 // Fetch stargazers count for each repo from GitHub's API

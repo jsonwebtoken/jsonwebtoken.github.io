@@ -6,39 +6,33 @@
     outline none
     box-shadow none
 
-.jwt-playground .output .jwt-header .CodeMirror,
-.jwt-playground .output .jwt-header .CodeMirror .cm-atom,
-.jwt-playground .output .jwt-header .CodeMirror .cm-number,
-.jwt-playground .output .jwt-header .CodeMirror .cm-property,
-.jwt-playground .output .jwt-header .CodeMirror .cm-string
-  color #fb015b
-.jwt-playground .output .jwt-header .CodeMirror .cm-string
-  color #fb015b !important
+.jwt-playground .input
+  &.error
+    background pink
+  .CodeMirror
+    font-size 20px
+    line-height 30px
+    .cm-jwt-dot
+      color black
+    .cm-jwt-header
+      color #FB015B
+    .cm-jwt-payload
+      color #D63AFF
+    .cm-jwt-signature
+      color #00B9F1
 
-.jwt-playground .output .jwt-header .text-line a,
-.jwt-playground .output .jwt-header .CodeMirror .cm-string
-  color #fb015b !important
+.jwt-playground .output .jwt-explained pre
+  font-size 14px
+  line-height 1.5
 
+.jwt-playground .output .jwt-header
+  .text-line a, .CodeMirror *
+    color #FB015B
 
-.jwt-playground .output .jwt-payload .text-line a
-  color #d63aff !important
+.jwt-playground .output .jwt-payload
+  .text-line a, .CodeMirror *
+    color #D63AFF
 
-
-.jwt-playground .output .jwt-signature .text-line a,
-.jwt-playground .output .jwt-signature pre,
-.jwt-playground .output .jwt-signature .CodeMirror .cm-property
-  color: #00b9f1 !important
-
-.jwt-playground .output .jwt-header .CodeMirror,
-.jwt-playground .output .jwt-header .CodeMirror .cm-property,
-.jwt-playground .output .jwt-header .CodeMirror .cm-string,
-.jwt-playground .output .jwt-header .CodeMirror .cm-atom,
-.jwt-playground .output .jwt-header .CodeMirror .cm-number
-  color #859900
-
-.jwt-playground .output .jwt-payload .CodeMirror,
-.jwt-playground .output .jwt-payload .CodeMirror .cm-property,
-.jwt-playground .output .jwt-payload .CodeMirror .cm-string,
-.jwt-playground .output .jwt-payload .CodeMirror .cm-atom,
-.jwt-playground .output .jwt-payload .CodeMirror .cm-number
-  color #268bd2
+.jwt-playground .output .jwt-signature
+  .text-line a, pre
+    color #00B9F1

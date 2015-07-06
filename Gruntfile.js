@@ -2,9 +2,9 @@ module.exports = function (grunt) {
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
   grunt.initConfig({
-    clean: [
-      'dist/'
-    ],
+    // clean: [
+    //   'dist/'
+    // ],
     watch: {
       min: {
         options: {
@@ -62,7 +62,7 @@ module.exports = function (grunt) {
     }
   });
 
-  grunt.registerTask('build', ['clean', 'stylus', 'jade']);
+  grunt.registerTask('build', ['stylus', 'jade']);
   // grunt.registerTask('build', ['clean', 'stylus', 'jade', 'useminPrepare', 'concat', 'uglify', 'cssmin', 'htmlmin', 'usemin']);
   grunt.registerTask('test', ['build', 'mocha_phantomjs']);
   grunt.registerTask('default', ['build', 'connect', 'watch']);
