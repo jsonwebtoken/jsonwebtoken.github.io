@@ -129,13 +129,6 @@ html(lang='en')
     section#libraries.token-sv
       .container
         //- a(name='libraries')
-        h1 Libraries for Token Signing/Verification
-
-        .warning
-          b Warning:
-          |  Critical vulnerabilities in JSON Web Token libraries with asymmetric keys.
-          a(href='https://auth0.com/blog/2015/03/31/critical-vulnerabilities-in-json-web-token-libraries/') Learn more
-
         .filter
           span Filter by
           .jwt-select
@@ -143,6 +136,13 @@ html(lang='en')
               option(value='*', selected='') All
               option(value='.java') Java
               option(value='.php') PHP
+
+        h1 Libraries for Token Signing/Verification
+
+        .warning
+          b Warning:
+          |  Critical vulnerabilities in JSON Web Token libraries with asymmetric keys.
+          a(href='https://auth0.com/blog/2015/03/31/critical-vulnerabilities-in-json-web-token-libraries/') Learn more
 
         .libraries-sv
           include libraries/net.jade

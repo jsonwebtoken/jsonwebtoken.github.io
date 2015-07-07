@@ -55,8 +55,9 @@ $(".jwt-playground .tab-link a").click(function() {
 var $grid = $('.libraries-sv').isotope({
   layoutMode: 'fitRows',
   itemSelector: 'article',
+  percentPosition: true,
   masonry: {
-    columnWidth: 1
+    columnWidth: 'article'
   }
 });
 

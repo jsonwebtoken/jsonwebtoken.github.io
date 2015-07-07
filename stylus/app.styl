@@ -315,6 +315,9 @@ section
 .token-sv
   background-color #EAEAEA
 
+  h1
+    text-align left
+
   .warning
     background-color #FFFCD2
     font-size 16px
@@ -322,6 +325,7 @@ section
     text-align center
     border-radius 3px
     padding 20px 0
+    margin-bottom 30px
     a
       font-size 11px
       color rgba(#4A4A4A,.5)
@@ -331,8 +335,8 @@ section
       margin-left 10px
 
   .filter
-    text-align right
-    margin 20px 0
+    float right
+    margin-top 8px
     span
       font-weight bold
       text-transform uppercase
@@ -348,6 +352,7 @@ section
       grid(3, 30px, 'article')
 
   article
+    width 100%
     margin-bottom 30px
     +breakpoint("tablet")
       &:nth-child(2n+1)
