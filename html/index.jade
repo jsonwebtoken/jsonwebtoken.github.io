@@ -11,12 +11,12 @@ html(lang='en')
     //- script(type='text/javascript').
     //-   try{Typekit.load();}catch(e){}
 
-    link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css")
+    link(rel="stylesheet", href="/css/bootstrap.min.css")
 
     // build:css dist/css/app.css
     link(rel='stylesheet', href='/vendor/codemirror/lib/codemirror.css', type='text/css', media='all')
     link(rel='stylesheet', href='/vendor/codemirror/addon/lint/lint.css', type='text/css', media='all')
-    link(rel="stylesheet", href='http://cdn.auth0.com/fonts/budicons/styles.css', type="text/css", media="all")
+    link(rel="stylesheet", href='/css/budicon.css', type="text/css", media="all")
     link(rel='stylesheet', href='/css/app.css', type='text/css', media='all')
 
     link(rel='search', type='application/opensearchdescription+xml', title='JWT.io', href='/opensearch.xml')
@@ -28,7 +28,7 @@ html(lang='en')
     // HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries
     | <!--[if lt IE 9]><script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script><script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script><![endif]-->
 
-  body(data-spy='scroll', data-target='.navbar')
+  body
     // Fixed navbar
     nav.navbar(role='navigation')
       .container
@@ -38,7 +38,7 @@ html(lang='en')
             img(src='img/logo.svg', alt='').logo
 
           ul.nav.navbar-nav
-            li.active
+            li
               a(href='#debugger') Debugger
             li
               a(href='#libraries') Libraries
@@ -51,12 +51,14 @@ html(lang='en')
     section.banner-jwt
       //- canvas
       .container
-        a.logo(href='#')
+        a.logo(href='/')
           img(src='img/pic_logo.svg', alt='')
-        p JSON Web Tokens are an open, industry standard [RFC 7519] method for representing claims securely between two parties.
+        p JSON Web Tokens are an open, industry standard&nbsp;
+          a(href='https://tools.ietf.org/html/rfc7519', target='_blank') RFC 7519
+          |  method for representing claims securely between two parties.
         p JWT.IO allows you to decode, verify and generate JWT.
 
-    section.debugger-jwt
+    section#debugger.debugger-jwt
       .container
         //- a(name='debugger')
         h1 Debugger
@@ -124,22 +126,37 @@ html(lang='en')
 
           .validation-status.js-signature
 
-    .bg-grey
+    section#libraries.token-sv
       .container
-        .page-header
-          a(name='libraries')
-          .algorithm.mobile-no
-            label.algorithm-label FILTER BY
-            select#filter.selectpicker
-              option(selected='', value='*') All
-              option(value='.set1') .NET
-              option(value='.set2') set2
-          h1#libraries Libraries for Token Signing/Verification
-        .alert.alert-danger(role='alert')
-          em(style='font-weight: bolder') Warning:
+        //- a(name='libraries')
+        h1 Libraries for Token Signing/Verification
+
+        .warning
+          b Warning:
           |  Critical vulnerabilities in JSON Web Token libraries with asymmetric keys.
-          a.more(href='https://auth0.com/blog/2015/03/31/critical-vulnerabilities-in-json-web-token-libraries/') Learn more
-        //- .filter-set
+          a(href='https://auth0.com/blog/2015/03/31/critical-vulnerabilities-in-json-web-token-libraries/') Learn more
+
+        .filter
+          span Filter by
+          .jwt-select
+            select
+              option(value='*', selected='') All
+              option(value='.java') Java
+              option(value='.php') PHP
+
+        .libraries-sv
+          include libraries/net.jade
+          include libraries/python.jade
+          include libraries/node.jade
+          include libraries/java.jade
+          include libraries/js.jade
+          include libraries/php.jade
+          include libraries/ruby.jade
+          include libraries/go.jade
+          include libraries/haskell.jade
+          include libraries/rust.jade
+          include libraries/lua.jade
+          include libraries/scala.jade
 
     .bt-con
       .container
@@ -208,7 +225,7 @@ html(lang='en')
       ==================================================
     // Placed at the end of the document so the pages load faster
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js')
-    script(src='//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js')
+    script(src='//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js')
     // build:js dist/js/app.js
     script(src='vendor/zepto/zepto.js')
     script(src='vendor/jsonlint/lib/jsonlint.js')

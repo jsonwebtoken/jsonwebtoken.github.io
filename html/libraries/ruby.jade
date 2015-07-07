@@ -1,75 +1,83 @@
 // Ruby progrium/ruby-jwt
-.col-md-4
-  .panel.panel-default
-    .panel-heading.color-7
-      h3.panel-title
-        img(src='img/7.svg', alt='')
-        | Ruby
+article.jwt-ruby
+  .panel
+    .panel-heading
+      img(src='/img/7.svg')
+      h3 Ruby
     .panel-wrap
-      .panel-body.library
-        .row
-          .col-xs-6
-            div
-              span.icon-check
-              | Sign
-            div
-              span.icon-check
-              | Verify
-            div
-              span.icon-check
-              | iss check
-            div
-              span.icon-check
-              | sub check
-            div
-              span.icon-check
-              | aud check
-            div
-              span.icon-check
-              | exp check
-            div
-              span.icon-check
-              | nbf check
-            div
-              span.icon-check
-              | iat check
-            div
-              span.icon-check
-              | jti check
-          .col-xs-6.right
-            div
-              span.icon-check
-              | HS256
-            div
-              span.icon-check
-              | HS384
-            div
-              span.icon-check
-              | HS512
-            div
-              span.icon-check
-              | RS256
-            div
-              span.icon-check
-              | RS384
-            div
-              span.icon-check
-              | RS512
-            .grey
-              span.icon-cross
-              | ES256
-            .grey
-              span.icon-cross
-              | ES384
-            .grey
-              span.icon-cross
-              | ES512
-        .author-info
-          i.icon-budicon-333(data-toggle='tooltip', title='Maintainer: Jeff Lindsay & Tim Rudat')
-          span.stars(data-repo='progrium/ruby-jwt')
+      .panel-body
+        .column
+          p
+            i.icon-budicon-501
+            | Sign
+          p
+            i.icon-budicon-500
+            | Verify
+          p
+            i.icon-budicon-501
+            code iss
+            |  check
+          p
+            i.icon-budicon-501
+            code sub
+            |  check
+          p
+            i.icon-budicon-500
+            code aud
+            |  check
+          p
+            i.icon-budicon-501
+            code exp
+            |  check
+          p
+            i.icon-budicon-500
+            code nbf
+            |  check
+          p
+            i.icon-budicon-501
+            code iat
+            |  check
+          p
+            i.icon-budicon-501
+            code jti
+            |  check
+        .column
+          p
+            i.icon-budicon-500
+            | HS256
+          p
+            i.icon-budicon-500
+            | HS384
+          p
+            i.icon-budicon-501
+            | HS512
+          p
+            i.icon-budicon-501
+            | RS256
+          p
+            i.icon-budicon-500
+            | RS384
+          p
+            i.icon-budicon-501
+            | RS512
+          p
+            i.icon-budicon-500
+            | ES256
+          p
+            i.icon-budicon-501
+            | ES384
+          p
+            i.icon-budicon-501
+            | ES512
+
+      .author-info
+        .maintainer
+          i.icon-budicon-333(data-toggle='tooltip', title='', data-original-title='Maintainer: Jeff Lindsay & Tim Rudat')
+          span.stars(data-repo='progrium/ruby-jwt', style='display: inline;')
             i.icon-budicon-466
-          .repository
-            i.fa.fa-github
-            a(href='https://github.com/progrium/ruby-jwt') View Repo
-        .panel-footer
-          code gem install jwt
+        .repository
+          i.icon-1392070209-icon-social-github
+          a(href='https://github.com/progrium/ruby-jwt') View Repo
+
+      .panel-footer
+        code gem install jwt

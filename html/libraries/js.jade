@@ -1,76 +1,84 @@
 // Javascript kjur/jsjws
-.col-md-4
-  .panel.panel-default.patched
-    .panel-heading.color-6
-      h3.panel-title
-        img(src='img/6.svg', alt='')
-        | JavaScript
+article.jwt-js
+  .panel
+    .panel-heading
+      img(src='/img/6.svg')
+      h3 JavaScript
     .panel-wrap
-      .panel-body.library
-        .row
-          .col-xs-6
-            div
-              span.icon-check
-              | Sign
-            div
-              span.icon-check
-              | Verify
-            .grey
-              span.icon-cross
-              | iss check
-            .grey
-              span.icon-cross
-              | sub check
-            .grey
-              span.icon-cross
-              | aud check
-            .grey
-              span.icon-cross
-              | exp check
-            .grey
-              span.icon-cross
-              | nbf check
-            .grey
-              span.icon-cross
-              | iat check
-            .grey
-              span.icon-cross
-              | jti check
-          .col-xs-6.right
-            div
-              span.icon-check
-              | HS256
-            div
-              span.icon-check
-              | HS384
-            div
-              span.icon-check
-              | HS512
-            div
-              span.icon-check
-              | RS256
-            div
-              span.icon-check
-              | RS384
-            div
-              span.icon-check
-              | RS512
-            div
-              span.icon-check
-              | ES256
-            div
-              span.icon-check
-              | ES384
-            .grey
-              span.icon-cross
-              | ES512
-        .author-info
+      .panel-body
+        .column
+          p
+            i.icon-budicon-501
+            | Sign
+          p
+            i.icon-budicon-500
+            | Verify
+          p
+            i.icon-budicon-501
+            code iss
+            |  check
+          p
+            i.icon-budicon-501
+            code sub
+            |  check
+          p
+            i.icon-budicon-500
+            code aud
+            |  check
+          p
+            i.icon-budicon-501
+            code exp
+            |  check
+          p
+            i.icon-budicon-500
+            code nbf
+            |  check
+          p
+            i.icon-budicon-501
+            code iat
+            |  check
+          p
+            i.icon-budicon-501
+            code jti
+            |  check
+        .column
+          p
+            i.icon-budicon-500
+            | HS256
+          p
+            i.icon-budicon-500
+            | HS384
+          p
+            i.icon-budicon-501
+            | HS512
+          p
+            i.icon-budicon-501
+            | RS256
+          p
+            i.icon-budicon-500
+            | RS384
+          p
+            i.icon-budicon-501
+            | RS512
+          p
+            i.icon-budicon-500
+            | ES256
+          p
+            i.icon-budicon-501
+            | ES384
+          p
+            i.icon-budicon-501
+            | ES512
+
+      .author-info
+        .maintainer
           a(href='https://github.com/kjur')
-            i.icon-budicon-333(data-toggle='tooltip', title='Maintainer: Kenji Urushima')
-          span.stars(data-repo='kjur/jsjws')
+            i.icon-budicon-333(data-toggle='tooltip', title='', data-original-title='Maintainer: Kenji Urushima')
+          span.stars(data-repo='kjur/jsjws', style='display: inline;')
             i.icon-budicon-466
-          .repository
-            i.fa.fa-github
-            a(href='https://github.com/kjur/jsjws') View Repo
+        .repository
+          i.icon-1392070209-icon-social-github
+          a(href='https://github.com/kjur/jsjws') View Repo
+
       .panel-footer
         code bower install jsjws

@@ -1,81 +1,86 @@
 // .NET System.IdentityModel.Tokens.Jwt
-.col-md-4.set2
-  .panel.panel-default
+article.jwt-net
+  .panel
     .panel-heading
-      h3.panel-title
-        img(src='img/1.svg', alt='')
-        | .NET
-    .panel-wrap(style='display: block;')
-      .panel-body.library
-        .row
-          .col-xs-6
-            div
-              span.icon-check
-              | Sign
-            div
-              span.icon-check
-              | Verify
-            .grey
-              span.icon-cross
-              | iss check
-            .grey
-              span.icon-cross
-              | sub check
-            div
-              span.icon-check
-              | aud check
-            .grey
-              span.icon-cross
-              | exp check
-            div
-              span.icon-check
-              | nbf check
-            .grey
-              span.icon-cross
-              | iat check
-            .grey
-              span.icon-cross
-              | jti check
-          .col-xs-6.right
-            div
-              span.icon-check
-              | HS256
-            div
-              span.icon-check
-              | HS384
-            .grey
-              span.icon-cross
-              | HS512
-            .grey
-              span.icon-cross
-              | RS256
-            div
-              span.icon-check
-              | RS384
-            .grey
-              span.icon-cross
-              | RS512
-            div
-              span.icon-check
-              | ES256
-            .grey
-              span.icon-cross
-              | ES384
-            .grey
-              span.icon-cross
-              | ES512
-        .author-info.type-2
-          .maintainer
-            i.icon-budicon-333(data-toggle='tooltip', title='Maintainer: Microsoft')
-            span Microsoft
-          .repository
-            i.fa.fa-github
-            a(href='https://github.com/MSOpenTech/azure-activedirectory-identitymodel-extensions-for-dotnet')
-          .star-ico
-            span.stars(data-repo='AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet')
-              i.icon-budicon-466
-        // <div><i class="fa fa-code"></i>Usage: <a href="#">Sign</a> · <a href="#">Verify</a></div>
+      img(src='/img/1.svg')
+      h3 .NET
+    .panel-wrap
+      .panel-body
+        .column
+          p
+            i.icon-budicon-501
+            | Sign
+          p
+            i.icon-budicon-500
+            | Verify
+          p
+            i.icon-budicon-501
+            code iss
+            |  check
+          p
+            i.icon-budicon-501
+            code sub
+            |  check
+          p
+            i.icon-budicon-500
+            code aud
+            |  check
+          p
+            i.icon-budicon-501
+            code exp
+            |  check
+          p
+            i.icon-budicon-500
+            code nbf
+            |  check
+          p
+            i.icon-budicon-501
+            code iat
+            |  check
+          p
+            i.icon-budicon-501
+            code jti
+            |  check
+        .column
+          p
+            i.icon-budicon-500
+            | HS256
+          p
+            i.icon-budicon-500
+            | HS384
+          p
+            i.icon-budicon-501
+            | HS512
+          p
+            i.icon-budicon-501
+            | RS256
+          p
+            i.icon-budicon-500
+            | RS384
+          p
+            i.icon-budicon-501
+            | RS512
+          p
+            i.icon-budicon-500
+            | ES256
+          p
+            i.icon-budicon-501
+            | ES384
+          p
+            i.icon-budicon-501
+            | ES512
+
+      .author-info
+        .maintainer
+          i.icon-budicon-333(data-toggle='tooltip', title='', data-original-title='Maintainer: Microsoft')
+          span.stars(data-repo='AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet', style='display: inline;')
+            i.icon-budicon-466
+        .repository
+          i.icon-1392070209-icon-social-github
+          a(href='https://github.com/MSOpenTech/azure-activedirectory-identitymodel-extensions-for-dotnet') View Repo
+
       .panel-footer
         code
-          | Install-PackageSystem.
-          a(href='https://www.nuget.org/packages/System.IdentityModel.Tokens.Jwt/') IdentityModel.Tokens.Jwt
+          | Install-Package
+          br
+          a(href='https://www.nuget.org/packages/System.IdentityModel.Tokens.Jwt/') System.IdentityModel.Tokens.Jwt

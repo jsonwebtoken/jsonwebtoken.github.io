@@ -11,6 +11,8 @@ function equalHeight(group) {
   group.css({ minHeight: tallest })
 };
 
+$('body').scrollspy({ target: '.navbar' })
+
 var clock = $('.counter').FlipClock(12323800, {
   clockFace: 'Counter'
 });
@@ -50,9 +52,9 @@ $(".jwt-playground .tab-link a").click(function() {
 //   });
 // });
 
-var $grid = $('.filter-set').isotope({
+var $grid = $('.libraries-sv').isotope({
   layoutMode: 'fitRows',
-  itemSelector: '.col-md-4',
+  itemSelector: 'article',
   masonry: {
     columnWidth: 1
   }
@@ -67,7 +69,7 @@ $(window).scroll(function() {
   };
 });
 
-$('#filter').on( 'change', function() {
+$('.filter select').on( 'change', function() {
   $grid.isotope({ filter: $(this).val() });
 });
 
@@ -525,18 +527,18 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
 $('[data-toggle="tooltip"]').tooltip();
 
 // 07012015
-$(".algorithm select").change(function() {
-   $('.algorithm input[value="'+$(this).val()+'"]').parent().trigger("click");
-   $('.algorithm input[value="'+$(this).val()+'"]').change();
+$(".debugger-jwt .algorithm select").change(function() {
+   $('.debugger-jwt .algorithm input[value="'+$(this).val()+'"]').parent().trigger("click");
+   $('.debugger-jwt .algorithm input[value="'+$(this).val()+'"]').change();
     equalHeight($(".jwt-playground .input, .jwt-playground .output"));
 });
 
-$(".algorithm input").change(function() {
-  $(".jwt-playground .btn .filter-option").text($(this).val());
+$(".debugger-jwt .algorithm input").change(function() {
+  // $(".jwt-playground .btn .filter-option").text($(this).val());
     equalHeight($(".jwt-playground .input, .jwt-playground .output"));
 });
 
-$(".algorithm select").change(function(){var a=$('.algorithm input[value="'+$(this).val()+'"]');a.prop("checked",!0)})
+$(".debugger-jwt .algorithm select").change(function(){var a=$('.debugger-jwt .algorithm input[value="'+$(this).val()+'"]');a.prop("checked",!0)})
 // end 07012015
 
 // Fetch stargazers count for each repo from GitHub's API
