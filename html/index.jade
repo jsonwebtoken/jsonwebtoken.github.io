@@ -126,7 +126,7 @@ html(lang='en')
 
           .validation-status.js-signature
 
-    section#libraries.token-sv
+    section#libraries.library
       .container
         //- a(name='libraries')
         .filter
@@ -158,67 +158,68 @@ html(lang='en')
           include libraries/lua.jade
           include libraries/scala.jade
 
-    .bt-con
+    section.sources
       .container
-        .row
-          .col-md-4
-            h3 Badges
+        .columns
+          .column.badges
+            h2 Badges
             .hold
               a(href='#')
                 img(src='img/pic_logo3.svg', alt='')
                 | View on JWT.IO
-              .text-hold
-                p https://jwt.io/assets/viewonjtwio.svg
+            .text-hold
+              a(href='')
+                i.icon-budicon-669
+              p https://jwt.io/assets/viewonjtwio.svg
             .hold
               a(href='#')
                 img(src='img/pic_logo3.svg', alt='')
                 | We support JWT
-              .text-hold
-                p https://jwt.io/assets/wesupportjwt.svg
-          .col-md-4.col-2
-            h3 Logotype
-            .hold.type-2
+            .text-hold
+              a(href='')
+                i.icon-budicon-669
+              p https://jwt.io/assets/wesupportjwt.svg
+          .column
+            h2 Logotype
+            .hold
               a(href='#')
                 img(src='img/pic_logo2.svg', alt='')
-              .text-hold
-                p https://jwt.io/assets/isotype.svg
-            .hold.type-3
+            .text-hold
+              a(href='')
+                i.icon-budicon-669
+              p https://jwt.io/assets/isotype.svg
+            .hold
               a(href='#')
                 img(src='img/pic_logo4.svg', alt='')
-              .text-hold
-                p https://jwt.io/assets/logotype.svg
-          .col-md-4
-            .tshirts
-              img.normal(src='img/pic_tshirt.png', alt='')
-              img.hover(src='img/pic_tshirt_b.png', alt='')
-              a.buy(href='#') BUY T-SHIRT
+            .text-hold
+              a(href='')
+                i.icon-budicon-669
+              p https://jwt.io/assets/logotype.svg
+          .column.tshirt
+            img(src='img/pic_tshirt.png', alt='')
+            a.buy(href='#') Buy T-Shirt
 
-    .banner.clearfix
-      img(src='img/pic_logo_ft.svg', alt='')
+    .tokens-created
       .container
-        p
-          | JWT.io is brought to you by Auth0.
-        p A cloud service, APIs and tools that eliminate the friction of identity for
-          br
-          | your applications and APIs.
-        .counter
-        p.note TOKENS CREATED
+        img(src='img/pic_logo_ft.svg', alt='')
+        p JWT.io is brought to you by Auth0.
+        p A cloud service, APIs and tools that eliminate the friction of identity for your applications and APIs.
 
-    #footer
+        .token
+          strong#tokens
+          h5 TOKENS CREATED
+
+    footer
       .container
+        .columns
+          .column
+            a(href='https://auth0.com/', target="_blank")
+              | Supported by
+              img(src='img/ico_logo.svg', alt='')
 
-        .design.col-sm-4
-          a(href='https://auth0.com/', target="_blank")
-            | Supported by
-            img(src='img/ico_logo.svg', alt='')
-
-        .ft-note.col-sm-4
-          | Missing something?
-          a(href='https://github.com/jsonwebtoken/jsonwebtoken.github.io/edit/master/html/index.html', target="_blank") Send a Pull Request
-
-
-        .twitter.col-sm-4
-          a(href='#')
+          .column.pull-request
+            | Missing something?
+            a(href='https://github.com/jsonwebtoken/jsonwebtoken.github.io/edit/master/html/index.html', target="_blank") Send a Pull Request
 
     //
       Bootstrap core JavaScript
@@ -242,6 +243,7 @@ html(lang='en')
 
     script(src='js/isotope.pkgd.min.js')
     script(src='js/flipclock.js')
+    script(src='//js.pusher.com/2.2/pusher.min.js')
 
     script(src='js/app.js')
     // endbuild

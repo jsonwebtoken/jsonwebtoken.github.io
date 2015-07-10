@@ -11,20 +11,47 @@ function equalHeight(group) {
   group.css({ minHeight: tallest })
 };
 
-$('body').scrollspy({ target: '.navbar' })
+$('body').scrollspy({ target: '.navbar' });
 
-var clock = $('.counter').FlipClock(12323800, {
-  clockFace: 'Counter'
+var pusher = null;
+var channel = null;
+var numberOfLogins = 0;
+
+$.ajax({
+  url: "http://metrics.it.auth0.com/counters",
+  cache: false
+}).done(function(response) {
+  numberOfLogins = response.logins || 71009098;
+  $('#tokens').text(numberOfLogins.toLocaleString());
+
+  if (!pusher) {
+    pusher = new Pusher('54da1f9bddbf14929983');
+  }
+
+  var timer = 0;
+  channel = pusher.subscribe('world_map');
+  channel.bind('login', function(data) {
+    // var diff = (numberOfLogins++).toLocaleString();
+    if (timer) return;
+    $('#tokens').text((numberOfLogins++).toLocaleString());
+    timer = setTimeout(function () {
+      timer = 0;
+    }, 1000);
+  });
 });
+
+// var clock = $('.counter').FlipClock(numberOfLogins, {
+//   clockFace: 'Counter'
+// });
+
+// setTimeout(function() {
+//   setInterval(function() {
+//     clock.increment();
+//   }, 1000);
+// });
 
 $(window).resize(function() {
   equalHeight($(".jwt-playground .input, .jwt-playground .output"));
-});
-
-setTimeout(function() {
-  setInterval(function() {
-    clock.increment();
-  }, 1000);
 });
 
 if (navigator.userAgent.indexOf('Mac OS X') != -1) {

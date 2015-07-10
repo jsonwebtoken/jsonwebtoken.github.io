@@ -48,6 +48,7 @@ code
   max-width 1200px
   padding 0 15px
   margin auto
+  overflow hidden
 
 section
   padding 60px 0
@@ -310,9 +311,9 @@ section
       margin-right 5px
 
 
-// libraries
+// library
 
-.token-sv
+.library
   background-color #EAEAEA
 
   h1
@@ -473,573 +474,117 @@ section
         text-decoration none
 
 
+// sources
 
+.sources
+  background-color #222228
+  .columns
+    grid(3, 30px, '.column')
 
-
-
-
-.banner
-  background linear-gradient(120deg, #14204d 0%, #3cc8f4 100%)
-  img
-    width 140px
-  a
-    color white
-  p
-    font-size 150%
-  .btn
-    min-width 200px
-
-.bg-grey
-  background #f6f6f6
-  padding-bottom 40px
-
-
-.library
-  div
-    i
-      padding-right 4px
-
-
-#footer
-  position absolute
-  bottom 0
-  width 100%
-  height 60px
-  background-color #f5f5f5
-  & > .container
-    padding-right 15px
-    padding-left 15px
-
-
-
-.container
-  .text-muted
-    margin 20px 0
-
-
-.navbar-right
-  height 20px
-
-
-
-.bs-searchbox,
-.bs-actionsbox
-  padding 4px 8px
-
-.bs-actionsbox
-  float left
-  width 100%
-  box-sizing border-box
-  .btn-group
-    button
-      width 50%
-
-.bs-searchbox
-  & + .bs-actionsbox
-    padding 0 8px 4px
-  input
-    &.form-control
-      margin-bottom 0
-      width 100%
-
-.mobile-device
-  position absolute
-  top 0
-  left 0
-  display block !important
-  width 100%
-  height 100% !important
-  opacity 0
-
-
-
-.bt-con
-  background #232228
-  text-align center
-  padding 19px 0 0 0
-  .container
-    padding 0
-  .col-md-4
-    border-bottom 1px solid #2e2d33
-    padding-bottom 9px
-    +breakpoint("desktop")
-      border-bottom none
-      padding-bottom 4px
-  h3
-    font-size 26px
-    color #FFFFFF
-    line-height 30px
-    font-weight normal
-    padding-bottom 4px
-    +breakpoint("desktop")
-      font-size 30px
-      color #FFFFFF
-      line-height 36px
-      padding-top 17px
-  .hold
-    padding-bottom 14px
-    +breakpoint("desktop")
-      padding-bottom 14px
-      padding-top 2px
-    a
-      background #000000
-      display inline-block
-      font-size 10px
-      height 30px
-      line-height 30px
-      color #fff
-      border-radius 183.6px
-      padding 0 10px
-      +breakpoint("desktop")
-        font-size 12px
-        height 35px
-        line-height 35px
-        padding 0 12px
-        margin-bottom 3px
-      img
-        width 15px
-        margin-right 6px
-        +breakpoint("desktop")
-          width auto
-          margin-right 8px
-    &.type-2
-      a
-        background none
-        padding 0 10px
-        margin-bottom 3px
-        +breakpoint("desktop")
-          margin-bottom 3px
-        img
-          width 33px
-          margin-right 0
-          +breakpoint("desktop")
-            width auto
-            position relative
-            top -3px
-    &.type-3
-      a
-        background none
-        padding 0 10px
-        margin-bottom -1px
-        margin-top 2px
-        img
-          width 73px
-          margin-right 0
-          +breakpoint("desktop")
-            width auto
-            margin-right 0
-            margin-bottom 2px
-  .text-hold
-    height 33px
-    border-radius 4px
-    line-height 33px
-    cursor pointer
-    background #2e2d33
-    color #fff
-    font-size 12px
-    margin 18px 32px
-    text-align left
-    padding 0 13px
-    +breakpoint("desktop")
-      height 40px
-      line-height 40px
-      font-size 14px
-      margin 18px 32px 20px 32px
-      padding 0 15px
-      position relative
-    &:after
-      +breakpoint("desktop")
-        position absolute
-        content ""
-        background url(../../img/ico_enlarge.svg) no-repeat
-        width 17px
-        height 20px
-        display block
-        top 9px
-        right 13px
-    p
-      line-height 35px
-      margin 0
-      +breakpoint("desktop")
-        line-height 44px
-  .col-2
-    padding-top 6px
-    padding-bottom 14px
-    +breakpoint("desktop")
-      padding-top 0
-  .tshirts
-    background #222228
-    box-shadow 0px 2px 14px 0px rgba(0,0,0,0.50)
-    border-radius 3px
-    margin 33px 30px 20px 30px
-    padding 17px 12px 14px 12px
-    +breakpoint("desktop")
-      margin 8px 52px 20px 6px
-      padding 18px 12px 14px 12px
-    img
-      width 195px
-      margin 0 auto 18px auto
-      display block
-      +breakpoint("desktop")
-        width auto
-        margin 0 auto 24px auto
-    .hover
-      display none
-    &:hover .normal
-      display none
-    &:hover .hover
-      display block
-    .buy
-      background #00B9F1
-      border 1px solid rgba(0,0,0,0.50)
-      border-radius 3px
-      font-size 14px
-      color #FFFFFF
-      letter-spacing 0.88px
-      line-height 19px
-      display block
-      height 52px
-      line-height 52px
-      +breakpoint("desktop")
-        font-size 16px
-        height 62px
-        line-height 62px
-
-// .mobile-no
-//   display none
-//   +breakpoint("desktop")
-//     display block
-
-.banner
-  background #000
-  padding 53px 0 128px 0
-  overflow hidden
-  margin 0
-  text-align: center;
-  +breakpoint("desktop")
-    padding 78px 0 252px 0
-  .container
-    padding 0
-  img
-    width 125px
-    margin 0 auto 20px auto
-    +breakpoint("desktop")
-      width auto
-      margin 0 auto 30px auto
-  p
-    font-size 17px
-    line-height 26px
-    padding 0 20px
-    color: #ccc;
-    +breakpoint("desktop")
-      font-size 26px
-      line-height 40px
-      padding 0
-      max-width 800px
-      margin auto
-
-  .note
-    font-size 10px
-    display block
-    text-align center
-    letter-spacing 2px
-    max-width none
-    line-height 14px
-    margin 5px 0 30px 0
-    +breakpoint("desktop")
-      font-size 14px
-      line-height 24px
-      margin 7px 0 40px 0
-      max-width none
-  .counter
-    margin 39px 0 0 0
-    +breakpoint("desktop")
-      margin 56px 0 0 0
-
-.btn.btn-lg, a.btn.btn-lg
-  line-height 55px
-  padding 0
-  height 51px
-  font-size 12px
-  width 236px
-  text-align center
-  +breakpoint("desktop")
-    line-height 62px
-    padding 0
-    height 62px
-    font-size 14px
-    width 276px
-
-.desktop-only
-  display none
-  +breakpoint("desktop")
-    display inline-block
-
-.mobile-only
-  display inline-block
-  +breakpoint("desktop")
-    display none !important
-.steps
-  margin 0 -15px
-  display block
-  .select
-    height 62px
-    background #232228 url(../../img/bg_steps.svg) no-repeat 95% 50%
-    line-height 62px
-    display block
-    padding 0 24px
-    font-size 12px
-    font-weight 600
-    color #fff
-    text-transform uppercase
-  li,
-  ul
-    padding 0
-    margin 0
-  ul
-    padding-bottom 15px
-    background #232228
-  li
-    a
-      line-height 22px
-      display block
-      padding 0 24px
-      font-size 12px
-      font-weight 600
-      color #fff
-      text-transform uppercase
-
-.sidebar
-  display none
-  +breakpoint("desktop")
-    display block
-    margin-top 91px
-    float right
-    width 283px
-    padding 17px 0 10px
-    border 1px solid #dddddd
-    border-radius 4px
-  h4
-    +breakpoint("desktop")
-      font-size 13px
-      text-transform uppercase
-      text-align left
-      color #333333
-      margin 0
-      border-top 1px solid #ebebeb
-      padding 27px 28px 30px
-  .btn
-    +breakpoint("desktop")
-      display block
-      color #fff
-      border-color transparent
-      margin 0 28px 27px
-      opacity 1
-      background #d63aff
-      line-height 43px
-      padding 0
-      letter-spacing 1px
-      height 43px
-      font-size 14px
-    &:hover
-      +breakpoint("desktop")
-        background #a829c9
-  p
-    +breakpoint("desktop")
-      text-align center
-      font-size 13px
-      line-height 20px
-      padding 15px 28px 13px
-      margin 0
-  ul
-    +breakpoint("desktop")
-      font-size 14px
-      text-align left
-      color #333333
-      line-height normal
-      margin 0
-      padding 0 28px
-    li
-      +breakpoint("desktop")
-        list-style none
-        margin 0
-        padding 0 0 11px
-    a
-      +breakpoint("desktop")
-        color #333333
-      &:hover
-        +breakpoint("desktop")
-          color #bc0edf
-    .current
-      a
-        +breakpoint("desktop")
-          color #bc0edf
-          font-weight 600
-
-
-.entry
-  padding 23px 9px
-  font-size 14px
-  color #000
-  +breakpoint("desktop")
-    float left
-    width 55.49%
-    padding-top 73px
-  p
-    line-height 24px
-    margin 0
-    padding 0 0 23px
-    +breakpoint("desktop")
-      line-height 28px
-      padding-bottom 0
-      display inline
-  .label
-    font-size 12px
-    color #fff
-    font-weight normal
-    font-family Menlo
-    line-height 18px
-    padding 0 5px
-    display inline-block
-    background #d63aff
-    +breakpoint("desktop")
-      line-height 21px
-  pre
-    background #f4f4f4
-    border 1px solid #d5d5d5
-    font-family Menlo
-    border-radius 3px
-    padding 10px
-    word-wrap normal
-    word-break normal
-    background #f4f4f4
-    border 1px solid #d5d5d5
-    font-family Menlo
-    font-size 12px
-    display block
-    border-radius 3px
-    margin-top -12px
-    margin-bottom 24px
-    padding 18px 22px
-    +breakpoint("desktop")
-      margin 40px 0 57px
-      font-size 12px
-      padding-top 21px
-      padding-bottom 19px
-      line-height 19px
-  code
-    display block
-    white-space nowrap
-    padding 0
-    margin 0
-    border 0
-    span
-      display inline-block
-      min-width 13px
   h2
-    padding 0 0 16px
-    font-size 20px
-    line-height 20px
+    font-size 30px
+    color white
+    text-align center
+    margin 0
+    font-weight normal
+
+  .badges
+    .hold
+      a
+        background-color black
+        color white
+        font-size 12px
+        padding 10px
+        border-radius 35px
+        display inline-block
+        vertical-align bottom
+        img
+          vertical-align top
+          margin-right 5px
+
+  .hold
+    text-align center
+    min-height 70px
+    margin-top 40px
+    a
+      text-decoration none
+
+  .text-hold
+    background-color #2D2D33
+    color white
+    text-align left
+    padding 10px 15px
+    border-radius 3px
+    a
+      float right
+      color white
+      font-size 20px
+      text-decoration none
+    p
+      margin 0
+
+  .tshirt
+    text-align center
+    img
+      display inline-block
+    a
+      background-color #00B9F1
+      color white
+      max-width 280px
+      margin 0 auto
+      font-size 16px
+      font-weight bold
+      text-transform uppercase
+      border-radius 3px
+      padding 15px
+      text-align center
+      text-decoration none
+      display block
+
+
+// tokens-created
+
+.tokens-created
+  background-color black
+  text-align center
+  color white
+  font-size 26px
+  padding 60px 0
+
+  img
+    margin-bottom 35px
+
+  p
+    max-width 875px
+    margin 5px auto
+
+  .token
+    margin-top 35px
+  h5
+    font-size 14px
     font-weight normal
     margin 0
-    +breakpoint("desktop")
-      font-size 22px
-      padding-bottom 39px
 
 
+// footer
 
-.btn.btn-purple.btn-lg, a.btn.btn-purple.btn-lg
-  display none
-  &.hidden-lg
-    display inline-block
-    color #fff
-    border-color transparent
-    margin 25px 0 16px
-    opacity 1
-    background #d63aff
-    line-height 52px
-    padding 0
-    letter-spacing 1px
-    height 52px
+footer
+  background-color black
+  border-top 1px solid rgba(#979797,.4)
+  padding 60px 0
+
+  .columns
+    grid(3, 0, '.column')
+    color white
     font-size 14px
-    width 236px
-    &:hover
-      background #a829c9
-    +breakpoint("desktop")
-      display none
-  +breakpoint("desktop")
-    display inline-block
-    color #fff
-    border-color transparent
-    margin 42px 0 -58px
-    opacity 1
-    background #d63aff
-    line-height 62px
-    padding 0
-    height 62px
-    font-size 14px
-    width 276px
-    &:hover
-      background #a829c9
+    a
+      color white
+    img
+      margin-left 5px
 
-#footer
-  height 82px
-  border-top 1px solid #313131
-  background #000
-  &.static
-    position relative
-  +breakpoint("desktop")
-    height 120px
-    border-top 2px solid #313131
-  .container
-    padding 0
-  .design
-    display none
-    +breakpoint("desktop")
-      display block
-      float left
-      font-size 14px
-      color #FFFFFF
-      line-height 17px
-      margin 45px 0 0 34px
-    a
-      +breakpoint("desktop")
-        color #FFFFFF
-      img
-        +breakpoint("desktop")
-          position relative
-          top -2px
-          right -7px
-  .twitter
-    display none
-    +breakpoint("desktop")
-      display block
-      float right
-      background url(../../img/ico_twitter.svg) no-repeat
-      height 25px
-      width 25px
-      margin 45px 0 0 0
-    +breakpoint("desktop-big")
-      margin 45px -18px 0 0
-    a
-      +breakpoint("desktop")
-        display block
-        height 25px
-        width 25px
-  .ft-note
-    width 300px
-    position absolute
-    top 33px
-    left 50%
+  .pull-request
     text-align center
-    margin-left -150px
-    font-size 14px
-    line-height 14px
-    color #fff
-    +breakpoint("desktop")
-      width 320px
-      top 48px
-      margin-left -160px
-      font-size 16px
-      line-height 16px
-
+    font-size 16px
+    a
+      color #00B9F1
+      margin-left 5px
