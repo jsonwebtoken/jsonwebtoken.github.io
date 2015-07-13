@@ -158,6 +158,12 @@ section
   +breakpoint("desktop")
     padding 200px 0 100px
 
+  p span
+    opacity: 0;
+    transition(opacity .5s ease-in-out)
+  p span.active
+    opacity: 1;
+
   p
     font-size 20px
     color white

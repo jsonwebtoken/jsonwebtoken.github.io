@@ -11,6 +11,58 @@ function equalHeight(group) {
   group.css({ minHeight: tallest })
 };
 
+$(function() {
+  var $elem = $('.banner-jwt p');
+
+  $elem.each(function() {
+    $(this).data('original', $(this).find('span').html());
+
+    var mocked = $(this).text().split('').reduce(function(prev, letter) {
+    if (/standard\s$/.test($(prev).text())) {
+      prev += '<strong>'
+    }
+
+    prev += ('<span>' + letter + '</span>');
+    if (/standard\sRFC\s7519$/.test($(prev).text())) {
+      prev += '</strong>'
+    }
+
+    return prev;
+  }, '');
+
+  $(this).html(mocked);
+  });
+
+  $( ".banner-jwt p.paragraph-1 span" ).each(function( i ) {
+    var span_item = $(this);
+    requestAnimationFrame(function(){
+      var delay = i * 20;
+      span_item.addClass('active').css('transition-delay', delay  + "ms")
+    });
+  });
+
+  setTimeout(function() {
+
+
+    $( ".banner-jwt p.paragraph-2 span" ).each(function( i ) {
+      var span_item = $(this);
+      requestAnimationFrame(function(){
+        var delay = i * 20;
+        span_item.addClass('active').css('transition-delay', delay  + "ms")
+      });
+    });
+  }, 3000);
+
+  setTimeout(function() {
+    $elem.each(function() {
+      var $ori = $(this).data('original');
+
+      $(this).html($ori);
+    })
+  }, 4500);
+
+});
+
 $('a[href^="#"].scrollto').on('click', function(event) {
   var target = $( $(this).attr('href') );
   var navheight = $(".navbar").height();
