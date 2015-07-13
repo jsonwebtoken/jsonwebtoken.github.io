@@ -30,18 +30,18 @@ html(lang='en')
 
   body
     // Fixed navbar
-    nav.navbar(role='navigation')
+    nav.navbar
       .container
         .navbar-header
-          a.brand(href='#')
+          a.brand(href='/')
             img(src='img/pic_logo.svg', alt='').icon
             img(src='img/logo.svg', alt='').logo
 
           ul.nav.navbar-nav
             li
-              a(href='#debugger') Debugger
+              a(href='#debugger').scrollto Debugger
             li
-              a(href='#libraries') Libraries
+              a(href='#libraries').scrollto Libraries
             li
               a(href='https://ask.auth0.com/category/jwt', target='_blank') Ask
 
@@ -227,7 +227,7 @@ html(lang='en')
       ==================================================
     // Placed at the end of the document so the pages load faster
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js')
-    script(src='//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js')
+    script(src='js/bootstrap.min.js')
     // build:js dist/js/app.js
     script(src='vendor/zepto/zepto.js')
     script(src='vendor/jsonlint/lib/jsonlint.js')

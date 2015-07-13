@@ -11,7 +11,38 @@ function equalHeight(group) {
   group.css({ minHeight: tallest })
 };
 
-$('body').scrollspy({ target: '.navbar' });
+$('a[href^="#"].scrollto').on('click', function(event) {
+  var target = $( $(this).attr('href') );
+  var navheight = $(".navbar").height();
+
+  if( target.length ) {
+    event.preventDefault();
+    $('html, body').animate({
+      scrollTop: target.offset().top - navheight
+    }, 500);
+  }
+});
+
+$(window).on('scroll', function () {
+  $submenu = $('.navbar');
+  var navheight = $(".navbar").height();
+  var sections = $('section');
+  var submenu_height = $submenu.outerHeight();
+  var cur_pos = $(window).scrollTop();
+
+  sections.each(function() {
+    var top = $(this).offset().top - navheight;
+    var bottom = top + $(this).outerHeight();
+
+    if (cur_pos >= top && cur_pos <= bottom) {
+      $submenu.find('a').removeClass('active').closest('.navbar-nav').removeClass('active');
+      sections.removeClass('active');
+
+      $(this).addClass('active');
+      $submenu.find('a[href="#' + $(this).attr('id') + '"]').addClass('active').closest('.navbar-nav').addClass('active');
+    }
+  });
+});
 
 var pusher = null;
 var channel = null;
