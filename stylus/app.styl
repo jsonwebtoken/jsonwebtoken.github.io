@@ -154,6 +154,19 @@ section
 .banner-jwt
   background black
   text-align center
+  +breakpoint("tablet")
+    height 100vh
+    transition(height .5s ease-in-out)
+    position relative
+
+  .container
+    +breakpoint("tablet")
+      width 100%
+      position absolute
+      top 50%
+      left 50%
+      transform(translate(-50%, -50%))
+      transition(top .5s ease-in-out)
 
   +breakpoint("tablet")
     padding 160px 0 60px
@@ -191,10 +204,17 @@ section
       width 100%
 
   svg
+    g#group
+      perspective 1000
+      -webkit-perspective 100
+      webkit-transform-style: preserve-3d;
+      transform-style: preserve-3d;
     path:nth-child(1)
-      transform(rotateY(45deg))
-      transform-origin: right center;
       backface-visibility: hidden;
+      transform-style: preserve-3d;
+      transform(perspective(400) translate3d(0, 0, -120px))
+
+
 
 
 // jwt-playground
@@ -416,6 +436,7 @@ section
 
     .panel-heading
       img
+        background-color red
         display block
         margin 0 auto -45px
       h3

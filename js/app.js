@@ -56,9 +56,12 @@ $(function() {
   setTimeout(function() {
     $elem.each(function() {
       var $ori = $(this).data('original');
+      var bannerheight = $(".banner-jwt").height();
 
       $(this).html($ori);
       $('.navbar').css('opacity', 1);
+      $('.banner-jwt').css('height', bannerheight);
+      $('.banner-jwt .container').css('top', '60%');
     })
   }, 3500);
 
