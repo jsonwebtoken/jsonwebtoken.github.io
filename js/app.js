@@ -60,6 +60,11 @@ if (navigator.userAgent.indexOf('Mac OS X') != -1) {
   $("body").addClass("pc");
 }
 
+// $('.text-hold a').on('click', function(e) {
+//   e.preventDefault();
+//   $(this).next('p').select().addClass('pepe');
+// })
+
 $(".jwt-playground .tab-link a").click(function() {
   var container = $(this).parentsUntil(".jwt-playground").parent();
   if (!$(this).parent().hasClass("current")) {
@@ -179,7 +184,7 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     mode:           'jwt',
     theme:          'night',
     lineWrapping:   true,
-    autofocus:      true,
+    // autofocus:      true,
     extraKeys: { 'Tab':  tabHack}
   });
 
