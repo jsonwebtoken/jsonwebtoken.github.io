@@ -36,7 +36,7 @@ $(function() {
   $( ".banner-jwt p.paragraph-1 span" ).each(function( i ) {
     var span_item = $(this);
     requestAnimationFrame(function(){
-      var delay = i * 20;
+      var delay = i * 15;
       span_item.addClass('active').css('transition-delay', delay  + "ms")
     });
   });
@@ -47,19 +47,20 @@ $(function() {
     $( ".banner-jwt p.paragraph-2 span" ).each(function( i ) {
       var span_item = $(this);
       requestAnimationFrame(function(){
-        var delay = i * 20;
+        var delay = i * 18;
         span_item.addClass('active').css('transition-delay', delay  + "ms")
       });
     });
-  }, 3000);
+  }, 2000);
 
   setTimeout(function() {
     $elem.each(function() {
       var $ori = $(this).data('original');
 
       $(this).html($ori);
+      $('.navbar').css('opacity', 1);
     })
-  }, 4500);
+  }, 3500);
 
 });
 

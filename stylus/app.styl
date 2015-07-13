@@ -67,6 +67,8 @@ section
   margin 0
   border-radius 0
   border 0
+  opacity 0
+  transition(opacity .5s ease-in-out)
   +breakpoint("tablet")
     width 100%
     min-height 80px
@@ -187,6 +189,12 @@ section
       margin 0 auto 50px
     img
       width 100%
+
+  svg
+    path:nth-child(1)
+      transform(rotateY(45deg))
+      transform-origin: right center;
+      backface-visibility: hidden;
 
 
 // jwt-playground
