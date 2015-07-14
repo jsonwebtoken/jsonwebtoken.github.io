@@ -11,6 +11,12 @@ function equalHeight(group) {
   group.css({ minHeight: tallest })
 };
 
+$('.menu-trigger').on('click', function() {
+  $(this).toggleClass('active');
+  $('.navbar').toggleClass('open');
+  $('body').toggleClass('menu-mobile');
+});
+
 $(function() {
   var $elem = $('.banner-jwt p');
 
@@ -56,12 +62,10 @@ $(function() {
   setTimeout(function() {
     $elem.each(function() {
       var $ori = $(this).data('original');
-      var bannerheight = $(".banner-jwt").height();
 
       $(this).html($ori);
       $('.navbar').css('opacity', 1);
-      $('.banner-jwt').css('height', bannerheight);
-      $('.banner-jwt .container').css('top', '60%');
+      $('.banner-jwt').addClass('collapsed');
     })
   }, 3500);
 
@@ -91,11 +95,11 @@ $(window).on('scroll', function () {
     var bottom = top + $(this).outerHeight();
 
     if (cur_pos >= top && cur_pos <= bottom) {
-      $submenu.find('a').removeClass('active').closest('.navbar-nav').removeClass('active');
+      $submenu.find('a').removeClass('active').closest('nav.menu').removeClass('active');
       sections.removeClass('active');
 
       $(this).addClass('active');
-      $submenu.find('a[href="#' + $(this).attr('id') + '"]').addClass('active').closest('.navbar-nav').addClass('active');
+      $submenu.find('a[href="#' + $(this).attr('id') + '"]').addClass('active').closest('nav.menu').addClass('active');
     }
   });
 });
@@ -180,7 +184,7 @@ var $grid = $('.libraries-sv').isotope({
   }
 });
 
-var offsetheight = $(".banner-jwt").height();
+var offsetheight = $(".banner-jwt").height() - 100;
 $(window).scroll(function() {
   if ($(window).scrollTop() > offsetheight) {
     $(".navbar").addClass("fixed")

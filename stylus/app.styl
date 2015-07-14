@@ -60,6 +60,10 @@ section
     +breakpoint("tablet")
       font-size 38px
 
+body.menu-mobile
+  .banner-jwt
+    padding-top 122px!important
+
 // navbar-fixed-top
 
 .navbar
@@ -67,8 +71,7 @@ section
   margin 0
   border-radius 0
   border 0
-  opacity 0
-  transition(opacity .5s ease-in-out)
+  text-align center
   +breakpoint("tablet")
     width 100%
     min-height 80px
@@ -76,28 +79,80 @@ section
     position fixed
     top 0
     z-index 100
+
+    opacity 0
+    transition(opacity .5s ease-in-out)
   +breakpoint("desktop")
     min-height 100px
 
-  .navbar-header
-    width 100%
-    text-align center
-    clearfix()
+  .container
     position relative
 
-  .brand
+  .top-mobile
+    border-bottom 1px solid rgba(#4A4A4A,.6)
+    clearfix()
+    margin 0 -15px
     +breakpoint("tablet")
+      border none
+      margin 0
+
+  .menu-trigger
+    height 10px
+    width 23px
+    padding-top 7px
+    cursor pointer
+    float right
+    margin 23px 15px 0 0
+    float right
+    span, span:before, span:after
+      background white
+      width 100%
+      height 2px
+      display block
+      transition(.3s ease-out)
+      backface-visibility hidden
+    span
+      position relative
+      &:before, &:after
+        content ""
+        position absolute
+      &:before
+        top -7px
+      &:after
+        top 7px
+    +breakpoint("tablet")
+      display none
+
+    &.active
+      span
+        background transparent
+        &:before
+          transform(translate(0, 7px) rotate(-45deg))
+        &:after
+          transform(translate(0, -7px) rotate(45deg))
+
+
+  .brand
+    display inline-block
+    float left
+    padding 20px 0 20px 15px
+    +breakpoint("tablet")
+      float none
       position absolute
-      left 0
+      left 15px
       top 20px
+      padding 0
     .icon
+      display none
       +breakpoint("tablet")
+        display inline-block
         width 40px
         opacity 0
         transform(scale(0))
       +breakpoint("desktop")
         width 60px
     .logo
+      width 60px
       +breakpoint("tablet")
         width 80px
         transition(.3s ease-in-out)
@@ -106,34 +161,39 @@ section
         width 100px
         transform(translateX(-60px))
 
-  .navbar-nav
-    float none
+  nav.menu
+    display none
     +breakpoint("tablet")
       display inline-block
-    li
-      float none
+    a
+      background none
+      color #9B9B9B
+      padding 0 15px
+      display block
+      text-decoration none
+      &:hover
+        +breakpoint("tablet")
+          color rgba(white,.8)
+      &.active
+        color white
       +breakpoint("tablet")
         display inline-block
         line-height 5.7
       +breakpoint("desktop")
         line-height 7
-      a
-        background none
-        color #9B9B9B
-        padding 0 15px
-        display inline-block
-        &:hover
-          color rgba(white,.8)
-        &.active
-          color white
 
   .social
+    display none
     +breakpoint("tablet")
+      display inline-block
       position absolute
-      right 0
+      right 15px
       top 28px
     +breakpoint("desktop")
       top 38px
+
+  .supported
+    display none
 
   &.fixed
     .brand
@@ -148,6 +208,49 @@ section
         +breakpoint("desktop")
           transform(translateX(20px))
 
+  &.open
+    background: -moz-linear-gradient(top,  rgba(0,0,0,1) 0%, rgba(0,0,0,0.9) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,1)), color-stop(100%,rgba(0,0,0,0.9)));
+    background: -webkit-linear-gradient(top,  rgba(0,0,0,1) 0%,rgba(0,0,0,0.9) 100%);
+    background: -o-linear-gradient(top,  rgba(0,0,0,1) 0%,rgba(0,0,0,0.9) 100%);
+    background: -ms-linear-gradient(top,  rgba(0,0,0,1) 0%,rgba(0,0,0,0.9) 100%);
+    background: linear-gradient(to bottom,  rgba(0,0,0,1) 0%,rgba(0,0,0,0.9) 100%);
+
+
+    position fixed
+    width 100vw
+    height 100vh
+    z-index 100
+    .container
+      padding 0
+      height 100vh
+
+    .top-mobile
+      margin 0
+
+    nav.menu
+      position absolute
+      top 50%
+      left 50%
+      transform(translate(-50%,-50%))
+      display block
+      a
+        color white
+        font-size 30px
+        margin 20% 0
+
+    .supported
+      display block
+      width 100%
+      padding 21px 0
+      color white
+      position absolute
+      bottom 0
+      border-top 1px solid rgba(#4A4A4A,.6)
+      text-decoration none
+      img
+        margin-left 5px
+
 
 // banner-jwt
 
@@ -158,6 +261,9 @@ section
     height 100vh
     transition(height .5s ease-in-out)
     position relative
+    padding 160px 0 60px
+  +breakpoint("desktop")
+    padding 200px 0 100px
 
   .container
     +breakpoint("tablet")
@@ -168,10 +274,11 @@ section
       transform(translate(-50%, -50%))
       transition(top .5s ease-in-out)
 
-  +breakpoint("tablet")
-    padding 160px 0 60px
-  +breakpoint("desktop")
-    padding 200px 0 100px
+  &.collapsed
+    +breakpoint("tablet")
+      height 628px
+      .container
+        top 60%
 
   p span
     opacity: 0;
@@ -193,15 +300,13 @@ section
       font-weight bold
       text-decoration none
 
-  .logo
+  .logo svg
     width 70px
     display block
     margin 0 auto 20px
     +breakpoint("desktop")
       width 90px
       margin 0 auto 50px
-    img
-      width 100%
 
   svg
     g#group
@@ -511,7 +616,8 @@ section
 .sources
   background-color #222228
   .columns
-    grid(3, 30px, '.column')
+    +breakpoint("tablet")
+      grid(3, 30px, '.column')
 
   h2
     font-size 30px
@@ -605,20 +711,26 @@ section
 footer
   background-color black
   border-top 1px solid rgba(#979797,.4)
-  padding 60px 0
+  padding 30px 0
+  text-align center
+  +breakpoint("tablet")
+    text-align left
+    padding 60px 0
 
   .columns
-    grid(3, 0, '.column')
     color white
     font-size 14px
+    +breakpoint("tablet")
+      grid(3, 0, '.column')
     a
       color white
     img
       margin-left 5px
 
   .pull-request
-    text-align right
-    font-size 16px
+    +breakpoint("tablet")
+      text-align right
+      font-size 16px
     a
       color #00B9F1
       margin-left 5px

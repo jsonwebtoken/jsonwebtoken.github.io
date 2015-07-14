@@ -32,21 +32,25 @@ html(lang='en')
     // Fixed navbar
     nav.navbar
       .container
-        .navbar-header
+        .top-mobile
+          .menu-trigger
+            span
+
           a.brand(href='/')
             img(src='img/pic_logo.svg', alt='').icon
             img(src='img/logo.svg', alt='').logo
 
-          ul.nav.navbar-nav
-            li
-              a(href='#debugger').scrollto Debugger
-            li
-              a(href='#libraries').scrollto Libraries
-            li
-              a(href='https://ask.auth0.com/category/jwt', target='_blank') Ask
+        nav.menu
+          a(href='#debugger').scrollto Debugger
+          a(href='#libraries').scrollto Libraries
+          a(href='https://ask.auth0.com/category/jwt', target='_blank') Ask
 
-          a.social.twitter(href='#')
-            img(src='img/ico_twitter.svg', alt='')
+        a.social.twitter(href='#')
+          img(src='img/ico_twitter.svg', alt='')
+
+        a.supported(href='https://auth0.com/', target="_blank")
+            | Supported by
+            img(src='img/ico_logo.svg', alt='')
 
     section.banner-jwt
       //- canvas
