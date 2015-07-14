@@ -60,9 +60,13 @@ section
     +breakpoint("tablet")
       font-size 38px
 
-body.menu-mobile
-  .banner-jwt
-    padding-top 122px!important
+body
+  &.intro
+    overflow hidden
+
+  &.menu-mobile
+    .banner-jwt
+      padding-top 122px!important
 
 // navbar-fixed-top
 
@@ -323,6 +327,10 @@ body.menu-mobile
 
 // jwt-playground
 
+.debugger-jwt
+  opacity 0
+  transition(opacity .3s .8s ease-in-out)
+
 .jwt-select
   display inline-block
   position relative
@@ -450,7 +458,7 @@ body.menu-mobile
 
 // library
 
-.library
+.libraries-jwt
   background-color #EAEAEA
 
   h1

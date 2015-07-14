@@ -66,6 +66,8 @@ $(function() {
       $(this).html($ori);
       $('.navbar').css('opacity', 1);
       $('.banner-jwt').addClass('collapsed');
+      $('.debugger-jwt').css('opacity', 1);
+      $('body').removeClass('intro');
     })
   }, 3500);
 
