@@ -85,7 +85,7 @@ body
     z-index 100
 
     opacity 0
-    transition(opacity .5s ease-in-out)
+    transition(opacity .5s .8s ease-in-out)
   +breakpoint("desktop")
     min-height 100px
 
@@ -261,6 +261,8 @@ body
 .banner-jwt
   background black
   text-align center
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
   +breakpoint("tablet")
     height 100vh
     transition(height .5s ease-in-out)
@@ -279,6 +281,8 @@ body
       transition(top .5s ease-in-out)
 
   &.collapsed
+    -webkit-backface-visibility: hidden;
+    -webkit-transform: translateZ(0);
     +breakpoint("tablet")
       height 628px
       .container
@@ -304,13 +308,14 @@ body
       font-weight bold
       text-decoration none
 
-  .logo svg
-    width 70px
-    display block
-    margin 0 auto 20px
-    +breakpoint("desktop")
-      width 90px
-      margin 0 auto 50px
+  .logo
+    display inline-block
+    svg
+      width 70px
+      display block
+      margin-bottom 20px
+      +breakpoint("desktop")
+        width 90px
 
   svg
     g#group
@@ -329,7 +334,7 @@ body
 
 .debugger-jwt
   opacity 0
-  transition(opacity .3s .8s ease-in-out)
+  transition(opacity .5s .7s ease-in-out)
 
 .jwt-select
   display inline-block
