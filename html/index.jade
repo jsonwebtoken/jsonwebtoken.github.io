@@ -150,23 +150,24 @@ html(lang='en')
 
     section#libraries.libraries-jwt
       .container
-        //- a(name='libraries')
-        .filter
-          span Filter by
-          .jwt-select
-            select
-              option(value='*', selected='') All
-              option(value='.java') Java
-              option(value='.php') PHP
+        .title-header
+          //- a(name='libraries')
+          h1 Libraries for Token Signing/Verification
 
-        h1 Libraries for Token Signing/Verification
+          .filter
+            span Filter by
+            .jwt-select
+              select
+                option(value='*', selected='') All
+                option(value='.java') Java
+                option(value='.php') PHP
 
         .warning
           b Warning:
           |  Critical vulnerabilities in JSON Web Token libraries with asymmetric keys.
           a(href='https://auth0.com/blog/2015/03/31/critical-vulnerabilities-in-json-web-token-libraries/') Learn more
 
-        .libraries-sv
+        .libraries-sv(data-accordion-group)
           include libraries/net.jade
           include libraries/python.jade
           include libraries/node.jade
@@ -271,6 +272,7 @@ html(lang='en')
 
     script(src='js/isotope.pkgd.min.js')
     script(src='js/flipclock.js')
+    script(src='js/accordion.js')
     script(src='//js.pusher.com/2.2/pusher.min.js')
 
     script(src='js/app.js')

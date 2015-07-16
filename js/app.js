@@ -16,6 +16,10 @@ $('.menu-trigger').on('click', function() {
   $('body').toggleClass('menu-mobile');
 });
 
+$('.accordion').accordion({
+    "transitionSpeed": 400
+});
+
 /*
  * Intro animation
  **/

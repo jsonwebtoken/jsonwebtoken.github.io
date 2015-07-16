@@ -1,84 +1,83 @@
 // Lua (openresty) SkyLothar/lua-resty-jwt
-article.jwt-lua
-  .panel
-    .panel-heading
-      img(src='/img/11.svg')
-      h3 Lua
-    .panel-wrap
-      .panel-body
-        .column
-          p
-            i.icon-budicon-501
-            | Sign
-          p
-            i.icon-budicon-500
-            | Verify
-          p
-            i.icon-budicon-501
-            code iss
-            |  check
-          p
-            i.icon-budicon-501
-            code sub
-            |  check
-          p
-            i.icon-budicon-500
-            code aud
-            |  check
-          p
-            i.icon-budicon-501
-            code exp
-            |  check
-          p
-            i.icon-budicon-500
-            code nbf
-            |  check
-          p
-            i.icon-budicon-501
-            code iat
-            |  check
-          p
-            i.icon-budicon-501
-            code jti
-            |  check
-        .column
-          p
-            i.icon-budicon-500
-            | HS256
-          p
-            i.icon-budicon-500
-            | HS384
-          p
-            i.icon-budicon-501
-            | HS512
-          p
-            i.icon-budicon-501
-            | RS256
-          p
-            i.icon-budicon-500
-            | RS384
-          p
-            i.icon-budicon-501
-            | RS512
-          p
-            i.icon-budicon-500
-            | ES256
-          p
-            i.icon-budicon-501
-            | ES384
-          p
-            i.icon-budicon-501
-            | ES512
+article.jwt-lua.accordion(data-accordion)
+  .panel-heading(data-control)
+    img(src='/img/11.svg')
+    h3 Lua
+  .panel-wrap(data-content)
+    .panel-body
+      .column
+        p
+          i.icon-budicon-501
+          | Sign
+        p
+          i.icon-budicon-500
+          | Verify
+        p
+          i.icon-budicon-501
+          code iss
+          |  check
+        p
+          i.icon-budicon-501
+          code sub
+          |  check
+        p
+          i.icon-budicon-500
+          code aud
+          |  check
+        p
+          i.icon-budicon-501
+          code exp
+          |  check
+        p
+          i.icon-budicon-500
+          code nbf
+          |  check
+        p
+          i.icon-budicon-501
+          code iat
+          |  check
+        p
+          i.icon-budicon-501
+          code jti
+          |  check
+      .column
+        p
+          i.icon-budicon-500
+          | HS256
+        p
+          i.icon-budicon-500
+          | HS384
+        p
+          i.icon-budicon-501
+          | HS512
+        p
+          i.icon-budicon-501
+          | RS256
+        p
+          i.icon-budicon-500
+          | RS384
+        p
+          i.icon-budicon-501
+          | RS512
+        p
+          i.icon-budicon-500
+          | ES256
+        p
+          i.icon-budicon-501
+          | ES384
+        p
+          i.icon-budicon-501
+          | ES512
 
-      .author-info
-        .maintainer
-          a(href='https://github.com/SkyLothar')
-            i.icon-budicon-333(data-toggle='tooltip', title='', data-original-title='Maintainer: SkyLothar')
-          span.stars(data-repo='SkyLothar/lua-resty-jwt', style='display: inline;')
-            i.icon-budicon-466
-        .repository
-          i.icon-1392070209-icon-social-github
-          a(href='https://github.com/SkyLothar/lua-resty-jwt') View Repo
+    .author-info
+      .maintainer
+        a(href='https://github.com/SkyLothar')
+          i.icon-budicon-333(data-toggle='tooltip', title='', data-original-title='Maintainer: SkyLothar')
+        span.stars(data-repo='SkyLothar/lua-resty-jwt', style='display: inline;')
+          i.icon-budicon-466
+      .repository
+        i.icon-1392070209-icon-social-github
+        a(href='https://github.com/SkyLothar/lua-resty-jwt') View Repo
 
-      .panel-footer
-        code sbt: "com.jason-goodwin" %% "authentikat-jwt" % "0.3.5"
+    .panel-footer
+      code sbt: "com.jason-goodwin" %% "authentikat-jwt" % "0.3.5"

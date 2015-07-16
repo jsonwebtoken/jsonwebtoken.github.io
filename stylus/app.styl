@@ -500,28 +500,28 @@ body
 .libraries-jwt
   background-color #EAEAEA
 
-  h1
-    text-align left
+  @media (max-width: 767px)
+    padding-bottom 0
 
-  .warning
-    background-color #FFFCD2
-    font-size 16px
-    color #4A4A4A
+  .title-header
+    clearfix()
     text-align center
-    border-radius 3px
-    padding 20px 0
-    margin-bottom 30px
-    a
-      font-size 11px
-      color rgba(#4A4A4A,.5)
-      text-transform uppercase
-      font-weight bold
-      letter-spacing 1px
-      margin-left 10px
+    +breakpoint("tablet")
+      text-align left
+    h1
+      display inline-block
+      +breakpoint("tablet")
+        float left
+    .filter
+      display inline-block
+      +breakpoint("tablet")
+        float right
 
   .filter
-    float right
-    margin-top 8px
+    margin-bottom 30px
+    +breakpoint("tablet")
+      margin-top 8px
+      margin-bottom 0
     span
       font-weight bold
       text-transform uppercase
@@ -530,18 +530,52 @@ body
     .jwt-select
       margin-left 10px
 
+  .warning
+    background-color #FFFCD2
+    font-size 11px
+    color #4A4A4A
+    text-align center
+    padding 10px
+    margin 0 -15px
+    line-height 1.8
+    +breakpoint("tablet")
+      font-size 16px
+      margin 0 0 30px
+      border-radius 3px
+      padding 20px 0
+    a
+      font-size 10px
+      color rgba(#4A4A4A,.5)
+      text-transform uppercase
+      font-weight bold
+      letter-spacing 1px
+      margin-left 10px
+
   .libraries-sv
+    margin 0 -15px
+
+    @media (max-width: 767px)
+      height auto!important
+
     +breakpoint("tablet")
       grid(2, 30px, 'article')
+      margin 0
     +breakpoint("desktop")
       grid(3, 30px, 'article')
 
   article
     width 100%
-    margin-bottom 30px
+
+    @media (max-width: 767px)
+      position relative!important
+      top auto!important
+      left auto!important
+
     +breakpoint("tablet")
+      margin-bottom 30px
       &:nth-child(2n+1)
         clear both
+
     +breakpoint("desktop")
       &:nth-child(2n+1)
         clear none
@@ -587,14 +621,22 @@ body
 
     .panel-heading
       img
-        display block
-        margin 0 auto -45px
+        float left
+        width 45px
+        margin 10px
+        +breakpoint("tablet")
+          float none
+          display block
+          margin 0 auto -45px
+          width 90px
       h3
         font-size 18px
         color white
         margin 0
-        padding 20px
-        border-radius 3px 3px 0 0
+        padding 20px 20px 20px 70px
+        +breakpoint("tablet")
+          padding 20px
+          border-radius 3px 3px 0 0
 
     .panel-body
       grid(2, 0, '.column')
@@ -656,6 +698,11 @@ body
       a
         color white
         text-decoration none
+
+    [data-content]
+      +breakpoint("tablet")
+        max-height 100%!important
+        overflow visible!important
 
 
 // sources
