@@ -4,7 +4,7 @@
  * Show menu mobile
  **/
 function scrollTo($target) {
-  var navheight = $(".navbar").height();
+  var navheight = $(".navbar.closed").height();
   $('html, body').animate({
     scrollTop: $target.offset().top - navheight
   }, 500);
@@ -12,10 +12,31 @@ function scrollTo($target) {
 
 $('.menu-trigger').on('click', function() {
   $(this).toggleClass('active');
-  $('.navbar').toggleClass('open');
+  $('.navbar').toggleClass('open').removeClass('closed');
   $('body').toggleClass('menu-mobile');
 });
 
+$('.navbar .menu a').on('click', function() {
+  $('.menu-trigger').removeClass('active');
+  $('.navbar').removeClass('open');
+  $('body').removeClass('menu-mobile');
+})
+
+/*
+ * Scroll to section
+ **/
+$('a[href^="#"].scrollto').on('click', function(event) {
+  var target = $( $(this).attr('href') );
+
+  if( target.length ) {
+    event.preventDefault();
+    scrollTo(target);
+  }
+});
+
+/*
+ * accordion
+ **/
 $('.accordion').accordion({
     "transitionSpeed": 400
 });
@@ -77,18 +98,6 @@ $(function() {
     })
   }, 3500);
 
-});
-
-/*
- * Scroll to section
- **/
-$('a[href^="#"].scrollto').on('click', function(event) {
-  var target = $( $(this).attr('href') );
-
-  if( target.length ) {
-    event.preventDefault();
-    scrollTo(target);
-  }
 });
 
 $(window).on('scroll', function () {
