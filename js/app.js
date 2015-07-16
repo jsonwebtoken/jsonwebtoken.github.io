@@ -11,6 +11,13 @@ function equalHeight(group) {
   group.css({ minHeight: tallest })
 };
 
+function scrollTo($target) {
+  var navheight = $(".navbar").height();
+  $('html, body').animate({
+    scrollTop: $target.offset().top - navheight
+  }, 500);
+}
+
 $('.menu-trigger').on('click', function() {
   $(this).toggleClass('active');
   $('.navbar').toggleClass('open');
@@ -75,13 +82,10 @@ $(function() {
 
 $('a[href^="#"].scrollto').on('click', function(event) {
   var target = $( $(this).attr('href') );
-  var navheight = $(".navbar").height();
 
   if( target.length ) {
     event.preventDefault();
-    $('html, body').animate({
-      scrollTop: target.offset().top - navheight
-    }, 500);
+    scrollTo(target);
   }
 });
 
@@ -683,6 +687,25 @@ $('.stars').each(function(idx, element){
       });
     }
 });
+
+function parseSearch() {
+  var qs = document.location.search.slice(1);
+  var d = {};
+  qs = qs.split('&');
+  qs.forEach(function (kv) { kv = kv.split('='); d[kv[0]] = kv[1]; });
+  return d;
+}
+
+if (parseSearch().value) {
+  $('body').addClass('animation-off');
+  scrollTo($('#debugger'));
+} else if (localStorage.getItem('visited')) {
+  $('body').addClass('refreshed');
+} else {
+  $('body').addClass('introduction');
+}
+
+localStorage.setItem("visited", "1");
 
 //CANVAS
 // $(function(){
