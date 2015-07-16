@@ -112,28 +112,25 @@ html(lang='en')
                   small edit the payload and secret (only HS256 supported)
 
             .tab-content
-              .box-content.current
-                #encoded-jwt.input.js-input
-              .box-content
-                #decoded-jwt.output
+              #encoded-jwt.box-content.current
+                .input.js-input
+              #decoded-jwt.box-content
+                .output
                   .jwt-explained.jwt-header
-                    p.text-line
-                      span HEADER:
-                      |  ALGORITHM & TOKEN TYPE
+                    p.text-line HEADER:
+                      span ALGORITHM & TOKEN TYPE
                       a(href='#') LEARN MORE
                     .js-header
 
                   .jwt-explained.jwt-payload
-                    p.text-line
-                      span PAYLOAD:
-                      |  DATA
+                    p.text-line PAYLOAD:
+                      span DATA
                       a(href='#') LEARN MORE
                     .js-payload
 
                   .jwt-explained.jwt-signature
-                    p.text-line
-                      span VERIFY SIGNATURE:
-                      |   LOREM IPSUM DOLOR SIT
+                    p.text-line VERIFY SIGNATURE:
+                      span LOREM IPSUM DOLOR SIT
                       a(href='#') LEARN MORE
                     pre.pre-encode.HS256.
                       HMACSHA256(
@@ -193,43 +190,45 @@ html(lang='en')
                 img(src='img/pic_logo3.svg', alt='')
                 | View on JWT.IO
             .text-hold
-              a(href='')
-                i.icon-budicon-669
-              p https://jwt.io/assets/viewonjtwio.svg
+              a(href='http://jwt.io/assets/viewonjtwio.svg')
+                i.icon-budicon-722
+              p.copy http://jwt.io/assets/viewonjtwio.svg
             .hold
               a(href='#')
                 img(src='img/pic_logo3.svg', alt='')
                 | We support JWT
             .text-hold
-              a(href='')
-                i.icon-budicon-669
-              p https://jwt.io/assets/wesupportjwt.svg
+              a(href='http://jwt.io/assets/wesupportjwt.svg')
+                i.icon-budicon-722
+              p http://jwt.io/assets/wesupportjwt.svg
           .column
             h2 Logotype
             .hold
               a(href='#')
                 img(src='img/pic_logo2.svg', alt='')
             .text-hold
-              a(href='')
-                i.icon-budicon-669
-              p https://jwt.io/assets/isotype.svg
+              a(href='http://jwt.io/assets/isotype.svg')
+                i.icon-budicon-722
+              p http://jwt.io/assets/isotype.svg
             .hold
               a(href='#')
                 img(src='img/pic_logo4.svg', alt='')
             .text-hold
-              a(href='')
-                i.icon-budicon-669
-              p https://jwt.io/assets/logotype.svg
+              a(href='http://jwt.io/assets/logotype.svg')
+                i.icon-budicon-722
+              p http://jwt.io/assets/logotype.svg
           .column.tshirt
             h2 Store
             img(src='img/pic_tshirt.png', alt='')
-            a.buy(href='#') Buy T-Shirt
+            a.buy(href='http://shop.spreadshirt.com/auth0/', target='_blank') Buy T-Shirt
 
     .tokens-created
       .container
         img(src='img/pic_logo_ft.svg', alt='')
         p JWT.io is brought to you by Auth0.
         p A cloud service, APIs and tools that eliminate the friction of identity for your applications and APIs.
+
+        a(href='javascript:void(0);', onclick="signup(this)", target="_blank", data-track="events-angularu").btn.btn-success Get started for free
 
         .token
           strong#tokens
@@ -242,11 +241,11 @@ html(lang='en')
             a(href='https://auth0.com/', target="_blank")
               | Supported by
               img(src='img/ico_logo.svg', alt='')
-          .column
-            | &nbsp;
           .column.pull-request
-            | Missing something?
+            span Missing something?
             a(href='https://github.com/jsonwebtoken/jsonwebtoken.github.io/edit/master/html/index.html', target="_blank") Send a Pull Request
+          .column.social-counter
+            | twitter
 
     //
       Bootstrap core JavaScript

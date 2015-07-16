@@ -1,22 +1,17 @@
 // 07012015 **
-function equalHeight(group) {
-  var tallest = 0;
-  group.css({ minHeight: 0 })
-  group.each(function() {
-    var thisHeight = $(this).outerHeight();
-    if(thisHeight > tallest) {
-      tallest = thisHeight;
-    }
-  });
-  group.css({ minHeight: tallest })
-};
 
+/*
+ * Show menu mobile
+ **/
 $('.menu-trigger').on('click', function() {
   $(this).toggleClass('active');
   $('.navbar').toggleClass('open');
   $('body').toggleClass('menu-mobile');
 });
 
+/*
+ * Intro animation
+ **/
 $(function() {
   var $elem = $('.banner-jwt p');
 
@@ -73,6 +68,9 @@ $(function() {
 
 });
 
+/*
+ * Scroll to section
+ **/
 $('a[href^="#"].scrollto').on('click', function(event) {
   var target = $( $(this).attr('href') );
   var navheight = $(".navbar").height();
@@ -106,6 +104,9 @@ $(window).on('scroll', function () {
   });
 });
 
+/*
+ * token counter
+ **/
 var pusher = null;
 var channel = null;
 var numberOfLogins = 0;
@@ -143,9 +144,6 @@ $.ajax({
 //   }, 1000);
 // });
 
-$(window).resize(function() {
-  equalHeight($(".jwt-playground .input, .jwt-playground .output"));
-});
 
 if (navigator.userAgent.indexOf('Mac OS X') != -1) {
   $("body").addClass("mac");
@@ -163,7 +161,7 @@ $(".jwt-playground .tab-link a").click(function() {
   if (!$(this).parent().hasClass("current")) {
     container.find(".tab-nav .current").removeClass("current")
     $(this).parent().addClass("current")
-    container.find(".tab-content .content").removeClass('current')
+    container.find(".tab-content .box-content").removeClass('current')
     $($(this).attr("href")).addClass('current');
   };
   return false;
@@ -301,9 +299,7 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
   function setJSONEditorContent(jsonEditor, decodedJSON, selector) {
     jsonEditor.off('change', refreshTokenEditor);
 
-    // 07012015
-    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
-    // end 07012015
+
 
     if (decodedJSON.result !== null && decodedJSON.result !== undefined) {
       jsonEditor.setValue(decodedJSON.result);
@@ -316,15 +312,11 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
       selector.removeClass('error');
     }
 
-    // 07012015
-    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
-    // end 07012015
+
 
     jsonEditor.on('change', refreshTokenEditor);
 
-    // 07012015
-    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
-    // end 07012015
+
   }
 
 
@@ -358,9 +350,7 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
 
     fireEvent(secretElement);
 
-    // 07012015
-    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
-    // end 07012015
+
   }
 
   function selectDetectedAlgorithm(alg){
@@ -369,18 +359,14 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
 
     fireEvent($algRadio.get(0));
 
-    // 07012015
-    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
-    // end 07012015
+
   }
 
   function saveToStorage(jwt) {
     // Save last valid jwt value for refresh
     localStorage.jwtValue = jwt;
 
-    // 07012015
-    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
-    // end 07012015
+
   }
 
   function loadFromStorage(cb) {
@@ -432,9 +418,7 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     tokenEditor.on('change', tokenEditorOnChangeListener);
     fireEvent(secretElement);
 
-    // 07012015
-    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
-    // end 07012015
+
   }
 
   function getFirstElementByClassName(selector) {
@@ -483,9 +467,7 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
       isBase64
     );
 
-    // 07012015
-    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
-    // end 07012015
+
 
     var error = result.error;
     result = result.result;
@@ -499,9 +481,7 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
       signatureElement.innerHTML = '<i class="icon-budicon-501"></i> invalid signature';
     }
 
-    // 07012015
-    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
-    // end 07012015
+
   }
 
   function getKey(algorithm, action) {
@@ -515,9 +495,7 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
         return action === 'sign' ? privateKeyElement.val() : publicKeyElement.val();
     }
 
-    // 07012015
-    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
-    // end 07012015
+
   }
 
   function getAlgorithm() {
@@ -542,9 +520,7 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
         setDefaultsForHMAC();
     }
 
-    // 07012015
-    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
-    // end 07012015
+
   }
 
   function setDefaultsForRSA() {
@@ -553,17 +529,13 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     $('.jwt-signature textarea[name=public-key]').val(DEFAULT_PUBLIC_RSA);
     $('.jwt-signature textarea[name=private-key]').val(DEFAULT_PRIVATE_RSA);
 
-    // 07012015
-    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
-    // end 07012015
+
   }
 
   function setDefaultsForHMAC(){
     tokenEditor.setValue(DEFAULT_HS_TOKEN);
 
-    // 07012015
-    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
-    // end 07012015
+
   }
 
   function validateKey() {
@@ -582,9 +554,7 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
       $textarea.addClass('error');
     }
 
-    // 07012015
-    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
-    // end 07012015
+
   }
 
   updateAlgorithm();
@@ -593,9 +563,7 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     updateAlgorithm();
     updateSignature();
 
-    // 07012015
-    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
-    // end 07012015
+
   });
 
   $('.jwt-signature textarea').on('change', updateSignature, false);
@@ -656,13 +624,9 @@ $('[data-toggle="tooltip"]').tooltip();
 $(".debugger-jwt .algorithm select").change(function() {
    $('.debugger-jwt .algorithm input[value="'+$(this).val()+'"]').parent().trigger("click");
    $('.debugger-jwt .algorithm input[value="'+$(this).val()+'"]').change();
-    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
+
 });
 
-$(".debugger-jwt .algorithm input").change(function() {
-  // $(".jwt-playground .btn .filter-option").text($(this).val());
-    equalHeight($(".jwt-playground .input, .jwt-playground .output"));
-});
 
 $(".debugger-jwt .algorithm select").change(function(){var a=$('.debugger-jwt .algorithm input[value="'+$(this).val()+'"]');a.prop("checked",!0)})
 // end 07012015

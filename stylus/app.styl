@@ -51,7 +51,9 @@ code
   overflow hidden
 
 section
-  padding 60px 0
+  padding 30px 0
+  +breakpoint("tablet")
+    padding 60px 0
   h1
     color black
     text-align center
@@ -62,13 +64,14 @@ section
 
 body
   &.intro
-    overflow hidden
+    +breakpoint("desktop")
+      overflow hidden
 
   &.menu-mobile
     .banner-jwt
       padding-top 122px!important
 
-// navbar-fixed-top
+// navbar
 
 .navbar
   background black
@@ -83,11 +86,10 @@ body
     position fixed
     top 0
     z-index 100
-
-    opacity 0
-    transition(opacity .5s .8s ease-in-out)
   +breakpoint("desktop")
     min-height 100px
+    opacity 0
+    transition(opacity .5s .8s ease-in-out)
 
   .container
     position relative
@@ -264,15 +266,15 @@ body
   -webkit-backface-visibility: hidden;
   -webkit-transform: translateZ(0);
   +breakpoint("tablet")
+    padding 140px 0 60px
+  +breakpoint("desktop")
+    padding 200px 0 100px
     height 100vh
     transition(height .5s ease-in-out)
     position relative
-    padding 160px 0 60px
-  +breakpoint("desktop")
-    padding 200px 0 100px
 
   .container
-    +breakpoint("tablet")
+    +breakpoint("desktop")
       width 100%
       position absolute
       top 50%
@@ -283,7 +285,7 @@ body
   &.collapsed
     -webkit-backface-visibility: hidden;
     -webkit-transform: translateZ(0);
-    +breakpoint("tablet")
+    +breakpoint("desktop")
       height 628px
       .container
         top 60%
@@ -330,11 +332,12 @@ body
 
 
 
-// jwt-playground
+// debugger-jwt
 
 .debugger-jwt
-  opacity 0
-  transition(opacity .5s .7s ease-in-out)
+  +breakpoint("desktop")
+    opacity 0
+    transition(opacity .5s .7s ease-in-out)
 
 .jwt-select
   display inline-block
@@ -377,50 +380,77 @@ body
       grid(2, 0, '.tab-link')
       margin-bottom 20px
 
+      .tab-link
+        text-align center
+        +breakpoint("tablet")
+          text-align left
+        &:nth-child(2)
+          +breakpoint("tablet")
+            padding-left 15px
+        &.current
+          border-bottom 6px solid #FB015B
+          +breakpoint("tablet")
+            border none
       a
-        font-size 28px
+        font-size 24px
         color black
         text-decoration none
         display block
         cursor default
+        padding-bottom 5px
+        +breakpoint("tablet")
+          font-size 28px
+          padding-bottom 0
         small
-          font-size 12px
+          font-size 10px
           color #979797
           text-transform uppercase
-          margin-left 20px
+          margin-left 10px
+          display none
+          +breakpoint("desktop")
+            display inline-block
 
     .tab-content
       +breakpoint("tablet")
         grid(2, 30px, '.box-content')
 
       .box-content
-        display none
+        height 0
+        overflow hidden
         +breakpoint("tablet")
-          display block
+          height auto
         &.current
-          display block
+          height auto
 
       .input, .output
         border 1px solid rgba(#9B9B9B,.5)
         border-radius 3px
 
       .input
-        padding 20px
+        padding 10px
+        +breakpoint("tablet")
+          padding 20px
+          &[data-alg="HS256"]
+            min-height 531px
+          &[data-alg="RS256"]
+            min-height 719px
 
-      .output
-        none none
       .jwt-explained
         .text-line
           margin 0
           font-size 12px
-          color #979797
+          color black
           clearfix()
           border-top 1px solid rgba(#9B9B9B,.5)
           border-bottom 1px solid rgba(#9B9B9B,.5)
           line-height 2.5
           padding 0 10px
           span
-            color black
+            color #979797
+            margin-left 5px
+            display none
+            +breakpoint("desktop")
+              display inline-block
           a
             float right
 
@@ -445,23 +475,27 @@ body
   .validation-status
     text-transform capitalize
     color white
-    font-size 30px
     text-align center
     border-radius 3px
     padding 10px 0
     margin-top 30px
+    font-size 20px
+    +breakpoint("tablet")
+      font-size 30px
     &.valid-token
       background-color #00B9F1
     &.invalid-token
       background-color red
     i
-      font-size 24px
+      font-size 18px
       vertical-align bottom
       display inline-block
       margin-right 5px
+      +breakpoint("tablet")
+        font-size 24px
 
 
-// library
+// libraries-jwt
 
 .libraries-jwt
   background-color #EAEAEA
@@ -632,6 +666,11 @@ body
     +breakpoint("tablet")
       grid(3, 30px, '.column')
 
+    .column
+      margin-bottom 20px
+      +breakpoint("tablet")
+        margin-bottom 0
+
   h2
     font-size 30px
     color white
@@ -669,21 +708,28 @@ body
     a
       float right
       color white
-      font-size 20px
+      font-size 18px
       text-decoration none
     p
       margin 0
+      white-space nowrap
+      text-overflow ellipsis
+      overflow hidden
 
   .tshirt
     text-align center
     h2
       margin-bottom 20px
     img
+      max-width 180px
+      width 100%
       display inline-block
+      +breakpoint("tablet")
+        max-width 270px
     a
       background-color #00B9F1
       color white
-      max-width 280px
+      max-width 180px
       margin 20px auto 0
       font-size 16px
       font-weight bold
@@ -693,6 +739,8 @@ body
       text-align center
       text-decoration none
       display block
+      +breakpoint("tablet")
+        max-width 270px
 
 
 // tokens-created
@@ -701,8 +749,12 @@ body
   background-color black
   text-align center
   color white
-  font-size 26px
-  padding 60px 0
+  font-size 20px
+  line-height 1.8
+  padding 30px 0
+  +breakpoint("tablet")
+    padding 60px 0
+    font-size 26px
 
   img
     margin-bottom 35px
@@ -710,6 +762,27 @@ body
   p
     max-width 875px
     margin 5px auto
+
+  .btn, a.btn
+    transition(background-color 0.2s ease)
+    text-transform uppercase
+    letter-spacing 2px
+    font-weight bold
+    border 1px solid #d0d2d3
+    line-height 30px
+    padding 15px 20px
+    font-size 15px
+    border-radius 3px
+    text-decoration none
+    display inline-block
+    margin-top 30px
+    &.btn-success
+      background-color #eb5424
+      color white
+      border-color transparent
+      &:hover
+        background-color darken(#eb5424, 30%)
+        color white
 
   .token
     margin-top 35px
@@ -724,7 +797,7 @@ body
 footer
   background-color black
   border-top 1px solid rgba(#979797,.4)
-  padding 30px 0
+  padding 20px 0
   text-align center
   +breakpoint("tablet")
     text-align left
@@ -735,6 +808,12 @@ footer
     font-size 14px
     +breakpoint("tablet")
       grid(3, 0, '.column')
+
+    .column
+      margin 15px 0
+      +breakpoint("tablet")
+        margin 0
+
     a
       color white
     img
@@ -742,8 +821,16 @@ footer
 
   .pull-request
     +breakpoint("tablet")
-      text-align right
+      text-align center
       font-size 16px
+    span
+      display block
+      +breakpoint("desktop")
+        display inline-block
     a
       color #00B9F1
       margin-left 5px
+
+  .social-counter
+    +breakpoint("tablet")
+      text-align right
