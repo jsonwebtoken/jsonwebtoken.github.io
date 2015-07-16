@@ -1,5 +1,42 @@
 // 07012015 **
 
+// Fetch stargazers count for each repo from GitHub's API
+$('.stars').each(function(idx, element){
+    var $el = $(element);
+    var repo = $el.attr('data-repo');
+
+    if (repo){
+      $.getJSON('//api.github.com/repos/' + repo, function(repoData){
+        var $count = $('<span>');
+        $count.text(repoData.stargazers_count);
+
+        $el.find('i').after($count);
+
+        $el.show();
+      });
+    }
+});
+
+function parseSearch() {
+  var qs = document.location.search.slice(1);
+  var d = {};
+  qs = qs.split('&');
+  qs.forEach(function (kv) { kv = kv.split('='); d[kv[0]] = kv[1]; });
+  return d;
+}
+
+if (parseSearch().value) {
+  $('body').addClass('animation-off');
+  scrollTo($('#debugger'));
+}
+if (localStorage.getItem('visited')) {
+  $('body').addClass('refreshed');
+} else {
+  $('body').addClass('introduction');
+}
+
+localStorage.setItem("visited", "1");
+
 /*
  * Show menu mobile
  **/
@@ -129,7 +166,7 @@ var channel = null;
 var numberOfLogins = 0;
 
 $.ajax({
-  url: "http://metrics.it.auth0.com/counters",
+  url: "//metrics.it.auth0.com/counters",
   cache: false
 }).done(function(response) {
   numberOfLogins = response.logins || 71009098;
@@ -646,42 +683,6 @@ $(".debugger-jwt .algorithm select").change(function() {
 
 $(".debugger-jwt .algorithm select").change(function(){var a=$('.debugger-jwt .algorithm input[value="'+$(this).val()+'"]');a.prop("checked",!0)})
 // end 07012015
-
-// Fetch stargazers count for each repo from GitHub's API
-$('.stars').each(function(idx, element){
-    var $el = $(element);
-    var repo = $el.attr('data-repo');
-
-    if (repo){
-      $.getJSON('http://api.github.com/repos/' + repo, function(repoData){
-        var $count = $('<span>');
-        $count.text(repoData.stargazers_count);
-
-        $el.find('i').after($count);
-
-        $el.show();
-      });
-    }
-});
-
-function parseSearch() {
-  var qs = document.location.search.slice(1);
-  var d = {};
-  qs = qs.split('&');
-  qs.forEach(function (kv) { kv = kv.split('='); d[kv[0]] = kv[1]; });
-  return d;
-}
-
-if (parseSearch().value) {
-  $('body').addClass('animation-off');
-  scrollTo($('#debugger'));
-} else if (localStorage.getItem('visited')) {
-  $('body').addClass('refreshed');
-} else {
-  $('body').addClass('introduction');
-}
-
-localStorage.setItem("visited", "1");
 
 //CANVAS
 // $(function(){

@@ -63,10 +63,6 @@ section
       font-size 38px
 
 body
-  &.intro
-    +breakpoint("desktop")
-      overflow hidden
-
   &.menu-mobile
     .banner-jwt
       padding-top 122px!important
@@ -88,8 +84,6 @@ body
     z-index 100
   +breakpoint("desktop")
     min-height 100px
-    opacity 0
-    transition(opacity .5s .8s ease-in-out)
 
   .container
     position relative
@@ -269,26 +263,6 @@ body
     padding 140px 0 60px
   +breakpoint("desktop")
     padding 200px 0 100px
-    height 100vh
-    transition(height .5s ease-in-out)
-    position relative
-
-  .container
-    +breakpoint("desktop")
-      width 100%
-      position absolute
-      top 50%
-      left 50%
-      transform(translate(-50%, -50%))
-      transition(top .5s ease-in-out)
-
-  &.collapsed
-    -webkit-backface-visibility: hidden;
-    -webkit-transform: translateZ(0);
-    +breakpoint("desktop")
-      height 628px
-      .container
-        top 60%
 
   p span
     opacity: 0;
@@ -333,11 +307,6 @@ body
 
 
 // debugger-jwt
-
-.debugger-jwt
-  +breakpoint("desktop")
-    opacity 0
-    transition(opacity .5s .7s ease-in-out)
 
 .jwt-select
   display inline-block
@@ -881,3 +850,36 @@ footer
   .social-counter
     +breakpoint("tablet")
       text-align right
+
+
+// animation intro refreshed
+body
+  &.introduction
+    +breakpoint("desktop")
+      .navbar
+        opacity 0
+        transition(opacity .5s .7s ease-in-out)
+
+      .banner-jwt
+        height 100vh
+        transition(height .5s ease-in-out)
+        position relative
+
+        .container
+          width 100%
+          position absolute
+          top 50%
+          left 50%
+          transform(translate(-50%, -50%))
+          transition(top .5s ease-in-out)
+
+        &.collapsed
+          -webkit-backface-visibility: hidden;
+          -webkit-transform: translateZ(0);
+          height 628px
+          .container
+            top 60%
+
+      .debugger-jwt
+        opacity 0
+        transition(opacity .5s .7s ease-in-out)

@@ -28,7 +28,7 @@ html(lang='en')
     // HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries
     | <!--[if lt IE 9]><script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script><script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script><![endif]-->
 
-  body.intro
+  body
     // Fixed navbar
     nav.navbar.closed
       .container
@@ -229,7 +229,7 @@ html(lang='en')
         p JWT.io is brought to you by Auth0.
         p A cloud service, APIs and tools that eliminate the friction of identity for your applications and APIs.
 
-        a(href='javascript:void(0);', onclick="signup(this)", target="_blank", data-track="events-angularu").btn.btn-success Get started for free
+        a(href='javascript:void(0);', onclick="signup(this)", target="_blank", data-track="events-angularu").btn.btn-success Create free account
 
         .token
           h5 TOKENS CREATED
@@ -247,7 +247,7 @@ html(lang='en')
             span Missing something?
             a(href='https://github.com/jsonwebtoken/jsonwebtoken.github.io/edit/master/html/index.html', target="_blank") Send a Pull Request
           .column.social-counter
-            | twitter
+            a.twitter-follow-button(href='https://twitter.com/auth0', data-show-count='true') Follow @auth0
 
     //
       Bootstrap core JavaScript
@@ -284,3 +284,6 @@ html(lang='en')
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
       ga('create', 'UA-37952868-2', 'auto');
       ga('send', 'pageview');
+
+    script.
+      !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
