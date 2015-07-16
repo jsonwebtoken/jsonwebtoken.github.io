@@ -138,15 +138,15 @@ $.ajax({
   });
 });
 
-// var clock = $('.counter').FlipClock(numberOfLogins, {
-//   clockFace: 'Counter'
-// });
+var clock = $('.counter').FlipClock(20, {
+  clockFace: 'Counter'
+});
 
-// setTimeout(function() {
-//   setInterval(function() {
-//     clock.increment();
-//   }, 1000);
-// });
+setTimeout(function() {
+  setInterval(function() {
+    clock.increment();
+  }, 1000);
+});
 
 
 if (navigator.userAgent.indexOf('Mac OS X') != -1) {
