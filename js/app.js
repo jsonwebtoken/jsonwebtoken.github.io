@@ -376,7 +376,7 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
 
   function saveToStorage(jwt) {
     // Save last valid jwt value for refresh
-    localStorage.jwtValue = jwt;
+    localStorage.setItem("jwtValue", jwt);
 
     // 07012015
     equalHeight($(".jwt-playground .input, .jwt-playground .output"));
@@ -384,8 +384,8 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
   }
 
   function loadFromStorage(cb) {
-    cb(localStorage.jwtValue);
-    localStorage.clear();
+    cb(localStorage.getItem("jwtValue"));
+    localStorage.removeItem("jwtValue");
   }
 
   function refreshTokenEditor(instance) {
