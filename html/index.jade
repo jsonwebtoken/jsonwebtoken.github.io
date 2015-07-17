@@ -7,8 +7,8 @@ html(lang='en')
     meta(name='author', content='auth0.com')
     meta(name='description', content='JSON Web Token (JWT) is a compact URL-safe means of representing claims to be transferred between two parties. The claims in a JWT are encoded as a JSON object that is digitally signed using JSON Web Signature (JWS).')
     title JSON Web Tokens - jwt.io
-    
-    //- Twitter Card 
+
+    //- Twitter Card
     meta(name='twitter:card', content='JWT.IO')
     meta(name='twitter:site', content='@auth0')
     meta(name='twitter:title', content='JWT.IO')
@@ -73,20 +73,23 @@ html(lang='en')
             span
 
           a.brand(href='/')
-            img(src='img/pic_logo.svg', alt='').icon
-            img(src='img/logo.svg', alt='').logo
+            img(src='img/pic_logo.svg').icon
+            img(src='img/logo.svg').logo
 
         nav.menu
           a(href='#debugger').scrollto Debugger
           a(href='#libraries').scrollto Libraries
           a(href='https://ask.auth0.com/category/jwt', target='_blank') Ask
 
-        a.social.twitter(href='https://twitter.com/auth0', target="_blank")
-          img(src='img/ico_twitter.svg', alt='')
+        .social
+          a.a0(href='https://auth0.com/', target='_blank')
+            img(src='img/ico_a0_white.svg')
+          a.twitter(href='https://twitter.com/auth0', target="_blank")
+            img(src='img/ico_twitter.svg')
 
         a.supported(href='https://auth0.com/', target="_blank")
             | Supported by
-            img(src='img/ico_logo.svg', alt='')
+            img(src='img/ico_logo.svg')
 
     section.banner-jwt
       //- canvas
@@ -223,7 +226,7 @@ html(lang='en')
             h2 Badges
             .hold
               a(href='http://jwt.io/assets/badge.svg', target='_blank')
-                img(src='img/pic_logo3.svg', alt='')
+                img(src='img/pic_logo3.svg')
                 | View on JWT.IO
             .text-hold
               a(href='http://jwt.io/assets/badge.svg', target='_blank')
@@ -231,7 +234,7 @@ html(lang='en')
               p.copy http://jwt.io/assets/badge.svg
             .hold
               a(href='http://jwt.io/assets/badge-support.svg', target='_blank')
-                img(src='img/pic_logo3.svg', alt='')
+                img(src='img/pic_logo3.svg')
                 | We support JWT
             .text-hold
               a(href='http://jwt.io/assets/badge-support.svg', target='_blank')
@@ -241,26 +244,26 @@ html(lang='en')
             h2 Logotype
             .hold
               a(href='http://jwt.io/assets/icon.svg', target='_blank')
-                img(src='img/pic_logo2.svg', alt='')
+                img(src='img/pic_logo2.svg')
             .text-hold
               a(href='http://jwt.io/assets/icon.svg', target='_blank')
                 i.icon-budicon-722
               p http://jwt.io/assets/icon.svg
             .hold
               a(href='http://jwt.io/assets/logo.svg', target='_blank')
-                img(src='img/pic_logo4.svg', alt='')
+                img(src='img/pic_logo4.svg')
             .text-hold
               a(href='http://jwt.io/assets/logo.svg', target='_blank')
                 i.icon-budicon-722
               p http://jwt.io/assets/logo.svg
           .column.tshirt
             h2 Store
-            img(src='img/pic_tshirt.png', alt='')
+            img(src='img/pic_tshirt.png')
             a.buy(href='http://swag.auth0.com/', target='_blank') Buy T-Shirt
 
     .tokens-created
       .container
-        img(src='img/pic_logo_ft.svg', alt='')
+        img(src='img/pic_logo_ft.svg')
         p JWT.io is brought to you by Auth0.
         p A cloud service, APIs and tools that eliminate the friction of identity for your applications and APIs.
 
@@ -277,7 +280,7 @@ html(lang='en')
           .column
             a(href='https://auth0.com/', target="_blank")
               | Supported by
-              img(src='img/ico_logo.svg', alt='')
+              img(src='img/ico_logo.svg')
           .column.pull-request
             span Missing something?
             a(href='https://github.com/jsonwebtoken/jsonwebtoken.github.io/edit/master/html/index.html', target="_blank") Send a Pull Request
