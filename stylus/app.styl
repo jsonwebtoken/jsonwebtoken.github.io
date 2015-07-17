@@ -194,11 +194,6 @@ body
     +breakpoint("desktop")
       top 38px
 
-    a
-      margin-left 15px
-      img
-        height 24px
-
   .supported
     display none
 
@@ -222,6 +217,7 @@ body
     background: -o-linear-gradient(top,  rgba(0,0,0,1) 0%,rgba(0,0,0,0.9) 100%);
     background: -ms-linear-gradient(top,  rgba(0,0,0,1) 0%,rgba(0,0,0,0.9) 100%);
     background: linear-gradient(to bottom,  rgba(0,0,0,1) 0%,rgba(0,0,0,0.9) 100%);
+
 
     position fixed
     width 100vw
@@ -292,19 +288,11 @@ body
 
   .logo
     display inline-block
-    width 70px
-    height 70px
-    +breakpoint("desktop")
-      height 90px
-      width 90px
-    
     svg
       width 70px
-      height 70px
       display block
       margin-bottom 20px
       +breakpoint("desktop")
-        height 90px
         width 90px
 
   svg
@@ -604,12 +592,14 @@ body
       img
         float left
         width 45px
+        height: 45px;
         margin 10px
         +breakpoint("tablet")
           float none
           display block
           margin 0 auto -45px
           width 90px
+          height: 90px;
       h3
         font-size 18px
         color white
