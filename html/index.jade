@@ -119,19 +119,15 @@ html(lang='en')
                   .jwt-explained.jwt-header
                     p.text-line HEADER:
                       span ALGORITHM & TOKEN TYPE
-                      a(href='#') LEARN MORE
                     .js-header
 
                   .jwt-explained.jwt-payload
                     p.text-line PAYLOAD:
                       span DATA
-                      a(href='#') LEARN MORE
                     .js-payload
 
                   .jwt-explained.jwt-signature
-                    p.text-line VERIFY SIGNATURE:
-                      span LOREM IPSUM DOLOR SIT
-                      a(href='#') LEARN MORE
+                    p.text-line VERIFY SIGNATURE
                     pre.pre-encode.HS256.
                       HMACSHA256(
                         base64UrlEncode(header) + "." +
@@ -257,7 +253,7 @@ html(lang='en')
       Bootstrap core JavaScript
       ==================================================
     // Placed at the end of the document so the pages load faster
-    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js')
+    script(src='//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js')
     script(src='js/bootstrap.min.js')
     // build:js dist/js/app.js
     script(src='vendor/zepto/zepto.js')
