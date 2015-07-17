@@ -4,7 +4,11 @@ article.jwt-php.php.accordion(data-accordion)
     img(src='/img/5.svg')
     h3 PHP
   .panel-wrap(data-content)
-    .panel-body
+    .version
+      p Minimum Version 2.0.0
+        a(href='https://auth0.com/blog/2015/03/31/critical-vulnerabilities-in-json-web-token-libraries/', target='_blank')
+          img(src='img/ico_question.svg')
+    .panel-body.mversion
       .column
         p
           i.icon-budicon-501
@@ -72,7 +76,8 @@ article.jwt-php.php.accordion(data-accordion)
     .author-info
       .maintainer
         a(href='https://github.com/firebase')
-          i.icon-budicon-333(data-toggle='tooltip', title='', data-original-title='Maintainer: Firebase')
+          i.icon-budicon-333(data-toggle='tooltip', title='', data-original-title='Maintainer')
+          | Firebase
         span.stars(data-repo='firebase/php-jwt', style='display: inline;')
           i.icon-budicon-466
       .repository

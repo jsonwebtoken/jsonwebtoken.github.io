@@ -4,10 +4,14 @@ article.jwt-js.accordion(data-accordion)
     img(src='/img/6.svg')
     h3 JavaScript
   .panel-wrap(data-content)
-    .panel-body
+    .version
+      p Minimum Version 3.2.0
+        a(href='https://auth0.com/blog/2015/03/31/critical-vulnerabilities-in-json-web-token-libraries/', target='_blank')
+          img(src='img/ico_question.svg')
+    .panel-body.mversion
       .column
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           | Sign
         p
           i.icon-budicon-500
@@ -21,7 +25,7 @@ article.jwt-js.accordion(data-accordion)
           code sub
           |  check
         p
-          i.icon-budicon-500
+          i.icon-budicon-501
           code aud
           |  check
         p
@@ -29,7 +33,7 @@ article.jwt-js.accordion(data-accordion)
           code exp
           |  check
         p
-          i.icon-budicon-500
+          i.icon-budicon-501
           code nbf
           |  check
         p
@@ -48,22 +52,22 @@ article.jwt-js.accordion(data-accordion)
           i.icon-budicon-500
           | HS384
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           | HS512
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           | RS256
         p
           i.icon-budicon-500
           | RS384
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           | RS512
         p
           i.icon-budicon-500
           | ES256
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           | ES384
         p
           i.icon-budicon-501
@@ -72,7 +76,8 @@ article.jwt-js.accordion(data-accordion)
     .author-info
       .maintainer
         a(href='https://github.com/kjur')
-          i.icon-budicon-333(data-toggle='tooltip', title='', data-original-title='Maintainer: Kenji Urushima')
+          i.icon-budicon-333(data-toggle='tooltip', title='', data-original-title='Maintainer')
+          | Kenji Urushima
         span.stars(data-repo='kjur/jsjws', style='display: inline;')
           i.icon-budicon-466
       .repository

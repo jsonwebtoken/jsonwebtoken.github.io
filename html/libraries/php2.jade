@@ -1,10 +1,14 @@
-// Lua (openresty) SkyLothar/lua-resty-jwt
-article.jwt-lua.accordion(data-accordion)
+// PHP namshi
+article.jwt-php.php.accordion(data-accordion)
   .panel-heading(data-control)
-    img(src='/img/11.svg')
-    h3 Lua
+    img(src='/img/5.svg')
+    h3 PHP
   .panel-wrap(data-content)
-    .panel-body
+    .version
+      p Minimum Version 2.2.0
+        a(href='https://auth0.com/blog/2015/03/31/critical-vulnerabilities-in-json-web-token-libraries/', target='_blank')
+          img(src='img/ico_question.svg')
+    .panel-body.mversion
       .column
         p
           i.icon-budicon-500
@@ -13,7 +17,7 @@ article.jwt-lua.accordion(data-accordion)
           i.icon-budicon-500
           | Verify
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           code iss
           |  check
         p
@@ -33,7 +37,7 @@ article.jwt-lua.accordion(data-accordion)
           code nbf
           |  check
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           code iat
           |  check
         p
@@ -45,19 +49,19 @@ article.jwt-lua.accordion(data-accordion)
           i.icon-budicon-500
           | HS256
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           | HS384
         p
           i.icon-budicon-500
           | HS512
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           | RS256
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           | RS384
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           | RS512
         p
           i.icon-budicon-501
@@ -71,14 +75,14 @@ article.jwt-lua.accordion(data-accordion)
 
     .author-info
       .maintainer
-        a(href='https://github.com/SkyLothar')
+        a(href='https://github.com/namshi')
           i.icon-budicon-333(data-toggle='tooltip', title='', data-original-title='Maintainer')
-          | SkyLothar
-        span.stars(data-repo='SkyLothar/lua-resty-jwt', style='display: inline;')
+          | Namshi
+        span.stars(data-repo='namshi/jose', style='display: inline;')
           i.icon-budicon-466
       .repository
         i.icon-1392070209-icon-social-github
-        a(href='https://github.com/SkyLothar/lua-resty-jwt') View Repo
+        a(href='https://github.com/namshi/jose') View Repo
 
     .panel-footer
-      code sbt: "com.jason-goodwin" %% "authentikat-jwt" % "0.3.5"
+      code composer namshi/jose

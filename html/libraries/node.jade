@@ -4,10 +4,14 @@ article.jwt-node.accordion(data-accordion)
     img(src='/img/2.svg')
     h3 Node.js
   .panel-wrap(data-content)
-    .panel-body
+    .version
+      p Minimum Version 4.2.2
+        a(href='https://auth0.com/blog/2015/03/31/critical-vulnerabilities-in-json-web-token-libraries/', target='_blank')
+          img(src='img/ico_question.svg')
+    .panel-body.mversion
       .column
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           | Sign
         p
           i.icon-budicon-500
@@ -25,11 +29,11 @@ article.jwt-node.accordion(data-accordion)
           code aud
           |  check
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           code exp
           |  check
         p
-          i.icon-budicon-500
+          i.icon-budicon-501
           code nbf
           |  check
         p
@@ -48,31 +52,32 @@ article.jwt-node.accordion(data-accordion)
           i.icon-budicon-500
           | HS384
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           | HS512
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           | RS256
         p
           i.icon-budicon-500
           | RS384
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           | RS512
         p
           i.icon-budicon-500
           | ES256
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           | ES384
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           | ES512
 
     .author-info
       .maintainer
         a(href='https://github.com/auth0')
-          i.icon-budicon-333(data-toggle='tooltip', title='', data-original-title='Maintainer: Auth0')
+          i.icon-budicon-333(data-toggle='tooltip', title='', data-original-title='Maintainer')
+          | Auth0
         span.stars(data-repo='auth0/node-jsonwebtoken', style='display: inline;')
           i.icon-budicon-466
       .repository

@@ -1,8 +1,8 @@
-// Lua (openresty) SkyLothar/lua-resty-jwt
-article.jwt-lua.accordion(data-accordion)
+// Java connect2id
+article.jwt-java.java.accordion(data-accordion)
   .panel-heading(data-control)
-    img(src='/img/11.svg')
-    h3 Lua
+    img(src='/img/3.svg')
+    h3 Java
   .panel-wrap(data-content)
     .panel-body
       .column
@@ -13,7 +13,7 @@ article.jwt-lua.accordion(data-accordion)
           i.icon-budicon-500
           | Verify
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           code iss
           |  check
         p
@@ -21,7 +21,7 @@ article.jwt-lua.accordion(data-accordion)
           code sub
           |  check
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           code aud
           |  check
         p
@@ -29,7 +29,7 @@ article.jwt-lua.accordion(data-accordion)
           code exp
           |  check
         p
-          i.icon-budicon-500
+          i.icon-budicon-501
           code nbf
           |  check
         p
@@ -45,40 +45,38 @@ article.jwt-lua.accordion(data-accordion)
           i.icon-budicon-500
           | HS256
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           | HS384
         p
           i.icon-budicon-500
           | HS512
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           | RS256
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           | RS384
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           | RS512
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           | ES256
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           | ES384
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           | ES512
 
     .author-info
       .maintainer
-        a(href='https://github.com/SkyLothar')
+        a(href='https://github.com/connect2id')
           i.icon-budicon-333(data-toggle='tooltip', title='', data-original-title='Maintainer')
-          | SkyLothar
-        span.stars(data-repo='SkyLothar/lua-resty-jwt', style='display: inline;')
-          i.icon-budicon-466
+          | connect2id
       .repository
         i.icon-1392070209-icon-social-github
-        a(href='https://github.com/SkyLothar/lua-resty-jwt') View Repo
+        a(href='https://bitbucket.org/connect2id/nimbus-jose-jwt') View Repo
 
     .panel-footer
-      code sbt: "com.jason-goodwin" %% "authentikat-jwt" % "0.3.5"
+      code maven: com.nimbusds / nimbus-jose-jwt / 3.6

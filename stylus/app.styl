@@ -49,6 +49,8 @@ code
   padding 0 15px
   margin auto
   overflow hidden
+  +breakpoint("desktop")
+    overflow visible
 
 section
   padding 30px 0
@@ -610,9 +612,11 @@ body
     .panel-body
       grid(2, 0, '.column')
       background-color white
-      padding 20px
+      padding 37px 20px 20px
+
       p
         font-size 18px
+        margin 10px 0
         code
           background-color #f9f2f4
           color #c7254e
@@ -625,6 +629,26 @@ body
           &.icon-budicon-501
             color #F0586A
 
+      &.mversion
+        padding-top 0
+
+    .version
+      background-color rgba(orange,.7)
+      color white
+      font-size 12px
+      text-align center
+      padding 10px
+      text-transform uppercase
+      p
+        margin 0
+      a
+        color rgba(black,.5)
+        img
+          width 13px
+          margin 2px 0 0 5px
+          color white
+          vertical-align top
+
     .author-info
       background-color white
       clearfix()
@@ -635,16 +659,17 @@ body
 
       .maintainer
         float left
+        font-size 12px
+        margin-top 3px
         i
           vertical-align middle
-        a
+          margin-right 5px
           font-size 16px
+        a
           color #4A4A4A
           text-decoration none
         .stars
           margin-left 10px
-          i
-            margin-right 5px
 
       .repository
         float right
@@ -653,7 +678,7 @@ body
           vertical-align middle
           margin-right 5px
         a
-          font-size 14px
+          font-size 13px
           color #4A4A4A
           text-decoration none
 
@@ -677,7 +702,7 @@ body
 // sources
 
 .sources
-  background-color #222228
+  background-color #222
   .columns
     +breakpoint("tablet")
       grid(3, 30px, '.column')
@@ -741,7 +766,7 @@ body
       width 100%
       display inline-block
       +breakpoint("tablet")
-        max-width 270px
+        max-width 208px
     a
       background-color #00B9F1
       color white
