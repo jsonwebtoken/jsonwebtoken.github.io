@@ -1,21 +1,6 @@
 // 07012015 **
 
-// Fetch stargazers count for each repo from GitHub's API
-$('.stars').each(function(idx, element){
-    var $el = $(element);
-    var repo = $el.attr('data-repo');
 
-    if (repo){
-      $.getJSON('//api.github.com/repos/' + repo, function(repoData){
-        var $count = $('<span>');
-        $count.text(repoData.stargazers_count);
-
-        $el.find('i').after($count);
-
-        $el.show();
-      });
-    }
-});
 
 function parseSearch() {
   var qs = document.location.search.slice(1);
@@ -204,10 +189,6 @@ if (navigator.userAgent.indexOf('Mac OS X') != -1) {
   $("body").addClass("pc");
 }
 
-// $('.text-hold a').on('click', function(e) {
-//   e.preventDefault();
-//   $(this).next('p').select().addClass('pepe');
-// })
 
 $(".jwt-playground .tab-link a").click(function() {
   var container = $(this).parentsUntil(".jwt-playground").parent();
@@ -219,14 +200,6 @@ $(".jwt-playground .tab-link a").click(function() {
   };
   return false;
 });
-
-// $('.bt-con .text-hold').each(function() {
-//   var tett = $(this).find("p").text();
-//   $(this).zclip({
-//   path:'ZeroClipboard.swf',
-//   copy: tett
-//   });
-// });
 
 var $grid = $('.libraries-sv').isotope({
   layoutMode: 'fitRows',
@@ -683,6 +656,23 @@ $(".debugger-jwt .algorithm select").change(function() {
 
 $(".debugger-jwt .algorithm select").change(function(){var a=$('.debugger-jwt .algorithm input[value="'+$(this).val()+'"]');a.prop("checked",!0)})
 // end 07012015
+
+// Fetch stargazers count for each repo from GitHub's API
+$('.stars').each(function(idx, element){
+    var $el = $(element);
+    var repo = $el.attr('data-repo');
+
+    if (repo){
+      $.getJSON('//api.github.com/repos/' + repo, function(repoData){
+        var $count = $('<span>');
+        $count.text(repoData.stargazers_count);
+
+        $el.find('i').after($count);
+
+        $el.show();
+      });
+    }
+});
 
 //CANVAS
 // $(function(){
