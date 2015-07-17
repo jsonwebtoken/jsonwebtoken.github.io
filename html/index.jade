@@ -59,6 +59,7 @@ html(lang='en')
     // Just for debugging purposes. Don't actually copy this line!
     | <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     link(rel="stylesheet", type="text/css", href="//cloud.typography.com/7834932/650606/css/fonts.css")
+    link(rel="stylesheet", type="text/css", href="//fonts.googleapis.com/css?family=Roboto+Mono")
 
     // HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries
     | <!--[if lt IE 9]><script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script><script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script><![endif]-->
@@ -154,25 +155,21 @@ html(lang='en')
                   .jwt-explained.jwt-header
                     p.text-line HEADER:
                       span ALGORITHM & TOKEN TYPE
-                      a(href='#') LEARN MORE
                     .js-header
 
                   .jwt-explained.jwt-payload
                     p.text-line PAYLOAD:
                       span DATA
-                      a(href='#') LEARN MORE
                     .js-payload
 
                   .jwt-explained.jwt-signature
-                    p.text-line VERIFY SIGNATURE:
-                      span LOREM IPSUM DOLOR SIT
-                      a(href='#') LEARN MORE
+                    p.text-line VERIFY SIGNATURE
                     pre.pre-encode.HS256.
                       HMACSHA256(
                         base64UrlEncode(header) + "." +
                         base64UrlEncode(payload),
                         <input type="text" name="secret" value="secret">
-                      )<span class="is-base64-encoded-label"> <input type="checkbox" name="is-base64-encoded">secret base64 encoded</span>
+                      )<span class="is-base64-encoded-label"> <input type="checkbox" name="is-base64-encoded"> secret base64 encoded</span>
                     pre.pre-encode.RS256.
                       RSASHA256(
                         base64UrlEncode(header) + "." +
@@ -292,7 +289,7 @@ html(lang='en')
       Bootstrap core JavaScript
       ==================================================
     // Placed at the end of the document so the pages load faster
-    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js')
+    script(src='//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js')
     script(src='js/bootstrap.min.js')
     // build:js dist/js/app.js
     script(src='vendor/zepto/zepto.js')
