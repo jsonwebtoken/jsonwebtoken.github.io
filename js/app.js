@@ -26,15 +26,22 @@ localStorage.setItem("visited", "1");
  * Show menu mobile
  **/
 function scrollTo($target) {
-  var navheight = $(".navbar.closed").height();
-  $('html, body').animate({
-    scrollTop: $target.offset().top - navheight
-  }, 500);
+  var navheight = $(".navbar").height();
+
+  if (window.matchMedia('(min-width: 768px)').matches) {
+    $('html, body').animate({
+      scrollTop: $target.offset().top - navheight
+    }, 500);
+  } else {
+    $('html, body').animate({
+      scrollTop: $target.offset().top
+    }, 500);
+  }
 }
 
 $('.menu-trigger').on('click', function() {
   $(this).toggleClass('active');
-  $('.navbar').toggleClass('open').removeClass('closed');
+  $('.navbar').toggleClass('open');
   $('body').toggleClass('menu-mobile');
 });
 
@@ -116,7 +123,6 @@ $(function() {
       $('.navbar').css('opacity', 1);
       $('.banner-jwt').addClass('collapsed');
       $('.debugger-jwt').css('opacity', 1);
-      $('body').removeClass('intro');
     })
   }, 3500);
 
