@@ -310,19 +310,33 @@ body
   text-align: center;
   color: darken(#e3e5e7, 70%)
   i
-    margin-right: 4px;
+    margin-right: 5px;
     display: inline-block
     position: relative;
-    bottom: -2px;
-    font-size: 14px;
+    bottom: -3px;
+    font-size: 15px;
+    opacity: .5
+  span
+    display: none
+    +breakpoint("tablet")
+      display: inline-block
+
+
   a
     text-decoration: none;
     font-weight: bold
+    display: block;
+    margin-top: 10px;
+    +breakpoint("tablet")
+      display: inline-block
+      margin-top: 0;
+      margin-left: 4px;
     svg
       fill: darken(#00b9f1, 20%)
       height: 14px;
       width: 12px;
       margin-bottom: -3px;
+
 // debugger-jwt
 
 .jwt-select
