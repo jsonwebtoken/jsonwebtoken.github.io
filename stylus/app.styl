@@ -933,22 +933,18 @@ footer
 
 // animation intro refreshed
 body
+  &.load
+    visibility hidden
+    .banner-jwt
+      visibility visible
+
   &.introduction
     +breakpoint("desktop")
-      overflow hidden
-      *
-        visibility hidden
-
-      .navbar
-        opacity 0
-
+      visibility hidden
       .banner-jwt
         height 100vh
         position relative
         visibility visible
-        & *
-          visibility visible
-
         .container
           width 100%
           position absolute
@@ -956,7 +952,6 @@ body
           left 50%
           transform(translate(-50%, -50%))
           transition(top .5s ease-out)
-
         &.collapsed
           -webkit-backface-visibility hidden
           backface-visibility hidden
@@ -966,21 +961,15 @@ body
           .container
             top 60.6%
 
-      .debugger-jwt
-        opacity 0
-        transform(translateY(20px))
-
-    &.loaded
-      +breakpoint("desktop")
-        overflow visible
-        *
-          visibility visible
-
-        .navbar, .debugger-jwt
-          opacity 1
-          transition(opacity .5s 1s ease-in)
-
-        .debugger-jwt
-          transform(translateY(0))
-          transition(.5s 1.25s ease-in)
+  // &.loaded
+  //   +breakpoint("desktop")
+  //     overflow visible
+  //     *
+  //       visibility visible
+  //     .navbar, .debugger-jwt
+  //       opacity 1
+  //       transition(opacity .5s 1s ease-in)
+  //     .debugger-jwt
+  //       transform(translateY(0))
+  //       transition(.5s 1.25s ease-in)
 
