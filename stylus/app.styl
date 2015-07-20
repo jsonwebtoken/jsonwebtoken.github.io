@@ -30,6 +30,7 @@ webfont('DINCondensedBold', 'DINCondensedBold', 'normal')
 html
   position relative
   min-height 100%
+  -webkit-font-smoothing: antialiased;
 
 body
   font-family: 'Whitney SSm A', 'Whitney SSm B', "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -42,6 +43,9 @@ code
 
 code
   font-size 80%
+
+a
+  color: darken(#00b9f1, 20%)
 
 .container
   width 100%
@@ -303,6 +307,39 @@ body
       +breakpoint("desktop")
         width 80px
 
+.update-site
+  background: #e3e5e7
+  padding: 14px 20px;
+  font-size: 13px;
+  text-align: center;
+  color: darken(#e3e5e7, 70%)
+  i
+    margin-right: 5px;
+    display: inline-block
+    position: relative;
+    bottom: -3px;
+    font-size: 15px;
+    opacity: .5
+  span
+    display: none
+    +breakpoint("tablet")
+      display: inline-block
+
+
+  a
+    text-decoration: none;
+    font-weight: bold
+    display: block;
+    margin-top: 10px;
+    +breakpoint("tablet")
+      display: inline-block
+      margin-top: 0;
+      margin-left: 4px;
+    svg
+      fill: darken(#00b9f1, 20%)
+      height: 14px;
+      width: 12px;
+      margin-bottom: -3px;
 
 // debugger-jwt
 
@@ -469,7 +506,7 @@ body
 // libraries-jwt
 
 .libraries-jwt
-  background-color #EAEAEA
+  background-color #e3e5e7
 
   @media (max-width: 767px)
     padding-bottom 0
@@ -766,7 +803,7 @@ body
       width 100%
       display inline-block
       +breakpoint("tablet")
-        max-width 208px
+        max-width 227px
     a
       background-color #00B9F1
       color white
