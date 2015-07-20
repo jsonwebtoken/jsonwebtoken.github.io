@@ -30,6 +30,7 @@ webfont('DINCondensedBold', 'DINCondensedBold', 'normal')
 html
   position relative
   min-height 100%
+  -webkit-font-smoothing: antialiased;
 
 body
   font-family: 'Whitney SSm A', 'Whitney SSm B', "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -42,6 +43,9 @@ code
 
 code
   font-size 80%
+
+a
+  color: darken(#00b9f1, 20%)
 
 .container
   width 100%
@@ -264,12 +268,12 @@ body
 .banner-jwt
   background black
   text-align center
-  -webkit-backface-visibility: hidden;
-  -webkit-transform: translateZ(0);
+  -webkit-backface-visibility hidden
+  -webkit-transform translateZ(0)
   +breakpoint("tablet")
     padding 140px 0 60px
   +breakpoint("desktop")
-    padding 200px 0 100px
+    padding 150px 0 40px
 
   p span
     opacity: 0;
@@ -296,23 +300,29 @@ body
     svg
       width 70px
       display block
-      margin-bottom 20px
       +breakpoint("desktop")
-        width 90px
+        width 80px
 
-  svg
-    g#group
-      perspective 1000
-      -webkit-perspective 100
-      webkit-transform-style: preserve-3d;
-      transform-style: preserve-3d;
-    path:nth-child(1)
-      backface-visibility: hidden;
-      transform-style: preserve-3d;
-      transform(perspective(400) translate3d(0, 0, -120px))
-
-
-
+.update-site
+  background: #e3e5e7
+  padding: 16px 20px;
+  font-size: 13px;
+  text-align: center;
+  color: darken(#e3e5e7, 70%)
+  i
+    margin-right: 4px;
+    display: inline-block
+    position: relative;
+    bottom: -2px;
+    font-size: 14px;
+  a
+    text-decoration: none;
+    font-weight: bold
+    svg
+      fill: darken(#00b9f1, 20%)
+      height: 14px;
+      width: 12px;
+      margin-bottom: -3px;
 // debugger-jwt
 
 .jwt-select
@@ -475,7 +485,7 @@ body
 // libraries-jwt
 
 .libraries-jwt
-  background-color #EAEAEA
+  background-color #e3e5e7
 
   @media (max-width: 767px)
     padding-bottom 0
@@ -665,7 +675,7 @@ body
       .maintainer
         float left
         font-size 12px
-        margin-top 3px
+        margin-top 4px
         i
           vertical-align middle
           margin-right 2px
@@ -683,7 +693,7 @@ body
           vertical-align middle
           margin-right 5px
         a
-          font-size 13px
+          font-size 12px
           color #4A4A4A
           text-decoration none
 

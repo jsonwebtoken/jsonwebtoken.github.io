@@ -27,6 +27,11 @@ html(lang='en')
     meta(property='og:image:width', content='1200')
     meta(property='og:image:height', content='630')
 
+    // Just for debugging purposes. Don't actually copy this line!
+    | <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    link(rel="stylesheet", type="text/css", href="//cloud.typography.com/7834932/650606/css/fonts.css")
+    link(rel="stylesheet", type="text/css", href="//fonts.googleapis.com/css?family=Roboto+Mono")
+
 
     link(rel="stylesheet", href="/css/bootstrap.min.css")
 
@@ -57,10 +62,6 @@ html(lang='en')
     meta(name='msapplication-TileImage', content='/img/favicon/ms-icon-144x144.png')
     meta(name='theme-color', content='#000000')
 
-    // Just for debugging purposes. Don't actually copy this line!
-    | <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    link(rel="stylesheet", type="text/css", href="//cloud.typography.com/7834932/650606/css/fonts.css")
-    link(rel="stylesheet", type="text/css", href="//fonts.googleapis.com/css?family=Roboto+Mono")
 
     // HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries
     | <!--[if lt IE 9]><script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script><script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script><![endif]-->
@@ -123,6 +124,17 @@ html(lang='en')
             |  method for representing claims securely between two parties.
         p.paragraph-2
           span JWT.IO allows you to decode, verify and generate JWT.
+
+    section.update-site
+      i.icon-budicon-697
+      strong We updated JWT.IO. 
+      span Cum sociis natoque penatibus et magnis dis parturient montes. 
+      a(href="") 
+        | Learn More 
+        svg(height='48', viewbox='0 0 48 48', width='48', xmlns='http://www.w3.org/2000/svg')
+          path(d='M-838-2232H562v3600H-838z', fill='none')
+          path(d='M16 10v28l22-14z')
+          path(d='M0 0h48v48H0z', fill='none')
 
     section#debugger.debugger-jwt
       .container
