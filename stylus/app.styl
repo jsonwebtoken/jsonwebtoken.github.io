@@ -153,18 +153,22 @@ body
       +breakpoint("tablet")
         display inline-block
         width 40px
+        height 40px
         opacity 0
         transform(scale(0))
       +breakpoint("desktop")
         width 60px
+        height 60px
     .logo
       width 60px
       +breakpoint("tablet")
         width 80px
+        height 25px
         transition(.3s ease-in-out)
         transform(translateX(-40px))
       +breakpoint("desktop")
         width 100px
+        height 32px
         transform(translateX(-60px))
 
   nav.menu
@@ -352,7 +356,10 @@ body
     border-radius 3px
     -webkit-appearance none
     -moz-appearance none
+    appearance none
     outline 0
+    &::-ms-expand
+      display none
   &:after
     background url(/img/bg_arrow_select.svg) no-repeat
     width 8px
@@ -689,11 +696,13 @@ body
       .maintainer
         float left
         font-size 12px
-        margin-top 4px
+        line-height 1.5
         i
           vertical-align middle
           margin-right 2px
-          font-size 16px
+          font-size 17px
+          height 25px
+          display inline-block
         a
           color #4A4A4A
           text-decoration none
@@ -703,6 +712,8 @@ body
       .repository
         float right
         i
+          height 24px
+          display inline-block
           font-size 20px
           vertical-align middle
           margin-right 5px
