@@ -669,7 +669,7 @@ $('.stars').each(function(idx, element){
     var repo = $el.attr('data-repo');
 
     if (repo){
-      $.getJSON('https://api.github.com/repos/' + repo, function(repoData){
+      $.getJSON('//api.github.com/repos/' + repo, function(repoData){
         var $count = $('<span>');
         $count.text(repoData.stargazers_count);
 
