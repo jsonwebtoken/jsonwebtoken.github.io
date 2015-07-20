@@ -665,15 +665,27 @@ $('.stars').each(function(idx, element){
     var $el = $(element);
     var repo = $el.attr('data-repo');
 
+    function setCount(count) {
+      var $count = $('<span>');
+
+      $count.text(count);
+
+      $el.find('i').after($count);
+
+      $el.show();
+    }
+
     if (repo){
-      $.getJSON('//api.github.com/repos/' + repo, function(repoData){
-        var $count = $('<span>');
-        $count.text(repoData.stargazers_count);
+      if(!localStorage["stars_" + repo]) {
 
-        $el.find('i').after($count);
+        $.getJSON('https://api.github.com/repos/' + repo, function(repoData){
+          localStorage.setItem("stars_" + repo, repoData.stargazers_count);
 
-        $el.show();
-      });
+          setCount(localStorage["stars_" + repo]);
+        });
+      } else {
+        setCount(localStorage["stars_" + repo]);
+      }
     }
 });
 
