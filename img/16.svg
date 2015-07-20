@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="90" height="90">
+    <desc iVinci="yes" version="4.6" gridStep="20" showGrid="no" snapToGrid="no" codePlatform="0"/>
+    <g id="Layer1" name="Layer 1" opacity="1">
+        <g id="Shape1">
+            <desc shapeID="1" type="0" basicInfo-basicType="0" basicInfo-roundedRectRadius="12" basicInfo-polygonSides="6" basicInfo-starPoints="5" bounding="rect(-45,-45,90,90)" text="" font-familyName="" font-pixelSize="20" font-bold="0" font-underline="0" font-alignment="1" strokeStyle="0" markerStart="0" markerEnd="0" shadowEnabled="0" shadowOffsetX="0" shadowOffsetY="2" shadowBlur="4" shadowOpacity="160" blurEnabled="0" blurRadius="4" transform="matrix(1,0,0,1,45,45)" pers-center="0,0" pers-size="0,0" pers-start="0,0" pers-end="0,0" locked="0" mesh="" flag=""/>
+            <path id="shapePath1" d="M90,45 C90,69.8528 69.8528,90 45,90 C20.1472,90 0,69.8528 0,45 C0,20.1472 20.1472,0 45,0 C69.8528,0 90,20.1472 90,45 Z" style="stroke:none;fill-rule:evenodd;fill:#ffffff;fill-opacity:1;"/>
+        </g>
+        <g id="Shape2">
+            <desc shapeID="2" type="2" basicInfo-basicType="0" basicInfo-roundedRectRadius="12" basicInfo-polygonSides="6" basicInfo-starPoints="5" bounding="rect(-25,-26.5,50,53)" text="C" font-familyName="Arial Black" font-pixelSize="54" font-bold="0" font-underline="0" font-alignment="1" strokeStyle="0" markerStart="0" markerEnd="0" shadowEnabled="0" shadowOffsetX="0" shadowOffsetY="2" shadowBlur="4" shadowOpacity="160" blurEnabled="0" blurRadius="4" transform="matrix(1,0,0,1,44.6426,43.3765)" pers-center="0,0" pers-size="0,0" pers-start="0,0" pers-end="0,0" locked="0" mesh="" flag=""/>
+            <path id="shapePath2" d="M53.332,48.52 L63.7998,51.6841 C63.0967,54.6196 61.9893,57.0718 60.4775,59.0405 C58.9658,61.0093 57.0894,62.4946 54.8481,63.4966 C52.6069,64.4985 49.7549,64.9995 46.292,64.9995 C42.0908,64.9995 38.6587,64.3887 35.9956,63.167 C33.3325,61.9453 31.0342,59.7964 29.1006,56.7202 C27.167,53.644 26.2002,49.7065 26.2002,44.9077 C26.2002,38.5093 27.9009,33.5918 31.3022,30.1553 C34.7036,26.7188 39.5156,25.0005 45.7383,25.0005 C50.6074,25.0005 54.4351,25.9849 57.2212,27.9536 C60.0073,29.9224 62.0771,32.9458 63.4307,37.0239 L52.8838,39.3706 C52.5146,38.1929 52.1279,37.3315 51.7236,36.7866 C51.0557,35.8726 50.2383,35.1694 49.2715,34.6772 C48.3047,34.1851 47.2236,33.939 46.0283,33.939 C43.3213,33.939 41.2471,35.0288 39.8057,37.2085 C38.7158,38.8257 38.1709,41.3657 38.1709,44.8286 C38.1709,49.1177 38.8213,52.0576 40.1221,53.6484 C41.4229,55.2393 43.251,56.0347 45.6064,56.0347 C47.8916,56.0347 49.6187,55.3931 50.7876,54.1099 C51.9565,52.8267 52.8047,50.9634 53.332,48.52 Z" style="stroke:none;fill-rule:nonzero;fill:#5180d2;fill-opacity:1;"/>
+        </g>
+    </g>
+</svg>
