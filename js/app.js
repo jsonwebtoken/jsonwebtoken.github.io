@@ -80,13 +80,14 @@ $(function() {
     $(this).data('original', $(this).find('span').html());
 
     var mocked = $(this).text().split('').reduce(function(prev, letter) {
+
     if (/standard\s$/.test($(prev).text())) {
-      prev += '<strong>'
+      prev += '<a href="https://tools.ietf.org/html/rfc7519" target="_blank">'
     }
 
     prev += ('<span>' + letter + '</span>');
     if (/standard\sRFC\s7519$/.test($(prev).text())) {
-      prev += '</strong>'
+      prev += '</a>'
     }
 
     return prev;
@@ -114,13 +115,8 @@ $(function() {
   }, 2000);
 
   setTimeout(function() {
-    $elem.each(function() {
-      var $ori = $(this).data('original');
-
-      $(this).html($ori);
-      $('.banner-jwt').addClass('collapsed');
-      $('body').addClass('loaded');
-    })
+    $('.banner-jwt').addClass('collapsed');
+    $('body').addClass('loaded');
   }, 3500);
 
 });
@@ -213,9 +209,8 @@ var $grid = $('.libraries-sv').isotope({
   }
 });
 
-var offsetheight = $(".banner-jwt").height() - 100;
 $(window).scroll(function() {
-  if ($(window).scrollTop() > offsetheight) {
+  if ($(window).scrollTop() > 150) {
     $(".navbar").addClass("fixed")
   } else {
     $(".navbar").removeClass("fixed")

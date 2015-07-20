@@ -286,11 +286,11 @@ body
   +breakpoint("desktop")
     padding 150px 0 40px
 
-  p span
-    opacity: 0;
-    transition(opacity .5s ease-in-out)
-  p span.active
-    opacity: 1;
+  p span, p span a
+    color black
+    transition(color .5s ease-out)
+  p span.active, p span.active a
+    color white
 
   p
     font-size 20px
@@ -350,6 +350,8 @@ body
 
     &:hover svg
       fill: darken(#00b9f1, 50%)
+
+
 // debugger-jwt
 
 .jwt-select
@@ -938,7 +940,6 @@ body
 
       .banner-jwt
         height 100vh
-        transition(height .5s ease-out)
         position relative
         visibility visible
         & *
@@ -957,8 +958,9 @@ body
           backface-visibility hidden
           transform(translateZ(0))
           height 512px
+          transition(height .5s ease-out)
           .container
-            top 60%
+            top 60.6%
 
       .debugger-jwt
         opacity 0
@@ -976,5 +978,5 @@ body
 
         .debugger-jwt
           transform(translateY(0))
-          transition(.65s 1.5s ease-in)
+          transition(.5s 1.25s ease-in)
 
