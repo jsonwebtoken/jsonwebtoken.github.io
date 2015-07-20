@@ -46,6 +46,9 @@ code
 
 a
   color: darken(#00b9f1, 20%)
+  transition: all  .3s ease;
+  &:hover
+    color: darken(#00b9f1, 50%)
 
 .container
   width 100%
@@ -341,6 +344,8 @@ body
       width: 12px;
       margin-bottom: -3px;
 
+    &:hover svg
+      fill: darken(#00b9f1, 50%)
 // debugger-jwt
 
 .jwt-select
