@@ -943,16 +943,23 @@ footer
 body
   &.load
     visibility hidden
+    nav, section
+      opacity 0
     .banner-jwt
       visibility visible
+      opacity 1
 
   &.introduction
     +breakpoint("desktop")
       visibility hidden
+      overflow hidden
+      nav, section
+        opacity 0
       .banner-jwt
         height 100vh
         position relative
         visibility visible
+        opacity 1
         .container
           width 100%
           position absolute
@@ -968,3 +975,7 @@ body
           transition(height .5s ease-out)
           .container
             top 60.6%
+
+  nav, section
+    opacity 1
+    transition(opacity .5s ease-out)
