@@ -183,6 +183,7 @@ body
 
   nav.menu
     display none
+    min-width: 300px;
     +breakpoint("tablet")
       display inline-block
     a
@@ -324,13 +325,15 @@ body
   font-size: 13px;
   text-align: center;
   color: darken(#e3e5e7, 70%)
-  i
-    margin-right: 5px;
+  .paper
+    margin-right: 4px;
     display: inline-block
     position: relative;
-    bottom: -3px;
+    bottom: -2px;
     font-size: 15px;
     opacity: .5
+    height: 14px;
+    width: 16px;
   span
     display: none
     +breakpoint("tablet")
@@ -561,16 +564,21 @@ body
     padding 10px
     margin 0 -15px
     line-height 1.8
+    color: darken(#FFFCD2, 80%)
     +breakpoint("tablet")
-      font-size 16px
+      font-size 14px
       margin 0 0 30px
       border-radius 3px
       padding 20px 0
     a
-      color rgba(#4A4A4A,.5)
+      color: darken(#FFFCD2, 80%)
       font-weight bold
       margin-left 5px
-
+    svg
+      height: 14px;
+      width: 14px;
+      fill: darken(#FFFCD2, 80%)
+      margin-bottom: -2px;
   .libraries-sv
     margin 0 -15px
 
@@ -684,8 +692,8 @@ body
         padding-top 0
 
     .version
-      background-color rgba(orange,.7)
-      color white
+      background-color #FFFCD2
+      color darken(#FFFCD2, 80%)
       font-size 12px
       text-align center
       padding 10px
@@ -960,16 +968,3 @@ body
           transition(height .5s ease-out)
           .container
             top 60.6%
-
-  // &.loaded
-  //   +breakpoint("desktop")
-  //     overflow visible
-  //     *
-  //       visibility visible
-  //     .navbar, .debugger-jwt
-  //       opacity 1
-  //       transition(opacity .5s 1s ease-in)
-  //     .debugger-jwt
-  //       transform(translateY(0))
-  //       transition(.5s 1.25s ease-in)
-
