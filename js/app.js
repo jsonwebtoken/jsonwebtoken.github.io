@@ -108,7 +108,7 @@ $(function() {
         span_item.addClass('active').css('transition-delay', delay  + "ms")
       });
     });
-  }, 1000);
+  }, 1500);
 
   setTimeout(function() {
     $( ".banner-jwt p.paragraph-2 span" ).each(function( i ) {
@@ -118,17 +118,17 @@ $(function() {
         span_item.addClass('active').css('transition-delay', delay  + "ms")
       });
     });
-  }, 3000);
+  }, 3500);
 
   setTimeout(function() {
     if($('body').hasClass('introduction')) {
       $('.banner-jwt').addClass('collapsed');
     }
-  }, 4500);
+  }, 5000);
 
   setTimeout(function() {
     $('body').removeClass('introduction');
-  }, 5100);
+  }, 5600);
 
 });
 
