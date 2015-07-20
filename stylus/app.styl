@@ -30,7 +30,10 @@ webfont('DINCondensedBold', 'DINCondensedBold', 'normal')
 html
   position relative
   min-height 100%
-  -webkit-font-smoothing: antialiased;
+
+  h1, h2, h3, h4, h5
+    -webkit-font-smoothing antialiased
+    -moz-font-smoothing antialiased
 
 body
   font-family: 'Whitney SSm A', 'Whitney SSm B', "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -273,7 +276,8 @@ body
   background black
   text-align center
   -webkit-backface-visibility hidden
-  -webkit-transform translateZ(0)
+  backface-visibility hidden
+  transform(translateZ(0))
   +breakpoint("tablet")
     padding 140px 0 60px
   +breakpoint("desktop")
@@ -920,14 +924,20 @@ footer
 body
   &.introduction
     +breakpoint("desktop")
+      overflow hidden
+      *
+        visibility hidden
+
       .navbar
         opacity 0
-        transition(opacity .5s .7s ease-in-out)
 
       .banner-jwt
         height 100vh
-        transition(height .5s ease-in-out)
+        transition(height .5s ease-out)
         position relative
+        visibility visible
+        & *
+          visibility visible
 
         .container
           width 100%
@@ -935,15 +945,31 @@ body
           top 50%
           left 50%
           transform(translate(-50%, -50%))
-          transition(top .5s ease-in-out)
+          transition(top .5s ease-out)
 
         &.collapsed
-          -webkit-backface-visibility: hidden;
-          -webkit-transform: translateZ(0);
-          height 628px
+          -webkit-backface-visibility hidden
+          backface-visibility hidden
+          transform(translateZ(0))
+          height 512px
           .container
             top 60%
 
       .debugger-jwt
         opacity 0
-        transition(opacity .5s .7s ease-in-out)
+        transform(translateY(20px))
+
+    &.loaded
+      +breakpoint("desktop")
+        overflow visible
+        *
+          visibility visible
+
+        .navbar, .debugger-jwt
+          opacity 1
+          transition(opacity .5s 1s ease-in)
+
+        .debugger-jwt
+          transform(translateY(0))
+          transition(.65s 1.5s ease-in)
+

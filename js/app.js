@@ -104,8 +104,6 @@ $(function() {
   });
 
   setTimeout(function() {
-
-
     $( ".banner-jwt p.paragraph-2 span" ).each(function( i ) {
       var span_item = $(this);
       requestAnimationFrame(function(){
@@ -120,9 +118,8 @@ $(function() {
       var $ori = $(this).data('original');
 
       $(this).html($ori);
-      $('.navbar').css('opacity', 1);
       $('.banner-jwt').addClass('collapsed');
-      $('.debugger-jwt').css('opacity', 1);
+      $('body').addClass('loaded');
     })
   }, 3500);
 
