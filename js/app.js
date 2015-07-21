@@ -16,10 +16,9 @@ function parseHash() {
 }
 
 if (parseSearch().value || parseHash().id_token) {
-  $('body').addClass('animation-off');
+  $('body').addClass('animation-off').removeClass('load');
   scrollTo($('#debugger'));
-}
-if (localStorage.getItem('visited')) {
+} else if (localStorage.getItem('visited')) {
   $('body').addClass('refreshed');
 
   $(window).load(function() {
