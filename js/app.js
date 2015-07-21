@@ -608,12 +608,16 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
 
   });
 
-  $('.jwt-signature textarea').on('change', updateSignature, false);
-  $('.jwt-signature textarea').on('keyup', updateSignature, false);
-  $('.jwt-signature textarea').on('keyup', validateKey, false);
+  $('.jwt-signature textarea[name="public-key"]').on('input', updateSignature);
+  $('.jwt-signature textarea[name="private-key"]').on('input', function () {
+    validateKey.apply(this);
+    refreshTokenEditor();
+  });
+
 
   secretElement.addEventListener('change', updateSignature, false);
   secretElement.addEventListener('keyup', updateSignature, false);
+
   isBase64EncodedElement.addEventListener('change', updateSignature, false);
 
   if (document.location.search) {
