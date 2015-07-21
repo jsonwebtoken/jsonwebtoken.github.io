@@ -1,14 +1,21 @@
 // 07012015 **
 
-function parseSearch() {
-  var qs = document.location.search.slice(1);
+function parseQueryString(qs) {
   var d = {};
   qs = qs.split('&');
   qs.forEach(function (kv) { kv = kv.split('='); d[kv[0]] = kv[1]; });
   return d;
 }
 
-if (parseSearch().value) {
+function parseSearch() {
+  return parseQueryString(document.location.search.slice(1));
+}
+
+function parseHash() {
+  return parseQueryString(document.location.hash.slice(1));
+}
+
+if (parseSearch().value || parseHash().id_token) {
   $('body').addClass('animation-off');
   scrollTo($('#debugger'));
 }
