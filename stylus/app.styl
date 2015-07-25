@@ -291,11 +291,13 @@ body
   +breakpoint("desktop")
     padding 150px 0 40px
 
-  p span, p span a
+  p span, p a
     color black
     transition(color .5s ease-out)
-  p span.active, p span.active a
+  p span.active
     color white
+  p a span.active
+    color #00b9f1
 
   p
     font-size 20px
@@ -307,7 +309,6 @@ body
       font-size 30px
 
     a
-      color white
       font-weight bold
       text-decoration none
 
