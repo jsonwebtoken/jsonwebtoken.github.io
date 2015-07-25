@@ -164,40 +164,62 @@ $(window).on('scroll', function () {
  **/
 var pusher = null;
 var channel = null;
-var numberOfLogins = 0;
+var numberOfLogins = 80482701;
+var pollfreqWhenVisible = 1000;
+var pollfreqWhenHidden = 5000;
+var pollfreq;
 
-$.ajax({
-  url: "//metrics.it.auth0.com/counters",
-  cache: false
-}).done(function(response) {
-  numberOfLogins = response.logins || 71009098;
+function isScrolledIntoView(elem) {
+  var docViewTop = $(window).scrollTop();
+  var docViewBottom = docViewTop + $(window).height();
 
-  var clock = $('.counter').FlipClock(numberOfLogins, {
-    clockFace: 'Counter',
-    minimumDigits: ('' + numberOfLogins).length
+  var elemTop = $(elem).offset().top;
+  var elemBottom = elemTop + $(elem).height();
+
+  return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+}
+
+function updatePollFreqIfVisible(elem) {
+  pollfreq = isScrolledIntoView($('.counter')) ? pollfreqWhenVisible : pollfreqWhenHidden;
+  return setTimeout(function () {
+    updatePollFreqIfVisible(elem);
+  }, 500);  
+}
+
+function poll() {
+  updateNumberOfLogins(function() {
+    return setTimeout(function () {
+      poll();
+    }, pollfreq); 
+  })
+}
+
+function updateNumberOfLogins(callback) {
+  $.ajax({
+    url: "//metrics.it.auth0.com/counters",
+    cache: false
+  }).done(function(response) {
+    numberOfLogins = response.logins;
+    if (callback) callback();
   });
+}
 
-  setInterval(function() {
-    if (clock.time.time < numberOfLogins) {
-      clock.setTime(numberOfLogins);
-    }
-  }, 1000);
+updateNumberOfLogins();
+updatePollFreqIfVisible();
 
-  if (!pusher) {
-    pusher = new Pusher('54da1f9bddbf14929983');
-  }
-
-  var timer = 0;
-  channel = pusher.subscribe('world_map');
-  channel.bind('login', function(data) {
-    // var diff = (numberOfLogins++).toLocaleString();
-    if (timer) return;
-    numberOfLogins++;
-    timer = setTimeout(function () {
-      timer = 0;
-    }, 1000);
-  });
+var clock = $('.counter').FlipClock(numberOfLogins, {
+  clockFace: 'Counter',
+  minimumDigits: ('' + numberOfLogins).length
 });
+
+setInterval(function() {
+  if (clock.time.time < numberOfLogins) {
+    clock.setTime(numberOfLogins);
+  }
+}, 1000);
+
+poll();
+
 
 if (navigator.userAgent.indexOf('Mac OS X') != -1) {
   $("body").addClass("mac");
