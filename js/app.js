@@ -16,18 +16,19 @@ function parseHash() {
 }
 
 if (parseSearch().value || parseHash().id_token) {
-  $('body').addClass('animation-off').removeClass('load');
+
+  $('body').removeClass('load');
+
   scrollTo($('#debugger'));
+
 } else if (localStorage.getItem('visited')) {
+
   $('body').addClass('refreshed');
 
-  $(window).load(function() {
-    $('body').removeClass('load');
-  });
-
 } else {
-  $('body').addClass('introduction');
-  $('body').removeClass('load');
+
+  $('body').addClass('introduction').removeClass('load');
+
 }
 
 localStorage.setItem("visited", "1");
@@ -83,7 +84,17 @@ $('.accordion').accordion({
 /*
  * Intro animation
  **/
-$(function() {
+
+ $(window).load(function() {
+  if ($('body').hasClass('introduction')) {
+    introAnimation();
+  } else {
+    $('.banner-jwt p span').addClass('active')
+    $('body').removeClass('load');
+  }
+ });
+
+function introAnimation() {
   var $elem = $('.banner-jwt p');
 
   $elem.each(function() {
@@ -136,7 +147,7 @@ $(function() {
     $('body').removeClass('introduction');
   }, 5600);
 
-});
+};
 
 $(window).on('scroll', function () {
   $submenu = $('.navbar');
@@ -183,14 +194,14 @@ function updatePollFreqIfVisible(elem) {
   pollfreq = isScrolledIntoView($('.counter')) ? pollfreqWhenVisible : pollfreqWhenHidden;
   return setTimeout(function () {
     updatePollFreqIfVisible(elem);
-  }, 500);  
+  }, 500);
 }
 
 function poll() {
   updateNumberOfLogins(function() {
     return setTimeout(function () {
       poll();
-    }, pollfreq); 
+    }, pollfreq);
   })
 }
 
