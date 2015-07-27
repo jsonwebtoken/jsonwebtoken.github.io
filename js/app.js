@@ -153,7 +153,6 @@ $(window).on('scroll', function () {
   $submenu = $('.navbar');
   var navheight = $(".navbar").height();
   var sections = $('section');
-  var submenu_height = $submenu.outerHeight();
   var cur_pos = $(window).scrollTop();
 
   sections.each(function() {
