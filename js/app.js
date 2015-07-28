@@ -31,7 +31,11 @@ if (parseSearch().value || parseHash().id_token) {
 
 }
 
-localStorage.setItem("visited", "1");
+try {
+  localStorage.setItem("visited", "1");
+} catch (e) {
+  // Safari when in private browsing doesn't allow it
+}
 
 /*
  * Show menu mobile
