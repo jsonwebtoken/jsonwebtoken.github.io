@@ -31,11 +31,14 @@ if (parseSearch().value || parseHash().id_token) {
 
 }
 
-try {
-  localStorage.setItem("visited", "1");
-} catch (e) {
-  // Safari when in private browsing doesn't allow it
+function safeLocalStorageSetItem(key, value) {
+  try {
+    localStorage.setItem(key, value);
+  } catch (e) {
+    // Safari when in private browsing doesn't allow it
+  }
 }
+safeLocalStorageSetItem("visited", "1");
 
 /*
  * Show menu mobile
@@ -441,7 +444,7 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
 
   function saveToStorage(jwt) {
     // Save last valid jwt value for refresh
-    localStorage.setItem("jwtValue", jwt);
+    safeLocalStorageSetItem("jwtValue", jwt);
 
 
   }
@@ -728,15 +731,16 @@ $('.stars').each(function(idx, element){
     }
 
     if (repo){
-      if(!localStorage["stars_" + repo]) {
+      var repoKey = "stars_" + repo;
+      if(!localStorage.getItem(repoKey)) {
 
         $.getJSON('https://api.github.com/repos/' + repo, function(repoData){
-          localStorage.setItem("stars_" + repo, repoData.stargazers_count);
-
-          setCount(localStorage["stars_" + repo]);
+          var starCount = repoData.stargazers_count;
+          safeLocalStorageSetItem(repoKey, starCount);
+          setCount(starCount);
         });
       } else {
-        setCount(localStorage["stars_" + repo]);
+        setCount(localStorage.getItem(repoKey));
       }
     }
 });
