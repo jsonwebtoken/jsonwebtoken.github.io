@@ -205,7 +205,7 @@ html(lang='en')
                         base64UrlEncode(header) + "." +
                         base64UrlEncode(payload),
                         <input type="text" name="secret" value="secret">
-                      )<span class="is-base64-encoded-label"> <input type="checkbox" name="is-base64-encoded"> secret base64 encoded</span>
+                      )<span class="is-base64-encoded-label"> <input id="is-base64-encoded" type="checkbox" name="is-base64-encoded"><label for="is-base64-encoded">secret base64 encoded</label></span>
                     pre.pre-encode.RS256.
                       RSASHA256(
                         base64UrlEncode(header) + "." +
