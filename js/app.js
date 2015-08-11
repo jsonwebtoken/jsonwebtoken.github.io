@@ -176,6 +176,13 @@ $(window).on('scroll', function () {
   });
 });
 
+function autoHeightInput() {
+  var outputHeight = $('#decoded-jwt .output').outerHeight(),
+      inputHeight = $('#encoded-jwt .input');
+
+  inputHeight.css('height', outputHeight + 'px');
+};
+
 /*
  * token counter
  **/
@@ -392,10 +399,7 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
       selector.removeClass('error');
     }
 
-
-
     jsonEditor.on('change', refreshTokenEditor);
-
 
   }
 
@@ -430,6 +434,9 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
 
     fireEvent(secretElement);
 
+    if (window.matchMedia('(min-width: 768px)').matches) {
+      autoHeightInput();
+    }
 
   }
 
@@ -706,9 +713,8 @@ $('[data-toggle="tooltip"]').tooltip();
 
 // 07012015
 $(".debugger-jwt .algorithm select").change(function() {
-   $('.debugger-jwt .algorithm input[value="'+$(this).val()+'"]').parent().trigger("click");
-   $('.debugger-jwt .algorithm input[value="'+$(this).val()+'"]').change();
-
+  $('.debugger-jwt .algorithm input[value="'+$(this).val()+'"]').parent().trigger("click");
+  $('.debugger-jwt .algorithm input[value="'+$(this).val()+'"]').change();
 });
 
 
