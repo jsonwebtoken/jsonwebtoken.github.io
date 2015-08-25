@@ -996,3 +996,20 @@ body
   nav, section
     opacity 1
     transition(opacity .5s ease-out)
+
+  &.refreshed.load, &.refreshed
+    visibility visible
+    nav, section
+      opacity 1
+      transition(none)
+    .banner-jwt
+      visibility visible
+      opacity 1
+      p span, p a
+        transition(none)
+      p span
+        color white
+        a
+          color #00b9f1
+      p a span
+        color #00b9f1
