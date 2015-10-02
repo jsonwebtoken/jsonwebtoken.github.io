@@ -1,4 +1,3 @@
-// 07012015 **
 
 function parseQueryString(qs) {
   var d = {};
@@ -20,16 +19,17 @@ if (parseSearch().value || parseHash().id_token) {
   $('body').removeClass('load');
 
   scrollTo($('#debugger'));
-
-} else if (localStorage.getItem('visited')) {
-
-  $('body').addClass('refreshed');
-
-} else {
-
-  $('body').addClass('introduction').removeClass('load');
-
 }
+
+// } else if (localStorage.getItem('visited')) {
+
+//   $('body').addClass('refreshed');
+
+// } else {
+
+//   $('body').addClass('introduction').removeClass('load');
+
+// }
 
 function safeLocalStorageSetItem(key, value) {
   try {
@@ -42,7 +42,7 @@ safeLocalStorageSetItem("visited", "1");
 
 /*
  * Show menu mobile
- **/
+ */
 function scrollTo($target) {
   var navheight = $(".navbar").height();
 
@@ -70,9 +70,16 @@ $('.navbar .menu a').on('click', function() {
 })
 
 /*
+ * Accordion
+ */
+$('.accordion').accordion({
+    "transitionSpeed": 400
+});
+
+/*
  * Scroll to section
- **/
-$('a[href^="#"].scrollto').on('click', function(event) {
+ */
+ $('a[href^="#"].scrollto').on('click', function(event) {
   var target = $( $(this).attr('href') );
 
   if( target.length ) {
@@ -80,81 +87,6 @@ $('a[href^="#"].scrollto').on('click', function(event) {
     scrollTo(target);
   }
 });
-
-/*
- * accordion
- **/
-$('.accordion').accordion({
-    "transitionSpeed": 400
-});
-
-/*
- * Intro animation
- **/
-
- $(window).load(function() {
-  if ($('body').hasClass('introduction')) {
-    introAnimation();
-  } else {
-    $('.banner-jwt p span').addClass('active')
-    $('body').removeClass('load');
-  }
- });
-
-function introAnimation() {
-  var $elem = $('.banner-jwt p');
-
-  $elem.each(function() {
-    $(this).data('original', $(this).find('span').html());
-
-    var mocked = $(this).text().split('').reduce(function(prev, letter) {
-
-    if (/standard\s$/.test($(prev).text())) {
-      prev += '<a href="https://tools.ietf.org/html/rfc7519" target="_blank">'
-    }
-
-    prev += ('<span>' + letter + '</span>');
-    if (/standard\sRFC\s7519$/.test($(prev).text())) {
-      prev += '</a>'
-    }
-
-    return prev;
-  }, '');
-
-  $(this).html(mocked);
-  });
-
-  setTimeout(function() {
-    $( ".banner-jwt p.paragraph-1 span" ).each(function( i ) {
-      var span_item = $(this);
-      requestAnimationFrame(function(){
-        var delay = i * 15;
-        span_item.addClass('active').css('transition-delay', delay  + "ms")
-      });
-    });
-  }, 1500);
-
-  setTimeout(function() {
-    $( ".banner-jwt p.paragraph-2 span" ).each(function( i ) {
-      var span_item = $(this);
-      requestAnimationFrame(function(){
-        var delay = i * 18;
-        span_item.addClass('active').css('transition-delay', delay  + "ms")
-      });
-    });
-  }, 3500);
-
-  setTimeout(function() {
-    if($('body').hasClass('introduction')) {
-      $('.banner-jwt').addClass('collapsed');
-    }
-  }, 5000);
-
-  setTimeout(function() {
-    $('body').removeClass('introduction');
-  }, 5600);
-
-};
 
 $(window).on('scroll', function () {
   $submenu = $('.navbar');
@@ -185,7 +117,7 @@ function autoHeightInput() {
 
 /*
  * token counter
- **/
+ */
 var pusher = null;
 var channel = null;
 var numberOfLogins = 80482701;

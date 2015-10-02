@@ -291,15 +291,10 @@ body
   +breakpoint("desktop")
     padding 150px 0 40px
 
-  p span, p a
-    color black
-    transition(color .5s ease-out)
-  p span.active
+  p
     color white
     a
       color #00b9f1
-  p a span.active
-    color #00b9f1
 
   p
     font-size 20px
@@ -961,62 +956,3 @@ footer
   .social-counter
     +breakpoint("tablet")
       text-align right
-
-
-// animation intro refreshed
-body
-  &.load
-    visibility hidden
-    nav, section
-      opacity 0
-    .banner-jwt
-      visibility visible
-      opacity 1
-
-  &.introduction
-    +breakpoint("desktop")
-      visibility hidden
-      overflow hidden
-      nav, section
-        opacity 0
-      .banner-jwt
-        height 100vh
-        position relative
-        visibility visible
-        opacity 1
-        .container
-          width 100%
-          position absolute
-          top 50%
-          left 50%
-          transform(translate(-50%, -50%))
-          transition(top .5s ease-out)
-        &.collapsed
-          -webkit-backface-visibility hidden
-          backface-visibility hidden
-          transform(translateZ(0))
-          height 512px
-          transition(height .5s ease-out)
-          .container
-            top 60.6%
-
-  nav, section
-    opacity 1
-    transition(opacity .5s ease-out)
-
-  &.refreshed.load, &.refreshed
-    visibility visible
-    nav, section
-      opacity 1
-      transition(none)
-    .banner-jwt
-      visibility visible
-      opacity 1
-      p span, p a
-        transition(none)
-      p span
-        color white
-        a
-          color #00b9f1
-      p a span
-        color #00b9f1
