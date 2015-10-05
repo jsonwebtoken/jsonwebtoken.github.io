@@ -1,0 +1,45 @@
+extends layout
+
+block content
+  nav.navbar.closed
+    .container
+      .top-mobile
+        .menu-trigger
+          span
+
+        a.brand(href='/')
+          img(src='/img/pic_logo.svg').icon
+          img(src='/img/logo.svg').logo
+
+      nav.menu
+        a(href='/#debugger').scrollto Debugger
+        a(href='/#libraries').scrollto Libraries
+        a(href='/introduction').active Introduction
+        a(href='https://ask.auth0.com/category/jwt', target='_blank') Ask
+        a(href='http://swag.auth0.com/', target='_blank') Get a T-shirt!
+
+      .social
+        a.a0(href='https://auth0.com/', target='_blank')
+          img(src='/img/ico_a0_white.svg')
+        a.twitter(href='https://twitter.com/auth0', target="_blank")
+          img(src='/img/ico_twitter.svg')
+
+      a.supported(href='https://auth0.com/', target="_blank")
+          | Supported by
+          img(src='/img/ico_logo.svg')
+
+  section.banner-jwt
+    .container
+      a.logo(href='/')
+        img(src='/img/pic_logo.svg')
+
+      h1 Introduction to JSON Web Tokens
+
+  section.plain-text
+    .container
+      include:markdown md/introduction.md
+
+  section.go-tool
+    .container
+      p Get started with JWT today
+      a(href='/#debugger').btn.btn-success Start using the tool

@@ -15,21 +15,8 @@ function parseHash() {
 }
 
 if (parseSearch().value || parseHash().id_token) {
-
-  $('body').removeClass('load');
-
-  scrollTo($('#debugger'));
+  scrollTo($('#debugger-io'));
 }
-
-// } else if (localStorage.getItem('visited')) {
-
-//   $('body').addClass('refreshed');
-
-// } else {
-
-//   $('body').addClass('introduction').removeClass('load');
-
-// }
 
 function safeLocalStorageSetItem(key, value) {
   try {
@@ -39,6 +26,28 @@ function safeLocalStorageSetItem(key, value) {
   }
 }
 safeLocalStorageSetItem("visited", "1");
+
+/*
+ * Go to url hash from intro section
+ */
+if (location.href.indexOf("#debugger") != -1) {
+  scrollTo($('#debugger-io'));
+}
+
+if (location.href.indexOf("#libraries") != -1) {
+  scrollTo($('#libraries-io'));
+}
+
+/*
+ * Show icon
+ */
+$(window).scroll(function() {
+  if ($(window).scrollTop() >= 130) {
+    $("nav.navbar").addClass("fixed")
+  } else {
+    $("nav.navbar").removeClass("fixed")
+  };
+});
 
 /*
  * Show menu mobile
@@ -79,7 +88,7 @@ $('.accordion').accordion({
 /*
  * Scroll to section
  */
- $('a[href^="#"].scrollto').on('click', function(event) {
+$('a[href^="#"].scrollto').on('click', function(event) {
   var target = $( $(this).attr('href') );
 
   if( target.length ) {
@@ -99,11 +108,9 @@ $(window).on('scroll', function () {
     var bottom = top + $(this).outerHeight();
 
     if (cur_pos >= top && cur_pos <= bottom) {
-      $submenu.find('a').removeClass('active').closest('nav.menu').removeClass('active');
-      sections.removeClass('active');
+      $submenu.find('a.scrollto').removeClass('active').closest('nav.menu').removeClass('active');
 
-      $(this).addClass('active');
-      $submenu.find('a[href="#' + $(this).attr('id') + '"]').addClass('active').closest('nav.menu').addClass('active');
+      $submenu.find('a.scrollto[href="#' + $(this).attr('id') + '"]').addClass('active').closest('nav.menu').addClass('active');
     }
   });
 });
@@ -202,14 +209,6 @@ var $grid = $('.libraries-sv').isotope({
   masonry: {
     columnWidth: 'article'
   }
-});
-
-$(window).scroll(function() {
-  if ($(window).scrollTop() > 150) {
-    $(".navbar").addClass("fixed")
-  } else {
-    $(".navbar").removeClass("fixed")
-  };
 });
 
 $('.filter select').on( 'change', function() {

@@ -263,7 +263,7 @@ body
       a
         color white
         font-size 30px
-        margin 20% 0
+        margin 10% 0
 
     .supported
       display block
@@ -289,7 +289,15 @@ body
   +breakpoint("tablet")
     padding 140px 0 60px
   +breakpoint("desktop")
-    padding 150px 0 40px
+    padding 150px 0 60px
+
+  h1
+    color white
+    margin 25px 0 0
+    +breakpoint("tablet")
+      font-size 34px
+    +breakpoint("desktop")
+      font-size 40px
 
   p
     color white
@@ -883,26 +891,32 @@ body
     max-width 875px
     margin 5px auto
 
-  .btn, a.btn
-    transition(background-color 0.2s ease)
-    text-transform uppercase
-    letter-spacing 2px
-    font-weight bold
-    border 1px solid #d0d2d3
-    line-height 30px
-    padding 15px 30px
-    font-size 15px
-    border-radius 3px
-    text-decoration none
-    display inline-block
-    margin-top 30px
-    &.btn-success
-      background-color #eb5424
+.btn, a.btn
+  transition(background-color 0.2s ease)
+  text-transform uppercase
+  letter-spacing 2px
+  font-weight bold
+  border 1px solid #d0d2d3
+  line-height 30px
+  padding 15px 30px
+  font-size 15px
+  border-radius 3px
+  text-decoration none
+  display inline-block
+  margin-top 30px
+  &.btn-success
+    background-color #eb5424
+    color white
+    border-color transparent
+    &:hover
+      background-color darken(#eb5424, 30%)
       color white
-      border-color transparent
-      &:hover
-        background-color darken(#eb5424, 30%)
-        color white
+
+.btn, a.btn
+  &.btn-lg
+    background-color #D63AFF
+    color white
+    border none
 
   .token
     margin-top 35px
@@ -912,6 +926,51 @@ body
     margin 0 0 10px 0;
     color: #999;
     letter-spacing: 1px;
+
+
+// plain-text
+
+.plain-text
+  .container
+    max-width 630px
+
+  h2
+    margin-top 50px
+    font-size 25px
+
+  h3
+    font-size 20px
+
+  p
+    line-height 1.8
+    font-size 18px
+
+    code
+      background-color rgba(#D8D8D8,.35)
+      font-size 75%
+      border-radius 3px
+      padding 2px 4px
+
+  img
+    width 100%
+
+
+// go-tool
+
+.go-tool
+  text-align center
+  border-top 1px solid #DDD
+  p
+    font-size 15px
+    display inline-block
+    text-transform uppercase
+    +breakpoint("tablet")
+      margin-right 20px
+  .btn.btn-success
+    background-color #D63AFF
+    margin 0
+    &:hover
+      background-color darken(#D63AFF, 30%)
 
 
 // footer
