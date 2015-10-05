@@ -263,7 +263,7 @@ body
       a
         color white
         font-size 30px
-        margin 20% 0
+        margin 10% 0
 
     .supported
       display block
@@ -292,9 +292,12 @@ body
     padding 150px 0 60px
 
   h1
-    font-size 40px
     color white
     margin 25px 0 0
+    +breakpoint("tablet")
+      font-size 34px
+    +breakpoint("desktop")
+      font-size 40px
 
   p
     color white
@@ -932,14 +935,20 @@ body
 
   h2
     margin-top 50px
-    font-size 22px
+    font-size 25px
 
   h3
-    font-size 18px
+    font-size 20px
 
   p
     line-height 1.8
     font-size 18px
+
+    code
+      background-color rgba(#D8D8D8,.35)
+      font-size 75%
+      border-radius 3px
+      padding 2px 4px
 
   img
     width 100%
@@ -951,7 +960,7 @@ body
   text-align center
   border-top 1px solid #DDD
   p
-    font-size 16px
+    font-size 15px
     display inline-block
     text-transform uppercase
     +breakpoint("tablet")
