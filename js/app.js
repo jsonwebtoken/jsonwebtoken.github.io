@@ -28,6 +28,19 @@ function safeLocalStorageSetItem(key, value) {
 safeLocalStorageSetItem("visited", "1");
 
 /*
+ * Go to url hash from intro section
+ */
+if (location.href.indexOf("#debugger") != -1) {
+  parent.location.hash = ''
+  scrollTo($('#debugger'));
+}
+
+if (location.href.indexOf("#libraries") != -1) {
+  parent.location.hash = ''
+  scrollTo($('#libraries'));
+}
+
+/*
  * Show icon
  */
 $(window).scroll(function() {
@@ -78,15 +91,12 @@ $('.accordion').accordion({
  * Scroll to section
  */
 $('a[href^="#"].scrollto').on('click', function(event) {
-  event.preventDefault();
   var target = $( $(this).attr('href') );
 
   if( target.length ) {
     event.preventDefault();
     scrollTo(target);
   }
-
-  return false;
 });
 
 $(window).on('scroll', function () {
