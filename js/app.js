@@ -15,7 +15,7 @@ function parseHash() {
 }
 
 if (parseSearch().value || parseHash().id_token) {
-  scrollTo($('#debugger'));
+  scrollTo($('#debugger-io'));
 }
 
 function safeLocalStorageSetItem(key, value) {
@@ -31,13 +31,11 @@ safeLocalStorageSetItem("visited", "1");
  * Go to url hash from intro section
  */
 if (location.href.indexOf("#debugger") != -1) {
-  parent.location.hash = ''
-  scrollTo($('#debugger'));
+  scrollTo($('#debugger-io'));
 }
 
 if (location.href.indexOf("#libraries") != -1) {
-  parent.location.hash = ''
-  scrollTo($('#libraries'));
+  scrollTo($('#libraries-io'));
 }
 
 /*
