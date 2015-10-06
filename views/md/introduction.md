@@ -16,7 +16,7 @@ Modern web applications present a few challenges for authentication that are dif
 
 ### 1. Apps are distributed across many servers
 
-Many of today's applications aren't deployed the same way they were in the past. It is now very common--and often necessary--for apps to be distributed across many servers so that up-time is increased and latency issues are mitigated. With this comes the side effect that, when a user accesses an application, it is no longer guaranteed that they are always accessing the same server. 
+Many of today's applications aren't deployed the same way they were in the past. It is now very common--and often necessary--for apps to be distributed across many servers so that up-time is increased and latency issues are mitigated. With this comes the side effect that, when a user accesses an application, it is no longer guaranteed that they are always accessing the same server.
 
 Since traditional authentication relies on the server to keep the user's authentication state in memory, things break down when the app is accessed from different servers. The user might be logged in on one server but not on the others that the application is distributed across.
 
@@ -32,7 +32,7 @@ Another challenge here is that it is quite common for an API to be served from o
 
 ### 3. Apps rely on downstream services
 
-Another common pattern seen with modern web applications is that they often rely on downstream services. For example, a call to the main application server might make a request to a downstream server before the original request is resolved. The issue here is that cookies don't "flow" easily to the downstream servers and can't tell those servers about the user's authentication state. Since each server has its own scheme for cookies, there is a lot of resistance to flow, and connecting to them is difficult. 
+Another common pattern seen with modern web applications is that they often rely on downstream services. For example, a call to the main application server might make a request to a downstream server before the original request is resolved. The issue here is that cookies don't "flow" easily to the downstream servers and can't tell those servers about the user's authentication state. Since each server has its own scheme for cookies, there is a lot of resistance to flow, and connecting to them is difficult.
 
 ## A Modern Alternative: The JSON Web Token (JWT)
 
@@ -69,7 +69,3 @@ It should be reiterated that the user's state is never saved in memory on the se
 Using a JWT for authentication helps to solve the challenges noted above. We can fully rely on data APIs that are stateless and even make requests to downstream services. Since JWT is a specification [implemented nearly everywhere](http://jwt.io), connecting to downstream services built on a stack other than our own is easy. It also doesn't matter which domain is serving our API, nor does it matter which specific server a request goes to if the app is deployed across many.
 
 JWT authentication can be [done with cookies](https://auth0.com/blog/2015/09/28/5-steps-to-add-modern-authentication-to-legacy-apps-using-jwts/), which can be useful in situations where applications can't fully move away from using them.
-
-## JWT Authentication Is Easy with Auth0
-
-Auth0 issues [JSON Web Tokens](http://jwt.io) on every login for your users. This means that you can have a solid [identity infrastructure](https://auth0.com/docs/identityproviders), including [Single Sign On](https://auth0.com/docs/sso/single-sign-on), User Management, support for Social (Facebook, Github, Twitter, etc.), Enterprise (Active Directory, LDAP, SAML, etc.) and your own database of users with just a few lines of code. Auth0 is perfect for [Single Page Applications](https://auth0.com/docs/sequence-diagrams) and very easy to set up.
