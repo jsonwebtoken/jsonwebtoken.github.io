@@ -56,7 +56,7 @@ From the user's perspective, logging in to an application that uses JWTs looks m
 
 The JWT must be sent to the server to access protected routes, and it is typically sent as an `Authorization` header. The scheme used for this header is `Bearer`, so the full header looks like this:
 
-```js
+```
 Authorization: Bearer <token>
 ```
 
