@@ -114,7 +114,7 @@ The following diagram shows this process:
 
 Let's talk about the benefits of **JSON Web Tokens (JWT)** comparing it to **Simple Web Tokens (SWT)** and **Security Assertion Markup Language Tokens (SAML)**.
 
-As JSON is less verbose than XAML, when it is encoded is size is also smaller; making JWT more compact than SAML. This makes JWT a good choice to be passed in HTML and HTTP environments.
+As JSON is less verbose than XML, when it is encoded is size is also smaller; making JWT more compact than SAML. This makes JWT a good choice to be passed in HTML and HTTP environments.
 
 Security-wise, SWT can only be symmetric signed by a shared secret using the HMAC algorithm. While JWT and SAML tokens can also use a public/private key pair in the form of a X.509 certificate to sign them. However, signing XML with XML Digital Signature without introducing obscure security holes is very difficult compared to the simplicity of signing JSON.
 
@@ -122,7 +122,7 @@ JSON parsers are common in most programming languages, because they map directly
 
 Regarding usage, JWT is used at an Internet scale. This highlights the ease of client side processing of the JSON Web token on multiple platforms, especially, mobile.
 
-![Comparing the length of an encoded JWT and an encoded SAML](https://cdn.auth0.com/content/jwt/comparing-jwt-vs-saml.png)
+![Comparing the length of an encoded JWT and an encoded SAML](https://cdn.auth0.com/content/jwt/comparing-jwt-vs-saml2.png)
 _Comparison of the length of an encoded JWT and an encoded SAML_
 
 ##How we use JSON Web Tokens in Auth0?
