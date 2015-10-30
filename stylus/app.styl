@@ -1,6 +1,7 @@
 @import 'mixins'
 @import 'codemirror'
 @import 'flip-clock'
+@import 'highlight'
 
 /*
  * Webfont
@@ -934,25 +935,130 @@ body
   .container
     max-width 630px
 
-  h2
-    margin-top 50px
+  h1
     font-size 25px
+    font-weight 300
+    color #333
+    margin-top 10px
+    line-height 1.3
+    +breakpoint("mobile-landscape")
+      font-size 40px
+
+  & > h1, & > hr
+    display none
+
+  h2, h3, h4, h5, h6
+    &.anchor-heading
+      position relative
+
+      .anchor
+        display none
+        +breakpoint("tablet")
+          position absolute
+          top 0
+          left -25px
+          visibility hidden
+      &:hover
+        +breakpoint("tablet")
+          .anchor
+            visibility visible
+
+  h2, h3, h4
+    font-weight 700
+    color #333
+    line-height 1.3
+
+  h2
+    font-size 20px
+    margin-top 40px
+    &:first-child
+      margin-top 0
 
   h3
-    font-size 20px
+    font-size 16px
 
-  p
-    line-height 1.8
-    font-size 18px
+  h4, h5, h6
+    font-size 13px
+    text-transform uppercase
+    letter-spacing 1px
 
+  p, ul li
+    color #5c666f
+    font-size 16px
+    line-height 2
+    strong
+      color #333
     code
-      background-color rgba(#D8D8D8,.35)
-      font-size 75%
-      border-radius 3px
-      padding 2px 4px
+      border-radius 4px
+      font-size 90%
+      padding 3px 8px
+      background-color #F7F7F7
+
+  blockquote
+    background-color lighten(#F7F7F7, 55%)
+    padding 60px 30px
+    border-radius 3px
+    margin 30px 0
+    text-align center
+    border none
+
+    p
+      margin 0
+      font-size 12px
+      +breakpoint("tablet")
+        font-size 16px
+
+    em
+      font-size 18px
+      line-height 1.5
+      +breakpoint("tablet")
+        font-size 25px
+
+    strong
+      display block
+      margin-top 15px
+      color rgba(#333,.5)
+      text-transform uppercase
+
+  sup
+    font-size 90%
 
   img
+    max-width 100%
+
+  table
+    border-collapse collapse
     width 100%
+    margin 20px 0 30px
+
+  thead tr th
+    font-family Helvetica, Arial, sans-serif
+    font-weight bold
+    text-align center
+    font-size 13px
+
+  td, th
+    border 1px solid #E0E0E0
+    padding 0.5rem
+    text-align left
+
+  tbody tr:nth-child(odd)
+    background rgba(#eee,.5)
+
+  pre
+    display block
+    font-size 13px
+    line-height 1.42857143
+    color #333
+    word-break break-all
+    background-color #f5f5f5
+    border-radius 4px
+    margin-bottom 30px
+
+  pre code
+    font-size inherit
+    border none
+    border-radius 0
 
 
 // go-tool

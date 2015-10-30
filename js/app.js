@@ -39,6 +39,23 @@ if (location.href.indexOf("#libraries") != -1) {
 }
 
 /*
+ * hljs
+ */
+hljs.configure({
+  classPrefix: ''
+});
+
+$('.plain-text pre code').each(function(i, block) {
+  var $snippet = $(this);
+
+  if(!$snippet.hasClass('hljs')) {
+    hljs.highlightBlock(block);
+    hljs.lineNumbersBlock(block);
+    $snippet.addClass('hljs');
+  }
+});
+
+/*
  * Show icon
  */
 $(window).scroll(function() {
