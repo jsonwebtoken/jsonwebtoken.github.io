@@ -10,7 +10,7 @@ module.exports = function (grunt) {
         options: {
           livereload: true
         },
-        files: ['Gruntfile.js', 'js/**/*.js', 'stylus/**/*.styl', 'views/**/*.jade'],
+        files: ['Gruntfile.js', 'js/**/*.js', 'stylus/**/*.styl', 'views/**/*.jade', 'views/**/*.md'],
         tasks: ['build']
       }
     },
