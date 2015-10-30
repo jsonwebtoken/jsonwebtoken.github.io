@@ -33,13 +33,12 @@ The header *typically* consists of two parts: the type of the token, which is JW
 
 For example:
 
-```js
+``
 {
   "alg": "HS256",
   "typ": "JWT"
 }
-
-```
+``
 
 Then, this JSON is **Base64Url** encoded to form the first part of the JWT.
 
@@ -58,14 +57,13 @@ There are three types of claims: *reserved*, *public*, and *private* claims.
 
 An example of payload could be:
 
-```js
+``
 {
   "sub": "1234567890",
   "name": "John Doe",
   "admin": true
 }
-
-```
+``
 
 The payload is then **Base64Url** encoded to form the second part of the JSON Web Token.
 
@@ -74,12 +72,12 @@ To create the signature part you have to take the encoded header, the encoded pa
 
 For example if you want to use the HMAC SHA256 algorithm, the signature will be created in the following way.
 
-```js
+``
 HMACSHA256(
   base64UrlEncode(header) + "." +
   base64UrlEncode(payload),
   secret)
-```
+``
 
 The signature is used to verify that the sender of the JWT is who it says it is and to ensure that the message was't changed in the way.
 
@@ -99,7 +97,9 @@ In authentication, when the user successfully logs in using his credentials, a J
 
 Whenever the user wants to access a protected route or resource, it should send the JWT, typically in the **Authorization** header using the **Bearer** schema. Therefore the content of the header should look like the following.
 
-`Authorization: Bearer <token>`
+``
+Authorization: Bearer <token>
+``
 
 This is a stateless authentication mechanism as the user state is never saved in the server memory.
 The server's protected routes will check for a valid JWT in the Authorization header, and if there is, the user will be allowed. As JWTs are self-contained, all the necessary information is there, reducing the need of going back and forward to the database.
@@ -125,8 +125,5 @@ Regarding usage, JWT is used at an Internet scale. This highlights the ease of c
 ![Comparing the length of an encoded JWT and an encoded SAML](https://cdn.auth0.com/content/jwt/comparing-jwt-vs-saml2.png)
 _Comparison of the length of an encoded JWT and an encoded SAML_
 
-##How we use JSON Web Tokens in Auth0?
 
-In Auth0, we issue JWTs as a result of the authentication process. When the user logs in using Auth0, a JWT is created, signed, and sent to the user. Auth0 supports signing JWT with both HMAC and RSA algorithms. This token will be then used to authenticate and authorize with APIs which will grant access to their protected routes and resources.
-
-We also use JWTs to perform authentication and authorization in Auth0's API v2, replacing the traditional usage of regular opaque API keys. Regarding authorization, JSON Web Tokens allow granular security, that is the ability to specify a particular set of permissions in the token, which improves debuggability.
+If you want to read more about JSON Web Tokens browse to the [JSON Web Token landing page](auth0.com/learn/json-web-tokens) in Auth0.
