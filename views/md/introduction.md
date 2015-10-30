@@ -1,71 +1,129 @@
-Authentication for web applications has historically been fairly straightforward and followed a common pattern, but this has been changing significantly in recent years. There are several reasons for these changes, and the prominent ones are related to the way in which modern applications are built and distributed.
+##What is JSON Web Token?
+JSON Web Token (JWT) is an open standard ([RFC 7519](https://tools.ietf.org/html/rfc7519)) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed. JWTs can be signed using a secret (with **HMAC** algorithm) or a public/private key pair using **RSA**.
 
-In this article, we'll explore how we can better handle authentication in modern applications by using JSON Web Tokens (JWT). The JWT standard is open source and offers a way for us to exchange claims between two parties. JWTs are used primarily for user authentication, but since they are digitally signed JSON objects and can contain arbitrary information that we specify, they give us the ability to do more than just authenticate users. For example, we can use JWTs to send information between two servers and--since JWTs are digitally signed--it can be done securely because we can verify the authenticity of the sender. When tokens are digitally signed, we are also guaranteed that their content has not been changed at all, giving us confidence in the authenticity of both the sender and the content.
+Let's explain some concepts of this definition further.
 
-## Traditional Web Applications
+- **Compact**: Because of its size, it can be sent through an URL, POST parameter, or inside an HTTP header. Additionally, due to its size its transmission is fast.
 
-In a general sense, traditional websites and applications typically implement user authentication using **sessions** and **cookies**. When a user logs in to a site, his or her username and password are matched against database entries. If the login is successful, the server saves the user's authentication state in memory and sends a cookie back in the reponse that contains some data, which in most cases includes the user's ID. Browsers will save the cookie for the domain from which it came and then automatically send it back when subsequent requests are made. For example, if a cookie is saved with a domain of auth0.com, it will be sent back on any future request to auth0.com as long as it is valid. This works great for traditional web apps.
+- **Self-contained**: The payload contains all the required information about the user, to avoid querying the database more than once.
 
-![modern authentication jwt](https://cdn.auth0.com/blog/legacy-app-auth/legacy-app-auth-1.png)
+##When should you use JSON Web Tokens?
+There are some scenarios where JSON Web Tokens are useful:
 
-Even though we've labeled the process described above as being "traditional", it should be noted that *most* of the web still operates this way. While this approach is still perfectly valid for a lot of use cases, we're going to explore some of the reasons why relying on it has become challenging for modern web applications.
+- **Authentication**: This is the typical scenario for using JWT, once the user is logged in, each subsequent request will include the JWT, allowing the user to access routes, services, and resources that are permitted with that token. Single Sign On is a feature that widely uses JWT nowadays, because of its small overhead and its ability to be easily used among systems of different domains.
 
-## Authentication Challenges for Modern Web Apps
+- **Information Exchange**: JSON Web Tokens are a good way of securely transmitting information between parties, because as they can be signed, for example using a public/private key pair, you can be sure that the sender is who he says he is. Additionally, as the signature is calculated using the header and the payload, you can also verify that the content hasn't changed.
 
-Modern web applications present a few challenges for authentication that are difficult to solve using conventional methods. The reasons for this have to do with how applications are crafted and the environment in which applications reside.
+##Which is the JSON Web Token structure?
+JSON Web Tokens consist of three parts separated by dots (`.`), which are:
 
-### 1. Apps are distributed across many servers
+- Header
+- Payload
+- Signature 
 
-Many of today's applications aren't deployed the same way they were in the past. It is now very common--and often necessary--for apps to be distributed across many servers so that up-time is increased and latency issues are mitigated. With this comes the side effect that, when a user accesses an application, it is no longer guaranteed that they are always accessing the same server.
+Therefore, a JWT typically looks like the following.
 
-Since traditional authentication relies on the server to keep the user's authentication state in memory, things break down when the app is accessed from different servers. The user might be logged in on one server but not on the others that the application is distributed across.
+`xxxxx.yyyyy.zzzzz`
 
-We can get around this by using methods like [**sticky sessions**](http://stackoverflow.com/questions/10494431/sticky-and-non-sticky-sessions). A sticky session will essentially route the user to the server instance from which they logged in so that the authentication state can be presevered. This type of workaround will do the job, but as we'll see, stateful servers in general don't play that well with modern applications.
+Let's break down the different parts.
 
-### 2. Apps use APIs for data
+###Header
 
-A common pattern for modern applications, especially single-page apps, is to retrieve and consume JSON data from a [RESTful API](http://www.restapitutorial.com/). Serving data from an API has several distinct advantages, one of them being the ability for data to be used in more than just one application. For example, an organization might start with the intent to build an internally facing application, but may soon realize that some of its functionality could be used in a public-facing app. Down the road, the organization might also decide that some of its data should be accessible by other application developers to build third-party apps with. This can all be made possible with an API.
+The header *typically* consists of two parts: the type of the token, which is JWT, and the hashing algorithm such as HMAC SHA256 or RSA.
 
-Using APIs in this fashion is great, but things can become challenging when it comes to authentication. The traditional approach of using sessions and cookies for the user's identity doesn't work so well in these cases because their use introduces **state** to the application. One of the tenets of a RESTful API is that it should be **stateless**, meaning that, when a request is made, a response within certain parameters can always be anticipated without side effects. A user's authentication state introduces such a side effect, which breaks this principle. Keeping the API stateless and therefore without side effect means that maintainability and debugging are made much easier.
+For example:
 
-Another challenge here is that it is quite common for an API to be served from one server and for the actual application to consume it from another. To make this happen, we need to enable [Cross-Origin Resource Sharing (CORS)](https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS). Since cookies can only be used for the domain from which they originated, they aren't much help for APIs on different domains than the application.
+``
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+``
 
-### 3. Apps rely on downstream services
+Then, this JSON is **Base64Url** encoded to form the first part of the JWT.
 
-Another common pattern seen with modern web applications is that they often rely on downstream services. For example, a call to the main application server might make a request to a downstream server before the original request is resolved. The issue here is that cookies don't "flow" easily to the downstream servers and can't tell those servers about the user's authentication state. Since each server has its own scheme for cookies, there is a lot of resistance to flow, and connecting to them is difficult.
+###Payload
 
-## A Modern Alternative: The JSON Web Token (JWT)
+The second part of the token is the payload, which contains the claims. Claims are statements about an entity (typically, the user) and additional metadata. 
+There are three types of claims: *reserved*, *public*, and *private* claims.
 
-To combat the issues detailed above, we can take a token-based approach by using JSON Web Tokens (JWTs) for authentication. A JWT contains three parts:
+- **Reserved claims**: These are a set of predefined claims, which are not mandatory but recommended, thought to provide a set of useful, interoperable claims. Some of them are: **iss** (issuer), **exp** (expiration time), **sub** (subject), **aud** (audience), among others.
 
-**1. Header**
+	> Notice that the claim names are only three characters long as JWT is meant to be compact.
 
-The header tells us about the algorithm and token type. It is Base64URL encoded.
+- **Public claims**: These can be defined at will by those using JWTs. But to avoid collisions they should be defined in the IANA JSON Web Token Registry or be defined as a URI that contains a collision resistant namespace.
 
-**2. Payload**
+- **Private claims**: These are the custom claims created to share information between parties that agree on using them.
 
-The payload contains any arbitrary information in the form of claims that we as developers find useful for our applications. The user's ID must be sent as a `sub` claim, but we can also send other useful information, such as the username, email, and more. The payload is also Base64URL encoded.
+An example of payload could be:
 
-**3. Signature**
+``
+{
+  "sub": "1234567890",
+  "name": "John Doe",
+  "admin": true
+}
+``
 
-The signature is used to verify the authenticity of the JWT. There are several different algorithms that can be used for the signature. Some algorithms implement a shared secret (HMAC), and others use public-private key secrets (RSA).
+The payload is then **Base64Url** encoded to form the second part of the JSON Web Token.
 
-![modern authentication jwt](https://cdn.auth0.com/blog/legacy-app-auth/legacy-app-auth-5.png)
+### Signature
+To create the signature part you have to take the encoded header, the encoded payload, a secret, the algorithm specified in the header, and sign that.
 
-From the user's perspective, logging in to an application that uses JWTs looks much like traditional authentication. The user enters his or her credentials as usual, but instead of the server creating a session and returning a cookie, it will respond with a JSON object that contains a JWT. The JWT then needs to be saved locally, which is normally done with local storage. However, as we'll see in the next section, it is possible to save the JWT in a cookie.
+For example if you want to use the HMAC SHA256 algorithm, the signature will be created in the following way.
 
-The JWT must be sent to the server to access protected routes, and it is typically sent as an `Authorization` header. The scheme used for this header is `Bearer`, so the full header looks like this:
+``
+HMACSHA256(
+  base64UrlEncode(header) + "." +
+  base64UrlEncode(payload),
+  secret)
+``
 
-```js
+The signature is used to verify that the sender of the JWT is who it says it is and to ensure that the message was't changed in the way.
+
+### Putting all together
+
+The output is three Base64 strings separated by dots that can be easily passed in HTML and HTTP environments, while being more compact compared to XML-based standards such as SAML.
+
+The following shows a JWT that has the previous header and payload encoded, and it is signed with a secret.
+![Encoded JWT](https://cdn.auth0.com/content/jwt/encoded-jwt3.png)
+
+If you want to play with JWT and put these concepts to practice, you can use [jwt.io Debugger](http://jwt.io) to decode, verify and generate JWTs.
+
+![JWT.IO Debugger](https://cdn.auth0.com/blog/legacy-app-auth/legacy-app-auth-5.png)
+
+## How JSON Web Tokens work?
+In authentication, when the user successfully logs in using his credentials, a JSON Web Token will be returned and must be saved locally (typically in local storage, but cookies can be also used), instead of the traditional approach of creating a session in the server and returning a cookie.
+
+Whenever the user wants to access a protected route or resource, it should send the JWT, typically in the **Authorization** header using the **Bearer** schema. Therefore the content of the header should look like the following.
+
+``
 Authorization: Bearer <token>
-```
+``
 
-Middleware on the protected API routes will check for a valid JWT, and if there is one, it will let the request through and return the data being requested. Since the user's information is contained within the JWT itself, there is no need to look the user up in a database, so there is less latency in the application.
+This is a stateless authentication mechanism as the user state is never saved in the server memory.
+The server's protected routes will check for a valid JWT in the Authorization header, and if there is, the user will be allowed. As JWTs are self-contained, all the necessary information is there, reducing the need of going back and forward to the database.
 
-It should be reiterated that the user's state is never saved in memory on the server, meaning that the user isn't "logged in" in the conventional sense. However, a valid JWT gives the user the keys to access data each time a request is made, and in this way, a stateless authentication mechanism is in place.
+This allows to fully rely on data APIs that are stateless and even make requests to downstream services. It doesn't matter which domains are serving your APIs, as Cross-Origin Resource Sharing (CORS) won't be an issue as it doesn't use cookies.
 
-![](https://cdn.auth0.com/blog/legacy-app-auth/legacy-app-auth-2.png)
+The following diagram shows this process:
 
-Using a JWT for authentication helps to solve the challenges noted above. We can fully rely on data APIs that are stateless and even make requests to downstream services. Since JWT is a specification [implemented nearly everywhere](http://jwt.io), connecting to downstream services built on a stack other than our own is easy. It also doesn't matter which domain is serving our API, nor does it matter which specific server a request goes to if the app is deployed across many.
+![How does a JSON Web Token works](https://cdn.auth0.com/content/jwt/jwt-diagram.png)
 
-JWT authentication can be [done with cookies](https://auth0.com/blog/2015/09/28/5-steps-to-add-modern-authentication-to-legacy-apps-using-jwts/), which can be useful in situations where applications can't fully move away from using them.
+##Why should we use JSON Web Tokens?
+
+Let's talk about the benefits of **JSON Web Tokens (JWT)** comparing it to **Simple Web Tokens (SWT)** and **Security Assertion Markup Language Tokens (SAML)**.
+
+As JSON is less verbose than XML, when it is encoded is size is also smaller; making JWT more compact than SAML. This makes JWT a good choice to be passed in HTML and HTTP environments.
+
+Security-wise, SWT can only be symmetric signed by a shared secret using the HMAC algorithm. While JWT and SAML tokens can also use a public/private key pair in the form of a X.509 certificate to sign them. However, signing XML with XML Digital Signature without introducing obscure security holes is very difficult compared to the simplicity of signing JSON.
+
+JSON parsers are common in most programming languages, because they map directly to objects, conversely XML doesn't have a natural document-to-object mapping. This makes it easier to work with JWT than SAML assertions.
+
+Regarding usage, JWT is used at an Internet scale. This highlights the ease of client side processing of the JSON Web token on multiple platforms, especially, mobile.
+
+![Comparing the length of an encoded JWT and an encoded SAML](https://cdn.auth0.com/content/jwt/comparing-jwt-vs-saml2.png)
+_Comparison of the length of an encoded JWT and an encoded SAML_
+
+
+If you want to read more about JSON Web Tokens browse to the [JSON Web Token landing page](auth0.com/learn/json-web-tokens) in Auth0.
