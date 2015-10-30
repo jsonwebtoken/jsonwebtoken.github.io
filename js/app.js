@@ -31,11 +31,15 @@ safeLocalStorageSetItem("visited", "1");
  * Go to url hash from intro section
  */
 if (location.href.indexOf("#debugger") != -1) {
-  scrollTo($('#debugger-io'));
-}
 
-if (location.href.indexOf("#libraries") != -1) {
+  scrollTo($('#debugger-io'));
+  history.pushState(null, null, "/");
+
+} else if (location.href.indexOf("#libraries") != -1) {
+
   scrollTo($('#libraries-io'));
+  history.pushState(null, null, "/");
+
 }
 
 /*
