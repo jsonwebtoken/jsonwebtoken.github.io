@@ -1,34 +1,36 @@
 doctype html
 html(lang='en')
   head
-    title JSON Web Tokens - jwt.io
-    meta(charset='utf-8')
-    meta(http-equiv='X-UA-Compatible', content='IE=edge')
-    meta(name='viewport', content='width=device-width, minimum-scale=1.0, maximum-scale=1.0')
-    meta(name='author', content='auth0.com')
-    meta(name='description', content='JSON Web Token (JWT) is a compact URL-safe means of representing claims to be transferred between two parties. The claims in a JWT are encoded as a JSON object that is digitally signed using JSON Web Signature (JWS).')
+    block meta
+      title JSON Web Tokens - jwt.io
+      meta(charset='utf-8')
+      meta(http-equiv='X-UA-Compatible', content='IE=edge')
+      meta(name='viewport', content='width=device-width, minimum-scale=1.0, maximum-scale=1.0')
+      meta(name='author', content='auth0.com')
+      meta(name='description', content='JSON Web Token (JWT) is a compact URL-safe means of representing claims to be transferred between two parties. The claims in a JWT are encoded as a JSON object that is digitally signed using JSON Web Signature (JWS).')
 
     //- Google Verification Code
     meta(name="google-site-verification", content="cFjJt_KK4v_TKnCZ3hcuLlEUBBk4RLT0iByrpjCsvLA")
 
     //- Twitter Card
-
-    meta(name='twitter:card', content='summary_large_image')
-    meta(name='twitter:creator', content='@auth0')
-    meta(name='twitter:title', content='JWT.IO')
-    meta(name='twitter:description', content='JSON Web Tokens are an open, industry standard RFC 7519 method for representing claims securely between two parties.')
-    meta(name='twitter:image', content='http://jwt.io/img/twitter-card.png')
+    block twittercard
+      meta(name='twitter:card', content='summary_large_image')
+      meta(name='twitter:creator', content='@auth0')
+      meta(name='twitter:title', content='JWT.IO')
+      meta(name='twitter:description', content='JSON Web Tokens are an open, industry standard RFC 7519 method for representing claims securely between two parties.')
+      meta(name='twitter:image', content='http://jwt.io/img/twitter-card.png')
 
     //- Facebook Card
-    meta(property='og:type', content='website')
-    meta(property='og:title', content='JWT.IO')
-    meta(property='og:description', content='JSON Web Tokens are an open, industry standard RFC 7519 method for representing claims securely between two parties.')
-    meta(property='og:locale', content='en_US')
-    meta(property='og:url', content='http://jwt.io/')
-    meta(property='og:image', content='http://jwt.io/img/facebook-card.png')
-    meta(property='og:image:type', content='image/png')
-    meta(property='og:image:width', content='1200')
-    meta(property='og:image:height', content='630')
+    block opengraph
+      meta(property='og:type', content='website')
+      meta(property='og:title', content='JWT.IO')
+      meta(property='og:description', content='JSON Web Tokens are an open, industry standard RFC 7519 method for representing claims securely between two parties.')
+      meta(property='og:locale', content='en_US')
+      meta(property='og:url', content='http://jwt.io/')
+      meta(property='og:image', content='http://jwt.io/img/facebook-card.png')
+      meta(property='og:image:type', content='image/png')
+      meta(property='og:image:width', content='1200')
+      meta(property='og:image:height', content='630')
 
     // Just for debugging purposes. Don't actually copy this line!
     | <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
