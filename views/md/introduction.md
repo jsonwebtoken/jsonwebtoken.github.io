@@ -126,4 +126,4 @@ Regarding usage, JWT is used at an Internet scale. This highlights the ease of c
 _Comparison of the length of an encoded JWT and an encoded SAML_
 
 
-If you want to read more about JSON Web Tokens browse to the [JSON Web Token landing page](auth0.com/learn/json-web-tokens) in Auth0.
+If you want to read more about JSON Web Tokens browse to the [JSON Web Token landing page](http://auth0.com/learn/json-web-tokens) in Auth0.
