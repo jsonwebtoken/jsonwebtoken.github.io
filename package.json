@@ -21,8 +21,7 @@
     "grunt-contrib-watch": "^0.6.1",
     "grunt-mocha-phantomjs": "0.7.0",
     "grunt-usemin": "^2.0.2",
-    "matchdep": "~0.3.0",
-    "marked": "*"
+    "matchdep": "~0.3.0"
   },
   "scripts": {
     "test": "grunt test --verbose",
