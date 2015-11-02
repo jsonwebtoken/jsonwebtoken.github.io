@@ -73,6 +73,17 @@ html(lang='en')
 
   body
 
+    // Google Tag Manager
+    noscript
+      iframe(src='//www.googletagmanager.com/ns.html?id=GTM-PT2SNS', height='0', width='0', style='display:none;visibility:hidden')
+    script.
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-PT2SNS');
+    // End Google Tag Manager —>
+
     block content
 
     .tokens-created
@@ -140,3 +151,23 @@ html(lang='en')
 
     script.
       !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+
+       script(type='text/javascript').
+      adroll_adv_id = "VM7GKQD35BDCHP7J6NIB5M";
+      adroll_pix_id = "M5G2HX3D4BDQ5GJR3OECRT";
+      (function () {
+      var _onload = function(){
+      if (document.readyState && !/loaded|complete/.test(document.readyState)){setTimeout(_onload, 10);return}
+      if (!window.__adroll_loaded){__adroll_loaded=true;setTimeout(_onload, 50);return}
+      var scr = document.createElement("script");
+      var host = (("https:" == document.location.protocol) ? "https://s.adroll.com" : "http://a.adroll.com");
+      scr.setAttribute('async', 'true');
+      scr.type = "text/javascript";
+      scr.src = host + "/j/roundtrip.js";
+      ((document.getElementsByTagName('head') || [null])[0] ||
+      document.getElementsByTagName('script')[0].parentNode).appendChild(scr);
+      };
+      if (window.addEventListener) {window.addEventListener('load', _onload, false);}
+      else {window.attachEvent('onload', _onload)}
+      }());
+
