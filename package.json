@@ -25,7 +25,7 @@
   },
   "scripts": {
     "test": "grunt test --verbose",
-    "start": "serve . --port $PORT",
+    "start": "serve . --port ${PORT:-3000} ",
     "watch": "grunt",
     "postinstall": "bower install"
   }
