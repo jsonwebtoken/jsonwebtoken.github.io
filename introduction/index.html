@@ -83,7 +83,7 @@ The server&#39;s protected routes will check for a valid JWT in the Authorizatio
 <p><img src="https://cdn.auth0.com/content/jwt/jwt-diagram.png" alt="How does a JSON Web Token works"></p>
 <h2 id="why-should-we-use-json-web-tokens-">Why should we use JSON Web Tokens?</h2>
 <p>Let&#39;s talk about the benefits of <strong>JSON Web Tokens (JWT)</strong> comparing it to <strong>Simple Web Tokens (SWT)</strong> and <strong>Security Assertion Markup Language Tokens (SAML)</strong>.</p>
-<p>As JSON is less verbose than XML, when it is encoded is size is also smaller; making JWT more compact than SAML. This makes JWT a good choice to be passed in HTML and HTTP environments.</p>
+<p>As JSON is less verbose than XML, when it is encoded its size is also smaller; making JWT more compact than SAML. This makes JWT a good choice to be passed in HTML and HTTP environments.</p>
 <p>Security-wise, SWT can only be symmetric signed by a shared secret using the HMAC algorithm. While JWT and SAML tokens can also use a public/private key pair in the form of a X.509 certificate to sign them. However, signing XML with XML Digital Signature without introducing obscure security holes is very difficult compared to the simplicity of signing JSON.</p>
 <p>JSON parsers are common in most programming languages, because they map directly to objects, conversely XML doesn&#39;t have a natural document-to-object mapping. This makes it easier to work with JWT than SAML assertions.</p>
 <p>Regarding usage, JWT is used at an Internet scale. This highlights the ease of client side processing of the JSON Web token on multiple platforms, especially, mobile.</p>

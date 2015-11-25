@@ -176,7 +176,7 @@ function poll() {
 
 function updateNumberOfLogins(callback) {
   $.ajax({
-    url: "//metrics.it.auth0.com/counters",
+    url: "https://webtask.it.auth0.com/api/run/auth0/proxy?url=http://metrics.it.auth0.com/counters",
     cache: false
   }).done(function(response) {
     numberOfLogins = response.logins;
