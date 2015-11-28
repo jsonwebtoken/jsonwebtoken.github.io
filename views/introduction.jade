@@ -1,0 +1,71 @@
+extends layout
+
+block meta
+  title JSON Web Token Introduction - jwt.io
+  meta(charset='utf-8')
+  meta(http-equiv='X-UA-Compatible', content='IE=edge')
+  meta(name='viewport', content='width=device-width, minimum-scale=1.0, maximum-scale=1.0')
+  meta(name='author', content='auth0.com')
+  meta(name='description', content='JSON Web Token (JWT) is a compact URL-safe means of representing claims to be transferred between two parties. Learn more about them, how they work, when and why you should use JWTs.')
+
+block twittercard
+  meta(name='twitter:card', content='summary_large_image')
+  meta(name='twitter:creator', content='@auth0')
+  meta(name='twitter:title', content='JWT.IO - JSON Web Tokens Introduction')
+  meta(name='twitter:description', content='Learn about JSON Web Tokens, what are they, how they work, when and why you should use them.')
+  meta(name='twitter:image', content='http://jwt.io/img/twitter-card.png')
+
+block opengraph
+  meta(property='og:type', content='website')
+  meta(property='og:title', content='JWT.IO - JSON Web Tokens Introduction')
+  meta(property='og:description', content='Learn about JSON Web Tokens, what are they, how they work, when and why you should use them.')
+  meta(property='og:locale', content='en_US')
+  meta(property='og:url', content='http://jwt.io/')
+  meta(property='og:image', content='http://jwt.io/img/facebook-card.png')
+  meta(property='og:image:type', content='image/png')
+  meta(property='og:image:width', content='1200')
+  meta(property='og:image:height', content='630')
+
+block content
+  nav.navbar.closed
+    .container
+      .top-mobile
+        .menu-trigger
+          span
+
+        a.brand(href='/')
+          img(src='/img/pic_logo.svg').icon
+          img(src='/img/logo.svg').logo
+
+      nav.menu
+        a(href='/#debugger').scrollto Debugger
+        a(href='/#libraries').scrollto Libraries
+        a(href='/introduction').active Introduction
+        a(href='https://ask.auth0.com/category/jwt', target='_blank') Ask
+        a(href='http://swag.auth0.com/', target='_blank') Get a T-shirt!
+
+      .social
+        a.a0(href='https://auth0.com/', target='_blank')
+          img(src='/img/ico_a0_white.svg')
+        a.twitter(href='https://twitter.com/auth0', target="_blank")
+          img(src='/img/ico_twitter.svg')
+
+      a.supported(href='https://auth0.com/', target="_blank")
+          | Supported by
+          img(src='/img/ico_logo.svg')
+
+  section.banner-jwt
+    .container
+      a.logo(href='/')
+        img(src='/img/pic_logo.svg')
+
+      h1 Introduction to JSON Web Tokens
+
+  section.plain-text
+    .container
+      include:markdown md/introduction.md
+
+  section.go-tool
+    .container
+      p Get started with JWT today
+      a(href='/#debugger').btn.btn-success Start using the tool

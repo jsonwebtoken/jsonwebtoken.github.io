@@ -1,8 +1,8 @@
-// .NET System.IdentityModel.Tokens.Jwt
-article.jwt-net.net.accordion(data-accordion)
+// Perl DCIT/perl-Crypt-JWT
+article.jwt-perl.accordion(data-accordion)
   .panel-heading(data-control)
-    img(src='/img/1.svg')
-    h3 .NET
+    img(src='/img/19.svg')
+    h3 Perl
   .panel-wrap(data-content)
     .panel-body
       .column
@@ -17,7 +17,7 @@ article.jwt-net.net.accordion(data-accordion)
           code iss
           |  check
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           code sub
           |  check
         p
@@ -29,15 +29,15 @@ article.jwt-net.net.accordion(data-accordion)
           code exp
           |  check
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           code nbf
           |  check
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           code iat
           |  check
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           code jti
           |  check
       .column
@@ -60,27 +60,25 @@ article.jwt-net.net.accordion(data-accordion)
           i.icon-budicon-500
           | RS512
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           | ES256
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           | ES384
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           | ES512
 
     .author-info
       .maintainer
-        i.icon-budicon-333(data-toggle='tooltip', title='', data-original-title='Maintainer')
-        | Microsoft
-        span.stars(data-repo='AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet', style='display: inline;')
+        a(href='https://github.com/DCIT')
+          i.icon-budicon-333(data-toggle='tooltip', title='', data-original-title='Maintainer')
+          | Karel Miko
+        span.stars(data-repo='DCIT/perl-Crypt-JWT', style='display: inline;')
           i.icon-budicon-466
       .repository
         i.icon-1392070209-icon-social-github
-        a(href='https://github.com/MSOpenTech/azure-activedirectory-identitymodel-extensions-for-dotnet') View Repo
+        a(href='https://github.com/DCIT/perl-Crypt-JWT') View Repo
 
     .panel-footer
-      code
-        | Install-Package
-        br
-        a(href='https://www.nuget.org/packages/System.IdentityModel.Tokens.Jwt/') System.IdentityModel.Tokens.Jwt
+      code cpanm Crypt::JWT

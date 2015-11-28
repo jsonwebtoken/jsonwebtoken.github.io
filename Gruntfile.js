@@ -10,8 +10,7 @@ module.exports = function (grunt) {
         options: {
           livereload: true
         },
-        files: ['Gruntfile.js', 'js/**/*.js', 'stylus/**/*.styl', 'html/**/*.jade'],
-        // files: ['Gruntfile.js', 'js/**/*.js', 'stylus/**/*.styl', 'html/**/*.jade', 'html/index.html'],
+        files: ['Gruntfile.js', 'js/**/*.js', 'stylus/**/*.styl', 'views/**/*.jade', 'views/**/*.md'],
         tasks: ['build']
       }
     },
@@ -35,7 +34,8 @@ module.exports = function (grunt) {
     jade: {
       compile: {
         files: {
-          'index.html': 'html/index.jade'
+          'index.html': 'views/index.jade',
+          'introduction/index.html': 'views/introduction.jade'
         }
       }
     },

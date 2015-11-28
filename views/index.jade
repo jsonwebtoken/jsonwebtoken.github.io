@@ -1,0 +1,222 @@
+extends layout
+
+block content
+  nav.navbar.closed
+    .container
+      .top-mobile
+        .menu-trigger
+          span
+
+        a.brand(href='/')
+          img(src='/img/pic_logo.svg').icon
+          img(src='/img/logo.svg').logo
+
+      nav.menu
+        a(href='#debugger-io').scrollto Debugger
+        a(href='#libraries-io').scrollto Libraries
+        a(href='/introduction') Introduction
+        a(href='https://ask.auth0.com/category/jwt', target='_blank') Ask
+        a(href='http://swag.auth0.com/', target='_blank') Get a T-shirt!
+
+      .social
+        a.a0(href='https://auth0.com/', target='_blank')
+          img(src='/img/ico_a0_white.svg')
+        a.twitter(href='https://twitter.com/auth0', target="_blank")
+          img(src='/img/ico_twitter.svg')
+
+      a.supported(href='https://auth0.com/', target="_blank")
+          | Supported by
+          img(src='/img/ico_logo.svg')
+
+  section.banner-jwt
+    .container
+      a.logo(href='/')
+        img(src='/img/pic_logo.svg')
+
+      p
+        | JSON Web Tokens are an open, industry standard&nbsp;
+        a(href='https://tools.ietf.org/html/rfc7519', target='_blank') RFC 7519
+        |  method for representing claims securely between two parties.
+      p JWT.IO allows you to decode, verify and generate JWT.
+
+      a.btn.btn-lg(href="/introduction") Learn more about jwt
+
+  section.update-site
+    svg(width='32px', height='32px', viewbox='0 0 32 32', version='1.1', class="paper")
+      g#Page-1(stroke='none', stroke-width='1', fill='none', fill-rule='evenodd', sketch:type='MSPage')
+        g#32px(sketch:type='MSLayerGroup', transform='translate(-805.000000, -2193.000000)', fill='#373A39')
+          path#Fill-529(d='M835,2221 C835,2222.1 834.104,2223 833,2223 L809,2223 C807.896,2223 807,2222.1 807,2221 L807,2197 C807,2195.89 807.896,2195 809,2195 L833,2195 C834.104,2195 835,2195.89 835,2197 L835,2221 L835,2221 Z M833,2193 L809,2193 C806.79,2193 805,2194.79 805,2197 L805,2221 C805,2223.21 806.79,2225 809,2225 L833,2225 C835.209,2225 837,2223.21 837,2221 L837,2197 C837,2194.79 835.209,2193 833,2193 L833,2193 Z M828,2203 L814,2203 C813.447,2203 813,2203.45 813,2204 C813,2204.55 813.447,2205 814,2205 L828,2205 C828.552,2205 829,2204.55 829,2204 C829,2203.45 828.552,2203 828,2203 L828,2203 Z M828,2209 L814,2209 C813.447,2209 813,2209.45 813,2210 C813,2210.55 813.447,2211 814,2211 L828,2211 C828.552,2211 829,2210.55 829,2210 C829,2209.45 828.552,2209 828,2209 L828,2209 Z M828,2215 L814,2215 C813.447,2215 813,2215.45 813,2216 C813,2216.55 813.447,2217 814,2217 L828,2217 C828.552,2217 829,2216.55 829,2216 C829,2215.45 828.552,2215 828,2215 L828,2215 Z', sketch:type='MSShapeGroup')
+
+    strong NEW!&nbsp;
+    span JWT.IO gets a refresh! New logo, new website and more.
+    a(href="https://auth0.com/blog/2015/07/21/jwt-json-webtoken-logo/", target="_blank")
+      | Learn More
+      svg(height='48', viewbox='0 0 48 48', width='48', xmlns='http://www.w3.org/2000/svg')
+        path(d='M-838-2232H562v3600H-838z', fill='none')
+        path(d='M16 10v28l22-14z')
+        path(d='M0 0h48v48H0z', fill='none')
+
+  section#debugger-io.debugger-jwt
+    .container
+      //- a(name='debugger')
+      h1 Debugger
+
+      .jwt-playground
+
+        .algorithm
+          span Algorithm
+          .hide
+            label
+              input(type='radio', name='algorithm', value='HS256', checked='')
+            label
+              input(type='radio', name='algorithm', value='RS256')
+          .jwt-select
+            select
+              option(name='algorithm',value='HS256', selected='') HS256
+              option(name='algorithm',value='RS256') RS256
+
+        .algorithm-code
+          .tab-nav
+            .tab-link.current
+              a(href='#encoded-jwt') Encoded
+                small paste a token here
+            .tab-link
+              a(href='#decoded-jwt') Decoded
+                small edit the payload and secret (only HS256 supported)
+
+          .tab-content
+            #encoded-jwt.box-content.current
+              .input.js-input
+            #decoded-jwt.box-content
+              .output
+                .jwt-explained.jwt-header
+                  p.text-line HEADER:
+                    span ALGORITHM & TOKEN TYPE
+                  .js-header
+
+                .jwt-explained.jwt-payload
+                  p.text-line PAYLOAD:
+                    span DATA
+                  .js-payload
+
+                .jwt-explained.jwt-signature
+                  p.text-line VERIFY SIGNATURE
+                  pre.pre-encode.HS256.
+                    HMACSHA256(
+                      base64UrlEncode(header) + "." +
+                      base64UrlEncode(payload),
+                      <input type="text" name="secret" value="secret">
+                    )<span class="is-base64-encoded-label"> <input id="is-base64-encoded" type="checkbox" name="is-base64-encoded"><label for="is-base64-encoded">secret base64 encoded</label></span>
+                  pre.pre-encode.RS256.
+                    RSASHA256(
+                      base64UrlEncode(header) + "." +
+                      base64UrlEncode(payload),
+                      <textarea rows="4" name="public-key" placeholder="Public Key or Certificate. Enter it in plain text only if you want to verify a token"></textarea>,
+                      <textarea rows="5" name="private-key" placeholder="Private Key (RSA). Enter the it in plain text only if you want to generate a new token. The key never leaves your browser."></textarea>
+                    )
+
+        .validation-status.js-signature
+
+  section#libraries-io.libraries-jwt
+    .container
+      .title-header
+        //- a(name='libraries')
+        h1 Libraries for Token Signing/Verification
+
+        .filter
+          span Filter by
+          .jwt-select
+            select
+              option(value='*', selected='') All
+              option(value='.go') Go
+              option(value='.haskell') Haskell
+              option(value='.java') Java
+              option(value='.net') NET
+              option(value='.python') Python
+              option(value='.php') PHP
+
+      .warning
+        b Warning:
+        |  Critical vulnerabilities in JSON Web Token libraries with asymmetric keys.
+        a(href='https://auth0.com/blog/2015/03/31/critical-vulnerabilities-in-json-web-token-libraries/')
+          | Learn more
+
+          svg(height='48', viewbox='0 0 48 48', width='48', xmlns='http://www.w3.org/2000/svg')
+            path(d='M-838-2232H562v3600H-838z', fill='none')
+            path(d='M16 10v28l22-14z')
+
+      .libraries-sv(data-accordion-group)
+        include libraries/net.jade
+        include libraries/net2.jade
+        include libraries/netrt.jade
+        include libraries/python.jade
+        include libraries/python2.jade
+        include libraries/python3.jade
+        include libraries/node.jade
+        include libraries/java.jade
+        include libraries/java2.jade
+        include libraries/java3.jade
+        include libraries/java4.jade
+        include libraries/js.jade
+        include libraries/php.jade
+        include libraries/php2.jade
+        include libraries/php3.jade
+        include libraries/php4.jade
+        include libraries/perl5.jade
+        include libraries/ruby.jade
+        include libraries/ruby2.jade
+        include libraries/elixir.jade
+        include libraries/go.jade
+        include libraries/go2.jade
+        include libraries/haskell.jade
+        include libraries/haskell2.jade
+        include libraries/rust.jade
+        include libraries/lua.jade
+        include libraries/scala.jade
+        include libraries/scala3.jade
+        include libraries/d.jade
+        include libraries/clojure.jade
+        include libraries/swift.jade
+        include libraries/c.jade
+        include libraries/q.jade
+        include libraries/delphi.jade
+
+  section.sources
+    .container
+      .columns
+        .column.badges
+          h2 Badges
+          .hold
+            a(href='http://jwt.io/assets/badge.svg', target='_blank')
+              img(src='assets/badge.svg')
+          .text-hold
+            a(href='http://jwt.io/assets/badge.svg', target='_blank')
+              i.icon-budicon-722
+            p http://jwt.io/assets/badge.svg
+          .hold
+            a(href='http://jwt.io/assets/badge-compatible.svg', target='_blank')
+              img(src='assets/badge-compatible.svg')
+          .text-hold
+            a(href='http://jwt.io/assets/badge-compatible.svg', target='_blank')
+              i.icon-budicon-722
+            p http://jwt.io/assets/badge-compatible.svg
+        .column.logotype
+          h2 Logotype
+          .hold
+            a(href='http://jwt.io/assets/icon.svg', target='_blank')
+              img(src='assets/icon.svg')
+          .text-hold
+            a(href='http://jwt.io/assets/icon.svg', target='_blank')
+              i.icon-budicon-722
+            p http://jwt.io/assets/icon.svg
+          .hold
+            a(href='http://jwt.io/assets/logo.svg', target='_blank')
+              img(src='assets/logo.svg')
+          .text-hold
+            a(href='http://jwt.io/assets/logo.svg', target='_blank')
+              i.icon-budicon-722
+            p http://jwt.io/assets/logo.svg
+        .column.tshirt
+          h2 Store
+          img(src='img/pic_tshirt.png')
+          a.buy(href='http://swag.auth0.com/', target='_blank') Buy T-Shirt

@@ -1,0 +1,153 @@
+doctype html
+html(lang='en')
+  head
+    block meta
+      title JSON Web Tokens - jwt.io
+      meta(charset='utf-8')
+      meta(http-equiv='X-UA-Compatible', content='IE=edge')
+      meta(name='viewport', content='width=device-width, minimum-scale=1.0, maximum-scale=1.0')
+      meta(name='author', content='auth0.com')
+      meta(name='description', content='JSON Web Token (JWT) is a compact URL-safe means of representing claims to be transferred between two parties. The claims in a JWT are encoded as a JSON object that is digitally signed using JSON Web Signature (JWS).')
+
+    //- Google Verification Code
+    meta(name="google-site-verification", content="cFjJt_KK4v_TKnCZ3hcuLlEUBBk4RLT0iByrpjCsvLA")
+
+    //- Twitter Card
+    block twittercard
+      meta(name='twitter:card', content='summary_large_image')
+      meta(name='twitter:creator', content='@auth0')
+      meta(name='twitter:title', content='JWT.IO')
+      meta(name='twitter:description', content='JSON Web Tokens are an open, industry standard RFC 7519 method for representing claims securely between two parties.')
+      meta(name='twitter:image', content='http://jwt.io/img/twitter-card.png')
+
+    //- Facebook Card
+    block opengraph
+      meta(property='og:type', content='website')
+      meta(property='og:title', content='JWT.IO')
+      meta(property='og:description', content='JSON Web Tokens are an open, industry standard RFC 7519 method for representing claims securely between two parties.')
+      meta(property='og:locale', content='en_US')
+      meta(property='og:url', content='http://jwt.io/')
+      meta(property='og:image', content='http://jwt.io/img/facebook-card.png')
+      meta(property='og:image:type', content='image/png')
+      meta(property='og:image:width', content='1200')
+      meta(property='og:image:height', content='630')
+
+    // Just for debugging purposes. Don't actually copy this line!
+    | <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    link(rel="stylesheet", type="text/css", href="//cloud.typography.com/7834932/650606/css/fonts.css")
+    link(rel="stylesheet", type="text/css", href="//fonts.googleapis.com/css?family=Roboto+Mono")
+
+
+    link(rel="stylesheet", href="/css/bootstrap.min.css")
+
+    // build:css dist/css/app.css
+    link(rel='stylesheet', href='/vendor/codemirror/lib/codemirror.css', type='text/css', media='all')
+    link(rel='stylesheet', href='/vendor/codemirror/addon/lint/lint.css', type='text/css', media='all')
+    link(rel="stylesheet", href='/css/budicon.css', type="text/css", media="all")
+    link(rel='stylesheet', href='/css/app.css', type='text/css', media='all')
+
+    link(rel='search', type='application/opensearchdescription+xml', title='JWT.io', href='/opensearch.xml')
+
+
+    link(rel='apple-touch-icon', sizes='57x57', href='/img/favicon/apple-icon-57x57.png')
+    link(rel='apple-touch-icon', sizes='60x60', href='/img/favicon/apple-icon-60x60.png')
+    link(rel='apple-touch-icon', sizes='72x72', href='/img/favicon/apple-icon-72x72.png')
+    link(rel='apple-touch-icon', sizes='76x76', href='/img/favicon/apple-icon-76x76.png')
+    link(rel='apple-touch-icon', sizes='114x114', href='/img/favicon/apple-icon-114x114.png')
+    link(rel='apple-touch-icon', sizes='120x120', href='/img/favicon/apple-icon-120x120.png')
+    link(rel='apple-touch-icon', sizes='144x144', href='/img/favicon/apple-icon-144x144.png')
+    link(rel='apple-touch-icon', sizes='152x152', href='/img/favicon/apple-icon-152x152.png')
+    link(rel='apple-touch-icon', sizes='180x180', href='/img/favicon/apple-icon-180x180.png')
+    link(rel='icon', type='image/png', sizes='192x192', href='/img/favicon/android-icon-192x192.png')
+    link(rel='icon', type='image/png', sizes='32x32', href='/img/favicon/favicon-32x32.png')
+    link(rel='icon', type='image/png', sizes='96x96', href='/img/favicon/favicon-96x96.png')
+    link(rel='icon', type='image/png', sizes='16x16', href='/img/favicon/favicon-16x16.png')
+    link(rel='manifest', href='/img/favicon/manifest.json')
+    meta(name='msapplication-TileColor', content='#000000')
+    meta(name='msapplication-TileImage', content='/img/favicon/ms-icon-144x144.png')
+    meta(name='theme-color', content='#000000')
+
+
+    // HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries
+    | <!--[if lt IE 9]><script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script><script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script><![endif]-->
+
+  body
+
+    // Google Tag Manager
+    noscript
+      iframe(src='//www.googletagmanager.com/ns.html?id=GTM-PT2SNS', height='0', width='0', style='display:none;visibility:hidden')
+    script.
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-PT2SNS');
+    // End Google Tag Manager —>
+
+    block content
+
+    .tokens-created
+      .container
+        img(src='/img/pic_logo_ft.svg')
+        p JWT.io is brought to you by Auth0.
+        p A cloud service, APIs and tools that eliminate the friction of identity for your applications and APIs.
+
+        a(href='https://auth0.com/signup', target="_blank").btn.btn-success Create free account
+
+        .token
+          h5 TOKENS CREATED
+
+        .counter
+
+    footer
+      .container
+        .columns
+          .column
+            a(href='https://auth0.com/', target="_blank")
+              | Supported by
+              img(src='/img/ico_logo.svg')
+          .column.pull-request
+            span Missing something?
+            a(href='https://github.com/jsonwebtoken/jsonwebtoken.github.io/tree/master/views', target="_blank") Send a Pull Request
+          .column.social-counter
+            a.twitter-follow-button(href='https://twitter.com/auth0', data-show-count='true') Follow @auth0
+
+
+    //
+      Bootstrap core JavaScript
+      ==================================================
+    // Placed at the end of the document so the pages load faster
+    script(src='//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js')
+    script(src='/js/bootstrap.min.js')
+    // build:js dist/js/app.js
+    script(src='/vendor/zepto/zepto.js')
+    script(src='/vendor/jsonlint/lib/jsonlint.js')
+    script(src='/vendor/json-sans-eval-min/index.js')
+    script(src='/vendor/codemirror/lib/codemirror.js')
+    script(src='/vendor/codemirror/mode/javascript/javascript.js')
+    script(src='/vendor/codemirror/addon/lint/lint.js')
+    script(src='/vendor/codemirror/addon/lint/javascript-lint.js')
+    script(src='/vendor/codemirror/addon/lint/json-lint.js')
+    script(src='/vendor/jsrsasign/index.js')
+    script(src='/vendor/jws.js/index.js')
+    script(src='/js/jwt_mode.js')
+    script(src='/js/jwt.js')
+
+    script(src='/js/isotope.pkgd.min.js')
+    script(src='/js/flipclock.js')
+    script(src='/js/accordion.js')
+    script(src='/js/highlight.min.js')
+
+    script(src='/js/app.js')
+    // endbuild
+
+    script.
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-37952868-2', 'auto');
+      ga('send', 'pageview');
+
+    script.
+      !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');

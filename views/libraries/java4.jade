@@ -1,27 +1,23 @@
-// PHP firebase/php-jwt
-article.jwt-php.php.accordion(data-accordion)
+// Java JJWT
+article.jwt-java.java.accordion(data-accordion)
   .panel-heading(data-control)
-    img(src='/img/5.svg')
-    h3 PHP
+    img(src='/img/3.svg')
+    h3 Java
   .panel-wrap(data-content)
-    .version
-      p Minimum Version 2.0.0
-        a(href='https://auth0.com/blog/2015/03/31/critical-vulnerabilities-in-json-web-token-libraries/', target='_blank')
-          img(src='img/ico_question.svg')
-    .panel-body.mversion
+    .panel-body
       .column
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           | Sign
         p
           i.icon-budicon-500
           | Verify
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           code iss
           |  check
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           code sub
           |  check
         p
@@ -41,7 +37,7 @@ article.jwt-php.php.accordion(data-accordion)
           code iat
           |  check
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           code jti
           |  check
       .column
@@ -52,37 +48,35 @@ article.jwt-php.php.accordion(data-accordion)
           i.icon-budicon-500
           | HS384
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           | HS512
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           | RS256
         p
           i.icon-budicon-500
           | RS384
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           | RS512
         p
           i.icon-budicon-500
           | ES256
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           | ES384
         p
-          i.icon-budicon-501
+          i.icon-budicon-500
           | ES512
 
     .author-info
       .maintainer
-        a(href='https://github.com/firebase')
+        a(href='https://twitter.com/lhazlewood')
           i.icon-budicon-333(data-toggle='tooltip', title='', data-original-title='Maintainer')
-          | Firebase
-        span.stars(data-repo='firebase/php-jwt', style='display: inline;')
-          i.icon-budicon-466
+          | __b_c
       .repository
         i.icon-1392070209-icon-social-github
-        a(href='https://github.com/firebase/php-jwt') View Repo
+        a(href='https://github.com/jwtk/jjwt') View Repo
 
     .panel-footer
-      code composer require firebase/php-jwt
+      code maven: io.jsonwebtoken / jjwt / 0.6.0
