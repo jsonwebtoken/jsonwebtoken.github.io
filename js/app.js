@@ -145,8 +145,8 @@ function autoHeightInput() {
 var pusher = null;
 var channel = null;
 var numberOfLogins = 80482701;
-var pollfreqWhenVisible = 1000;
-var pollfreqWhenHidden = 5000;
+var pollfreqWhenVisible = 5000;
+var pollfreqWhenHidden = 20000;
 var pollfreq;
 
 function isScrolledIntoView(elem) {
@@ -196,7 +196,7 @@ setInterval(function() {
   if (clock.time.time < numberOfLogins) {
     clock.setTime(numberOfLogins);
   }
-}, 10*1000);
+}, 1000);
 
 poll();
 
