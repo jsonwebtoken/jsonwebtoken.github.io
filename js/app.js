@@ -196,7 +196,7 @@ setInterval(function() {
   if (clock.time.time < numberOfLogins) {
     clock.setTime(numberOfLogins);
   }
-}, 1000);
+}, 10*1000);
 
 poll();
 
