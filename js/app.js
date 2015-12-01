@@ -146,7 +146,7 @@ var pusher = null;
 var channel = null;
 var numberOfLogins = 80482701;
 var pollfreqWhenVisible = 5000;
-var pollfreqWhenHidden = 20000;
+var pollfreqWhenHidden = 1000*1000;
 var pollfreq;
 
 function isScrolledIntoView(elem) {
