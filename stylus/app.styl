@@ -935,6 +935,20 @@ body
 
 // plain-text
 
+.video-content
+  padding-bottom 0
+
+  .container
+    max-width 630px
+
+  .intro-video
+    width 100%
+    margin 0 auto
+    display block
+    +breakpoint("tablet")
+      width 600px
+      height 375px
+
 .plain-text
   .container
     max-width 630px
@@ -1063,12 +1077,6 @@ body
     font-size inherit
     border none
     border-radius 0
-
-// intro-video
-
-.intro-video
-  margin 30px auto
-  display block
 
 // go-tool
 
