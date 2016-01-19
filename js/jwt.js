@@ -65,7 +65,7 @@ window.sign = function (algorithm, header, payload, key, isSecretBase64Encoded) 
     return error;
   }
 
-  if(algorithm === 'HS256'){
+  if(algorithm.match(/HS[0-9]{3,}/)){
     if (isSecretBase64Encoded) {
       try {
         key = window.b64utob64(key);
@@ -101,7 +101,7 @@ window.verify = function (algorithm, value, key, isSecretBase64Encoded) {
 
   var result = '', error = null;
 
-  if (algorithm === 'HS256'){
+  if (algorithm.match(/HS[0-9]{3,}/)){
     if (isSecretBase64Encoded) {
       try {
         key = window.b64utob64(key);
