@@ -70,10 +70,16 @@ block content
               input(type='radio', name='algorithm', value='HS256', checked='')
             label
               input(type='radio', name='algorithm', value='RS256')
+            label
+              input(type='radio', name='algorithm', value='ES256')
+            label
+              input(type='radio', name='algorithm', value='ES384')
           .jwt-select
             select
               option(name='algorithm',value='HS256', selected='') HS256
               option(name='algorithm',value='RS256') RS256
+              option(name='algorithm',value='ES256') ES256
+              option(name='algorithm',value='ES384') ES384
 
         .algorithm-code
           .tab-nav
@@ -82,7 +88,7 @@ block content
                 small paste a token here
             .tab-link
               a(href='#decoded-jwt') Decoded
-                small edit the payload and secret (only HS256 supported)
+                small edit the payload and secret (only a subset supported)
 
           .tab-content
             #encoded-jwt.box-content.current
@@ -113,6 +119,20 @@ block content
                       base64UrlEncode(payload),
                       <textarea rows="4" name="public-key" placeholder="Public Key or Certificate. Enter it in plain text only if you want to verify a token"></textarea>,
                       <textarea rows="5" name="private-key" placeholder="Private Key (RSA). Enter the it in plain text only if you want to generate a new token. The key never leaves your browser."></textarea>
+                    )
+                  pre.pre-encode.ES256.
+                    SHA256(
+                      base64UrlEncode(header) + "." +
+                      base64UrlEncode(payload),
+                      <textarea rows="4" name="public-key" placeholder="Public Key or Certificate. Enter it in plain text only if you want to verify a token"></textarea>,
+                      <textarea rows="5" name="private-key" placeholder="Private Key (ECC). Enter the it in plain text only if you want to generate a new token. The key never leaves your browser."></textarea>
+                    )
+                  pre.pre-encode.ES384.
+                    SHA384(
+                      base64UrlEncode(header) + "." +
+                      base64UrlEncode(payload),
+                      <textarea rows="4" name="public-key" placeholder="Public Key or Certificate. Enter it in plain text only if you want to verify a token"></textarea>,
+                      <textarea rows="5" name="private-key" placeholder="Private Key (ECC). Enter the it in plain text only if you want to generate a new token. The key never leaves your browser."></textarea>
                     )
 
         .validation-status.js-signature
