@@ -3,6 +3,8 @@
   "version": "0.0.1",
   "dependencies": {
     "bower": "^1.4.1",
+    "express": "^4.13.4",
+    "express-sslify": "^1.0.1",
     "grunt": "^0.4.5",
     "marked": "^0.3.5",
     "serve": "*"
@@ -25,7 +27,7 @@
   },
   "scripts": {
     "test": "grunt test --verbose",
-    "start": "serve -D --compress --port ${PORT:-3000} .",
+    "start": "node server.js",
     "watch": "grunt",
     "postinstall": "bower install"
   }
