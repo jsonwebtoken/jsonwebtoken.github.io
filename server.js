@@ -8,7 +8,6 @@ app.use('/', express.static(__dirname));
 // use HTTPS(true) in case you are behind a load balancer (e.g. Heroku) 
 if (process.env.NODE_ENV === 'production') {
 	console.log('redirecting to ssl');
-	app.use(enforce.HTTPS());
 	app.use(enforce.HTTPS({ trustProtoHeader: true }))
 }
  
