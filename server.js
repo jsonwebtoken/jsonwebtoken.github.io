@@ -11,6 +11,6 @@ if (process.env.NODE_ENV === 'production') {
 	app.use(enforce.HTTPS({ trustProtoHeader: true }))
 }
  
-http.createServer(app).listen(app.get('port') || 3000, function() {
+http.createServer(app).listen(process.env.PORT || 3000, function() {
 	console.log('started');
 });
