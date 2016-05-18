@@ -631,6 +631,14 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     qs.forEach(function (kv) { kv = kv.split('='); d[kv[0]] = kv[1]; });
     if (d.id_token) {
       tokenEditor.setValue(decodeURIComponent(d.id_token));
+      
+      if (d.public_key) {
+        var key = '-----BEGIN PUBLIC KEY-----\n' +
+                  decodeURIComponent(d.public_key) +
+                  '\n-----END PUBLIC KEY-----';
+        $('.jwt-signature textarea[name=public-key]').val(key);
+        updateSignature();
+      }
       return;
     }
   }
