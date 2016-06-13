@@ -514,12 +514,39 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     }
   }
 
-  loadFromStorage(function (jwt) {
-    lastRestoredToken = jwt || DEFAULT_HS_TOKEN;
+  function isToken(token) {
+    if(token && token.length > 0) {
+        var header = window.decode(token.split('.')[0]);
+        if(header.error) {
+            return false;
+        }
+        return JSON.parse(header.result).typ === 'JWT';
+    }
+    return false;
+  }
 
-    tokenEditor.setValue(
-      lastRestoredToken
-    );
+  function tryLoadFromClipboard(defaultVal) {
+      var input = document.createElement('textarea');
+      document.body.appendChild(input);
+      input.focus();
+      input.select();
+      document.execCommand('Paste');
+      var token = input.value;
+      input.remove();
+
+      return isToken(token) ? token : defaultVal;
+  }
+
+  loadFromStorage(function (jwt) {
+    token = jwt || DEFAULT_HS_TOKEN;
+
+    try {
+        token = tryLoadFromClipboard(token);
+    } catch(e) {
+        console.log(e);
+    }
+
+    tokenEditor.setValue(token);
   });
 
 }());

@@ -10,11 +10,13 @@
       "default_popup": "index.html"
   },
 
-  "icons": { 
+  "icons": {
       "128": "img/favicon/favicon-96x96.png"
   },
 
   "permissions": [
-    "activeTab"
+    "activeTab",
+    "cookies",
+    "clipboardRead"
   ]
 }
