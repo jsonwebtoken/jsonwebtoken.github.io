@@ -4,3 +4,6 @@ vendor
 .tmp
 .DS_Store
 npm-debug.log
+dist.crx
+dist.pem
+dist

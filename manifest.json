@@ -1,0 +1,20 @@
+{
+  "manifest_version": 2,
+
+  "name": "JWT.io",
+  "description": "JWT.io debugger as a Chrome extension!",
+  "version": "1.0",
+
+  "browser_action": {
+      "default_icon": "img/favicon/favicon-96x96.png",
+      "default_popup": "index.html"
+  },
+
+  "icons": { 
+      "128": "img/favicon/favicon-96x96.png"
+  },
+
+  "permissions": [
+    "activeTab"
+  ]
+}

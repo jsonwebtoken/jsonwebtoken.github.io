@@ -39,31 +39,37 @@ module.exports = function (grunt) {
         }
       }
     },
-    // useminPrepare: {
-    //   html: 'html/index.html',
-    //   options: {
-    //     root: '.',
-    //     dest: '.'
-    //   }
-    // },
-    // usemin: {
-    //   html: 'index.html',
-    //   options: {
-    //     assetsDir: ['dist/']
-    //   }
-    // },
-    // htmlmin: {
-    //   dist: {
-    //     files:  { 'index.html': 'html/index.html' }
-    //   }
-    // },
     mocha_phantomjs: {
       all: ['test/**/*.html']
+    },
+    copy: {
+        crx: {
+            files: [{
+                src: [
+                    'manifest.json',
+                    'index.html',
+                    'img/**',
+                    'vendor/**',
+                    'js/**',
+                    'css/**',
+                    'fonts/**',
+                    'assets/**'
+                ],
+                dest: 'dist/'
+            }]
+        }
+    },
+    run: {
+        crx: {
+        }
     }
   });
 
+  grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-run');
+
   grunt.registerTask('build', ['stylus', 'jade']);
-  // grunt.registerTask('build', ['clean', 'stylus', 'jade', 'useminPrepare', 'concat', 'uglify', 'cssmin', 'htmlmin', 'usemin']);
   grunt.registerTask('test', ['build', 'mocha_phantomjs']);
+  grunt.registerTask('chrome-extension', ['build', 'copy:crx', 'run:crx']);
   grunt.registerTask('default', ['build', 'connect', 'watch']);
 };
