@@ -27,7 +27,8 @@ module.exports = function (grunt) {
     stylus: {
       compile: {
         files: {
-          'css/app.css': 'stylus/app.styl'
+          'css/app.css': 'stylus/app.styl',
+          'css/chrome-extension.css': 'stylus/chrome-extension.styl'          
         }
       }
     },

@@ -3,7 +3,7 @@
 
   "name": "JWT.io",
   "description": "JWT.io debugger as a Chrome extension!",
-  "version": "1.1.0",
+  "version": "1.2.0",
 
   "browser_action": {
       "default_icon": "img/favicon/favicon-96x96.png",
@@ -12,6 +12,16 @@
 
   "icons": {
       "128": "img/favicon/favicon-96x96.png"
+  },
+
+  "commands": {
+      "_execute_browser_action": {
+          "suggested_key": {
+              "default": "Ctrl+Shift+K",
+              "mac": "Command+Shift+K",
+              "linux": "Ctrl+Shift+K"
+          }
+      }
   },
 
   "permissions": [
