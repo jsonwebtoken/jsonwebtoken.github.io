@@ -28,7 +28,7 @@ module.exports = function (grunt) {
       compile: {
         files: {
           'css/app.css': 'stylus/app.styl',
-          'css/chrome-extension.css': 'stylus/chrome-extension.styl'          
+          'css/chrome-extension.css': 'stylus/chrome-extension.styl'
         }
       }
     },
@@ -51,6 +51,7 @@ module.exports = function (grunt) {
                     'index.html',
                     'img/**',
                     'vendor/**',
+                    'extension-deps/**',
                     'js/**',
                     'css/**',
                     'fonts/**',
