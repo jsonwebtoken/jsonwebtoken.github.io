@@ -8,39 +8,46 @@ block content
       .jwt-playground
       
         .top-section.clearfix
+        
           .pull-left
-            a(href="#")
-              img(src="/assets/share-badge.svg" height="40")
-
-          .select-field.algorithm.pull-right
-            span Algorithm
-            .hide
-              label
-                input(type='radio', name='algorithm', value='HS256', checked='')
-              label
-                input(type='radio', name='algorithm', value='RS256')
-            .jwt-select.custom-select
-              select
-                option(name='algorithm',value='HS256', selected='') HS256
-                option(name='algorithm',value='RS256') RS256
-                
-          .select-field.pull-right
-            span Import JWT
-            .hide
-              label
-                input(type='radio', name='algorithm', value='HS256', checked='')
-              label
-                input(type='radio', name='algorithm', value='RS256')
-            .custom-select
-              select
-                optgroup
-                  option(name='0', selected, disabled) Select JWT
-                optgroup(label="localStorage")
-                  option(name='1',value='') foo
-                  option(name='2',value='') bar
-                optgroup(label="Cookies")
-                  option(name='1',value='') foo
-                  option(name='2',value='') bar
+            .jwt-logo.h-block
+              img(src="/assets/debugger-logo.svg" height="33" alt="Share this jwt")
+          
+          .pull-right      
+            .select-field.h-block
+              span Import JWT
+              .hide
+                label
+                  input(type='radio', name='algorithm', value='HS256', checked='')
+                label
+                  input(type='radio', name='algorithm', value='RS256')
+              .custom-select
+                select
+                  optgroup
+                    option(name='0', selected) None
+                  optgroup(label="localStorage")
+                    option(name='1',value='') foo
+                    option(name='2',value='') bar
+                  optgroup(label="Cookies")
+                    option(name='1',value='') foo
+                    option(name='2',value='') bar
+                    
+            .select-field.algorithm.h-block
+              span Algorithm
+              .hide
+                label
+                  input(type='radio', name='algorithm', value='HS256', checked='')
+                label
+                  input(type='radio', name='algorithm', value='RS256')
+              .jwt-select.custom-select
+                select
+                  option(name='algorithm',value='HS256', selected='') HS256
+                  option(name='algorithm',value='RS256') RS256
+                  
+            .share-this-jwt.h-block
+              a.jwt-clipboard-btn(href="#")
+                | Share this JWT
+                img(src="/assets/icon-chromeless.svg" height="25" alt="Share this jwt")
 
         .algorithm-code
           .tab-nav
@@ -85,7 +92,7 @@ block content
         .validation-status.js-signature
         .colophon.clearfix
           .pull-left
-            a(href="https://auth0.com/")
+            a(href="https://auth0.com/?utm_source=jwt-ext&utm_campaign=badge")
               | Supported by 
               img(src="/img/ico_logo.svg")
               
