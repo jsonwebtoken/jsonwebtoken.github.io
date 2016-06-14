@@ -549,6 +549,15 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     tokenEditor.setValue(token);
   });
 
+  // Share JWT button
+  function shareJWT() {
+      var jwt = tokenEditor.getValue();
+      chrome.tabs.create({
+          url: 'https://jwt.io/#debugger?&id_token=' + jwt,
+          active: true
+      });
+  }
+
 }());
 
 //Inizialize bootstrap widgets
