@@ -1,12 +1,120 @@
 body
     zoom 0.8
 
+.debugger-jwt
+  overflow-y auto
+  height 740px
+
 .jwt-playground
+  min-width 930px
+
+  .save-back
+    color #0094c1
+    margin-left 15px
+
+  .colophon
+    padding-top 18px
+    position relative
+    top -8px
+
+    .share-callouts
+      margin-left 20px
+
+      svg
+        position relative
+        top 5px
+        margin-left 4px
+
+    a
+      text-decoration none
+      color currentColor
+
+  .top-section
+    margin-bottom 18px
+
+    a
+      outline none
+
+  .keyboard-info
+    display inline-block
+    margin-left 20px
+    opacity 0.5
+    //line-height 37px
+
   .algorithm
     text-align right
 
+  .validation-status
+    margin-top 20px
+
   .algorithm-code
     margin-top 0px
+
+    .tab-content
+      .jwt-explained .CodeMirror-wrap
+        padding 10px
+        min-height 108px
+      .input
+        padding 10px
+
+    .tab-nav
+      margin-bottom 10px
+
+      a
+        font-size 16px
+
+.custom-select
+  display inline-block
+  position relative
+  select
+    background white
+    width 100px
+    height 38px
+    font-size 12px
+    padding 0 10px
+    border 1px solid #D8D8D8
+    border-radius 3px
+    -webkit-appearance none
+    -moz-appearance none
+    appearance none
+    outline 0
+    &::-ms-expand
+      display none
+
+  &:before
+    content ""
+    background white
+    height 34px
+    width 24px
+    display block
+    position absolute
+    right 1px
+    top 1px
+    pointer-events none
+
+  &:after
+    background url(/img/bg_arrow_select.svg) no-repeat
+    width 8px
+    height 6px
+    content ''
+    display inline-block
+    position absolute
+    top 16px
+    right 10px
+    pointer-events none
+
+.select-field + .select-field
+  margin-right 15px
+
+.select-field
+  text-align center
+  span
+    font-weight bold
+    text-transform uppercase
+    font-size 12px
+    vertical-align middle
+  .custom-select
+    margin-left 10px
 
 section
   padding 30px 0
