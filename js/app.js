@@ -537,6 +537,16 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
       return isToken(token) ? token : defaultVal;
   }
 
+  function writeToClipboard(value) {
+      var input = document.createElement('textarea');
+      document.body.appendChild(input);
+      input.value = value;
+      input.focus();
+      input.select();
+      document.execCommand('Copy');
+      input.remove();
+  }
+
   loadFromStorage(function (jwt) {
     token = jwt || DEFAULT_HS_TOKEN;
 
@@ -552,12 +562,17 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
   // Share JWT button
   function shareJWT() {
       var jwt = tokenEditor.getValue();
-      chrome.tabs.create({
-          url: 'https://jwt.io/#debugger?&id_token=' + jwt,
-          active: true
-      });
+      writeToClipboard('https://jwt.io/#debugger?&id_token=' + jwt);
   }
 
+  $('.share-this-jwt').on('click', function() {
+      shareJWT();
+      var prevText = $('#share-this-jwt-text').text();
+      $('#share-this-jwt-text').text('JWT.io URL copied');
+      setTimeout(function() {
+          $('#share-this-jwt-text').text(prevText);
+      }, 2000);
+  });
 }());
 
 //Inizialize bootstrap widgets
@@ -602,3 +617,9 @@ $('.stars').each(function(idx, element){
       }
     }
 });
+
+if(navigator.platform.toLowerCase().indexOf('mac') !== -1) {
+    var e = $('.keyboard-info span');
+    var text = e.text();
+    e.text(text.replace('Ctrl', 'Cmd'));
+}
