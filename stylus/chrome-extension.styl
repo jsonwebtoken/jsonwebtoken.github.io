@@ -1,23 +1,30 @@
-body
-    zoom 0.8
+.container
+  width 800px
 
 .jwt-clipboard-btn
-  background black
+  background #000
   display inline-block
   padding 6px 6px
   padding-left 15px
-  color white !important
+  color #fff !important
   text-decoration none !important
   border-radius 20px
   text-transform uppercase
   font-size 12px
-  letter-spacing 0.5px
+  letter-spacing .5px
+  position relative
+  line-height 28px
+  padding-right 40px
+  width 190px
+  text-align center
 
   &:hover
     opacity: 0.85
 
   img
-    margin-left 10px
+    position absolute
+    top 7px
+    right 7px
 
 .h-block
   display inline-block;
@@ -25,16 +32,17 @@ body
   & + .h-block
     margin-left: 15px;
 
-.debugger-jwt
-  //overflow-y auto
-  height 740px
+.tab-link small
+  zoom .8
 
 .jwt-playground
-  min-width 930px
-
   .save-back
     color #0094c1
     margin-left 15px
+
+  .colophon,
+  .validation-status
+    zoom .8
 
   .colophon
     padding-top 18px
@@ -55,6 +63,7 @@ body
 
   .top-section
     margin-bottom 18px
+    zoom .8
 
     a
       outline none
@@ -75,9 +84,17 @@ body
     margin-top 0px
 
     .tab-content
-      .jwt-explained .CodeMirror-wrap
-        padding 10px
-        min-height 108px
+      .jwt-explained
+        .text-line
+          zoom .8
+        pre
+          font-size 11px
+          line-height 1.5
+          padding 0
+        .CodeMirror-wrap,
+        .pre-encode
+          min-height 70px
+          padding: 8px
       .input
         padding 10px
 
