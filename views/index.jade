@@ -127,14 +127,28 @@ block content
           span Filter by
           .jwt-select
             select
+              // Languages must be in alphabetic order
               option(value='*', selected='') All
+              option(value='.c') C
+              option(value='.clojure') Clojure
+              option(value='.d') D
+              option(value='.delphi') Delphi
+              option(value='.elixir') Elixir
               option(value='.go') Go
               option(value='.haskell') Haskell
               option(value='.java') Java
-              option(value='.net') NET
+              option(value='.js') JavaScript
+              option(value='.lua') Lua
+              option(value='.net') .NET
+              option(value='.node') Node.js
+              option(value='.rust') Rust
+              option(value='.perl') Perl
               option(value='.python') Python
               option(value='.php') PHP
-              option(value='.elixir') Elixir
+              option(value='.q') Q
+              option(value='.ruby') Ruby
+              option(value='.scala') Scala
+              option(value='.swift') Swift
 
       .warning
         b Warning:
