@@ -213,8 +213,6 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
   function setJSONEditorContent(jsonEditor, decodedJSON, selector) {
     jsonEditor.off('change', refreshTokenEditor);
 
-
-
     if (decodedJSON.result !== null && decodedJSON.result !== undefined) {
       jsonEditor.setValue(decodedJSON.result);
     } else {
@@ -230,6 +228,14 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
 
   }
 
+  function saveToStorage(jwt) {
+    // Save last valid jwt value for refresh
+    safeLocalStorageSetItem("jwt-debugger-editor-content", jwt);
+  }
+
+  function loadFromStorage(cb) {
+    cb(localStorage.getItem("jwt-debugger-editor-content"));
+  }
 
   function tokenEditorOnChangeListener(instance) {
     var value = getTrimmedValue(instance);
@@ -265,6 +271,7 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
       autoHeightInput();
     }
 
+    saveToStorage(tokenEditor.getValue());
   }
 
   function selectDetectedAlgorithm(alg){
@@ -272,20 +279,6 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     $algRadio.prop('checked', true);
 
     fireEvent($algRadio.get(0));
-
-
-  }
-
-  function saveToStorage(jwt) {
-    // Save last valid jwt value for refresh
-    safeLocalStorageSetItem("jwtValue", jwt);
-
-
-  }
-
-  function loadFromStorage(cb) {
-    cb(localStorage.getItem("jwtValue"));
-    localStorage.removeItem("jwtValue");
   }
 
   function refreshTokenEditor(instance) {
@@ -326,13 +319,12 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
       $('.input').removeClass('error');
       $('.jwt-payload').removeClass('error');
       $('.jwt-header').removeClass('error');
-
-      saveToStorage(signResult.result);
     }
+
+    saveToStorage(tokenEditor.getValue());
+
     tokenEditor.on('change', tokenEditorOnChangeListener);
     fireEvent(secretElement);
-
-
   }
 
   function getFirstElementByClassName(selector) {
@@ -515,12 +507,15 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
   }
 
   function isToken(token) {
-    if(token && token.length > 0) {
-        var header = window.decode(token.split('.')[0]);
-        if(header.error) {
-            return false;
+    try {
+        if(token && token.length > 0) {
+            var header = window.decode(token.split('.')[0]);
+            if(header.error) {
+                return false;
+            }
+            return JSON.parse(header.result).typ === 'JWT';
         }
-        return JSON.parse(header.result).typ === 'JWT';
+    } catch (e) {
     }
     return false;
   }
@@ -548,15 +543,23 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
   }
 
   loadFromStorage(function (jwt) {
-    token = jwt || DEFAULT_HS_TOKEN;
+      var token;
 
-    try {
-        token = tryLoadFromClipboard(token);
-    } catch(e) {
-        console.log(e);
-    }
+      if(jwt) {
+          token = jwt;
+      } else {
+          try {
+              token = tryLoadFromClipboard(token);
+          } catch(e) {
+              console.log(e);
+          }
+      }
 
-    tokenEditor.setValue(token);
+      if(!token) {
+          token = DEFAULT_HS_TOKEN;
+      }
+
+      tokenEditor.setValue(token);
   });
 
   // Share JWT button
@@ -573,6 +576,166 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
           $('#share-this-jwt-text').text(prevText);
       }, 2000);
   });
+
+  // Populate cookies/LocalStorage combobox
+  function checkLoadJwtFromLength() {
+      var optGroups = [
+          $('optgroup[label="Cookies"]'),
+          $('optgroup[label="Web Storage"]')
+      ];
+
+      optGroups.forEach(function(optGroup) {
+          var hasJWTs =
+            optGroup.children(':not(.load-from-no-jwts)').size() > 0;
+          if(hasJWTs) {
+              optGroup.children('.load-from-no-jwts').remove();
+          } else {
+              optGroup.empty();
+              optGroup.append($('<option/>', {
+                  'class': 'load-from-no-jwts',
+                  'text': 'No JWTs found',
+                  'disabled': true
+              }));
+          }
+      });
+  }
+
+  function jwtMessage(message) {
+      if(message.type !== 'cookies' && message.type !== 'storage') {
+          return;
+      }
+
+      var elements = [];
+
+      message.tokens.forEach(function(token) {
+          if(!isToken(token.value)) {
+              if(message.type === 'storage') {
+                  try {
+                      // Try again after parsing it first, some people do
+                      //localStorage.setItem('jwt', JSON.stringify(token))
+                      token.value = JSON.parse(token.value);
+                      if(!isToken(token.value)) {
+                          return;
+                      }
+                  } catch(e) {
+                      return;
+                  }
+              } else {
+                  return;
+              }
+          }
+
+          var e = $('<option/>').text(token.name)
+                                .val(token.value)
+                                .data('type', token.type)
+          if(token.cookie) {
+              e.data('cookie', token.cookie);
+          }
+          elements.push(e);
+      });
+
+      if(message.type === 'cookies') {
+          $('optgroup[label="Cookies"]').append(elements);
+      } else {
+          $('optgroup[label="Web Storage"]').append(elements);
+      }
+
+      checkLoadJwtFromLength();
+  }
+
+  chrome.runtime.onMessage.addListener(jwtMessage);
+
+  chrome.tabs.executeScript({
+      file: 'js/webstorage.js',
+      runAt: "document_idle"
+  });
+
+  chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+      chrome.cookies.getAll({
+          url: tabs[0].url,
+      }, function(cookies) {
+          var result = cookies.map(function(cookie) {
+              return {
+                  name: cookie.name,
+                  value: cookie.value,
+                  type: 'cookie',
+                  cookie: cookie
+              }
+          });
+
+          jwtMessage({
+              type: 'cookies',
+              tokens: result
+          });
+      });
+  });
+
+  //Actions for storage combobox
+  $('.custom-select select').on('change', function() {
+      var selected = $('.custom-select select option:selected').eq(0);
+      var saveButton = $('.save-back').eq(0);
+
+      if(selected.attr('name') === '0') { // "None" selected
+          saveButton.addClass('hide');
+          return;
+      }
+      saveButton.removeClass('hide');
+
+      var type = selected.parent().attr('label').toLowerCase();
+
+      var name = selected.text();
+      var value = selected.val();
+
+      tokenEditor.setValue(value);
+
+      var label = saveButton.children('a');
+      label.text('Save back to ' + type);
+  });
+
+  // Save back button action
+  function saveCookie(url, cookie, oldCookie) {
+      // Some cookies get duplicated otherwise (chrome.cookies.set bug?)
+      chrome.cookies.remove({
+          url: url,
+          name: oldCookie.name,
+          storeId: oldCookie.storeId
+      });
+      chrome.cookies.set({
+          url: url,
+          name: oldCookie.name,
+          value: cookie.value,
+          domain: oldCookie.domain,
+          path: oldCookie.path,
+          secure: oldCookie.secure,
+          httpOnly: oldCookie.httpOnly,
+          expirationDate: oldCookie.expirationDate,
+          storeId: oldCookie.storeId
+      });
+  }
+
+  $('.save-back').eq(0).on('click', function() {
+      var selected = $('.custom-select select option:selected').eq(0);
+      var type = selected.data('type');
+      var name = selected.text();
+      var value = tokenEditor.getValue();
+
+      selected.attr('value', value);
+
+      chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+          var data = {
+              type: type + 'Save',
+              name: name,
+              value: value
+          };
+          if(type === 'cookie') {
+              saveCookie(tabs[0].url, data, selected.data('cookie'));
+          } else {
+              chrome.tabs.sendMessage(tabs[0].id, data);
+          }
+      });
+  });
+
+  checkLoadJwtFromLength();
 }());
 
 //Inizialize bootstrap widgets

@@ -2,8 +2,8 @@
   "manifest_version": 2,
 
   "name": "JWT.io",
-  "description": "JWT.io debugger as a Chrome extension!",
-  "version": "1.3.0",
+  "description": "JWT.io debugger as a Chrome extension",
+  "version": "1.6.0",
 
   "browser_action": {
       "default_icon": "img/favicon/favicon-96x96.png",
@@ -26,7 +26,9 @@
 
   "permissions": [
     "activeTab",
+    "<all_urls>",
     "cookies",
+    "storage",
     "clipboardRead",
     "clipboardWrite"
   ]

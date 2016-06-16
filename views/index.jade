@@ -15,7 +15,7 @@ block content
           
           .pull-right      
             .select-field.h-block
-              span Import JWT
+              span Open JWT from
               .hide
                 label
                   input(type='radio', name='algorithm', value='HS256', checked='')
@@ -24,13 +24,13 @@ block content
               .custom-select
                 select
                   optgroup
-                    option(name='0', selected) None
-                  optgroup(label="localStorage")
-                    option(name='1',value='') foo
-                    option(name='2',value='') bar
+                    option(name='0', selected) 
+                  optgroup(label="Web Storage")
+                    //option(name='1',value='') foo
+                    //option(name='2',value='') bar
                   optgroup(label="Cookies")
-                    option(name='1',value='') foo
-                    option(name='2',value='') bar
+                    //option(name='1',value='') foo
+                    //option(name='2',value='') bar
                     
             .select-field.algorithm.h-block
               span Algorithm
