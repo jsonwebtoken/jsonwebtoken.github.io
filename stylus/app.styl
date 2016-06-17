@@ -328,42 +328,51 @@ body
 
 .update-site
   background: #e3e5e7
-  padding: 14px 20px;
-  font-size: 13px;
+  padding: 30px 20px;
+  font-size: 18px;
   text-align: center;
   color: darken(#e3e5e7, 70%)
-  .paper
-    margin-right: 4px;
-    display: inline-block
-    position: relative;
-    bottom: -2px;
-    font-size: 15px;
-    opacity: .5
-    height: 14px;
-    width: 16px;
+
+  +breakpoint("desktop")
+    padding: 30px 0;
+
   span
-    display: none
-    +breakpoint("tablet")
-      display: inline-block
+    margin-right 5px
+    display inline-block
+    line-height 33px
+    display block
+    margin-bottom 15px
 
+    +breakpoint("desktop")
+      display inline-block
+      margin-bottom 0
 
-  a
-    text-decoration: none;
-    font-weight: bold
-    display: block;
-    margin-top: 10px;
-    +breakpoint("tablet")
-      display: inline-block
-      margin-top: 0;
-      margin-left: 4px;
+    strong
+      margin-right 5px
+
+  a.extension-button
+    font-size: 12px;
+    text-transform: uppercase;
+    color: white;
+    padding: 0 21px;
+    display: inline-block;
+    border-radius: 2px;
+    margin-left: 11px;
+    text-shadow: 0 1px 1px rgba(black, 0.1);
+    border: 1px solid #2D53AF;
+    background-color: #5689DB;
+    background: linear-gradient(to bottom, #5689DB , #4D7BD6);
+    height: 34px;
+    line-height: 34px;
+
     svg
-      fill: darken(#00b9f1, 20%)
+      fill: #0094c1;
       height: 14px;
       width: 12px;
       margin-bottom: -3px;
-
-    &:hover svg
-      fill: darken(#00b9f1, 50%)
+      margin-right: 10px;
+      line-height: 33px;
+      display: inline-block;
 
 
 // debugger-jwt
