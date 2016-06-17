@@ -11,7 +11,8 @@
   },
 
   "icons": {
-      "128": "img/favicon/favicon-96x96.png"
+      "96": "img/favicon/favicon-96x96.png",
+      "192": "img/favicon/android-icon-192x192.png"
   },
 
   "commands": {
