@@ -11,6 +11,9 @@
   },
 
   "icons": {
+      "16": "img/favicon/favicon-16x16.png",
+      "32": "img/favicon/favicon-32x32.png",
+      "48": "img/favicon/android-icon-48x48.png",
       "96": "img/favicon/favicon-96x96.png",
       "192": "img/favicon/android-icon-192x192.png"
   },
