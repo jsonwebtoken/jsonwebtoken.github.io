@@ -724,9 +724,20 @@ $('#extension-button').on('click', function() {
     }
 
     if(isChrome()) {
-        chrome.webstore.install();
+        function openInWindow() {
+            window.open('https://chrome.google.com/webstore/detail/jwt-debugger/ppmmlchacdbknfphdeafcbmklcghghmd');
+        }
+
+        try {
+            chrome.webstore.install('https://chrome.google.com/webstore/detail/ppmmlchacdbknfphdeafcbmklcghghmd', function() {                
+            }, function() {
+                openInWindow();
+            });
+        } catch(e) {
+            openInWindow();
+        }
     } else {
-        window.open('https://chrome.google.com/webstore/detail/jwt-debugger/ppmmlchacdbknfphdeafcbmklcghghmd');
+        openInWindow();
     }
 });
 
