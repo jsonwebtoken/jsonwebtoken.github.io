@@ -699,7 +699,7 @@ $('.stars').each(function(idx, element){
     }
 });
 
-$('#extension-button').on('click', function() {
+/*$('#extension-button').on('click', function() {
     function isChrome() {
         // please note,
         // that IE11 now returns undefined again for window.chrome
@@ -729,7 +729,7 @@ $('#extension-button').on('click', function() {
         }
 
         try {
-            chrome.webstore.install('https://chrome.google.com/webstore/detail/ppmmlchacdbknfphdeafcbmklcghghmd', function() {                
+            chrome.webstore.install('https://chrome.google.com/webstore/detail/ppmmlchacdbknfphdeafcbmklcghghmd', function() {
             }, function() {
                 openInWindow();
             });
@@ -739,7 +739,7 @@ $('#extension-button').on('click', function() {
     } else {
         openInWindow();
     }
-});
+});*/
 
 //CANVAS
 // $(function(){
