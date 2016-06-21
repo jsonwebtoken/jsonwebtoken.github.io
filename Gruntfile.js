@@ -50,11 +50,26 @@ module.exports = function (grunt) {
                     'manifest.json',
                     'index.html',
                     'img/**',
-                    'vendor/**',
+
+                    'vendor/crypto-js/core.js',
+
+                    'vendor/jsonlint/lib/jsonlint.js',
+
+                    'vendor/json-sans-eval-min/index.js',
+
+                    'vendor/codemirror/lib/codemirror.js',
+                    'vendor/codemirror/lib/codemirror.css',
+                    'vendor/codemirror/mode/javascript/javascript.js',
+                    'vendor/codemirror/addon/lint/lint.js',
+                    'vendor/codemirror/addon/lint/lint.css',
+                    'vendor/codemirror/addon/lint/javascript-lint.js',
+                    'vendor/codemirror/addon/lint/json-lint.js',
+
+                    'vendor/kjur-jsrsasign/jsrsasign-latest-all-min.js',
+
                     'extension-deps/**',
                     'js/**',
                     'css/**',
-                    'fonts/**',
                     'assets/**'
                 ],
                 dest: 'dist/'

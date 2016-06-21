@@ -69,13 +69,6 @@ function scrollTo($target) {
 }
 
 /*
- * Accordion
- */
-$('.accordion').accordion({
-    "transitionSpeed": 400
-});
-
-/*
  * Scroll to section
  */
 $('a[href^="#"].scrollto').on('click', function(event) {
@@ -747,39 +740,8 @@ $(".debugger-jwt .algorithm select").change(function() {
   $('.debugger-jwt .algorithm input[value="'+$(this).val()+'"]').change();
 });
 
-
 $(".debugger-jwt .algorithm select").change(function(){var a=$('.debugger-jwt .algorithm input[value="'+$(this).val()+'"]');a.prop("checked",!0)})
 // end 07012015
-
-// Fetch stargazers count for each repo from GitHub's API
-$('.stars').each(function(idx, element){
-    var $el = $(element);
-    var repo = $el.attr('data-repo');
-
-    function setCount(count) {
-      var $count = $('<span>');
-
-      $count.text(count);
-
-      $el.find('i').after($count);
-
-      $el.show();
-    }
-
-    if (repo){
-      var repoKey = "stars_" + repo;
-      if(!localStorage.getItem(repoKey)) {
-
-        $.getJSON('https://api.github.com/repos/' + repo, function(repoData){
-          var starCount = repoData.stargazers_count;
-          safeLocalStorageSetItem(repoKey, starCount);
-          setCount(starCount);
-        });
-      } else {
-        setCount(localStorage.getItem(repoKey));
-      }
-    }
-});
 
 if(navigator.platform.toLowerCase().indexOf('mac') !== -1) {
     var e = $('.keyboard-info span');
