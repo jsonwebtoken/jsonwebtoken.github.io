@@ -57,13 +57,8 @@ module.exports = function (grunt) {
 
                     'vendor/json-sans-eval-min/index.js',
 
-                    'vendor/codemirror/lib/codemirror.js',
                     'vendor/codemirror/lib/codemirror.css',
-                    'vendor/codemirror/mode/javascript/javascript.js',
-                    'vendor/codemirror/addon/lint/lint.js',
                     'vendor/codemirror/addon/lint/lint.css',
-                    'vendor/codemirror/addon/lint/javascript-lint.js',
-                    'vendor/codemirror/addon/lint/json-lint.js',
 
                     'vendor/kjur-jsrsasign/jsrsasign-latest-all-min.js',
 
@@ -76,6 +71,25 @@ module.exports = function (grunt) {
             }]
         }
     },
+    uglify: {
+        crx: {
+            options: {
+                sourceMap: false,
+            },
+            files: {
+                'dist/js/app.js': 'js/app.js',
+                'dist/vendor/codemirror/codemirror.min.js': [
+                    'vendor/codemirror/lib/codemirror.js',
+                    'vendor/codemirror/mode/javascript/javascript.js',
+                    'vendor/codemirror/addon/lint/lint.js',
+                    'vendor/codemirror/addon/lint/javascript-lint.js',
+                    'vendor/codemirror/addon/lint/json-lint.js'
+                ],
+                'dist/vendor/jsonlint/lib/jsonlint.js': 'vendor/jsonlint/lib/jsonlint.js',
+                'dist/vendor/crypto-js/core.js': 'vendor/crypto-js/core.js'
+            }
+        }
+    },
     run: {
         crx: {
         }
@@ -84,9 +98,10 @@ module.exports = function (grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-run');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
 
   grunt.registerTask('build', ['stylus', 'jade']);
   grunt.registerTask('test', ['build', 'mocha_phantomjs']);
-  grunt.registerTask('chrome-extension', ['build', 'copy:crx', 'run:crx']);
+  grunt.registerTask('chrome-extension', ['build', 'copy:crx', 'uglify:crx', 'run:crx']);
   grunt.registerTask('default', ['build', 'connect', 'watch']);
 };
