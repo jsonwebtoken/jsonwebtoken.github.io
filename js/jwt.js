@@ -80,6 +80,11 @@ window.sign = function (algorithm, header, payload, key, isSecretBase64Encoded) 
 
   try {
     value = KJUR.jws.JWS.sign(algorithm, headerAsJSON, payloadAsJSON, key);
+    /*value = jws.sign({
+        header: JSON.parse(header),
+        payload: payloadAsJSON,
+        secret: key
+    });*/
   } catch (e) {
     error = e;
   }
@@ -116,6 +121,7 @@ window.verify = function (algorithm, value, key, isSecretBase64Encoded) {
 
   try {
     result = KJUR.jws.JWS.verify(value, key);
+    //result = jws.verify(value, algorithm, key);
   } catch (e) {
     error = e;
   }

@@ -49,6 +49,7 @@ module.exports = function (grunt) {
                 src: [
                     'manifest.json',
                     'index.html',
+                    'bg.html',
                     'img/**',
 
                     'vendor/crypto-js/core.js',
@@ -77,7 +78,7 @@ module.exports = function (grunt) {
                 sourceMap: false,
             },
             files: {
-                'dist/js/app.js': 'js/app.js',
+                //'dist/js/app.js': 'js/app.js',
                 'dist/vendor/codemirror/codemirror.min.js': [
                     'vendor/codemirror/lib/codemirror.js',
                     'vendor/codemirror/mode/javascript/javascript.js',
@@ -86,7 +87,8 @@ module.exports = function (grunt) {
                     'vendor/codemirror/addon/lint/json-lint.js'
                 ],
                 'dist/vendor/jsonlint/lib/jsonlint.js': 'vendor/jsonlint/lib/jsonlint.js',
-                'dist/vendor/crypto-js/core.js': 'vendor/crypto-js/core.js'
+                'dist/vendor/crypto-js/core.js': 'vendor/crypto-js/core.js',
+                'dist/extension-deps/jws/jws.bundle.js': 'extension-deps/jws/jws.bundle.js'
             }
         }
     },

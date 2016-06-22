@@ -1,13 +1,17 @@
 {
   "manifest_version": 2,
 
-  "name": "JWT debugger",
+  "name": "JWT Debugger",
   "description": "The JWT.io debugger as a Chrome extension",
-  "version": "1.0.1",
+  "version": "1.0.2",
 
   "browser_action": {
       "default_icon": "img/favicon/favicon-96x96.png",
       "default_popup": "index.html"
+  },
+
+  "background": {
+      "page": "bg.html"
   },
 
   "icons": {
