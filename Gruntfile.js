@@ -2,9 +2,9 @@ module.exports = function (grunt) {
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
   grunt.initConfig({
-    // clean: [
-    //   'dist/'
-    // ],
+    clean: [
+        'dist/'
+    ],
     watch: {
       min: {
         options: {
@@ -52,45 +52,24 @@ module.exports = function (grunt) {
                     'bg.html',
                     'img/**',
 
-                    'vendor/crypto-js/core.js',
-
-                    'vendor/jsonlint/lib/jsonlint.js',
-
-                    'vendor/json-sans-eval-min/index.js',
-
-                    'vendor/codemirror/lib/codemirror.css',
-                    'vendor/codemirror/addon/lint/lint.css',
-
-                    'vendor/kjur-jsrsasign/jsrsasign-latest-all-min.js',
-
                     'extension-deps/**',
-                    'js/**',
+                    'js/webstorage.js',
+                    'js/app.bundle.js',
                     'css/**',
                     'assets/**'
                 ],
                 dest: 'dist/'
+            }, {
+                expand: true,
+                cwd: 'node_modules/',
+                src: ['codemirror/lib/codemirror.css',
+                      'codemirror/addon/lint/lint.css'],
+                dest: 'dist/vendor/'
             }]
         }
     },
-    uglify: {
-        crx: {
-            options: {
-                sourceMap: false,
-            },
-            files: {
-                'dist/js/app.js': 'js/app.js',
-                'dist/js/jwtview.js': 'js/jwtview.js',
-                'dist/vendor/codemirror/codemirror.min.js': [
-                    'vendor/codemirror/lib/codemirror.js',
-                    'vendor/codemirror/mode/javascript/javascript.js',
-                    'vendor/codemirror/addon/lint/lint.js',
-                    'vendor/codemirror/addon/lint/javascript-lint.js',
-                    'vendor/codemirror/addon/lint/json-lint.js'
-                ],
-                'dist/vendor/jsonlint/lib/jsonlint.js': 'vendor/jsonlint/lib/jsonlint.js',
-                'dist/vendor/crypto-js/core.js': 'vendor/crypto-js/core.js'
-            }
-        }
+    webpack: {
+        crx: require('./webpack.config.js')
     },
     run: {
         crx: {
@@ -100,10 +79,10 @@ module.exports = function (grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-run');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-webpack');
 
   grunt.registerTask('build', ['stylus', 'jade']);
   grunt.registerTask('test', ['build', 'mocha_phantomjs']);
-  grunt.registerTask('chrome-extension', ['build', 'copy:crx', 'uglify:crx', 'run:crx']);
+  grunt.registerTask('chrome-extension', ['clean', 'build', 'webpack:crx', 'copy:crx', 'run:crx']);
   grunt.registerTask('default', ['build', 'connect', 'watch']);
 };

@@ -8,3 +8,4 @@ dist.crx
 dist.pem
 dist
 *.crx
+app.bundle.js*

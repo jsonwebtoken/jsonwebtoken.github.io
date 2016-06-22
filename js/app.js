@@ -1,9 +1,8 @@
-function autoHeightInput() {
-  var outputHeight = $('#decoded-jwt .output').outerHeight(),
-      inputHeight = $('#encoded-jwt .input');
+//jQuery forcefully included with Webpack
+//import { jQuery, $ } from 'jquery';
+import 'bootstrap';
 
-  inputHeight.css('height', outputHeight + 'px');
-};
+import { initJwtView } from './jwtview';
 
 if (navigator.userAgent.indexOf('Mac OS X') != -1) {
   $("body").addClass("mac");

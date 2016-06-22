@@ -1,3 +1,13 @@
+//jQuery forcefully included with Webpack
+//import { jQuery, $ } from 'jquery';
+import 'jsrsasign';
+import * as CodeMirror from 'codemirror/lib/codemirror';
+import 'codemirror/mode/javascript/javascript';
+import 'codemirror/addon/lint/javascript-lint';
+import 'codemirror/addon/lint/json-lint';
+
+import './jwt';
+
 var DEFAULT_HS_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ';
 
 var DEFAULT_RS_TOKEN = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.EkN-DOsnsuRjRO6BxXemmJDm3HbxrbRzXglbN2S4sOkopdU4IsDxTI8jO19W_A4K8ZPJijNLis4EZsHeY559a4DFOd50_OqgHGuERTqYZyuhtF39yxJPAjUESwxk2J5k_4zM3O-vtd1Ghyo4IbqKKSy6J9mTniYJPenn5-HIirE';
@@ -104,7 +114,7 @@ function loadFromStorageAndCookies() {
 
         optGroups.forEach(function(optGroup) {
             var hasJWTs =
-              optGroup.children(':not(.load-from-no-jwts)').size() > 0;
+              optGroup.children(':not(.load-from-no-jwts)').length > 0;
             if(hasJWTs) {
                 optGroup.children('.load-from-no-jwts').remove();
             } else {
@@ -191,7 +201,7 @@ function loadFromStorageAndCookies() {
     checkLoadJwtFromLength();
 }
 
-function initJwtView() {
+export function initJwtView() {
   // Taken from http://stackoverflow.com/questions/2490825/how-to-trigger-event-in-javascript
   function fireEvent(element) {
     var event; // The custom event that will be created
@@ -255,7 +265,7 @@ function initJwtView() {
     };
   });
 
-  var codeMirror = CodeMirror;
+  var codeMirror = CodeMirror.default;
 
   function tabHack(instance) {
     instance.replaceSelection('   ' , 'end');
@@ -335,7 +345,10 @@ function initJwtView() {
     fireEvent(secretElement);
 
     if (window.matchMedia('(min-width: 768px)').matches) {
-      autoHeightInput();
+        var outputHeight = $('#decoded-jwt .output').outerHeight(),
+            inputHeight = $('#encoded-jwt .input');
+
+        inputHeight.css('height', outputHeight + 'px');
     }
 
     saveToStorage(tokenEditor.getValue());
