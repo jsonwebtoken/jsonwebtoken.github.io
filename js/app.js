@@ -699,7 +699,12 @@ $('.stars').each(function(idx, element){
     }
 });
 
-/*$('#extension-button').on('click', function() {
+document.getElementById('extension-button').addEventListener('click', function(event) {
+    var button = $(event.target);
+    if(button.hasClass('is-installed')) {
+        return;
+    }
+
     function isChrome() {
         // please note,
         // that IE11 now returns undefined again for window.chrome
@@ -723,14 +728,16 @@ $('.stars').each(function(idx, element){
         }
     }
 
-    if(isChrome()) {
-        function openInWindow() {
-            window.open('https://chrome.google.com/webstore/detail/jwt-debugger/ppmmlchacdbknfphdeafcbmklcghghmd');
-        }
+    function openInWindow() {
+        window.open('https://chrome.google.com/webstore/detail/jwt-debugger/ppmmlchacdbknfphdeafcbmklcghghmd');
+    }
 
+    if(isChrome()) {
         try {
             chrome.webstore.install('https://chrome.google.com/webstore/detail/ppmmlchacdbknfphdeafcbmklcghghmd', function() {
+                button.addClass('is-installed');
             }, function() {
+                button.removeClass('is-installed');
                 openInWindow();
             });
         } catch(e) {
@@ -739,7 +746,7 @@ $('.stars').each(function(idx, element){
     } else {
         openInWindow();
     }
-});*/
+});
 
 //CANVAS
 // $(function(){
