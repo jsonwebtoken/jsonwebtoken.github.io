@@ -699,6 +699,19 @@ $('.stars').each(function(idx, element){
     }
 });
 
+function setInstalledText() {
+    var button = $('#extension-button');
+    if(button && button.hasClass('is-installed')) {
+        button.find('.button-text').text('Already installed');
+    }
+}
+
+setInstalledText();
+// The is-installed class is added by the extension. It is unspecified when
+// this is done. So check again in a second or so.
+setTimeout(setInstalledText, 1000);
+
+// chrome.webstore.install can only be called from standard event handlers.
 document.getElementById('extension-button').addEventListener('click', function(event) {
     var button = $(event.target);
     if(button.hasClass('is-installed')) {
@@ -743,9 +756,13 @@ document.getElementById('extension-button').addEventListener('click', function(e
                 openInWindow();
             });
         } catch(e) {
+            button.removeClass('is-installed');
+            button.find('.button-text').text('Add to chrome');
             openInWindow();
         }
     } else {
+        button.removeClass('is-installed');
+        button.find('.button-text').text('Add to chrome');
         openInWindow();
     }
 });
