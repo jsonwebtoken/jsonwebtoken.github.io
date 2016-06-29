@@ -736,8 +736,10 @@ document.getElementById('extension-button').addEventListener('click', function(e
         try {
             chrome.webstore.install('https://chrome.google.com/webstore/detail/ppmmlchacdbknfphdeafcbmklcghghmd', function() {
                 button.addClass('is-installed');
+                button.find('.button-text').text('Already installed');
             }, function() {
                 button.removeClass('is-installed');
+                button.find('.button-text').text('Add to chrome');
                 openInWindow();
             });
         } catch(e) {
