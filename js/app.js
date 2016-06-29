@@ -703,6 +703,7 @@ function setInstalledText() {
     var button = $('#extension-button');
     if(button && button.hasClass('is-installed')) {
         button.find('.button-text').text('Already installed');
+        button.css('cursor', 'default');
     }
 }
 
@@ -713,7 +714,7 @@ setTimeout(setInstalledText, 1000);
 
 // chrome.webstore.install can only be called from standard event handlers.
 document.getElementById('extension-button').addEventListener('click', function(event) {
-    var button = $(event.target);
+    var button = $('#extension-button');
     if(button.hasClass('is-installed')) {
         return;
     }
@@ -749,7 +750,7 @@ document.getElementById('extension-button').addEventListener('click', function(e
         try {
             chrome.webstore.install('https://chrome.google.com/webstore/detail/ppmmlchacdbknfphdeafcbmklcghghmd', function() {
                 button.addClass('is-installed');
-                button.find('.button-text').text('Already installed');
+                setInstalledText();
             }, function() {
                 button.removeClass('is-installed');
                 button.find('.button-text').text('Add to chrome');
