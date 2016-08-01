@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.0"
+   width="300pt"
+   height="300pt"
+   viewBox="0 0 300 300"
+   id="svg2">
+  <defs
+     id="defs12" />
+  <metadata
+     id="metadata4">
+Created by potrace 1.13, written by Peter Selinger 2001-2015
+<rdf:RDF>
+  <cc:Work
+     rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type
+       rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+    <dc:title></dc:title>
+  </cc:Work>
+</rdf:RDF>
+</metadata>
+  <g
+     transform="matrix(0.69295055,0,0,0.69295055,42.974376,53.985234)"
+     id="g3931">
+    <path
+       d="m 321.76907,201.00636 a 165.25424,165.25424 0 1 1 -330.5084804,0 165.25424,165.25424 0 1 1 330.5084804,0 z"
+       transform="matrix(1.3058533,0,0,1.3058533,-49.936259,-123.92549)"
+       id="path2991"
+       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none" />
+    <g
+       transform="matrix(0.14881542,0,0,-0.14881542,-68.699569,362.52652)"
+       id="g6"
+       style="fill:#000000;stroke:none">
+      <path
+         d="M 812,2187 C 597,1972 420,1790 420,1783 420,1773 699,723 704,713 c 3,-5 1057,-283 1073,-283 11,0 177,159 410,393 l 392,392 -80,300 c -44,165 -109,405 -143,534 -37,137 -68,236 -77,241 -12,7 -1057,290 -1069,290 -3,0 -182,-177 -398,-393 z m 718,-144 c 1,-27 -277,-1033 -285,-1033 -16,0 -768,757 -759,763 5,3 189,53 409,112 220,59 445,120 500,135 106,30 135,35 135,23 z"
+         id="path8" />
+    </g>
+  </g>
+</svg>
