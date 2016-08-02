@@ -29,7 +29,6 @@
     "test": "grunt test --verbose",
     "start": "node server.js",
     "watch": "grunt",
-    "postinstall": "bower install",
-    "heroku-postbuild": "grunt build"
+    "postinstall": "bower install && grunt build"
   }
 }
