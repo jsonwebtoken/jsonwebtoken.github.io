@@ -14,7 +14,7 @@ First, install the required dependencies:
 npm install && bower install
 ```
 
-In order to build (and run) the project execute:
+In order to build (and run) the project execute: 
 
 ```sh
 grunt
