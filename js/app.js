@@ -521,8 +521,8 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
 
   function getKey(algorithm, action) {
     var secretElement = $('input[name="secret"]');
-    var privateKeyElement = $('textarea[name="private-key"]');
-    var publicKeyElement = $('textarea[name="public-key"]');
+    var privateKeyElement = $('textarea[name="private-key"]').filter(':visible');
+    var publicKeyElement = $('textarea[name="public-key"]').filter(':visible');
 
     if(algorithm === 'HS256') {
         return secretElement.val();
