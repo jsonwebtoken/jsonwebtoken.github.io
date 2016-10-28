@@ -5,7 +5,7 @@ JSON Web Token (JWT) is an open standard ([RFC 7519](https://tools.ietf.org/html
 
 Let's explain some concepts of this definition further.
 
-- **Compact**: Because of its smaller size, JWTs can be sent through an URL, POST parameter, or inside an HTTP header. Additionally, the smaller size means transmission is fast.
+- **Compact**: Because of its smaller size, JWTs can be sent through a URL, POST parameter, or inside an HTTP header. Additionally, the smaller size means transmission is fast.
 
 - **Self-contained**: The payload contains all the required information about the user, avoiding the need to query the database more than once.
 
