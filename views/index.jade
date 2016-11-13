@@ -64,18 +64,30 @@ block content
       h1 Debugger
 
       .jwt-playground
+        .selections
+          .token-type
+            span Token
+            .hide
+              label
+                input(type='radio', name='token-type', value='id_token', checked='')
+              label
+                input(type='radio', name='token-type', value='access_token')
+            .jwt-select
+              select
+                option(name='token-type',value='id_token', selected='') id_token
+                option(name='token-type',value='access_token') access_token
 
-        .algorithm
-          span Algorithm
-          .hide
-            label
-              input(type='radio', name='algorithm', value='HS256', checked='')
-            label
-              input(type='radio', name='algorithm', value='RS256')
-          .jwt-select
-            select
-              option(name='algorithm',value='HS256', selected='') HS256
-              option(name='algorithm',value='RS256') RS256
+          .algorithm
+            span Algorithm
+            .hide
+              label
+                input(type='radio', name='algorithm', value='HS256', checked='')
+              label
+                input(type='radio', name='algorithm', value='RS256')
+            .jwt-select
+              select
+                option(name='algorithm',value='HS256', selected='') HS256
+                option(name='algorithm',value='RS256') RS256
 
         .algorithm-code
           .tab-nav

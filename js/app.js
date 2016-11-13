@@ -330,11 +330,10 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
 
   var algorithmRadios = $('input[name="algorithm"]'),
       lastRestoredToken;
+  var tokenRadios = $('input[name="token-type"]');
 
   function setJSONEditorContent(jsonEditor, decodedJSON, selector) {
     jsonEditor.off('change', refreshTokenEditor);
-
-
 
     if (decodedJSON.result !== null && decodedJSON.result !== undefined) {
       jsonEditor.setValue(decodedJSON.result);
@@ -385,7 +384,6 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     if (window.matchMedia('(min-width: 768px)').matches) {
       autoHeightInput();
     }
-
   }
 
   function selectDetectedAlgorithm(alg){
@@ -393,15 +391,11 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     $algRadio.prop('checked', true);
 
     fireEvent($algRadio.get(0));
-
-
   }
 
   function saveToStorage(jwt) {
     // Save last valid jwt value for refresh
     safeLocalStorageSetItem("jwtValue", jwt);
-
-
   }
 
   function loadFromStorage(cb) {
@@ -452,8 +446,6 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     }
     tokenEditor.on('change', tokenEditorOnChangeListener);
     fireEvent(secretElement);
-
-
   }
 
   function getFirstElementByClassName(selector) {
@@ -502,8 +494,6 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
       isBase64
     );
 
-
-
     var error = result.error;
     result = result.result;
     if (!error && result) {
@@ -515,8 +505,6 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
       $(signatureElement).addClass('invalid-token');
       signatureElement.innerHTML = '<i class="icon-budicon-501"></i> invalid signature';
     }
-
-
   }
 
   function getKey(algorithm, action) {
@@ -529,8 +517,6 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     } else {
         return action === 'sign' ? privateKeyElement.val() : publicKeyElement.val();
     }
-
-
   }
 
   function getAlgorithm() {
@@ -547,15 +533,13 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
         .filter('.' + algorithm)
         .show();
 
-    if(getTrimmedValue(tokenEditor) === DEFAULT_HS_TOKEN &&
+    if(getTokenType() === 'id_token' && getTrimmedValue(tokenEditor) === DEFAULT_HS_TOKEN &&
       algorithm === 'RS256'){
         setDefaultsForRSA();
-    }else if(getTrimmedValue(tokenEditor) === DEFAULT_RS_TOKEN &&
+    }else if(getTokenType() === 'id_token' && getTrimmedValue(tokenEditor) === DEFAULT_RS_TOKEN &&
       algorithm === 'HS256'){
         setDefaultsForHMAC();
     }
-
-
   }
 
   function setDefaultsForRSA() {
@@ -563,14 +547,29 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
 
     $('.jwt-signature textarea[name=public-key]').val(DEFAULT_PUBLIC_RSA);
     $('.jwt-signature textarea[name=private-key]').val(DEFAULT_PRIVATE_RSA);
-
-
   }
 
   function setDefaultsForHMAC(){
     tokenEditor.setValue(DEFAULT_HS_TOKEN);
+  }
 
+  function updateToken() {
+    var tokenType = getTokenType();
+    if (document.location.hash) {
+      var qs = document.location.hash.slice(1);
+      var d = {};
+      qs = qs.split('&');
+      qs.forEach(function (kv) { kv = kv.split('='); d[kv[0]] = kv[1]; });
 
+      if (d[tokenType]) {
+        tokenEditor.setValue(decodeURIComponent(d[tokenType]));
+        return;
+      }
+    }
+  }
+
+  function getTokenType() {
+    return tokenRadios.filter(':checked').val();
   }
 
   function validateKey() {
@@ -588,8 +587,6 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     } else {
       $textarea.addClass('error');
     }
-
-
   }
 
   updateAlgorithm();
@@ -597,8 +594,12 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
   algorithmRadios.on('change', function(){
     updateAlgorithm();
     updateSignature();
+  });
 
-
+  tokenRadios.on('change', function(){
+    updateToken();
+    updateAlgorithm();
+    updateSignature();
   });
 
   $('.jwt-signature textarea[name="public-key"]').on('input', updateSignature);
@@ -629,8 +630,19 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     var d = {};
     qs = qs.split('&');
     qs.forEach(function (kv) { kv = kv.split('='); d[kv[0]] = kv[1]; });
+
+    if (d.access_token && d.id_token) {
+      // show token-type selector
+      $('.jwt-playground .selections .token-type').show();
+    }
+
     if (d.id_token) {
       tokenEditor.setValue(decodeURIComponent(d.id_token));
+      return;
+    }
+
+    if (d.access_token) {
+      tokenEditor.setValue(decodeURIComponent(d.access_token));
       return;
     }
   }
@@ -668,6 +680,14 @@ $(".debugger-jwt .algorithm select").change(function() {
 
 $(".debugger-jwt .algorithm select").change(function(){var a=$('.debugger-jwt .algorithm input[value="'+$(this).val()+'"]');a.prop("checked",!0)})
 // end 07012015
+
+$(".debugger-jwt .token-type select").change(function() {
+  $('.debugger-jwt .token-type input[value="'+$(this).val()+'"]').parent().trigger("click");
+  $('.debugger-jwt .token-type input[value="'+$(this).val()+'"]').change();
+});
+
+$(".debugger-jwt .token-type select").change(function(){var a=$('.debugger-jwt .token-type input[value="'+$(this).val()+'"]');a.prop("checked",!0)})
+
 
 // Fetch stargazers count for each repo from GitHub's API
 $('.stars').each(function(idx, element){
