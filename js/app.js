@@ -719,6 +719,18 @@ $('.stars').each(function(idx, element){
     }
 });
 
+function rotateBanner() {
+    var extensionSection = $(".update-site");
+    var ebookSection = $(".jtw-ebook-banner");
+    if (Math.random() >= .5) {
+        extensionSection.show();
+    } else {
+        ebookSection.show();
+    }
+};
+
+rotateBanner();
+
 function setInstalledText() {
     var button = $('#extension-button');
     if(button && button.hasClass('is-installed')) {
