@@ -338,6 +338,7 @@ body
         width 80px
 
 .update-site
+  display: none;
   background: #e3e5e7
   padding: 30px 20px;
   font-size: 18px;
@@ -394,6 +395,29 @@ body
       line-height: 33px;
       display: inline-block;
 
+// jtw ebook banner
+.jtw-ebook-banner
+  display: none;
+  background: #e3e5e7;
+  padding: 30px 20px;
+  font-size: 18px;
+  text-align: center;
+  color: darken(#e3e5e7, 70%);
+
+  +breakpoint("desktop")
+    padding: 30px 0;
+
+  .btn-download-ebook
+    padding: 8px 24px;
+    margin: 0px auto 0 11px;
+    color: #fff;
+    border-radius: 3px;
+    background-color: #00b9f1;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    text-decoration: none;
 
 // debugger-jwt
 
