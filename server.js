@@ -5,10 +5,10 @@ var enforce = require('express-sslify');
 var app = express();
 
 // use HTTPS(true) in case you are behind a load balancer (e.g. Heroku)
-if (process.env.NODE_ENV === 'production') {
-	console.log('redirecting to ssl');
-	app.use(enforce.HTTPS({ trustProtoHeader: true }))
-}
+// if (process.env.NODE_ENV === 'production') {
+// 	console.log('redirecting to ssl');
+// 	app.use(enforce.HTTPS({ trustProtoHeader: true }))
+// }
 
 app.use('/', express.static(__dirname));
 
