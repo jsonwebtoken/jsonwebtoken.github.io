@@ -69,6 +69,8 @@ An example of payload could be:
 
 The payload is then **Base64Url** encoded to form the second part of the JSON Web Token.
 
+	> The payload should not contain any sensitive information. It is encoded but not encrypted and can be easily decoded and read.
+
 ### Signature
 To create the signature part you have to take the encoded header, the encoded payload, a secret, the algorithm specified in the header, and sign that.
 
