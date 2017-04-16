@@ -619,10 +619,21 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     var d = {};
     qs = qs.split('&');
     qs.forEach(function (kv) { kv = kv.split('='); d[kv[0]] = kv[1]; });
+    var changed = false;
     if (d.value) {
       tokenEditor.setValue(decodeURIComponent(d.value));
-      return;
+      changed = true;
     }
+    if (d.secret) {
+      $(secretElement).val(decodeURIComponent(d.secret));
+      changed = true;
+    }
+    if (d.base64) {
+      $(isBase64EncodedElement).prop('checked',d.base64 == 'true');
+      changed = true;
+    }
+
+    if ( changed ) return;
   }
 
   if (document.location.hash) {
