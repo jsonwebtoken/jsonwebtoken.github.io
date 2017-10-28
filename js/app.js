@@ -60,10 +60,10 @@ $('.plain-text pre code').each(function(i, block) {
  */
 $(window).scroll(function() {
   if ($(window).scrollTop() >= 130) {
-    $("nav.navbar").addClass("fixed")
+    $("nav.navbar").addClass("fixed");
   } else {
-    $("nav.navbar").removeClass("fixed")
-  };
+    $("nav.navbar").removeClass("fixed");
+  }
 });
 
 /*
@@ -93,13 +93,13 @@ $('.navbar .menu a').on('click', function() {
   $('.menu-trigger').removeClass('active');
   $('.navbar').removeClass('open');
   $('body').removeClass('menu-mobile');
-})
+});
 
 /*
  * Accordion
  */
 $('.accordion').accordion({
-    "transitionSpeed": 400
+  "transitionSpeed": 400
 });
 
 /*
@@ -115,7 +115,7 @@ $('a[href^="#"].scrollto').on('click', function(event) {
 });
 
 $(window).on('scroll', function () {
-  $submenu = $('.navbar');
+  var $submenu = $('.navbar');
   var navheight = $(".navbar").height();
   var sections = $('section');
   var cur_pos = $(window).scrollTop();
@@ -134,16 +134,14 @@ $(window).on('scroll', function () {
 
 function autoHeightInput() {
   var outputHeight = $('#decoded-jwt .output').outerHeight(),
-      inputHeight = $('#encoded-jwt .input');
+    inputHeight = $('#encoded-jwt .input');
 
   inputHeight.css('height', outputHeight + 'px');
-};
+}
 
 /*
  * token counter
  */
-var pusher = null;
-var channel = null;
 var numberOfLogins = 80482701;
 var pollfreqWhenVisible = 5000;
 var pollfreqWhenHidden = 1000*1000;
@@ -171,7 +169,7 @@ function poll() {
     return setTimeout(function () {
       poll();
     }, pollfreq);
-  })
+  });
 }
 
 function updateNumberOfLogins(callback) {
@@ -211,11 +209,11 @@ if (navigator.userAgent.indexOf('Mac OS X') != -1) {
 $(".jwt-playground .tab-link a").click(function() {
   var container = $(this).parentsUntil(".jwt-playground").parent();
   if (!$(this).parent().hasClass("current")) {
-    container.find(".tab-nav .current").removeClass("current")
-    $(this).parent().addClass("current")
-    container.find(".tab-content .box-content").removeClass('current')
+    container.find(".tab-nav .current").removeClass("current");
+    $(this).parent().addClass("current");
+    container.find(".tab-content .box-content").removeClass('current');
     $($(this).attr("href")).addClass('current');
-  };
+  }
   return false;
 });
 
@@ -241,7 +239,7 @@ $(".panel-default .panel-heading").click(function() {
     $(".panel-default .panel-wrap").slideUp(300);
     $(this).addClass("active");
     $(this).next(".panel-wrap").slideDown(300);
-  };
+  }
   return false;
 });
 
@@ -329,12 +327,11 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
   });
 
   var algorithmRadios = $('input[name="algorithm"]'),
-      lastRestoredToken;
+    lastRestoredToken;
+  var tokenRadios = $('input[name="token-type"]');
 
   function setJSONEditorContent(jsonEditor, decodedJSON, selector) {
     jsonEditor.off('change', refreshTokenEditor);
-
-
 
     if (decodedJSON.result !== null && decodedJSON.result !== undefined) {
       jsonEditor.setValue(decodedJSON.result);
@@ -385,7 +382,6 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     if (window.matchMedia('(min-width: 768px)').matches) {
       autoHeightInput();
     }
-
   }
 
   function selectDetectedAlgorithm(alg){
@@ -393,15 +389,11 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     $algRadio.prop('checked', true);
 
     fireEvent($algRadio.get(0));
-
-
   }
 
   function saveToStorage(jwt) {
     // Save last valid jwt value for refresh
     safeLocalStorageSetItem("jwtValue", jwt);
-
-
   }
 
   function loadFromStorage(cb) {
@@ -409,7 +401,7 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     localStorage.removeItem("jwtValue");
   }
 
-  function refreshTokenEditor(instance) {
+  function refreshTokenEditor() {
     tokenEditor.off('change', tokenEditorOnChangeListener);
 
     var algorithm = getAlgorithm();
@@ -452,8 +444,6 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     }
     tokenEditor.on('change', tokenEditorOnChangeListener);
     fireEvent(secretElement);
-
-
   }
 
   function getFirstElementByClassName(selector) {
@@ -502,8 +492,6 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
       isBase64
     );
 
-
-
     var error = result.error;
     result = result.result;
     if (!error && result) {
@@ -515,8 +503,6 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
       $(signatureElement).addClass('invalid-token');
       signatureElement.innerHTML = '<i class="icon-budicon-501"></i> invalid signature';
     }
-
-
   }
 
   function getKey(algorithm, action) {
@@ -525,12 +511,10 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     var publicKeyElement = $('textarea[name="public-key"]');
 
     if(algorithm === 'HS256') {
-        return secretElement.val();
+      return secretElement.val();
     } else {
-        return action === 'sign' ? privateKeyElement.val() : publicKeyElement.val();
+      return action === 'sign' ? privateKeyElement.val() : publicKeyElement.val();
     }
-
-
   }
 
   function getAlgorithm() {
@@ -547,15 +531,13 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
         .filter('.' + algorithm)
         .show();
 
-    if(getTrimmedValue(tokenEditor) === DEFAULT_HS_TOKEN &&
+    if(getTokenType() === 'id_token' && getTrimmedValue(tokenEditor) === DEFAULT_HS_TOKEN &&
       algorithm === 'RS256'){
-        setDefaultsForRSA();
-    }else if(getTrimmedValue(tokenEditor) === DEFAULT_RS_TOKEN &&
+      setDefaultsForRSA();
+    }else if(getTokenType() === 'id_token' && getTrimmedValue(tokenEditor) === DEFAULT_RS_TOKEN &&
       algorithm === 'HS256'){
-        setDefaultsForHMAC();
+      setDefaultsForHMAC();
     }
-
-
   }
 
   function setDefaultsForRSA() {
@@ -563,14 +545,29 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
 
     $('.jwt-signature textarea[name=public-key]').val(DEFAULT_PUBLIC_RSA);
     $('.jwt-signature textarea[name=private-key]').val(DEFAULT_PRIVATE_RSA);
-
-
   }
 
   function setDefaultsForHMAC(){
     tokenEditor.setValue(DEFAULT_HS_TOKEN);
+  }
 
+  function updateToken() {
+    var tokenType = getTokenType();
+    if (document.location.hash) {
+      var qs = document.location.hash.slice(1);
+      var d = {};
+      qs = qs.split('&');
+      qs.forEach(function (kv) { kv = kv.split('='); d[kv[0]] = kv[1]; });
 
+      if (d[tokenType]) {
+        tokenEditor.setValue(decodeURIComponent(d[tokenType]));
+        return;
+      }
+    }
+  }
+
+  function getTokenType() {
+    return tokenRadios.filter(':checked').val();
   }
 
   function validateKey() {
@@ -588,8 +585,6 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     } else {
       $textarea.addClass('error');
     }
-
-
   }
 
   updateAlgorithm();
@@ -597,8 +592,12 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
   algorithmRadios.on('change', function(){
     updateAlgorithm();
     updateSignature();
+  });
 
-
+  tokenRadios.on('change', function(){
+    updateToken();
+    updateAlgorithm();
+    updateSignature();
   });
 
   $('.jwt-signature textarea[name="public-key"]').on('input', updateSignature);
@@ -613,9 +612,11 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
 
   isBase64EncodedElement.addEventListener('change', updateSignature, false);
 
+  var qs;
+  var d;
   if (document.location.search) {
-    var qs = document.location.search.slice(1);
-    var d = {};
+    qs = document.location.search.slice(1);
+    d = {};
     qs = qs.split('&');
     qs.forEach(function (kv) { kv = kv.split('='); d[kv[0]] = kv[1]; });
     if (d.value) {
@@ -625,12 +626,23 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
   }
 
   if (document.location.hash) {
-    var qs = document.location.hash.slice(1);
-    var d = {};
+    qs = document.location.hash.slice(1);
+    d = {};
     qs = qs.split('&');
     qs.forEach(function (kv) { kv = kv.split('='); d[kv[0]] = kv[1]; });
+
+    if (d.access_token && d.id_token) {
+      // show token-type selector
+      $('.jwt-playground .selections .token-type').show();
+    }
+
     if (d.id_token) {
       tokenEditor.setValue(decodeURIComponent(d.id_token));
+      return;
+    }
+
+    if (d.access_token) {
+      tokenEditor.setValue(decodeURIComponent(d.access_token));
       return;
     }
   }
@@ -666,45 +678,53 @@ $(".debugger-jwt .algorithm select").change(function() {
 });
 
 
-$(".debugger-jwt .algorithm select").change(function(){var a=$('.debugger-jwt .algorithm input[value="'+$(this).val()+'"]');a.prop("checked",!0)})
+$(".debugger-jwt .algorithm select").change(function(){var a=$('.debugger-jwt .algorithm input[value="'+$(this).val()+'"]');a.prop("checked",!0);});
 // end 07012015
+
+$(".debugger-jwt .token-type select").change(function() {
+  $('.debugger-jwt .token-type input[value="'+$(this).val()+'"]').parent().trigger("click");
+  $('.debugger-jwt .token-type input[value="'+$(this).val()+'"]').change();
+});
+
+$(".debugger-jwt .token-type select").change(function(){var a=$('.debugger-jwt .token-type input[value="'+$(this).val()+'"]');a.prop("checked",!0);});
+
 
 // Fetch stargazers count for each repo from GitHub's API
 $('.stars').each(function(idx, element){
-    var $el = $(element);
-    var repo = $el.attr('data-repo');
+  var $el = $(element);
+  var repo = $el.attr('data-repo');
 
-    function setCount(count) {
-      var $count = $('<span>');
+  function setCount(count) {
+    var $count = $('<span>');
 
-      $count.text(count);
+    $count.text(count);
 
-      $el.find('i').after($count);
+    $el.find('i').after($count);
 
-      $el.show();
+    $el.show();
+  }
+
+  if (repo){
+    var repoKey = "stars_" + repo;
+    if(!localStorage.getItem(repoKey)) {
+
+      $.getJSON('https://api.github.com/repos/' + repo, function(repoData){
+        var starCount = repoData.stargazers_count;
+        safeLocalStorageSetItem(repoKey, starCount);
+        setCount(starCount);
+      });
+    } else {
+      setCount(localStorage.getItem(repoKey));
     }
-
-    if (repo){
-      var repoKey = "stars_" + repo;
-      if(!localStorage.getItem(repoKey)) {
-
-        $.getJSON('https://api.github.com/repos/' + repo, function(repoData){
-          var starCount = repoData.stargazers_count;
-          safeLocalStorageSetItem(repoKey, starCount);
-          setCount(starCount);
-        });
-      } else {
-        setCount(localStorage.getItem(repoKey));
-      }
-    }
+  }
 });
 
 function setInstalledText() {
-    var button = $('#extension-button');
-    if(button && button.hasClass('is-installed')) {
-        button.find('.button-text').text('Already installed');
-        button.css('cursor', 'default');
-    }
+  var button = $('#extension-button');
+  if(button && button.hasClass('is-installed')) {
+    button.find('.button-text').text('Already installed');
+    button.css('cursor', 'default');
+  }
 }
 
 setInstalledText();
@@ -713,59 +733,59 @@ setInstalledText();
 setTimeout(setInstalledText, 1000);
 
 // chrome.webstore.install can only be called from standard event handlers.
-document.getElementById('extension-button').addEventListener('click', function(event) {
-    var button = $('#extension-button');
-    if(button.hasClass('is-installed')) {
-        return;
-    }
+document.getElementById('extension-button').addEventListener('click', function() {
+  var button = $('#extension-button');
+  if(button.hasClass('is-installed')) {
+    return;
+  }
 
-    function isChrome() {
+  function isChrome() {
         // please note,
         // that IE11 now returns undefined again for window.chrome
         // and new Opera 30 outputs true for window.chrome
         // and new IE Edge outputs to true now for window.chrome
         // and if not iOS Chrome check
         // so use the below updated condition
-        var isChromium = window.chrome,
-            winNav = window.navigator,
-            vendorName = winNav.vendor,
-            isOpera = winNav.userAgent.indexOf("OPR") > -1,
-            isIEedge = winNav.userAgent.indexOf("Edge") > -1,
-            isIOSChrome = winNav.userAgent.match("CriOS");
+    var isChromium = window.chrome,
+      winNav = window.navigator,
+      vendorName = winNav.vendor,
+      isOpera = winNav.userAgent.indexOf("OPR") > -1,
+      isIEedge = winNav.userAgent.indexOf("Edge") > -1,
+      isIOSChrome = winNav.userAgent.match("CriOS");
 
-        if(isIOSChrome){
-           return false;
-        } else if(isChromium !== null && isChromium !== undefined && vendorName === "Google Inc." && isOpera == false && isIEedge == false) {
-           return true;
-        } else {
-           return false;
-        }
-    }
-
-    function openInWindow() {
-        window.open('https://chrome.google.com/webstore/detail/jwt-debugger/ppmmlchacdbknfphdeafcbmklcghghmd');
-    }
-
-    if(isChrome()) {
-        try {
-            chrome.webstore.install('https://chrome.google.com/webstore/detail/ppmmlchacdbknfphdeafcbmklcghghmd', function() {
-                button.addClass('is-installed');
-                setInstalledText();
-            }, function() {
-                button.removeClass('is-installed');
-                button.find('.button-text').text('Add to chrome');
-                openInWindow();
-            });
-        } catch(e) {
-            button.removeClass('is-installed');
-            button.find('.button-text').text('Add to chrome');
-            openInWindow();
-        }
+    if(isIOSChrome){
+      return false;
+    } else if(isChromium !== null && isChromium !== undefined && vendorName === "Google Inc." && isOpera == false && isIEedge == false) {
+      return true;
     } else {
+      return false;
+    }
+  }
+
+  function openInWindow() {
+    window.open('https://chrome.google.com/webstore/detail/jwt-debugger/ppmmlchacdbknfphdeafcbmklcghghmd');
+  }
+
+  if(isChrome()) {
+    try {
+      chrome.webstore.install('https://chrome.google.com/webstore/detail/ppmmlchacdbknfphdeafcbmklcghghmd', function() {
+        button.addClass('is-installed');
+        setInstalledText();
+      }, function() {
         button.removeClass('is-installed');
         button.find('.button-text').text('Add to chrome');
         openInWindow();
+      });
+    } catch(e) {
+      button.removeClass('is-installed');
+      button.find('.button-text').text('Add to chrome');
+      openInWindow();
     }
+  } else {
+    button.removeClass('is-installed');
+    button.find('.button-text').text('Add to chrome');
+    openInWindow();
+  }
 });
 
 //CANVAS

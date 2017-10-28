@@ -65,7 +65,7 @@ window.sign = function (algorithm, header, payload, key, isSecretBase64Encoded) 
     return error;
   }
 
-  if(algorithm === 'HS256'){
+  if (algorithm === 'HS256') {
     if (isSecretBase64Encoded) {
       try {
         key = window.b64utob64(key);

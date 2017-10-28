@@ -15,7 +15,7 @@ block content
         a(href='#debugger-io').scrollto Debugger
         a(href='#libraries-io').scrollto Libraries
         a(href='/introduction') Introduction
-        a(href='https://auth0.com/forum/c/jwt', target='_blank') Ask
+        a(href='https://community.auth0.com', target='_blank') Ask
         a(href='http://swag.auth0.com/', target='_blank') Get a T-shirt!
 
       .social
@@ -57,6 +57,20 @@ block content
           use(fill='#FFFFFF', fill-rule='evenodd', xlink:href='#path-1')
 
       span.button-text Add to chrome
+  section.jtw-ebook-banner
+    span
+      strong Get the JWT Handbook for free!
+      |Spread the word and download it now.
+    a.btn.btn-download-ebook(href='https://auth0.com/e-books/jwt-handbook?utm_source=jwtio&utm_medium=sc&utm_campaign=rotating_banner', target='_blank') Download Ebook
+
+  script.
+    var extensionSection = document.getElementsByClassName("update-site")[0];
+    var ebookSection = document.getElementsByClassName("jtw-ebook-banner")[0];
+    if (Math.random() >= .5) {
+    extensionSection.style.display = 'block';
+    } else {
+    ebookSection.style.display = 'block';
+    }
 
   section#debugger-io.debugger-jwt
     .container
@@ -64,18 +78,30 @@ block content
       h1 Debugger
 
       .jwt-playground
+        .selections
+          .token-type
+            span Token
+            .hide
+              label
+                input(type='radio', name='token-type', value='id_token', checked='')
+              label
+                input(type='radio', name='token-type', value='access_token')
+            .jwt-select
+              select
+                option(name='token-type',value='id_token', selected='') id_token
+                option(name='token-type',value='access_token') access_token
 
-        .algorithm
-          span Algorithm
-          .hide
-            label
-              input(type='radio', name='algorithm', value='HS256', checked='')
-            label
-              input(type='radio', name='algorithm', value='RS256')
-          .jwt-select
-            select
-              option(name='algorithm',value='HS256', selected='') HS256
-              option(name='algorithm',value='RS256') RS256
+          .algorithm
+            span Algorithm
+            .hide
+              label
+                input(type='radio', name='algorithm', value='HS256', checked='')
+              label
+                input(type='radio', name='algorithm', value='RS256')
+            .jwt-select
+              select
+                option(name='algorithm',value='HS256', selected='') HS256
+                option(name='algorithm',value='RS256') RS256
 
         .algorithm-code
           .tab-nav
@@ -131,6 +157,7 @@ block content
             select
               // Languages must be in alphabetic order
               option(value='*', selected='') All
+              option(value='.1c') 1c
               option(value='.c') C
               option(value='.clojure') Clojure
               option(value='.crystal') Crystal
@@ -189,6 +216,7 @@ block content
         include libraries/go2.jade
         include libraries/go3.jade
         include libraries/go4.jade
+        include libraries/go5.jade
         include libraries/haskell.jade
         include libraries/haskell2.jade
         include libraries/rust.jade
@@ -200,6 +228,7 @@ block content
         include libraries/clojure.jade
         include libraries/objective-c.jade
         include libraries/swift.jade
+        include libraries/swift2.jade
         include libraries/c.jade
         include libraries/q.jade
         include libraries/delphi.jade
@@ -210,6 +239,7 @@ block content
         include libraries/php5.jade
         include libraries/php6.jade
         include libraries/crystal.jade
+        include libraries/1c.jade
 
   section.sources
     .container

@@ -5,7 +5,7 @@ JSON Web Token (JWT) is an open standard ([RFC 7519](https://tools.ietf.org/html
 
 Let's explain some concepts of this definition further.
 
-- **Compact**: Because of its smaller size, JWTs can be sent through an URL, POST parameter, or inside an HTTP header. Additionally, the smaller size means transmission is fast.
+- **Compact**: Because of their smaller size, JWTs can be sent through a URL, POST parameter, or inside an HTTP header. Additionally, the smaller size means transmission is fast.
 
 - **Self-contained**: The payload contains all the required information about the user, avoiding the need to query the database more than once.
 
@@ -14,7 +14,7 @@ Here are some scenarios where JSON Web Tokens are useful:
 
 - **Authentication**: This is the most common scenario for using JWT. Once the user is logged in, each subsequent request will include the JWT, allowing the user to access routes, services, and resources that are permitted with that token. Single Sign On is a feature that widely uses JWT nowadays, because of its small overhead and its ability to be easily used across different domains.
 
-- **Information Exchange**: JSON Web Tokens are a good way of securely transmitting information between parties, because as they can be signed, for example using public/private key pairs, you can be sure that the senders are who they say they are. Additionally, as the signature is calculated using the header and the payload, you can also verify that the content hasn't been tampered with.
+- **Information Exchange**: JSON Web Tokens are a good way of securely transmitting information between parties. Because JWTs can be signed—for example, using public/private key pairs—you can be sure the senders are who they say they are. Additionally, as the signature is calculated using the header and the payload, you can also verify that the content hasn't been tampered with.
 
 ## What is the JSON Web Token structure?
 JSON Web Tokens consist of three parts separated by dots (`.`), which are:
@@ -49,7 +49,7 @@ Then, this JSON is **Base64Url** encoded to form the first part of the JWT.
 The second part of the token is the payload, which contains the claims. Claims are statements about an entity (typically, the user) and additional metadata.
 There are three types of claims: *reserved*, *public*, and *private* claims.
 
-- **Reserved claims**: These is a set of predefined claims which are not mandatory but recommended, to provide a set of useful, interoperable claims. Some of them are: **iss** (issuer), **exp** (expiration time), **sub** (subject), **aud** (audience), and others.
+- **Reserved claims**: These are a set of predefined claims which are not mandatory but recommended, to provide a set of useful, interoperable claims. Some of them are: **iss** (issuer), **exp** (expiration time), **sub** (subject), **aud** (audience), and others.
 
 	> Notice that the claim names are only three characters long as JWT is meant to be compact.
 
