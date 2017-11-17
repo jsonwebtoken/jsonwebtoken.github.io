@@ -53,7 +53,7 @@ There are three types of claims: *reserved*, *public*, and *private* claims.
 
 	> Notice that the claim names are only three characters long as JWT is meant to be compact.
 
-- **Public claims**: These can be defined at will by those using JWTs. But to avoid collisions they should be defined in the IANA JSON Web Token Registry or be defined as a URI that contains a collision resistant namespace.
+- **Public claims**: These can be defined at will by those using JWTs. But to avoid collisions they should be defined in the [IANA JSON Web Token Registry](https://www.iana.org/assignments/jwt/jwt.xhtml) or be defined as a URI that contains a collision resistant namespace.
 
 - **Private claims**: These are the custom claims created to share information between parties that agree on using them.
 
