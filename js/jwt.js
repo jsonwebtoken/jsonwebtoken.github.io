@@ -101,6 +101,18 @@ window.verify = function (algorithm, value, key, isSecretBase64Encoded) {
 
   var result = '', error = null;
 
+  // HOTFIX: issue #251, 'alg: none' results in valid signature. It should
+  // always be invalid. This is fixed in KJUR.jws.JWS in later versions.
+  // When we update libraries to the latest versions, we can remove this.
+  try {
+    var header = JSON.parse(window.decode(value.split('.')[0]).result);
+    if(header.alg === 'none') {
+      return { result: false, error: null };
+    }
+  } catch(e) {
+    return { result: false, error: e };
+  }
+
   if (algorithm === 'HS256'){
     if (isSecretBase64Encoded) {
       try {
