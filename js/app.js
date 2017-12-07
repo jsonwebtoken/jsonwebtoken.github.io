@@ -348,6 +348,60 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
 
   }
 
+  function downloadPublicKeyIfPossible(token, callback) {
+    var decoded = window.decodeJWT(token);
+    if(decoded.error) {
+      console.error(decoded.error);
+      callback();
+      return;
+    }
+
+    if(decoded.result.header.alg.indexOf('RS') !== 0 ||
+       !decoded.result.header.kid ||
+       !decoded.result.payload.iss) {
+      callback();
+      return;
+    }
+
+    var url = decoded.result.payload.iss + '.well-known/jwks.json';
+    $.get(url, function(data) {
+      try {
+        if(!data.keys || !(data.keys instanceof Array)) {
+          callback();
+          return;
+        }
+
+        for(var i = 0; i < data.keys.length; ++i) {
+          if(data.keys[i].kid === decoded.result.header.kid) {
+            var x5c = data.keys[i].x5c;          
+            if(!(x5c instanceof Array)) {
+              x5c = [ x5c ];
+            }
+
+            var certChain = '';
+            x5c.forEach(function(cert) {
+              certChain += '-----BEGIN CERTIFICATE-----\n';
+              certChain += cert + '\n';
+              certChain += '-----END CERTIFICATE-----\n';
+            });
+
+            var publicKeyElement = $('textarea[name="public-key"]');
+            publicKeyElement.val(certChain);
+
+            var privateKeyElement = $('textarea[name="private-key"]');
+            privateKeyElement.val('');
+
+            break;
+          }
+        }
+
+        callback();
+      } catch(e) {
+        console.error(e);
+        callback();
+      }
+    });
+  }
 
   function tokenEditorOnChangeListener(instance) {
     var value = getTrimmedValue(instance);
@@ -367,21 +421,25 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
 
     try {
       selectDetectedAlgorithm(JSON.parse(decodedHeader.result).alg);
-    }catch (e){
+    } catch (e){
       console.error('Invalid header decoded');
     }
 
-    var selector = $('.jwt-header');
-    setJSONEditorContent(headerEditor, decodedHeader, selector);
-    var decodedPayload = window.decode(parts[1]);
-    selector = $('.jwt-payload');
-    setJSONEditorContent(payloadEditor, decodedPayload, selector);
+    downloadPublicKeyIfPossible(value, function() {
 
-    fireEvent(secretElement);
+      var selector = $('.jwt-header');
+      setJSONEditorContent(headerEditor, decodedHeader, selector);
+      var decodedPayload = window.decode(parts[1]);
+      selector = $('.jwt-payload');
+      setJSONEditorContent(payloadEditor, decodedPayload, selector);
 
-    if (window.matchMedia('(min-width: 768px)').matches) {
-      autoHeightInput();
-    }
+      fireEvent(secretElement);
+
+      if (window.matchMedia('(min-width: 768px)').matches) {
+        autoHeightInput();
+      }
+
+    });
   }
 
   function selectDetectedAlgorithm(alg){

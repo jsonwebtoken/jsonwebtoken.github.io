@@ -43,6 +43,22 @@ window.decode = function (base64json) {
   return {result: json, error: error};
 };
 
+window.decodeJWT = function(encoded) {
+  var result = {
+    header: {},
+    payload: {}
+  };
+
+  try {
+    var split = encoded.split('.');
+    result.header = JSON.parse(window.decode(split[0]).result);
+    result.payload = JSON.parse(window.decode(split[1]).result);
+    return { result: result, error: null };
+  } catch(e) {
+    return { result: result, error: e };
+  }
+}
+
 window.sign = function (algorithm, header, payload, key, isSecretBase64Encoded) {
   var value = '', error = null, headerAsJSON, payloadAsJSON;
 
