@@ -526,6 +526,21 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
   var secretElement = document.getElementsByName('secret')[0];
   var isBase64EncodedElement = document.getElementsByName('is-base64-encoded')[0];
 
+  function showInvalidSignature() {
+    var signatureElement = getFirstElementByClassName('js-signature');
+    $(signatureElement).removeClass('valid-token');
+    $(signatureElement).addClass('invalid-token');
+    signatureElement.innerHTML = '<i class="icon-budicon-501"></i> invalid signature';
+  }
+
+  function showValidSignature() {
+    var signatureElement = getFirstElementByClassName('js-signature');
+    $(signatureElement).removeClass('invalid-token');      
+    $(signatureElement).addClass('valid-token');
+    signatureElement.innerHTML = '<i class="icon-budicon-499"></i> signature verified';
+    $('.input').removeClass('error');
+  }
+
   function updateSignature () {
     var algorithm = getAlgorithm();
     var signatureElement = getFirstElementByClassName('js-signature');
@@ -538,6 +553,7 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     var isBase64 = isBase64EncodedElement.checked;
     if (isBase64 && !window.isValidBase64String(secretElement.value)) {
       $(signatureContainerElement).addClass('error');
+      showInvalidSignature();
       return;
     } else {
       $(signatureContainerElement).removeClass('error');
@@ -553,14 +569,9 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     var error = result.error;
     result = result.result;
     if (!error && result) {
-      $(signatureElement).removeClass('invalid-token');      
-      $(signatureElement).addClass('valid-token');
-      signatureElement.innerHTML = '<i class="icon-budicon-499"></i> signature verified';
-      $('.input').removeClass('error');
+      showValidSignature()
     } else {
-      $(signatureElement).removeClass('valid-token');
-      $(signatureElement).addClass('invalid-token');
-      signatureElement.innerHTML = '<i class="icon-budicon-501"></i> invalid signature';
+      showInvalidSignature();
     }
   }
 

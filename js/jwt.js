@@ -105,9 +105,26 @@ window.sign = function (algorithm, header, payload, key, isSecretBase64Encoded) 
 
 window.isValidBase64String = function (s) {
   try {
-    s = window.b64utob64(s);
-    window.CryptoJS.enc.Base64.parse(s).toString();
-    return true;
+    var validChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_+/=';
+    var hasPadding = false;
+    for(var i = 0; i < s.length; ++i) {
+      hasPadding |= s.charAt(i) === '=';
+      if(validChars.indexOf(s.charAt(i)) === -1) {
+        return false;
+      }
+    }
+
+    if(hasPadding) {
+      for(var i = s.indexOf('='); i < s.length; ++i) {
+        if(s.charAt(i) !== '=') {
+          return false;
+        }
+      }
+
+      return s.length % 4 === 0;
+    }
+
+    return true;    
   } catch (e) {
     return false;
   }
@@ -133,7 +150,7 @@ window.verify = function (algorithm, value, key, isSecretBase64Encoded) {
     if (isSecretBase64Encoded) {
       try {
         key = window.b64utob64(key);
-        key = window.CryptoJS.enc.Base64.parse(key).toString();
+        key = window.b64tohex(key);
       } catch (e) {
         return {result: '', error: e};
       }
