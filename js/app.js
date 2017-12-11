@@ -395,6 +395,8 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
           }
         }
 
+        validateKey.apply($('textarea[name="public-key"]'));
+
         callback();
       } catch(e) {
         console.error(e);
@@ -642,16 +644,17 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
 
   function validateKey() {
     var $textarea = $(this);
-    var valid;
+    var valid = window.isValidKey($textarea.val());
 
-    if($textarea.prop('name') === 'public-key') {
+    /*if($textarea.prop('name') === 'public-key') {
       valid = /-----BEGIN (PUBLIC KEY|CERTIFICATE)-----(.|\n)*-----END (PUBLIC KEY|CERTIFICATE)-----/.test($textarea.val());
     } else {
       valid = /-----BEGIN RSA PRIVATE KEY-----(.|\n)*-----END RSA PRIVATE KEY-----/.test($textarea.val());
-    }
+    }*/
 
-    if (valid) {
+    if (valid.valid) {
       $textarea.removeClass('error');
+      $textarea.val(valid.key);
     } else {
       $textarea.addClass('error');
     }
@@ -670,7 +673,10 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     updateSignature();
   });
 
-  $('.jwt-signature textarea[name="public-key"]').on('input', updateSignature);
+  $('.jwt-signature textarea[name="public-key"]').on('input', function() {
+    validateKey.apply(this);
+    updateSignature();
+  });
   $('.jwt-signature textarea[name="private-key"]').on('input', function () {
     validateKey.apply(this);
     refreshTokenEditor();

@@ -167,3 +167,43 @@ window.verify = function (algorithm, value, key, isSecretBase64Encoded) {
 
   return {result: result, error: error};
 };
+
+window.isValidKey = function(key) {
+  // Four tries: no header, header for cert, header for pub key,
+  // header for priv key
+
+  var headers = [{
+    prologue: '',
+    epilogue: ''
+  },{
+    prologue: '-----BEGIN CERTIFICATE-----\n',
+    epilogue: '-----END CERTIFICATE-----\n'
+  }, {
+    prologue: '-----BEGIN PUBLIC KEY-----\n',
+    epilogue: '-----END PUBLIC KEY-----\n'
+  }, {
+    prologue: '-----BEGIN RSA PRIVATE KEY-----\n',
+    epilogue: '-----END RSA PRIVATE KEY-----\n'
+  }];
+
+  for(var i = 0; i < headers.length; ++i) {
+    var header = headers[i];
+    try {
+      var newKey = header.prologue;
+      newKey += key + '\n';
+      newKey += header.epilogue;
+
+      return {
+        valid: !!KEYUTIL.getKey(newKey),
+        key: newKey
+      };
+    } catch(e2) {
+      // Ignore
+    }
+  }
+
+  return {
+    valid: false,
+    key: key
+  };
+};
