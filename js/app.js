@@ -553,9 +553,10 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     var error = result.error;
     result = result.result;
     if (!error && result) {
-      $(signatureElement).removeClass('invalid-token');
+      $(signatureElement).removeClass('invalid-token');      
       $(signatureElement).addClass('valid-token');
       signatureElement.innerHTML = '<i class="icon-budicon-499"></i> signature verified';
+      $('.input').removeClass('error');
     } else {
       $(signatureElement).removeClass('valid-token');
       $(signatureElement).addClass('invalid-token');
