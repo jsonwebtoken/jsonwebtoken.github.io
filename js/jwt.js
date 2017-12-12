@@ -103,9 +103,12 @@ window.sign = function (algorithm, header, payload, key, isSecretBase64Encoded) 
   return {result: value, error: error};
 };
 
-window.isValidBase64String = function (s) {
+window.isValidBase64String = function (s, urlOnly) {
   try {
-    var validChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_+/=';
+    var validChars = urlOnly ?
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_=' :
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_+/=';
+
     var hasPadding = false;
     for(var i = 0; i < s.length; ++i) {
       hasPadding |= s.charAt(i) === '=';

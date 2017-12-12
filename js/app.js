@@ -419,6 +419,13 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
       return;
     }
 
+    if(!window.isValidBase64String(parts[0], true) ||
+       !window.isValidBase64String(parts[1], true) ||
+       !window.isValidBase64String(parts[2], true)) {
+      $('.input').addClass('error');
+      return;
+    }
+
     var decodedHeader = window.decode(parts[0]);
 
     try {
