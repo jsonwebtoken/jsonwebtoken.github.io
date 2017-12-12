@@ -3,7 +3,9 @@
 ## What is JSON Web Token?
 JSON Web Token (JWT) is an open standard ([RFC 7519](https://tools.ietf.org/html/rfc7519)) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed. JWTs can be signed using a secret (with the **HMAC** algorithm) or a public/private key pair using **RSA**.
 
-Let's explain some concepts of this definition further.
+Although JWTs can be encrypted to also provide secrecy between parties, we will focus on *signed* tokens. Signed tokens can verify the *integrity* of the claims contained within it, while encrypted tokens *hide* those claims from other parties. When tokens are signed using public/private key pairs, the signature also certifies that only the party holding the private key is the one that signed it.
+
+Let's explain some concepts further.
 
 - **Compact**: Because of their smaller size, JWTs can be sent through a URL, POST parameter, or inside an HTTP header. Additionally, the smaller size means transmission is fast.
 
@@ -17,7 +19,7 @@ Here are some scenarios where JSON Web Tokens are useful:
 - **Information Exchange**: JSON Web Tokens are a good way of securely transmitting information between parties. Because JWTs can be signed—for example, using public/private key pairs—you can be sure the senders are who they say they are. Additionally, as the signature is calculated using the header and the payload, you can also verify that the content hasn't been tampered with.
 
 ## What is the JSON Web Token structure?
-JSON Web Tokens consist of three parts separated by dots (`.`), which are:
+In its compact form, JSON Web Tokens consist of three parts separated by dots (`.`), which are:
 
 - Header
 - Payload
@@ -69,6 +71,8 @@ An example payload could be:
 
 The payload is then **Base64Url** encoded to form the second part of the JSON Web Token.
 
+> Do note that for signed tokens this information, though protected against tampering, is readable by anyone. Do not put secret information in the payload or header elements of a JWT unless it is encrypted.
+
 ### Signature
 To create the signature part you have to take the encoded header, the encoded payload, a secret, the algorithm specified in the header, and sign that.
 
@@ -81,18 +85,18 @@ HMACSHA256(
   secret)
 ```
 
-The signature is used to verify that the sender of the JWT is who it says it is and to ensure that the message wasn't changed along the way.
+The signature is used to verify the message wasn't changed along the way, and, in the case of tokens signed with a private key, it can also verify that the sender of the JWT is who it says it is.
 
 ### Putting all together
 
-The output is three Base64 strings separated by dots that can be easily passed in HTML and HTTP environments, while being more compact when compared to XML-based standards such as SAML.
+The output is three Base64-URL strings separated by dots that can be easily passed in HTML and HTTP environments, while being more compact when compared to XML-based standards such as SAML.
 
 The following shows a JWT that has the previous header and payload encoded, and it is signed with a secret.
 ![Encoded JWT](https://cdn.auth0.com/content/jwt/encoded-jwt3.png)
 
 If you want to play with JWT and put these concepts into practice, you can use [jwt.io Debugger](http://jwt.io) to decode, verify, and generate JWTs.
 
-![JWT.IO Debugger](https://cdn.auth0.com/blog/legacy-app-auth/legacy-app-auth-5.png)
+![JWT.io Debugger](https://cdn.auth0.com/blog/legacy-app-auth/legacy-app-auth-5.png)
 
 ## How do JSON Web Tokens work?
 In authentication, when the user successfully logs in using their credentials, a JSON Web Token will be returned and must be saved locally (typically in local storage, but cookies can be also used), instead of the traditional approach of creating a session in the server and returning a cookie.
@@ -112,6 +116,8 @@ The following diagram shows this process:
 
 ![How does a JSON Web Token works](https://cdn.auth0.com/content/jwt/jwt-diagram.png)
 
+Do note that with signed tokens, all the information contained within the token is exposed to users or other parties, even though they are unable to change it. This means you should not put secret information within the token.
+
 ## Why should we use JSON Web Tokens?
 
 Let's talk about the benefits of **JSON Web Tokens (JWT)** when compared to **Simple Web Tokens (SWT)** and **Security Assertion Markup Language Tokens (SAML)**.
@@ -126,6 +132,5 @@ Regarding usage, JWT is used at Internet scale. This highlights the ease of clie
 
 ![Comparing the length of an encoded JWT and an encoded SAML](https://cdn.auth0.com/content/jwt/comparing-jwt-vs-saml2.png)
 _Comparison of the length of an encoded JWT and an encoded SAML_
-
 
 If you want to read more about JSON Web Tokens and even start using them to perform authentication in your own applications, browse to the [JSON Web Token landing page](http://auth0.com/learn/json-web-tokens) at Auth0.
