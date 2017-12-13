@@ -348,6 +348,64 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
 
   }
 
+  function setKeyFromX5Claims(json, callback) {
+    function setKeyFromX5c(x5c) {
+      if(!x5c) {
+        return;
+      }
+
+      if(!(x5c instanceof Array)) {
+        x5c = [ x5c ];
+      }
+
+      var certChain = '';
+      x5c.forEach(function(cert) {
+        certChain += '-----BEGIN CERTIFICATE-----\n';
+        certChain += cert + '\n';
+        certChain += '-----END CERTIFICATE-----\n';
+      });
+
+      var publicKeyElement = $('textarea[name="public-key"]');
+      publicKeyElement.val(certChain);
+
+      var privateKeyElement = $('textarea[name="private-key"]');
+      privateKeyElement.val('');      
+
+      validateKey.apply($('textarea[name="public-key"]'));
+    }
+
+    if(json.x5c) {
+      setKeyFromX5c(json.x5c);
+      callback();
+    } else if(json.x5u) {
+      $.get(json.x5u, function(data) {
+        setKeyFromX5c(data);
+        callback();
+      });
+    } else {
+      callback();
+    }
+  }
+
+  function setKeyFromJwkKeySetUrl(kid, url, callback) {
+    $.get(url, function(data) {
+      if(!data || !data.keys || !(data.keys instanceof Array)) {
+        callback();
+        return;
+      }
+
+      for(var i = 0; i < data.keys.length; ++i) {
+        var jwk = data.keys[i];
+        if(jwk.kid === kid) {
+          setKeyFromX5Claims(jwk, callback);
+          return;
+        }
+      }
+
+      callback();
+    });
+  }
+
   function downloadPublicKeyIfPossible(token, callback) {
     var decoded = window.decodeJWT(token);
     if(decoded.error) {
@@ -356,53 +414,27 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
       return;
     }
 
-    if(decoded.result.header.alg.indexOf('RS') !== 0 ||
-       !decoded.result.header.kid ||
-       !decoded.result.payload.iss) {
+    var header = decoded.result.header;
+    var payload = decoded.result.payload;
+
+    if(header.alg.indexOf('RS') !== 0) {
       callback();
       return;
     }
 
-    var url = decoded.result.payload.iss + '.well-known/jwks.json';
-    $.get(url, function(data) {
-      try {
-        if(!data.keys || !(data.keys instanceof Array)) {
-          callback();
-          return;
-        }
-
-        for(var i = 0; i < data.keys.length; ++i) {
-          if(data.keys[i].kid === decoded.result.header.kid) {
-            var x5c = data.keys[i].x5c;          
-            if(!(x5c instanceof Array)) {
-              x5c = [ x5c ];
-            }
-
-            var certChain = '';
-            x5c.forEach(function(cert) {
-              certChain += '-----BEGIN CERTIFICATE-----\n';
-              certChain += cert + '\n';
-              certChain += '-----END CERTIFICATE-----\n';
-            });
-
-            var publicKeyElement = $('textarea[name="public-key"]');
-            publicKeyElement.val(certChain);
-
-            var privateKeyElement = $('textarea[name="private-key"]');
-            privateKeyElement.val('');
-
-            break;
-          }
-        }
-
-        validateKey.apply($('textarea[name="public-key"]'));
-
-        callback();
-      } catch(e) {
-        console.error(e);
-        callback();
-      }
-    });
+    if(header.x5c || header.x5u) {
+      setKeyFromX5Claims(header, callback);
+    } else if(header.jku) {
+      setKeyFromJwkKeySetUrl(header.kid, header.jku, callback);
+    } else if(header.jwk) {
+      setKeyFromX5Claims(header.jwk, callback);
+    } else if(header.kid && payload.iss) {
+      //Auth0-specific scheme
+      var url = payload.iss + '.well-known/jwks.json';
+      setKeyFromJwkKeySetUrl(header.kid, url, callback);
+    } else {
+      callback();
+    }
   }
 
   function tokenEditorOnChangeListener(instance) {
