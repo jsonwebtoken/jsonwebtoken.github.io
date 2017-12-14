@@ -319,16 +319,46 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     lint: true
   });
 
-  var payloadEditor = codeMirror(document.getElementsByClassName('js-payload')[0], {
+  var payloadEditorDom = document.getElementsByClassName('js-payload')[0];
+  var payloadEditor = codeMirror(payloadEditorDom, {
     mode:           'application/json',
     lineWrapping:   true,
     extraKeys: { 'Tab':  tabHack},
     lint: true
   });
 
+  $(payloadEditorDom).on('mousemove', tooltipHandler)
+
   var algorithmRadios = $('input[name="algorithm"]'),
     lastRestoredToken;
   var tokenRadios = $('input[name="token-type"]');
+
+  var payloadTooltip = $('#js-payload-tooltip');
+  
+  function tooltipHandler(event) {
+    var result = payloadEditor.coordsChar({
+      left: event.pageX,
+      top: event.pageY
+    }, 'page');
+
+    var line = payloadEditor.getLine(result.line);
+    
+    var timeClaims = ['exp', 'nbf', 'iat', 'auth_time', 'updated_at'];
+
+    var matches = /"(.*)":\s*"?(\d*)"?/.exec(line);
+    if(matches && timeClaims.indexOf(matches[1]) !== -1) {
+      var dateStr = (new Date(parseInt(matches[2]))).toString();
+      console.log(dateStr);
+      payloadTooltip.text(dateStr);
+      payloadTooltip.css({
+        left: event.pageX + 'px',
+        top: event.pageY + 'px',
+      });
+      payloadTooltip.show();
+    } else {
+      payloadTooltip.hide();
+    }
+  }
 
   function setJSONEditorContent(jsonEditor, decodedJSON, selector) {
     jsonEditor.off('change', refreshTokenEditor);
