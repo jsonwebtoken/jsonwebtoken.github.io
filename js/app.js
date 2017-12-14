@@ -348,7 +348,6 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     var matches = /"(.*)":\s*"?(\d*)"?/.exec(line);
     if(matches && timeClaims.indexOf(matches[1]) !== -1) {
       var dateStr = (new Date(parseInt(matches[2]))).toString();
-      console.log(dateStr);
       payloadTooltip.text(dateStr);
       payloadTooltip.css({
         left: event.pageX + 'px',
