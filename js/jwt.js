@@ -81,7 +81,7 @@ window.sign = function (algorithm, header, payload, key, isSecretBase64Encoded) 
     return error;
   }
 
-  if (algorithm === 'HS256') {
+  if(algorithm.indexOf('HS') === 0) {
     if (isSecretBase64Encoded) {
       try {
         key = window.b64utob64(key);
@@ -149,7 +149,7 @@ window.verify = function (algorithm, value, key, isSecretBase64Encoded) {
     return { result: false, error: e };
   }
 
-  if (algorithm === 'HS256'){
+  if(algorithm.indexOf('HS') === 0) {
     if (isSecretBase64Encoded) {
       try {
         key = window.b64utob64(key);
@@ -184,6 +184,9 @@ window.isValidKey = function(key) {
   }, {
     prologue: '-----BEGIN PUBLIC KEY-----\n',
     epilogue: '-----END PUBLIC KEY-----\n'
+  }, {
+    prologue: '-----BEGIN PRIVATE KEY-----\n',
+    epilogue: '-----END PRIVATE KEY-----\n'
   }, {
     prologue: '-----BEGIN RSA PRIVATE KEY-----\n',
     epilogue: '-----END RSA PRIVATE KEY-----\n'

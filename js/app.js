@@ -267,37 +267,6 @@ $(".panel-default .panel-heading").click(function() {
     }
   }
 
-  var DEFAULT_HS_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ';
-
-  var DEFAULT_RS_TOKEN = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.EkN-DOsnsuRjRO6BxXemmJDm3HbxrbRzXglbN2S4sOkopdU4IsDxTI8jO19W_A4K8ZPJijNLis4EZsHeY559a4DFOd50_OqgHGuERTqYZyuhtF39yxJPAjUESwxk2J5k_4zM3O-vtd1Ghyo4IbqKKSy6J9mTniYJPenn5-HIirE';
-
-  var DEFAULT_PUBLIC_RSA = "\
------BEGIN PUBLIC KEY-----\n\
-MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDdlatRjRjogo3WojgGHFHYLugd\
-UWAY9iR3fy4arWNA1KoS8kVw33cJibXr8bvwUAUparCwlvdbH6dvEOfou0/gCFQs\
-HUfQrSDv+MuSUMAe8jzKE4qW+jK+xQU9a03GUnKHkkle+Q0pX/g6jXZ7r1/xAK5D\
-o2kQ+X5xK9cipRgEKwIDAQAB\n\
------END PUBLIC KEY-----\
-  ";
-
-  var DEFAULT_PRIVATE_RSA = "\
------BEGIN RSA PRIVATE KEY-----\n\
-MIICWwIBAAKBgQDdlatRjRjogo3WojgGHFHYLugdUWAY9iR3fy4arWNA1KoS8kVw\
-33cJibXr8bvwUAUparCwlvdbH6dvEOfou0/gCFQsHUfQrSDv+MuSUMAe8jzKE4qW\
-+jK+xQU9a03GUnKHkkle+Q0pX/g6jXZ7r1/xAK5Do2kQ+X5xK9cipRgEKwIDAQAB\
-AoGAD+onAtVye4ic7VR7V50DF9bOnwRwNXrARcDhq9LWNRrRGElESYYTQ6EbatXS\
-3MCyjjX2eMhu/aF5YhXBwkppwxg+EOmXeh+MzL7Zh284OuPbkglAaGhV9bb6/5Cp\
-uGb1esyPbYW+Ty2PC0GSZfIXkXs76jXAu9TOBvD0ybc2YlkCQQDywg2R/7t3Q2OE\
-2+yo382CLJdrlSLVROWKwb4tb2PjhY4XAwV8d1vy0RenxTB+K5Mu57uVSTHtrMK0\
-GAtFr833AkEA6avx20OHo61Yela/4k5kQDtjEf1N0LfI+BcWZtxsS3jDM3i1Hp0K\
-Su5rsCPb8acJo5RO26gGVrfAsDcIXKC+bQJAZZ2XIpsitLyPpuiMOvBbzPavd4gY\
-6Z8KWrfYzJoI/Q9FuBo6rKwl4BFoToD7WIUS+hpkagwWiz+6zLoX1dbOZwJACmH5\
-fSSjAkLRi54PKJ8TFUeOP15h9sQzydI8zJU+upvDEKZsZc/UhT/SySDOxQ4G/523\
-Y0sz/OZtSWcol/UMgQJALesy++GdvoIDLfJX5GBQpuFgFenRiRDabxrE9MNUZ2aP\
-FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
-  -----END RSA PRIVATE KEY-----\
-  ";
-
   var codeMirror = CodeMirror;
 
   function tabHack(instance) {
@@ -516,6 +485,8 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     var $algRadio = $('.algorithm input[value="'+alg+'"]');
     $algRadio.prop('checked', true);
 
+    $('.algorithm option[value="'+alg+'"]').prop('selected', true);
+
     fireEvent($algRadio.get(0));
   }
 
@@ -650,7 +621,7 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     var privateKeyElement = $('textarea[name="private-key"]');
     var publicKeyElement = $('textarea[name="public-key"]');
 
-    if(algorithm === 'HS256') {
+    if(algorithm.indexOf('HS') === 0) {
       return secretElement.val();
     } else {
       return action === 'sign' ? privateKeyElement.val() : publicKeyElement.val();
@@ -661,34 +632,87 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
     return algorithmRadios.filter(':checked').val();
   }
 
-  function updateAlgorithm () {
-    var algorithm = algorithmRadios.filter(':checked').val();
+  function checkDefaults(requestedAlgorithm) {
+    requestedAlgorithm = requestedAlgorithm.toLowerCase();
+    var requestedDefaults = defaultTokens[requestedAlgorithm];
 
-    $('.js-input').attr('data-alg', algorithm);
+    var token = getTrimmedValue(tokenEditor);
+    if(!token) {
+      token = '';
+    }
+    for(var alg in defaultTokens) {
+      if(token === defaultTokens[alg].token) {
+        if(alg === requestedAlgorithm) {
+          break;
+        }
 
-    $('.jwt-signature pre')
-        .hide()
-        .filter('.' + algorithm)
-        .show();
+        tokenEditor.setValue(requestedDefaults.token);
 
-    if(getTokenType() === 'id_token' && getTrimmedValue(tokenEditor) === DEFAULT_HS_TOKEN &&
-      algorithm === 'RS256'){
-      setDefaultsForRSA();
-    }else if(getTokenType() === 'id_token' && getTrimmedValue(tokenEditor) === DEFAULT_RS_TOKEN &&
-      algorithm === 'HS256'){
-      setDefaultsForHMAC();
+        if(requestedAlgorithm.indexOf('hs') === 0) {
+          var secretElement = $('input[name="secret"]');
+
+          secretElement.val(requestedDefaults.secret);
+        } else {
+          var publicKey = $('.jwt-signature textarea[name=public-key]');
+          var privateKey = $('.jwt-signature textarea[name=private-key]');
+
+          publicKey.val(requestedDefaults.publicKey);
+          privateKey.val(requestedDefaults.privateKey);          
+
+          validateKey.apply(publicKey);
+          validateKey.apply(privateKey);
+        }
+
+        break;
+      }
+    }    
+  }
+
+  function updateHeader(algorithm) {
+    var headerStr = getTrimmedValue(headerEditor);
+    try {
+      var header = JSON.parse(headerStr);
+      header.alg = algorithm;
+      headerEditor.setValue(JSON.stringify(header, null, 2));
+    } catch(e) {
+      //Ignore this, we may have garbage in the editor.
     }
   }
 
-  function setDefaultsForRSA() {
-    tokenEditor.setValue(DEFAULT_RS_TOKEN);
+  function updateAlgorithm () {
+    var algorithm = algorithmRadios.filter(':checked').val();
+    var algoType = algorithm.substr(0, 2);
+    var algoSize = algorithm.substr(2, 3);
 
-    $('.jwt-signature textarea[name=public-key]').val(DEFAULT_PUBLIC_RSA);
-    $('.jwt-signature textarea[name=private-key]').val(DEFAULT_PRIVATE_RSA);
-  }
+    $('.js-input').attr('data-alg', algorithm);
 
-  function setDefaultsForHMAC(){
-    tokenEditor.setValue(DEFAULT_HS_TOKEN);
+    if(algoType === 'HS') {
+      $('#hmacsha-text').text('HMACSHA' + algoSize);
+
+      $('.jwt-signature pre')
+        .hide()
+        .filter('.HS256')
+        .show();
+    } else {
+      var texts = {
+        RS: 'RSASHA',
+        PS: 'RSAPSSSHA',
+        ES: 'ECDSASHA'
+      };
+      $('#rsasha-text').text(texts[algoType] + algoSize);
+
+      $('.jwt-signature pre')
+        .hide()
+        .filter('.RS256')
+        .show();
+    }
+
+    checkDefaults(algorithm);
+    updateHeader(algorithm);
+
+    if (window.matchMedia('(min-width: 768px)').matches) {
+      autoHeightInput();
+    }
   }
 
   function updateToken() {
@@ -713,12 +737,6 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
   function validateKey() {
     var $textarea = $(this);
     var valid = window.isValidKey($textarea.val());
-
-    /*if($textarea.prop('name') === 'public-key') {
-      valid = /-----BEGIN (PUBLIC KEY|CERTIFICATE)-----(.|\n)*-----END (PUBLIC KEY|CERTIFICATE)-----/.test($textarea.val());
-    } else {
-      valid = /-----BEGIN RSA PRIVATE KEY-----(.|\n)*-----END RSA PRIVATE KEY-----/.test($textarea.val());
-    }*/
 
     if (valid.valid) {
       $textarea.removeClass('error');
@@ -792,7 +810,7 @@ FaFp+DyAe+b4nDwuJaW2LURbr8AEZga7oQj0uYxcYw==\n\
   }
 
   loadFromStorage(function (jwt) {
-    lastRestoredToken = jwt || DEFAULT_HS_TOKEN;
+    lastRestoredToken = jwt || defaultTokens.hs256.token;
 
     tokenEditor.setValue(
       lastRestoredToken
