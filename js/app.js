@@ -316,7 +316,7 @@ $(".panel-default .panel-heading").click(function() {
 
     var matches = /"(.*)":\s*"?(\d*)"?/.exec(line);
     if(matches && timeClaims.indexOf(matches[1]) !== -1) {
-      var dateStr = (new Date(parseInt(matches[2]) * 1000)).toString();
+      var dateStr = (new Date(parseInt(matches[2], 10) * 1000)).toString();
       payloadTooltip.text(dateStr);
       payloadTooltip.css({
         left: event.pageX + 'px',
