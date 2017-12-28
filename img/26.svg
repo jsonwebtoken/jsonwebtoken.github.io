@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   height="600"
+   width="600"
+   version="1.1"
+   viewBox="0 0 600 599.99999"
+   data-name="Layer 1"
+   id="Layer_1">
+  <metadata
+     id="metadata23">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>cpp_logo</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs4">
+    <style
+       id="style2">.cls-1{fill:#00599c;}.cls-2{fill:#004482;}.cls-3{fill:#659ad2;}.cls-4{fill:#fff;}</style>
+  </defs>
+  <title
+     id="title6">cpp_logo</title>
+  <circle
+     r="300"
+     cy="300"
+     cx="300"
+     id="path4527"
+     style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.65803099;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+  <g
+     transform="translate(147,-127.84374)"
+     id="g4525">
+    <path
+       class="cls-1"
+       d="m 302.11,513.90999 a 27.11,27.11 0 0 0 3.89,-13 v -146.12 a 27.11,27.11 0 0 0 -3.89,-13 l -149.11,86.03 z"
+       id="path8"
+       style="fill:#00599c" />
+    <path
+       class="cls-2"
+       d="m 166.25,596.83999 126.5,-73 a 27.11,27.11 0 0 0 9.36,-9.9 l -149.11,-86.12 -149.11,86.09 a 27.11,27.11 0 0 0 9.36,9.9 l 126.5,73 c 7.25,4.24 19.25,4.24 26.5,0.03 z"
+       id="path10"
+       style="fill:#004482" />
+    <path
+       class="cls-3"
+       d="m 302.11,341.73999 a 27.11,27.11 0 0 0 -9.36,-9.9 l -126.5,-73 c -7.25,-4.19 -19.25,-4.19 -26.5,-0.03 l -126.5,73 C 6,336.04999 0,346.36999 0,354.78999 v 146.07 a 27.11,27.11 0 0 0 3.89,13 l 149.11,-86.04 z"
+       id="path12"
+       style="fill:#659ad2" />
+    <path
+       class="cls-4"
+       d="m 153,529.81999 a 102,102 0 1 1 88.33,-153 l -44.14,25.55 a 51,51 0 1 0 0,51 l 44.14,25.54 a 102.36,102.36 0 0 1 -88.33,50.91 z"
+       id="path14"
+       style="fill:#ffffff" />
+    <polygon
+       class="cls-4"
+       points="232.33,189.18 243.67,189.18 243.67,177.84 255,177.84 255,166.51 243.67,166.51 243.67,155.18 232.33,155.18 232.33,166.51 221,166.51 221,177.84 232.33,177.84 "
+       id="polygon16"
+       style="fill:#ffffff"
+       transform="translate(0,255.64999)" />
+    <polygon
+       class="cls-4"
+       points="274.83,189.18 286.17,189.18 286.17,177.84 297.5,177.84 297.5,166.51 286.17,166.51 286.17,155.18 274.83,155.18 274.83,166.51 263.5,166.51 263.5,177.84 274.83,177.84 "
+       id="polygon18"
+       style="fill:#ffffff"
+       transform="translate(0,255.64999)" />
+  </g>
+</svg>
