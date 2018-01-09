@@ -1,69 +1,52 @@
-module.exports = function (grunt) {
-  require('matchdep').filter('grunt-*').forEach(grunt.loadNpmTasks);
+const webpackConfig = require('./webpack.config.js');
+
+module.exports = grunt => {
+  grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-stylus');
+  grunt.loadNpmTasks('grunt-contrib-pug');
+  grunt.loadNpmTasks('grunt-webpack');
 
   grunt.initConfig({
-    // clean: [
-    //   'dist/'
-    // ],
-    watch: {
-      min: {
-        options: {
-          livereload: true
-        },
-        files: ['Gruntfile.js', 'js/**/*.js', 'stylus/**/*.styl', 'views/**/*.jade', 'views/**/*.md'],
-        tasks: ['build']
+    copy: {
+      main: {
+        files: [{
+          expand: true,
+          src: ['img/**', 'fonts/**', 'assets/**'],
+          dest: 'dist/website'
+        }, {
+          expand: true,
+          flatten: true,
+          src: [
+            'node_modules/bootstrap/dist/css/bootstrap.min.css',
+            'node_modules/codemirror/lib/codemirror.css',
+            'node_modules/codemirror/addon/lint/lint.css',
+            'css/budicon.css'
+          ],
+          dest: 'dist/website/css/'
+        }]
       }
-    },
-    connect: {
-      dev: {
-        options: {
-          hostname: '0.0.0.0',
-          livereload: true,
-          protocol: 'http',
-          passphrase: ''
-        }
-      },
-    },
+    }, 
     stylus: {
       compile: {
         files: {
-          'css/app.css': 'stylus/app.styl'
+          'dist/website/css/app.css': 'stylus/app.styl'
         }
       }
     },
-    jade: {
+    pug: {
       compile: {
         files: {
-          'index.html': 'views/index.jade',
-          'introduction/index.html': 'views/introduction.jade'
+          'dist/website/index.html': 'views/index.pug',
+          'dist/website/introduction/index.html': 'views/introduction.pug'
         }
       }
     },
-    // useminPrepare: {
-    //   html: 'html/index.html',
-    //   options: {
-    //     root: '.',
-    //     dest: '.'
-    //   }
-    // },
-    // usemin: {
-    //   html: 'index.html',
-    //   options: {
-    //     assetsDir: ['dist/']
-    //   }
-    // },
-    // htmlmin: {
-    //   dist: {
-    //     files:  { 'index.html': 'html/index.html' }
-    //   }
-    // },
-    mocha_phantomjs: {
-      all: ['test/**/*.html']
+    webpack: {
+      prod: webpackConfig,
+      dev: webpackConfig
     }
   });
 
-  grunt.registerTask('build', ['stylus', 'jade']);
-  // grunt.registerTask('build', ['clean', 'stylus', 'jade', 'useminPrepare', 'concat', 'uglify', 'cssmin', 'htmlmin', 'usemin']);
-  grunt.registerTask('test', ['build', 'mocha_phantomjs']);
-  grunt.registerTask('default', ['build', 'connect', 'watch']);
+  grunt.registerTask('build', ['copy', 'stylus', 'pug', 'webpack']);
+  grunt.registerTask('default', ['build']);
 };

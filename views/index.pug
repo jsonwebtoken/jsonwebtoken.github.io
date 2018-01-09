@@ -1,0 +1,335 @@
+extends layout
+
+block content
+  nav.navbar.closed
+    .container
+      .top-mobile
+        .menu-trigger
+          span
+
+        a.brand(href='/')
+          img(src='/img/pic_logo.svg').icon
+          img(src='/img/logo.svg').logo
+
+      nav.menu
+        a(href='#debugger-io').scrollto Debugger
+        a(href='#libraries-io').scrollto Libraries
+        a(href='/introduction') Introduction
+        a(href='https://auth0.com/forum/c/jwt', target='_blank') Ask
+        a(href='http://swag.auth0.com/', target='_blank') Get a T-shirt!
+
+      .social
+        a.a0(href='https://auth0.com/?utm_source=jwtio&utm_campaign=craftedby', target='_blank')
+          span.by-text Crafted by
+          img(src='/img/pic_logo_ft.svg', alt='Token Based Authentication')
+
+      a.supported(href='https://auth0.com/?utm_source=jwtio&utm_campaign=craftedby', target="_blank")
+          | Supported by
+          img(src='/img/ico_logo.svg', alt='Token Based Authentication')
+
+  section.banner-jwt
+    .container
+      a.logo(href='/')
+        img(src='/img/pic_logo.svg', alt='Token Based Authentication')
+
+      p
+        | JSON Web Tokens are an open, industry standard&nbsp;
+        a(href='https://tools.ietf.org/html/rfc7519', target='_blank') RFC 7519
+        |  method for representing claims securely between two parties.
+      p JWT.IO allows you to decode, verify and generate JWT.
+
+      a.btn.btn-lg(href="/introduction") Learn more about jwt
+
+  section.update-site
+    span
+      strong Love JWT.IO?
+      | Bring the debugger to your favorite browser with our new chrome extension.
+    a#extension-button.extension-button
+      svg(width='14px', height='13px', viewbox='24 11 14 13', version='1.1', xmlns='http://www.w3.org/2000/svg', xmlns:xlink='http://www.w3.org/1999/xlink')
+        defs
+          path#path-1(d='M30.0287226,15.7142857 L30.0287226,11 L31.600907,11 L31.600907,15.7142857 L36.3174603,15.7142857 L36.3174603,17.2857143 L31.600907,17.2857143 L31.600907,22 L30.0287226,22 L30.0287226,17.2857143 L25.3121693,17.2857143 L25.3121693,15.7142857 L30.0287226,15.7142857 Z')
+          filter#filter-2(x='-50%', y='-50%', width='200%', height='200%', filterunits='objectBoundingBox')
+            feoffset(dx='0', dy='1', in='SourceAlpha', result='shadowOffsetOuter1')
+            fegaussianblur(stddeviation='0.5', in='shadowOffsetOuter1', result='shadowBlurOuter1')
+            fecolormatrix(values='0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.1 0', type='matrix', in='shadowBlurOuter1')
+        g#Rectangle-213(stroke='none', fill='none')
+          use(fill='black', fill-opacity='1', filter='url(#filter-2)', xlink:href='#path-1')
+          use(fill='#FFFFFF', fill-rule='evenodd', xlink:href='#path-1')
+
+      span.button-text Add to chrome
+  section.jtw-ebook-banner
+    span
+      strong Get the JWT Handbook for free!
+      | Spread the word and download it now.
+    a.btn.btn-download-ebook(href='https://auth0.com/e-books/jwt-handbook?utm_source=jwtio&utm_medium=sc&utm_campaign=rotating_banner', target='_blank') Download Ebook
+  
+  script.
+    var extensionSection = document.getElementsByClassName("update-site")[0];
+    var ebookSection = document.getElementsByClassName("jtw-ebook-banner")[0];
+    if (Math.random() >= .5) {
+    extensionSection.style.display = 'block';
+    } else {
+    ebookSection.style.display = 'block';
+    }
+
+  section#debugger-io.debugger-jwt
+    .container
+      //- a(name='debugger')
+      h1 Debugger
+
+      .jwt-playground
+        .selections
+          .token-type
+            span Token
+            .hide
+              label
+                input(type='radio', name='token-type', value='id_token', checked='')
+              label
+                input(type='radio', name='token-type', value='access_token')
+            .jwt-select
+              select
+                option(name='token-type',value='id_token', selected='') id_token
+                option(name='token-type',value='access_token') access_token
+
+          .algorithm
+            span Algorithm
+            .hide
+              label
+                input(type='radio', name='algorithm', value='HS256', checked='')
+              //- Buggy support in library
+              //- label
+              //-  input(type='radio', name='algorithm', value='HS384')
+              label
+                input(type='radio', name='algorithm', value='HS512')
+              label
+                input(type='radio', name='algorithm', value='RS256')
+              label
+                input(type='radio', name='algorithm', value='RS384')
+              label
+                input(type='radio', name='algorithm', value='RS512')
+              label
+                input(type='radio', name='algorithm', value='ES256')
+              label
+                input(type='radio', name='algorithm', value='ES384')
+              //- Not supported by JWS library
+              //- label
+              //-  input(type='radio', name='algorithm', value='ES512')
+              //- Buggy support in library
+              //- label
+              //-   input(type='radio', name='algorithm', value='PS256')
+              //- label
+              //-   input(type='radio', name='algorithm', value='PS384')
+              //- label
+              //-   input(type='radio', name='algorithm', value='PS512')
+            .jwt-select
+              select#algorithm-select
+                option(name='algorithm',value='HS256', selected='') HS256
+                //- option(name='algorithm',value='HS384') HS384
+                option(name='algorithm',value='HS512') HS512
+                option(name='algorithm',value='RS256') RS256
+                option(name='algorithm',value='RS384') RS384
+                option(name='algorithm',value='RS512') RS512
+                option(name='algorithm',value='ES256') ES256
+                option(name='algorithm',value='ES384') ES384
+                //- option(name='algorithm',value='ES512') ES512
+                //- option(name='algorithm',value='PS256') PS256
+                //- option(name='algorithm',value='PS384') PS384
+                //- option(name='algorithm',value='PS512') PS512
+
+        .algorithm-code
+          .tab-nav
+            .tab-link.current
+              a(href='#encoded-jwt') Encoded
+                small paste a token here
+            .tab-link
+              a(href='#decoded-jwt') Decoded
+                small edit the payload and secret
+
+          .tab-content
+            #encoded-jwt.box-content.current
+              .input.js-input
+            #decoded-jwt.box-content
+              .output
+                .jwt-explained.jwt-header
+                  p.text-line HEADER:
+                    span ALGORITHM & TOKEN TYPE
+                  .js-header
+
+                .jwt-explained.jwt-payload
+                  p.text-line PAYLOAD:
+                    span DATA
+                  .js-payload
+                    #js-payload-tooltip
+
+                .jwt-explained.jwt-signature
+                  p.text-line VERIFY SIGNATURE
+                  pre.pre-encode.HS256.
+                    <span id="hmacsha-text">HMACSHA256</span>(
+                      base64UrlEncode(header) + "." +
+                      base64UrlEncode(payload),
+                      <input type="text" name="secret" value="secret">
+                    )<span class="is-base64-encoded-label"> <input id="is-base64-encoded" type="checkbox" name="is-base64-encoded"><label for="is-base64-encoded">secret base64 encoded</label></span>
+                  pre.pre-encode.RS256.
+                    <span id="rsasha-text">RSASHA256</span>(
+                      base64UrlEncode(header) + "." +
+                      base64UrlEncode(payload),
+                      <textarea rows="4" name="public-key" placeholder="Public Key or Certificate. Enter it in plain text only if you want to verify a token"></textarea>,
+                      <textarea rows="5" name="private-key" placeholder="Private Key. Enter the it in plain text only if you want to generate a new token. The key never leaves your browser."></textarea>
+                    )
+
+        .validation-status.js-signature
+
+  section#libraries-io.libraries-jwt
+    .container
+      .title-header
+        //- a(name='libraries')
+        h1 Libraries for Token Signing/Verification
+
+        .filter
+          span Filter by
+          .jwt-select
+            select#libraries-select
+              // Languages must be in alphabetic order
+              option(value='*', selected='') All
+              option(value='._1c') 1c
+              option(value='.c') C
+              option(value='.clojure') Clojure
+              option(value='.crystal') Crystal
+              option(value='.d') D
+              option(value='.delphi') Delphi
+              option(value='.elixir') Elixir
+              option(value='.go') Go
+              option(value='.groovy') Groovy
+              option(value='.haskell') Haskell
+              option(value='.haxe') Haxe
+              option(value='.java') Java
+              option(value='.js') JavaScript
+              option(value='.lua') Lua
+              option(value='.net') .NET
+              option(value='.node') Node.js
+              option(value='.objective-c') Objective-c
+              option(value='.perl') Perl
+              option(value='.php') PHP
+              option(value='.postgresql') PostgreSQL
+              option(value='.python') Python
+              option(value='.q') Q
+              option(value='.ruby') Ruby
+              option(value='.rust') Rust
+              option(value='.scala') Scala
+              option(value='.swift') Swift
+
+      .warning
+        b Warning:
+        |  Critical vulnerabilities in JSON Web Token libraries with asymmetric keys.
+        a(href='https://auth0.com/blog/2015/03/31/critical-vulnerabilities-in-json-web-token-libraries/')
+          | Learn more
+
+          svg(height='48', viewbox='0 0 48 48', width='48', xmlns='http://www.w3.org/2000/svg')
+            path(d='M-838-2232H562v3600H-838z', fill='none')
+            path(d='M16 10v28l22-14z')
+
+      .libraries-sv(data-accordion-group)
+        include libraries/net.pug
+        include libraries/net2.pug
+        include libraries/netrt.pug
+        include libraries/python.pug
+        include libraries/python2.pug
+        include libraries/python3.pug
+        include libraries/node.pug
+        include libraries/java.pug
+        include libraries/java2.pug
+        include libraries/java3.pug
+        include libraries/java4.pug
+        include libraries/java5.pug
+        include libraries/java6.pug
+        include libraries/js.pug
+        include libraries/js2.pug
+        include libraries/perl5.pug
+        include libraries/ruby.pug
+        include libraries/ruby2.pug
+        include libraries/ruby3.pug        
+        include libraries/ruby4.pug
+        include libraries/elixir.pug
+        include libraries/elixir2.pug
+        include libraries/elixir3.pug
+        include libraries/go.pug
+        include libraries/go2.pug
+        include libraries/go3.pug
+        include libraries/go4.pug
+        include libraries/go5.pug
+        include libraries/go6.pug
+        include libraries/go7.pug
+        include libraries/go8.pug
+        include libraries/groovy.pug
+        include libraries/haskell.pug
+        include libraries/haskell2.pug
+        include libraries/haxe.pug
+        include libraries/rust.pug
+        include libraries/rust2.pug
+        include libraries/rust3.pug
+        include libraries/lua.pug
+        include libraries/scala.pug
+        include libraries/scala2.pug
+        include libraries/scala3.pug
+        include libraries/scala4.pug
+        include libraries/d.pug
+        include libraries/d2.pug
+        include libraries/clojure.pug
+        include libraries/objective-c.pug
+        include libraries/swift.pug
+        include libraries/swift2.pug
+        include libraries/c.pug
+        include libraries/c2.pug
+        include libraries/q.pug
+        include libraries/delphi.pug
+        include libraries/delphi2.pug
+        include libraries/php.pug
+        include libraries/php3.pug
+        include libraries/php4.pug
+        include libraries/php5.pug
+        include libraries/php6.pug
+        include libraries/php7.pug
+        include libraries/php8.pug
+        include libraries/crystal.pug
+        include libraries/1c.pug
+        include libraries/postgresql.pug
+
+  section.sources
+    .container
+      .columns
+        .column.badges
+          h2 Badges
+          .hold
+            a(href='http://jwt.io/assets/badge.svg', target='_blank')
+              img(src='assets/badge.svg')
+          .text-hold
+            a(href='http://jwt.io/assets/badge.svg', target='_blank')
+              i.icon-budicon-722
+            p http://jwt.io/assets/badge.svg
+          .hold
+            a(href='http://jwt.io/assets/badge-compatible.svg', target='_blank')
+              img(src='assets/badge-compatible.svg')
+          .text-hold
+            a(href='http://jwt.io/assets/badge-compatible.svg', target='_blank')
+              i.icon-budicon-722
+            p http://jwt.io/assets/badge-compatible.svg
+        .column.logotype
+          h2 Logotype
+          .hold
+            a(href='http://jwt.io/assets/icon.svg', target='_blank')
+              img(src='assets/icon.svg')
+          .text-hold
+            a(href='http://jwt.io/assets/icon.svg', target='_blank')
+              i.icon-budicon-722
+            p http://jwt.io/assets/icon.svg
+          .hold
+            a(href='http://jwt.io/assets/logo.svg', target='_blank')
+              img(src='assets/logo.svg')
+          .text-hold
+            a(href='http://jwt.io/assets/logo.svg', target='_blank')
+              i.icon-budicon-722
+            p http://jwt.io/assets/logo.svg
+        .column.tshirt
+          h2 Store
+          img(src='img/pic_tshirt.png')
+          a.buy(href='http://swag.auth0.com/', target='_blank') Buy T-Shirt

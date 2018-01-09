@@ -95,12 +95,14 @@ $('.navbar .menu a').on('click', function() {
   $('body').removeClass('menu-mobile');
 });
 
+// DEAD CODE
 /*
  * Accordion
  */
 $('.accordion').accordion({
   "transitionSpeed": 400
 });
+// DEAD CODE END
 
 /*
  * Scroll to section
@@ -198,12 +200,13 @@ setInterval(function() {
 
 poll();
 
-
+// DEAD CODE
 if (navigator.userAgent.indexOf('Mac OS X') != -1) {
   $("body").addClass("mac");
 } else {
   $("body").addClass("pc");
 }
+// DEAD CODE END
 
 
 $(".jwt-playground .tab-link a").click(function() {
@@ -230,6 +233,7 @@ $('.filter select').on( 'change', function() {
   $grid.isotope({ filter: $(this).val() });
 });
 
+// DEAD CODE
 $(".panel-default .panel-heading").click(function() {
   if ($(this).hasClass("active")) {
     $(".panel-default .panel-heading").removeClass("active");
@@ -242,6 +246,7 @@ $(".panel-default .panel-heading").click(function() {
   }
   return false;
 });
+// DEAD CODE END
 
 // Principal JWT JS **
 
