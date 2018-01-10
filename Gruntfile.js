@@ -11,7 +11,7 @@ module.exports = grunt => {
       main: {
         files: [{
           expand: true,
-          src: ['img/**', 'fonts/**', 'assets/**'],
+          src: ['img/**', 'fonts/**', 'assets/**', 'opensearch.xml'],
           dest: 'dist/website'
         }, {
           expand: true,

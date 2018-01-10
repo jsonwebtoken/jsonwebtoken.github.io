@@ -33,7 +33,7 @@ function parseLocationQuery() {
     scroll = true;
   }
   if(token) {
-    setTokenEditorValue(value);
+    setTokenEditorValue(token);
     scroll = true;
   }
 
