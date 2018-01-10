@@ -28,8 +28,8 @@ export function httpGet(url, cache = true) {
   });
 }
 
-export function downloadPublicKeyIfPossible() {
-  return '';
+export function downloadPublicKeyIfPossible(decodedToken) {
+  return Promise.reject();
 }
 
 export function isValidBase64String(s, urlOnly) {

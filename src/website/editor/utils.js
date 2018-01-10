@@ -34,5 +34,5 @@ export function fixEditorHeight() {
 }
 
 export function stringify(object) {
-  return JSON.stringify(object, 2);
+  return JSON.stringify(object, null, 2);
 }

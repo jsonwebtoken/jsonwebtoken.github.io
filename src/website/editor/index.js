@@ -1,4 +1,5 @@
 import { copyTextToClipboard } from '../utils.js';
+import { downloadPublicKeyIfPossible } from '../../utils.js';
 import { tooltipHandler } from './tooltip.js';
 import { tokenEditor, headerEditor, payloadEditor } from './instances.js';
 import { 
@@ -273,12 +274,12 @@ function setupEvents() {
   eventManager.addCodeMirrorEvent(payloadEditor, 'change', encodeToken);
 
   // HMAC secret, when changed the encoded token must be updated.
-  eventManager.addDomEvent(secretInput, 'change', encodeToken);
+  eventManager.addDomEvent(secretInput, 'input', encodeToken);
   // Private key, when changed the encoded token must be updated.
-  eventManager.addDomEvent(privateKeyTextArea, 'change', encodeToken);
+  eventManager.addDomEvent(privateKeyTextArea, 'input', encodeToken);
   // Public key, when changed the encoded token must NOT be updated
   // (only verified).
-  eventManager.addDomEvent(publicKeyTextArea, 'change', verifyToken);
+  eventManager.addDomEvent(publicKeyTextArea, 'input', verifyToken);
 
   // The following event are never disabled, so it is not necessary to go
   // through the event manager for them.
@@ -296,5 +297,6 @@ export function setTokenEditorValue(value) {
 export function setupTokenEditor() {
   setupEvents();
   selectAlgorithm('HS256');
+  useDefaultToken('HS256');
   fixEditorHeight();
 }
