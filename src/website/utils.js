@@ -1,3 +1,5 @@
+import { navbarElement } from './dom-elements.js';
+
 export function safeLocalStorageSetItem(key, value) {
   try {
     localStorage.setItem(key, value);
@@ -103,3 +105,27 @@ export function isInViewport(elem) {
       bounding.right <= (window.innerWidth || document.documentElement.clientWidth)
   );
 };
+
+export function isWideScreen() {
+  return window.matchMedia('(min-width: 768px)').matches;
+}
+
+// This is the only function that really requires jQuery, other than some
+// of the dependencies. Consider this when adding code that depends on
+// jQuery somewhere else.
+export function smoothScrollTo(element) {
+  // TODO: don't use jQuery
+  
+  const navHeight = $(navbarElement).height();
+  const targetElement = $(element);
+
+  if (isWideScreen()) {
+    $('html, body').animate({
+      scrollTop: targetElement.offset().top - navHeight
+    }, 500);
+  } else {
+    $('html, body').animate({
+      scrollTop: targetElement.offset().top
+    }, 500);
+  }
+}

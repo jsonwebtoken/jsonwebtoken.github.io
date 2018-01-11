@@ -7,11 +7,12 @@ import {
   useDefaultToken
 } from './editor';
 import { setupJwtCounter } from './counter.js';
-import { getParameterByName } from './utils.js';
+import { getParameterByName, smoothScrollTo } from './utils.js';
 import { 
   publicKeyTextArea, 
   codeElements, 
-  debuggerSection
+  debuggerSection,
+  menuScrollableLinks
 } from './dom-elements.js';
 
 import hljs from 'highlight.js';
@@ -70,8 +71,21 @@ function setupHighlighting() {
 }
 
 function setupSmoothScrolling() {
-  //TODO
-  console.log('TODO: smooth scrolling');
+  Array.prototype.forEach.call(menuScrollableLinks, scrollable => {
+    scrollable.addEventListener('click', event => {
+      event.preventDefault();
+
+      const start = scrollable.href.indexOf('#');
+      if(start === -1) {
+        console.error('<a> element with .scrollto set and bad link: ', 
+                      scrollable.href);
+        return;
+      }
+
+      const id = scrollable.href.substr(start + 1);
+      smoothScrollTo(document.getElementById(id));
+    });
+  });
 }
 
 // Initialization

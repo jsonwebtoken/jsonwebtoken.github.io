@@ -1,4 +1,5 @@
 import { tokenEditor } from './instances.js';
+import { isWideScreen } from '../utils.js';
 import { 
   algorithmSelect, 
   publicKeyTextArea,
@@ -28,7 +29,7 @@ export function copyTokenLink() {
 }
 
 export function fixEditorHeight() {
-  if(window.matchMedia('(min-width: 768px)').matches) {
+  if(isWideScreen()) {
     editorElement.style.height = `${decodedElement.offsetHeight}px`;
   }
 }
