@@ -18,7 +18,7 @@ export function tooltipHandler(event) {
     payloadTooltipElement.style.left = event.pageX + 'px';
     payloadTooltipElement.style.top = event.pageY + 'px';
 
-    payloadTooltipElement.style.display = '';
+    payloadTooltipElement.style.display = 'block';
   } else {
     payloadTooltipElement.style.display = 'none';
   }

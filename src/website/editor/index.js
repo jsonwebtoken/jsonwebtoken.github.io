@@ -208,7 +208,9 @@ function encodeToken() {
 
       tokenEditor.setValue(encoded);
     } catch(e) {
-      console.error('Failed to sign/encode token: ', e);
+      console.error('Failed to sign/encode token: ', e);      
+      markAsInvalid();
+      tokenEditor.setValue('');
     }    
 
     verifyToken();
