@@ -1,5 +1,5 @@
 import { copyTextToClipboard } from '../utils.js';
-import { downloadPublicKeyIfPossible } from '../../utils.js';
+import { downloadPublicKeyIfPossible } from '../../public-key-download.js';
 import { tooltipHandler } from './tooltip.js';
 import { tokenEditor, headerEditor, payloadEditor } from './instances.js';
 import { 
@@ -114,8 +114,8 @@ export function useDefaultToken(algorithm) {
     if(algorithm.indexOf('HS') === 0) {
       secretInput.value = defaults.secret;
     } else {
-      publicKeyTextArea.firstChild.textContent = defaults.publicKey;
-      privateKeyTextArea.firstChild.textContent = defaults.privateKey;
+      publicKeyTextArea.value = defaults.publicKey;
+      privateKeyTextArea.value = defaults.privateKey;
     }
 
     markAsValid();
@@ -203,7 +203,7 @@ function encodeToken() {
       const encoded = sign(header, payload, 
         header.alg.indexOf('HS') === 0 ?
           secretInput.value :
-          privateKeyTextArea.firstChild.textContent,
+          privateKeyTextArea.value,
           secretBase64Checkbox.checked);
 
       tokenEditor.setValue(encoded);
@@ -224,7 +224,7 @@ function decodeToken() {
       selectAlgorithm(decoded.header.alg);
       downloadPublicKeyIfPossible(decoded).then(publicKey => {
         eventManager.withDisabledEvents(() => {
-          publicKeyTextArea.firstChild.textContent = publicKey;
+          publicKeyTextArea.value = publicKey;
           verifyToken();
         });
       });
@@ -251,7 +251,7 @@ function verifyToken() {
   const publicKeyOrSecret = 
     decoded.header.alg.indexOf('HS') === 0 ?
       secretInput.value : 
-      publicKeyTextArea.firstChild.textContent;
+      publicKeyTextArea.value;
 
   if(verify(jwt, publicKeyOrSecret, secretBase64Checkbox.checked)) {
     markAsValid();

@@ -100,8 +100,3 @@ export function isValidKey(key) {
     key: key
   };
 }
-
-export function downloadPublicKeyIfPossible(decodedToken) {
-  return Promise.reject();
-}
-
