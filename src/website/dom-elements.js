@@ -7,8 +7,9 @@ export const menuScrollableLinks =
 export const sectionElements = document.getElementsByTagName('section');
 
 export const extensionButton = document.getElementById('extension-button');
-export const extensionButtonText = 
-  extensionButton.querySelector('.button-text');
+export const extensionButtonText = extensionButton ?
+  extensionButton.querySelector('.button-text') :
+  undefined;
 
 export const codeElements = document.querySelectorAll('.plain-text pre code');
 

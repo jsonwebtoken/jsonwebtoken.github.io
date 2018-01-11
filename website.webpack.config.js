@@ -3,12 +3,12 @@ const webpack = require('webpack');
 module.exports = {
   devtool: 'source-map',
   entry: {
-    website: './src/website/index.js',
-    //extension: './src/extension/index.js'
+    index: './src/website/index.js',
+    introduction: './src/website/introduction/index.js'
   },
   output: {
-    filename: '[name]/js/index.js',
-    path: __dirname + '/dist'
+    filename: '[name].js',
+    path: __dirname + '/dist/website/js'
   },
   module: {
     rules: [{

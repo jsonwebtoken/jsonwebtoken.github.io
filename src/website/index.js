@@ -7,15 +7,14 @@ import {
   useDefaultToken
 } from './editor';
 import { setupJwtCounter } from './counter.js';
+import { setupSmoothScrolling } from './smooth-scrolling.js';
+import { setupHighlighting } from './highlighting.js';
 import { getParameterByName, smoothScrollTo } from './utils.js';
 import { 
   publicKeyTextArea, 
   codeElements, 
   debuggerSection,
-  menuScrollableLinks
 } from './dom-elements.js';
-
-import hljs from 'highlight.js';
 
 /* For initialization, look at the end of this file */
 
@@ -38,7 +37,9 @@ function parseLocationQuery() {
     scroll = true;
   }
 
-  debuggerSection.scrollIntoView(true);
+  if(scroll) {
+    debuggerSection.scrollIntoView(true);
+  }
 }
 
 function loadToken() {
@@ -53,39 +54,6 @@ function loadToken() {
   } else {
     useDefaultToken('HS256');
   }
-}
-
-function setupHighlighting() {
-  // TODO: consider replacing this with CodeMirror, which we already use.
-
-  hljs.configure({
-    classPrefix: ''
-  });
-  
-  Array.prototype.forEach.call(codeElements, element => {
-    if(!element.classList.contains('hljs')) {
-      element.classList.add('hljs');
-      hljs.highlightBlock(element);   
-    }
-  });
-}
-
-function setupSmoothScrolling() {
-  Array.prototype.forEach.call(menuScrollableLinks, scrollable => {
-    scrollable.addEventListener('click', event => {
-      event.preventDefault();
-
-      const start = scrollable.href.indexOf('#');
-      if(start === -1) {
-        console.error('<a> element with .scrollto set and bad link: ', 
-                      scrollable.href);
-        return;
-      }
-
-      const id = scrollable.href.substr(start + 1);
-      smoothScrollTo(document.getElementById(id));
-    });
-  });
 }
 
 // Initialization

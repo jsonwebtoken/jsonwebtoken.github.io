@@ -1,4 +1,4 @@
-const webpackConfig = require('./webpack.config.js');
+const websiteWebpackConfig = require('./website.webpack.config.js');
 
 module.exports = grunt => {
   grunt.loadNpmTasks('grunt-contrib-copy');
@@ -42,8 +42,8 @@ module.exports = grunt => {
       }
     },
     webpack: {
-      prod: webpackConfig,
-      dev: webpackConfig
+      prod: websiteWebpackConfig,
+      dev: websiteWebpackConfig
     }
   });
 

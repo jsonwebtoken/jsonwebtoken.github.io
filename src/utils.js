@@ -28,10 +28,6 @@ export function httpGet(url, cache = true) {
   });
 }
 
-export function downloadPublicKeyIfPossible(decodedToken) {
-  return Promise.reject();
-}
-
 export function isValidBase64String(s, urlOnly) {
   try {
     const validChars = urlOnly ?
@@ -103,5 +99,9 @@ export function isValidKey(key) {
     valid: false,
     key: key
   };
+}
+
+export function downloadPublicKeyIfPossible(decodedToken) {
+  return Promise.reject();
 }
 
