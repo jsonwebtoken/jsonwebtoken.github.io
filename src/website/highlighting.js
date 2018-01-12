@@ -1,6 +1,11 @@
 import { codeElements } from './dom-elements.js';
 
-import hljs from 'highlight.js';
+import hljs from 'highlight.js/lib/highlight.js';
+import jsHighlight from 'highlight.js/lib/languages/javascript';
+import jsonHighlight from 'highlight.js/lib/languages/json';
+
+hljs.registerLanguage('javascript', jsHighlight);
+hljs.registerLanguage('json', jsonHighlight);
 
 export function setupHighlighting() {
   // TODO: consider replacing this with CodeMirror, which we already use.
