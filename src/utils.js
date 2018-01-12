@@ -100,3 +100,7 @@ export function isValidKey(key) {
     key: key
   };
 }
+
+export function deferToNextLoop(func) {
+  setTimeout(func, 1);
+}

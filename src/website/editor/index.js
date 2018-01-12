@@ -1,4 +1,5 @@
 import { copyTextToClipboard } from '../utils.js';
+import { deferToNextLoop } from '../../utils.js';
 import { downloadPublicKeyIfPossible } from '../../public-key-download.js';
 import { tooltipHandler } from './tooltip.js';
 import { tokenEditor, headerEditor, payloadEditor } from './instances.js';
@@ -73,7 +74,7 @@ function displaySecretOrKeys(algorithm) {
     keyEditorContainer.style.display = '';
   }
 
-  fixEditorHeight();
+  deferToNextLoop(fixEditorHeight);
 }
 
 function selectAlgorithm(algorithm) {
@@ -175,6 +176,8 @@ function markAsInvalidWithElement(element, clearTokenEditor = true) {
 }
 
 function encodeToken() {
+  deferToNextLoop(fixEditorHeight);
+
   eventManager.withDisabledEvents(() => {
     let header;
     try {
@@ -218,23 +221,31 @@ function encodeToken() {
 }
 
 function decodeToken() {
+  deferToNextLoop(fixEditorHeight);
+
   eventManager.withDisabledEvents(() => {
     try {
       const jwt = getTrimmedValue(tokenEditor);
       const decoded = decode(jwt);
   
       selectAlgorithm(decoded.header.alg);
-      downloadPublicKeyIfPossible(decoded).then(publicKey => {
-        eventManager.withDisabledEvents(() => {
-          publicKeyTextArea.value = publicKey;
-          verifyToken();
+      if(decoded.header.alg && decoded.header.alg.indexOf('HS') === -1) {
+        downloadPublicKeyIfPossible(decoded).then(publicKey => {
+          eventManager.withDisabledEvents(() => {
+            publicKeyTextArea.value = publicKey;
+            verifyToken();
+          });
         });
-      });
+      }
   
       headerEditor.setValue(stringify(decoded.header));
       payloadEditor.setValue(stringify(decoded.payload));
   
-      verifyToken();
+      if(decoded.errors) {
+        markAsInvalidWithElement(editorElement, false);
+      } else {
+        verifyToken();
+      }
     } catch(e) {
       console.error('Failed to decode token: ', e);
     }  

@@ -16,7 +16,8 @@ const jsonEditorOptions = {
       instance.replaceSelection('   ', 'end');
     }
   },
-  lint: true
+  lint: true,
+  scrollbarStyle: 'null'
 };
 
 const tokenEditorOptions = Object.assign({}, jsonEditorOptions, {

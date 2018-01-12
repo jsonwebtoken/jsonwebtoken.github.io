@@ -518,6 +518,9 @@ body
       +breakpoint("tablet")
         grid(2, 30px, '.box-content')
 
+      .error .CodeMirror
+        background-color #ffc0cb
+
       .box-content
         height 0
         overflow hidden
@@ -576,9 +579,7 @@ body
           textarea
             width 100%
             max-width 266px
-            resize none
-            &.error
-              background-color #ffc0cb
+            resize none            
 
   .validation-status
     text-transform capitalize
