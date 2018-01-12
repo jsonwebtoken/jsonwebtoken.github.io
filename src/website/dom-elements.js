@@ -6,6 +6,9 @@ export const menuScrollableLinks =
 
 export const sectionElements = document.getElementsByTagName('section');
 
+export const extensionSection = document.querySelector('.update-site');
+export const ebookSection = document.querySelector('.jtw-ebook-banner');
+
 export const extensionButton = document.getElementById('extension-button');
 export const extensionButtonText = extensionButton ?
   extensionButton.querySelector('.button-text') :

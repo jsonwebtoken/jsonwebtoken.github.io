@@ -14,6 +14,8 @@ import {
   publicKeyTextArea, 
   codeElements, 
   debuggerSection,
+  extensionSection,
+  ebookSection
 } from './dom-elements.js';
 
 /* For initialization, look at the end of this file */
@@ -57,9 +59,7 @@ function loadToken() {
 }
 
 function pickEbookOrExtensionBanner() {
-  var extensionSection = document.getElementsByClassName("update-site")[0];
-  var ebookSection = document.getElementsByClassName("jtw-ebook-banner")[0];
-  if (Math.random() >= .5) {
+  if(Math.random() >= 0.5) {
     extensionSection.style.display = 'block';
   } else {
     ebookSection.style.display = 'block';
