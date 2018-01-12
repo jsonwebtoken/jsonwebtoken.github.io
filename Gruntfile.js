@@ -24,7 +24,8 @@ module.exports = grunt => {
             'node_modules/bootstrap/dist/css/bootstrap.min.css',
             'node_modules/codemirror/lib/codemirror.css',
             'node_modules/codemirror/addon/lint/lint.css',
-            'css/budicon.css'
+            'css/budicon.css',
+            'css/google-roboto-mono.css'
           ],
           dest: 'dist/website/css/'
         }]

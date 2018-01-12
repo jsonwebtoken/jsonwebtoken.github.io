@@ -56,6 +56,16 @@ function loadToken() {
   }
 }
 
+function pickEbookOrExtensionBanner() {
+  var extensionSection = document.getElementsByClassName("update-site")[0];
+  var ebookSection = document.getElementsByClassName("jtw-ebook-banner")[0];
+  if (Math.random() >= .5) {
+    extensionSection.style.display = 'block';
+  } else {
+    ebookSection.style.display = 'block';
+  }
+}
+
 // Initialization
 setupNavbar();
 setupExtensionButton();
@@ -66,3 +76,4 @@ loadToken();
 parseLocationQuery();
 setupHighlighting();
 setupJwtCounter();
+pickEbookOrExtensionBanner();
