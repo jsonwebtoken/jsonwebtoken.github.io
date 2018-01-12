@@ -1,4 +1,5 @@
-const websiteWebpackConfig = require('./website.webpack.config.js');
+const websiteWebpackConfigDev = require('./webpack.website-dev.js');
+const websiteWebpackConfigProd = require('./webpack.website-prod.js');
 
 module.exports = grunt => {
   grunt.loadNpmTasks('grunt-contrib-copy');
@@ -6,8 +7,10 @@ module.exports = grunt => {
   grunt.loadNpmTasks('grunt-contrib-pug');
   grunt.loadNpmTasks('grunt-webpack');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-clean');
 
   grunt.initConfig({
+    clean: [ 'dist' ],
     copy: {
       main: {
         files: [{
@@ -37,19 +40,20 @@ module.exports = grunt => {
     pug: {
       compile: {
         files: {
-          'dist/website/index.html': 'views/index.pug',
-          'dist/website/introduction/index.html': 'views/introduction.pug'
+          'dist/website/index.html': 'views/website/index.pug',
+          'dist/website/introduction/index.html': 
+            'views/website/introduction.pug'
         }
       }
     },
     webpack: {
-      prod: websiteWebpackConfig,
-      dev: websiteWebpackConfig
+      prod: websiteWebpackConfigProd,
+      dev: websiteWebpackConfigDev
     },
     watch: {
       js: {
         files: 'src/**',
-        tasks: 'webpack'
+        tasks: 'webpack:dev'
       },
       assets: {
         files: [
@@ -66,11 +70,14 @@ module.exports = grunt => {
       },
       views: {
         files: ['stylus/**', 'views/**'],
-        tasks: ['stylus', 'pug']
+        tasks: ['build-views']
       }
     }
   });
 
-  grunt.registerTask('build', ['copy', 'stylus', 'pug', 'webpack']);
-  grunt.registerTask('default', ['build', 'watch']);
+  grunt.registerTask('build-views', ['stylus', 'pug']);
+  grunt.registerTask('build', ['clean', 'copy', 'build-views', 'webpack:prod']);
+  grunt.registerTask('build-dev', 
+                     ['clean', 'copy', 'build-views', 'webpack:dev']);
+  grunt.registerTask('default', ['build-dev', 'watch']);
 };
