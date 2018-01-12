@@ -27,7 +27,11 @@ import {
   rsaShaTextSpan,
   keyEditorContainer,
   secretEditorContainer,
-  secretBase64Checkbox
+  secretBase64Checkbox,
+  encodedTabLink,
+  decodedTabLink,
+  encodedTabElement,
+  decodedTabElement
 } from '../dom-elements.js';
 
 // The event manager lets us enable/disable events as needed without
@@ -273,6 +277,28 @@ function verifyToken() {
   }
 }
 
+function setupTabEvents() {
+  // These are relevant for portrait or mobile screens.
+  
+  encodedTabLink.addEventListener('click', event => {
+    event.preventDefault();
+
+    decodedTabLink.parentNode.classList.remove('current');
+    encodedTabLink.parentNode.classList.add('current');
+    decodedTabElement.classList.remove('current');
+    encodedTabElement.classList.add('current');
+  });
+
+  decodedTabLink.addEventListener('click', event => {
+    event.preventDefault();
+
+    encodedTabLink.parentNode.classList.remove('current');
+    decodedTabLink.parentNode.classList.add('current');
+    encodedTabElement.classList.remove('current');
+    decodedTabElement.classList.add('current');
+  });
+}
+
 function setupEvents() {
   // The event manager lets us enable/disable events as needed without
   // manually tracking them. Events that need to be disabled should be
@@ -301,6 +327,8 @@ function setupEvents() {
   payloadElement.addEventListener('mousemove', tooltipHandler);
   // Temporary (share button not ready yet)
   signatureStatusElement.addEventListener('click', copyTokenLink);
+
+  setupTabEvents();
 }
 
 export function setTokenEditorValue(value) {

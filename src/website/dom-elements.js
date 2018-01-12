@@ -15,6 +15,12 @@ export const codeElements = document.querySelectorAll('.plain-text pre code');
 
 export const debuggerSection = document.getElementById('debugger-io');
 
+export const encodedTabLink = 
+  document.querySelector('.tab-link a[href="#encoded-jwt"]');
+export const decodedTabLink = 
+  document.querySelector('.tab-link a[href="#decoded-jwt"]');
+export const encodedTabElement = document.getElementById('encoded-jwt');
+export const decodedTabElement = document.getElementById('decoded-jwt');
 export const editorElement = document.querySelector('#encoded-jwt .input');
 export const decodedElement = document.querySelector('#decoded-jwt .output');
 export const headerElement = document.querySelector('.js-header');
