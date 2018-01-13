@@ -1,0 +1,42 @@
+.algorithm-code
+  .tab-nav
+    .tab-link.current
+      a(href='#encoded-jwt') Encoded
+        small paste a token here
+    .tab-link
+      a(href='#decoded-jwt') Decoded
+        small edit the payload and secret
+
+  .tab-content
+    #encoded-jwt.box-content.current
+      .input.js-input
+    #decoded-jwt.box-content
+      .output
+        .jwt-explained.jwt-header
+          p.text-line HEADER:
+            span ALGORITHM & TOKEN TYPE
+          .js-header
+
+        .jwt-explained.jwt-payload
+          p.text-line PAYLOAD:
+            span DATA
+          .js-payload
+            #js-payload-tooltip placeholder
+
+        .jwt-explained.jwt-signature
+          p.text-line VERIFY SIGNATURE
+          pre.pre-encode.HS256.
+            <span id="hmacsha-text">HMACSHA256</span>(
+              base64UrlEncode(header) + "." +
+              base64UrlEncode(payload),
+              <input type="text" name="secret" value="secret">
+            )<span class="is-base64-encoded-label"> <input id="is-base64-encoded" type="checkbox" name="is-base64-encoded"><label for="is-base64-encoded">secret base64 encoded</label></span>
+          pre.pre-encode.RS256.
+            <span id="rsasha-text">RSASHA256</span>(
+              base64UrlEncode(header) + "." +
+              base64UrlEncode(payload),
+              <textarea rows="4" name="public-key" placeholder="Public Key or Certificate. Enter it in plain text only if you want to verify a token"></textarea>,
+              <textarea rows="5" name="private-key" placeholder="Private Key. Enter the it in plain text only if you want to generate a new token. The key never leaves your browser."></textarea>
+            )
+
+.validation-status.js-signature
