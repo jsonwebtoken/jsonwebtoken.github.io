@@ -1,5 +1,5 @@
 import { menuScrollableLinks, navbarElement } from './dom-elements.js';
-import { isWideScreen } from './utils.js';
+import { isWideScreen } from '../utils.js';
 
 import $ from 'jquery';
 

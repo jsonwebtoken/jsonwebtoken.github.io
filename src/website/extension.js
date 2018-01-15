@@ -1,5 +1,5 @@
 import { extensionButton, extensionButtonText } from './dom-elements.js';
-import strings from './strings.js';
+import strings from '../strings.js';
 
 // https://stackoverflow.com/questions/4565112/javascript-how-to-find-out-if-the-user-browser-is-chrome
 function isChrome() {

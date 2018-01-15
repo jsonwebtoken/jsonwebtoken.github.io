@@ -1,6 +1,5 @@
-import { copyTextToClipboard } from '../utils.js';
-import { deferToNextLoop } from '../../utils.js';
-import { downloadPublicKeyIfPossible } from '../../public-key-download.js';
+import { copyTextToClipboard, deferToNextLoop } from '../utils.js';
+import { downloadPublicKeyIfPossible } from './public-key-download.js';
 import { tooltipHandler } from './tooltip.js';
 import { tokenEditor, headerEditor, payloadEditor } from './instances.js';
 import { 
@@ -9,10 +8,10 @@ import {
   stringify,
   fixEditorHeight 
 } from './utils.js';
-import { sign, verify, decode } from '../../jwt.js';
+import { sign, verify, decode } from './jwt.js';
 import EventManager from './event-manager.js';
 import strings from '../strings.js';
-import defaultTokens from '../../default-tokens.js';
+import defaultTokens from './default-tokens.js';
 import { 
   algorithmSelect, 
   signatureStatusElement,

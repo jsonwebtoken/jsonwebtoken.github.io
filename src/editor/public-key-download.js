@@ -1,4 +1,4 @@
-import { httpGet } from './utils.js';
+import { httpGet } from '../utils.js';
 
 function getKeyFromX5c(x5c) {
   if(!x5c) {
