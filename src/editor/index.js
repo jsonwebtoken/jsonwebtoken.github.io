@@ -313,6 +313,8 @@ function setupEvents() {
 
   // HMAC secret, when changed the encoded token must be updated.
   eventManager.addDomEvent(secretInput, 'input', encodeToken);
+  // Base64 checkbox, when changes the encoded token must be updated.
+  eventManager.addDomEvent(secretBase64Checkbox, 'input', encodeToken);
   // Private key, when changed the encoded token must be updated.
   eventManager.addDomEvent(privateKeyTextArea, 'input', encodeToken);
   // Public key, when changed the encoded token must NOT be updated
