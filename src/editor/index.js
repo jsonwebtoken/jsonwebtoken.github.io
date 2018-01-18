@@ -1,9 +1,13 @@
-import { copyTextToClipboard, deferToNextLoop, safeLocalStorageSetItem } from '../utils.js';
+import { 
+  copyTextToClipboard,
+  deferToNextLoop,
+  safeLocalStorageSetItem,
+  copyTokenLink 
+} from '../utils.js';
 import { downloadPublicKeyIfPossible } from './public-key-download.js';
 import { tooltipHandler } from './tooltip.js';
 import { tokenEditor, headerEditor, payloadEditor } from './instances.js';
 import { 
-  copyTokenLink,
   getTrimmedValue,
   stringify,
   fixEditorHeight 
@@ -37,6 +41,14 @@ import {
 // manually tracking them. Events that need to be disabled should be
 // passed to the event manager.
 const eventManager = new EventManager();
+
+function isSharedSecretAlgorithm(algorithm) {
+  return algorithm && algorithm.indexOf('HS') === 0;
+}
+
+function isPublicKeyAlgorithm(algorithm) {
+  return algorithm && algorithm.indexOf('HS') === -1;
+}
 
 function markAsInvalid() {
   signatureStatusElement.classList.remove('valid-token');
@@ -115,7 +127,7 @@ export function useDefaultToken(algorithm) {
     headerEditor.setValue(stringify(decoded.header));
     payloadEditor.setValue(stringify(decoded.payload));
     
-    if(algorithm.indexOf('HS') === 0) {
+    if(isSharedSecretAlgorithm(algorithm)) {
       secretInput.value = defaults.secret;
     } else {
       publicKeyTextArea.value = defaults.publicKey;
@@ -233,7 +245,7 @@ function encodeToken() {
 
     try {
       const encoded = sign(header, payload, 
-        header.alg.indexOf('HS') === 0 ?
+        isSharedSecretAlgorithm(header.alg) ?
           secretInput.value :
           privateKeyTextArea.value,
           secretBase64Checkbox.checked);
@@ -260,7 +272,7 @@ function decodeToken() {
       const decoded = decode(jwt);
   
       selectAlgorithm(decoded.header.alg);
-      if(decoded.header.alg && decoded.header.alg.indexOf('HS') === -1) {
+      if(isPublicKeyAlgorithm(decoded.header.alg)) {
         downloadPublicKeyIfPossible(decoded).then(publicKey => {
           eventManager.withDisabledEvents(() => {
             publicKeyTextArea.value = publicKey;
@@ -294,7 +306,7 @@ function verifyToken() {
   }
 
   const publicKeyOrSecret = 
-    decoded.header.alg.indexOf('HS') === 0 ?
+    isSharedSecretAlgorithm(decoded.header.alg) ?
       secretInput.value : 
       publicKeyTextArea.value;
 
@@ -327,6 +339,17 @@ function setupTabEvents() {
   });
 }
 
+function copyTokenHandler(event) {
+  event.preventDefault();
+
+  const token = getTrimmedValue(tokenEditor);
+  const publicKey = isPublicKeyAlgorithm(getSelectedAlgorithm()) ? 
+    publicKeyTextArea.value :
+    null;
+  
+  copyTokenLink(token, publicKey);
+}
+
 function setupEvents() {
   // The event manager lets us enable/disable events as needed without
   // manually tracking them. Events that need to be disabled should be
@@ -356,13 +379,22 @@ function setupEvents() {
   // Human readable timestamp tooltips
   payloadElement.addEventListener('mousemove', tooltipHandler);
   // Temporary (share button not ready yet)
-  signatureStatusElement.addEventListener('click', copyTokenLink);
+  signatureStatusElement.addEventListener('click', copyTokenHandler);
 
   setupTabEvents();
 }
 
 export function setTokenEditorValue(value) {
   tokenEditor.setValue(value);
+}
+
+export function getTokenEditorValue() {
+  return {
+    token: getTrimmedValue(tokenEditor),
+    publicKey: isPublicKeyAlgorithm(getSelectedAlgorithm()) ? 
+      publicKeyTextArea.value :
+      undefined
+  };
 }
 
 export function setupTokenEditor() {

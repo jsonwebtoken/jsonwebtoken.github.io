@@ -160,6 +160,15 @@ export function copyTextToClipboard(text) {
   document.body.removeChild(textArea);
 }
 
+export function copyTokenLink(token, publicKeyOptional) {
+  let url = `https://jwt.io/#debugger-io?token=${encodeURIComponent(token)}`;
+  if(publicKeyOptional) {
+    url += `&publicKey=${encodeURIComponent(publicKeyOptional)}`;
+  }
+
+  copyTextToClipboard(url);
+}
+
 // https://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
 export function getParameterByName(name, url) {
   if(!url) {
