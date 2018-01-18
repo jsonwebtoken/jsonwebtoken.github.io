@@ -103,11 +103,11 @@ module.exports = grunt => {
 
     watch: {
       websiteSrc: {
-        files: ['src/*.js', 'src/website/**'],
+        files: ['src/*.js', 'src/website/**', 'src/editor/**'],
         tasks: 'webpack:websiteDev'
       },
       extensionSrc: {
-        files: ['src/*.js', 'src/extension/**'],
+        files: ['src/*.js', 'src/extension/**', 'src/editor/**'],
         tasks: 'webpack:extensionDev'
       },
       websiteImg: {
