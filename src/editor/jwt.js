@@ -48,17 +48,26 @@ export function verify(jwt, secretOrPublicKeyString, base64Secret = false) {
 }
 
 export function decode(jwt) {
-  const split = jwt.split('.');
-  
   const result = {
+    header: {},
+    payload: {},
     errors: false
   };
+
+  if(!jwt) {
+    result.errors = true;
+    return result;
+  }
+  
+  const split = jwt.split('.');
+  
   try {
     result.header = JSON.parse(b64utoutf8(split[0]));
   } catch(e) {
     result.header = {};
     result.errors = true;
   }
+
   try {
     result.payload = JSON.parse(b64utoutf8(split[1]));
   } catch(e) {
@@ -67,4 +76,9 @@ export function decode(jwt) {
   }
 
   return result;
+}
+
+export function isToken(jwt) {
+  const decoded = decode(jwt);
+  return !decoded.errors && decoded.header.typ === 'JWT';
 }

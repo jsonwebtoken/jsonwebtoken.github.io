@@ -1,6 +1,12 @@
-import { setupTokenEditor, getTokenEditorValue } from '../editor';
+import { 
+  setupTokenEditor,
+  setTokenEditorValue,
+  getTokenEditorValue
+} from '../editor';
+import { setupTokenPageInspector } from './page-inspector.js';
 import { shareJwtLink, shareJwtTextElement } from './dom-elements.js';
 import { copyTokenLink } from '../utils.js';
+import { getTokenFromClipboardIfPossible } from './utils.js';
 import strings from '../strings.js';
 
 function setupShareJwtButton() {
@@ -22,6 +28,15 @@ function setupShareJwtButton() {
   });
 }
 
+function loadFromClipboardIfPossible() {
+  const token = getTokenFromClipboardIfPossible();
+  if(token) {
+    setTokenEditorValue(token);
+  }
+}
+
 // Initialization
 setupTokenEditor();
+loadFromClipboardIfPossible();
+setupTokenPageInspector();
 setupShareJwtButton();

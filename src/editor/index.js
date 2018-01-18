@@ -1,5 +1,4 @@
 import { 
-  copyTextToClipboard,
   deferToNextLoop,
   safeLocalStorageSetItem,
   copyTokenLink 
@@ -204,6 +203,7 @@ function saveAsLastToken() {
 
 function loadToken() {
   const lastToken = localStorage.getItem('lastToken');
+
   if(lastToken) {
     setTokenEditorValue(lastToken);
     
