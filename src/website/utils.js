@@ -1,12 +1,3 @@
-export function safeLocalStorageSetItem(key, value) {
-  try {
-    localStorage.setItem(key, value);
-  } catch (e) {
-    console.error(e);
-    // Safari when in private browsing doesn't allow it
-  }
-}
-
 export function getOffsetBoundingClientRect(element) {
   const rect = element.getBoundingClientRect();
 

@@ -1,4 +1,4 @@
-import { copyTextToClipboard, deferToNextLoop } from '../utils.js';
+import { copyTextToClipboard, deferToNextLoop, safeLocalStorageSetItem } from '../utils.js';
 import { downloadPublicKeyIfPossible } from './public-key-download.js';
 import { tooltipHandler } from './tooltip.js';
 import { tokenEditor, headerEditor, payloadEditor } from './instances.js';
@@ -178,6 +178,32 @@ function markAsInvalidWithElement(element, clearTokenEditor = true) {
   }
 }
 
+function saveAsLastToken() {
+  const token = getTrimmedValue(tokenEditor);
+  if(token && token.length > 0) {
+    safeLocalStorageSetItem('lastToken', token);
+  }
+
+  const publicKey = publicKeyTextArea.value;
+  if(publicKey && publicKey.length > 0) {
+    safeLocalStorageSetItem('lastPublicKey', publicKey);
+  }
+}
+
+function loadToken() {
+  const lastToken = localStorage.getItem('lastToken');
+  if(lastToken) {
+    setTokenEditorValue(lastToken);
+    
+    const lastPublicKey = localStorage.getItem('lastPublicKey');
+    if(lastPublicKey) {
+      publicKeyTextArea.value = lastPublicKey;
+    }
+  } else {
+    useDefaultToken('HS256');
+  }
+}
+
 function encodeToken() {
   deferToNextLoop(fixEditorHeight);
 
@@ -211,8 +237,10 @@ function encodeToken() {
           secretInput.value :
           privateKeyTextArea.value,
           secretBase64Checkbox.checked);
-
+          
       tokenEditor.setValue(encoded);
+
+      saveAsLastToken();
     } catch(e) {
       console.error('Failed to sign/encode token: ', e);      
       markAsInvalid();
@@ -247,6 +275,7 @@ function decodeToken() {
       if(decoded.errors) {
         markAsInvalidWithElement(editorElement, false);
       } else {
+        saveAsLastToken();
         verifyToken();
       }
     } catch(e) {
@@ -339,6 +368,6 @@ export function setTokenEditorValue(value) {
 export function setupTokenEditor() {
   setupEvents();
   selectAlgorithm('HS256');
-  useDefaultToken('HS256');
+  loadToken();
   fixEditorHeight();
 }

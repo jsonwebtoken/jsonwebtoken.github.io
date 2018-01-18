@@ -1,4 +1,4 @@
-import { safeLocalStorageSetItem } from './utils.js';
+import { safeLocalStorageSetItem } from '../utils.js';
 import { httpGet } from '../utils.js';
 import { 
   starsElements,

@@ -183,3 +183,13 @@ export function getParameterByName(name, url) {
 export function isWideScreen() {
   return window.matchMedia('(min-width: 768px)').matches;
 }
+
+export function safeLocalStorageSetItem(key, value) {
+  try {
+    localStorage.setItem(key, value);
+  } catch (e) {
+    console.log('Cannot save token to Local Storage ' + 
+                '(private browsing enabled?), ignoring...', e);
+    // Safari when in private browsing doesn't allow it
+  }
+}

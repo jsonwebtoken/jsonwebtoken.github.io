@@ -1,11 +1,7 @@
 import { setupNavbar } from './navbar.js';
 import { setupExtensionButton } from './extension.js';
 import { setupLibraries } from './libraries.js';
-import {
-  setupTokenEditor,
-  setTokenEditorValue,
-  useDefaultToken
-} from '../editor';
+import { setupTokenEditor, setTokenEditorValue } from '../editor';
 import { setupJwtCounter } from './counter.js';
 import { setupSmoothScrolling } from './smooth-scrolling.js';
 import { setupHighlighting } from './highlighting.js';
@@ -44,20 +40,6 @@ function parseLocationQuery() {
   }
 }
 
-function loadToken() {
-  const lastToken = localStorage.getItem('lastToken');
-  if(lastToken) {
-    setTokenEditorValue(value);
-    
-    const lastPublicKey = localStorage.getItem('lastPublicKey');
-    if(lastPublicKey) {
-      publicKeyTextArea.value = lastPublicKey;
-    }
-  } else {
-    useDefaultToken('HS256');
-  }
-}
-
 function pickEbookOrExtensionBanner() {
   if(Math.random() >= 0.5) {
     extensionSection.style.display = 'block';
@@ -72,7 +54,6 @@ setupExtensionButton();
 setupSmoothScrolling();
 setupLibraries();
 setupTokenEditor();
-loadToken();
 parseLocationQuery();
 setupHighlighting();
 setupJwtCounter();
