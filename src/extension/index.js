@@ -14,11 +14,10 @@ function setupShareJwtButton() {
       copyTokenLink(value.token, value.publicKey);
     }
 
-    shareJwtTextElement.firstChild.textContent = 
-      strings.extension.jwtIoUrlCopied;
+    const shareJwtTextNode = shareJwtTextElement.firstChild;
+    shareJwtTextNode.textContent = strings.extension.jwtIoUrlCopied;
     setTimeout(() => {
-      shareJwtTextElement.firstChild.textContent = 
-        strings.extension.shareThisJwt;        
+      shareJwtTextNode.textContent = strings.extension.shareThisJwt;
     }, 2000);
   });
 }
