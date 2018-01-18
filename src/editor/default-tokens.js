@@ -1,3 +1,6 @@
+// Yes, all keys here are supposed to be exposed, you can commit
+// them safely to GitHub.
+
 const rsaPrivateKey = 
 `-----BEGIN RSA PRIVATE KEY----- 
 MIICWwIBAAKBgQDdlatRjRjogo3WojgGHFHYLugdUWAY9iR3fy4arWNA1KoS8kVw
