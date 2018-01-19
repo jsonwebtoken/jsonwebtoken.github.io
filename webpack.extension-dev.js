@@ -5,6 +5,7 @@ const common = require('./webpack.common.js');
 module.exports = merge(common, {
   entry: {
     index: './src/extension/index.js',
+    webstorage: './src/extension/injected/webstorage.js'
   },
   output: {
     filename: '[name].js',
