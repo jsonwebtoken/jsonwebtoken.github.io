@@ -36,6 +36,8 @@ import {
   decodedTabElement
 } from '../dom-elements.js';
 
+import * as log from 'loglevel';
+
 // The event manager lets us enable/disable events as needed without
 // manually tracking them. Events that need to be disabled should be
 // passed to the event manager.
@@ -97,7 +99,7 @@ function selectAlgorithm(algorithm) {
       algorithmSelect.querySelector(`option[value="${algorithm}"]`);
     
     if(!selected) {
-      console.log(`Invalid algorithm ${algorithm}, ignoring...`);
+      log.info(`Invalid algorithm ${algorithm}, ignoring...`);
       return;
     }
 
@@ -148,7 +150,7 @@ function setAlgorithmInHeader(algorithm) {
       // errors.
       if(!(e instanceof SyntaxError)) {
         // If it's not a SyntaxError, log the error.
-        console.error('Failed to encode token: ', e);
+        log.warn('Failed to encode token: ', e);
       }
     }
 
@@ -254,7 +256,7 @@ function encodeToken() {
 
       saveAsLastToken();
     } catch(e) {
-      console.error('Failed to sign/encode token: ', e);      
+      log.warn('Failed to sign/encode token: ', e);      
       markAsInvalid();
       tokenEditor.setValue('');
     }    
@@ -291,7 +293,7 @@ function decodeToken() {
         verifyToken();
       }
     } catch(e) {
-      console.error('Failed to decode token: ', e);
+      log.warn('Failed to decode token: ', e);
     }  
   });
 }

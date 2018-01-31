@@ -1,4 +1,5 @@
 import { KEYUTIL } from 'jsrsasign';
+import * as log from 'loglevel';
 
 export function httpGet(url, cache = true) {
   return new Promise((resolve, reject) => {
@@ -154,7 +155,7 @@ export function copyTextToClipboard(text) {
   try {
     document.execCommand('copy');
   } catch (err) {
-    console.error(err);
+    log.warn(err);
   }
 
   document.body.removeChild(textArea);
@@ -197,7 +198,7 @@ export function safeLocalStorageSetItem(key, value) {
   try {
     localStorage.setItem(key, value);
   } catch (e) {
-    console.log('Cannot save token to Local Storage ' + 
+    log.info('Cannot save token to Local Storage ' + 
                 '(private browsing enabled?), ignoring...', e);
     // Safari when in private browsing doesn't allow it
   }

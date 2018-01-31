@@ -7,6 +7,7 @@ import {
 } from './dom-elements.js';
 
 import Isotope from 'isotope-layout';
+import * as log from 'loglevel';
 
 const librariesGrid = new Isotope(librariesElement, {
   layoutMode: 'fitRows',
@@ -58,7 +59,7 @@ function getStarsForGitHubRepos() {
       }
     } catch (e) {
       // Ignore bad data
-      console.error('Bad data in stored stars count, ignoring...', e);
+      log.warn('Bad data in stored stars count, ignoring...', e);
     }
 
     const url = `https://api.github.com/repos/${repo}`;
@@ -70,7 +71,7 @@ function getStarsForGitHubRepos() {
 
       insertStarCount(element, count);
     }).catch(e => {
-      console.error('Failed to get GitHub stars count for repository, ' + 
+      log.warn('Failed to get GitHub stars count for repository, ' + 
                     'is the repository URL OK? ', e);
     });
   });

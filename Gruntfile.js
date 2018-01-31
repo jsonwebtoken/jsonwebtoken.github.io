@@ -5,6 +5,7 @@ module.exports = grunt => {
   grunt.loadNpmTasks('grunt-webpack');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-mocha-test');
 
   grunt.initConfig({
     clean: {
@@ -99,6 +100,7 @@ module.exports = grunt => {
       websiteDev: require('./webpack.website-dev.js'),
       extensionProd: require('./webpack.extension-prod.js'),
       extensionDev: require('./webpack.extension-dev.js'),
+      test: require('./webpack.website-tests.js')
     },
 
     watch: {
@@ -150,6 +152,13 @@ module.exports = grunt => {
         ],
         tasks: ['build-extension-views']
       }
+    },
+
+    mochaTest: {
+      all: {
+        options: {},
+        src: ['dist/test/*.js']
+      }
     }
   });
 
@@ -197,6 +206,8 @@ module.exports = grunt => {
     'build-website-dev',
     'build-extension-dev'
   ]);
+
+  grunt.registerTask('test', ['webpack:test', 'mochaTest']);
   
   grunt.registerTask('default', ['build-dev', 'watch']);
 };

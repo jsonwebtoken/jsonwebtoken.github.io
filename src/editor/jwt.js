@@ -1,3 +1,5 @@
+import { isValidBase64String } from '../utils.js';
+
 import { 
   jws,
   KEYUTIL,
@@ -5,6 +7,8 @@ import {
   b64utohex,
   utf8tohex 
 } from 'jsrsasign';
+
+import * as log from 'loglevel';
 
 export function sign(header, 
                      payload,
@@ -25,6 +29,10 @@ export function sign(header,
 }
 
 export function verify(jwt, secretOrPublicKeyString, base64Secret = false) {
+  if(!isToken(jwt)) {
+    return false;
+  }
+
   const decoded = decode(jwt);
   
   if(!decoded.header.alg) {
@@ -41,7 +49,7 @@ export function verify(jwt, secretOrPublicKeyString, base64Secret = false) {
       return jws.JWS.verify(jwt, secretOrPublicKeyString);
     }
   } catch(e) {
-    console.error('Could not verify token, ' +
+    log.warn('Could not verify token, ' +
                   'probably due to bad data in it or the keys: ', e);
     return false;
   }
@@ -78,7 +86,20 @@ export function decode(jwt) {
   return result;
 }
 
-export function isToken(jwt) {
+export function isToken(jwt, checkTypClaim = false) {
   const decoded = decode(jwt);
-  return !decoded.errors && decoded.header.typ === 'JWT';
+
+  if(decoded.errors) {
+    return false;
+  }
+
+  if(checkTypClaim && decoded.header.typ !== 'JWT') {
+    return false;
+  }
+
+  const split = jwt.split('.');
+  let valid = true;
+  split.forEach(s => valid = valid && isValidBase64String(s, true));
+
+  return valid;
 }

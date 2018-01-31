@@ -2,6 +2,7 @@ import { menuScrollableLinks, navbarElement } from './dom-elements.js';
 import { isWideScreen } from '../utils.js';
 
 import $ from 'jquery';
+import * as log from 'loglevel';
 
 // This is the only function that really requires jQuery, other than some
 // of the dependencies. Consider this when adding code that depends on
@@ -30,7 +31,7 @@ export function setupSmoothScrolling() {
 
       const start = scrollable.href.indexOf('#');
       if (start === -1) {
-        console.error('<a> element with .scrollto set and bad link: ',
+        log.warn('<a> element with .scrollto set and bad link: ',
           scrollable.href);
         return;
       }

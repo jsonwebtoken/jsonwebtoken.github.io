@@ -5,6 +5,7 @@ import { httpGet } from '../utils.js';
 import $ from 'jquery';
 import jQuery from 'jquery';
 import 'flipclock/compiled/flipclock.js';
+import * as log from 'loglevel';
 
 const initialCount = 80482701;
 const pollIntervalWhenVisible = 5000;
@@ -24,7 +25,7 @@ function updateCounterFromWebtask() {
       const parsed = JSON.parse(data);
       flipCounter.setTime(parsed.logins);
     }).catch(e => {
-      console.error('Failed to set count from Webtask: ', e);
+      log.warn('Failed to set count from Webtask: ', e);
     });
   });
 }
