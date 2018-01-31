@@ -2,7 +2,7 @@ import { menuScrollableLinks, navbarElement } from './dom-elements.js';
 import { isWideScreen } from '../utils.js';
 
 import $ from 'jquery';
-import * as log from 'loglevel';
+import log from 'loglevel';
 
 // This is the only function that really requires jQuery, other than some
 // of the dependencies. Consider this when adding code that depends on

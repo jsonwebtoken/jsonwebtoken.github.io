@@ -5,7 +5,7 @@ import { httpGet } from '../utils.js';
 import $ from 'jquery';
 import jQuery from 'jquery';
 import 'flipclock/compiled/flipclock.js';
-import * as log from 'loglevel';
+import log from 'loglevel';
 
 const initialCount = 80482701;
 const pollIntervalWhenVisible = 5000;

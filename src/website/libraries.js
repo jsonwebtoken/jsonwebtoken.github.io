@@ -7,7 +7,7 @@ import {
 } from './dom-elements.js';
 
 import Isotope from 'isotope-layout';
-import * as log from 'loglevel';
+import log from 'loglevel';
 
 const librariesGrid = new Isotope(librariesElement, {
   layoutMode: 'fitRows',

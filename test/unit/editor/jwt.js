@@ -3,21 +3,13 @@ import tokens from '../../../src/editor/default-tokens.js';
 
 import { utf8tob64u, b64utob64 } from 'jsrsasign';
 
-import * as log from 'loglevel';
+import log from 'loglevel';
 
 import { should } from 'chai';
 
 should();
 
-describe('JWT (logging disabled, enable it for debugging)', function() {
-  before(function() {
-    log.disableAll();
-  });
-
-  after(function() {
-    log.enableAll();
-  });
-
+describe('JWT', function() {
   it('detects tokens', function() {
     jwt.isToken('skdjf9238ujdhkf.asdfasdf2.sdsdffsfsd').should.be.false;
     jwt.isToken('skdjf9238ujdhkf.asdfasdf2').should.be.false;
@@ -59,43 +51,50 @@ describe('JWT (logging disabled, enable it for debugging)', function() {
     jwt.verify(tokens.ps384.token, tokens.ps384.publicKey).should.be.true;
   });
 
-  it('fails to verify invalid tokens', function() {
-    const split = tokens.hs256.token.split('.');
-    const token = `${split[0]}.${split[1]}`;
-    const token2 = token + '.';
+  it('fails to verify invalid tokens ' +
+     '(logging temporarily disabled to hide exceptions)', function() {
+    log.disableAll();
 
-    jwt.verify(token, tokens.hs256.secret).should.be.false;
-    jwt.verify(token2, tokens.hs256.secret).should.be.false;
+    try {
+      const split = tokens.hs256.token.split('.');
+      const token = `${split[0]}.${split[1]}`;
+      const token2 = token + '.';
 
-    jwt.verify(tokens.hs256.token, tokens.hs256.secret + 'sdfasdf')
-       .should.be.false;
-    jwt.verify(tokens.hs256.token, 'sdfsdf' + tokens.hs256.secret)
-       .should.be.false;
-    jwt.verify(tokens.hs256.token, 'sdfsdf').should.be.false;
+      jwt.verify(token, tokens.hs256.secret).should.be.false;
+      jwt.verify(token2, tokens.hs256.secret).should.be.false;
 
-    jwt.verify(tokens.rs256.token, tokens.rs256.publicKey.replace('a','b'))
-       .should.be.false;
+      jwt.verify(tokens.hs256.token, tokens.hs256.secret + 'sdfasdf')
+        .should.be.false;
+      jwt.verify(tokens.hs256.token, 'sdfsdf' + tokens.hs256.secret)
+        .should.be.false;
+      jwt.verify(tokens.hs256.token, 'sdfsdf').should.be.false;
 
-    jwt.verify(tokens.es256.token, tokens.es256.publicKey.replace('a','b'))
-       .should.be.false;
-    
-    jwt.verify(tokens.ps256.token, tokens.ps256.publicKey.replace('a','b'))
-       .should.be.false;
+      jwt.verify(tokens.rs256.token, tokens.rs256.publicKey.replace('a','b'))
+        .should.be.false;
 
-    const header = {
-      typ: 'JWT',
-      alg: 'none'
-    };
-    const payload = {
-      sub: 'test'
-    };
+      jwt.verify(tokens.es256.token, tokens.es256.publicKey.replace('a','b'))
+        .should.be.false;
+      
+      jwt.verify(tokens.ps256.token, tokens.ps256.publicKey.replace('a','b'))
+        .should.be.false;
 
-    const token3 = `${utf8tob64u(JSON.stringify(header))}.` + 
-                   `${utf8tob64u(JSON.stringify(payload))}`;
-    
-    jwt.verify(token3, 'whatever').should.be.false;
-    jwt.verify(token3 + '.', 'whatever').should.be.false;
-    jwt.verify(token3 + '.' + split[2], 'whatever').should.be.false;
+      const header = {
+        typ: 'JWT',
+        alg: 'none'
+      };
+      const payload = {
+        sub: 'test'
+      };
+
+      const token3 = `${utf8tob64u(JSON.stringify(header))}.` + 
+                    `${utf8tob64u(JSON.stringify(payload))}`;
+      
+      jwt.verify(token3, 'whatever').should.be.false;
+      jwt.verify(token3 + '.', 'whatever').should.be.false;
+      jwt.verify(token3 + '.' + split[2], 'whatever').should.be.false;
+    } finally {
+      log.enableAll();
+    }
   });
 
   it('signs tokens (HS256)', function() {

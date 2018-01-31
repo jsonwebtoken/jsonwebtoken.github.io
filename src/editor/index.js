@@ -36,7 +36,7 @@ import {
   decodedTabElement
 } from '../dom-elements.js';
 
-import * as log from 'loglevel';
+import log from 'loglevel';
 
 // The event manager lets us enable/disable events as needed without
 // manually tracking them. Events that need to be disabled should be

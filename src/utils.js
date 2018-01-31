@@ -1,5 +1,5 @@
 import { KEYUTIL } from 'jsrsasign';
-import * as log from 'loglevel';
+import log from 'loglevel';
 
 export function httpGet(url, cache = true) {
   return new Promise((resolve, reject) => {

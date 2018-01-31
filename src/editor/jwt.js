@@ -8,7 +8,7 @@ import {
   utf8tohex 
 } from 'jsrsasign';
 
-import * as log from 'loglevel';
+import log from 'loglevel';
 
 export function sign(header, 
                      payload,

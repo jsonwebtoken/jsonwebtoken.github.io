@@ -11,5 +11,24 @@ module.exports = merge(common, {
     filename: '[name].js',
     path: __dirname + '/dist/test'
   },
-  target: 'node'
+  target: 'node',
+  module: {
+    rules: [{
+      test: /\.js$/,
+      exclude: /(node_modules|bower_components)/,
+      use: {
+        loader: 'babel-loader',
+        options: {
+          presets: [[
+            '@babel/preset-env', {
+              targets: {
+                browsers: ["last 5 versions", "safari >= 7"]
+              },
+              modules: 'commonjs'
+            }
+          ]]
+        }
+      }
+    }]
+  }
 });
