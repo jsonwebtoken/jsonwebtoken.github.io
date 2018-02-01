@@ -66,4 +66,44 @@ describe('Libraries', function() {
       visible: true
     });
   });
+
+  it('Shows a repo link for each library', async function() {
+    expect(await this.page.$$eval('.repository a', elements => {
+      return Array.prototype.every.call(elements, e => {
+        return !!e.href;
+      });
+    })).to.be.true;
+  });
+
+  it('Displays libraries stacked on top of each other ' + 
+     'for small screens', async function() {
+    try {
+      await this.page.setViewport({
+        width: 375,
+        height: 1080
+      });
+
+      const libraries = await this.page.$$('article.accordion');
+      
+      let last = await libraries[0].boundingBox();
+      const result = await Promise.all(libraries.slice(1).map(async element => {
+        const box = await element.boundingBox();
+        const result = box.x === last.x && box.y > last.y;
+        last = box;
+        return result;
+      }));
+
+      expect(result.every(value => value)).to.be.true;
+    } finally {
+      await this.page.setViewport({
+        width: 1920,
+        height: 1080
+      });
+    }
+  });
+
+  it('Sets the right classes when the vulnerability is and ' + 
+     'is not displayed ', async function() {
+
+  });
 });
