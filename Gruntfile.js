@@ -6,6 +6,8 @@ module.exports = grunt => {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-mocha-test');
+  grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-exec');
 
   grunt.initConfig({
     clean: {
@@ -100,7 +102,7 @@ module.exports = grunt => {
       websiteDev: require('./webpack.website-dev.js'),
       extensionProd: require('./webpack.extension-prod.js'),
       extensionDev: require('./webpack.extension-dev.js'),
-      test: require('./webpack.website-tests.js')
+      unitTests: require('./webpack.website-unit-tests.js')
     },
 
     watch: {
@@ -155,11 +157,27 @@ module.exports = grunt => {
     },
 
     mochaTest: {
-      all: {
+      unit: {
         options: {},
-        src: ['dist/test/*.js']
+        src: ['dist/test/unit-tests.js']
+      },
+      functional: {
+        options: {
+          // Higher default timeout to account for some animations
+          timeout: 10000
+        },
+        src: ['test/functional/**.js']        
       }
-    }
+    },
+
+    connect: {
+      functionalTests: {
+        options: {
+          hostname: '127.0.0.1',
+          base: 'dist/website',
+        }
+      }
+    },
   });
 
   grunt.registerTask('build-website-views', [
@@ -207,7 +225,15 @@ module.exports = grunt => {
     'build-extension-dev'
   ]);
 
-  grunt.registerTask('test', ['webpack:test', 'mochaTest']);
+  grunt.registerTask('unit-tests', ['webpack:unitTests', 'mochaTest:unit']);
+  
+  grunt.registerTask('functional-tests', [
+    'build-website-dev',
+    'connect:functionalTests',        
+    'mochaTest:functional'
+  ]);
+
+  grunt.registerTask('test', ['unit-tests', 'functional-tests']);
   
   grunt.registerTask('default', ['build-dev', 'watch']);
 };

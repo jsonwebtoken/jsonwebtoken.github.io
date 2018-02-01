@@ -4,8 +4,7 @@ const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
   entry: {
-    'unit-tests': './test/unit/index.js',
-    'functional-tests': './test/functional/index.js'
+    'unit-tests': './test/unit/index.js'
   },
   output: {
     filename: '[name].js',
