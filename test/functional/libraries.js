@@ -104,6 +104,31 @@ describe('Libraries', function() {
 
   it('Sets the right classes when the vulnerability is and ' + 
      'is not displayed ', async function() {
+    expect(await this.page.$$eval('.panel-wrap', elements => {      
+      function getLibraryName(panelWrapElement) {
+        return panelWrapElement.parentNode
+                               .querySelector('h3')
+                               .firstChild
+                               .textContent;
+      }
 
+      const result = [];
+      
+      Array.prototype.forEach.call(elements, el => {
+        const versionPresent = !!el.querySelector('.version');
+        const panelBodyElement = el.querySelector('.panel-body');
+        const mversionPresent = panelBodyElement.classList.contains('mversion');
+
+        if((versionPresent && mversionPresent) || 
+           (!versionPresent && !mversionPresent)) {
+          // All good
+          return;
+        }
+
+        result.push(getLibraryName(el));        
+      });
+
+      return result;
+    })).to.be.empty;
   });
 });
