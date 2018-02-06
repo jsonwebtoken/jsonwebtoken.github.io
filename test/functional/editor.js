@@ -12,7 +12,7 @@ chai.use(chaiAsPromised);
 chai.use(chaiArrays);
 const expect = chai.expect;
 
-describe.only('Editor', function() {
+describe('Editor', function() {
   before(utils.launchBrowser);
 
   after(utils.closeBrowser);
