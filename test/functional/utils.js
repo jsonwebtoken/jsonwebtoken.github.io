@@ -1,4 +1,5 @@
 const puppeteer = require('puppeteer');
+const os = require('os');
 
 // https://stackoverflow.com/questions/5353934/check-if-element-is-visible-on-screen
 function isVisible(elm) {
@@ -18,11 +19,14 @@ async function launchBrowser() {
   // Initial navigation may take long due to outside requests.
   this.timeout(30000);
 
-  this.browser = await puppeteer.launch({
-    //args: ['--no-sandbox'],
+  const options = os.hostname() === 'i7-4790K-LIN' ? {    
     headless: false,
     executablePath: '/usr/bin/chromium'
-  });
+  } : {
+    args: ['--no-sandbox']
+  };
+
+  this.browser = await puppeteer.launch(options);
   this.page = await this.browser.newPage();
   await this.page.setViewport({
     width: 1920,

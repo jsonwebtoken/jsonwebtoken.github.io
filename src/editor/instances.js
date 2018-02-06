@@ -28,3 +28,11 @@ const tokenEditorOptions = Object.assign({}, jsonEditorOptions, {
 export const headerEditor = new CodeMirror(headerElement, jsonEditorOptions);
 export const payloadEditor = new CodeMirror(payloadElement, jsonEditorOptions);
 export const tokenEditor = new CodeMirror(editorElement, tokenEditorOptions);
+
+// Expose instances as globals for functional tests.
+if(!window.test) {
+  window.test = {};
+}
+window.test.headerEditor = headerEditor;
+window.test.payloadEditor = payloadEditor;
+window.test.tokenEditor = tokenEditor;
