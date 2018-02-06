@@ -20,7 +20,7 @@ async function launchBrowser() {
   this.timeout(30000);
 
   const options = os.hostname() === 'i7-4790K-LIN' ? {    
-    headless: false,
+    //headless: false,
     executablePath: '/usr/bin/chromium'
   } : {
     args: ['--no-sandbox']
