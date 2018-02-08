@@ -274,7 +274,7 @@ describe('Editor', function() {
       expect(oldToken).to.equal(newToken);
     });
 
-    describe('Decodes HS256/384/512 tokens', async function() {      
+    describe('Decodes HS256/384/512 tokens', function() {      
       const algs = Object.keys(tokens).filter(alg => alg.includes('hs'));
       
       for(const alg of algs) {
@@ -311,5 +311,355 @@ describe('Editor', function() {
         });        
       }
     });    
-  });  
+
+    it('Signs tokens with an empty secret', async function() {      
+      const secretInput = await this.page.$('input[name="secret"]');
+      await secretInput.click();
+      await this.page.keyboard.down('ControlLeft');
+      await this.page.keyboard.press('KeyA');
+      await this.page.keyboard.up('ControlLeft');
+      await this.page.keyboard.press('Delete');
+
+      const valid = await this.page.$eval('.validation-status', status => {
+        return status.classList.contains('valid-token') && 
+              status.textContent.indexOf('verified') !== -1;
+      });
+  
+      expect(valid).to.be.true;
+    });
+  });
+
+  describe('Public-key', function() {
+    describe('Decodes RS/ES/PS tokens', function() {
+      const algs = Object.keys(defaultTokens)
+                         .filter(alg => !alg.includes('hs'));
+      
+      for(const alg of algs) {
+        it(alg.toUpperCase(), async function() {
+          await this.page.click('.js-input');
+          await this.page.keyboard.down('ControlLeft');
+          await this.page.keyboard.press('KeyA');
+          await this.page.keyboard.up('ControlLeft');
+          await this.page.keyboard.type(tokens[alg].token, { 
+            delay: 5 
+          });
+
+          const secretInput = await this.page.$('textarea[name="public-key"]');
+          await secretInput.click();
+          await this.page.keyboard.down('ControlLeft');
+          await this.page.keyboard.press('KeyA');
+          await this.page.keyboard.up('ControlLeft');
+          await secretInput.type(tokens[alg].publicKey, { 
+            delay: 5 
+          });          
+
+          const valid = await this.page.$eval('.validation-status', status => {
+            return status.classList.contains('valid-token') && 
+                  status.textContent.indexOf('verified') !== -1;
+          });
+      
+          expect(valid).to.be.true;
+
+          const payload = await this.page.evaluate(() => {
+            return window.test.payloadEditor.getValue();
+          });
+
+          expect(payload).to.include(alg + 'test');
+        });
+      }
+    });
+
+    describe('Encodes RS/ES/PS tokens', function() {
+      const algs = Object.keys(defaultTokens)
+                         .filter(alg => !alg.includes('hs') && alg !== 'none');
+      
+      for(const alg of algs) {
+        it(alg.toUpperCase(), async function() {
+          this.timeout(30000);
+
+          await this.page.select('#algorithm-select', alg.toUpperCase());
+
+          const oldToken = await this.page.evaluate(() => {
+            return window.test.tokenEditor.getValue();
+          });          
+
+          await this.page.click('textarea[name="public-key"]');
+          await this.page.keyboard.down('ControlLeft');
+          await this.page.keyboard.press('KeyA');
+          await this.page.keyboard.up('ControlLeft');
+          await this.page.keyboard.type(defaultTokens[alg].publicKey, { 
+            delay: 5 
+          });
+
+          await this.page.click('textarea[name="private-key"]');
+          await this.page.keyboard.down('ControlLeft');
+          await this.page.keyboard.press('KeyA');
+          await this.page.keyboard.up('ControlLeft');
+          await this.page.keyboard.type(defaultTokens[alg].privateKey, { 
+            delay: 5 
+          });
+
+          await this.page.click('.js-header');
+          await this.page.keyboard.down('ControlLeft');
+          await this.page.keyboard.press('KeyA');
+          await this.page.keyboard.up('ControlLeft');
+          await this.page.keyboard.type(JSON.stringify({
+            alg: alg.toUpperCase(),
+            typ: 'JWT'
+          }, null, 2), { 
+            delay: 5 
+          });
+
+          await this.page.click('.js-payload');
+          await this.page.keyboard.down('ControlLeft');
+          await this.page.keyboard.press('KeyA');
+          await this.page.keyboard.up('ControlLeft');
+          await this.page.keyboard.type(JSON.stringify({
+            sub: 'test'
+          }, null, 2), { 
+            delay: 5 
+          });
+
+          const newToken = await this.page.evaluate(() => {
+            return window.test.tokenEditor.getValue();
+          });
+        
+          expect(newToken).to.not.equal(oldToken);
+
+          const valid = await this.page.$eval('.validation-status', status => {
+            return status.classList.contains('valid-token') && 
+                  status.textContent.indexOf('verified') !== -1;
+          });
+      
+          expect(valid).to.be.true;
+        });
+      }
+    });
+
+    describe('Should download public-keys when possible', function() {
+      before(function() {
+
+      });
+
+      after(function() {
+
+      });
+
+      it('iss URL + .well-known');
+      it('jku');
+    });    
+
+    it('Clears the token when the header is edited and there ' +     
+       'is no private key', async function() {
+      const secretInput = await this.page.$('textarea[name="private-key"]');
+      await secretInput.click();
+      await this.page.keyboard.down('ControlLeft');
+      await this.page.keyboard.press('KeyA');
+      await this.page.keyboard.up('ControlLeft');
+      await this.page.keyboard.press('Delete');
+
+      await this.page.click('.js-header');
+      await this.page.keyboard.down('ControlLeft');
+      await this.page.keyboard.press('KeyA');
+      await this.page.keyboard.up('ControlLeft');
+
+      const header = {
+        alg: 'RS256',
+        typ: 'JWT',
+        test: 'test'
+      };
+      await this.page.keyboard.type(JSON.stringify(header, null, 2), { 
+        delay: 5 
+      });
+
+      const token = await this.page.evaluate(() => {
+        return window.test.tokenEditor.getValue();
+      });
+
+      expect(token).to.be.empty;
+    });
+
+    it('Clears the token when the payload is edited and there ' + 
+       'is no private key', async function() {
+        const secretInput = await this.page.$('textarea[name="private-key"]');
+        await secretInput.click();
+        await this.page.keyboard.down('ControlLeft');
+        await this.page.keyboard.press('KeyA');
+        await this.page.keyboard.up('ControlLeft');
+        await this.page.keyboard.press('Delete');
+  
+        await this.page.click('.js-payload');
+        await this.page.keyboard.down('ControlLeft');
+        await this.page.keyboard.press('KeyA');
+        await this.page.keyboard.up('ControlLeft');
+  
+        const payload = {
+          sub: 'test'
+        };
+        await this.page.keyboard.type(JSON.stringify(payload, null, 2), { 
+          delay: 5 
+        });
+  
+        const token = await this.page.evaluate(() => {
+          return window.test.tokenEditor.getValue();
+        });
+  
+        expect(token).to.be.empty;
+    });
+
+    it('Marks token as invalid when there is no public key', async function() {
+      await this.page.select('#algorithm-select', 'RS256');
+
+      await this.page.click('.js-input');
+      await this.page.keyboard.down('ControlLeft');
+      await this.page.keyboard.press('KeyA');
+      await this.page.keyboard.up('ControlLeft');
+      await this.page.keyboard.type(tokens['rs256'].token, { 
+        delay: 5 
+      });
+
+      const secretInput = await this.page.$('textarea[name="public-key"]');
+      await secretInput.click();
+      await this.page.keyboard.down('ControlLeft');
+      await this.page.keyboard.press('KeyA');
+      await this.page.keyboard.up('ControlLeft');
+      await secretInput.type(tokens['rs256'].publicKey, { 
+        delay: 5 
+      });
+
+      const valid = await this.page.$eval('.validation-status', status => {
+        return status.classList.contains('valid-token') && 
+              status.textContent.indexOf('verified') !== -1;
+      });
+  
+      expect(valid).to.be.true;
+
+      await secretInput.click();
+      await this.page.keyboard.down('ControlLeft');
+      await this.page.keyboard.press('KeyA');
+      await this.page.keyboard.up('ControlLeft');
+      await this.page.keyboard.press('Delete');
+
+      const invalid = await this.page.$eval('.validation-status', status => {
+        return status.classList.contains('invalid-token') && 
+               status.textContent.indexOf('invalid') !== -1;
+      });
+  
+      expect(invalid).to.be.true;
+    });
+
+    it('Marks token as invalid when the public key is wrong', async function() {
+      await this.page.select('#algorithm-select', 'RS256');
+
+      await this.page.click('.js-input');
+      await this.page.keyboard.down('ControlLeft');
+      await this.page.keyboard.press('KeyA');
+      await this.page.keyboard.up('ControlLeft');
+      await this.page.keyboard.type(tokens['rs256'].token, { 
+        delay: 5 
+      });
+
+      const secretInput = await this.page.$('textarea[name="public-key"]');
+      await secretInput.click();
+      await this.page.keyboard.down('ControlLeft');
+      await this.page.keyboard.press('KeyA');
+      await this.page.keyboard.up('ControlLeft');
+      await secretInput.type(tokens['rs256'].publicKey, { 
+        delay: 5 
+      });
+
+      const valid = await this.page.$eval('.validation-status', status => {
+        return status.classList.contains('valid-token') && 
+              status.textContent.indexOf('verified') !== -1;
+      });
+  
+      expect(valid).to.be.true;
+
+      await secretInput.click();
+      await this.page.keyboard.type('sdfasdf389972389', {
+        delay: 5
+      });
+
+      const invalid = await this.page.$eval('.validation-status', status => {
+        return status.classList.contains('invalid-token') && 
+               status.textContent.indexOf('invalid') !== -1;
+      });
+  
+      expect(invalid).to.be.true;
+    });
+
+    it('Marks token as valid when the public key is OK and private key is wrong');
+    it('Marks token as valid when the public key is OK and private key is missing');
+  });
+
+  it('Updates the header when the token algorithm ' + 
+     'is changed', async function() {
+    await this.page.select('#algorithm-select', 'HS256');
+
+    await this.page.click('.js-input');
+    await this.page.keyboard.down('ControlLeft');
+    await this.page.keyboard.press('KeyA');
+    await this.page.keyboard.up('ControlLeft');
+    await this.page.keyboard.type(tokens.hs256.token, { 
+      delay: 5 
+    });
+
+    await this.page.select('#algorithm-select', 'HS384');
+
+    const header = await this.page.evaluate(() => {
+      return JSON.parse(window.test.headerEditor.getValue());
+    });
+
+    expect(header.alg).to.equal('HS384');
+  });
+
+  it('Marks token as invalid when "alg" is "none"', async function() {
+    await this.page.click('.js-input');
+    await this.page.keyboard.down('ControlLeft');
+    await this.page.keyboard.press('KeyA');
+    await this.page.keyboard.up('ControlLeft');
+    await this.page.keyboard.type(tokens.none.token, { 
+      delay: 5 
+    });
+
+    const invalid = await this.page.$eval('.validation-status', status => {
+      return status.classList.contains('invalid-token') && 
+             status.textContent.indexOf('invalid') !== -1;
+    });
+
+    expect(invalid).to.be.true;
+  });
+
+  it('Saves last edited token', async function() {
+    await this.page.select('#algorithm-select', 'HS256');
+
+    const secretInput = await this.page.$('input[name="secret"]');
+    await secretInput.click();
+    await this.page.keyboard.down('ControlLeft');
+    await this.page.keyboard.press('KeyA');
+    await this.page.keyboard.up('ControlLeft');
+    await secretInput.type('secret-test', { 
+      delay: 5 
+    });
+
+    await this.page.click('.js-payload');
+    await this.page.keyboard.down('ControlLeft');
+    await this.page.keyboard.press('KeyA');
+    await this.page.keyboard.up('ControlLeft');
+
+    const payload = {
+      sub: 'test'      
+    };
+    await this.page.keyboard.type(JSON.stringify(payload, null, 2), { 
+      delay: 5 
+    });
+
+    await this.page.reload();
+
+    const storedPayload = await this.page.evaluate(() => {
+      return JSON.parse(window.test.payloadEditor.getValue());
+    });
+
+    expect(storedPayload).to.deep.equal(payload);
+  });
 });
