@@ -2,9 +2,13 @@ const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 const chaiArrays = require('chai-arrays');
 
+const express = require('express');
+const jsrsasign = require('jsrsasign');
+
 const utils = require('./utils.js');
 const tokens = require('./tokens.js');
 const defaultTokens = require('./default-tokens.js');
+const jwks = require('./jwks.json');
 
 const isVisible = utils.isVisible;
 
@@ -454,16 +458,135 @@ describe('Editor', function() {
     });
 
     describe('Should download public-keys when possible', function() {
-      before(function() {
+      before(async function() {
+        this.app = express();
 
+        this.app.get('/.well-known/jwks.json', (req, res) => {
+          res.set('Access-Control-Allow-Origin', '*');
+          res.json(jwks);
+        });
+
+        this.server = this.app.listen(3000);
+
+        await this.page.select('#algorithm-select', 'RS256');
+      });
+
+      beforeEach(async function() {
+        const publicKeyInput = await this.page.$('textarea[name="public-key"]');
+        await publicKeyInput.click();
+        await this.page.keyboard.down('ControlLeft');
+        await this.page.keyboard.press('KeyA');
+        await this.page.keyboard.up('ControlLeft');
+        await this.page.keyboard.press('Delete');
       });
 
       after(function() {
-
+        this.server.close();
       });
 
-      it('iss URL + .well-known');
-      it('jku');
+      it('iss URL + .well-known', async function() {
+        this.timeout(20000);
+
+        const token = jsrsasign.jws.JWS.sign(null, JSON.stringify({
+          alg: 'RS256',
+          typ: 'JWT',
+          kid: '1'
+        }), JSON.stringify({
+          sub: 'test',
+          iss: 'http://localhost:3000/'
+        }), defaultTokens.rs256.privateKey);
+
+        await this.page.click('.js-input');
+        await this.page.keyboard.down('ControlLeft');
+        await this.page.keyboard.press('KeyA');
+        await this.page.keyboard.up('ControlLeft');
+        await this.page.keyboard.type(token, { 
+          delay: 5         
+        });
+
+        await this.page.waitFor(2000);
+
+        const publicKey = await this.page.$eval('textarea[name="public-key"]', 
+          publicKeyElement => publicKeyElement.value);
+
+        expect(publicKey).to.include(jwks.keys[0].x5c[0]);
+
+        const valid = await this.page.$eval('.validation-status', status => {
+          return status.classList.contains('valid-token') && 
+                status.textContent.indexOf('verified') !== -1;
+        });
+    
+        expect(valid).to.be.true;
+      });
+
+      it('jku', async function() {
+        this.timeout(20000);
+
+        const token = jsrsasign.jws.JWS.sign(null, JSON.stringify({
+          alg: 'RS256',
+          typ: 'JWT',
+          kid: '1',
+          jku: 'http://localhost:3000/.well-known/jwks.json'
+        }), JSON.stringify({
+          sub: 'test'
+        }), defaultTokens.rs256.privateKey);
+
+        await this.page.click('.js-input');
+        await this.page.keyboard.down('ControlLeft');
+        await this.page.keyboard.press('KeyA');
+        await this.page.keyboard.up('ControlLeft');
+        await this.page.keyboard.type(token, { 
+          delay: 5         
+        });
+
+        await this.page.waitFor(2000);
+
+        const publicKey = await this.page.$eval('textarea[name="public-key"]', 
+          publicKeyElement => publicKeyElement.value);
+
+        expect(publicKey).to.include(jwks.keys[0].x5c[0]);
+
+        const valid = await this.page.$eval('.validation-status', status => {
+          return status.classList.contains('valid-token') && 
+                status.textContent.indexOf('verified') !== -1;
+        });
+    
+        expect(valid).to.be.true;
+      });
+
+      it('x5c', async function() {
+        this.timeout(35000);
+
+        const token = jsrsasign.jws.JWS.sign(null, JSON.stringify({
+          alg: 'RS256',
+          typ: 'JWT',
+          x5c: jwks.keys[0].x5c[0]
+        }), JSON.stringify({
+          sub: 'test'
+        }), defaultTokens.rs256.privateKey);
+
+        await this.page.click('.js-input');
+        await this.page.keyboard.down('ControlLeft');
+        await this.page.keyboard.press('KeyA');
+        await this.page.keyboard.up('ControlLeft');
+        await this.page.keyboard.type(token, { 
+          delay: 5         
+        });
+
+        await this.page.waitFor(2000);
+
+        const publicKey = await this.page.$eval('textarea[name="public-key"]', 
+          publicKeyElement => publicKeyElement.value);
+
+        expect(publicKey).to.include(jwks.keys[0].x5c[0]);
+
+        const valid = await this.page.$eval('.validation-status', status => {
+          return status.classList.contains('valid-token') && 
+                status.textContent.indexOf('verified') !== -1;
+        });
+    
+        expect(valid).to.be.true;
+      });
     });    
 
     it('Clears the token when the header is edited and there ' +     
