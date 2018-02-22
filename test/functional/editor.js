@@ -455,6 +455,85 @@ describe('Editor', function() {
           });
         }
       });
+
+      describe('ES', async function() {
+        before(async function() {
+          this.timeout(30000);
+
+          await this.page.select('#algorithm-select', 'ES256');
+
+          await this.page.click('textarea[name="public-key"]');
+          await this.page.keyboard.down('ControlLeft');
+          await this.page.keyboard.press('KeyA');
+          await this.page.keyboard.up('ControlLeft');
+          await this.page.keyboard.type(defaultTokens['es256'].publicKey, { 
+            delay: 5 
+          });
+
+          await this.page.click('textarea[name="private-key"]');
+          await this.page.keyboard.down('ControlLeft');
+          await this.page.keyboard.press('KeyA');
+          await this.page.keyboard.up('ControlLeft');
+          await this.page.keyboard.type(defaultTokens['es256'].privateKey, { 
+            delay: 5 
+          });
+        });
+
+        const algs = Object.keys(defaultTokens)
+                           .filter(alg => alg.includes('es'));
+
+        for(const alg of algs) {
+          it(alg.toUpperCase(), async function() {
+            this.timeout(30000);
+
+            await this.page.evaluate(token => {
+              window.test.tokenEditor.setValue(token);
+            }, defaultTokens[alg].token);
+
+            await this.page.select('#algorithm-select', alg.toUpperCase());
+
+            const oldToken = await this.page.evaluate(() => {
+              return window.test.tokenEditor.getValue();
+            });
+
+            await this.page.click('.js-header');
+            await this.page.keyboard.down('ControlLeft');
+            await this.page.keyboard.press('KeyA');
+            await this.page.keyboard.up('ControlLeft');
+            await this.page.keyboard.type(JSON.stringify({
+              alg: alg.toUpperCase(),
+              typ: 'JWT'
+            }, null, 2), { 
+              delay: 5 
+            });
+
+            await this.page.click('.js-payload');
+            await this.page.keyboard.down('ControlLeft');
+            await this.page.keyboard.press('KeyA');
+            await this.page.keyboard.up('ControlLeft');
+            await this.page.keyboard.type(JSON.stringify({
+              sub: 'test'
+            }, null, 2), { 
+              delay: 5 
+            });
+
+            const newToken = await this.page.evaluate(() => {
+              return window.test.tokenEditor.getValue();
+            });
+          
+            expect(newToken).to.not.be.empty;
+            expect(newToken).to.not.equal(oldToken);
+
+            const valid = await this.page.$eval('.validation-status', 
+              status => {
+                return status.classList.contains('valid-token') && 
+                       status.textContent.indexOf('verified') !== -1;
+              });
+        
+            expect(valid).to.be.true;
+          });
+        }
+      });
     });
 
     describe('Should download public-keys when possible', function() {
