@@ -774,6 +774,8 @@ describe('Editor', function() {
     });
 
     it('Marks token as invalid when the public key is wrong', async function() {
+      this.timeout(20000);
+      
       await this.page.select('#algorithm-select', 'RS256');
 
       await this.page.click('.js-input');
