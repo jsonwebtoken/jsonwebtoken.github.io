@@ -50,7 +50,7 @@
     "xhr-mock": "^2.0.3"
   },
   "scripts": {
-    "test": "echo UNIMPLEMENTED",
-    "start": "echo UNIMPLEMENTED"
+    "test": "grunt test",
+    "build": "grunt build"
   }
 }
