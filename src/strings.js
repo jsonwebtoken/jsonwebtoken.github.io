@@ -3,7 +3,7 @@ export default {
     alreadyInstalled: 'Already installed',
     addToChrome: 'Add to Chrome',
     shareThisJwt: 'Share this JWT',
-    jwtIoUrlCopied: 'JWT.io URL copied',
+    jwtIoUrlCopied: 'Copied',
     noJwtsFound: 'No JWTs found',
     saveBackTo: 'Save back to '
   },
