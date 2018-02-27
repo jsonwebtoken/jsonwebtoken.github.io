@@ -8,6 +8,7 @@ module.exports = grunt => {
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-exec');
+  grunt.loadNpmTasks('grunt-crx');
 
   grunt.initConfig({
     clean: {
@@ -68,6 +69,13 @@ module.exports = grunt => {
         }]
       }
     }, 
+
+    crx: {
+      pack: {
+        src: "dist/extension/**/*",
+        dest: "dist/jwt-debugger-extension.zip"
+      }
+    },
 
     stylus: {
       website: {
@@ -208,7 +216,8 @@ module.exports = grunt => {
     'clean:extension',
     'copy:extension',
     'build-extension-views',
-    'webpack:extensionProd'
+    'webpack:extensionProd',
+    'crx:pack'
   ]);
   
   grunt.registerTask('build-extension-dev', [

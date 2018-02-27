@@ -29,10 +29,10 @@ describe('JWT', function() {
   });
 
   it('considers Base64 (not URL) encoded tokens invalid', function() {
-    const token = b64utob64(tokens.hs256.token);
+    const token = b64utob64(tokens.hs384.token);
 
     jwt.isToken(token).should.be.false;
-    jwt.verify(token, tokens.hs256.secret).should.be.false;
+    jwt.verify(token, tokens.hs384.secret).should.be.false;
   });
 
   it('verifies valid tokens', function() {

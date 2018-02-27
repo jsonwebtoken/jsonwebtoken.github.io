@@ -26,6 +26,7 @@
     "grunt-contrib-pug": "^1.0.0",
     "grunt-contrib-stylus": "^1.2.0",
     "grunt-contrib-watch": "^1.0.0",
+    "grunt-crx": "^1.0.5",
     "grunt-exec": "^3.0.0",
     "grunt-mocha-test": "^0.13.3",
     "grunt-webpack": "^3.0.2",

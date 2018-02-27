@@ -60,6 +60,8 @@ describe('Editor', function() {
 
   it('Should display a tooltip with a human readable ' + 
      'date on claim hover', async function() {
+    await this.page.select('#algorithm-select', 'HS384');  
+    
     await this.page.mouse.move(0, 0);
     
     expect(await this.page.$eval('#js-payload-tooltip', isVisible)).to.be.false;
