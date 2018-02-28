@@ -77,6 +77,14 @@ module.exports = grunt => {
       }
     },
 
+    exec: {
+      firefoxExtensionPack: {
+        command: 'node_modules/web-ext/bin/web-ext build ' + 
+                 '--source-dir=dist/extension --artifacts-dir=dist ' + 
+                 '--overwrite-dest'
+      }
+    },
+
     stylus: {
       website: {
         files: {
@@ -217,7 +225,8 @@ module.exports = grunt => {
     'copy:extension',
     'build-extension-views',
     'webpack:extensionProd',
-    'crx:pack'
+    'crx:pack',
+    'exec:firefoxExtensionPack'
   ]);
   
   grunt.registerTask('build-extension-dev', [
