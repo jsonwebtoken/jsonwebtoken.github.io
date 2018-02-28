@@ -34,9 +34,6 @@
   & + .h-block
     margin-left: 15px;
 
-.tab-link small
-  zoom .8
-
 .jwt-playground
   padding-top 12px
 
@@ -44,14 +41,14 @@
     color #0094c1
     margin-left 15px
 
-  .colophon,
-  .validation-status
-    zoom .8
-
   .colophon
     margin-top 12px
     margin-bottom 12px
     position relative
+    font-size 12px
+
+    img
+      height 14px
 
     .share-callouts
       margin-left 20px
@@ -81,7 +78,13 @@
     text-align right
 
   .validation-status
-    margin-top 20px
+    margin-top 10px
+    padding 5px 0
+    font-size 20px
+
+    i 
+      line-height 22px
+      font-size 20px
 
   .algorithm-code
     margin-top 0px
@@ -89,7 +92,7 @@
     .tab-content
       .jwt-explained
         .text-line
-          zoom .8
+          font-size 9px
         pre
           font-size 11px
           line-height 1.5
@@ -150,13 +153,18 @@
 .select-field + .select-field
   margin-right 15px
 
+.algorithm span
+  font-size 10px !important
+
 .select-field
-  text-align center
+  text-align center  
   span
     font-weight bold
-    text-transform uppercase
-    font-size 10px
+    text-transform uppercase    
     vertical-align middle
+    font-size 10px
+    position relative
+    top 2px
   .custom-select
     margin-left 10px
     
