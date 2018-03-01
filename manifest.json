@@ -3,7 +3,7 @@
 
   "name": "JWT Debugger",
   "description": "The JWT.io debugger as a Web Extension",
-  "version": "2.0.1",
+  "version": "2.0.2",
 
   "browser_action": {
       "default_icon": "img/favicon/favicon-96x96.png",
