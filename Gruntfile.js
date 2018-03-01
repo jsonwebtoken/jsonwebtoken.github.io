@@ -1,3 +1,5 @@
+const extensionManifest = require('./manifest.json');
+
 module.exports = grunt => {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-stylus');
@@ -73,7 +75,8 @@ module.exports = grunt => {
     crx: {
       pack: {
         src: "dist/extension/**/*",
-        dest: "dist/jwt-debugger-extension.zip"
+        dest: 'dist/chrome-jwt-debugger-extension-v' + 
+              `${extensionManifest.version}.zip`
       }
     },
 
@@ -82,6 +85,11 @@ module.exports = grunt => {
         command: 'node_modules/web-ext/bin/web-ext build ' + 
                  '--source-dir=dist/extension --artifacts-dir=dist ' + 
                  '--overwrite-dest'
+      },
+      renameFirefoxExtension: {
+        command: `mv dist/jwt_debugger-${extensionManifest.version}.zip ` + 
+                 'dist/firefox-jwt-debugger-extension-' + 
+                 `v${extensionManifest.version}.zip`
       }
     },
 
@@ -226,7 +234,8 @@ module.exports = grunt => {
     'build-extension-views',
     'webpack:extensionProd',
     'crx:pack',
-    'exec:firefoxExtensionPack'
+    'exec:firefoxExtensionPack',
+    'exec:renameFirefoxExtension'
   ]);
   
   grunt.registerTask('build-extension-dev', [
