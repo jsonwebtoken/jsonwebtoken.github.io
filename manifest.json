@@ -2,7 +2,7 @@
   "manifest_version": 2,
 
   "name": "JWT Debugger",
-  "description": "The JWT.io debugger as a Chrome extension",
+  "description": "The JWT.io debugger as a Web Extension",
   "version": "2.0.0",
 
   "browser_action": {
@@ -31,6 +31,8 @@
           }
       }
   },
+
+  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'", 
 
   "permissions": [
     "activeTab",
