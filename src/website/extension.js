@@ -45,33 +45,35 @@ export function setupExtensionButton() {
 
   // chrome.webstore.install can only be called from standard event handlers.
   extensionButton.addEventListener('click', () => {
-    const url = 'https://chrome.google.com/webstore/detail/' +
-                'jwt-debugger/ppmmlchacdbknfphdeafcbmklcghghmd';
+    const chromeUrl = 'https://chrome.google.com/webstore/detail/' +
+                      'jwt-debugger/ppmmlchacdbknfphdeafcbmklcghghmd';
+    const firefoxUrl = 'https://addons.mozilla.org/en-US/firefox' +   
+                       '/addon/jwtio-debugger/';
 
-    if (button.classList.contains('is-installed')) {
+    if (extensionButton.classList.contains('is-installed')) {
       return;
     }
 
-    function notInstalled() {
+    function notInstalled(url) {
       extensionButton.classList.remove('is-installed');
       extensionButtonText.firstChild.textContent = 
-        strings.extension.addToChrome;
+        strings.extension.addToBrowser;
       window.open(url);
     }
 
     if(isChrome()) {
       try {
-        chrome.webstore.install(url, () => {
+        chrome.webstore.install(chromeUrl, () => {
           button.classList.add('is-installed');
           setInstalledText();
         }, () => {
-          notInstalled();
+          notInstalled(chromeUrl);
         });
       } catch (e) {
-        notInstalled();
+        notInstalled(chromeUrl);
       }
     } else {
-      notInstalled();
+      notInstalled(firefoxUrl);
     }
   });
 }

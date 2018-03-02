@@ -1,7 +1,7 @@
 export default {
   extension: {
     alreadyInstalled: 'Already installed',
-    addToChrome: 'Add to Chrome',
+    addToBrowser: 'Add to Browser',
     shareThisJwt: 'Share this JWT',
     jwtIoUrlCopied: 'Copied',
     noJwtsFound: 'No JWTs found',
