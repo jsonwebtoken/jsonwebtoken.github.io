@@ -19,3 +19,13 @@ export function isInViewport(elem) {
       bounding.right <= (window.innerWidth || document.documentElement.clientWidth)
   );
 };
+
+//From:
+// https://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
+export function isChrome() {
+  return !!window.chrome && !!window.chrome.webstore;
+}
+
+export function isFirefox() {
+  return typeof InstallTrigger !== 'undefined';
+}

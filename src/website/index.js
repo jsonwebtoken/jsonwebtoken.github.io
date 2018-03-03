@@ -6,6 +6,7 @@ import { setupJwtCounter } from './counter.js';
 import { setupSmoothScrolling } from './smooth-scrolling.js';
 import { setupHighlighting } from './highlighting.js';
 import { getParameterByName } from '../utils.js';
+import { isChrome, isFirefox } from './utils.js';
 import { 
   publicKeyTextArea, 
   codeElements, 
@@ -41,7 +42,7 @@ function parseLocationQuery() {
 }
 
 function pickEbookOrExtensionBanner() {
-  if(Math.random() >= 0.5) {
+  if((isChrome() || isFirefox()) && (Math.random() >= 0.5)) {
     extensionSection.style.display = 'block';
   } else {
     ebookSection.style.display = 'block';
