@@ -1,0 +1,114 @@
+section#libraries-io.libraries-jwt
+  .container
+    .title-header
+      h1 Libraries for Token Signing/Verification
+
+      .filter
+        span Filter by
+        .jwt-select
+          select#libraries-select
+            // Languages must be in alphabetic order
+            option(value='*', selected='') All
+            option(value='._1c') 1c
+            option(value='.c') C
+            option(value='.clojure') Clojure
+            option(value='.crystal') Crystal
+            option(value='.d') D
+            option(value='.delphi') Delphi
+            option(value='.elixir') Elixir
+            option(value='.go') Go
+            option(value='.groovy') Groovy
+            option(value='.haskell') Haskell
+            option(value='.haxe') Haxe
+            option(value='.java') Java
+            option(value='.js') JavaScript
+            option(value='.lua') Lua
+            option(value='.net') .NET
+            option(value='.node') Node.js
+            option(value='.objective-c') Objective-c
+            option(value='.perl') Perl
+            option(value='.php') PHP
+            option(value='.postgresql') PostgreSQL
+            option(value='.python') Python
+            option(value='.q') Q
+            option(value='.ruby') Ruby
+            option(value='.rust') Rust
+            option(value='.scala') Scala
+            option(value='.swift') Swift
+
+    .warning
+      b Warning:
+      |  Critical vulnerabilities in JSON Web Token libraries with asymmetric keys.
+      a(href='https://auth0.com/blog/2015/03/31/critical-vulnerabilities-in-json-web-token-libraries/')
+        | Learn more
+
+        svg(height='48', viewbox='0 0 48 48', width='48', xmlns='http://www.w3.org/2000/svg')
+          path(d='M-838-2232H562v3600H-838z', fill='none')
+          path(d='M16 10v28l22-14z')
+
+    .libraries-sv(data-accordion-group)
+      include libraries/net.pug
+      include libraries/net2.pug
+      include libraries/netrt.pug
+      include libraries/python.pug
+      include libraries/python2.pug
+      include libraries/python3.pug
+      include libraries/node.pug
+      include libraries/java.pug
+      include libraries/java2.pug
+      include libraries/java3.pug
+      include libraries/java4.pug
+      include libraries/java5.pug
+      include libraries/java6.pug
+      include libraries/js.pug
+      include libraries/js2.pug
+      include libraries/perl5.pug
+      include libraries/ruby.pug
+      include libraries/ruby2.pug
+      include libraries/ruby3.pug        
+      include libraries/ruby4.pug
+      include libraries/elixir.pug
+      include libraries/elixir2.pug
+      include libraries/elixir3.pug
+      include libraries/go.pug
+      include libraries/go2.pug
+      include libraries/go3.pug
+      include libraries/go4.pug
+      include libraries/go5.pug
+      include libraries/go6.pug
+      include libraries/go7.pug
+      include libraries/go8.pug
+      include libraries/groovy.pug
+      include libraries/haskell.pug
+      include libraries/haskell2.pug
+      include libraries/haxe.pug
+      include libraries/rust.pug
+      include libraries/rust2.pug
+      include libraries/rust3.pug
+      include libraries/lua.pug
+      include libraries/scala.pug
+      include libraries/scala2.pug
+      include libraries/scala3.pug
+      include libraries/scala4.pug
+      include libraries/d.pug
+      include libraries/d2.pug
+      include libraries/clojure.pug
+      include libraries/objective-c.pug
+      include libraries/swift.pug
+      include libraries/swift2.pug
+      include libraries/c.pug
+      include libraries/c2.pug
+      include libraries/q.pug
+      include libraries/delphi.pug
+      include libraries/delphi2.pug
+      include libraries/php.pug
+      include libraries/php3.pug
+      include libraries/php4.pug
+      include libraries/php5.pug
+      include libraries/php6.pug
+      include libraries/php7.pug
+      include libraries/php8.pug
+      include libraries/crystal.pug
+      include libraries/1c.pug
+      include libraries/postgresql.pug
+      

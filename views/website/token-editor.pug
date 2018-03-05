@@ -1,0 +1,13 @@
+section#debugger-io.debugger-jwt
+  .container
+    //- a(name='debugger')
+    h1 Debugger
+
+    .jwt-playground
+      .selections
+        .algorithm
+          span Algorithm
+          .jwt-select
+            include ../token-editor-algorithms.pug
+
+      include ../token-editor-common.pug

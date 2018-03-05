@@ -1,69 +1,266 @@
-module.exports = function (grunt) {
-  require('matchdep').filter('grunt-*').forEach(grunt.loadNpmTasks);
+const extensionManifest = require('./manifest.json');
+
+module.exports = grunt => {
+  grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-stylus');
+  grunt.loadNpmTasks('grunt-contrib-pug');
+  grunt.loadNpmTasks('grunt-webpack');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-mocha-test');
+  grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-exec');
+  grunt.loadNpmTasks('grunt-crx');
 
   grunt.initConfig({
-    // clean: [
-    //   'dist/'
-    // ],
-    watch: {
-      min: {
-        options: {
-          livereload: true
-        },
-        files: ['Gruntfile.js', 'js/**/*.js', 'stylus/**/*.styl', 'views/**/*.jade', 'views/**/*.md'],
-        tasks: ['build']
+    clean: {
+      website: [ 'dist/website' ],
+      extension: ['dist/extension']
+    },
+
+    copy: {
+      website: {
+        files: [{
+          expand: true,
+          cwd: 'img/website',
+          src: ['**'],
+          dest: 'dist/website/img'
+        }, {
+          expand: true,
+          src: ['fonts/**', 'opensearch.xml'],
+          dest: 'dist/website'
+        }, {
+          expand: true,
+          flatten: true,
+          src: [
+            'node_modules/bootstrap/dist/css/bootstrap.min.css',
+            'node_modules/codemirror/lib/codemirror.css',
+            'node_modules/codemirror/addon/lint/lint.css',
+            'css/budicon.css',
+            'css/google-roboto-mono.css'
+          ],
+          dest: 'dist/website/css/'
+        }]
+      },
+      extension: {
+        files: [{
+          expand: true,
+          flatten: true,
+          src: ['manifest.json', 'html/extension/bg.html'],
+          dest: 'dist/extension'
+        }, {
+          expand: true,
+          cwd: 'img/extension',
+          src: ['**'],
+          dest: 'dist/extension/img'
+        }, {
+          expand: true,
+          src: ['fonts/**'],
+          dest: 'dist/extension'
+        }, {
+          expand: true,
+          flatten: true,
+          src: [
+            'node_modules/bootstrap/dist/css/bootstrap.min.css',
+            'node_modules/codemirror/lib/codemirror.css',
+            'node_modules/codemirror/addon/lint/lint.css',
+            'css/budicon.css',
+            'css/google-roboto-mono.css'
+          ],
+          dest: 'dist/extension/css/'
+        }]
+      }
+    }, 
+
+    crx: {
+      pack: {
+        src: "dist/extension/**/*",
+        dest: 'dist/chrome-jwt-debugger-extension-v' + 
+              `${extensionManifest.version}.zip`
       }
     },
-    connect: {
-      dev: {
-        options: {
-          hostname: '0.0.0.0',
-          livereload: true,
-          protocol: 'http',
-          passphrase: ''
+
+    exec: {
+      firefoxExtensionPack: {
+        command: 'node_modules/web-ext/bin/web-ext build ' + 
+                 '--source-dir=dist/extension --artifacts-dir=dist ' + 
+                 '--overwrite-dest'
+      },
+      renameFirefoxExtension: {
+        command: `mv dist/jwt_debugger-${extensionManifest.version}.zip ` + 
+                 'dist/firefox-jwt-debugger-extension-' + 
+                 `v${extensionManifest.version}.zip`
+      }
+    },
+
+    stylus: {
+      website: {
+        files: {
+          'dist/website/css/index.css': 'stylus/website/index.styl'
         }
       },
-    },
-    stylus: {
-      compile: {
+      extension: {
         files: {
-          'css/app.css': 'stylus/app.styl'
+          'dist/extension/css/index.css': 'stylus/extension/index.styl'
         }
       }
     },
-    jade: {
-      compile: {
+
+    pug: {
+      website: {
         files: {
-          'index.html': 'views/index.jade',
-          'introduction/index.html': 'views/introduction.jade'
+          'dist/website/index.html': 'views/website/index.pug',
+          'dist/website/introduction/index.html': 
+            'views/website/introduction.pug'
+        }
+      },
+      extension: {
+        files: {
+          'dist/extension/index.html': 'views/extension/index.pug'          
         }
       }
     },
-    // useminPrepare: {
-    //   html: 'html/index.html',
-    //   options: {
-    //     root: '.',
-    //     dest: '.'
-    //   }
-    // },
-    // usemin: {
-    //   html: 'index.html',
-    //   options: {
-    //     assetsDir: ['dist/']
-    //   }
-    // },
-    // htmlmin: {
-    //   dist: {
-    //     files:  { 'index.html': 'html/index.html' }
-    //   }
-    // },
-    mocha_phantomjs: {
-      all: ['test/**/*.html']
-    }
+
+    webpack: {
+      websiteProd: require('./webpack.website-prod.js'),
+      websiteDev: require('./webpack.website-dev.js'),
+      extensionProd: require('./webpack.extension-prod.js'),
+      extensionDev: require('./webpack.extension-dev.js'),
+      unitTests: require('./webpack.website-unit-tests.js')
+    },
+
+    watch: {
+      websiteSrc: {
+        files: ['src/*.js', 'src/website/**', 'src/editor/**'],
+        tasks: 'webpack:websiteDev'
+      },
+      extensionSrc: {
+        files: ['src/*.js', 'src/extension/**', 'src/editor/**'],
+        tasks: 'webpack:extensionDev'
+      },
+      websiteImg: {
+        files: [ 'img/website/**' ],
+        tasks: 'copy:website'
+      },
+      extensionImg: {
+        files: [ 'img/extension/**' ],
+        tasks: 'copy:extension'
+      },
+      opensearch: {
+        files: 'opensearch.xml',
+        tasks: 'copy:website'
+      },
+      assets: {
+        files: [
+          'fonts/**',
+          'node_modules/bootstrap/dist/css/bootstrap.min.css',
+          'node_modules/codemirror/lib/codemirror.css',
+          'node_modules/codemirror/addon/lint/lint.css',
+          'css/budicon.css'
+        ],
+        tasks: 'copy'
+      },
+      websiteViews: {
+        files: [
+          'stylus/*.styl',
+          'stylus/website/**',
+          'views/*.pug',
+          'views/website/**'
+        ],
+        tasks: ['build-website-views']
+      },
+      extensionViews: {
+        files: [
+          'stylus/*.styl',
+          'stylus/extension/**',
+          'views/*.pug',
+          'views/extension/**'
+        ],
+        tasks: ['build-extension-views']
+      }
+    },
+
+    mochaTest: {
+      unit: {
+        options: {},
+        src: ['dist/test/unit-tests.js']
+      },
+      functional: {
+        options: {
+          // Higher default timeout to account for some animations
+          timeout: 10000
+        },
+        src: ['test/functional/**.js']        
+      }
+    },
+
+    connect: {
+      functionalTests: {
+        options: {
+          hostname: '127.0.0.1',
+          base: 'dist/website',
+        }
+      }
+    },
   });
 
-  grunt.registerTask('build', ['stylus', 'jade']);
-  // grunt.registerTask('build', ['clean', 'stylus', 'jade', 'useminPrepare', 'concat', 'uglify', 'cssmin', 'htmlmin', 'usemin']);
-  grunt.registerTask('test', ['build', 'mocha_phantomjs']);
-  grunt.registerTask('default', ['build', 'connect', 'watch']);
+  grunt.registerTask('build-website-views', [
+    'stylus:website',
+    'pug:website'
+  ]);
+
+  grunt.registerTask('build-extension-views', [
+    'stylus:extension',
+    'pug:extension'
+  ]);
+
+  grunt.registerTask('build-website', [
+    'clean:website',
+    'copy:website',
+    'build-website-views',
+    'webpack:websiteProd'
+  ]);
+
+  grunt.registerTask('build-website-dev', [
+    'clean:website',
+    'copy:website',
+    'build-website-views',
+    'webpack:websiteDev'
+  ]);
+
+  grunt.registerTask('build-extension', [
+    'clean:extension',
+    'copy:extension',
+    'build-extension-views',
+    'webpack:extensionProd',
+    'crx:pack',
+    'exec:firefoxExtensionPack',
+    'exec:renameFirefoxExtension'
+  ]);
+  
+  grunt.registerTask('build-extension-dev', [
+    'clean:extension',
+    'copy:extension', 
+    'build-extension-views',
+    'webpack:extensionDev'
+  ]);
+  
+  grunt.registerTask('build', ['build-website', 'build-extension']);
+  
+  grunt.registerTask('build-dev', [
+    'build-website-dev',
+    'build-extension-dev'
+  ]);
+
+  grunt.registerTask('unit-tests', ['webpack:unitTests', 'mochaTest:unit']);
+  
+  grunt.registerTask('functional-tests', [
+    'build-website-dev',
+    'connect:functionalTests',        
+    'mochaTest:functional'
+  ]);
+
+  grunt.registerTask('test', ['unit-tests', 'functional-tests']);
+  
+  grunt.registerTask('default', ['build-dev', 'watch']);
 };

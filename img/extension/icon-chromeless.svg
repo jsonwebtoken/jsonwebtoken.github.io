@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.8.3 (29802) - http://www.bohemiancoding.com/sketch -->
+    <title>icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icon">
+            <g id="Group">
+                <g id="Page-1">
+                    <g id="jwt_logo">
+                        <g id="Group">
+                            <polygon id="Shape" fill="#FFFFFF" points="57.5 26.9 57.5 0 42.5 0 42.5 26.9 50 37.2"></polygon>
+                            <polygon id="Shape" fill="#FFFFFF" points="42.5 73.1 42.5 100 57.5 100 57.5 73.1 50 62.8"></polygon>
+                            <polygon id="Shape" fill="#00F2E6" points="57.5 73.1 73.3 94.9 85.5 86 69.6 64.3 57.5 60.3"></polygon>
+                            <polygon id="Shape" fill="#00F2E6" points="42.5 26.9 26.7 5.1 14.5 14 30.4 35.7 42.5 39.7"></polygon>
+                            <polygon id="Shape" fill="#00B9F1" points="30.4 35.7 4.8 27.4 0.1 41.7 25.7 50 37.9 46.1"></polygon>
+                            <polygon id="Shape" fill="#00B9F1" points="62.1 53.9 69.6 64.3 95.2 72.6 99.9 58.3 74.3 50"></polygon>
+                            <polygon id="Shape" fill="#D63AFF" points="74.3 50 99.9 41.7 95.2 27.4 69.6 35.7 62.1 46.1"></polygon>
+                            <polygon id="Shape" fill="#D63AFF" points="25.7 50 0.1 58.3 4.8 72.6 30.4 64.3 37.9 53.9"></polygon>
+                            <polygon id="Shape" fill="#FB015B" points="30.4 64.3 14.5 86 26.7 94.9 42.5 73.1 42.5 60.3"></polygon>
+                            <polygon id="Shape" fill="#FB015B" points="69.6 35.7 85.5 14 73.3 5.1 57.5 26.9 57.5 39.7"></polygon>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

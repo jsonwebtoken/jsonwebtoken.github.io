@@ -1,17 +1,18 @@
-var express = require('express');
-var http = require('http');
-var enforce = require('express-sslify');
+const express = require('express');
+const enforce = require('express-sslify');
 
-var app = express();
+const app = express();
 
-// use HTTPS(true) in case you are behind a load balancer (e.g. Heroku)
-if (process.env.NODE_ENV === 'production') {
-	console.log('redirecting to ssl');
-	app.use(enforce.HTTPS({ trustProtoHeader: true }))
+if(process.env.NODE_ENV === 'production') {
+  console.log('Redirecting to TLS endpoint.');  
+	app.use(enforce.HTTPS({
+    // Required for proper use under a reverse proxy (Heroku, etc.).
+    trustProtoHeader: true
+  }));
 }
 
-app.use('/', express.static(__dirname));
+app.use('/', express.static('dist/website'));
 
-http.createServer(app).listen(process.env.PORT || 3000, function() {
-	console.log('started');
+app.listen(process.env.PORT || 3000, function() {
+	console.log('Started.');
 });

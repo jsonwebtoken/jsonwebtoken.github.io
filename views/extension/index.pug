@@ -1,0 +1,48 @@
+extends layout
+
+block content
+
+  section#debugger-io.debugger-jwt
+    .container
+      .jwt-playground
+        .top-section.clearfix
+
+          .pull-left
+            .jwt-logo.h-block
+              img(src="/img/debugger-logo.svg" height="25" alt="Share this jwt")
+
+          .pull-right      
+            .select-field.h-block
+              span Open JWT from
+              .custom-select
+                select
+                  optgroup
+                    option(name='0', selected) 
+                  optgroup(label="Web Storage")
+                  optgroup(label="Cookies")
+
+            .select-field.algorithm.h-block
+              span Algorithm
+              .jwt-select.custom-select
+                include ../token-editor-algorithms.pug
+
+            .share-this-jwt.h-block
+              a.jwt-clipboard-btn(href="#")
+                span#share-this-jwt-text Share this JWT
+                img(src="/img/icon-chromeless.svg" height="22" alt="Share this jwt")
+
+        include ../token-editor-common.pug
+
+        .colophon.clearfix
+          .pull-left
+            a(target="_blank" href="https://auth0.com/?utm_source=jwt-ext&utm_campaign=badge")
+              | Supported by 
+              img(src="/img/ico_logo.svg")
+              
+          .pull-right.save-back.hide
+            a#save-back-link(href="#") Save back to localStorage
+            
+          .pull-right.keyboard-info
+            span Press Ctrl + Shift + K to open the JWT debugger
+
+  script(src='/js/index.js')

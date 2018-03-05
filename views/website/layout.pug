@@ -1,0 +1,77 @@
+doctype html
+html(lang='en')
+  head
+    include ../title.pug
+
+    //- Google Verification Code
+    meta(name="google-site-verification", content="cFjJt_KK4v_TKnCZ3hcuLlEUBBk4RLT0iByrpjCsvLA")
+    // For Chrome extension inline install
+    meta(name="google-site-verification", content="eksHKAourReHdYNGn8amokJTErSTq0VzdQWuyU_hE2s")
+
+    //- Twitter Card
+    block twittercard
+      meta(name='twitter:card', content='summary_large_image')
+      meta(name='twitter:creator', content='@auth0')
+      meta(name='twitter:title', content='JWT.IO')
+      meta(name='twitter:description', content='JSON Web Tokens are an open, industry standard RFC 7519 method for representing claims securely between two parties.')
+      meta(name='twitter:image', content='http://jwt.io/img/twitter-card.png')
+
+    //- Facebook Card
+    block opengraph
+      meta(property='og:type', content='website')
+      meta(property='og:title', content='JWT.IO')
+      meta(property='og:description', content='JSON Web Tokens are an open, industry standard RFC 7519 method for representing claims securely between two parties.')
+      meta(property='og:locale', content='en_US')
+      meta(property='og:url', content='http://jwt.io/')
+      meta(property='og:image', content='http://jwt.io/img/facebook-card.png')
+      meta(property='og:image:type', content='image/png')
+      meta(property='og:image:width', content='1200')
+      meta(property='og:image:height', content='630')
+
+    include ../stylesheets.pug
+
+    link(rel='search', type='application/opensearchdescription+xml', title='JWT.io', href='/opensearch.xml')
+
+    include ../icons.pug
+    
+    // Chrome extension link, required for inline installs
+    link(rel="chrome-webstore-item", href="https://chrome.google.com/webstore/detail/ppmmlchacdbknfphdeafcbmklcghghmd")
+
+  body
+
+    // Google Tag Manager
+    noscript
+      iframe(src='//www.googletagmanager.com/ns.html?id=GTM-PT2SNS', height='0', width='0', style='display:none;visibility:hidden')
+    script.
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-PT2SNS');
+    // End Google Tag Manager —>
+
+    block content
+
+    footer
+      .container
+        .columns
+          .column
+            a(href='https://auth0.com/', target="_blank")
+              | Supported by
+              img(src='/img/ico_logo.svg')
+          .column.pull-request
+            span Missing something?
+            a(href='https://github.com/jsonwebtoken/jsonwebtoken.github.io/tree/master/views', target="_blank") Send a Pull Request
+          .column.social-counter
+            a.twitter-follow-button(href='https://twitter.com/auth0', data-show-count='true') Follow @auth0
+
+    script.
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-37952868-2', 'auto');
+      ga('send', 'pageview');
+
+    script.
+      !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
