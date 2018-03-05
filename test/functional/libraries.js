@@ -2,6 +2,8 @@ const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 const chaiArrays = require('chai-arrays');
 
+const request = require('request-promise-native');
+
 const utils = require('./utils.js');
 
 const isVisible = utils.isVisible;
@@ -34,6 +36,21 @@ describe('Libraries', function() {
     });
 
     expect(libraries).to.be.sorted;
+  });
+
+  it('Should all have a valid logo', async function() {
+    const imgs = await this.page.$$eval('.panel-heading img', imgs => {
+      return Array.prototype.map.call(imgs, img => img.src);  
+    });
+
+    const uniqueImgs = new Set(imgs);
+    
+    const promises = [];
+    for(src of uniqueImgs) {
+      promises.push(request(src));
+    }
+
+    return expect(Promise.all(promises)).to.be.fulfilled;
   });
 
   it('Hides and displays libraries using filters', async function() {    
