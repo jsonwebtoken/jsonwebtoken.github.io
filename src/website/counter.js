@@ -7,44 +7,35 @@ import jQuery from 'jquery';
 import 'flipclock/compiled/flipclock.js';
 import log from 'loglevel';
 
-const initialCount = 80482701;
-const pollIntervalWhenVisible = 5000;
-const pollIntervalWhenHidden = 1000*1000;
-const url = 'https://webtask.it.auth0.com/api/run/' + 
-            'wt-matiasw-gmail_com-0/proxy?' + 
-            'url=http://metrics.it.auth0.com/counters';
+const baselineDate = new Date(2018, 3 - 1, 6);
+// We should try to get a real number for this.
+// Set on 2018-03-06
+const baselineCount = 53919517299;
 
+const secondsPerDay = 60 * 60 * 24;
+const loginsPerDay = 50000000;
+const loginsPerSecond = loginsPerDay / secondsPerDay;
+
+const intervalMs = 1000;
+
+const initialCount = getLoginCount();
 const flipCounter = $(counterElement).FlipClock(initialCount, {
   clockFace: 'Counter',
   minimumDigits: initialCount.toString().length
 });
 
-function updateCounterFromWebtask() {
-  return new Promise((resolve, reject) => {
-    httpGet(url, false).then(data => {
-      const parsed = JSON.parse(data);
-      flipCounter.setTime(parsed.logins);
-    }).catch(e => {
-      log.warn('Failed to set count from Webtask: ', e);
-    });
-  });
+function getLoginCount() {
+  return baselineCount + 
+         Math.round((new Date() - baselineDate) / 1000 * loginsPerSecond);
 }
 
-let elapsed = pollIntervalWhenHidden;
 function updateCounter() {
-  elapsed += pollIntervalWhenVisible;
-
   if(isInViewport(counterElement)) {
-    updateCounterFromWebtask();
-  } else {
-    if(elapsed >= pollIntervalWhenHidden) {
-      elapsed = 0;
-      updateCounterFromWebtask();
-    }
+    flipCounter.setTime(getLoginCount());
   }
 }
 
 export function setupJwtCounter() {
   updateCounter();
-  setInterval(updateCounter, pollIntervalWhenVisible);  
+  setInterval(updateCounter, intervalMs);  
 }
