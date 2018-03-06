@@ -195,7 +195,7 @@ module.exports = grunt => {
     },
 
     connect: {
-      functionalTests: {
+      website: {
         options: {
           hostname: '127.0.0.1',
           base: 'dist/website',
@@ -256,11 +256,11 @@ module.exports = grunt => {
   
   grunt.registerTask('functional-tests', [
     'build-website-dev',
-    'connect:functionalTests',        
+    'connect:website',        
     'mochaTest:functional'
   ]);
 
   grunt.registerTask('test', ['unit-tests', 'functional-tests']);
   
-  grunt.registerTask('default', ['build-dev', 'watch']);
+  grunt.registerTask('default', ['build-dev', 'connect:website', 'watch']);
 };
