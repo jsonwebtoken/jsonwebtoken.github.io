@@ -20,6 +20,14 @@ grunt
 
 You will find the generated files in the `dist` directory. For the website, you can run a server at its root. For example: `http-server dist/website`.
 
+To run tests, execute:
+
+```
+grunt test
+```
+
+Look at the end of the `Gruntfile` for other common tasks.
+
 ### Happy hacking!
 
 
