@@ -1,7 +1,7 @@
 import { payloadEditor } from './instances.js';
 import { payloadTooltipElement } from '../dom-elements.js';
 
-export function tooltipHandler(event) {
+export function timeTooltipHandler(event) {
   const result = payloadEditor.coordsChar({
     left: event.pageX,
     top: event.pageY

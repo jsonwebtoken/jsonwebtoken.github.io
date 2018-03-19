@@ -4,7 +4,7 @@ import {
   copyTokenLink 
 } from '../utils.js';
 import { downloadPublicKeyIfPossible } from './public-key-download.js';
-import { tooltipHandler } from './tooltip.js';
+import { timeTooltipHandler } from './time-tooltip.js';
 import { tokenEditor, headerEditor, payloadEditor } from './instances.js';
 import { 
   getTrimmedValue,
@@ -379,7 +379,7 @@ function setupEvents() {
   // through the event manager for them.
 
   // Human readable timestamp tooltips
-  payloadElement.addEventListener('mousemove', tooltipHandler);
+  payloadElement.addEventListener('mousemove', timeTooltipHandler);
   // Temporary (share button not ready yet)
   signatureStatusElement.addEventListener('click', copyTokenHandler);
 
