@@ -16,6 +16,8 @@ chai.use(chaiAsPromised);
 chai.use(chaiArrays);
 const expect = chai.expect;
 
+const typingDelay = 0;
+
 describe('Editor', function() {
   before(utils.launchBrowser);
 
@@ -34,6 +36,13 @@ describe('Editor', function() {
     });
 
     expect(selected).to.equal('HS256');
+  });
+
+  it('Default selected token should say something ' + 
+     'about secret length', async function() {
+    const secret = this.page.$eval('input[name="secret"]',
+      secretInput => secretInput.value);
+    return expect(secret).to.eventually.include('256');
   });
 
   it('Should select default tokens when no changes have ' +
@@ -119,7 +128,7 @@ describe('Editor', function() {
       test: 'test'
     };
     await this.page.keyboard.type(JSON.stringify(header, null, 2), { 
-      delay: 5 
+      delay: typingDelay 
     });
 
     const newToken = await this.page.evaluate(() => {
@@ -154,7 +163,7 @@ describe('Editor', function() {
       "test": "test"
     };
     await this.page.keyboard.type(JSON.stringify(payload, null, 2), { 
-      delay: 5 
+      delay: typingDelay 
     });
 
     const newToken = await this.page.evaluate(() => {
@@ -187,7 +196,7 @@ describe('Editor', function() {
       typ: 'JWT',
     };
     await this.page.keyboard.type(JSON.stringify(header, null, 2), { 
-      delay: 5 
+      delay: typingDelay 
     });
 
     const selectedAfter = 
@@ -219,7 +228,7 @@ describe('Editor', function() {
       sub: 'test'      
     };
     await this.page.keyboard.type(JSON.stringify(payload, null, 2), { 
-      delay: 5 
+      delay: typingDelay 
     });
 
     const algs = await this.page.$eval('#algorithm-select', select => {
@@ -291,7 +300,7 @@ describe('Editor', function() {
           await this.page.keyboard.press('KeyA');
           await this.page.keyboard.up('ControlLeft');
           await secretInput.type(tokens[alg].secret, { 
-            delay: 5 
+            delay: typingDelay 
           });
 
           await this.page.click('.js-input');
@@ -299,7 +308,7 @@ describe('Editor', function() {
           await this.page.keyboard.press('KeyA');
           await this.page.keyboard.up('ControlLeft');
           await this.page.keyboard.type(tokens[alg].token, { 
-            delay: 5 
+            delay: typingDelay 
           });
 
           const valid = await this.page.$eval('.validation-status', status => {
@@ -349,7 +358,7 @@ describe('Editor', function() {
           await this.page.keyboard.press('KeyA');
           await this.page.keyboard.up('ControlLeft');
           await this.page.keyboard.type(tokens[alg].token, { 
-            delay: 5 
+            delay: typingDelay 
           });
 
           const secretInput = await this.page.$('textarea[name="public-key"]');
@@ -358,7 +367,7 @@ describe('Editor', function() {
           await this.page.keyboard.press('KeyA');
           await this.page.keyboard.up('ControlLeft');
           await secretInput.type(tokens[alg].publicKey, { 
-            delay: 5 
+            delay: typingDelay 
           });          
 
           const valid = await this.page.$eval('.validation-status', status => {
@@ -389,7 +398,7 @@ describe('Editor', function() {
           await this.page.keyboard.press('KeyA');
           await this.page.keyboard.up('ControlLeft');
           await this.page.keyboard.type(defaultTokens['rs256'].publicKey, { 
-            delay: 5 
+            delay: typingDelay 
           });
 
           await this.page.click('textarea[name="private-key"]');
@@ -397,7 +406,7 @@ describe('Editor', function() {
           await this.page.keyboard.press('KeyA');
           await this.page.keyboard.up('ControlLeft');
           await this.page.keyboard.type(defaultTokens['rs256'].privateKey, { 
-            delay: 5 
+            delay: typingDelay 
           });
         });
 
@@ -427,7 +436,7 @@ describe('Editor', function() {
               alg: alg.toUpperCase(),
               typ: 'JWT'
             }, null, 2), { 
-              delay: 5 
+              delay: typingDelay 
             });
 
             await this.page.click('.js-payload');
@@ -437,7 +446,7 @@ describe('Editor', function() {
             await this.page.keyboard.type(JSON.stringify({
               sub: 'test'
             }, null, 2), { 
-              delay: 5 
+              delay: typingDelay 
             });
 
             const newToken = await this.page.evaluate(() => {
@@ -469,7 +478,7 @@ describe('Editor', function() {
           await this.page.keyboard.press('KeyA');
           await this.page.keyboard.up('ControlLeft');
           await this.page.keyboard.type(defaultTokens['es256'].publicKey, { 
-            delay: 5 
+            delay: typingDelay 
           });
 
           await this.page.click('textarea[name="private-key"]');
@@ -477,7 +486,7 @@ describe('Editor', function() {
           await this.page.keyboard.press('KeyA');
           await this.page.keyboard.up('ControlLeft');
           await this.page.keyboard.type(defaultTokens['es256'].privateKey, { 
-            delay: 5 
+            delay: typingDelay 
           });
         });
 
@@ -506,7 +515,7 @@ describe('Editor', function() {
               alg: alg.toUpperCase(),
               typ: 'JWT'
             }, null, 2), { 
-              delay: 5 
+              delay: typingDelay 
             });
 
             await this.page.click('.js-payload');
@@ -516,7 +525,7 @@ describe('Editor', function() {
             await this.page.keyboard.type(JSON.stringify({
               sub: 'test'
             }, null, 2), { 
-              delay: 5 
+              delay: typingDelay 
             });
 
             const newToken = await this.page.evaluate(() => {
@@ -582,7 +591,7 @@ describe('Editor', function() {
         await this.page.keyboard.press('KeyA');
         await this.page.keyboard.up('ControlLeft');
         await this.page.keyboard.type(token, { 
-          delay: 5         
+          delay: typingDelay         
         });
 
         await this.page.waitFor(2000);
@@ -617,7 +626,7 @@ describe('Editor', function() {
         await this.page.keyboard.press('KeyA');
         await this.page.keyboard.up('ControlLeft');
         await this.page.keyboard.type(token, { 
-          delay: 5         
+          delay: typingDelay         
         });
 
         await this.page.waitFor(2000);
@@ -651,7 +660,7 @@ describe('Editor', function() {
         await this.page.keyboard.press('KeyA');
         await this.page.keyboard.up('ControlLeft');
         await this.page.keyboard.type(token, { 
-          delay: 5         
+          delay: typingDelay         
         });
 
         await this.page.waitFor(2000);
@@ -692,7 +701,7 @@ describe('Editor', function() {
         test: 'test'
       };
       await this.page.keyboard.type(JSON.stringify(header, null, 2), { 
-        delay: 5 
+        delay: typingDelay 
       });
 
       const token = await this.page.evaluate(() => {
@@ -722,7 +731,7 @@ describe('Editor', function() {
         sub: 'test'
       };
       await this.page.keyboard.type(JSON.stringify(payload, null, 2), { 
-        delay: 5 
+        delay: typingDelay 
       });
 
       const token = await this.page.evaluate(() => {
@@ -742,7 +751,7 @@ describe('Editor', function() {
       await this.page.keyboard.press('KeyA');
       await this.page.keyboard.up('ControlLeft');
       await this.page.keyboard.type(tokens['rs256'].token, { 
-        delay: 5 
+        delay: typingDelay 
       });
 
       const secretInput = await this.page.$('textarea[name="public-key"]');
@@ -751,7 +760,7 @@ describe('Editor', function() {
       await this.page.keyboard.press('KeyA');
       await this.page.keyboard.up('ControlLeft');
       await secretInput.type(tokens['rs256'].publicKey, { 
-        delay: 5 
+        delay: typingDelay 
       });
 
       const valid = await this.page.$eval('.validation-status', status => {
@@ -785,7 +794,7 @@ describe('Editor', function() {
       await this.page.keyboard.press('KeyA');
       await this.page.keyboard.up('ControlLeft');
       await this.page.keyboard.type(tokens['rs256'].token, { 
-        delay: 5 
+        delay: typingDelay 
       });
 
       const secretInput = await this.page.$('textarea[name="public-key"]');
@@ -794,7 +803,7 @@ describe('Editor', function() {
       await this.page.keyboard.press('KeyA');
       await this.page.keyboard.up('ControlLeft');
       await secretInput.type(tokens['rs256'].publicKey, { 
-        delay: 5 
+        delay: typingDelay 
       });
 
       const valid = await this.page.$eval('.validation-status', status => {
@@ -806,7 +815,7 @@ describe('Editor', function() {
 
       await secretInput.click();
       await this.page.keyboard.type('sdfasdf389972389', {
-        delay: 5
+        delay: typingDelay
       });
 
       const invalid = await this.page.$eval('.validation-status', status => {
@@ -829,7 +838,7 @@ describe('Editor', function() {
       await this.page.keyboard.press('KeyA');
       await this.page.keyboard.up('ControlLeft');
       await secretInput.type(defaultTokens['rs256'].publicKey, { 
-        delay: 5 
+        delay: typingDelay 
       });
 
       const privateKeyInput = await this.page.$('textarea[name="private-key"]');
@@ -842,7 +851,7 @@ describe('Editor', function() {
       const tail = defaultTokens['rs256'].privateKey.slice(20);
 
       await privateKeyInput.type(`${head}sadfasdf${tail}`, { 
-        delay: 5 
+        delay: typingDelay 
       });
 
       await this.page.click('.js-input');
@@ -850,7 +859,7 @@ describe('Editor', function() {
       await this.page.keyboard.press('KeyA');
       await this.page.keyboard.up('ControlLeft');
       await this.page.keyboard.type(defaultTokens['rs256'].token, { 
-        delay: 5 
+        delay: typingDelay 
       });
 
       await this.page.waitFor(1000);
@@ -875,7 +884,7 @@ describe('Editor', function() {
       await this.page.keyboard.press('KeyA');
       await this.page.keyboard.up('ControlLeft');
       await secretInput.type(tokens['rs256'].publicKey, { 
-        delay: 5 
+        delay: typingDelay 
       });
 
       const privateKeyInput = await this.page.$('textarea[name="private-key"]');
@@ -890,7 +899,7 @@ describe('Editor', function() {
       await this.page.keyboard.press('KeyA');
       await this.page.keyboard.up('ControlLeft');
       await this.page.keyboard.type(tokens['rs256'].token, { 
-        delay: 5 
+        delay: typingDelay 
       });
 
       await this.page.waitFor(1000);
@@ -913,7 +922,7 @@ describe('Editor', function() {
     await this.page.keyboard.press('KeyA');
     await this.page.keyboard.up('ControlLeft');
     await this.page.keyboard.type(tokens.hs256.token, { 
-      delay: 5 
+      delay: typingDelay 
     });
 
     await this.page.select('#algorithm-select', 'HS384');
@@ -933,7 +942,7 @@ describe('Editor', function() {
     await this.page.keyboard.press('KeyA');
     await this.page.keyboard.up('ControlLeft');
     await this.page.keyboard.type(tokens.none.token, { 
-      delay: 5 
+      delay: typingDelay 
     });
 
     const invalid = await this.page.$eval('.validation-status', status => {
@@ -953,7 +962,7 @@ describe('Editor', function() {
     await this.page.keyboard.press('KeyA');
     await this.page.keyboard.up('ControlLeft');
     await secretInput.type('secret-test', { 
-      delay: 5 
+      delay: typingDelay 
     });
 
     await this.page.click('.js-payload');
@@ -965,7 +974,7 @@ describe('Editor', function() {
       sub: 'test'      
     };
     await this.page.keyboard.type(JSON.stringify(payload, null, 2), { 
-      delay: 5 
+      delay: typingDelay 
     });
 
     await this.page.reload();
