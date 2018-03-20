@@ -9,12 +9,17 @@ import { tokenEditor, headerEditor, payloadEditor } from './instances.js';
 import { 
   getTrimmedValue,
   stringify,
-  fixEditorHeight 
+  fixEditorHeight,
+  getSelectedAlgorithm
 } from './utils.js';
 import { sign, verify, decode } from './jwt.js';
 import EventManager from './event-manager.js';
 import strings from '../strings.js';
 import defaultTokens from './default-tokens.js';
+import { 
+  minSecretLengthCheck,
+  setupSecretLengthTooltip 
+} from './secret-length-tooltip.js';
 import { 
   algorithmSelect, 
   signatureStatusElement,
@@ -161,11 +166,6 @@ function setAlgorithmInHeader(algorithm) {
       // is being edited.
     }
   });
-}
-
-function getSelectedAlgorithm() {
-  const selected = algorithmSelect.options[algorithmSelect.selectedIndex];
-  return selected.value;
 }
 
 function algorithmChangeHandler() {
@@ -365,8 +365,10 @@ function setupEvents() {
   eventManager.addCodeMirrorEvent(headerEditor, 'change', encodeToken);
   eventManager.addCodeMirrorEvent(payloadEditor, 'change', encodeToken);
 
+  // HMAC secret, show tooltip if secret is too short.
+  eventManager.addDomEvent(secretInput, 'input', minSecretLengthCheck);
   // HMAC secret, when changed the encoded token must be updated.
-  eventManager.addDomEvent(secretInput, 'input', encodeToken);
+  eventManager.addDomEvent(secretInput, 'input', encodeToken);  
   // Base64 checkbox, when changes the encoded token must be updated.
   eventManager.addDomEvent(secretBase64Checkbox, 'change', encodeToken);
   // Private key, when changed the encoded token must be updated.
@@ -404,4 +406,5 @@ export function setupTokenEditor() {
   selectAlgorithm('HS256');
   loadToken();
   fixEditorHeight();
+  setupSecretLengthTooltip();
 }

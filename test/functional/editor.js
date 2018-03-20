@@ -5,6 +5,8 @@ const chaiArrays = require('chai-arrays');
 const express = require('express');
 const jsrsasign = require('jsrsasign');
 
+const _ = require('lodash');
+
 const utils = require('./utils.js');
 const tokens = require('./tokens.js');
 const defaultTokens = require('./default-tokens.js');
@@ -289,11 +291,11 @@ describe('Editor', function() {
       expect(oldToken).to.equal(newToken);
     });
 
-    describe('Decodes HS256/384/512 tokens', function() {      
+    describe('HS256/384/512', function() {      
       const algs = Object.keys(tokens).filter(alg => alg.includes('hs'));
       
       for(const alg of algs) {
-        it(alg.toUpperCase(), async function() {
+        it(`Decodes ${alg.toUpperCase()} tokens`, async function() {
           const secretInput = await this.page.$('input[name="secret"]');
           await secretInput.click();
           await this.page.keyboard.down('ControlLeft');
@@ -323,7 +325,51 @@ describe('Editor', function() {
           });
 
           expect(payload).to.include(alg + 'test');
-        });        
+        });
+
+        const bits = parseInt(alg.substr(2));
+        it(`Considers less-than-${bits}-bit secrets weak`,
+           async function() {
+          let secret = _.pad('', (bits / 8) - 1, 'test');
+
+          const secretInput = await this.page.$('input[name="secret"]');
+          await secretInput.click();
+          await this.page.keyboard.down('ControlLeft');
+          await this.page.keyboard.press('KeyA');
+          await this.page.keyboard.up('ControlLeft');
+          await secretInput.type(secret, {
+            delay: typingDelay
+          });
+
+          // Wait for animations
+          await this.page.waitFor(500);
+
+          let tooltipVisible = 
+            await this.page.$eval('input[name="secret"]', input => {
+              return input._tippy.state.visible;
+            });
+
+          expect(tooltipVisible).to.be.true;
+
+          secret += 'test';
+          await secretInput.click();
+          await this.page.keyboard.down('ControlLeft');
+          await this.page.keyboard.press('KeyA');
+          await this.page.keyboard.up('ControlLeft');
+          await secretInput.type(secret, {
+            delay: typingDelay
+          });
+
+          // Wait for animations
+          await this.page.waitFor(500);
+
+          tooltipVisible = 
+            await this.page.$eval('input[name="secret"]', input => {
+              return input._tippy.state.visible;
+            });
+
+          expect(tooltipVisible).to.be.false;
+        });
       }
     });    
 

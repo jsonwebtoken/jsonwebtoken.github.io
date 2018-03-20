@@ -25,3 +25,8 @@ export function fixEditorHeight() {
 export function stringify(object) {
   return JSON.stringify(object, null, 2);
 }
+
+export function getSelectedAlgorithm() {
+  const selected = algorithmSelect.options[algorithmSelect.selectedIndex];
+  return selected.value;
+}
