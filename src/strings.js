@@ -1,9 +1,11 @@
 export default {
+  common: {
+    shareThisJwt: 'Share JWT',
+    jwtIoUrlCopied: 'Copied',
+  },
   extension: {
     alreadyInstalled: 'Already installed',
-    addToBrowser: 'Add to Browser',
-    shareThisJwt: 'Share this JWT',
-    jwtIoUrlCopied: 'Copied',
+    addToBrowser: 'Add to Browser',    
     noJwtsFound: 'No JWTs found',
     saveBackTo: 'Save back to '
   },

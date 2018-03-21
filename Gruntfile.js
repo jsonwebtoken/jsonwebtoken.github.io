@@ -173,6 +173,9 @@ module.exports = grunt => {
         files: [
           'stylus/*.styl',
           'stylus/extension/**',
+          // Yes, we still share styles with the website, it's really hard
+          // to refactor them out without breaking stuff
+          'stylus/website/**',
           'views/*.pug',
           'views/extension/**'
         ],

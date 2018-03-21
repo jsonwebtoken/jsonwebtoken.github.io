@@ -7,12 +7,15 @@ import { setupSmoothScrolling } from './smooth-scrolling.js';
 import { setupHighlighting } from './highlighting.js';
 import { getParameterByName } from '../utils.js';
 import { isChrome, isFirefox } from './utils.js';
+import { setupShareJwtButton } from '../share-button.js';
 import { 
   publicKeyTextArea, 
   codeElements, 
   debuggerSection,
   extensionSection,
-  ebookSection
+  ebookSection,
+  shareJwtButton,
+  shareJwtTextElement
 } from './dom-elements.js';
 
 /* For initialization, look at the end of this file */
@@ -59,3 +62,4 @@ parseLocationQuery();
 setupHighlighting();
 setupJwtCounter();
 pickEbookOrExtensionBanner();
+setupShareJwtButton(shareJwtButton, shareJwtTextElement);

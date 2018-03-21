@@ -583,8 +583,8 @@ body
 
   .validation-status
     text-transform capitalize
-    color white
-    text-align center
+    background-color white
+    text-align left
     border-radius 3px
     padding 10px 0
     margin-top 30px
@@ -592,9 +592,9 @@ body
     +breakpoint("tablet")
       font-size 30px
     &.valid-token
-      background-color #00B9F1
+      color #00B9F1
     &.invalid-token
-      background-color red
+      color red
     i
       font-size 18px
       vertical-align bottom
@@ -602,6 +602,20 @@ body
       margin-right 5px
       +breakpoint("tablet")
         font-size 24px
+
+  .debugger-footer
+    font-size 30px
+    .website-validation
+      padding-left 0      
+    .website-share
+      padding-right 0
+      button
+        width 100%;
+        background-color #00b9f1;
+        color white;
+        font-weight 400;
+        border-color #00b9f1;
+      
 
 
 // libraries-jwt

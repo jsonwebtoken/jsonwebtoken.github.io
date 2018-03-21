@@ -28,10 +28,11 @@ block content
 
             .share-this-jwt.h-block
               a.jwt-clipboard-btn(href="#")
-                span#share-this-jwt-text Share this JWT
+                span#share-this-jwt-text Share JWT
                 img(src="/img/icon-chromeless.svg" height="22" alt="Share this jwt")
 
         include ../token-editor-common.pug
+        include ../token-editor-validation.pug
 
         .colophon.clearfix
           .pull-left
