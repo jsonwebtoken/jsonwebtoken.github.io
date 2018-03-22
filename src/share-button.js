@@ -11,7 +11,15 @@ export function setupShareJwtButton(shareJwtElement, shareJwtTextElement) {
     if(value.token) {
       // If the selected algorithm does not use public keys, publicKey will be
       // undefined.
-      copyTokenLink(value.token, value.publicKey);
+      const copiedUrl = copyTokenLink(value.token, value.publicKey);
+
+      // We cannot read the clipboard in headless Chrome, 
+      // so we use this to let functional tests see the URL. See:
+      // https://github.com/GoogleChrome/puppeteer/issues/2147 
+      if(!window.test) {
+        window.test = {};
+      }
+      window.test.shareJwtCopiedUrl = copiedUrl;
     }
 
     const shareJwtTextNode = shareJwtTextElement.firstChild;

@@ -168,6 +168,7 @@ export function copyTokenLink(token, publicKeyOptional) {
   }
 
   copyTextToClipboard(url);
+  return url;
 }
 
 // https://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript

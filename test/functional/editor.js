@@ -1031,4 +1031,124 @@ describe('Editor', function() {
 
     expect(storedPayload).to.deep.equal(payload);
   });
+
+  describe('JWT share button', function() {
+    it('Copies an HMAC token to the clipboard (no secret)', async function() {
+      await this.page.select('#algorithm-select', 'HS256');
+
+      const secretInput = await this.page.$('input[name="secret"]');
+      await secretInput.click();
+      await this.page.keyboard.down('ControlLeft');
+      await this.page.keyboard.press('KeyA');
+      await this.page.keyboard.up('ControlLeft');
+      await secretInput.type('secret-test', { 
+        delay: typingDelay 
+      });
+
+      await this.page.click('.js-payload');
+      await this.page.keyboard.down('ControlLeft');
+      await this.page.keyboard.press('KeyA');
+      await this.page.keyboard.up('ControlLeft');
+
+      const payload = {
+        sub: 'test'      
+      };
+      await this.page.keyboard.type(JSON.stringify(payload, null, 2), { 
+        delay: typingDelay 
+      });
+
+      const shareJwtButton = await this.page.$('.website-share button');
+      await shareJwtButton.click();
+
+      const srcToken = await this.page.evaluate(() => 
+        window.test.tokenEditor.getValue());
+
+      // We cannot read the clipboard in headless Chrome, so we have a special
+      // harness in the code that stores this value. See:
+      // https://github.com/GoogleChrome/puppeteer/issues/2147
+      const copiedUrl = await this.page.evaluate(() => 
+        window.test.shareJwtCopiedUrl);
+
+      const newPage = await this.browser.newPage();
+      await newPage.goto(copiedUrl);
+
+      const destToken = await newPage.evaluate(() => 
+        window.test.tokenEditor.getValue());
+      const destSecret = await newPage.$eval('input[name="secret"]', input =>
+        input.value);
+
+      expect(srcToken).to.equal(destToken);
+      expect(destSecret).to.not.equal('secret-test');
+    });
+
+    it('Copies an RSA token to the clipboard (with public-key)',
+      async function() {
+        this.timeout(30000);
+
+        await this.page.select('#algorithm-select', 'RS256');      
+
+        await this.page.click('.js-input');
+        await this.page.keyboard.down('ControlLeft');
+        await this.page.keyboard.press('KeyA');
+        await this.page.keyboard.up('ControlLeft');
+        await this.page.keyboard.type(defaultTokens['rs256'].token, { 
+          delay: typingDelay 
+        });
+
+        const pubKeyInput = await this.page.$('textarea[name="public-key"]');
+        await pubKeyInput.click();
+        await this.page.keyboard.down('ControlLeft');
+        await this.page.keyboard.press('KeyA');
+        await this.page.keyboard.up('ControlLeft');
+        await pubKeyInput.type(defaultTokens['rs256'].publicKey, { 
+          delay: typingDelay 
+        });
+
+        const privateKeyInput = 
+          await this.page.$('textarea[name="private-key"]');
+        await privateKeyInput.click();
+        await this.page.keyboard.down('ControlLeft');
+        await this.page.keyboard.press('KeyA');
+        await this.page.keyboard.up('ControlLeft');      
+        await privateKeyInput.type(defaultTokens['rs256'].privateKey, { 
+          delay: typingDelay 
+        });
+
+        await this.page.click('.js-payload');
+        await this.page.keyboard.down('ControlLeft');
+        await this.page.keyboard.press('KeyA');
+        await this.page.keyboard.up('ControlLeft');
+
+        const payload = {
+          sub: 'test'      
+        };
+        await this.page.keyboard.type(JSON.stringify(payload, null, 2), { 
+          delay: typingDelay 
+        });
+
+        const shareJwtButton = await this.page.$('.website-share button');
+        await shareJwtButton.click();
+
+        const srcToken = await this.page.evaluate(() => 
+          window.test.tokenEditor.getValue());
+
+        // We cannot read the clipboard in headless Chrome, so we have a
+        // special harness in the code that stores this value. See:
+        // https://github.com/GoogleChrome/puppeteer/issues/2147
+        const copiedUrl = await this.page.evaluate(() => 
+          window.test.shareJwtCopiedUrl);
+
+        const newPage = await this.browser.newPage();
+        await newPage.goto(copiedUrl);
+
+        const destToken = await newPage.evaluate(() => 
+          window.test.tokenEditor.getValue());
+        const destPubKey = await newPage.$eval('textarea[name="public-key"]',
+          input => input.value);
+
+        expect(srcToken).to.equal(destToken);
+        expect(destPubKey).to.equal(defaultTokens['rs256'].publicKey);
+      }
+    );
+  });
 });
