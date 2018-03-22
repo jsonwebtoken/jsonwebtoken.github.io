@@ -1,4 +1,4 @@
-##JWT.io
+## JWT.io
 
 <img src="https://cdn.auth0.com/blog/jwtio/jwtio.png"/>
 
