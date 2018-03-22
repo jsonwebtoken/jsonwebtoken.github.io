@@ -584,13 +584,15 @@ body
   .validation-status
     text-transform capitalize
     background-color white
-    text-align left
+    text-align center
     border-radius 3px
-    padding 10px 0
+    padding 0
     margin-top 30px
     font-size 20px
     +breakpoint("tablet")
       font-size 30px
+      padding 10px 0
+      text-align left
     &.valid-token
       color #00B9F1
     &.invalid-token
