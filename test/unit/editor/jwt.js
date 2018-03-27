@@ -9,6 +9,13 @@ import { should } from 'chai';
 
 should();
 
+const publicKeyPlainRSA =
+`-----BEGIN RSA PUBLIC KEY-----
+MIGJAoGBAN2Vq1GNGOiCjdaiOAYcUdgu6B1RYBj2JHd/LhqtY0DUqhLyRXDfdwmJ
+tevxu/BQBSlqsLCW91sfp28Q5+i7T+AIVCwdR9CtIO/4y5JQwB7yPMoTipb6Mr7F
+BT1rTcZScoeSSV75DSlf+DqNdnuvX/EArkOjaRD5fnEr1yKlGAQrAgMBAAE=
+-----END RSA PUBLIC KEY-----`;
+
 describe('JWT', function() {
   it('detects tokens', function() {
     jwt.isToken('skdjf9238ujdhkf.asdfasdf2.sdsdffsfsd').should.be.false;
@@ -97,7 +104,7 @@ describe('JWT', function() {
     }
   });
 
-  it('signs tokens (HS256)', function() {
+  it('signs/verifies tokens (HS256)', function() {
     const header = {
       alg: 'HS256'
     };
@@ -118,7 +125,7 @@ describe('JWT', function() {
     decoded.payload.should.deep.equal(payload);
   });
 
-  it('signs tokens (RS256)', function() {
+  it('signs/verifies tokens (RS256)', function() {
     const header = {
       alg: 'RS256'
     };
@@ -139,7 +146,7 @@ describe('JWT', function() {
     decoded.payload.should.deep.equal(payload);
   });
 
-  it('signs tokens (ES256)', function() {
+  it('signs/verifies tokens (ES256)', function() {
     const header = {
       alg: 'ES256'
     };
@@ -160,7 +167,7 @@ describe('JWT', function() {
     decoded.payload.should.deep.equal(payload);
   });
 
-  it('signs tokens (PS256)', function() {
+  it('signs/verifies tokens (PS256)', function() {
     const header = {
       alg: 'PS256'
     };
@@ -179,5 +186,18 @@ describe('JWT', function() {
     const decoded = jwt.decode(token);
     decoded.header.should.deep.equal(header);
     decoded.payload.should.deep.equal(payload);
+  });
+
+  it('verifies tokens (RS256) using a plain RSA public key', function() {
+    const header = {
+      alg: 'RS256'
+    };
+    const payload = {
+      sub: 'test'
+    };
+
+    const token = jwt.sign(header, payload, tokens.rs256.privateKey);
+    
+    jwt.verify(token, publicKeyPlainRSA).should.be.true;
   });
 });
