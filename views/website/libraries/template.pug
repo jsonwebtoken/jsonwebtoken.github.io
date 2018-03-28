@@ -1,7 +1,7 @@
 article(data-accordion, class=`accordion ${lang.uniqueClass}`)
   .panel-heading(data-control)
     img(src=lang.image)
-    h3(style=`background-color: ${lang.bgColor}`) #{langName}
+    h3(style=`background-color: ${lang.bgColor}`) #{lang.name}
   .panel-wrap(data-content)
     if lib.minimumVersion
       .version

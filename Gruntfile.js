@@ -1,4 +1,6 @@
 const extensionManifest = require('./manifest.json');
+const getLanguages =
+  require('./views/website/libraries/support/get-languages.js');
 
 module.exports = grunt => {
   grunt.loadNpmTasks('grunt-contrib-copy');
@@ -111,7 +113,7 @@ module.exports = grunt => {
         options: {
           //pretty: true,
           data: {
-            languages: require('./views/website/libraries/data.json')            
+            languages: getLanguages()
           }
         },
         files: {

@@ -1,0 +1,64 @@
+{
+  "name": "C",
+  "uniqueClass": "c",
+  "image": "/img/16.svg",
+  "bgColor": "rgb(81, 128, 210)",
+  "libs": [
+    {
+      "minimumVersion": null,
+      "support": {
+        "sign": true,
+        "verify": true,
+        "iss": false,
+        "sub": false,
+        "aud": false,
+        "exp": false,
+        "nbf": false,
+        "iat": false,
+        "jti": false,
+        "hs256": true,
+        "hs384": true,
+        "hs512": true,
+        "rs256": true,
+        "rs384": true,
+        "rs512": true,
+        "es256": true,
+        "es384": true,
+        "es512": true
+      },
+      "authorUrl": "https://github.com/benmcollins",
+      "authorName": "benmcollins",
+      "gitHubRepoPath": "benmcollins/libjwt",
+      "repoUrl": "https://github.com/benmcollins/libjwt",
+      "installCommandHtml": "add-apt-repository ppa:ben-collins/libjwt"
+    },
+    {
+      "minimumVersion": null,
+      "support": {
+        "sign": true,
+        "verify": true,
+        "iss": false,
+        "sub": false,
+        "aud": false,
+        "exp": false,
+        "nbf": false,
+        "iat": false,
+        "jti": false,
+        "hs256": true,
+        "hs384": true,
+        "hs512": true,
+        "rs256": true,
+        "rs384": true,
+        "rs512": true,
+        "es256": true,
+        "es384": true,
+        "es512": true
+      },
+      "authorUrl": "https://github.com/cisco/cjose",
+      "authorName": "linuxwolf",
+      "gitHubRepoPath": "cisco/cjose",
+      "repoUrl": "https://github.com/cisco/cjose",
+      "installCommandHtml": "go get github.com/cisco/cjose"
+    }
+  ]
+}

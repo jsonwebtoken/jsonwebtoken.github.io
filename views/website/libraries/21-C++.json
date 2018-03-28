@@ -1,0 +1,92 @@
+{
+  "name": "C++",
+  "uniqueClass": "cpp",
+  "image": "/img/26.svg",
+  "bgColor": "rgb(0, 89, 156)",
+  "libs": [
+    {
+      "minimumVersion": null,
+      "support": {
+        "sign": true,
+        "verify": true,
+        "iss": true,
+        "sub": true,
+        "aud": true,
+        "exp": true,
+        "nbf": true,
+        "iat": true,
+        "jti": true,
+        "hs256": true,
+        "hs384": true,
+        "hs512": true,
+        "rs256": true,
+        "rs384": true,
+        "rs512": true,
+        "es256": true,
+        "es384": true,
+        "es512": true
+      },
+      "authorUrl": "https://github.com/troian",
+      "authorName": "Artur Troian",
+      "gitHubRepoPath": "troian/josepp",
+      "repoUrl": "https://github.com/troian/josepp",
+      "installCommandHtml": "git clone https://github.com/troian/josepp"
+    },
+    {
+      "minimumVersion": null,
+      "support": {
+        "sign": true,
+        "verify": true,
+        "iss": true,
+        "sub": true,
+        "aud": true,
+        "exp": true,
+        "nbf": true,
+        "iat": true,
+        "jti": true,
+        "hs256": true,
+        "hs384": true,
+        "hs512": true,
+        "rs256": true,
+        "rs384": true,
+        "rs512": true,
+        "es256": true,
+        "es384": true,
+        "es512": true
+      },
+      "authorUrl": "https://github.com/Thalhammer",
+      "authorName": "Dominik Thalhammer",
+      "gitHubRepoPath": "Thalhammer/jwt-cpp",
+      "repoUrl": "https://github.com/Thalhammer/jwt-cpp",
+      "installCommandHtml": "git clone https://github.com/Thalhammer/jwt-cpp"
+    },
+    {
+      "minimumVersion": null,
+      "support": {
+        "sign": true,
+        "verify": true,
+        "iss": true,
+        "sub": true,
+        "aud": true,
+        "exp": true,
+        "nbf": true,
+        "iat": true,
+        "jti": true,
+        "hs256": true,
+        "hs384": true,
+        "hs512": true,
+        "rs256": true,
+        "rs384": true,
+        "rs512": true,
+        "es256": true,
+        "es384": true,
+        "es512": true
+      },
+      "authorUrl": "https://github.com/arun11299",
+      "authorName": "Arun Muralidharan",
+      "gitHubRepoPath": "arun11299/cpp-jwt",
+      "repoUrl": "https://github.com/arun11299/cpp-jwt",
+      "installCommandHtml": "git clone https://github.com/arun11299/cpp-jwt"
+    }
+  ]
+}

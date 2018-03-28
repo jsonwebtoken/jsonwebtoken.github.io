@@ -5,15 +5,16 @@
 [![Build Status](https://travis-ci.org/jsonwebtoken/jsonwebtoken.github.io.png?branch=master)](https://travis-ci.org/jsonwebtoken/jsonwebtoken.github.io)
 
 ### How to add a library
-To add a library, simply edit the `data.json` file located at `views/website/libraries`.
+To add a library, simply edit the right JSON file located at `views/website/libraries`. Each language gets its own file. Multiple libraries share the same language file.
 
-If you add a new language, you will need to provide a proper icon for it and place it in the `img` folder.
+To add a new language, simply add a JSON file in the same folder as the others. It will get automatically recognized. If you add a new language, you will need to provide a proper icon for it and place it in the `img` folder.
 
-Here's a commented example of a language + library definition. All fields must have valid values unless noted:
+Here's a commented example of the .NET language file (`0-.NET.json`). All fields must have valid values unless noted:
 
 ```javascript
-// Language name (unique)
-".NET": {
+{
+  // Language name (unique)
+  "name": ".NET",
 
   // Unique identifier that will be used as a CSS class
   // for this language (only valid CSS class names).

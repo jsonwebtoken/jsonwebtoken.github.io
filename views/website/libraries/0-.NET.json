@@ -1,0 +1,92 @@
+{
+  "name": ".NET",
+  "uniqueClass": "net",
+  "image": "/img/1.svg",
+  "bgColor": "rgb(42, 168, 229)",
+  "libs": [
+    {
+      "minimumVersion": null,
+      "support": {
+        "sign": true,
+        "verify": true,
+        "iss": true,
+        "sub": true,
+        "aud": true,
+        "exp": true,
+        "nbf": true,
+        "iat": true,
+        "jti": true,
+        "hs256": true,
+        "hs384": true,
+        "hs512": true,
+        "rs256": true,
+        "rs384": true,
+        "rs512": true,
+        "es256": true,
+        "es384": true,
+        "es512": true
+      },
+      "authorUrl": "https://www.microsoft.com",
+      "authorName": "Microsoft",
+      "gitHubRepoPath": "AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet",
+      "repoUrl": "https://github.com/MSOpenTech/azure-activedirectory-identitymodel-extensions-for-dotnet",
+      "installCommandHtml": "Install-Package<br><a href=\"https://www.nuget.org/packages/System.IdentityModel.Tokens.Jwt/\">System.IdentityModel.Tokens.Jwt</a>"
+    },
+    {
+      "minimumVersion": null,
+      "support": {
+        "sign": true,
+        "verify": true,
+        "iss": false,
+        "sub": false,
+        "aud": false,
+        "exp": false,
+        "nbf": false,
+        "iat": false,
+        "jti": false,
+        "hs256": true,
+        "hs384": true,
+        "hs512": true,
+        "rs256": true,
+        "rs384": true,
+        "rs512": true,
+        "es256": true,
+        "es384": true,
+        "es512": true
+      },
+      "authorUrl": "https://github.com/dvsekhvalnov/jose-jwt",
+      "authorName": "DV",
+      "gitHubRepoPath": "dvsekhvalnov/jose-jwt",
+      "repoUrl": "https://github.com/dvsekhvalnov/jose-jwt",
+      "installCommandHtml": "Install-Package<br><a href=\"http://www.nuget.org/packages/jose-jwt/\">jose-jwt</a>"
+    },
+    {
+      "minimumVersion": null,
+      "support": {
+        "sign": true,
+        "verify": true,
+        "iss": false,
+        "sub": false,
+        "aud": false,
+        "exp": false,
+        "nbf": false,
+        "iat": false,
+        "jti": false,
+        "hs256": true,
+        "hs384": true,
+        "hs512": true,
+        "rs256": true,
+        "rs384": true,
+        "rs512": true,
+        "es256": true,
+        "es384": true,
+        "es512": true
+      },
+      "authorUrl": "https://github.com/dvsekhvalnov/jose-rt",
+      "authorName": "DV",
+      "gitHubRepoPath": "dvsekhvalnov/jose-rt",
+      "repoUrl": "https://github.com/dvsekhvalnov/jose-rt",
+      "installCommandHtml": "Install-Package<br><a href=\"http://www.nuget.org/packages/jose-rt/\">jose-rt</a>"
+    }
+  ]
+}
