@@ -26,7 +26,7 @@
           "es384": true,
           "es512": true
         },
-        "authorUrl": null,
+        "authorUrl": "https://www.microsoft.com",
         "authorName": "Microsoft",
         "gitHubRepoPath": "AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet",
         "repoUrl": "https://github.com/MSOpenTech/azure-activedirectory-identitymodel-extensions-for-dotnet",
