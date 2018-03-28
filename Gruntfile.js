@@ -108,6 +108,12 @@ module.exports = grunt => {
 
     pug: {
       website: {
+        options: {
+          //pretty: true,
+          data: {
+            languages: require('./views/website/libraries/data.json')            
+          }
+        },
         files: {
           'dist/website/index.html': 'views/website/index.pug',
           'dist/website/introduction/index.html': 
