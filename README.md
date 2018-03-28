@@ -90,7 +90,7 @@ npm install
 In order to build (and run) the project execute:
 
 ```sh
-grunt
+./node_modules/.bin/grunt
 ```
 
 You will find the generated files in the `dist` directory. For the website, you can run a server at its root. For example: `http-server dist/website`. The default `grunt` task runs a server
@@ -100,7 +100,7 @@ for changes.
 To run tests, execute:
 
 ```
-grunt test
+./node_modules/.bin/grunt test
 ```
 
 Look at the end of the `Gruntfile` for other common tasks.
