@@ -20,8 +20,8 @@
         "hs384": true,
         "hs512": true,
         "rs256": true,
-        "rs384": false,
-        "rs512": false,
+        "rs384": true,
+        "rs512": true,
         "es256": false,
         "es384": false,
         "es512": false
