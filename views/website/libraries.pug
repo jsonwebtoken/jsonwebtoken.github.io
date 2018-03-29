@@ -9,8 +9,11 @@ section#libraries-io.libraries-jwt
           select#libraries-select
             option(value='*', selected='') All
             // Languages must be in alphabetic order
-            each lang in Object.keys(languages).sort()
-              option(value=`.${languages[lang].uniqueClass}`) #{lang}
+            -            
+              const sortedLangs = Array.from(languages);   
+              sortedLangs.sort((a, b) => a.name.localeCompare(b.name));
+            each lang in sortedLangs
+              option(value=`.${lang.uniqueClass}`) #{lang.name}
 
     .warning
       b Warning:
