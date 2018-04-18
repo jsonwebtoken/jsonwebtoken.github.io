@@ -31,23 +31,6 @@ describe('Editor', function() {
     await this.page.waitFor(3000);
     expect(await this.page.$eval('#debugger-io', isVisible)).to.be.true;    
   });
-  
-  const token = 'eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.';
-  ['token', 'value', 'id_token', 'access_token'].forEach((key) => {
-    [
-      `/?${key}=${token}`,
-      `/#${key}=${token}`,
-      `/?foo=bar&${key}=${token}`,
-      `/#foo=bar&${key}=${token}`,
-    ].forEach((structure, i) => {
-      it(`Should parse ${key} from window.location.href [${i}]`, async function () {
-        await this.page.goto(`http://localhost:8000${structure}${key}${i}`);
-        expect(await this.page.evaluate(() => {
-          return window.test.tokenEditor.getValue();
-        })).to.equal(`${token}${key}${i}`);
-      });
-    })
-  });
 
   it('HS256 should be selected by default', async function() {
     const selected = await this.page.$eval('#algorithm-select', select => {
@@ -1167,5 +1150,24 @@ describe('Editor', function() {
         expect(destPubKey).to.equal(defaultTokens['rs256'].publicKey);
       }
     );
+  });
+  
+  describe('parsing tokens from window.location.href', () => {
+    const token = 'eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.';
+    ['token', 'value', 'id_token', 'access_token'].forEach((key) => {
+      [
+        `/?${key}=${token}`,
+        `/#${key}=${token}`,
+        `/?foo=bar&${key}=${token}`,
+        `/#foo=bar&${key}=${token}`,
+      ].forEach((structure, i) => {
+        it(`Should parse ${key} from window.location.href [${i}]`, async function () {
+          await this.page.goto(`http://localhost:8000${structure}${key}${i}`);
+          expect(await this.page.evaluate(() => {
+            return window.test.tokenEditor.getValue();
+          })).to.equal(`${token}${key}${i}`);
+        });
+      })
+    });
   });
 });
