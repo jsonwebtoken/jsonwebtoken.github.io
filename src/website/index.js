@@ -22,9 +22,7 @@ import {
 
 function parseLocationQuery() {
   const publicKey = getParameterByName('publicKey');
-  const value = getParameterByName('value');
-  const token = getParameterByName('token');
-  const { id_token, access_token } = getTokensFromLocation();
+  const { id_token, access_token, value, token } = getTokensFromLocation();
 
   let scroll = false;
   if(publicKey) {

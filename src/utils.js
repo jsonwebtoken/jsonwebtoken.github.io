@@ -122,7 +122,7 @@ function regexp(body, flag) {
   return new RegExp("[?&#]" + body + "(?:=([^&#]*)|&|#|$)", flag);
 }
 
-const tokenRegexp = regexp('((?:id_|access_)?token)', 'g');
+const tokenRegexp = regexp('((?:id_|access_)?token|value)', 'g');
 
 export function getTokensFromLocation() {
   const { href } = window.location;
