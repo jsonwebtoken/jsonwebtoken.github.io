@@ -1,4 +1,5 @@
 import { KEYUTIL } from 'jsrsasign';
+import { isToken } from './editor/jwt.js';
 import log from 'loglevel';
 
 export function httpGet(url, cache = true) {
@@ -170,6 +171,25 @@ export function copyTokenLink(token, publicKeyOptional) {
   copyTextToClipboard(url);
 }
 
+function regexp(body, flag) {
+  return new RegExp("[?&#]" + body + "(?:=([^&#]*)|&|#|$)", flag);
+}
+
+const tokenRegexp = regexp('((?:id_|access_)?token)', 'g');
+
+export function getTokensFromLocation() {
+  const { href } = window.location;
+  let name, value;
+  const val = {};
+
+  try {
+    while ([, name, value] = tokenRegexp.exec(href)) {
+      if(isToken(value)) val[name] = value;
+    }
+  } catch (err) {}
+  return val;
+}
+
 // https://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
 export function getParameterByName(name, url) {
   if(!url) {
@@ -178,16 +198,16 @@ export function getParameterByName(name, url) {
 
   name = name.replace(/[\[\]]/g, "\\$&");
   
-  const regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)");
+  const regex = regexp(name);
   const results = regex.exec(url);
   if(!results) {
     return null;
   }
-  if(!results[2]) {
+  if(!results[1]) {
     return '';
   }
 
-  return decodeURIComponent(results[2].replace(/\+/g, " "));
+  return decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
 export function isWideScreen() {
