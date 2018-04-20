@@ -255,6 +255,34 @@
       "gitHubRepoPath": "gbrlsnchs/jwt",
       "repoUrl": "https://github.com/gbrlsnchs/jwt",
       "installCommandHtml": "go get github.com/gbrlsnchs/jwt"
+    },
+    {
+      "minimumVersion": null,
+      "support": {
+        "sign": true,
+        "verify": true,
+        "iss": true,
+        "sub": true,
+        "aud": true,
+        "exp": true,
+        "nbf": true,
+        "iat": true,
+        "jti": true,
+        "hs256": true,
+        "hs384": true,
+        "hs512": true,
+        "rs256": true,
+        "rs384": true,
+        "rs512": true,
+        "es256": false,
+        "es384": false,
+        "es512": false
+      },
+      "authorUrl": "https://github.com/pascaldekloe",
+      "authorName": "Pascal de Kloe",
+      "gitHubRepoPath": "pascaldekloe/jwt",
+      "repoUrl": "https://github.com/pascaldekloe/jwt",
+      "installCommandHtml": "go get github.com/pascaldekloe/jwt"
     }
   ]
 }
