@@ -341,17 +341,6 @@ function setupTabEvents() {
   });
 }
 
-function copyTokenHandler(event) {
-  event.preventDefault();
-
-  const token = getTrimmedValue(tokenEditor);
-  const publicKey = isPublicKeyAlgorithm(getSelectedAlgorithm()) ? 
-    publicKeyTextArea.value :
-    null;
-  
-  copyTokenLink(token, publicKey);
-}
-
 function setupEvents() {
   // The event manager lets us enable/disable events as needed without
   // manually tracking them. Events that need to be disabled should be
@@ -382,8 +371,6 @@ function setupEvents() {
 
   // Human readable timestamp tooltips
   payloadElement.addEventListener('mousemove', timeTooltipHandler);
-  // Temporary (share button not ready yet)
-  signatureStatusElement.addEventListener('click', copyTokenHandler);
 
   setupTabEvents();
 }
