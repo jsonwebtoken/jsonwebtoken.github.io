@@ -1151,4 +1151,23 @@ describe('Editor', function() {
       }
     );
   });
+  
+  describe('parsing tokens from window.location.href', () => {
+    const token = 'eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.';
+    ['token', 'value', 'id_token', 'access_token'].forEach((key) => {
+      [
+        `/?${key}=${token}`,
+        `/#${key}=${token}`,
+        `/?foo=bar&${key}=${token}`,
+        `/#foo=bar&${key}=${token}`,
+      ].forEach((structure, i) => {
+        it(`Should parse ${key} from window.location.href [${i}]`, async function () {
+          await this.page.goto(`http://localhost:8000${structure}${key}${i}`);
+          expect(await this.page.evaluate(() => {
+            return window.test.tokenEditor.getValue();
+          })).to.equal(`${token}${key}${i}`);
+        });
+      })
+    });
+  });
 });

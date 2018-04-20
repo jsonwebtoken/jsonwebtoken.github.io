@@ -5,7 +5,7 @@ import { setupTokenEditor, setTokenEditorValue } from '../editor';
 import { setupJwtCounter } from './counter.js';
 import { setupSmoothScrolling } from './smooth-scrolling.js';
 import { setupHighlighting } from './highlighting.js';
-import { getParameterByName } from '../utils.js';
+import { getParameterByName, getTokensFromLocation } from '../utils.js';
 import { isChrome, isFirefox } from './utils.js';
 import { setupShareJwtButton } from '../share-button.js';
 import { 
@@ -22,20 +22,17 @@ import {
 
 function parseLocationQuery() {
   const publicKey = getParameterByName('publicKey');
-  const value = getParameterByName('value');
-  const token = getParameterByName('token');
+  const { id_token, access_token, value, token } = getTokensFromLocation();
 
   let scroll = false;
   if(publicKey) {
     publicKeyTextArea.value = publicKey;
     scroll = true;
   }
-  if(value) {
-    setTokenEditorValue(value);
-    scroll = true;
-  }
-  if(token) {
-    setTokenEditorValue(token);
+
+  const val = value || token || id_token || access_token;
+  if(val) {
+    setTokenEditorValue(val);
     scroll = true;
   }
 
