@@ -87,6 +87,34 @@
       "gitHubRepoPath": "latchset/jwcrypto",
       "repoUrl": "https://github.com/latchset/jwcrypto/",
       "installCommandHtml": "pip install jwcrypto"
+    },
+    {
+      "minimumVersion": null,
+      "support": {
+        "sign": true,
+        "verify": true,
+        "iss": true,
+        "sub": true,
+        "aud": true,
+        "exp": true,
+        "nbf": true,
+        "iat": true,
+        "jti": true,
+        "hs256": true,
+        "hs384": true,
+        "hs512": true,
+        "rs256": true,
+        "rs384": true,
+        "rs512": true,
+        "es256": true,
+        "es384": true,
+        "es512": true
+      },
+      "authorUrl": "https://github.com/lepture",
+      "authorName": "Hsiaoming Yang",
+      "gitHubRepoPath": "lepture/authlib",
+      "repoUrl": "https://github.com/lepture/authlib",
+      "installCommandHtml": "pip install authlib"
     }
   ]
 }
