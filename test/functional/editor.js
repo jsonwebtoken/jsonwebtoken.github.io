@@ -726,7 +726,7 @@ describe('Editor', function() {
     });    
 
     it('Clears the token when the header is edited and there ' +     
-            'is no private key', async function() {
+       'is no private key', async function() {
       await this.page.select('#algorithm-select', 'RS256');
 
       const secretInput = await this.page.$('textarea[name="private-key"]');
@@ -1152,22 +1152,29 @@ describe('Editor', function() {
     );
   });
   
-  describe('parsing tokens from window.location.href', () => {
-    const token = 'eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.';
+  describe('Parses tokens from window.location.href', () => {
+    const token = defaultTokens.hs384.token;
+    
     ['token', 'value', 'id_token', 'access_token'].forEach((key) => {
+
       [
         `/?${key}=${token}`,
         `/#${key}=${token}`,
         `/?foo=bar&${key}=${token}`,
         `/#foo=bar&${key}=${token}`,
-      ].forEach((structure, i) => {
-        it(`Should parse ${key} from window.location.href [${i}]`, async function () {
-          await this.page.goto(`http://localhost:8000${structure}${key}${i}`);
-          expect(await this.page.evaluate(() => {
-            return window.test.tokenEditor.getValue();
-          })).to.equal(`${token}${key}${i}`);
-        });
-      })
+      ].forEach((searchStr, i) => {
+        this.timeout(20000);
+
+        it(`Should parse ${key} from window.location.href [${i}]`,
+          async function () {
+            await this.page.goto(`http://localhost:8000${searchStr}`);
+            expect(await this.page.evaluate(() => {
+              return window.test.tokenEditor.getValue();
+            })).to.equal(`${token}`);
+          });
+      });
+
     });
+
   });
 });

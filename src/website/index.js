@@ -5,7 +5,6 @@ import { setupTokenEditor, setTokenEditorValue } from '../editor';
 import { setupJwtCounter } from './counter.js';
 import { setupSmoothScrolling } from './smooth-scrolling.js';
 import { setupHighlighting } from './highlighting.js';
-import { getParameterByName, getTokensFromLocation } from '../utils.js';
 import { isChrome, isFirefox } from './utils.js';
 import { setupShareJwtButton } from '../share-button.js';
 import { 
@@ -18,27 +17,29 @@ import {
   shareJwtTextElement
 } from './dom-elements.js';
 
+import queryString from 'querystring';
+
 /* For initialization, look at the end of this file */
 
 function parseLocationQuery() {
-  const publicKey = getParameterByName('publicKey');
-  const { id_token, access_token, value, token } = getTokensFromLocation();
+  const locSearch = queryString.parse(document.location.search.substr(1));
+  const locHash = queryString.parse(document.location.hash.substr(1));
 
-  let scroll = false;
-  if(publicKey) {
-    publicKeyTextArea.value = publicKey;
-    scroll = true;
-  }
+  const token = locSearch.id_token || 
+                locSearch.access_token ||
+                locSearch.value ||
+                locSearch.token;
+  if(token) {
+    setTokenEditorValue(token);
 
-  const val = value || token || id_token || access_token;
-  if(val) {
-    setTokenEditorValue(val);
-    scroll = true;
-  }
+    if(locSearch.publicKey) {
+      publicKeyTextArea.value = locSearch.publicKey;
+    }
 
-  if(scroll) {
     debuggerSection.scrollIntoView(true);
-  }
+  } else if(locHash.token) { // Legacy token passing method (as hash)    
+    setTokenEditorValue(locHash.token);
+  }    
 }
 
 function pickEbookOrExtensionBanner() {

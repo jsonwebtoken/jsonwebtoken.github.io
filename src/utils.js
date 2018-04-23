@@ -1,7 +1,6 @@
 import { KEYUTIL } from 'jsrsasign';
 import log from 'loglevel';
 import clipboard from 'clipboard-polyfill';
-import { isToken } from './editor/jwt.js';
 
 export function httpGet(url, cache = true) {
   return new Promise((resolve, reject) => {
@@ -30,36 +29,6 @@ export function httpGet(url, cache = true) {
 
   });
 }
-
-export function isValidBase64String(s, urlOnly) {
-  try {
-    const validChars = urlOnly ?
-      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_=' :
-      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_+/=';
-
-    let hasPadding = false;
-    for(let i = 0; i < s.length; ++i) {
-      hasPadding |= s.charAt(i) === '=';
-      if(validChars.indexOf(s.charAt(i)) === -1) {
-        return false;
-      }
-    }
-
-    if(hasPadding) {
-      for(let i = s.indexOf('='); i < s.length; ++i) {
-        if(s.charAt(i) !== '=') {
-          return false;
-        }
-      }
-
-      return s.length % 4 === 0;
-    }
-
-    return true;    
-  } catch (e) {
-    return false;
-  }
-};
 
 export function isValidKey(key) {
   // Four tries: no header, header for cert, header for pub key,
@@ -116,45 +85,6 @@ export function copyTokenLink(token, publicKeyOptional) {
 
   clipboard.writeText(url);
   return url;
-}
-
-function regexp(body, flag) {
-  return new RegExp("[?&#]" + body + "(?:=([^&#]*)|&|#|$)", flag);
-}
-
-const tokenRegexp = regexp('((?:id_|access_)?token|value)', 'g');
-
-export function getTokensFromLocation() {
-  const { href } = window.location;
-  let name, value;
-  const val = {};
-
-  try {
-    while ([, name, value] = tokenRegexp.exec(href)) {
-      if(isToken(value)) val[name] = value;
-    }
-  } catch (err) {}
-  return val;
-}
-
-// https://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
-export function getParameterByName(name, url) {
-  if(!url) {
-    url = window.location.href;
-  }
-
-  name = name.replace(/[\[\]]/g, "\\$&");
-  
-  const regex = regexp(name);
-  const results = regex.exec(url);
-  if(!results) {
-    return null;
-  }
-  if(!results[1]) {
-    return '';
-  }
-
-  return decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
 export function isWideScreen() {
