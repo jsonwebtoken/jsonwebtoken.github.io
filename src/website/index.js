@@ -25,21 +25,22 @@ function parseLocationQuery() {
   const locSearch = queryString.parse(document.location.search.substr(1));
   const locHash = queryString.parse(document.location.hash.substr(1));
 
-  const token = locSearch.id_token || 
-                locSearch.access_token ||
-                locSearch.value ||
-                locSearch.token;
-  if(token) {
-    setTokenEditorValue(token);
+  const keys = [ 'id_token', 'access_token', 'value', 'token'];
+  for(const key of keys) {
+    const token = locSearch[key] || locHash[key];
 
-    if(locSearch.publicKey) {
-      publicKeyTextArea.value = locSearch.publicKey;
+    if(token) {
+      setTokenEditorValue(token);
+
+      if(locSearch.publicKey) {
+        publicKeyTextArea.value = locSearch.publicKey;
+      }
+
+      debuggerSection.scrollIntoView(true);
+
+      break;
     }
-
-    debuggerSection.scrollIntoView(true);
-  } else if(locHash.token) { // Legacy token passing method (as hash)    
-    setTokenEditorValue(locHash.token);
-  }    
+  }
 }
 
 function pickEbookOrExtensionBanner() {
