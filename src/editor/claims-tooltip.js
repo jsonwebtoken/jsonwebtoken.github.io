@@ -1,5 +1,4 @@
 import { claimsTooltipElement } from '../dom-elements.js';
-import { timeClaims } from './time-tooltip.js';
 import { stringifyIndentSpaces } from './utils.js';
 import strings from '../strings.js';
 import { 
@@ -10,6 +9,8 @@ import {
 
 import tippy from 'tippy.js';
 
+const timeClaims = ['exp', 'nbf', 'iat', 'auth_time', 'updated_at'];
+
 function hideTooltip() {
   decodedElement._tippy.hide();
 }
@@ -17,6 +18,10 @@ function hideTooltip() {
 function showTooltip(text) {
   decodedElement.title = text;
   decodedElement._tippy.show();
+}
+
+function getTimeText(timeStr) {
+  return (new Date(parseInt(timeStr, 10) * 1000)).toString();
 }
 
 function tooltipHandler(event) {
@@ -46,7 +51,7 @@ function tooltipHandler(event) {
   // TODO: merge both tooltip handlers?
   const claimEnd = line.indexOf(':');
   if(result.ch >= claimEnd && timeClaims.includes(claim)) {
-    hideTooltip();
+    showTooltip(getTimeText(matches[2]));
     return;
   }
 

@@ -7,7 +7,7 @@ export default {
       nbf: 'Not valid before (seconds since Unix epoch)',
       iat: 'Issued at (seconds since Unix epoch)',
       iss: 'Issuer (who created and signed this token)',
-      sub: 'Subject (who the token refers to)',
+      sub: 'Subject (whom the token refers to)',
       aud: 'Audience (who or what the token is intended for)',
       jti: 'JWT ID (unique identifier for this token)',
       typ: 'Type of token',

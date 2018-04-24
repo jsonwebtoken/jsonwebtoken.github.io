@@ -4,7 +4,6 @@ import {
   copyTokenLink 
 } from '../utils.js';
 import { downloadPublicKeyIfPossible } from './public-key-download.js';
-import { timeTooltipHandler } from './time-tooltip.js';
 import { setupClaimsTooltip } from './claims-tooltip.js';
 import { tokenEditor, headerEditor, payloadEditor } from './instances.js';
 import { 
@@ -367,12 +366,8 @@ function setupEvents() {
   // (only verified).
   eventManager.addDomEvent(publicKeyTextArea, 'input', verifyToken);
 
-  // The following event are never disabled, so it is not necessary to go
+  // The following events are never disabled, so it is not necessary to go
   // through the event manager for them.
-
-  // Human readable timestamp tooltips
-  payloadElement.addEventListener('mousemove', timeTooltipHandler);
-
   setupTabEvents();
 }
 
