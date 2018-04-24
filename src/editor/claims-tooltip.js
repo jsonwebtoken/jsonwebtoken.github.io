@@ -2,21 +2,25 @@ import { claimsTooltipElement } from '../dom-elements.js';
 import { timeClaims } from './time-tooltip.js';
 import { stringifyIndentSpaces } from './utils.js';
 import strings from '../strings.js';
+import { 
+  payloadElement,
+  headerElement,
+  decodedElement
+} from '../dom-elements.js';
+
+import tippy from 'tippy.js';
 
 function hideTooltip() {
-  claimsTooltipElement.style.display = 'none';
+  decodedElement._tippy.hide();
 }
 
-function showTooltip(x, y, text) {
-  claimsTooltipElement.firstChild.textContent = text;
-  claimsTooltipElement.style.left = x + 'px';
-  claimsTooltipElement.style.top = y + 'px';
-  claimsTooltipElement.style.display = 'block';
+function showTooltip(text) {
+  decodedElement.title = text;
+  decodedElement._tippy.show();
 }
 
-export function claimsTooltipHandler(event) {
+function tooltipHandler(event) {
   const editor = event.currentTarget.querySelector('.CodeMirror').CodeMirror;
-  //const editor = event.currentTarget.firstChild.CodeMirror;
 
   if(!editor) {
     return;
@@ -52,5 +56,21 @@ export function claimsTooltipHandler(event) {
     return;
   }
 
-  showTooltip(event.pageX, event.pageY, claimText);
+  showTooltip(claimText);
+}
+
+export function setupClaimsTooltip() {
+  tippy(decodedElement, {    
+    placement: 'left',
+    arrow: true,
+    followCursor: true,
+    performance: true,
+    size: 'large',
+    dynamicTitle: true,
+    arrowTransform: 'scale(0.75)',
+    distance: 20
+  });
+
+  payloadElement.addEventListener('mousemove', tooltipHandler);
+  headerElement.addEventListener('mousemove', tooltipHandler);
 }
