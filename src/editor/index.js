@@ -5,6 +5,7 @@ import {
 } from '../utils.js';
 import { downloadPublicKeyIfPossible } from './public-key-download.js';
 import { timeTooltipHandler } from './time-tooltip.js';
+import { claimsTooltipHandler } from './claims-tooltip.js';
 import { tokenEditor, headerEditor, payloadEditor } from './instances.js';
 import { 
   getTrimmedValue,
@@ -371,6 +372,8 @@ function setupEvents() {
 
   // Human readable timestamp tooltips
   payloadElement.addEventListener('mousemove', timeTooltipHandler);
+  payloadElement.addEventListener('mousemove', claimsTooltipHandler);
+  headerElement.addEventListener('mousemove', claimsTooltipHandler);
 
   setupTabEvents();
 }

@@ -1,6 +1,8 @@
 import { payloadEditor } from './instances.js';
 import { payloadTooltipElement } from '../dom-elements.js';
 
+export const timeClaims = ['exp', 'nbf', 'iat', 'auth_time', 'updated_at'];
+
 export function timeTooltipHandler(event) {
   const result = payloadEditor.coordsChar({
     left: event.pageX,
@@ -8,8 +10,6 @@ export function timeTooltipHandler(event) {
   }, 'page');
 
   const line = payloadEditor.getLine(result.line);
-
-  const timeClaims = ['exp', 'nbf', 'iat', 'auth_time', 'updated_at'];
 
   const matches = /"(.*)":\s*"?(\d*)"?/.exec(line);
   if (matches && timeClaims.indexOf(matches[1]) !== -1) {

@@ -22,8 +22,10 @@ export function fixEditorHeight() {
   }
 }
 
+export const stringifyIndentSpaces = 2;
+
 export function stringify(object) {
-  return JSON.stringify(object, null, 2);
+  return JSON.stringify(object, null, stringifyIndentSpaces);
 }
 
 export function getSelectedAlgorithm() {

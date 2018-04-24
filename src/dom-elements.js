@@ -4,8 +4,11 @@ export const decodedTabLink =
   document.querySelector('.tab-link a[href="#decoded-jwt"]');
 export const encodedTabElement = document.getElementById('encoded-jwt');
 export const decodedTabElement = document.getElementById('decoded-jwt');
+
 export const editorElement = document.querySelector('#encoded-jwt .input');
 export const decodedElement = document.querySelector('#decoded-jwt .output');
+export const claimsTooltipElement = 
+  document.getElementById('js-claims-tooltip');
 export const headerElement = document.querySelector('.js-header');
 export const payloadElement = document.querySelector('.js-payload');
 export const payloadTooltipElement = 
