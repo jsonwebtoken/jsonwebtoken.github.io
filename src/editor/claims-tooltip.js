@@ -12,12 +12,14 @@ import tippy from 'tippy.js';
 const timeClaims = ['exp', 'nbf', 'iat', 'auth_time', 'updated_at'];
 
 function hideTooltip() {
-  decodedElement._tippy.hide();
+  decodedElement._tippy.popper.style.opacity = 0;
 }
 
 function showTooltip(text) {
-  decodedElement.title = text;
-  decodedElement._tippy.show();
+  decodedElement._tippy.popper.querySelector('.tippy-content')
+                .textContent = text;
+  decodedElement._tippy.popperInstance.update();
+  decodedElement._tippy.popper.style.opacity = 1;
 }
 
 function getTimeText(timeStr) {
@@ -28,6 +30,7 @@ function tooltipHandler(event) {
   const editor = event.currentTarget.querySelector('.CodeMirror').CodeMirror;
 
   if(!editor) {
+    hideTooltip();
     return;
   }
 
@@ -64,8 +67,8 @@ function tooltipHandler(event) {
   showTooltip(claimText);
 }
 
-export function setupClaimsTooltip() {
-  tippy(decodedElement, {    
+export function setupClaimsTooltip() {  
+  tippy(decodedElement, {
     placement: 'left',
     arrow: true,
     followCursor: true,
@@ -73,8 +76,12 @@ export function setupClaimsTooltip() {
     size: 'large',
     dynamicTitle: true,
     arrowTransform: 'scale(0.75)',
-    distance: 20
-  });
+    distance: 20,
+    sticky: true,
+    updateDuration: 100
+  });  
+
+  decodedElement._tippy.popper.style.opacity = 0;
 
   payloadElement.addEventListener('mousemove', tooltipHandler);
   headerElement.addEventListener('mousemove', tooltipHandler);
