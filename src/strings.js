@@ -12,7 +12,20 @@ export default {
       jti: 'JWT ID (unique identifier for this token)',
       typ: 'Type of token',
       azp: 'Authorized party (the party to which this token was issued)',
-      alg: 'Signature or encryption algorithm'
+      alg: 'Signature or encryption algorithm',
+      jku: 'JSON Web Key Set URL',
+      jwk: 'JSON Web Key Set (embedded)',
+      kid: 'Key ID',
+      x5u: 'X.509 Certificate URL',
+      x5t: 'X.509 Fingerprint (SHA-1)',
+      'x5t#S256': 'X.509 Fingerprint (SHA-256)',
+      cty: 'Content type',
+      crit: 'Extensions or claims that MUST be processed or verified',
+      enc: 'Encryption algorithm',
+      zip: 'Compression algorithm',
+      kty: 'Key type',
+      use: 'Intended use of key: "sig" or "enc" (other values accepted)',
+      key_ops: 'Intended operations for this key'      
     }
   },
   extension: {
