@@ -69,13 +69,17 @@ describe('Editor', function() {
     }
   });
 
-  it('Should display a tooltip with a human readable ' + 
-     'date on claim hover', async function() {
+  it('Should display a tooltip for a claim', async function() {
     await this.page.select('#algorithm-select', 'HS384');  
-    
+
     await this.page.mouse.move(0, 0);
+
+    function tippyVisible(element) {
+      return element._tippy.state.visible;
+    }
     
-    expect(await this.page.$eval('#js-payload-tooltip', isVisible)).to.be.false;
+    expect(await this.page.$eval('#decoded-jwt .output', tippyVisible)).
+      to.be.false;
     
     const iatPos = await this.page.evaluate(() => {
       return window.test.payloadEditor.charCoords({
@@ -86,7 +90,11 @@ describe('Editor', function() {
 
     await this.page.mouse.move(iatPos.left, iatPos.top);
 
-    expect(await this.page.$eval('#js-payload-tooltip', isVisible)).to.be.true;
+    // Wait for animation
+    await this.page.waitFor(2000);
+
+    expect(await this.page.$eval('#decoded-jwt .output', tippyVisible))
+      .to.be.true;
   });
 
   it('Displays a valid token by default', async function() {
