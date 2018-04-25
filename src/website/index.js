@@ -25,7 +25,13 @@ function parseLocationQuery() {
   const locSearch = queryString.parse(document.location.search.substr(1));
   const locHash = queryString.parse(document.location.hash.substr(1));
 
-  const keys = [ 'id_token', 'access_token', 'value', 'token'];
+  const keys = [
+    'id_token', 
+    'access_token',
+    'value',
+    'token',
+    'debugger-io?token'
+  ];
   for(const key of keys) {
     const token = locSearch[key] || locHash[key];
 
