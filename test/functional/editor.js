@@ -1078,7 +1078,8 @@ describe('Editor', function() {
         window.test.shareJwtCopiedUrl);
 
       const newPage = await this.browser.newPage();
-      await newPage.goto(copiedUrl);
+      await newPage.goto(
+        copiedUrl.replace('https://jwt.io', 'http://localhost:8000'));
 
       const destToken = await newPage.evaluate(() => 
         window.test.tokenEditor.getValue());
@@ -1147,7 +1148,8 @@ describe('Editor', function() {
           window.test.shareJwtCopiedUrl);
 
         const newPage = await this.browser.newPage();
-        await newPage.goto(copiedUrl);
+        await newPage.goto(
+          copiedUrl.replace('https://jwt.io', 'http://localhost:8000'));
 
         const destToken = await newPage.evaluate(() => 
           window.test.tokenEditor.getValue());
@@ -1169,19 +1171,38 @@ describe('Editor', function() {
         `/?${key}=${token}`,
         `/#${key}=${token}`,
         `/?foo=bar&${key}=${token}`,
-        `/#foo=bar&${key}=${token}`,
+        `/#foo=bar&${key}=${token}`
       ].forEach((searchStr, i) => {
         this.timeout(20000);
 
         it(`Should parse ${key} from window.location.href [${i}]`,
           async function () {
-            await this.page.goto(`http://localhost:8000${searchStr}`);
-            expect(await this.page.evaluate(() => {
-              return window.test.tokenEditor.getValue();
-            })).to.equal(`${token}`);
-          });
-      });
+            const page = await this.browser.newPage();    
 
+            await page.goto(`http://localhost:8000${searchStr}`);
+
+            expect(await page.evaluate(() => {
+              return window.test.tokenEditor.getValue();
+            })).to.equal(token);
+
+            await page.close();
+          });
+      });      
+
+    });
+
+    it('Parses shared token', async function() {
+      this.timeout(20000);
+
+      const page = await this.browser.newPage();
+
+      await page.goto(`http://localhost:8000/#debugger-io?token=${token}`);
+
+      expect(await page.evaluate(() => {
+        return window.test.tokenEditor.getValue();
+      })).to.equal(token);                     
+
+      await page.close();
     });
 
   });
