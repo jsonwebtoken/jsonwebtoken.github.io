@@ -1,4 +1,6 @@
 const extensionManifest = require('./manifest.json');
+const getLanguages =
+  require('./views/website/libraries/support/get-languages.js');
 
 module.exports = grunt => {
   grunt.loadNpmTasks('grunt-contrib-copy');
@@ -108,6 +110,12 @@ module.exports = grunt => {
 
     pug: {
       website: {
+        options: {
+          //pretty: true,
+          data: {
+            languages: getLanguages()
+          }
+        },
         files: {
           'dist/website/index.html': 'views/website/index.pug',
           'dist/website/introduction/index.html': 
@@ -173,6 +181,9 @@ module.exports = grunt => {
         files: [
           'stylus/*.styl',
           'stylus/extension/**',
+          // Yes, we still share styles with the website, it's really hard
+          // to refactor them out without breaking stuff
+          'stylus/website/**',
           'views/*.pug',
           'views/extension/**'
         ],

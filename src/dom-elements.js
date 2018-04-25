@@ -4,12 +4,12 @@ export const decodedTabLink =
   document.querySelector('.tab-link a[href="#decoded-jwt"]');
 export const encodedTabElement = document.getElementById('encoded-jwt');
 export const decodedTabElement = document.getElementById('decoded-jwt');
+
 export const editorElement = document.querySelector('#encoded-jwt .input');
 export const decodedElement = document.querySelector('#decoded-jwt .output');
+
 export const headerElement = document.querySelector('.js-header');
 export const payloadElement = document.querySelector('.js-payload');
-export const payloadTooltipElement = 
-  document.getElementById('js-payload-tooltip');
 
 export const signatureStatusElement =
   document.querySelector('.validation-status.js-signature');

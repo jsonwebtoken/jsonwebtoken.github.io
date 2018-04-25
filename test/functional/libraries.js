@@ -92,6 +92,30 @@ describe('Libraries', function() {
     })).to.be.true;
   });
 
+  it('Has a data-repo attribute for star counts if repo ' + 
+          'is in GitHub', async function() {
+    const repos = await this.page.$$eval('.panel-wrap', bodies => {
+      const result = [];
+      for(let i = 0; i < bodies.length; ++i) {
+        const spanStars = bodies[i].querySelector('span.stars');
+        const repoUrl = bodies[i].querySelector('.repository a').href;
+
+        if(repoUrl.indexOf('github') !== -1) {
+          result.push({
+            url: repoUrl,
+            dataRepo: spanStars ? spanStars.getAttribute('data-repo') : null
+          });
+        }
+      }
+
+      return result;
+    });
+
+    for(const repo of repos) {
+      expect(repo.dataRepo, repo.url).to.exist.and.not.be.empty;
+    }
+  });
+
   it('Displays libraries stacked on top of each other ' + 
      'for small screens', async function() {
     try {

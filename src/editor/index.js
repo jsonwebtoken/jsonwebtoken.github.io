@@ -4,17 +4,22 @@ import {
   copyTokenLink 
 } from '../utils.js';
 import { downloadPublicKeyIfPossible } from './public-key-download.js';
-import { tooltipHandler } from './tooltip.js';
+import { setupClaimsTooltip } from './claims-tooltip.js';
 import { tokenEditor, headerEditor, payloadEditor } from './instances.js';
 import { 
   getTrimmedValue,
   stringify,
-  fixEditorHeight 
+  fixEditorHeight,
+  getSelectedAlgorithm
 } from './utils.js';
 import { sign, verify, decode } from './jwt.js';
 import EventManager from './event-manager.js';
 import strings from '../strings.js';
 import defaultTokens from './default-tokens.js';
+import { 
+  minSecretLengthCheck,
+  setupSecretLengthTooltip 
+} from './secret-length-tooltip.js';
 import { 
   algorithmSelect, 
   signatureStatusElement,
@@ -161,11 +166,6 @@ function setAlgorithmInHeader(algorithm) {
       // is being edited.
     }
   });
-}
-
-function getSelectedAlgorithm() {
-  const selected = algorithmSelect.options[algorithmSelect.selectedIndex];
-  return selected.value;
 }
 
 function algorithmChangeHandler() {
@@ -341,17 +341,6 @@ function setupTabEvents() {
   });
 }
 
-function copyTokenHandler(event) {
-  event.preventDefault();
-
-  const token = getTrimmedValue(tokenEditor);
-  const publicKey = isPublicKeyAlgorithm(getSelectedAlgorithm()) ? 
-    publicKeyTextArea.value :
-    null;
-  
-  copyTokenLink(token, publicKey);
-}
-
 function setupEvents() {
   // The event manager lets us enable/disable events as needed without
   // manually tracking them. Events that need to be disabled should be
@@ -365,8 +354,10 @@ function setupEvents() {
   eventManager.addCodeMirrorEvent(headerEditor, 'change', encodeToken);
   eventManager.addCodeMirrorEvent(payloadEditor, 'change', encodeToken);
 
+  // HMAC secret, show tooltip if secret is too short.
+  eventManager.addDomEvent(secretInput, 'input', minSecretLengthCheck);
   // HMAC secret, when changed the encoded token must be updated.
-  eventManager.addDomEvent(secretInput, 'input', encodeToken);
+  eventManager.addDomEvent(secretInput, 'input', encodeToken);  
   // Base64 checkbox, when changes the encoded token must be updated.
   eventManager.addDomEvent(secretBase64Checkbox, 'change', encodeToken);
   // Private key, when changed the encoded token must be updated.
@@ -375,14 +366,8 @@ function setupEvents() {
   // (only verified).
   eventManager.addDomEvent(publicKeyTextArea, 'input', verifyToken);
 
-  // The following event are never disabled, so it is not necessary to go
+  // The following events are never disabled, so it is not necessary to go
   // through the event manager for them.
-
-  // Human readable timestamp tooltips
-  payloadElement.addEventListener('mousemove', tooltipHandler);
-  // Temporary (share button not ready yet)
-  signatureStatusElement.addEventListener('click', copyTokenHandler);
-
   setupTabEvents();
 }
 
@@ -404,4 +389,6 @@ export function setupTokenEditor() {
   selectAlgorithm('HS256');
   loadToken();
   fixEditorHeight();
+  setupSecretLengthTooltip();
+  setupClaimsTooltip();
 }

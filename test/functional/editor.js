@@ -5,6 +5,8 @@ const chaiArrays = require('chai-arrays');
 const express = require('express');
 const jsrsasign = require('jsrsasign');
 
+const _ = require('lodash');
+
 const utils = require('./utils.js');
 const tokens = require('./tokens.js');
 const defaultTokens = require('./default-tokens.js');
@@ -15,6 +17,8 @@ const isVisible = utils.isVisible;
 chai.use(chaiAsPromised);
 chai.use(chaiArrays);
 const expect = chai.expect;
+
+const typingDelay = 0;
 
 describe('Editor', function() {
   before(utils.launchBrowser);
@@ -34,6 +38,13 @@ describe('Editor', function() {
     });
 
     expect(selected).to.equal('HS256');
+  });
+
+  it('Default selected token should say something ' + 
+     'about secret length', async function() {
+    const secret = this.page.$eval('input[name="secret"]',
+      secretInput => secretInput.value);
+    return expect(secret).to.eventually.include('256');
   });
 
   it('Should select default tokens when no changes have ' +
@@ -58,13 +69,17 @@ describe('Editor', function() {
     }
   });
 
-  it('Should display a tooltip with a human readable ' + 
-     'date on claim hover', async function() {
+  it('Should display a tooltip for a claim', async function() {
     await this.page.select('#algorithm-select', 'HS384');  
-    
+
     await this.page.mouse.move(0, 0);
+
+    function tippyVisible(element) {
+      return element._tippy.state.visible;
+    }
     
-    expect(await this.page.$eval('#js-payload-tooltip', isVisible)).to.be.false;
+    expect(await this.page.$eval('#decoded-jwt .output', tippyVisible)).
+      to.be.false;
     
     const iatPos = await this.page.evaluate(() => {
       return window.test.payloadEditor.charCoords({
@@ -75,7 +90,11 @@ describe('Editor', function() {
 
     await this.page.mouse.move(iatPos.left, iatPos.top);
 
-    expect(await this.page.$eval('#js-payload-tooltip', isVisible)).to.be.true;
+    // Wait for animation
+    await this.page.waitFor(2000);
+
+    expect(await this.page.$eval('#decoded-jwt .output', tippyVisible))
+      .to.be.true;
   });
 
   it('Displays a valid token by default', async function() {
@@ -119,7 +138,7 @@ describe('Editor', function() {
       test: 'test'
     };
     await this.page.keyboard.type(JSON.stringify(header, null, 2), { 
-      delay: 5 
+      delay: typingDelay 
     });
 
     const newToken = await this.page.evaluate(() => {
@@ -154,7 +173,7 @@ describe('Editor', function() {
       "test": "test"
     };
     await this.page.keyboard.type(JSON.stringify(payload, null, 2), { 
-      delay: 5 
+      delay: typingDelay 
     });
 
     const newToken = await this.page.evaluate(() => {
@@ -187,7 +206,7 @@ describe('Editor', function() {
       typ: 'JWT',
     };
     await this.page.keyboard.type(JSON.stringify(header, null, 2), { 
-      delay: 5 
+      delay: typingDelay 
     });
 
     const selectedAfter = 
@@ -219,7 +238,7 @@ describe('Editor', function() {
       sub: 'test'      
     };
     await this.page.keyboard.type(JSON.stringify(payload, null, 2), { 
-      delay: 5 
+      delay: typingDelay 
     });
 
     const algs = await this.page.$eval('#algorithm-select', select => {
@@ -280,18 +299,18 @@ describe('Editor', function() {
       expect(oldToken).to.equal(newToken);
     });
 
-    describe('Decodes HS256/384/512 tokens', function() {      
+    describe('HS256/384/512', function() {      
       const algs = Object.keys(tokens).filter(alg => alg.includes('hs'));
       
       for(const alg of algs) {
-        it(alg.toUpperCase(), async function() {
+        it(`Decodes ${alg.toUpperCase()} tokens`, async function() {
           const secretInput = await this.page.$('input[name="secret"]');
           await secretInput.click();
           await this.page.keyboard.down('ControlLeft');
           await this.page.keyboard.press('KeyA');
           await this.page.keyboard.up('ControlLeft');
           await secretInput.type(tokens[alg].secret, { 
-            delay: 5 
+            delay: typingDelay 
           });
 
           await this.page.click('.js-input');
@@ -299,7 +318,7 @@ describe('Editor', function() {
           await this.page.keyboard.press('KeyA');
           await this.page.keyboard.up('ControlLeft');
           await this.page.keyboard.type(tokens[alg].token, { 
-            delay: 5 
+            delay: typingDelay 
           });
 
           const valid = await this.page.$eval('.validation-status', status => {
@@ -314,7 +333,51 @@ describe('Editor', function() {
           });
 
           expect(payload).to.include(alg + 'test');
-        });        
+        });
+
+        const bits = parseInt(alg.substr(2));
+        it(`Considers less-than-${bits}-bit secrets weak`,
+           async function() {
+          let secret = _.pad('', (bits / 8) - 1, 'test');
+
+          const secretInput = await this.page.$('input[name="secret"]');
+          await secretInput.click();
+          await this.page.keyboard.down('ControlLeft');
+          await this.page.keyboard.press('KeyA');
+          await this.page.keyboard.up('ControlLeft');
+          await secretInput.type(secret, {
+            delay: typingDelay
+          });
+
+          // Wait for animations
+          await this.page.waitFor(500);
+
+          let tooltipVisible = 
+            await this.page.$eval('input[name="secret"]', input => {
+              return input._tippy.state.visible;
+            });
+
+          expect(tooltipVisible).to.be.true;
+
+          secret += 'test';
+          await secretInput.click();
+          await this.page.keyboard.down('ControlLeft');
+          await this.page.keyboard.press('KeyA');
+          await this.page.keyboard.up('ControlLeft');
+          await secretInput.type(secret, {
+            delay: typingDelay
+          });
+
+          // Wait for animations
+          await this.page.waitFor(500);
+
+          tooltipVisible = 
+            await this.page.$eval('input[name="secret"]', input => {
+              return input._tippy.state.visible;
+            });
+
+          expect(tooltipVisible).to.be.false;
+        });
       }
     });    
 
@@ -349,7 +412,7 @@ describe('Editor', function() {
           await this.page.keyboard.press('KeyA');
           await this.page.keyboard.up('ControlLeft');
           await this.page.keyboard.type(tokens[alg].token, { 
-            delay: 5 
+            delay: typingDelay 
           });
 
           const secretInput = await this.page.$('textarea[name="public-key"]');
@@ -358,7 +421,7 @@ describe('Editor', function() {
           await this.page.keyboard.press('KeyA');
           await this.page.keyboard.up('ControlLeft');
           await secretInput.type(tokens[alg].publicKey, { 
-            delay: 5 
+            delay: typingDelay 
           });          
 
           const valid = await this.page.$eval('.validation-status', status => {
@@ -389,7 +452,7 @@ describe('Editor', function() {
           await this.page.keyboard.press('KeyA');
           await this.page.keyboard.up('ControlLeft');
           await this.page.keyboard.type(defaultTokens['rs256'].publicKey, { 
-            delay: 5 
+            delay: typingDelay 
           });
 
           await this.page.click('textarea[name="private-key"]');
@@ -397,7 +460,7 @@ describe('Editor', function() {
           await this.page.keyboard.press('KeyA');
           await this.page.keyboard.up('ControlLeft');
           await this.page.keyboard.type(defaultTokens['rs256'].privateKey, { 
-            delay: 5 
+            delay: typingDelay 
           });
         });
 
@@ -427,7 +490,7 @@ describe('Editor', function() {
               alg: alg.toUpperCase(),
               typ: 'JWT'
             }, null, 2), { 
-              delay: 5 
+              delay: typingDelay 
             });
 
             await this.page.click('.js-payload');
@@ -437,7 +500,7 @@ describe('Editor', function() {
             await this.page.keyboard.type(JSON.stringify({
               sub: 'test'
             }, null, 2), { 
-              delay: 5 
+              delay: typingDelay 
             });
 
             const newToken = await this.page.evaluate(() => {
@@ -469,7 +532,7 @@ describe('Editor', function() {
           await this.page.keyboard.press('KeyA');
           await this.page.keyboard.up('ControlLeft');
           await this.page.keyboard.type(defaultTokens['es256'].publicKey, { 
-            delay: 5 
+            delay: typingDelay 
           });
 
           await this.page.click('textarea[name="private-key"]');
@@ -477,7 +540,7 @@ describe('Editor', function() {
           await this.page.keyboard.press('KeyA');
           await this.page.keyboard.up('ControlLeft');
           await this.page.keyboard.type(defaultTokens['es256'].privateKey, { 
-            delay: 5 
+            delay: typingDelay 
           });
         });
 
@@ -506,7 +569,7 @@ describe('Editor', function() {
               alg: alg.toUpperCase(),
               typ: 'JWT'
             }, null, 2), { 
-              delay: 5 
+              delay: typingDelay 
             });
 
             await this.page.click('.js-payload');
@@ -516,7 +579,7 @@ describe('Editor', function() {
             await this.page.keyboard.type(JSON.stringify({
               sub: 'test'
             }, null, 2), { 
-              delay: 5 
+              delay: typingDelay 
             });
 
             const newToken = await this.page.evaluate(() => {
@@ -582,7 +645,7 @@ describe('Editor', function() {
         await this.page.keyboard.press('KeyA');
         await this.page.keyboard.up('ControlLeft');
         await this.page.keyboard.type(token, { 
-          delay: 5         
+          delay: typingDelay         
         });
 
         await this.page.waitFor(2000);
@@ -617,7 +680,7 @@ describe('Editor', function() {
         await this.page.keyboard.press('KeyA');
         await this.page.keyboard.up('ControlLeft');
         await this.page.keyboard.type(token, { 
-          delay: 5         
+          delay: typingDelay         
         });
 
         await this.page.waitFor(2000);
@@ -651,7 +714,7 @@ describe('Editor', function() {
         await this.page.keyboard.press('KeyA');
         await this.page.keyboard.up('ControlLeft');
         await this.page.keyboard.type(token, { 
-          delay: 5         
+          delay: typingDelay         
         });
 
         await this.page.waitFor(2000);
@@ -671,7 +734,7 @@ describe('Editor', function() {
     });    
 
     it('Clears the token when the header is edited and there ' +     
-            'is no private key', async function() {
+       'is no private key', async function() {
       await this.page.select('#algorithm-select', 'RS256');
 
       const secretInput = await this.page.$('textarea[name="private-key"]');
@@ -692,7 +755,7 @@ describe('Editor', function() {
         test: 'test'
       };
       await this.page.keyboard.type(JSON.stringify(header, null, 2), { 
-        delay: 5 
+        delay: typingDelay 
       });
 
       const token = await this.page.evaluate(() => {
@@ -722,7 +785,7 @@ describe('Editor', function() {
         sub: 'test'
       };
       await this.page.keyboard.type(JSON.stringify(payload, null, 2), { 
-        delay: 5 
+        delay: typingDelay 
       });
 
       const token = await this.page.evaluate(() => {
@@ -742,7 +805,7 @@ describe('Editor', function() {
       await this.page.keyboard.press('KeyA');
       await this.page.keyboard.up('ControlLeft');
       await this.page.keyboard.type(tokens['rs256'].token, { 
-        delay: 5 
+        delay: typingDelay 
       });
 
       const secretInput = await this.page.$('textarea[name="public-key"]');
@@ -751,7 +814,7 @@ describe('Editor', function() {
       await this.page.keyboard.press('KeyA');
       await this.page.keyboard.up('ControlLeft');
       await secretInput.type(tokens['rs256'].publicKey, { 
-        delay: 5 
+        delay: typingDelay 
       });
 
       const valid = await this.page.$eval('.validation-status', status => {
@@ -785,7 +848,7 @@ describe('Editor', function() {
       await this.page.keyboard.press('KeyA');
       await this.page.keyboard.up('ControlLeft');
       await this.page.keyboard.type(tokens['rs256'].token, { 
-        delay: 5 
+        delay: typingDelay 
       });
 
       const secretInput = await this.page.$('textarea[name="public-key"]');
@@ -794,7 +857,7 @@ describe('Editor', function() {
       await this.page.keyboard.press('KeyA');
       await this.page.keyboard.up('ControlLeft');
       await secretInput.type(tokens['rs256'].publicKey, { 
-        delay: 5 
+        delay: typingDelay 
       });
 
       const valid = await this.page.$eval('.validation-status', status => {
@@ -806,7 +869,7 @@ describe('Editor', function() {
 
       await secretInput.click();
       await this.page.keyboard.type('sdfasdf389972389', {
-        delay: 5
+        delay: typingDelay
       });
 
       const invalid = await this.page.$eval('.validation-status', status => {
@@ -829,7 +892,7 @@ describe('Editor', function() {
       await this.page.keyboard.press('KeyA');
       await this.page.keyboard.up('ControlLeft');
       await secretInput.type(defaultTokens['rs256'].publicKey, { 
-        delay: 5 
+        delay: typingDelay 
       });
 
       const privateKeyInput = await this.page.$('textarea[name="private-key"]');
@@ -842,7 +905,7 @@ describe('Editor', function() {
       const tail = defaultTokens['rs256'].privateKey.slice(20);
 
       await privateKeyInput.type(`${head}sadfasdf${tail}`, { 
-        delay: 5 
+        delay: typingDelay 
       });
 
       await this.page.click('.js-input');
@@ -850,7 +913,7 @@ describe('Editor', function() {
       await this.page.keyboard.press('KeyA');
       await this.page.keyboard.up('ControlLeft');
       await this.page.keyboard.type(defaultTokens['rs256'].token, { 
-        delay: 5 
+        delay: typingDelay 
       });
 
       await this.page.waitFor(1000);
@@ -875,7 +938,7 @@ describe('Editor', function() {
       await this.page.keyboard.press('KeyA');
       await this.page.keyboard.up('ControlLeft');
       await secretInput.type(tokens['rs256'].publicKey, { 
-        delay: 5 
+        delay: typingDelay 
       });
 
       const privateKeyInput = await this.page.$('textarea[name="private-key"]');
@@ -890,7 +953,7 @@ describe('Editor', function() {
       await this.page.keyboard.press('KeyA');
       await this.page.keyboard.up('ControlLeft');
       await this.page.keyboard.type(tokens['rs256'].token, { 
-        delay: 5 
+        delay: typingDelay 
       });
 
       await this.page.waitFor(1000);
@@ -913,7 +976,7 @@ describe('Editor', function() {
     await this.page.keyboard.press('KeyA');
     await this.page.keyboard.up('ControlLeft');
     await this.page.keyboard.type(tokens.hs256.token, { 
-      delay: 5 
+      delay: typingDelay 
     });
 
     await this.page.select('#algorithm-select', 'HS384');
@@ -933,7 +996,7 @@ describe('Editor', function() {
     await this.page.keyboard.press('KeyA');
     await this.page.keyboard.up('ControlLeft');
     await this.page.keyboard.type(tokens.none.token, { 
-      delay: 5 
+      delay: typingDelay 
     });
 
     const invalid = await this.page.$eval('.validation-status', status => {
@@ -953,7 +1016,7 @@ describe('Editor', function() {
     await this.page.keyboard.press('KeyA');
     await this.page.keyboard.up('ControlLeft');
     await secretInput.type('secret-test', { 
-      delay: 5 
+      delay: typingDelay 
     });
 
     await this.page.click('.js-payload');
@@ -965,7 +1028,7 @@ describe('Editor', function() {
       sub: 'test'      
     };
     await this.page.keyboard.type(JSON.stringify(payload, null, 2), { 
-      delay: 5 
+      delay: typingDelay 
     });
 
     await this.page.reload();
@@ -975,5 +1038,151 @@ describe('Editor', function() {
     });
 
     expect(storedPayload).to.deep.equal(payload);
+  });
+
+  describe('JWT share button', function() {
+    it('Copies an HMAC token to the clipboard (no secret)', async function() {
+      await this.page.select('#algorithm-select', 'HS256');
+
+      const secretInput = await this.page.$('input[name="secret"]');
+      await secretInput.click();
+      await this.page.keyboard.down('ControlLeft');
+      await this.page.keyboard.press('KeyA');
+      await this.page.keyboard.up('ControlLeft');
+      await secretInput.type('secret-test', { 
+        delay: typingDelay 
+      });
+
+      await this.page.click('.js-payload');
+      await this.page.keyboard.down('ControlLeft');
+      await this.page.keyboard.press('KeyA');
+      await this.page.keyboard.up('ControlLeft');
+
+      const payload = {
+        sub: 'test'      
+      };
+      await this.page.keyboard.type(JSON.stringify(payload, null, 2), { 
+        delay: typingDelay 
+      });
+
+      const shareJwtButton = await this.page.$('.website-share button');
+      await shareJwtButton.click();
+
+      const srcToken = await this.page.evaluate(() => 
+        window.test.tokenEditor.getValue());
+
+      // We cannot read the clipboard in headless Chrome, so we have a special
+      // harness in the code that stores this value. See:
+      // https://github.com/GoogleChrome/puppeteer/issues/2147
+      const copiedUrl = await this.page.evaluate(() => 
+        window.test.shareJwtCopiedUrl);
+
+      const newPage = await this.browser.newPage();
+      await newPage.goto(copiedUrl);
+
+      const destToken = await newPage.evaluate(() => 
+        window.test.tokenEditor.getValue());
+      const destSecret = await newPage.$eval('input[name="secret"]', input =>
+        input.value);
+
+      expect(srcToken).to.equal(destToken);
+      expect(destSecret).to.not.equal('secret-test');
+    });
+
+    it('Copies an RSA token to the clipboard (with public-key)',
+      async function() {
+        this.timeout(30000);
+
+        await this.page.select('#algorithm-select', 'RS256');      
+
+        await this.page.click('.js-input');
+        await this.page.keyboard.down('ControlLeft');
+        await this.page.keyboard.press('KeyA');
+        await this.page.keyboard.up('ControlLeft');
+        await this.page.keyboard.type(defaultTokens['rs256'].token, { 
+          delay: typingDelay 
+        });
+
+        const pubKeyInput = await this.page.$('textarea[name="public-key"]');
+        await pubKeyInput.click();
+        await this.page.keyboard.down('ControlLeft');
+        await this.page.keyboard.press('KeyA');
+        await this.page.keyboard.up('ControlLeft');
+        await pubKeyInput.type(defaultTokens['rs256'].publicKey, { 
+          delay: typingDelay 
+        });
+
+        const privateKeyInput = 
+          await this.page.$('textarea[name="private-key"]');
+        await privateKeyInput.click();
+        await this.page.keyboard.down('ControlLeft');
+        await this.page.keyboard.press('KeyA');
+        await this.page.keyboard.up('ControlLeft');      
+        await privateKeyInput.type(defaultTokens['rs256'].privateKey, { 
+          delay: typingDelay 
+        });
+
+        await this.page.click('.js-payload');
+        await this.page.keyboard.down('ControlLeft');
+        await this.page.keyboard.press('KeyA');
+        await this.page.keyboard.up('ControlLeft');
+
+        const payload = {
+          sub: 'test'      
+        };
+        await this.page.keyboard.type(JSON.stringify(payload, null, 2), { 
+          delay: typingDelay 
+        });
+
+        const shareJwtButton = await this.page.$('.website-share button');
+        await shareJwtButton.click();
+
+        const srcToken = await this.page.evaluate(() => 
+          window.test.tokenEditor.getValue());
+
+        // We cannot read the clipboard in headless Chrome, so we have a
+        // special harness in the code that stores this value. See:
+        // https://github.com/GoogleChrome/puppeteer/issues/2147
+        const copiedUrl = await this.page.evaluate(() => 
+          window.test.shareJwtCopiedUrl);
+
+        const newPage = await this.browser.newPage();
+        await newPage.goto(copiedUrl);
+
+        const destToken = await newPage.evaluate(() => 
+          window.test.tokenEditor.getValue());
+        const destPubKey = await newPage.$eval('textarea[name="public-key"]',
+          input => input.value);
+
+        expect(srcToken).to.equal(destToken);
+        expect(destPubKey).to.equal(defaultTokens['rs256'].publicKey);
+      }
+    );
+  });
+  
+  describe('Parses tokens from window.location.href', () => {
+    const token = defaultTokens.hs384.token;
+    
+    ['token', 'value', 'id_token', 'access_token'].forEach((key) => {
+
+      [
+        `/?${key}=${token}`,
+        `/#${key}=${token}`,
+        `/?foo=bar&${key}=${token}`,
+        `/#foo=bar&${key}=${token}`,
+      ].forEach((searchStr, i) => {
+        this.timeout(20000);
+
+        it(`Should parse ${key} from window.location.href [${i}]`,
+          async function () {
+            await this.page.goto(`http://localhost:8000${searchStr}`);
+            expect(await this.page.evaluate(() => {
+              return window.test.tokenEditor.getValue();
+            })).to.equal(`${token}`);
+          });
+      });
+
+    });
+
   });
 });

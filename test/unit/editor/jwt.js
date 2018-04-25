@@ -1,13 +1,19 @@
 import * as jwt from '../../../src/editor/jwt.js';
 import tokens from '../../../src/editor/default-tokens.js';
 
-import { utf8tob64u, b64utob64 } from 'jsrsasign';
-
+import { utf8tob64, utf8tob64u, b64utob64 } from 'jsrsasign';
 import log from 'loglevel';
-
 import { should } from 'chai';
+import { randomFillSync } from 'crypto';
 
 should();
+
+const publicKeyPlainRSA =
+`-----BEGIN RSA PUBLIC KEY-----
+MIGJAoGBAN2Vq1GNGOiCjdaiOAYcUdgu6B1RYBj2JHd/LhqtY0DUqhLyRXDfdwmJ
+tevxu/BQBSlqsLCW91sfp28Q5+i7T+AIVCwdR9CtIO/4y5JQwB7yPMoTipb6Mr7F
+BT1rTcZScoeSSV75DSlf+DqNdnuvX/EArkOjaRD5fnEr1yKlGAQrAgMBAAE=
+-----END RSA PUBLIC KEY-----`;
 
 describe('JWT', function() {
   it('detects tokens', function() {
@@ -29,10 +35,10 @@ describe('JWT', function() {
   });
 
   it('considers Base64 (not URL) encoded tokens invalid', function() {
-    const token = b64utob64(tokens.hs384.token);
+    const token = b64utob64(tokens.hs256.token);
 
     jwt.isToken(token).should.be.false;
-    jwt.verify(token, tokens.hs384.secret).should.be.false;
+    jwt.verify(token, tokens.hs256.secret).should.be.false;
   });
 
   it('verifies valid tokens', function() {
@@ -97,7 +103,7 @@ describe('JWT', function() {
     }
   });
 
-  it('signs tokens (HS256)', function() {
+  it('signs/verifies tokens (HS256)', function() {
     const header = {
       alg: 'HS256'
     };
@@ -118,7 +124,7 @@ describe('JWT', function() {
     decoded.payload.should.deep.equal(payload);
   });
 
-  it('signs tokens (RS256)', function() {
+  it('signs/verifies tokens (RS256)', function() {
     const header = {
       alg: 'RS256'
     };
@@ -139,7 +145,7 @@ describe('JWT', function() {
     decoded.payload.should.deep.equal(payload);
   });
 
-  it('signs tokens (ES256)', function() {
+  it('signs/verifies tokens (ES256)', function() {
     const header = {
       alg: 'ES256'
     };
@@ -160,7 +166,7 @@ describe('JWT', function() {
     decoded.payload.should.deep.equal(payload);
   });
 
-  it('signs tokens (PS256)', function() {
+  it('signs/verifies tokens (PS256)', function() {
     const header = {
       alg: 'PS256'
     };
@@ -179,5 +185,50 @@ describe('JWT', function() {
     const decoded = jwt.decode(token);
     decoded.header.should.deep.equal(header);
     decoded.payload.should.deep.equal(payload);
+  });
+
+  it('verifies tokens (RS256) using a plain RSA public key', function() {
+    const header = {
+      alg: 'RS256'
+    };
+    const payload = {
+      sub: 'test'
+    };
+
+    const token = jwt.sign(header, payload, tokens.rs256.privateKey);
+    
+    jwt.verify(token, publicKeyPlainRSA).should.be.true;
+  });
+
+  describe('isValidBase64String', function() {
+    // Generate random data of different sizes.
+    const data = [];
+    for(let i = 0; i < 1000; ++i) {
+      let bytes = new Uint8Array(i);
+      randomFillSync(bytes);
+      bytes = String.fromCharCode.apply(null, bytes);
+
+      data.push({
+        b64: utf8tob64(bytes),
+        b64u: utf8tob64u(bytes)
+      });
+    }
+
+    it('detects valid Base64 and Base64URL strings', function() {
+      data.forEach(d => {
+        jwt.isValidBase64String(d.b64, false).should.be.true;
+        jwt.isValidBase64String(d.b64u, false).should.be.true;
+        jwt.isValidBase64String(d.b64u).should.be.true;
+        jwt.isValidBase64String(d.b64u, true).should.be.true;
+      });
+    });
+
+    it('fails on invalid Base64 and Base64 URL strings', function() {
+      data.forEach(d => {
+        if(d.b64.match(/[\+\/]/)) {
+          jwt.isValidBase64String(d.b64, true).should.be.false;
+        }
+      });
+    });
   });
 });

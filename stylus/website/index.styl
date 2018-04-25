@@ -4,6 +4,7 @@
 @import 'highlight'
 @import 'nib'
 @import 'nib/gradients'
+@import 'fonts'
 
 /*
  * Webfont
@@ -39,7 +40,7 @@ html
     -moz-font-smoothing antialiased
 
 body
-  font-family: 'Whitney SSm A', 'Whitney SSm B', "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: 'fakt-web', "Helvetica Neue", Helvetica, Arial, sans-serif;
 
 pre,
 code
@@ -579,21 +580,27 @@ body
             width 100%
             max-width 266px
             resize none            
+          input[type="checkbox"]
+            margin-right 5px
+            position relative
+            top 2px
 
   .validation-status
     text-transform capitalize
-    color white
+    background-color white
     text-align center
     border-radius 3px
-    padding 10px 0
+    padding 0
     margin-top 30px
     font-size 20px
     +breakpoint("tablet")
       font-size 30px
+      padding 10px 0
+      text-align left
     &.valid-token
-      background-color #00B9F1
+      color #00B9F1
     &.invalid-token
-      background-color red
+      color red
     i
       font-size 18px
       vertical-align bottom
@@ -601,6 +608,20 @@ body
       margin-right 5px
       +breakpoint("tablet")
         font-size 24px
+
+  .debugger-footer
+    font-size 30px
+    .website-validation
+      padding-left 0      
+    .website-share
+      padding-right 0
+      button
+        width 100%;
+        background-color #00b9f1;
+        color white;
+        font-weight 400;
+        border-color #00b9f1;
+      
 
 
 // libraries-jwt
@@ -691,87 +712,6 @@ body
         clear none
       &:nth-child(3n+1)
         clear both
-
-    &.jwt-net
-      .panel-heading h3
-        background-color #2AA8E5
-    &.jwt-python
-      .panel-heading h3
-        background-color #377EF0
-    &.jwt-clojure
-      .panel-heading h3
-        background-color #5881d8
-    &.jwt-node
-      .panel-heading h3
-        background-color #8AC244
-    &.jwt-java
-      .panel-heading h3
-        background-color #E76F00
-    &.jwt-js
-      .panel-heading h3
-        background-color #EFC825
-    &.jwt-php
-      .panel-heading h3
-        background-color #777BB4
-    &.jwt-postgresql
-      .panel-heading h3
-        background-color #336791
-    &.jwt-ruby
-      .panel-heading h3
-        background-color #AA1100
-    &.jwt-elixir
-      .panel-heading h3
-        background-color #4E2A8E
-    &.jwt-go
-      .panel-heading h3
-        background-color #47B6C4
-    &.jwt-groovy
-      .panel-heading h3
-        background-color #6398aa
-    &.jwt-haskell
-      .panel-heading h3
-        background-color #666
-    &.jwt-haxe
-      .panel-heading h3
-        background-color #EA8220
-    &.jwt-rust
-      .panel-heading h3
-        background-color #814626
-    &.jwt-lua
-      .panel-heading h3
-        background-color #000080
-    &.jwt-scala
-      .panel-heading h3
-        background-color #EA2D2E
-    &.jwt-d
-      .panel-heading h3
-        background-color #B44137
-    &.jwt-q
-      .panel-heading h3
-        background-color #666
-    &.jwt-c
-      .panel-heading h3
-        background-color #5180D2
-    &.jwt-cpp
-      .panel-heading h3
-        background-color #00599c
-    &.jwt-objective-c
-      .panel-heading h3
-        background linear-gradient(top, #AAAAAA, #767676)
-
-    &.jwt-delphi
-      .panel-heading h3
-        background-color #E31C23
-    &.jwt-perl
-      .panel-heading h3
-        background-color #3B477A
-    &.jwt-crystal
-      .panel-heading h3
-        background-color #B0B0B0
-    &.jwt-1c
-      .panel-heading h3
-        background-color #fbc53d
-
 
     .panel-heading
       padding 0

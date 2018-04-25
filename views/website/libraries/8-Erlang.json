@@ -1,0 +1,36 @@
+{
+  "name": "Erlang",
+  "uniqueClass": "erlang",
+  "image": "/img/27.svg",
+  "bgColor": "rgb(169, 5, 51)",
+  "libs": [
+    {
+      "minimumVersion": null,
+      "support": {
+        "sign": true,
+        "verify": true,
+        "iss": false,
+        "sub": false,
+        "aud": false,
+        "exp": true,
+        "nbf": true,
+        "iat": true,
+        "jti": false,
+        "hs256": true,
+        "hs384": true,
+        "hs512": true,
+        "rs256": true,
+        "rs384": true,
+        "rs512": true,
+        "es256": true,
+        "es384": true,
+        "es512": true
+      },
+      "authorUrl": "https://github.com/glejeune",
+      "authorName": "Gregoire Lejeune",
+      "gitHubRepoPath": "emedia-project/jwerl",
+      "repoUrl": "https://github.com/emedia-project/jwerl",
+      "installCommandHtml": "git clone https://github.com/emedia-project/jwerl.git"
+    }
+  ]
+}

@@ -12,6 +12,9 @@ module.exports = merge(common, {
     path: __dirname + '/dist/test'
   },
   target: 'node',
+  node: {
+    __dirname: true
+  },
   module: {
     rules: [{
       test: /\.js$/,

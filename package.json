@@ -1,13 +1,14 @@
 {
   "name": "jwt.io",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/jsonwebtoken/jsonwebtoken.github.io"
   },
   "dependencies": {
     "express": "^4.16.2",
-    "express-sslify": "^1.2.0"
+    "express-sslify": "^1.2.0",
+    "querystring": "^0.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.36",
@@ -18,7 +19,10 @@
     "chai": "^4.1.2",
     "chai-arrays": "^2.0.0",
     "chai-as-promised": "^7.1.1",
+    "chai-json-schema": "^1.5.0",
+    "clipboard-polyfill": "^2.4.6",
     "codemirror": "^5.33.0",
+    "deep-freeze": "0.0.1",
     "flipclock": "^0.7.8",
     "grunt": "^1.0.1",
     "grunt-cli": "^1.2.0",
@@ -48,6 +52,8 @@
     "sinon-chai": "^2.14.0",
     "source-map-support": "^0.5.3",
     "stylus": "^0.54.5",
+    "tippy.js": "^2.3.0",
+    "tv4-formats": "^3.0.3",
     "uglifyjs-webpack-plugin": "^1.1.6",
     "web-ext": "^2.4.0",
     "webpack": "^4.1.0",

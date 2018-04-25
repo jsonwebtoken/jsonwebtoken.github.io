@@ -20,6 +20,9 @@ export const codeElements = document.querySelectorAll('.plain-text pre code');
 
 export const debuggerSection = document.getElementById('debugger-io');
 
+export const shareJwtButton = document.querySelector('.website-share button');
+export const shareJwtTextElement = shareJwtButton.querySelector('span');
+
 export const starsElements = document.getElementsByClassName('stars');
 export const librariesElement = document.querySelector('.libraries-sv');
 export const librariesSelect = document.getElementById('libraries-select');

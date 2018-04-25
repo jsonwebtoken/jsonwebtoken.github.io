@@ -1,0 +1,93 @@
+article(data-accordion, class=`accordion ${lang.uniqueClass}`)
+  .panel-heading(data-control)
+    img(src=lang.image)
+    h3(style=`background-color: ${lang.bgColor}`) #{lang.name}
+  .panel-wrap(data-content)
+    if lib.minimumVersion
+      .version
+        p Minimum Version #{lib.minimumVersion}
+          a(href='https://auth0.com/blog/2015/03/31/critical-vulnerabilities-in-json-web-token-libraries/', target='_blank')
+            img(src='img/ico_question.svg')    
+    div(class={ 'panel-body': true, mversion: !!lib.minimumVersion })
+      .column
+        p
+          i(class=lib.support.sign ? 'icon-budicon-500' : 'icon-budicon-501')
+          | Sign
+        p
+          i(class=lib.support.verify ? 'icon-budicon-500' : 'icon-budicon-501')
+          | Verify
+        p
+          i(class=lib.support.iss ? 'icon-budicon-500' : 'icon-budicon-501')
+          code iss
+          |  check
+        p
+          i(class=lib.support.sub ? 'icon-budicon-500' : 'icon-budicon-501')
+          code sub
+          |  check
+        p
+          i(class=lib.support.aud ? 'icon-budicon-500' : 'icon-budicon-501')
+          code aud
+          |  check
+        p
+          i(class=lib.support.exp ? 'icon-budicon-500' : 'icon-budicon-501')
+          code exp
+          |  check
+        p
+          i(class=lib.support.nbf ? 'icon-budicon-500' : 'icon-budicon-501')
+          code nbf
+          |  check
+        p
+          i(class=lib.support.iat ? 'icon-budicon-500' : 'icon-budicon-501')
+          code iat
+          |  check
+        p
+          i(class=lib.support.jti ? 'icon-budicon-500' : 'icon-budicon-501')
+          code jti
+          |  check
+      .column
+        p
+          i(class=lib.support.hs256 ? 'icon-budicon-500' : 'icon-budicon-501')
+          | HS256
+        p
+          i(class=lib.support.hs384 ? 'icon-budicon-500' : 'icon-budicon-501')
+          | HS384
+        p
+          i(class=lib.support.hs512 ? 'icon-budicon-500' : 'icon-budicon-501')
+          | HS512
+        p
+          i(class=lib.support.rs256 ? 'icon-budicon-500' : 'icon-budicon-501')
+          | RS256
+        p
+          i(class=lib.support.rs384 ? 'icon-budicon-500' : 'icon-budicon-501')
+          | RS384
+        p
+          i(class=lib.support.rs512 ? 'icon-budicon-500' : 'icon-budicon-501')
+          | RS512
+        p
+          i(class=lib.support.es256 ? 'icon-budicon-500' : 'icon-budicon-501')
+          | ES256
+        p
+          i(class=lib.support.es384 ? 'icon-budicon-500' : 'icon-budicon-501')
+          | ES384
+        p
+          i(class=lib.support.es512 ? 'icon-budicon-500' : 'icon-budicon-501')
+          | ES512
+
+    .author-info
+      .maintainer
+        if lib.authorUrl
+          a(href=lib.authorUrl)
+            i.icon-budicon-333(data-toggle='tooltip', title='', data-original-title='Maintainer')
+            | #{lib.authorName}
+        else
+          i.icon-budicon-333(data-toggle='tooltip', title='', data-original-title='Maintainer')
+          | #{lib.authorName}
+        if lib.gitHubRepoPath
+          span.stars(data-repo=lib.gitHubRepoPath, style='display: inline;')
+            i.icon-budicon-466
+      .repository
+        i.icon-1392070209-icon-social-github
+        a(href=lib.repoUrl) View Repo
+
+    .panel-footer
+      code !{lib.installCommandHtml}
