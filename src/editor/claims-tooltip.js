@@ -58,7 +58,15 @@ function showTooltip(element, text, placement) {
 }
 
 function getTimeText(timeStr) {
-  return (new Date(parseInt(timeStr, 10) * 1000)).toString();
+  try {
+    if(/\d+,/.test(timeStr)) {
+      return (new Date(parseInt(timeStr, 10) * 1000)).toString();
+    } else {            
+      return (new Date(timeStr.replace(/[",]/g, ''))).toString();
+    }
+  } catch(e) {
+    return 'Invalid date';
+  }
 }
 
 function tooltipHandler(event) {
