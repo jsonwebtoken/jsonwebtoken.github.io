@@ -23,7 +23,9 @@ export function minSecretLengthCheck(event) {
   console.log(utf8tohex(secretInput.value));
 
   if(inputBits < algBits) {
-    secretInput._tippy.show();
+    if(!secretInput._tippy.state.visible) {
+      secretInput._tippy.show();
+    }
   } else {
     secretInput._tippy.hide();
   }
