@@ -25,7 +25,7 @@ export default {
       zip: 'Compression algorithm',
       kty: 'Key type',
       use: 'Intended use of key: "sig" or "enc" (other values accepted)',
-      key_ops: 'Intended operations for this key'      ,
+      key_ops: 'Intended operations for this key',
       sid: 'Session ID (String identifier for a Session)'
     }
   },
