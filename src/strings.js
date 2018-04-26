@@ -26,7 +26,10 @@ export default {
       kty: 'Key type',
       use: 'Intended use of key: "sig" or "enc" (other values accepted)',
       key_ops: 'Intended operations for this key',
-      sid: 'Session ID (String identifier for a Session)'
+      sid: 'Session ID (String identifier for a Session)',
+      updated_at: 'Last modification timestamp',
+      at_hash: 'SHA-256 of leftmost half of this token',
+      nonce: 'Unique value associating request to token'
     }
   },
   extension: {
