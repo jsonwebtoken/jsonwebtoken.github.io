@@ -104,6 +104,6 @@ To run tests, execute:
 ./node_modules/.bin/grunt test
 ```
 
-Look at the end of the `Gruntfile` for other common tasks.
+Look at the end of the [Gruntfile](/Gruntfile.js) for other common tasks.
 
 ### Happy hacking!
