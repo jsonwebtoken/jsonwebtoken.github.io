@@ -78,7 +78,7 @@ describe('Editor', function() {
       return element._tippy.state.visible;
     }
     
-    expect(await this.page.$eval('#decoded-jwt .output', tippyVisible)).
+    expect(await this.page.$eval('[data-tippy]', tippyVisible)).
       to.be.false;
     
     const iatPos = await this.page.evaluate(() => {
@@ -93,7 +93,7 @@ describe('Editor', function() {
     // Wait for animation
     await this.page.waitFor(2000);
 
-    expect(await this.page.$eval('#decoded-jwt .output', tippyVisible))
+    expect(await this.page.$eval('[data-tippy]', tippyVisible))
       .to.be.true;
   });
 

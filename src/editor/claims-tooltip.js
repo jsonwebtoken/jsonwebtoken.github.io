@@ -11,15 +11,50 @@ import tippy from 'tippy.js';
 
 const timeClaims = ['exp', 'nbf', 'iat', 'auth_time', 'updated_at'];
 
+let instance;
+
 function hideTooltip() {
-  decodedElement._tippy.popper.style.opacity = 0;
+  if(instance) {
+    instance.destroy();
+    instance = null;
+  }
 }
 
-function showTooltip(text) {
-  decodedElement._tippy.popper.querySelector('.tippy-content')
-                .textContent = text;
-  decodedElement._tippy.popperInstance.update();
-  decodedElement._tippy.popper.style.opacity = 1;
+function showTooltip(element, text, placement) {
+  function newTooltip() {
+    element.title = text;
+
+    tippy(element, {
+      placement: placement,
+      arrow: true,
+      performance: true,
+      size: 'large',
+      dynamicTitle: true,
+      arrowTransform: 'scale(0.75)',
+      distance: 10,
+      updateDuration: 100,
+      trigger: 'manual'
+    });  
+
+    return element._tippy;
+  }
+
+  if(instance) {
+    if(instance.reference !== element || 
+       instance.options.placement !== placement) {
+      instance.destroy();
+      instance = newTooltip();
+    } else if(instance.popper.querySelector('.tippy-content').textContent !== 
+              text) {
+      instance.popper.querySelector('.tippy-content').textContent = text;
+    }
+  } else {
+    instance = newTooltip();
+  }
+  
+  if(!instance.state.visible) {
+    instance.show();
+  }
 }
 
 function getTimeText(timeStr) {
@@ -49,12 +84,21 @@ function tooltipHandler(event) {
 
   const claim = matches[1];  
 
+  const element = event.target.tagName === 'SPAN' ? 
+    event.target :
+    event.target.querySelector('span');
+
+  if(!element || element.tagName !== 'SPAN') {
+    hideTooltip();
+    return;
+  }
+
   // If this is a time claim and the mouse cursor is on top of the time,
   // let the time tooltip handle this, do nothing.
   // TODO: merge both tooltip handlers?
   const claimEnd = line.indexOf(':');
   if(result.ch >= claimEnd && timeClaims.includes(claim)) {
-    showTooltip(getTimeText(matches[2]));
+    showTooltip(element, getTimeText(matches[2]), 'right');
     return;
   }
 
@@ -64,25 +108,10 @@ function tooltipHandler(event) {
     return;
   }
 
-  showTooltip(claimText);
+  showTooltip(element, claimText, 'left');
 }
 
 export function setupClaimsTooltip() {  
-  tippy(decodedElement, {
-    placement: 'left',
-    arrow: true,
-    followCursor: true,
-    performance: true,
-    size: 'large',
-    dynamicTitle: true,
-    arrowTransform: 'scale(0.75)',
-    distance: 20,
-    sticky: true,
-    updateDuration: 100
-  });  
-
-  decodedElement._tippy.popper.style.opacity = 0;
-
   payloadElement.addEventListener('mousemove', tooltipHandler);
   headerElement.addEventListener('mousemove', tooltipHandler);
 }
