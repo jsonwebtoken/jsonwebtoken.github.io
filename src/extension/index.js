@@ -1,3 +1,4 @@
+import '../google-analytics.js';
 import { 
   setupTokenEditor,
   setTokenEditorValue,

@@ -1,3 +1,4 @@
+import '../google-analytics.js';
 import { setupNavbar } from './navbar.js';
 import { setupExtensionButton } from './extension.js';
 import { setupLibraries } from './libraries.js';
