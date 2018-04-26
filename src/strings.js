@@ -29,7 +29,10 @@ export default {
       sid: 'Session ID (String identifier for a Session)',
       updated_at: 'Last modification timestamp',
       at_hash: 'SHA-256 of leftmost half of this token',
-      nonce: 'Unique value associating request to token'
+      nonce: 'Unique value associating request to token',
+      auth_time: 'Time when authentication occurred',
+      amr: 'Authentication methods array',
+      acr: 'Authentication context class'
     }
   },
   extension: {
