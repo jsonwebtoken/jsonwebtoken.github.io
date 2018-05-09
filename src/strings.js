@@ -30,6 +30,7 @@ export default {
       updated_at: 'Last modification timestamp',
       at_hash: 'Access Token hash value',
       c_hash: 'Authorization Code hash value',
+      s_hash: 'State hash value',
       nonce: 'Unique value associating request to token',
       auth_time: 'Time when authentication occurred',
       amr: 'Authentication methods array',
