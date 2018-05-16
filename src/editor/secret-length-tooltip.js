@@ -20,8 +20,6 @@ export function minSecretLengthCheck(event) {
     b64utohex(secretInput.value).length / 2 * 8 :
     utf8tohex(secretInput.value).length / 2 * 8;
 
-  console.log(utf8tohex(secretInput.value));
-
   if(inputBits < algBits) {
     if(!secretInput._tippy.state.visible) {
       secretInput._tippy.show();
