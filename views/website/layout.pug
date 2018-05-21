@@ -27,7 +27,12 @@ html(lang='en')
       meta(property='og:image:type', content='image/png')
       meta(property='og:image:width', content='1200')
       meta(property='og:image:height', content='630')
-
+   
+    // GDPR cookie banner
+    script(src="https://cdn.cookielaw.org/consent/c1198aef-6105-4bf5-9af7-ab5b543482e0.js")
+    script(type="text/javascript").
+      function OptanonWrapper() { }
+      
     include ../stylesheets.pug
 
     link(rel='search', type='application/opensearchdescription+xml', title='JWT.io', href='/opensearch.xml')
