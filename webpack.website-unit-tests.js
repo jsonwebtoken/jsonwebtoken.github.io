@@ -25,11 +25,19 @@ module.exports = merge(common, {
           presets: [[
             '@babel/preset-env', {
               targets: {
-                browsers: ["last 5 versions", "safari >= 7"]
+                browsers: [
+                  '> 0.25%',
+                  'not dead',
+                ],
+                android: 7,
+                ios: 10,
+                ie: 11,
               },
-              modules: 'commonjs'
+              modules: 'commonjs',
+              "useBuiltIns": 'usage',
+              "debug": false
             }
-          ]]
+          ]],
         }
       }
     }]
