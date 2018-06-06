@@ -6,10 +6,25 @@ HUfQrSDv+MuSUMAe8jzKE4qW+jK+xQU9a03GUnKHkkle+Q0pX/g6jXZ7r1/xAK5D
 o2kQ+X5xK9cipRgEKwIDAQAB
 -----END PUBLIC KEY-----`;
 
-const esPublicKey = 
+const ecPublicKey256 =
 `-----BEGIN PUBLIC KEY-----
 MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEEVs/o5+uQbTjL3chynL4wXgUg2R9
 q9UU8I5mEovUf86QZ7kOBIjJwqnzD1omageEHWwHdBO6B+dFabmdT9POxg==
+-----END PUBLIC KEY-----`;
+
+const ecPublicKey384 =
+`-----BEGIN PUBLIC KEY-----
+MHYwEAYHKoZIzj0CAQYFK4EEACIDYgAEC1uWSXj2czCDwMTLWV5BFmwxdM6PX9p+
+Pk9Yf9rIf374m5XP1U8q79dBhLSIuaojsvOT39UUcPJROSD1FqYLued0rXiooIii
+1D3jaW6pmGVJFhodzC31cy5sfOYotrzF
+-----END PUBLIC KEY-----`;
+
+const ecPublicKey521 =
+`-----BEGIN PUBLIC KEY-----
+MIGbMBAGByqGSM49AgEGBSuBBAAjA4GGAAQBgc4HZz+/fBbC7lmEww0AO3NK9wVZ
+PDZ0VEnsaUFLEYpTzb90nITtJUcPUbvOsdZIZ1Q8fnbquAYgxXL5UgHMoywAib47
+6MkyyYgPk0BXZq3mq4zImTRNuaU9slj9TVJ3ScT3L1bXwVuPJDzpr5GOFpaj+WwM
+Al8G7CqwoJOsW7Kddns=
 -----END PUBLIC KEY-----`;
 
 module.exports = {
@@ -42,11 +57,15 @@ module.exports = {
   },
   es256: {
     token: 'eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMiwidGVzdCI6ImVzMjU2dGVzdCJ9.Ir41cyW-pc_pM2L0_cl0spnr8Y3GRUYKm7LfLhScI8SaPLfaQn9B7uES8OkYxu1YfudkYfgoFV_Bh1Qvu8lf7g',
-    publicKey: esPublicKey
+    publicKey: ecPublicKey256
   },
   es384: {
-    token: 'eyJhbGciOiJFUzM4NCIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMiwidGVzdCI6ImVzMzg0dGVzdCJ9.xy86p6ogINec1cucUmjEUIPtN2-kkg22lbVqGlLqYY4RRI5AVHv-UndXAfe6wBxpggV1GFH5gyacOs1TWs1uhQ',
-    publicKey: esPublicKey
+    token: 'eyJhbGciOiJFUzM4NCIsInR5cCI6IkpXVCIsImtpZCI6ImlUcVhYSTB6YkFuSkNLRGFvYmZoa00xZi02ck1TcFRmeVpNUnBfMnRLSTgifQ.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMiwidGVzdCI6ImVzMzg0dGVzdCJ9.YXzDoj68bFiJ-1gIOrqgSJUvyzh0y61uf6mqp4rWuhekhB1Ck1utbZ20Fg0fqokguEWG-9mj_iyEbiVDD9upf9SLU7M3_9PidGQ4YxbiMhXe3Q2iJyIcMHOqteqqobrt',
+    publicKey: ecPublicKey384
+  },
+  es512: {
+    token: 'eyJhbGciOiJFUzUxMiIsInR5cCI6IkpXVCIsImtpZCI6InhaRGZacHJ5NFA5dlpQWnlHMmZOQlJqLTdMejVvbVZkbTd0SG9DZ1NOZlkifQ.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMiwidGVzdCI6ImVzNTEydGVzdCJ9.AF3NvldM10bAnAYvoy337HgVLAyJealQRYLCYD1FxayivcNinURScqM49bhUWKUg6svLxi03ENhpcsErqJt2x6QnAOkkepMOPU52r1mVYNz_kB0gxY8Xvl8_0d9CYn84NmNL11NrvZlzm03vL2oFZnWZx1L_4st7bm4jsDglnzkapkdh',
+    publicKey: ecPublicKey521
   },
   ps256: {
     token: 'eyJhbGciOiJQUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMiwidGVzdCI6InBzMjU2dGVzdCJ9.jVQfrR2D8k3I5FsIBDW2zn1OINhemVA7T1izMSlYb-7MNlw4DrlcifJ0ilQwXHNw1rZI00OkGjeoJBNpArhEROCY8odXLosjvetRvfp0QPyH0mL5IehWcSsSAhJU0jL8FNQ44HBAUnTQ41llG6p1q7w7qIVcHnFmyqaXcFCP5B8',

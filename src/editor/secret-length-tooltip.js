@@ -1,12 +1,12 @@
 import { getSelectedAlgorithm } from './utils.js';
-import { 
+import {
   secretInput,
   secretBase64Checkbox,
 } from '../dom-elements.js';
 
 import log from 'loglevel';
 import tippy from 'tippy.js';
-import { b64utohex, utf8tohex } from 'jsrsasign';
+import b64u from 'base64url';
 
 export function minSecretLengthCheck(event) {
   const alg = getSelectedAlgorithm();
@@ -16,9 +16,9 @@ export function minSecretLengthCheck(event) {
   }
 
   const algBits = parseInt(alg.substr(2));
-  const inputBits = secretBase64Checkbox.checked ? 
-    b64utohex(secretInput.value).length / 2 * 8 :
-    utf8tohex(secretInput.value).length / 2 * 8;
+  const inputBits = secretBase64Checkbox.checked ?
+    b64u.decode(secretInput.value).length * 8 :
+    Buffer.from(secretInput.value).length * 8;
 
   if(inputBits < algBits) {
     if(!secretInput._tippy.state.visible) {
