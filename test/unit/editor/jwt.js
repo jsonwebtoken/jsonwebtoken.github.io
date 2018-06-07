@@ -188,8 +188,7 @@ describe('JWT', function() {
     });
   });
 
-  // TODO: reenable this test after converting plain RSA keys.
-  /*it('verifies tokens (RS256) using a plain RSA public key', function() {
+  it('verifies tokens (RS256) using a plain RSA public key', function() {
     const header = {
       alg: 'RS256'
     };
@@ -200,7 +199,7 @@ describe('JWT', function() {
     return jwt.sign(header, payload, tokens.rs256.privateKey).then(token => {
       return jwt.verify(token, publicKeyPlainRSA).should.eventually.be.true;
     });
-  });*/
+  });
 
   describe('isValidBase64String', function() {
     // Generate random data of different sizes.

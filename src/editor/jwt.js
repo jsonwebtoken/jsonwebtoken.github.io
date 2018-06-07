@@ -1,6 +1,7 @@
 import jose from 'node-jose';
 import b64u from 'base64url';
 import any from 'promise.any';
+import { pki } from 'node-forge';
 
 import log from 'loglevel';
 
@@ -21,6 +22,31 @@ function paddedKey(key, alg, base64Secret) {
   return b64u.encode(buf);
 }
 
+/*
+ * This function handles plain RSA keys not wrapped in a
+ * X.509 SubjectPublicKeyInfo structure. It returns a PEM encoded public key
+ * wrapper in that structure.
+ * See: https://stackoverflow.com/questions/18039401/how-can-i-transform-between-the-two-styles-of-public-key-format-one-begin-rsa
+ * @param {String} publicKey The public key as a PEM string.
+ * @returns {String} The PEM encoded public key in
+ *                   X509 SubjectPublicKeyInfo format.
+ */
+function plainRsaKeyToX509Key(key) {
+  try {
+    const startTag = '-----BEGIN RSA PUBLIC KEY-----';
+    const endTag = '-----END RSA PUBLIC KEY-----';
+    const startTagPos = key.indexOf(startTag);
+    const endTagPos = key.indexOf(endTag);
+
+    return startTagPos !== -1 && endTagPos !== -1 ?
+            pki.publicKeyToPem(pki.publicKeyFromPem(key)) :
+            key;
+  } catch(e) {
+    // If anything fails, it may not be a plain RSA key, so return the same key.
+    return key;
+  }
+}
+
 function getJoseKey(header, key, base64Secret) {
   if(header.alg.indexOf('HS') === 0) {
     return jose.JWK.asKey({
@@ -30,6 +56,10 @@ function getJoseKey(header, key, base64Secret) {
       k: paddedKey(key, header.alg, base64Secret)
     });
   } else {
+    if(header.alg.indexOf('RS') === 0) {
+      key = plainRsaKeyToX509Key(key);
+    }
+
     return any(['pem', 'json'].map(form => {
       try {
         return jose.JWK.asKey(key, form);
@@ -64,45 +94,6 @@ export function sign(header,
     }
   );
 }
-
-// TODO: reenable this (and tests)
-/**
- * This function takes a PEM string with a public key and returns a
- * jsrsasign key object (RSAKey, KJUR.crypto.DSA, KJUR.crypto.ECDSA). It also
- * handles plain RSA keys not wrapped in a X.509 SubjectPublicKeyInfo
- * structure.
- * See: https://stackoverflow.com/questions/18039401/how-can-i-transform-between-the-two-styles-of-public-key-format-one-begin-rsa
- * @param {String} publicKey The public key as a PEM string.
- * @returns {Object} The public key as a jsrsasign key object.
- * /
-function getPublicKeyObject(publicKey) {
-  try {
-    const startTag = '-----BEGIN RSA PUBLIC KEY-----';
-    const endTag = '-----END RSA PUBLIC KEY-----';
-    const startTagPos = publicKey.indexOf(startTag);
-    const endTagPos = publicKey.indexOf(endTag);
-
-    if(startTagPos !== -1 && endTagPos !== -1) {
-      const plainDataBase64 =
-      publicKey.substr(0, endTagPos)
-               .substr(startTagPos + startTag.length);
-
-      const plainDataDER = b64tohex(plainDataBase64);
-
-      const barePublicKey = {
-        n: ASN1HEX.getVbyList(plainDataDER, 0, [0], '02'),
-        e: ASN1HEX.getVbyList(plainDataDER, 0, [1], '02')
-      };
-
-      return KEYUTIL.getKey(barePublicKey);
-    }
-  } catch(e) {
-    log.error('Failed to make public key into X.509 ' +
-              'SubjectPublicKeyInfo key:', e);
-  }
-
-  return KEYUTIL.getKey(publicKey);
-}*/
 
 export function verify(jwt, secretOrPublicKeyString, base64Secret = false) {
   if(!isToken(jwt)) {
