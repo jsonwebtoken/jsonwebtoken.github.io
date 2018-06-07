@@ -1,8 +1,7 @@
-import { tokenEditor } from './instances.js';
 import { isWideScreen } from '../utils.js';
-import { 
-  algorithmSelect, 
-  publicKeyTextArea,
+import {
+  algorithmSelect,
+  algorithmEs512,
   editorElement,
   decodedElement
 } from '../dom-elements.js';
@@ -31,4 +30,15 @@ export function stringify(object) {
 export function getSelectedAlgorithm() {
   const selected = algorithmSelect.options[algorithmSelect.selectedIndex];
   return selected.value;
+}
+
+export function isSafari() {
+  return /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+}
+
+export function disableUnsupportedAlgorithms() {
+  // TODO: test supported algorithms in runtime
+  if(isSafari) {
+    algorithmEs512.disabled = true;
+  }
 }

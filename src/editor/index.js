@@ -1,7 +1,6 @@
 import {
   deferToNextLoop,
-  safeLocalStorageSetItem,
-  copyTokenLink
+  safeLocalStorageSetItem
 } from '../utils.js';
 import { downloadPublicKeyIfPossible } from './public-key-download.js';
 import { setupClaimsTooltip } from './claims-tooltip.js';
@@ -10,7 +9,8 @@ import {
   getTrimmedValue,
   stringify,
   fixEditorHeight,
-  getSelectedAlgorithm
+  getSelectedAlgorithm,
+  disableUnsupportedAlgorithms
 } from './utils.js';
 import { sign, verify, decode } from './jwt.js';
 import EventManager from './event-manager.js';
@@ -26,7 +26,6 @@ import {
   editorElement,
   headerElement,
   payloadElement,
-  decodedElement,
   secretInput,
   privateKeyTextArea,
   publicKeyTextArea,
@@ -388,6 +387,7 @@ export function getTokenEditorValue() {
 }
 
 export function setupTokenEditor() {
+  disableUnsupportedAlgorithms();
   setupEvents();
   selectAlgorithm('HS256');
   loadToken();
