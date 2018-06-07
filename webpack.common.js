@@ -20,9 +20,7 @@ module.exports = {
                 ios: 10,
                 ie: 11,
               },
-              modules: 'commonjs',
-              "useBuiltIns": 'usage',
-              "debug": false
+              modules: false
             }
           ]]
         }
