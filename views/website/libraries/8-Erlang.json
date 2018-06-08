@@ -9,13 +9,13 @@
       "support": {
         "sign": true,
         "verify": true,
-        "iss": false,
-        "sub": false,
-        "aud": false,
+        "iss": true,
+        "sub": true,
+        "aud": true,
         "exp": true,
         "nbf": true,
         "iat": true,
-        "jti": false,
+        "jti": true,
         "hs256": true,
         "hs384": true,
         "hs512": true,
@@ -28,9 +28,9 @@
       },
       "authorUrl": "https://github.com/glejeune",
       "authorName": "Gregoire Lejeune",
-      "gitHubRepoPath": "emedia-project/jwerl",
-      "repoUrl": "https://github.com/emedia-project/jwerl",
-      "installCommandHtml": "git clone https://github.com/emedia-project/jwerl.git"
+      "gitHubRepoPath": "G-Corp/jwerl",
+      "repoUrl": "https://github.com/G-Corp/jwerl",
+      "installCommandHtml": "git clone https://github.com/G-Corp/jwerl.git"
     }
   ]
 }
