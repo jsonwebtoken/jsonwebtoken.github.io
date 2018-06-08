@@ -38,7 +38,7 @@ export function isSafari() {
 
 export function disableUnsupportedAlgorithms() {
   // TODO: test supported algorithms in runtime
-  if(isSafari) {
+  if(isSafari()) {
     algorithmEs512.disabled = true;
   }
 }
