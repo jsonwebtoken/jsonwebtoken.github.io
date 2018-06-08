@@ -116,6 +116,9 @@ describe('Editor', function() {
       window.test.tokenEditor.setValue(token);
     });
 
+    // Wait for token processing.
+    await this.page.waitFor(tokenProcessingWait);
+
     const invalid = await this.page.$eval('.validation-status', status => {
       return status.classList.contains('invalid-token') &&
              status.textContent.indexOf('invalid') !== -1;
