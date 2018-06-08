@@ -7,11 +7,9 @@ select#algorithm-select
   option(name='algorithm',value='RS512') RS512
   option(name='algorithm',value='ES256') ES256
   option(name='algorithm',value='ES384') ES384
-  //- Unsupported by jsrsasign
-    option(name='algorithm',value='ES512') ES512
+  option(name='algorithm',value='ES512') ES512
   option(name='algorithm',value='PS256') PS256
   option(name='algorithm',value='PS384') PS384
-  //- Buggy in jsrsasign
+  //- Buggy in node-jose for now, supported by browsers
     option(name='algorithm',value='PS512') PS512
 
-  

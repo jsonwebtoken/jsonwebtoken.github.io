@@ -1,97 +1,122 @@
-import { 
-  jws,
-  KEYUTIL,
-  b64utoutf8,
-  b64utohex,
-  utf8tohex, 
-  b64tohex,
-  ASN1HEX
-} from 'jsrsasign';
+import jose from 'node-jose';
+import b64u from 'base64url';
+import any from 'promise.any';
+import { pki } from 'node-forge';
 
 import log from 'loglevel';
 
-export function sign(header, 
+// node-jose does not support keys shorter than block size. This is a
+// limitation from their implementation and could be resolved in the future.
+// See: https://github.com/cisco/node-jose/blob/master/lib/jwk/octkey.js#L141
+function paddedKey(key, alg, base64Secret) {
+  const blockSizeBytes = alg.indexOf('256') !== -1 ? 512 / 8 : 1024 / 8;
+
+  let buf = base64Secret ? Buffer.from(key, 'base64') : Buffer.from(key);
+
+  if(buf.length < blockSizeBytes) {
+    const oldBuf = buf;
+    buf = Buffer.alloc(blockSizeBytes);
+    buf.set(oldBuf);
+  }
+
+  return b64u.encode(buf);
+}
+
+/*
+ * This function handles plain RSA keys not wrapped in a
+ * X.509 SubjectPublicKeyInfo structure. It returns a PEM encoded public key
+ * wrapper in that structure.
+ * See: https://stackoverflow.com/questions/18039401/how-can-i-transform-between-the-two-styles-of-public-key-format-one-begin-rsa
+ * @param {String} publicKey The public key as a PEM string.
+ * @returns {String} The PEM encoded public key in
+ *                   X509 SubjectPublicKeyInfo format.
+ */
+function plainRsaKeyToX509Key(key) {
+  try {
+    const startTag = '-----BEGIN RSA PUBLIC KEY-----';
+    const endTag = '-----END RSA PUBLIC KEY-----';
+    const startTagPos = key.indexOf(startTag);
+    const endTagPos = key.indexOf(endTag);
+
+    return startTagPos !== -1 && endTagPos !== -1 ?
+            pki.publicKeyToPem(pki.publicKeyFromPem(key)) :
+            key;
+  } catch(e) {
+    // If anything fails, it may not be a plain RSA key, so return the same key.
+    return key;
+  }
+}
+
+function getJoseKey(header, key, base64Secret) {
+  if(header.alg.indexOf('HS') === 0) {
+    return jose.JWK.asKey({
+      kty: 'oct',
+      use: 'sig',
+      alg: header.alg,
+      k: paddedKey(key, header.alg, base64Secret)
+    });
+  } else {
+    if(header.alg.indexOf('RS') === 0) {
+      key = plainRsaKeyToX509Key(key);
+    }
+
+    return any(['pem', 'json'].map(form => {
+      try {
+        return jose.JWK.asKey(key, form);
+      } catch(e) {
+        return Promise.reject(e);
+      }
+    }));
+  }
+}
+
+export function sign(header,
                      payload,
                      secretOrPrivateKeyString,
                      base64Secret = false) {
   if(!header.alg) {
-    throw new Error('Missing "alg" claim in header');
+    return Promise.reject(new Error('Missing "alg" claim in header'));
   }
 
-  if(header.alg.indexOf('HS') === 0) {
-    return jws.JWS.sign(null, header, payload, 
-      base64Secret ? 
-        b64utohex(secretOrPrivateKeyString) : 
-        utf8tohex(secretOrPrivateKeyString));
-  } else {
-    return jws.JWS.sign(null, header, payload, secretOrPrivateKeyString);
-  }
-}
+  return getJoseKey(header, secretOrPrivateKeyString, base64Secret).then(
+    key => {
+      if(!(typeof payload === 'string' || payload instanceof String)) {
+        payload = JSON.stringify(payload);
+      }
 
-/**
- * This function takes a PEM string with a public key and returns a
- * jsrsasign key object (RSAKey, KJUR.crypto.DSA, KJUR.crypto.ECDSA). It also
- * handles plain RSA keys not wrapped in a X.509 SubjectPublicKeyInfo
- * structure.
- * See: https://stackoverflow.com/questions/18039401/how-can-i-transform-between-the-two-styles-of-public-key-format-one-begin-rsa
- * @param {String} publicKey The public key as a PEM string.
- * @returns {Object} The public key as a jsrsasign key object.
- */
-function getPublicKeyObject(publicKey) {
-  try {
-    const startTag = '-----BEGIN RSA PUBLIC KEY-----';
-    const endTag = '-----END RSA PUBLIC KEY-----';
-    const startTagPos = publicKey.indexOf(startTag);
-    const endTagPos = publicKey.indexOf(endTag);
-      
-    if(startTagPos !== -1 && endTagPos !== -1) {
-      const plainDataBase64 =
-      publicKey.substr(0, endTagPos)
-               .substr(startTagPos + startTag.length);
-    
-      const plainDataDER = b64tohex(plainDataBase64);
-
-      const barePublicKey = {
-        n: ASN1HEX.getVbyList(plainDataDER, 0, [0], '02'),
-        e: ASN1HEX.getVbyList(plainDataDER, 0, [1], '02')
-      };
-
-      return KEYUTIL.getKey(barePublicKey);
+      return jose.JWS.createSign({
+        fields: header,
+        format: 'compact'
+      }, {
+        key: key,
+        reference: false
+      }).update(payload, 'utf8').final();
     }
-  } catch(e) {
-    log.error('Failed to make public key into X.509 ' + 
-              'SubjectPublicKeyInfo key:', e);
-  }
-
-  return KEYUTIL.getKey(publicKey);
+  );
 }
 
 export function verify(jwt, secretOrPublicKeyString, base64Secret = false) {
   if(!isToken(jwt)) {
-    return false;
+    return Promise.resolve(false);
   }
 
   const decoded = decode(jwt);
-  
+
   if(!decoded.header.alg) {
-    return false;
+    return Promise.resolve(false);
   }
 
-  try {
-    if(decoded.header.alg.indexOf('HS') === 0) {
-      return jws.JWS.verify(jwt, 
-        base64Secret ? 
-          b64utohex(secretOrPublicKeyString) : 
-          utf8tohex(secretOrPublicKeyString));
-    } else {
-      const publicKeyObject = getPublicKeyObject(secretOrPublicKeyString);
-      return jws.JWS.verify(jwt, publicKeyObject);
+  return getJoseKey(decoded.header, secretOrPublicKeyString, base64Secret).then(
+    key => {
+      return jose.JWS.createVerify(key)
+                     .verify(jwt)
+                     .then(() => true, () => false);
+    }, e => {
+      log.warn('Could not verify token, ' +
+               'probably due to bad data in it or the keys: ', e);
+      return false;
     }
-  } catch(e) {
-    log.warn('Could not verify token, ' +
-             'probably due to bad data in it or the keys: ', e);
-    return false;
-  }
+  );
 }
 
 export function decode(jwt) {
@@ -105,18 +130,18 @@ export function decode(jwt) {
     result.errors = true;
     return result;
   }
-  
+
   const split = jwt.split('.');
-  
+
   try {
-    result.header = JSON.parse(b64utoutf8(split[0]));
+    result.header = JSON.parse(b64u.decode(split[0]));
   } catch(e) {
     result.header = {};
     result.errors = true;
   }
 
   try {
-    result.payload = JSON.parse(b64utoutf8(split[1]));
+    result.payload = JSON.parse(b64u.decode(split[1]));
   } catch(e) {
     result.payload = {};
     result.errors = true;
@@ -149,7 +174,7 @@ export function isValidBase64String(s, urlOnly) {
       return s.length % 4 === 0;
     }
 
-    return true;    
+    return true;
   } catch (e) {
     return false;
   }

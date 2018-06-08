@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 
 module.exports = {
-  devtool: 'source-map',  
+  devtool: 'source-map',
   module: {
     rules: [{
       test: /\.js$/,
@@ -12,7 +12,13 @@ module.exports = {
           presets: [[
             '@babel/preset-env', {
               targets: {
-                browsers: ["last 5 versions", "safari >= 7"]
+                browsers: [
+                  '> 0.25%',
+                  'not dead',
+                ],
+                android: 7,
+                ios: 10,
+                ie: 11,
               },
               modules: false
             }

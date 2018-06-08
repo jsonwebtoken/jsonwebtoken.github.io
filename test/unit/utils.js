@@ -3,7 +3,6 @@ import chaiAsPromised from 'chai-as-promised';
 import xhrMock from 'xhr-mock';
 
 import { httpGet } from '../../src/utils.js';
-import { utf8tob64, utf8tob64u } from 'jsrsasign';
 
 import { randomFillSync } from 'crypto';
 
@@ -18,7 +17,7 @@ describe('Generic utils', function() {
     beforeEach(() => xhrMock.setup());
 
     afterEach(() => xhrMock.teardown());
-    
+
     it('fetches data with a GET request', function() {
       xhrMock.get(url, {
         status: 200,

@@ -1,11 +1,11 @@
-import { KEYUTIL } from 'jsrsasign';
+//import { KEYUTIL } from 'jsrsasign';
 import log from 'loglevel';
 import clipboard from 'clipboard-polyfill';
 
 export function httpGet(url, cache = true) {
   return new Promise((resolve, reject) => {
 
-    const request = new XMLHttpRequest();    
+    const request = new XMLHttpRequest();
     request.onreadystatechange = () => {
       if (request.readyState === XMLHttpRequest.DONE) {
 
@@ -30,7 +30,7 @@ export function httpGet(url, cache = true) {
   });
 }
 
-export function isValidKey(key) {
+/*export function isValidKey(key) {
   // Four tries: no header, header for cert, header for pub key,
   // header for priv key
 
@@ -71,7 +71,7 @@ export function isValidKey(key) {
     valid: false,
     key: key
   };
-}
+}*/
 
 export function deferToNextLoop(func) {
   setTimeout(func, 1);
@@ -95,7 +95,7 @@ export function safeLocalStorageSetItem(key, value) {
   try {
     localStorage.setItem(key, value);
   } catch (e) {
-    log.info('Cannot save token to Local Storage ' + 
+    log.info('Cannot save token to Local Storage ' +
                 '(private browsing enabled?), ignoring...', e);
     // Safari when in private browsing doesn't allow it
   }
