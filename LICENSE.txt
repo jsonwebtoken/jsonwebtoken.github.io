@@ -23,7 +23,8 @@ SOFTWARE.
 ----
 
 Distributions of this software ("bundles") contain code from other
-libraries. Additional licenses from these libraries can be found below.
+libraries. For a list of software included in a bundle, refer to
+package.json and the list of dependencies.
 
 ----
 
