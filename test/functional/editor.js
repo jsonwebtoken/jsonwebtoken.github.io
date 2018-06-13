@@ -1087,7 +1087,7 @@ describe('Editor', function() {
     expect(invalid).to.be.true;
   });
 
-  it('Saves last edited token', async function() {
+  it('Does NOT save the last edited token', async function() {
     await this.page.select('#algorithm-select', 'HS256');
 
     const secretInput = await this.page.$('input[name="secret"]');
@@ -1117,7 +1117,7 @@ describe('Editor', function() {
       return JSON.parse(window.test.payloadEditor.getValue());
     });
 
-    expect(storedPayload).to.deep.equal(payload);
+    expect(storedPayload).to.not.deep.equal(payload);
   });
 
   describe('JWT share button', function() {

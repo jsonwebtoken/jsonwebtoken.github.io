@@ -1,6 +1,5 @@
 import {
-  deferToNextLoop,
-  safeLocalStorageSetItem
+  deferToNextLoop
 } from '../utils.js';
 import { downloadPublicKeyIfPossible } from './public-key-download.js';
 import { setupClaimsTooltip } from './claims-tooltip.js';
@@ -190,33 +189,6 @@ function markAsInvalidWithElement(element, clearTokenEditor = true) {
   }
 }
 
-function saveAsLastToken() {
-  const token = getTrimmedValue(tokenEditor);
-  if(token && token.length > 0) {
-    safeLocalStorageSetItem('lastToken', token);
-  }
-
-  const publicKey = publicKeyTextArea.value;
-  if(publicKey && publicKey.length > 0) {
-    safeLocalStorageSetItem('lastPublicKey', publicKey);
-  }
-}
-
-function loadToken() {
-  const lastToken = localStorage.getItem('lastToken');
-
-  if(lastToken) {
-    setTokenEditorValue(lastToken);
-
-    const lastPublicKey = localStorage.getItem('lastPublicKey');
-    if(lastPublicKey) {
-      publicKeyTextArea.value = lastPublicKey;
-    }
-  } else {
-    useDefaultToken('HS256');
-  }
-}
-
 function encodeToken() {
   deferToNextLoop(fixEditorHeight);
 
@@ -251,7 +223,6 @@ function encodeToken() {
     sign(header, payload, key, secretBase64Checkbox.checked).then(encoded => {
       eventManager.withDisabledEvents(() => {
         tokenEditor.setValue(encoded);
-        saveAsLastToken();
       });
     }).catch(e => {
       eventManager.withDisabledEvents(() => {
@@ -289,7 +260,6 @@ function decodeToken() {
       if(decoded.errors) {
         markAsInvalidWithElement(editorElement, false);
       } else {
-        saveAsLastToken();
         verifyToken();
       }
     } catch(e) {
@@ -319,6 +289,15 @@ function verifyToken() {
       markAsInvalid();
     }
   });
+}
+
+// The last saved token functionality has been flagged as a security issue.
+// This function removes any locally stored tokens in the past.
+// Once a considerable amount of time has passed since this was put in place,
+// it may be safe to remove it. Enabled at: 2018-06-12.
+function removeSavedTokens() {
+  localStorage.removeItem('lastToken');
+  localStorage.removeItem('lastPublicKey');
 }
 
 function setupTabEvents() {
@@ -390,8 +369,9 @@ export function setupTokenEditor() {
   disableUnsupportedAlgorithms();
   setupEvents();
   selectAlgorithm('HS256');
-  loadToken();
+  useDefaultToken('HS256');
   fixEditorHeight();
   setupSecretLengthTooltip();
   setupClaimsTooltip();
+  removeSavedTokens();
 }
