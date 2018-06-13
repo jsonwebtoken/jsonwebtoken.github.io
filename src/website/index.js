@@ -8,9 +8,8 @@ import { setupSmoothScrolling } from './smooth-scrolling.js';
 import { setupHighlighting } from './highlighting.js';
 import { isChrome, isFirefox } from './utils.js';
 import { setupShareJwtButton } from '../share-button.js';
-import { 
-  publicKeyTextArea, 
-  codeElements, 
+import {
+  publicKeyTextArea,
   debuggerSection,
   extensionSection,
   ebookSection,
@@ -27,7 +26,7 @@ function parseLocationQuery() {
   const locHash = queryString.parse(document.location.hash.substr(1));
 
   const keys = [
-    'id_token', 
+    'id_token',
     'access_token',
     'value',
     'token',
@@ -39,8 +38,8 @@ function parseLocationQuery() {
     if(token) {
       setTokenEditorValue(token);
 
-      if(locSearch.publicKey) {
-        publicKeyTextArea.value = locSearch.publicKey;
+      if(locSearch.publicKey || locHash.publicKey) {
+        publicKeyTextArea.value = locSearch.publicKey || locHash.publicKey;
       }
 
       debuggerSection.scrollIntoView(true);
