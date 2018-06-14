@@ -1,7 +1,7 @@
 **NEW:** get the [JWT Handbook for free](https://auth0.com/e-books/jwt-handbook) and learn JWTs in depth!
 
 ## What is JSON Web Token?
-JSON Web Token (JWT) is an open standard ([RFC 7519](https://tools.ietf.org/html/rfc7519)) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed. JWTs can be signed using a secret (with the **HMAC** algorithm) or a public/private key pair using **RSA**.
+JSON Web Token (JWT) is an open standard ([RFC 7519](https://tools.ietf.org/html/rfc7519)) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed. JWTs can be signed using a secret (with the **HMAC** algorithm) or a public/private key pair using **RSA** or **ECDSA**.
 
 Although JWTs can be encrypted to also provide secrecy between parties, we will focus on *signed* tokens. Signed tokens can verify the *integrity* of the claims contained within it, while encrypted tokens *hide* those claims from other parties. When tokens are signed using public/private key pairs, the signature also certifies that only the party holding the private key is the one that signed it.
 
@@ -9,7 +9,7 @@ Let's explain some concepts further.
 
 - **Compact**: Because of their smaller size, JWTs can be sent through a URL, POST parameter, or inside an HTTP header. Additionally, the smaller size means transmission is fast.
 
-- **Self-contained**: The payload contains all the required information about the user, avoiding the need to query the database more than once.
+- **Self-contained**: The payload may contain extra information about the user, avoiding the need to query the database more than once.
 
 ## When should you use JSON Web Tokens?
 Here are some scenarios where JSON Web Tokens are useful:
@@ -48,7 +48,7 @@ Then, this JSON is **Base64Url** encoded to form the first part of the JWT.
 
 ### Payload
 
-The second part of the token is the payload, which contains the claims. Claims are statements about an entity (typically, the user) and additional metadata.
+The second part of the token is the payload, which contains the claims. Claims are statements about an entity (typically, the user) and additional data.
 There are three types of claims: *registered*, *public*, and *private* claims.
 
 - [**Registered claims**](https://tools.ietf.org/html/rfc7519#section-4.1): These are a set of predefined claims which are not mandatory but recommended, to provide a set of useful, interoperable claims. Some of them are: **iss** (issuer), **exp** (expiration time), **sub** (subject), **aud** (audience), and [others](https://tools.ietf.org/html/rfc7519#section-4.1).
@@ -99,9 +99,7 @@ If you want to play with JWT and put these concepts into practice, you can use [
 ![JWT.io Debugger](https://cdn.auth0.com/blog/legacy-app-auth/legacy-app-auth-5.png)
 
 ## How do JSON Web Tokens work?
-In authentication, when the user successfully logs in using their credentials, a JSON Web Token will be returned and must be saved locally (typically in local storage, but cookies can be also used), instead of the traditional approach of creating a session in the server and returning a cookie.
-
-> There are security considerations that must be taken into account with regards to the way tokens are stored. These are enumerated in [Where to Store Tokens](https://auth0.com/docs/security/store-tokens).
+In authentication, when the user successfully logs in using their credentials, a JSON Web Token will be returned. Since tokens are credentials, great care must be taken to prevent security issues. In general, you should not keep tokens longer than required.
 
 Whenever the user wants to access a protected route or resource, the user agent should send the JWT, typically in the **Authorization** header using the **Bearer** schema. The content of the header should look like the following:
 
@@ -109,8 +107,7 @@ Whenever the user wants to access a protected route or resource, the user agent 
 Authorization: Bearer <token>
 ```
 
-This is a stateless authentication mechanism as the user state is never saved in server memory.
-The server's protected routes will check for a valid JWT in the Authorization header, and if it's present, the user will be allowed to access protected resources. As JWTs are self-contained, all the necessary information is there, reducing the need to query the database multiple times.
+This can be, in certain cases, a stateless authentication mechanism. The server's protected routes will check for a valid JWT in the `Authorization` header, and if it's present, the user will be allowed to access protected resources. If the JWT is self-contained, all the necessary information is there, reducing the need to query the database multiple times.
 
 This allows you to fully rely on data APIs that are stateless and even make requests to downstream services. It doesn't matter which domains are serving your APIs, so Cross-Origin Resource Sharing (CORS) won't be an issue as it doesn't use cookies.
 
