@@ -86,7 +86,7 @@
       "authorName": "hassox",
       "gitHubRepoPath": "ueberauth/guardian",
       "repoUrl": "https://github.com/ueberauth/guardian",
-      "installCommandHtml": "defp deps, do: [{:guardian, \"~&gt; 0.11.1\"}]"
+      "installCommandHtml": "defp deps, do: [{:guardian, \"~&gt; 1.0    \"}]"
     }
   ]
 }
