@@ -255,6 +255,34 @@
       "gitHubRepoPath": "cdoco/php-jwt",
       "repoUrl": "https://github.com/cdoco/php-jwt",
       "installCommandHtml": "git clone https://github.com/cdoco/php-jwt"
+    },
+    {
+      "minimumVersion": null,
+      "support": {
+        "sign": true,
+        "verify": true,
+        "iss": true,
+        "sub": false,
+        "aud": false,
+        "exp": true,
+        "nbf": true,
+        "iat": true,
+        "jti": false,
+        "hs256": true,
+        "hs384": true,
+        "hs512": true,
+        "rs256": true,
+        "rs384": true,
+        "rs512": true,
+        "es256": false,
+        "es384": false,
+        "es512": false
+      },
+      "authorUrl": "https://github.com/adhocore",
+      "authorName": "Jitendra Adhikari",
+      "gitHubRepoPath": "adhocore/jwt",
+      "repoUrl": "https://github.com/adhocore/jwt",
+      "installCommandHtml": "composer require adhocore/jwt"
     }
   ]
 }
