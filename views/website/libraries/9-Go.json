@@ -308,6 +308,7 @@
       },
       "authorUrl": "https://gitlab.com/rucuriousyet",
       "authorName": "Seth Moeckel",
+      "gitHubRepoPath": null,
       "repoUrl": "https://gitlab.com/rucuriousyet/jwt",
       "installCommandHtml": "go get gitlab.com/rucuriousyet/jwt"
     }
