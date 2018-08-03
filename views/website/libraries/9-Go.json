@@ -283,6 +283,34 @@
       "gitHubRepoPath": "pascaldekloe/jwt",
       "repoUrl": "https://github.com/pascaldekloe/jwt",
       "installCommandHtml": "go get github.com/pascaldekloe/jwt"
+    },
+    {
+      "minimumVersion": null,
+      "support": {
+        "sign": true,
+        "verify": true,
+        "iss": false,
+        "sub": false,
+        "aud": false,
+        "exp": false,
+        "nbf": false,
+        "iat": false,
+        "jti": false,
+        "hs256": true,
+        "hs384": false,
+        "hs512": true,
+        "rs256": false,
+        "rs384": false,
+        "rs512": false,
+        "es256": false,
+        "es384": false,
+        "es512": false
+      },
+      "authorUrl": "https://gitlab.com/rucuriousyet",
+      "authorName": "Seth Moeckel",
+      "gitHubRepoPath": null,
+      "repoUrl": "https://gitlab.com/rucuriousyet/jwt",
+      "installCommandHtml": "go get gitlab.com/rucuriousyet/jwt"
     }
   ]
 }
