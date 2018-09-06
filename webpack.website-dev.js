@@ -11,5 +11,10 @@ module.exports = merge(common, {
   output: {
     filename: '[name].js',
     path: __dirname + '/dist/website/js'
-  }
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      PRODUCTION: false
+    })
+  ]
 });

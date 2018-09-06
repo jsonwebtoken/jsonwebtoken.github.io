@@ -1,9 +1,10 @@
 import { safeLocalStorageSetItem } from '../utils.js';
 import { httpGet } from '../utils.js';
-import { 
+import * as metrics from './metrics.js';
+import {
   starsElements,
   librariesElement,
-  librariesSelect 
+  librariesSelect
 } from './dom-elements.js';
 
 import Isotope from 'isotope-layout';
@@ -49,7 +50,7 @@ function getStarsForGitHubRepos() {
 
     const now = Date.now();
     try {
-      const stored = JSON.parse(localStorage.getItem(key));      
+      const stored = JSON.parse(localStorage.getItem(key));
       const diff = now - stored.date;
       // Cached for a week
       const maxdiff = 7 * 24 * 60 * 60 * 1000;
@@ -71,16 +72,26 @@ function getStarsForGitHubRepos() {
 
       insertStarCount(element, count);
     }).catch(e => {
-      log.warn('Failed to get GitHub stars count for repository, ' + 
-                    'is the repository URL OK? ', e);
+      log.warn('Failed to get GitHub stars count for repository, ' +
+               'is the repository URL OK? ', e);
     });
   });
 }
 
+function setupMetrics() {
+  // TODO for clicks
+}
+
 export function setupLibraries() {
   getStarsForGitHubRepos();
-  
+
+  setupMetrics();
+
   librariesSelect.addEventListener('change', event => {
+    metrics.track('libraries-filter-selected', {
+      selected: event.target.value
+    });
+
     librariesGrid.arrange({
       filter: event.target.value
     });

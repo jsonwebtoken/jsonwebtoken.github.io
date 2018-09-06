@@ -1,4 +1,5 @@
 import '../google-analytics.js';
+import * as metrics from './metrics.js';
 import { setupNavbar } from './navbar.js';
 import { setupExtensionButton } from './extension.js';
 import { setupLibraries } from './libraries.js';
@@ -6,7 +7,7 @@ import { setupTokenEditor, setTokenEditorValue } from '../editor';
 import { setupJwtCounter } from './counter.js';
 import { setupSmoothScrolling } from './smooth-scrolling.js';
 import { setupHighlighting } from './highlighting.js';
-import { isChrome, isFirefox } from './utils.js';
+import { isChrome, isFirefox, isPartiallyInViewport, once } from './utils.js';
 import { setupShareJwtButton } from '../share-button.js';
 import {
   publicKeyTextArea,
@@ -14,7 +15,8 @@ import {
   extensionSection,
   ebookSection,
   shareJwtButton,
-  shareJwtTextElement
+  shareJwtTextElement,
+  librariesElement
 } from './dom-elements.js';
 
 import queryString from 'querystring';
@@ -36,9 +38,12 @@ function parseLocationQuery() {
     const token = locSearch[key] || locHash[key];
 
     if(token) {
+      metrics.track('token-in-url', { type: key });
+
       setTokenEditorValue(token);
 
       if(locSearch.publicKey || locHash.publicKey) {
+        metrics.track('pubkey-in-url');
         publicKeyTextArea.value = locSearch.publicKey || locHash.publicKey;
       }
 
@@ -51,13 +56,31 @@ function parseLocationQuery() {
 
 function pickEbookOrExtensionBanner() {
   if((isChrome() || isFirefox()) && (Math.random() >= 0.5)) {
+    metrics.track('extension-banner-shown');
     extensionSection.style.display = 'block';
   } else {
+    metrics.track('ebook-banner-shown');
     ebookSection.style.display = 'block';
   }
 }
 
+function setupMetrics() {
+  metrics.init(PRODUCTION ? 'PROD-KEY' : 'DEV-KEY');
+
+  // Section visible metrics
+  window.addEventListener('scroll', e => {
+    if(isPartiallyInViewport(librariesElement)) {
+      once('libraries-visible', () => metrics.track('libraries-visible-once'));
+    }
+
+    if(isPartiallyInViewport(debuggerSection)) {
+      once('debugger-visible', () => metrics.track('debugger-visible-once'));
+    }
+  });
+}
+
 // Initialization
+setupMetrics();
 setupNavbar();
 setupExtensionButton();
 setupSmoothScrolling();

@@ -18,7 +18,20 @@ export function isInViewport(elem) {
       bounding.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
       bounding.right <= (window.innerWidth || document.documentElement.clientWidth)
   );
-};
+}
+
+// From: https://stackoverflow.com/questions/487073/check-if-element-is-visible-after-scrolling
+export function isPartiallyInViewport(el) {
+  var rect = el.getBoundingClientRect();
+  var elemTop = rect.top;
+  var elemBottom = rect.bottom;
+
+  // Only completely visible elements return true:
+  //var isVisible = (elemTop >= 0) && (elemBottom <= window.innerHeight);
+  // Partially visible elements return true:
+  var isVisible = elemTop < window.innerHeight && elemBottom >= 0;
+  return isVisible;
+}
 
 //From:
 // https://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
@@ -28,4 +41,15 @@ export function isChrome() {
 
 export function isFirefox() {
   return typeof InstallTrigger !== 'undefined';
+}
+
+const alreadyRun = {};
+export function once(unique, fn) {
+  if(unique in alreadyRun) {
+    return alreadyRun[unique];
+  }
+
+  const result = fn();
+  alreadyRun[unique] = result;
+  return result;
 }
