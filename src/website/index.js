@@ -1,5 +1,5 @@
 import '../google-analytics.js';
-import * as metrics from './metrics.js';
+import * as metrics from '../metrics.js';
 import { setupNavbar } from './navbar.js';
 import { setupExtensionButton } from './extension.js';
 import { setupLibraries } from './libraries.js';
@@ -74,7 +74,7 @@ function setupMetrics() {
     }
 
     if(isPartiallyInViewport(debuggerSection)) {
-      once('debugger-visible', () => metrics.track('debugger-visible-once'));
+      once('editor-visible', () => metrics.track('editor-visible-once'));
     }
   });
 }

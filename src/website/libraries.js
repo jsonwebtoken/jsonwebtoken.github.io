@@ -1,6 +1,6 @@
 import { safeLocalStorageSetItem } from '../utils.js';
 import { httpGet } from '../utils.js';
-import * as metrics from './metrics.js';
+import * as metrics from '../metrics.js';
 import {
   starsElements,
   librariesElement,
@@ -79,7 +79,25 @@ function getStarsForGitHubRepos() {
 }
 
 function setupMetrics() {
-  // TODO for clicks
+  const tracked = [{
+    selector: '.version p a',
+    event: 'libraries-jwt-vulns-link-clicked'
+  }, {
+    selector: '.maintainer a',
+    event: 'libraries-maintainer-link-clicked'
+  }, {
+    selector: '.repository a',
+    event: 'libraries-repository-link-clicked'
+  }];
+
+  tracked.forEach(t => {
+    const els = document.querySelectorAll(t.selector);
+    Array.prototype.forEach.call(els, el => {
+      el.addEventListener('click', () => {
+        metrics.track(t.event);
+      });
+    });
+  });
 }
 
 export function setupLibraries() {

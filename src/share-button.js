@@ -1,5 +1,6 @@
 import { copyTokenLink } from './utils.js';
 import { getTokenEditorValue } from './editor';
+import * as metrics from './metrics.js';
 
 import strings from './strings.js';
 
@@ -7,15 +8,17 @@ export function setupShareJwtButton(shareJwtElement, shareJwtTextElement) {
   shareJwtElement.addEventListener('click', event => {
     event.preventDefault();
 
+    metrics.track('editor-share-button-clicked');
+
     const value = getTokenEditorValue();
     if(value.token) {
       // If the selected algorithm does not use public keys, publicKey will be
       // undefined.
       const copiedUrl = copyTokenLink(value.token, value.publicKey);
 
-      // We cannot read the clipboard in headless Chrome, 
+      // We cannot read the clipboard in headless Chrome,
       // so we use this to let functional tests see the URL. See:
-      // https://github.com/GoogleChrome/puppeteer/issues/2147 
+      // https://github.com/GoogleChrome/puppeteer/issues/2147
       if(!window.test) {
         window.test = {};
       }
