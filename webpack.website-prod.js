@@ -7,6 +7,9 @@ module.exports = merge(devConfig, {
   mode: 'production',
   devtool: false,
   plugins: [
-    new UglifyJsPlugin()
+    new UglifyJsPlugin(),
+    new webpack.DefinePlugin({
+      PRODUCTION: true
+    })
   ]
 });
