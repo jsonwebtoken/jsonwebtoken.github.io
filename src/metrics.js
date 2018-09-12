@@ -10,9 +10,9 @@ export function init(key) {
 export function track(event, data) {
   if(analytics) {
     try {
-     analytics.track(event, data);
+      analytics.track(event, data);
     } catch(e) {
-      log.error(`Metrics library error: ${e}`);
+      log.error(`Metrics library error for event ${event}: ${e}`);
     }
   }
 }
