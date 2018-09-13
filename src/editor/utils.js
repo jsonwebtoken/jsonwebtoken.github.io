@@ -1,6 +1,7 @@
 import { isWideScreen } from '../utils.js';
 import * as metrics from '../metrics.js';
 import * as jwt from './jwt.js';
+import registeredClaims from './jwt-iana-registered-claims.js';
 import forge from 'node-forge';
 import {
   algorithmSelect,
@@ -49,27 +50,89 @@ export function disableUnsupportedAlgorithms() {
   }
 }
 
-export function getSafeTokenInfo(jwt) {
+export function isString(value) {
+  return typeof value === 'string' || value instanceof String;
+}
+
+function getBase64Format(token) {
+  if(jwt.isValidBase64String(token, true)) {
+    return 'base64url';
+  } else if(jwt.isValidBase64String(token, false)) {
+    return 'base64';
+  } else {
+    return 'invalid';
+  }
+}
+
+function getRegisteredClaims(payload) {
+  const result = [];
+
+  registeredClaims.forEach(claim => {
+    if(claim in payload) {
+      result.push(claim);
+    }
+  });
+
+  return result;
+}
+
+function getScopes(payload) {
+  if(!isString(payload.scope)) {
+    return [];
+  }
+
+  const scopes = payload.scope.split(/\s+/).filter(scope => {
+    return scope.length > 0 && /\S+/.test(scope);
+  });
+
+  return scopes;
+}
+
+function getNumberOfScopes(payload) {
+  return getScopes(payload).length;
+}
+
+function getOIDCScopes(payload) {
+  const oidcScopes = ['openid', 'profile', 'email',
+                      'address', 'phone', 'offline_access'];
+  const scopes = getScopes(payload);
+
+  return scopes.filter(scope => oidcScopes.indexOf(scope) !== -1);
+}
+
+export function getSafeTokenInfo(token) {
   try {
     sha256.start();
-    sha256.update(jwt);
+    sha256.update(token);
 
     const result = {
       hash: sha256.digest().toHex()
     };
 
     try {
-      const decoded = jwt.decode(jwt);
+      const decoded = jwt.decode(token);
 
-      return Object.assign(result, {
+      const result = Object.assign(result, {
         decodedWithErrors: decoded.errors,
+        encodedSize: token.length,
+        base64Format: getBase64Format(token),
         header: {
           alg: decoded.header.alg,
         },
         payload: {
-          // TODO
+          registeredClaimsPresent: getRegisteredClaims(decoded.payload),
+          oidcScopesPresent: getOIDCScopes(decoded.payload),
+          numberOfScopes: getNumberOfScopes(decoded.payload),
+          numberOfClaims: Object.keys(decoded.payload).length,
+          issuer: decoded.payload.iss ? decoded.payload.iss : null
         }
       });
+
+      if(decoded.payload.amr) {
+        result.payload.amr = decoded.payload.amr;
+      }
+
+      return result;
     } catch(e) {
       return Object.assign(result, {
         error: 'error decoding token',
