@@ -1,66 +1,41 @@
 {
-  // Language name (unique)
-  "name": ".NET",
-
-  // Unique identifier that will be used as a CSS class
-  // for this language (only valid CSS class names).
-  "uniqueClass": "net",
+  "name": "Scheme",
+  "uniqueClass": "Scheme",
   
-  // The language icon, SVG format preferred, should be placed
-  // in /img directory.
-  "image": "/img/1.svg",
+  "image": "/img/28.jpg",
   
-  // The color of header that displays the name of the language
-  // and the icon. This is a valid CSS color definition.
-  "bgColor": "rgb(42, 168, 229)",
+  "bgColor": "rgb(251, 156, 39)",
   
-  // An array of libraries for this language.
   "libs": [
     {
-      // In case the library suffered from a vulnerability, the
-      // minimum version in which the vuln was fixed must be
-      // listed here. Optional (can be null).
-      "minimumVersion": "1.0.1", // or null
-      
-      // Supported features, true for supported,
-      // false for not supported.
+
+      "minimumVersion": "0.1.2",
       "support": {
         "sign": true,
         "verify": true,
-        "iss": true,
-        "sub": true,
-        "aud": true,
-        "exp": true,
-        "nbf": true,
-        "iat": true,
-        "jti": true,
+        "iss": false,
+        "sub": false,
+        "aud": false,
+        "exp": false,
+        "nbf": false,
+        "iat": false,
+        "jti": false,
         "hs256": true,
-        "hs384": true,
-        "hs512": true,
-        "rs256": true,
-        "rs384": true,
-        "rs512": true,
-        "es256": true,
-        "es384": true,
-        "es512": true
+        "hs384": false,
+        "hs512": false,
+        "rs256": false,
+        "rs384": false,
+        "rs512": false,
+        "es256": false,
+        "es384": false,
+        "es512": false
       },
-      
-      // Author URL, can be GitHub profile, personal page
-      // company page, etc. Can be null.
-      "authorUrl": "https://www.microsoft.com", // or null
-      
-      // Author name.
-      "authorName": "Microsoft",
-      
-      // For the star count, this is the GitHub repository path,
-      // (usually user/repo). Can be null (no star count shown).
-      "gitHubRepoPath": "AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet", // or null
-      
-      // URL for source code.
-      "repoUrl": "https://github.com/MSOpenTech/azure-activedirectory-identitymodel-extensions-for-dotnet",
-      
-      // Install command, can be HTML or plain text.
-      "installCommandHtml": "Install-Package<br><a href=\"https://www.nuget.org/packages/System.IdentityModel.Tokens.Jwt/\">System.IdentityModel.Tokens.Jwt</a>"
+
+      "authorUrl": "https://github.com/guenchi", 
+      "authorName": "guenchi",
+      "gitHubRepoPath": "https://github.com/guenchi/jwt", 
+      "repoUrl": "https://github.com/guenchi/jwt",
+      "installCommandHtml": "Raven<br><a href=\"http://ravensc.com\">raven install jwt</a>"
     }
   ]
 }
