@@ -1,4 +1,4 @@
-import { codeElements } from './dom-elements.js';
+import { codeElements } from './dom-elements-common.js';
 
 import hljs from 'highlight.js/lib/highlight.js';
 import jsHighlight from 'highlight.js/lib/languages/javascript';

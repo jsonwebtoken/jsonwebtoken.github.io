@@ -1,4 +1,4 @@
-import { counterElement } from './dom-elements.js';
+import { counterElement } from './dom-elements-common.js';
 import { isInViewport } from './utils.js';
 import { httpGet } from '../utils.js';
 
@@ -25,7 +25,7 @@ const flipCounter = $(counterElement).FlipClock(initialCount, {
 });
 
 function getLoginCount() {
-  return baselineCount + 
+  return baselineCount +
          Math.round((new Date() - baselineDate) / 1000 * loginsPerSecond);
 }
 
@@ -37,5 +37,5 @@ function updateCounter() {
 
 export function setupJwtCounter() {
   updateCounter();
-  setInterval(updateCounter, intervalMs);  
+  setInterval(updateCounter, intervalMs);
 }
