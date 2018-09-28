@@ -65,7 +65,9 @@ function pickEbookOrExtensionBanner() {
 }
 
 function setupMetrics() {
-  metrics.init(PRODUCTION ? 'PROD-KEY' : 'DEV-KEY');
+  metrics.init(PRODUCTION ?
+    '693wciz6BgZdlmW0qDlbgxpyj7gtVxRR' :
+    'xBxBArADMejN3aqs9NhISky9PHPXIr80');
 
   // Section visible metrics
   window.addEventListener('scroll', e => {

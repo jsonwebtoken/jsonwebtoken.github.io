@@ -6,8 +6,8 @@ article(data-accordion, class=`accordion ${lang.uniqueClass}`)
     if lib.minimumVersion
       .version
         p Minimum Version #{lib.minimumVersion}
-          a(href='https://auth0.com/blog/critical-vulnerabilities-in-json-web-token-libraries/', target='_blank')
-            img(src='img/ico_question.svg')    
+          a(href='https://auth0.com/blog/critical-vulnerabilities-in-json-web-token-libraries/', target='_blank', data-metrics-lib-id=lib.repoUrl)
+            img(src='img/ico_question.svg')
     div(class={ 'panel-body': true, mversion: !!lib.minimumVersion })
       .column
         p
@@ -76,7 +76,7 @@ article(data-accordion, class=`accordion ${lang.uniqueClass}`)
     .author-info
       .maintainer
         if lib.authorUrl
-          a(href=lib.authorUrl)
+          a(href=lib.authorUrl, data-metrics-lib-id=lib.repoUrl)
             i.icon-budicon-333(data-toggle='tooltip', title='', data-original-title='Maintainer')
             | #{lib.authorName}
         else
@@ -87,7 +87,7 @@ article(data-accordion, class=`accordion ${lang.uniqueClass}`)
             i.icon-budicon-466
       .repository
         i.icon-1392070209-icon-social-github
-        a(href=lib.repoUrl) View Repo
+        a(href=lib.repoUrl, data-metrics-lib-id=lib.repoUrl) View Repo
 
     .panel-footer
       code !{lib.installCommandHtml}

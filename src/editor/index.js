@@ -48,13 +48,13 @@ import log from 'loglevel';
 // passed to the event manager.
 const eventManager = new EventManager();
 
-function trackToken(jwt, operation) {
+function trackToken(jwt, operation, extra) {
   const tokenInfo = getSafeTokenInfo(jwt);
 
-  metric.track('editor-jwt-tracked', {
+  metrics.track('editor-jwt-tracked', Object.assign({
     operation: operation,
     tokenInfo: tokenInfo
-  });
+  }, extra));
 
   return tokenInfo.hash;
 }
@@ -238,7 +238,9 @@ function encodeToken() {
     sign(header, payload, key, secretBase64Checkbox.checked).then(encoded => {
       eventManager.withDisabledEvents(() => {
         tokenEditor.setValue(encoded);
-        trackToken(encoded, 'encode');
+        trackToken(encoded, 'encode', {
+          secretBase64Checkbox: secretBase64Checkbox.checked
+        });
       });
     }).catch(e => {
       eventManager.withDisabledEvents(() => {
@@ -324,13 +326,15 @@ function verifyToken() {
     if(valid) {
       markAsValid();
       metrics.track('editor-jwt-verified', {
-        tokenHash: tokenHash
+        tokenHash: tokenHash,
+        secretBase64Checkbox: secretBase64Checkbox.checked
       });
     } else {
       markAsInvalid();
       metrics.track('editor-jwt-invalid', {
         reason: 'invalid signature',
-        tokenHash: tokenHash
+        tokenHash: tokenHash,
+        secretBase64Checkbox: secretBase64Checkbox.checked
       });
     }
   });

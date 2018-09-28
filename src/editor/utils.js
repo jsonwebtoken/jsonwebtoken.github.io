@@ -55,11 +55,21 @@ export function isString(value) {
 }
 
 function getBase64Format(token) {
-  if(jwt.isValidBase64String(token, true)) {
-    return 'base64url';
-  } else if(jwt.isValidBase64String(token, false)) {
-    return 'base64';
-  } else {
+  try {
+    function getFormat(str) {
+      if(jwt.isValidBase64String(str, true)) {
+        return 'base64url';
+      } else if(jwt.isValidBase64String(str, false)) {
+        return 'base64';
+      } else {
+        return 'invalid';
+      }
+    }
+
+    const formats = token.split('.').map(getFormat);
+    return formats.every(r => r === formats[0]) ?
+      formats[0] : 'invalid';
+  } catch(e) {
     return 'invalid';
   }
 }
@@ -112,7 +122,7 @@ export function getSafeTokenInfo(token) {
     try {
       const decoded = jwt.decode(token);
 
-      const result = Object.assign(result, {
+      Object.assign(result, {
         decodedWithErrors: decoded.errors,
         encodedSize: token.length,
         base64Format: getBase64Format(token),

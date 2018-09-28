@@ -94,7 +94,9 @@ function setupMetrics() {
     const els = document.querySelectorAll(t.selector);
     Array.prototype.forEach.call(els, el => {
       el.addEventListener('click', () => {
-        metrics.track(t.event);
+        metrics.track(t.event, {
+          id: el.dataset.metricsLibId
+        });
       });
     });
   });
