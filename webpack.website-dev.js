@@ -14,8 +14,5 @@ module.exports = merge(common, {
     path: __dirname + '/dist/website/js'
   },
   plugins: [
-    new webpack.DefinePlugin({
-      PRODUCTION: false
-    })
   ]
 });
