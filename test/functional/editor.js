@@ -23,6 +23,8 @@ const typingDelay = 0;
 const tokenProcessingWait = 200;
 
 describe('Editor', function() {
+  this.timeout(50000);
+
   before(utils.launchBrowser);
 
   after(utils.closeBrowser);
@@ -437,7 +439,7 @@ describe('Editor', function() {
 
       for(const alg of algs) {
         it(alg.toUpperCase(), async function() {
-          this.timeout(20000);
+          //this.timeout(20000);
 
           await this.page.click('.js-input');
           await this.page.keyboard.down('ControlLeft');
@@ -478,7 +480,7 @@ describe('Editor', function() {
     describe('Encodes RS/ES/PS tokens', function() {
       describe('RS/PS', async function() {
         before(async function() {
-          this.timeout(30000);
+          //this.timeout(30000);
 
           await this.page.select('#algorithm-select', 'RS256');
 
@@ -505,7 +507,7 @@ describe('Editor', function() {
 
         for(const alg of algs) {
           it(alg.toUpperCase(), async function() {
-            this.timeout(30000);
+            //this.timeout(30000);
 
             await this.page.evaluate(token => {
               window.test.tokenEditor.setValue(token);
@@ -561,7 +563,7 @@ describe('Editor', function() {
 
       describe('ES', async function() {
         before(async function() {
-          this.timeout(30000);
+          //this.timeout(30000);
 
           await this.page.select('#algorithm-select', 'ES256');
 
@@ -587,7 +589,7 @@ describe('Editor', function() {
 
         for(const alg of algs) {
           it(alg.toUpperCase(), async function() {
-            this.timeout(30000);
+            //this.timeout(30000);
 
             await this.page.evaluate(token => {
               window.test.tokenEditor.setValue(token);
@@ -670,7 +672,7 @@ describe('Editor', function() {
       });
 
       it('iss URL + .well-known', async function() {
-        this.timeout(20000);
+        //this.timeout(20000);
 
         const key = await jose.JWK.asKey(defaultTokens.rs256.privateKey, 'pem');
         const token = await jose.JWS.createSign({
@@ -711,7 +713,7 @@ describe('Editor', function() {
       });
 
       it('jku', async function() {
-        this.timeout(20000);
+        //this.timeout(20000);
 
         const key = await jose.JWK.asKey(defaultTokens.rs256.privateKey, 'pem');
         const token = await jose.JWS.createSign({
@@ -752,7 +754,7 @@ describe('Editor', function() {
       });
 
       it('x5c', async function() {
-        this.timeout(35000);
+        //this.timeout(35000);
 
         const key = await jose.JWK.asKey(defaultTokens.rs256.privateKey, 'pem');
         const token = await jose.JWS.createSign({
@@ -861,7 +863,7 @@ describe('Editor', function() {
     });
 
     it('Marks token as invalid when there is no public key', async function() {
-      this.timeout(20000);
+      //this.timeout(20000);
 
       await this.page.select('#algorithm-select', 'RS256');
 
@@ -910,7 +912,7 @@ describe('Editor', function() {
     });
 
     it('Marks token as invalid when the public key is wrong', async function() {
-      this.timeout(20000);
+      //this.timeout(20000);
 
       await this.page.select('#algorithm-select', 'RS256');
 
@@ -959,7 +961,7 @@ describe('Editor', function() {
 
     it('Marks token as valid when the public key is OK and private ' +
        'key is wrong', async function() {
-      this.timeout(30000);
+      //this.timeout(30000);
 
       await this.page.select('#algorithm-select', 'RS256');
 
@@ -1005,7 +1007,7 @@ describe('Editor', function() {
 
     it('Marks token as valid when the public key is OK and private ' +
        'key is missing', async function() {
-      this.timeout(30000);
+      //this.timeout(30000);
 
       await this.page.select('#algorithm-select', 'RS256');
 
@@ -1066,7 +1068,7 @@ describe('Editor', function() {
   });
 
   it('Marks token as invalid when "alg" is "none"', async function() {
-    this.timeout(20000);
+    //this.timeout(20000);
 
     await this.page.click('.js-input');
     await this.page.keyboard.down('ControlLeft');
@@ -1172,7 +1174,7 @@ describe('Editor', function() {
 
     it('Copies an RSA token to the clipboard (with public-key)',
       async function() {
-        this.timeout(30000);
+        //this.timeout(30000);
 
         await this.page.select('#algorithm-select', 'RS256');
 
@@ -1253,7 +1255,7 @@ describe('Editor', function() {
         `/?foo=bar&${key}=${token}`,
         `/#foo=bar&${key}=${token}`
       ].forEach((searchStr, i) => {
-        this.timeout(20000);
+        //this.timeout(20000);
 
         it(`Should parse ${key} from window.location.href [${i}]`,
           async function () {
@@ -1272,7 +1274,7 @@ describe('Editor', function() {
     });
 
     it('Parses shared token', async function() {
-      this.timeout(20000);
+      //this.timeout(20000);
 
       const page = await this.browser.newPage();
 
