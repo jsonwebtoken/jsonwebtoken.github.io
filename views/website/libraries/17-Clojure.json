@@ -10,7 +10,7 @@
         "sign": true,
         "verify": true,
         "iss": true,
-        "sub": false,
+        "sub": true,
         "aud": true,
         "exp": true,
         "nbf": true,
@@ -30,7 +30,7 @@
       "authorName": "Andrey Antukh",
       "gitHubRepoPath": "funcool/buddy",
       "repoUrl": "https://github.com/funcool/buddy/",
-      "installCommandHtml": "lein: [funcool/buddy \"0.6.0\"]"
+      "installCommandHtml": "lein: [funcool/buddy \"2.0.0\"]"
     }
   ]
 }
