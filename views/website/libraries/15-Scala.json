@@ -115,6 +115,34 @@
       "gitHubRepoPath": "janjaali/spray-jwt",
       "repoUrl": "https://github.com/janjaali/spray-jwt",
       "installCommandHtml": "libraryDependencies += \"com.github.janjaali\" %% \"spray-jwt\" % \"1.0.0\""
+    },
+    {
+      "minimumVersion": null,
+      "support": {
+        "sign": true,
+        "verify": true,
+        "iss": true,
+        "sub": true,
+        "aud": true,
+        "exp": true,
+        "nbf": true,
+        "iat": false,
+        "jti": true,
+        "hs256": true,
+        "hs384": true,
+        "hs512": true,
+        "rs256": false,
+        "rs384": false,
+        "rs512": false,
+        "es256": true,
+        "es384": false,
+        "es512": false
+      },
+      "authorUrl": "https://github.com/blackdoor",
+      "authorName": "blackdoor software",
+      "gitHubRepoPath": "blackdoor/jose",
+      "repoUrl": "https://github.com/blackdoor/jose",
+      "installCommandHtml": "dependsOn(RootProject(uri(\"git://github.com/blackdoor/jose.git#0.1.0\")))"
     }
   ]
 }
