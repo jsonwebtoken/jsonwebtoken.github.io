@@ -660,23 +660,12 @@ body
       margin-left 10px
 
   .warning
-    background-color #FFFCD2
-    font-size 11px
-    color #4A4A4A
-    text-align center
-    padding 10px
     margin 0 -15px
+    border-radius 0
     line-height 1.8
-    color: darken(#FFFCD2, 80%)
     +breakpoint("tablet")
-      font-size 14px
       margin 0 0 30px
       border-radius 3px
-      padding 20px 0
-    a
-      color: darken(#FFFCD2, 80%)
-      font-weight bold
-      margin-left 5px
     svg
       height: 14px;
       width: 14px;
@@ -1163,3 +1152,22 @@ footer
   .social-counter
     +breakpoint("tablet")
       text-align right
+
+.warning
+  display block
+  width 100%
+  padding 15px
+  margin 0 0 40px 0
+  background #fff7c9
+  border-radius 3px
+  font-size 14px
+  color #786600
+  line-height 2
+
+  a
+    border-bottom 1px solid rgba(120,102,0,.4)
+    color #786600
+    text-decoration none
+
+    &:hover
+      opacity .7
