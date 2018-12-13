@@ -60,6 +60,31 @@ describe('Public key downloader', function() {
       }).should.notify(done);    
   });
 
+  it('Can find keys for non-slash-terminated iss', function(done) {
+    const decodedToken = _.defaultsDeep({}, decodedBaseToken, {
+      header: {
+        kid: 1
+      },
+      payload: {
+        iss: "https://not.slash.terminated"
+      }
+    });
+
+    const httpGetStub = sinon.stub().resolves(JSON.stringify(jwks));
+    const downloadPublicKeyIfPossible = publicKeyDownloadInjector({
+      '../utils.js': {
+        httpGet: httpGetStub
+      }
+    }).downloadPublicKeyIfPossible;
+
+    downloadPublicKeyIfPossible(decodedToken)
+      .should.eventually.include(jwks.keys[0].x5c[0])
+      .then(() => {
+        httpGetStub.should.have.been
+                   .calledWith('https://not.slash.terminated/.well-known/jwks.json');
+      }).should.notify(done);    
+  });
+
   it('Finds keys in jwk header claim', function(done) {
     const decodedToken = _.defaultsDeep({}, decodedBaseToken, {
       header: {

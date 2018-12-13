@@ -67,8 +67,8 @@ export function downloadPublicKeyIfPossible(decodedToken) {
     } else if(header.jwk) {
       resolve(getKeyFromX5Claims(header.jwk));
     } else if(header.kid && payload.iss) {
-      //Auth0-specific scheme
-      const url = payload.iss + '.well-known/jwks.json';
+      const slashTerminatedIss = payload.iss.replace(/\/$/, "") + "/";
+      const url = slashTerminatedIss + '.well-known/jwks.json';
       resolve(getKeyFromJwkKeySetUrl(header.kid, url));
     } else {
       reject('No details about key');
