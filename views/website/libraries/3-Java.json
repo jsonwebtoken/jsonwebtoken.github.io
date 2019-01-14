@@ -139,16 +139,16 @@
         "exp": true,
         "nbf": true,
         "iat": true,
-        "jti": false,
+        "jti": true,
         "hs256": true,
         "hs384": true,
         "hs512": true,
         "rs256": true,
         "rs384": true,
         "rs512": true,
-        "es256": false,
-        "es384": false,
-        "es512": false,
+        "es256": true,
+        "es384": true,
+        "es512": true,
         "ps256": false,
         "ps384": false,
         "ps512": false
@@ -157,7 +157,7 @@
       "authorName": "FusionAuth",
       "gitHubRepoPath": "fusionauth/fusionauth-jwt",
       "repoUrl": "https://github.com/fusionauth/fusionauth-jwt",
-      "installCommandHtml": "maven: io.fusionauth / fusionauth-jwt / 2.1.0"
+      "installCommandHtml": "maven: io.fusionauth / fusionauth-jwt / 3.0.0"
     },
     {
       "minimumVersion": null,

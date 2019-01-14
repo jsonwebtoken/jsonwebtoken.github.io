@@ -20,10 +20,10 @@ chai.use(chaiArrays);
 const expect = chai.expect;
 
 const typingDelay = 0;
-const tokenProcessingWait = 200;
+const tokenProcessingWait = 300;
 
 describe('Editor', function() {
-  this.timeout(50000);
+  this.timeout(75000);
 
   before(utils.launchBrowser);
 
