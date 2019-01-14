@@ -24,13 +24,19 @@
         "rs512": true,
         "es256": true,
         "es384": true,
-        "es512": true
+        "es512": true,
+        "ps256": true,
+        "ps384": true,
+        "ps512": true
       },
       "authorUrl": "https://www.microsoft.com",
       "authorName": "Microsoft",
-      "gitHubRepoPath": "AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet",
-      "repoUrl": "https://github.com/MSOpenTech/azure-activedirectory-identitymodel-extensions-for-dotnet",
-      "installCommandHtml": "Install-Package<br><a href=\"https://www.nuget.org/packages/System.IdentityModel.Tokens.Jwt/\">System.IdentityModel.Tokens.Jwt</a>"
+      "gitHubRepoPath":
+        "AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet",
+      "repoUrl":
+        "https://github.com/MSOpenTech/azure-activedirectory-identitymodel-extensions-for-dotnet",
+      "installCommandHtml":
+        "Install-Package<br><a href=\"https://www.nuget.org/packages/System.IdentityModel.Tokens.Jwt/\">System.IdentityModel.Tokens.Jwt</a>"
     },
     {
       "minimumVersion": null,
@@ -52,13 +58,17 @@
         "rs512": true,
         "es256": true,
         "es384": true,
-        "es512": true
+        "es512": true,
+        "ps256": true,
+        "ps384": true,
+        "ps512": true
       },
       "authorUrl": "https://github.com/dvsekhvalnov/jose-jwt",
       "authorName": "DV",
       "gitHubRepoPath": "dvsekhvalnov/jose-jwt",
       "repoUrl": "https://github.com/dvsekhvalnov/jose-jwt",
-      "installCommandHtml": "Install-Package<br><a href=\"http://www.nuget.org/packages/jose-jwt/\">jose-jwt</a>"
+      "installCommandHtml":
+        "Install-Package<br><a href=\"http://www.nuget.org/packages/jose-jwt/\">jose-jwt</a>"
     },
     {
       "minimumVersion": null,
@@ -86,7 +96,8 @@
       "authorName": "DV",
       "gitHubRepoPath": "dvsekhvalnov/jose-rt",
       "repoUrl": "https://github.com/dvsekhvalnov/jose-rt",
-      "installCommandHtml": "Install-Package<br><a href=\"http://www.nuget.org/packages/jose-rt/\">jose-rt</a>"
+      "installCommandHtml":
+        "Install-Package<br><a href=\"http://www.nuget.org/packages/jose-rt/\">jose-rt</a>"
     }
   ]
 }

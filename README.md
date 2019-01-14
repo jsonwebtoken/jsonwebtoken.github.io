@@ -5,6 +5,7 @@
 [![Build Status](https://travis-ci.org/jsonwebtoken/jsonwebtoken.github.io.png?branch=master)](https://travis-ci.org/jsonwebtoken/jsonwebtoken.github.io)
 
 ### How to add a library
+
 To add a library, simply edit the right JSON file located at `views/website/libraries`. Each language gets its own file. Multiple libraries share the same language file.
 
 To add a new language, simply add a JSON file in the same folder as the others. It will get automatically recognized. If you add a new language, you will need to provide a proper icon for it and place it in the `img` folder.
@@ -19,15 +20,15 @@ Here's a commented example of the .NET language file (`0-.NET.json`). All fields
   // Unique identifier that will be used as a CSS class
   // for this language (only valid CSS class names).
   "uniqueClass": "net",
-  
+
   // The language icon, SVG format preferred, should be placed
   // in /img directory.
   "image": "/img/1.svg",
-  
+
   // The color of header that displays the name of the language
   // and the icon. This is a valid CSS color definition.
   "bgColor": "rgb(42, 168, 229)",
-  
+
   // An array of libraries for this language.
   "libs": [
     {
@@ -35,7 +36,7 @@ Here's a commented example of the .NET language file (`0-.NET.json`). All fields
       // minimum version in which the vuln was fixed must be
       // listed here. Optional (can be null).
       "minimumVersion": "1.0.1", // or null
-      
+
       // Supported features, true for supported,
       // false for not supported.
       "support": {
@@ -56,23 +57,26 @@ Here's a commented example of the .NET language file (`0-.NET.json`). All fields
         "rs512": true,
         "es256": true,
         "es384": true,
-        "es512": true
+        "es512": true,
+        "ps256": true,
+        "ps384": true,
+        "ps512": true
       },
-      
+
       // Author URL, can be GitHub profile, personal page
       // company page, etc. Can be null.
       "authorUrl": "https://www.microsoft.com", // or null
-      
+
       // Author name.
       "authorName": "Microsoft",
-      
+
       // For the star count, this is the GitHub repository path,
       // (usually user/repo). Can be null (no star count shown).
       "gitHubRepoPath": "AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet", // or null
-      
+
       // URL for source code.
       "repoUrl": "https://github.com/MSOpenTech/azure-activedirectory-identitymodel-extensions-for-dotnet",
-      
+
       // Install command, can be HTML or plain text.
       "installCommandHtml": "Install-Package<br><a href=\"https://www.nuget.org/packages/System.IdentityModel.Tokens.Jwt/\">System.IdentityModel.Tokens.Jwt</a>"
     }

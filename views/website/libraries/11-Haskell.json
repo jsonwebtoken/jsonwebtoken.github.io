@@ -24,7 +24,10 @@
         "rs512": false,
         "es256": false,
         "es384": false,
-        "es512": false
+        "es512": false,
+        "ps256": false,
+        "ps384": false,
+        "ps512": false
       },
       "authorUrl": "https://bitbucket.org/ssaasen",
       "authorName": "Stefan Saasen",
@@ -52,7 +55,10 @@
         "rs512": true,
         "es256": true,
         "es384": true,
-        "es512": true
+        "es512": true,
+        "ps256": true,
+        "ps384": true,
+        "ps512": true
       },
       "authorUrl": "https://github.com/frasertweedale",
       "authorName": "Fraser Tweedale",

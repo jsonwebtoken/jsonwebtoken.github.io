@@ -579,7 +579,7 @@ body
           textarea
             width 100%
             max-width 266px
-            resize none            
+            resize none
           input[type="checkbox"]
             margin-right 5px
             position relative
@@ -612,7 +612,7 @@ body
   .debugger-footer
     font-size 30px
     .website-validation
-      padding-left 0      
+      padding-left 0
     .website-share
       padding-right 0
       button
@@ -621,7 +621,7 @@ body
         color white;
         font-weight 400;
         border-color #00b9f1;
-      
+
 
 
 // libraries-jwt
@@ -1171,3 +1171,23 @@ footer
 
     &:hover
       opacity .7
+
+.icon-unknown {
+  display: inline-block;
+  width: 19px;
+  height: 19px;
+  margin-top: -2px;
+  border: 1px solid #000;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 13px;
+  font-style: normal;
+}
+.icon-unknown::after {
+  content: '?';
+  font-size: 14px;
+  line-height: 1;
+  padding: 0;
+  margin: 0;
+  display: inline;
+}
