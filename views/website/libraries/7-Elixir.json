@@ -24,13 +24,17 @@
         "rs512": true,
         "es256": true,
         "es384": true,
-        "es512": true
+        "es512": true,
+        "ps256": false,
+        "ps384": false,
+        "ps512": false
       },
       "authorUrl": null,
       "authorName": "Fleshman",
       "gitHubRepoPath": "garyf/json_web_token_ex",
       "repoUrl": "https://github.com/garyf/json_web_token_ex",
-      "installCommandHtml": "defp deps, do: [{:json_web_token, \"~&gt; 0.2.5\"}]"
+      "installCommandHtml":
+        "defp deps, do: [{:json_web_token, \"~&gt; 0.2.5\"}]"
     },
     {
       "minimumVersion": null,
@@ -52,7 +56,10 @@
         "rs512": true,
         "es256": true,
         "es384": true,
-        "es512": true
+        "es512": true,
+        "ps256": true,
+        "ps384": true,
+        "ps512": true
       },
       "authorUrl": null,
       "authorName": "bryanjos",
