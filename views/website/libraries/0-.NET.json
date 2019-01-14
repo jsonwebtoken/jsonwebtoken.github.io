@@ -24,9 +24,7 @@
         "rs512": true,
         "es256": true,
         "es384": true,
-        "es512": true,
-        "ps256": true,
-        "ps384": false
+        "es512": true
       },
       "authorUrl": "https://www.microsoft.com",
       "authorName": "Microsoft",
