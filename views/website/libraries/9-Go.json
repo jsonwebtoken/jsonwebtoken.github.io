@@ -302,9 +302,9 @@
         "es256": true,
         "es384": true,
         "es512": true,
-        "ps256": false,
-        "ps384": false,
-        "ps512": false
+        "ps256": true,
+        "ps384": true,
+        "ps512": true
       },
       "authorUrl": "https://github.com/pascaldekloe",
       "authorName": "Pascal de Kloe",
