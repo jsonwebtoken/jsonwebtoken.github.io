@@ -40,6 +40,7 @@ import {
 } from "../dom-elements.js";
 
 import log from "loglevel";
+import _ from "lodash";
 
 // The event manager lets us enable/disable events as needed without
 // manually tracking them. Events that need to be disabled should be
@@ -388,10 +389,22 @@ function setupEvents() {
   eventManager.addDomEvent(algorithmSelect, "change", algorithmChangeHandler);
 
   // When an encoded token is inserted, it must be decoded.
-  eventManager.addCodeMirrorEvent(tokenEditor, "change", decodeToken);
+  eventManager.addCodeMirrorEvent(
+    tokenEditor,
+    "change",
+    _.throttle(decodeToken, 1000)
+  );
   // When parts of the decoded token are changed, it must be reencoded.
-  eventManager.addCodeMirrorEvent(headerEditor, "change", encodeToken);
-  eventManager.addCodeMirrorEvent(payloadEditor, "change", encodeToken);
+  eventManager.addCodeMirrorEvent(
+    headerEditor,
+    "change",
+    _.throttle(encodeToken, 1000)
+  );
+  eventManager.addCodeMirrorEvent(
+    payloadEditor,
+    "change",
+    _.throttle(encodeToken, 1000)
+  );
 
   // HMAC secret, show tooltip if secret is too short.
   eventManager.addDomEvent(secretInput, "input", minSecretLengthCheck);
