@@ -91,9 +91,7 @@ export function init(apiKey) {
   // Load Auth0-metrics with your key, which will automatically
   // load the tools you've enabled for your account. Boosh!
   analytics.load(
-    apiKey,
-    "https://dwh-tracking.it.auth0.com/external-metrics",
-    "jwt.io"
+    apiKey
   );
 
   // Make the first page call to load the integrations. If
