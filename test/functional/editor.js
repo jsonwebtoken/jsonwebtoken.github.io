@@ -21,6 +21,7 @@ const expect = chai.expect;
 
 const typingDelay = 0;
 const tokenProcessingWait = 300;
+const editorThrottle = 1000;
 
 describe('Editor', function() {
   this.timeout(75000);
@@ -134,6 +135,7 @@ describe('Editor', function() {
       return window.test.tokenEditor.getValue()
     });
 
+    await this.page.waitFor(editorThrottle);
     await this.page.click('.js-header');
     await this.page.keyboard.down('ControlLeft');
     await this.page.keyboard.press('KeyA');
@@ -340,6 +342,7 @@ describe('Editor', function() {
           await secretInput.type(tokens[alg].secret, {
             delay: typingDelay
           });
+          await this.page.waitFor(1250);
 
           await this.page.click('.js-input');
           await this.page.keyboard.down('ControlLeft');
