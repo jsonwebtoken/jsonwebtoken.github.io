@@ -21,6 +21,7 @@ const expect = chai.expect;
 
 const typingDelay = 0;
 const tokenProcessingWait = 300;
+const tokenEditorThrottleWait = 1200;
 
 describe('Editor', function() {
   this.timeout(75000);
@@ -150,6 +151,7 @@ describe('Editor', function() {
 
     // Wait for token processing.
     await this.page.waitFor(tokenProcessingWait);
+    await this.page.waitFor(tokenEditorThrottleWait);
 
     const newToken = await this.page.evaluate(() => {
       return window.test.tokenEditor.getValue();
@@ -188,6 +190,7 @@ describe('Editor', function() {
 
     // Wait for token processing.
     await this.page.waitFor(tokenProcessingWait);
+    await this.page.waitFor(tokenEditorThrottleWait);
 
     const newToken = await this.page.evaluate(() => {
       return window.test.tokenEditor.getValue()
@@ -222,6 +225,10 @@ describe('Editor', function() {
       delay: typingDelay
     });
 
+    // Wait for token processing.
+    await this.page.waitFor(tokenProcessingWait);
+    await this.page.waitFor(tokenEditorThrottleWait);
+
     const selectedAfter =
       await this.page.$eval('#algorithm-select', select => {
         return select.options[select.selectedIndex].value;
@@ -232,6 +239,7 @@ describe('Editor', function() {
 
     // Wait for token processing.
     await this.page.waitFor(tokenProcessingWait);
+    await this.page.waitFor(tokenEditorThrottleWait);
 
     const valid = await this.page.$eval('.validation-status', status => {
       return status.classList.contains('valid-token') &&
@@ -351,6 +359,7 @@ describe('Editor', function() {
 
           // Wait for token processing.
           await this.page.waitFor(tokenProcessingWait);
+          await this.page.waitFor(tokenEditorThrottleWait);
 
           const valid = await this.page.$eval('.validation-status', status => {
             return status.classList.contains('valid-token') &&
@@ -460,6 +469,7 @@ describe('Editor', function() {
 
           // Wait for token processing.
           await this.page.waitFor(tokenProcessingWait);
+          await this.page.waitFor(tokenEditorThrottleWait);
 
           const valid = await this.page.$eval('.validation-status', status => {
             return status.classList.contains('valid-token') &&
@@ -542,6 +552,7 @@ describe('Editor', function() {
 
             // Wait for token processing.
             await this.page.waitFor(tokenProcessingWait);
+            await this.page.waitFor(tokenEditorThrottleWait);
 
             const newToken = await this.page.evaluate(() => {
               return window.test.tokenEditor.getValue();
@@ -624,6 +635,7 @@ describe('Editor', function() {
 
             // Wait for token processing.
             await this.page.waitFor(tokenProcessingWait);
+            await this.page.waitFor(tokenEditorThrottleWait);
 
             const newToken = await this.page.evaluate(() => {
               return window.test.tokenEditor.getValue();
@@ -698,6 +710,7 @@ describe('Editor', function() {
         });
 
         await this.page.waitFor(2000);
+        await this.page.waitFor(tokenEditorThrottleWait);
 
         const publicKey = await this.page.$eval('textarea[name="public-key"]',
           publicKeyElement => publicKeyElement.value);
@@ -739,6 +752,7 @@ describe('Editor', function() {
         });
 
         await this.page.waitFor(2000);
+        await this.page.waitFor(tokenEditorThrottleWait);
 
         const publicKey = await this.page.$eval('textarea[name="public-key"]',
           publicKeyElement => publicKeyElement.value);
@@ -864,7 +878,7 @@ describe('Editor', function() {
 
     it('Marks token as invalid when there is no public key', async function() {
       //this.timeout(20000);
-
+      await this.page.waitFor(tokenEditorThrottleWait);
       await this.page.select('#algorithm-select', 'RS256');
 
       await this.page.click('.js-input');
@@ -886,6 +900,7 @@ describe('Editor', function() {
 
       // Wait for token processing.
       await this.page.waitFor(tokenProcessingWait);
+      await this.page.waitFor(tokenEditorThrottleWait);
 
       const valid = await this.page.$eval('.validation-status', status => {
         return status.classList.contains('valid-token') &&
@@ -902,6 +917,7 @@ describe('Editor', function() {
 
       // Wait for token processing.
       await this.page.waitFor(tokenProcessingWait);
+      await this.page.waitFor(tokenEditorThrottleWait);
 
       const invalid = await this.page.$eval('.validation-status', status => {
         return status.classList.contains('invalid-token') &&
@@ -935,6 +951,7 @@ describe('Editor', function() {
 
       // Wait for token processing.
       await this.page.waitFor(tokenProcessingWait);
+      await this.page.waitFor(tokenEditorThrottleWait);
 
       const valid = await this.page.$eval('.validation-status', status => {
         return status.classList.contains('valid-token') &&
@@ -1147,6 +1164,8 @@ describe('Editor', function() {
         delay: typingDelay
       });
 
+      await this.page.waitFor(tokenEditorThrottleWait);
+
       const shareJwtButton = await this.page.$('.website-share button');
       await shareJwtButton.click();
 
@@ -1216,6 +1235,8 @@ describe('Editor', function() {
         await this.page.keyboard.type(JSON.stringify(payload, null, 2), {
           delay: typingDelay
         });
+
+        await this.page.waitFor(tokenEditorThrottleWait);
 
         const shareJwtButton = await this.page.$('.website-share button');
         await shareJwtButton.click();

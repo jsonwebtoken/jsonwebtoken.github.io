@@ -1,9 +1,7 @@
-import {
-  deferToNextLoop
-} from '../utils.js';
-import { downloadPublicKeyIfPossible } from './public-key-download.js';
-import { setupClaimsTooltip } from './claims-tooltip.js';
-import { tokenEditor, headerEditor, payloadEditor } from './instances.js';
+import { deferToNextLoop } from "../utils.js";
+import { downloadPublicKeyIfPossible } from "./public-key-download.js";
+import { setupClaimsTooltip } from "./claims-tooltip.js";
+import { tokenEditor, headerEditor, payloadEditor } from "./instances.js";
 import {
   getTrimmedValue,
   stringify,
@@ -11,16 +9,16 @@ import {
   getSelectedAlgorithm,
   disableUnsupportedAlgorithms,
   getSafeTokenInfo
-} from './utils.js';
-import { sign, verify, decode } from './jwt.js';
-import EventManager from './event-manager.js';
-import strings from '../strings.js';
-import defaultTokens from './default-tokens.js';
+} from "./utils.js";
+import { sign, verify, decode } from "./jwt.js";
+import EventManager from "./event-manager.js";
+import strings from "../strings.js";
+import defaultTokens from "./default-tokens.js";
 import {
   minSecretLengthCheck,
   setupSecretLengthTooltip
-} from './secret-length-tooltip.js';
-import * as metrics from '../metrics.js';
+} from "./secret-length-tooltip.js";
+import * as metrics from "../metrics.js";
 import {
   algorithmSelect,
   signatureStatusElement,
@@ -39,9 +37,10 @@ import {
   decodedTabLink,
   encodedTabElement,
   decodedTabElement
-} from '../dom-elements.js';
+} from "../dom-elements.js";
 
-import log from 'loglevel';
+import log from "loglevel";
+import _ from "lodash";
 
 // The event manager lets us enable/disable events as needed without
 // manually tracking them. Events that need to be disabled should be
@@ -51,59 +50,67 @@ const eventManager = new EventManager();
 function trackToken(jwt, operation, extra) {
   const tokenInfo = getSafeTokenInfo(jwt);
 
-  metrics.track('editor-jwt-tracked', Object.assign({
-    operation: operation,
-    tokenInfo: tokenInfo
-  }, extra));
+  metrics.track(
+    "editor-jwt-tracked",
+    Object.assign(
+      {
+        operation: operation,
+        tokenInfo: tokenInfo
+      },
+      extra
+    )
+  );
 
   return tokenInfo.hash;
 }
 
 function isSharedSecretAlgorithm(algorithm) {
-  return algorithm && algorithm.indexOf('HS') === 0;
+  return algorithm && algorithm.indexOf("HS") === 0;
 }
 
 function isPublicKeyAlgorithm(algorithm) {
-  return algorithm && algorithm.indexOf('HS') === -1;
+  return algorithm && algorithm.indexOf("HS") === -1;
 }
 
 function markAsInvalid() {
-  signatureStatusElement.classList.remove('valid-token');
-  signatureStatusElement.classList.add('invalid-token');
-  signatureStatusElement.innerHTML =
-    `<i class="icon-budicon-501"></i> ${strings.editor.signatureInvalid}`;
+  signatureStatusElement.classList.remove("valid-token");
+  signatureStatusElement.classList.add("invalid-token");
+  signatureStatusElement.innerHTML = `<i class="icon-budicon-501"></i> ${
+    strings.editor.signatureInvalid
+  }`;
 }
 
 function markAsValid() {
-  const elementsWithError = document.getElementsByClassName('error');
+  const elementsWithError = document.getElementsByClassName("error");
   Array.prototype.forEach.call(elementsWithError, element => {
-    element.classList.remove('error');
+    element.classList.remove("error");
   });
 
-  signatureStatusElement.classList.remove('invalid-token');
-  signatureStatusElement.classList.add('valid-token');
-  signatureStatusElement.innerHTML =
-    `<i class="icon-budicon-499"></i> ${strings.editor.signatureVerified}`;
+  signatureStatusElement.classList.remove("invalid-token");
+  signatureStatusElement.classList.add("valid-token");
+  signatureStatusElement.innerHTML = `<i class="icon-budicon-499"></i> ${
+    strings.editor.signatureVerified
+  }`;
 }
 
 function displaySecretOrKeys(algorithm) {
   const algoType = algorithm.substr(0, 2);
   const algoSize = algorithm.substr(2, 3);
 
-  if(algoType === 'HS') {
+  if (algoType === "HS") {
     hmacShaTextSpan.firstChild.textContent = `HMACSHA${algoSize}`;
-    secretEditorContainer.style.display = '';
-    keyEditorContainer.style.display = 'none';
+    secretEditorContainer.style.display = "";
+    keyEditorContainer.style.display = "none";
   } else {
     const texts = {
-      RS: 'RSASHA',
-      PS: 'RSAPSSSHA',
-      ES: 'ECDSASHA'
+      RS: "RSASHA",
+      PS: "RSAPSSSHA",
+      ES: "ECDSASHA"
     };
 
     rsaShaTextSpan.firstChild.textContent = `${texts[algoType]}${algoSize}`;
-    secretEditorContainer.style.display = 'none';
-    keyEditorContainer.style.display = '';
+    secretEditorContainer.style.display = "none";
+    keyEditorContainer.style.display = "";
   }
 
   deferToNextLoop(fixEditorHeight);
@@ -111,10 +118,11 @@ function displaySecretOrKeys(algorithm) {
 
 function selectAlgorithm(algorithm) {
   eventManager.withDisabledEvents(() => {
-    const selected =
-      algorithmSelect.querySelector(`option[value="${algorithm}"]`);
+    const selected = algorithmSelect.querySelector(
+      `option[value="${algorithm}"]`
+    );
 
-    if(!selected) {
+    if (!selected) {
       log.info(`Invalid algorithm ${algorithm}, ignoring...`);
       return;
     }
@@ -126,8 +134,8 @@ function selectAlgorithm(algorithm) {
 }
 
 function isDefaultToken(token) {
-  for(const algorithm of Object.keys(defaultTokens)) {
-    if(defaultTokens[algorithm].token === token) {
+  for (const algorithm of Object.keys(defaultTokens)) {
+    if (defaultTokens[algorithm].token === token) {
       return true;
     }
   }
@@ -144,7 +152,7 @@ export function useDefaultToken(algorithm) {
     headerEditor.setValue(stringify(decoded.header));
     payloadEditor.setValue(stringify(decoded.payload));
 
-    if(isSharedSecretAlgorithm(algorithm)) {
+    if (isSharedSecretAlgorithm(algorithm)) {
       secretInput.value = defaults.secret;
     } else {
       publicKeyTextArea.value = defaults.publicKey;
@@ -161,18 +169,18 @@ function setAlgorithmInHeader(algorithm) {
       const header = JSON.parse(headerEditor.getValue());
       header.alg = algorithm;
       headerEditor.setValue(stringify(header));
-    } catch(e) {
+    } catch (e) {
       // SyntaxError is expected while things are being edited, ignore those
       // errors.
-      if(!(e instanceof SyntaxError)) {
+      if (!(e instanceof SyntaxError)) {
         // If it's not a SyntaxError, log the error.
-        log.warn('Failed to encode token: ', e);
+        log.warn("Failed to encode token: ", e);
       }
     }
 
     try {
       encodeToken();
-    } catch(e) {
+    } catch (e) {
       // Ignore error, this may fail in unexpected ways if the data
       // is being edited.
     }
@@ -182,11 +190,11 @@ function setAlgorithmInHeader(algorithm) {
 function algorithmChangeHandler() {
   const algorithm = getSelectedAlgorithm();
 
-  metrics.track('editor-algorithm-selected', { algorithm: algorithm });
+  metrics.track("editor-algorithm-selected", { algorithm: algorithm });
 
   displaySecretOrKeys(algorithm);
 
-  if(isDefaultToken(getTrimmedValue(tokenEditor))) {
+  if (isDefaultToken(getTrimmedValue(tokenEditor))) {
     useDefaultToken(algorithm);
   } else {
     setAlgorithmInHeader(algorithm);
@@ -194,12 +202,12 @@ function algorithmChangeHandler() {
 }
 
 function markAsInvalidWithElement(element, clearTokenEditor = true) {
-  element.classList.add('error');
+  element.classList.add("error");
   markAsInvalid();
 
-  if(clearTokenEditor) {
+  if (clearTokenEditor) {
     eventManager.withDisabledEvents(() => {
-      tokenEditor.setValue('');
+      tokenEditor.setValue("");
     });
   }
 }
@@ -211,12 +219,12 @@ function encodeToken() {
     let header;
     try {
       header = JSON.parse(headerEditor.getValue());
-    } catch(e) {
+    } catch (e) {
       markAsInvalidWithElement(headerElement, true);
       return;
     }
 
-    if(!header.alg) {
+    if (!header.alg) {
       setAlgorithmInHeader(getSelectedAlgorithm());
       return;
     } else {
@@ -226,32 +234,35 @@ function encodeToken() {
     let payload;
     try {
       payload = JSON.parse(payloadEditor.getValue());
-    } catch(e) {
+    } catch (e) {
       markAsInvalidWithElement(payloadElement, true);
       return;
     }
 
-    const key = isSharedSecretAlgorithm(header.alg) ?
-                  secretInput.value :
-                  privateKeyTextArea.value;
+    const key = isSharedSecretAlgorithm(header.alg)
+      ? secretInput.value
+      : privateKeyTextArea.value;
 
-    sign(header, payload, key, secretBase64Checkbox.checked).then(encoded => {
-      eventManager.withDisabledEvents(() => {
-        tokenEditor.setValue(encoded);
-        trackToken(encoded, 'encode', {
-          secretBase64Checkbox: secretBase64Checkbox.checked
+    sign(header, payload, key, secretBase64Checkbox.checked)
+      .then(encoded => {
+        eventManager.withDisabledEvents(() => {
+          tokenEditor.setValue(encoded);
+          trackToken(encoded, "encode", {
+            secretBase64Checkbox: secretBase64Checkbox.checked
+          });
         });
+      })
+      .catch(e => {
+        eventManager.withDisabledEvents(() => {
+          log.warn("Failed to sign/encode token: ", e);
+          markAsInvalid();
+          tokenEditor.setValue("");
+        });
+        metrics.track("editor-encoding-error");
+      })
+      .finally(() => {
+        verifyToken();
       });
-    }).catch(e => {
-      eventManager.withDisabledEvents(() => {
-        log.warn('Failed to sign/encode token: ', e);
-        markAsInvalid();
-        tokenEditor.setValue('');
-      });
-      metrics.track('editor-encoding-error');
-    }).finally(() => {
-      verifyToken();
-    });
   });
 }
 
@@ -263,12 +274,12 @@ function decodeToken() {
       const jwt = getTrimmedValue(tokenEditor);
       const decoded = decode(jwt);
 
-      const tokenHash = trackToken(jwt, 'decode');
+      const tokenHash = trackToken(jwt, "decode");
 
       selectAlgorithm(decoded.header.alg);
-      if(isPublicKeyAlgorithm(decoded.header.alg)) {
+      if (isPublicKeyAlgorithm(decoded.header.alg)) {
         downloadPublicKeyIfPossible(decoded).then(publicKey => {
-          metrics.track('editor-jwt-public-key-downloaded', {
+          metrics.track("editor-jwt-public-key-downloaded", {
             tokenHash: tokenHash
           });
 
@@ -282,19 +293,19 @@ function decodeToken() {
       headerEditor.setValue(stringify(decoded.header));
       payloadEditor.setValue(stringify(decoded.payload));
 
-      if(decoded.errors) {
+      if (decoded.errors) {
         markAsInvalidWithElement(editorElement, false);
-        metrics.track('editor-jwt-invalid', {
+        metrics.track("editor-jwt-invalid", {
           reason: `partial decode`,
           tokenHash: tokenHash
         });
       } else {
         verifyToken();
       }
-    } catch(e) {
-      log.warn('Failed to decode token: ', e);
+    } catch (e) {
+      log.warn("Failed to decode token: ", e);
 
-      metrics.track('editor-jwt-invalid', {
+      metrics.track("editor-jwt-invalid", {
         reason: `failed to decode token`,
         tokenHash: trackToken(jwt)
       });
@@ -306,33 +317,32 @@ function verifyToken() {
   const jwt = getTrimmedValue(tokenEditor);
   const decoded = decode(jwt);
 
-  const tokenHash = trackToken(jwt, 'verify');
+  const tokenHash = trackToken(jwt, "verify");
 
-  if(!decoded.header.alg || decoded.header.alg === 'none') {
+  if (!decoded.header.alg || decoded.header.alg === "none") {
     markAsInvalid();
-    metrics.track('editor-jwt-invalid', {
+    metrics.track("editor-jwt-invalid", {
       reason: `header.alg value is ${decoded.header.alg}`,
       tokenHash: tokenHash
     });
     return;
   }
 
-  const publicKeyOrSecret =
-    isSharedSecretAlgorithm(decoded.header.alg) ?
-      secretInput.value :
-      publicKeyTextArea.value;
+  const publicKeyOrSecret = isSharedSecretAlgorithm(decoded.header.alg)
+    ? secretInput.value
+    : publicKeyTextArea.value;
 
   verify(jwt, publicKeyOrSecret, secretBase64Checkbox.checked).then(valid => {
-    if(valid) {
+    if (valid) {
       markAsValid();
-      metrics.track('editor-jwt-verified', {
+      metrics.track("editor-jwt-verified", {
         tokenHash: tokenHash,
         secretBase64Checkbox: secretBase64Checkbox.checked
       });
     } else {
       markAsInvalid();
-      metrics.track('editor-jwt-invalid', {
-        reason: 'invalid signature',
+      metrics.track("editor-jwt-invalid", {
+        reason: "invalid signature",
         tokenHash: tokenHash,
         secretBase64Checkbox: secretBase64Checkbox.checked
       });
@@ -345,29 +355,29 @@ function verifyToken() {
 // Once a considerable amount of time has passed since this was put in place,
 // it may be safe to remove it. Enabled at: 2018-06-12.
 function removeSavedTokens() {
-  localStorage.removeItem('lastToken');
-  localStorage.removeItem('lastPublicKey');
+  localStorage.removeItem("lastToken");
+  localStorage.removeItem("lastPublicKey");
 }
 
 function setupTabEvents() {
   // These are relevant for portrait or mobile screens.
 
-  encodedTabLink.addEventListener('click', event => {
+  encodedTabLink.addEventListener("click", event => {
     event.preventDefault();
 
-    decodedTabLink.parentNode.classList.remove('current');
-    encodedTabLink.parentNode.classList.add('current');
-    decodedTabElement.classList.remove('current');
-    encodedTabElement.classList.add('current');
+    decodedTabLink.parentNode.classList.remove("current");
+    encodedTabLink.parentNode.classList.add("current");
+    decodedTabElement.classList.remove("current");
+    encodedTabElement.classList.add("current");
   });
 
-  decodedTabLink.addEventListener('click', event => {
+  decodedTabLink.addEventListener("click", event => {
     event.preventDefault();
 
-    encodedTabLink.parentNode.classList.remove('current');
-    decodedTabLink.parentNode.classList.add('current');
-    encodedTabElement.classList.remove('current');
-    decodedTabElement.classList.add('current');
+    encodedTabLink.parentNode.classList.remove("current");
+    decodedTabLink.parentNode.classList.add("current");
+    encodedTabElement.classList.remove("current");
+    decodedTabElement.classList.add("current");
   });
 }
 
@@ -376,25 +386,37 @@ function setupEvents() {
   // manually tracking them. Events that need to be disabled should be
   // passed to the event manager.
 
-  eventManager.addDomEvent(algorithmSelect, 'change', algorithmChangeHandler);
+  eventManager.addDomEvent(algorithmSelect, "change", algorithmChangeHandler);
 
   // When an encoded token is inserted, it must be decoded.
-  eventManager.addCodeMirrorEvent(tokenEditor, 'change', decodeToken);
+  eventManager.addCodeMirrorEvent(
+    tokenEditor,
+    "change",
+    _.throttle(decodeToken, 1000)
+  );
   // When parts of the decoded token are changed, it must be reencoded.
-  eventManager.addCodeMirrorEvent(headerEditor, 'change', encodeToken);
-  eventManager.addCodeMirrorEvent(payloadEditor, 'change', encodeToken);
+  eventManager.addCodeMirrorEvent(
+    headerEditor,
+    "change",
+    _.throttle(encodeToken, 1000)
+  );
+  eventManager.addCodeMirrorEvent(
+    payloadEditor,
+    "change",
+    _.throttle(encodeToken, 1000)
+  );
 
   // HMAC secret, show tooltip if secret is too short.
-  eventManager.addDomEvent(secretInput, 'input', minSecretLengthCheck);
+  eventManager.addDomEvent(secretInput, "input", minSecretLengthCheck);
   // HMAC secret, when changed the encoded token must be updated.
-  eventManager.addDomEvent(secretInput, 'input', encodeToken);
+  eventManager.addDomEvent(secretInput, "input", encodeToken);
   // Base64 checkbox, when changes the encoded token must be updated.
-  eventManager.addDomEvent(secretBase64Checkbox, 'change', encodeToken);
+  eventManager.addDomEvent(secretBase64Checkbox, "change", encodeToken);
   // Private key, when changed the encoded token must be updated.
-  eventManager.addDomEvent(privateKeyTextArea, 'input', encodeToken);
+  eventManager.addDomEvent(privateKeyTextArea, "input", encodeToken);
   // Public key, when changed the encoded token must NOT be updated
   // (only verified).
-  eventManager.addDomEvent(publicKeyTextArea, 'input', verifyToken);
+  eventManager.addDomEvent(publicKeyTextArea, "input", verifyToken);
 
   // The following events are never disabled, so it is not necessary to go
   // through the event manager for them.
@@ -408,17 +430,17 @@ export function setTokenEditorValue(value) {
 export function getTokenEditorValue() {
   return {
     token: getTrimmedValue(tokenEditor),
-    publicKey: isPublicKeyAlgorithm(getSelectedAlgorithm()) ?
-      publicKeyTextArea.value :
-      undefined
+    publicKey: isPublicKeyAlgorithm(getSelectedAlgorithm())
+      ? publicKeyTextArea.value
+      : undefined
   };
 }
 
 export function setupTokenEditor() {
   disableUnsupportedAlgorithms();
   setupEvents();
-  selectAlgorithm('HS256');
-  useDefaultToken('HS256');
+  selectAlgorithm("HS256");
+  useDefaultToken("HS256");
   fixEditorHeight();
   setupSecretLengthTooltip();
   setupClaimsTooltip();

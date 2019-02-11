@@ -12,10 +12,10 @@ function enableAll(events) {
 
 function tryAsResult(func) {
   const result = {};
-  
+
   try {
     result.result = func();
-  } catch(e) {
+  } catch (e) {
     result.exception = e;
   }
 
@@ -36,22 +36,27 @@ export default class EventManager {
       event: event,
       handler: handler
     });
-  
+
     target[enable](event, handler);
   }
 
   addDomEvent(target, event, handler) {
-    this.addEvent(target, 'addEventListener', 
-      'removeEventListener', event,handler);
+    this.addEvent(
+      target,
+      "addEventListener",
+      "removeEventListener",
+      event,
+      handler
+    );
   }
 
   addCodeMirrorEvent(target, event, handler) {
-    this.addEvent(target, 'on', 'off', event, handler);
+    this.addEvent(target, "on", "off", event, handler);
   }
-  
+
   withDisabledEvents(func) {
     // Nested calls are supported
-    if(this.callDepth === 0) {
+    if (this.callDepth === 0) {
       disableAll(this.events);
     }
 
@@ -59,13 +64,13 @@ export default class EventManager {
     const result = tryAsResult(func);
     --this.callDepth;
 
-    if(this.callDepth === 0) {
+    if (this.callDepth === 0) {
       enableAll(this.events);
     }
 
-    if(result.exception) {
+    if (result.exception) {
       throw result.exception;
-    } 
+    }
 
     return result.result;
   }
