@@ -68,9 +68,9 @@
     "xhr-mock": "^2.0.3"
   },
   "scripts": {
-    "postinstall": "grunt build-website",
     "start": "node server.js",
     "test": "grunt test",
-    "build": "grunt build"
-  }
+    "build": "grunt build-website"
+  },
+  "heroku-run-build-script": true
 }
