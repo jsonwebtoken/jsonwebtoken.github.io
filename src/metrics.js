@@ -92,7 +92,7 @@ export function init(apiKey) {
   // load the tools you've enabled for your account. Boosh!
   analytics.load(
     apiKey,
-    "https://dwh-tracking.it.auth0.com/external",
+    "https://dwh-tracking.it.auth0.com/external-metrics",
     "jwt.io"
   );
 
@@ -106,7 +106,6 @@ export function track(event, data) {
   if (window.metrics) {
     try {
       window.metrics.track(event, data);
-      console.log();
     } catch (e) {
       log.error(`Metrics library error for event ${event}: ${e}`);
     }
