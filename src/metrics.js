@@ -1,8 +1,8 @@
-import log from 'loglevel';
+import log from "loglevel";
 
 export function init(apiKey) {
   // Create a queue, but don't obliterate an existing one!
-  var analytics = window.analytics = window.analytics || [];
+  var analytics = (window.metrics = window.metrics || []);
 
   // If the real analytics.js is already on the page return.
   if (analytics.initialize) return;
@@ -10,7 +10,7 @@ export function init(apiKey) {
   // If the snippet was invoked already show an error.
   if (analytics.invoked) {
     if (window.console && console.error) {
-      console.error('Segment snippet included twice.');
+      console.error("Segment snippet included twice.");
     }
     return;
   }
@@ -19,32 +19,32 @@ export function init(apiKey) {
   // is never invoked twice.
   analytics.invoked = true;
 
-  // A list of the methods in Analytics.js to stub.
+  // A list of the methods in Auth0-metrics to stub.
   analytics.methods = [
-    'trackSubmit',
-    'trackClick',
-    'trackLink',
-    'trackForm',
-    'pageview',
-    'identify',
-    'reset',
-    'group',
-    'track',
-    'ready',
-    'alias',
-    'debug',
-    'page',
-    'once',
-    'off',
-    'on'
+    "trackSubmit",
+    "trackClick",
+    "trackLink",
+    "trackForm",
+    "pageview",
+    "identify",
+    "reset",
+    "group",
+    "track",
+    "ready",
+    "alias",
+    "debug",
+    "page",
+    "once",
+    "off",
+    "on"
   ];
 
   // Define a factory to create stubs. These are placeholders
-  // for methods in Analytics.js so that you never have to wait
+  // for methods in Auth0-metrics so that you never have to wait
   // for it to load to actually record data. The `method` is
   // stored as the first argument, so we can replay the data.
-  analytics.factory = function(method){
-    return function(){
+  analytics.factory = function(method) {
+    return function() {
       var args = Array.prototype.slice.call(arguments);
       args.unshift(method);
       analytics.push(args);
@@ -58,28 +58,43 @@ export function init(apiKey) {
     analytics[key] = analytics.factory(key);
   }
 
-  // Define a method to load Analytics.js from our CDN,
+  // Define a method to load Auth0-metrics from our CDN,
   // and that will be sure to only ever load it once.
-  analytics.load = function(key, options){
+  analytics.load = function(key, options) {
     // Create an async script element based on your key.
-    var script = document.createElement('script');
-    script.type = 'text/javascript';
+    var script = document.createElement("script");
+    script.type = "text/javascript";
     script.async = true;
-    script.src = 'https://cdn.segment.com/analytics.js/v1/'
-      + key + '/analytics.min.js';
+    script.src = "https://cdn.auth0.com/website/js/1.6.0/auth0-metrics-min.js";
+
+    script.onerror = function() {
+      console.error("No metrics");
+    };
+
+    script.onload = function() {
+      // Grab analytics and make it private
+      window.metrics = new Auth0Metrics(
+        key,
+        "https://dwh-tracking.it.auth0.com/external-metrics",
+        "jwt.io"
+      );
+    };
 
     // Insert our script next to the first script element.
-    var first = document.getElementsByTagName('script')[0];
+    var first = document.getElementsByTagName("script")[0];
     first.parentNode.insertBefore(script, first);
-    analytics._loadOptions = options;
   };
 
   // Add a version to keep track of what's in the wild.
-  analytics.SNIPPET_VERSION = '4.1.0';
+  analytics.SNIPPET_VERSION = "4.1.0";
 
-  // Load Analytics.js with your key, which will automatically
+  // Load Auth0-metrics with your key, which will automatically
   // load the tools you've enabled for your account. Boosh!
-  analytics.load(apiKey);
+  analytics.load(
+    apiKey,
+    "https://dwh-tracking.it.auth0.com/external",
+    "jwt.io"
+  );
 
   // Make the first page call to load the integrations. If
   // you'd like to manually name or tag the page, edit or
@@ -88,10 +103,11 @@ export function init(apiKey) {
 }
 
 export function track(event, data) {
-  if(window.analytics) {
+  if (window.metrics) {
     try {
-      window.analytics.track(event, data);
-    } catch(e) {
+      window.metrics.track(event, data);
+      console.log();
+    } catch (e) {
       log.error(`Metrics library error for event ${event}: ${e}`);
     }
   }
