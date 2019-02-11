@@ -75,7 +75,7 @@ export function init(apiKey) {
       // Grab analytics and make it private
       window.metrics = new Auth0Metrics(
         key,
-        "https://dwh-tracking.it.auth0.com/external",
+        "https://dwh-tracking.it.auth0.com/external-metrics",
         "jwt.io"
       );
     };
