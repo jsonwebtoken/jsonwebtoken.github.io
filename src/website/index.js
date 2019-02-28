@@ -1,6 +1,5 @@
 import "../google-analytics.js";
 import * as metrics from "../metrics.js";
-import metricsApiKey from "./metrics-api-key.js";
 import { setupNavbar } from "./navbar.js";
 import { setupExtensionButton } from "./extension.js";
 import { setupLibraries } from "./libraries.js";
@@ -66,7 +65,7 @@ function pickEbookOrExtensionBanner() {
 }
 
 function setupMetrics() {
-  metrics.init(metricsApiKey);
+  metrics.init();
 
   // Section visible metrics
   window.addEventListener("scroll", e => {

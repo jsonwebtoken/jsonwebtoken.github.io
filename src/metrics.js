@@ -1,6 +1,6 @@
 import log from "loglevel";
 
-export function init(apiKey) {
+export function init() {
   // Create a queue, but don't obliterate an existing one!
   var analytics = (window.metrics = window.metrics || []);
 
@@ -60,7 +60,7 @@ export function init(apiKey) {
 
   // Define a method to load Auth0-metrics from our CDN,
   // and that will be sure to only ever load it once.
-  analytics.load = function(key, options) {
+  analytics.load = function() {
     // Create an async script element based on your key.
     var script = document.createElement("script");
     script.type = "text/javascript";
@@ -74,9 +74,29 @@ export function init(apiKey) {
     script.onload = function() {
       // Grab analytics and make it private
       window.metrics = new Auth0Metrics(
-        key,
+        "",
         "https://dwh-tracking.it.auth0.com/external-metrics",
-        "jwt.io"
+        "jwt.io",
+        {
+          removeQueryParam: [
+            {
+              key: "token",
+              value: "[a-z0-9._~-]+"
+            },
+            {
+              key: "value",
+              value: "[a-z0-9._~-]+"
+            },
+            {
+              key: "id_token",
+              value: "[a-z0-9._~-]+"
+            },
+            {
+              key: "access_token",
+              value: "[a-z0-9._~-]+"
+            }
+          ]
+        }
       );
     };
 
@@ -90,9 +110,7 @@ export function init(apiKey) {
 
   // Load Auth0-metrics with your key, which will automatically
   // load the tools you've enabled for your account. Boosh!
-  analytics.load(
-    apiKey
-  );
+  analytics.load();
 
   // Make the first page call to load the integrations. If
   // you'd like to manually name or tag the page, edit or
