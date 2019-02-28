@@ -80,10 +80,6 @@ export function init() {
         {
           removeQueryParam: [
             {
-              key: "token",
-              value: "[a-z0-9._~-]+"
-            },
-            {
               key: "value",
               value: "[a-z0-9._~-]+"
             },
@@ -93,6 +89,10 @@ export function init() {
             },
             {
               key: "access_token",
+              value: "[a-z0-9._~-]+"
+            },
+            {
+              key: "token",
               value: "[a-z0-9._~-]+"
             }
           ]
