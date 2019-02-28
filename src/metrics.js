@@ -66,7 +66,7 @@ export function init() {
     script.type = "text/javascript";
     script.async = true;
     script.src =
-      "https://cdn.auth0.com/website/js/m/1.6.1/auth0-metrics.min.js";
+      "https://cdn.auth0.com/website/js/m/1.6.2/auth0-metrics.min.js";
 
     script.onerror = function() {
       console.error("No metrics");
