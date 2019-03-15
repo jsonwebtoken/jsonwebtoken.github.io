@@ -5,6 +5,8 @@ import { pki } from 'node-forge';
 
 import log from 'loglevel';
 
+window.jose = jose;
+
 // node-jose does not support keys shorter than block size. This is a
 // limitation from their implementation and could be resolved in the future.
 // See: https://github.com/cisco/node-jose/blob/master/lib/jwk/octkey.js#L141
