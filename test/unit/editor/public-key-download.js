@@ -4,7 +4,7 @@ import _ from 'lodash';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 
-import publicKeyDownloadInjector from 
+import publicKeyDownloadInjector from
   'inject-loader!../../../src/editor/public-key-download.js';
 
 chai.use(chaiAsPromised);
@@ -57,7 +57,7 @@ describe('Public key downloader', function() {
       .then(() => {
         httpGetStub.should.have.been
                    .calledWith(baseUrl + '.well-known/jwks.json');
-      }).should.notify(done);    
+      }).should.notify(done);
   });
 
   it('Finds keys in jwk header claim', function(done) {
@@ -79,7 +79,7 @@ describe('Public key downloader', function() {
       .should.eventually.include(jwks.keys[0].x5c[0])
       .then(() => {
         httpGetStub.should.have.callCount(0);
-      }).should.notify(done);    
+      }).should.notify(done);
   });
 
   it('Finds keys in jku header claim', function(done) {
@@ -101,7 +101,7 @@ describe('Public key downloader', function() {
       .should.eventually.include(jwks.keys[0].x5c[0])
       .then(() => {
         httpGetStub.should.have.been.calledWith(baseUrl);
-      }).should.notify(done);    
+      }).should.notify(done);
   });
 
   it('Finds keys in x5u header claim', function(done) {
@@ -122,7 +122,7 @@ describe('Public key downloader', function() {
       .should.eventually.include(jwks.keys[0].x5c[0])
       .then(() => {
         httpGetStub.should.have.been.calledWith(baseUrl);
-      }).should.notify(done);    
+      }).should.notify(done);
   });
 
   it('Finds keys in x5c string header claim', function(done) {
@@ -143,7 +143,7 @@ describe('Public key downloader', function() {
       .should.eventually.include(jwks.keys[0].x5c[0])
       .then(() => {
         httpGetStub.should.have.callCount(0);
-      }).should.notify(done);    
+      }).should.notify(done);
   });
 
   it('Finds keys in x5c array header claim', function(done) {
@@ -164,7 +164,7 @@ describe('Public key downloader', function() {
       .should.eventually.include(jwks.keys[0].x5c[0])
       .then(() => {
         httpGetStub.should.have.callCount(0);
-      }).should.notify(done);    
+      }).should.notify(done);
   });
 
   it('Rejects the promise when HTTP request fails', function(done) {
@@ -186,10 +186,10 @@ describe('Public key downloader', function() {
       .should.be.rejected
       .then(() => {
         httpGetStub.should.have.been.calledWith(baseUrl);
-      }).should.notify(done);    
+      }).should.notify(done);
   });
 
-  describe('Rejects the promise when invalid data ' + 
+  describe('Rejects the promise when invalid data ' +
            'is in jku claim URL', function() {
     const decodedToken = _.defaultsDeep({}, decodedBaseToken, {
       header: {
@@ -216,9 +216,9 @@ describe('Public key downloader', function() {
           httpGetStub.should.have.been.calledWith(baseUrl);
         }).should.notify(done);
     });
-      
+
     it('when the keys object does not exist', function(done) {
-      httpGetStub = sinon.stub().resolves({      
+      httpGetStub = sinon.stub().resolves({
       });
 
       downloadPublicKeyIfPossible(decodedToken)
@@ -227,7 +227,7 @@ describe('Public key downloader', function() {
           httpGetStub.should.have.been.calledWith(baseUrl);
         }).should.notify(done);
     });
-    
+
     it('when there is no kid', function(done) {
       httpGetStub = sinon.stub().resolves({
         keys: [{
@@ -241,7 +241,7 @@ describe('Public key downloader', function() {
           httpGetStub.should.have.been.calledWith(baseUrl);
         }).should.notify(done);
     });
-    
+
     it('when there are no x5u or x5c claims', function(done) {
       httpGetStub = sinon.stub().resolves({
         keys: [{

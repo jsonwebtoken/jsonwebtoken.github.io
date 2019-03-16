@@ -28,13 +28,13 @@ function getKeyFromX5Claims(claims) {
     } else {
       reject('x5c or x5u claims not available');
     }
-  });  
+  });
 }
 
 function getKeyFromJwkKeySetUrl(kid, url) {
   return httpGet(url).then(data => {
     data = JSON.parse(data);
-    
+
     if(!data || !data.keys || !(data.keys instanceof Array)) {
       throw new Error(`Could not get JWK key set from URL: ${url}`);
     }
