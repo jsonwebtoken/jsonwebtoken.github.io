@@ -26,7 +26,7 @@ describe('Public key downloader', function() {
 
   const jwks = {
     keys: [{
-      kid: 1,
+      kid: '1',
       x5c: ['test-x5c-key']
     }]
   };
@@ -38,7 +38,7 @@ describe('Public key downloader', function() {
   it('Finds keys in iss + .well-known URL', function(done) {
     const decodedToken = _.defaultsDeep({}, decodedBaseToken, {
       header: {
-        kid: 1
+        kid: '1'
       },
       payload: {
         iss: baseUrl
@@ -63,7 +63,7 @@ describe('Public key downloader', function() {
   it('Finds keys in jwk header claim', function(done) {
     const decodedToken = _.defaultsDeep({}, decodedBaseToken, {
       header: {
-        kid: 1,
+        kid: '1',
         jwk: jwks.keys[0]
       }
     });
@@ -85,7 +85,7 @@ describe('Public key downloader', function() {
   it('Finds keys in jku header claim', function(done) {
     const decodedToken = _.defaultsDeep({}, decodedBaseToken, {
       header: {
-        kid: 1,
+        kid: '1',
         jku: baseUrl
       }
     });
@@ -170,7 +170,7 @@ describe('Public key downloader', function() {
   it('Rejects the promise when HTTP request fails', function(done) {
     const decodedToken = _.defaultsDeep({}, decodedBaseToken, {
       header: {
-        kid: 1,
+        kid: '1',
         jku: baseUrl
       }
     });
@@ -193,7 +193,7 @@ describe('Public key downloader', function() {
            'is in jku claim URL', function() {
     const decodedToken = _.defaultsDeep({}, decodedBaseToken, {
       header: {
-        kid: 1,
+        kid: '1',
         jku: baseUrl
       }
     });
@@ -245,7 +245,7 @@ describe('Public key downloader', function() {
     it('when there are no x5u or x5c claims', function(done) {
       httpGetStub = sinon.stub().resolves({
         keys: [{
-          kid: 1
+          kid: '1'
         }]
       });
 
