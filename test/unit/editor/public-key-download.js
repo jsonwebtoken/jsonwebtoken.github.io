@@ -45,7 +45,10 @@ describe('Public key downloader', function() {
       }
     });
 
-    const httpGetStub = sinon.stub().resolves(JSON.stringify(jwks));
+    const httpGetStub = sinon.stub()
+      .onCall(0).resolves(JSON.stringify({ jwks_uri: '/.well-known/jwks.json' }))
+      .onCall(1).resolves(JSON.stringify(jwks));
+
     const downloadPublicKeyIfPossible = publicKeyDownloadInjector({
       '../utils.js': {
         httpGet: httpGetStub
@@ -55,6 +58,8 @@ describe('Public key downloader', function() {
     downloadPublicKeyIfPossible(decodedToken)
       .should.eventually.include(jwks.keys[0].x5c[0])
       .then(() => {
+        httpGetStub.should.have.been
+                   .calledWith(baseUrl + '.well-known/openid-configuration');
         httpGetStub.should.have.been
                    .calledWith(baseUrl + '.well-known/jwks.json');
       }).should.notify(done);

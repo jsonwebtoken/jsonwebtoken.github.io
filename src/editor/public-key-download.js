@@ -67,9 +67,17 @@ export function downloadPublicKeyIfPossible(decodedToken) {
     } else if(header.jwk) {
       resolve(getKeyFromX5Claims(header.jwk));
     } else if(header.kid && payload.iss) {
-      //Auth0-specific scheme
-      const url = payload.iss + '.well-known/jwks.json';
-      resolve(getKeyFromJwkKeySetUrl(header.kid, url));
+      const url = payload.iss + (payload.iss.substr(-1) === '/' ? '.well-known/openid-configuration' : '/.well-known/openid-configuration')
+
+      resolve(httpGet(url).then(data => {
+        data = JSON.parse(data);
+
+        if(!data || !data.jwks_uri || typeof data.jwks_uri !== 'string') {
+          throw new Error(`Could not get jwks_uri from URL: ${url}`);
+        }
+
+	return getKeyFromJwkKeySetUrl(header.kid, data.jwks_uri);
+      }));
     } else {
       reject('No details about key');
     }

@@ -660,6 +660,13 @@ describe('Editor', function() {
       before(async function() {
         this.app = express();
 
+        this.app.get('/.well-known/openid-configuration', (req, res) => {
+          res.set('Access-Control-Allow-Origin', '*');
+          res.json({
+            jwks_uri: 'http://localhost:3000/.well-known/jwks.json'
+          });
+        });
+
         this.app.get('/.well-known/jwks.json', (req, res) => {
           res.set('Access-Control-Allow-Origin', '*');
           res.json(jwks);
