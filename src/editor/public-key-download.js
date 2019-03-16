@@ -1,3 +1,5 @@
+import jose from 'node-jose';
+
 import { httpGet } from '../utils.js';
 
 function getKeyFromX5c(x5c) {
@@ -66,18 +68,31 @@ export function downloadPublicKeyIfPossible(decodedToken) {
       resolve(getKeyFromJwkKeySetUrl(header.kid, header.jku));
     } else if(header.jwk) {
       resolve(getKeyFromX5Claims(header.jwk));
-    } else if(header.kid && payload.iss) {
+    } else if(payload.iss) {
       const url = payload.iss + (payload.iss.substr(-1) === '/' ? '.well-known/openid-configuration' : '/.well-known/openid-configuration')
 
-      resolve(httpGet(url).then(data => {
+      httpGet(url).then(data => {
         data = JSON.parse(data);
 
         if(!data || !data.jwks_uri || typeof data.jwks_uri !== 'string') {
           throw new Error(`Could not get jwks_uri from URL: ${url}`);
         }
 
-	return getKeyFromJwkKeySetUrl(header.kid, data.jwks_uri);
-      }));
+        return httpGet(data.jwks_uri)
+      }).then(data => {
+        data = JSON.parse(data);
+
+        return jose.JWK.asKeyStore(data);
+      }).then(jwks => {
+
+        const keys = jwks.all({ alg: header.alg, kid: header.kid, use: 'sig' })
+
+        if (keys.length !== 1) {
+          throw new Error('Could not find a single definitive key in jwks_uri');
+        }
+
+        resolve(keys[0].toPEM())
+      }).catch(reject);
     } else {
       reject('No details about key');
     }
