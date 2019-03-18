@@ -1,3 +1,5 @@
+import jose from 'node-jose';
+
 import { httpGet } from '../utils.js';
 
 function getKeyFromX5c(x5c) {
@@ -28,13 +30,13 @@ function getKeyFromX5Claims(claims) {
     } else {
       reject('x5c or x5u claims not available');
     }
-  });  
+  });
 }
 
 function getKeyFromJwkKeySetUrl(kid, url) {
   return httpGet(url).then(data => {
     data = JSON.parse(data);
-    
+
     if(!data || !data.keys || !(data.keys instanceof Array)) {
       throw new Error(`Could not get JWK key set from URL: ${url}`);
     }
@@ -66,10 +68,31 @@ export function downloadPublicKeyIfPossible(decodedToken) {
       resolve(getKeyFromJwkKeySetUrl(header.kid, header.jku));
     } else if(header.jwk) {
       resolve(getKeyFromX5Claims(header.jwk));
-    } else if(header.kid && payload.iss) {
-      //Auth0-specific scheme
-      const url = payload.iss + '.well-known/jwks.json';
-      resolve(getKeyFromJwkKeySetUrl(header.kid, url));
+    } else if(payload.iss) {
+      const url = payload.iss + (payload.iss.substr(-1) === '/' ? '.well-known/openid-configuration' : '/.well-known/openid-configuration')
+
+      httpGet(url).then(data => {
+        data = JSON.parse(data);
+
+        if(!data || !data.jwks_uri || typeof data.jwks_uri !== 'string') {
+          throw new Error(`Could not get jwks_uri from URL: ${url}`);
+        }
+
+        return httpGet(data.jwks_uri)
+      }).then(data => {
+        data = JSON.parse(data);
+
+        return jose.JWK.asKeyStore(data);
+      }).then(jwks => {
+
+        const keys = jwks.all({ alg: header.alg, kid: header.kid, use: 'sig' })
+
+        if (keys.length !== 1) {
+          throw new Error('Could not find a single definitive key in jwks_uri');
+        }
+
+        resolve(keys[0].toPEM())
+      }).catch(reject);
     } else {
       reject('No details about key');
     }

@@ -660,6 +660,13 @@ describe('Editor', function() {
       before(async function() {
         this.app = express();
 
+        this.app.get('/.well-known/openid-configuration', (req, res) => {
+          res.set('Access-Control-Allow-Origin', '*');
+          res.json({
+            jwks_uri: 'http://localhost:3000/.well-known/jwks.json'
+          });
+        });
+
         this.app.get('/.well-known/jwks.json', (req, res) => {
           res.set('Access-Control-Allow-Origin', '*');
           res.json(jwks);
@@ -715,7 +722,7 @@ describe('Editor', function() {
         const publicKey = await this.page.$eval('textarea[name="public-key"]',
           publicKeyElement => publicKeyElement.value);
 
-        expect(publicKey).to.include(jwks.keys[0].x5c[0]);
+        expect(publicKey).to.include(`-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDdlatRjRjogo3WojgGHFHYLugd\nUWAY9iR3fy4arWNA1KoS8kVw33cJibXr8bvwUAUparCwlvdbH6dvEOfou0/gCFQs\nHUfQrSDv+MuSUMAe8jzKE4qW+jK+xQU9a03GUnKHkkle+Q0pX/g6jXZ7r1/xAK5D\no2kQ+X5xK9cipRgEKwIDAQAB\n-----END PUBLIC KEY-----\n`);
 
         const valid = await this.page.$eval('.validation-status', status => {
           return status.classList.contains('valid-token') &&
