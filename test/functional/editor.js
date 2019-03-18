@@ -691,7 +691,7 @@ describe('Editor', function() {
       });
 
       it('iss URL + .well-known', async function() {
-        //this.timeout(20000);
+        // this.timeout(20000);
 
         const key = await jose.JWK.asKey(defaultTokens.rs256.privateKey, 'pem');
         const token = await jose.JWS.createSign({
@@ -722,7 +722,7 @@ describe('Editor', function() {
         const publicKey = await this.page.$eval('textarea[name="public-key"]',
           publicKeyElement => publicKeyElement.value);
 
-        expect(publicKey).to.include(`-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDdlatRjRjogo3WojgGHFHYLugd\nUWAY9iR3fy4arWNA1KoS8kVw33cJibXr8bvwUAUparCwlvdbH6dvEOfou0/gCFQs\nHUfQrSDv+MuSUMAe8jzKE4qW+jK+xQU9a03GUnKHkkle+Q0pX/g6jXZ7r1/xAK5D\no2kQ+X5xK9cipRgEKwIDAQAB\n-----END PUBLIC KEY-----\n`);
+        expect(publicKey.replace(/(\r\n|\n|\r)/gm, '')).to.include('-----BEGIN PUBLIC KEY-----MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDdlatRjRjogo3WojgGHFHYLugdUWAY9iR3fy4arWNA1KoS8kVw33cJibXr8bvwUAUparCwlvdbH6dvEOfou0/gCFQsHUfQrSDv+MuSUMAe8jzKE4qW+jK+xQU9a03GUnKHkkle+Q0pX/g6jXZ7r1/xAK5Do2kQ+X5xK9cipRgEKwIDAQAB-----END PUBLIC KEY-----');
 
         const valid = await this.page.$eval('.validation-status', status => {
           return status.classList.contains('valid-token') &&
