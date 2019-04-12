@@ -141,7 +141,7 @@
         "aud": true,
         "exp": true,
         "nbf": true,
-        "iat": false,
+        "iat": true,
         "jti": true,
         "hs256": true,
         "hs384": true,
@@ -161,7 +161,7 @@
       "gitHubRepoPath": "blackdoor/jose",
       "repoUrl": "https://github.com/blackdoor/jose",
       "installCommandHtml":
-        "dependsOn(RootProject(uri(\"git://github.com/blackdoor/jose.git#0.1.0\")))"
+        "sbt: libraryDependencies += &quot;black.door&quot; %% &quot;jose&quot; % &quot;0.2.2&quot;\nmill: ivy&quot;black.door::jose:0.2.2&quot;"
     }
   ]
 }
