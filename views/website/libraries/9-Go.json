@@ -271,15 +271,15 @@
         "es256": true,
         "es384": true,
         "es512": true,
-        "ps256": false,
-        "ps384": false,
-        "ps512": false
+        "ps256": true,
+        "ps384": true,
+        "ps512": true
       },
       "authorUrl": "https://github.com/gbrlsnchs",
-      "authorName": "gbrlsnchs",
+      "authorName": "Gabriel Sanches",
       "gitHubRepoPath": "gbrlsnchs/jwt",
       "repoUrl": "https://github.com/gbrlsnchs/jwt",
-      "installCommandHtml": "go get github.com/gbrlsnchs/jwt"
+      "installCommandHtml": "go get -u github.com/gbrlsnchs/jwt/v3"
     },
     {
       "minimumVersion": null,
