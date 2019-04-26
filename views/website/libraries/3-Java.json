@@ -157,7 +157,7 @@
       "authorName": "FusionAuth",
       "gitHubRepoPath": "fusionauth/fusionauth-jwt",
       "repoUrl": "https://github.com/fusionauth/fusionauth-jwt",
-      "installCommandHtml": "maven: io.fusionauth / fusionauth-jwt / 3.0.0"
+      "installCommandHtml": "maven: io.fusionauth / fusionauth-jwt / 3.1.0"
     },
     {
       "minimumVersion": null,
