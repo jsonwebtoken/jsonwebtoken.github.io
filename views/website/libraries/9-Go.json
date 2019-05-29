@@ -186,9 +186,9 @@
       },
       "authorUrl": "https://github.com/lestrrat",
       "authorName": "lestrrat",
-      "gitHubRepoPath": "lestrrat/go-jwx",
-      "repoUrl": "https://github.com/lestrrat/go-jwx",
-      "installCommandHtml": "go get <a href=\"https://godoc.org/github.com/lestrrat/go-jwx\">github.com/lestrrat/go-jwx</a>"
+      "gitHubRepoPath": "lestrrat-go/jwx",
+      "repoUrl": "https://github.com/lestrrat-go/jwx",
+      "installCommandHtml": "go get <a href=\"https://godoc.org/github.com/lestrrat-go/jwx\">github.com/lestrrat-go/jwx</a>"
     },
     {
       "minimumVersion": null,
