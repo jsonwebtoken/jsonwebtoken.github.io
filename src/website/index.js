@@ -1,4 +1,3 @@
-import "../google-analytics.js";
 import * as metrics from "../metrics.js";
 import { setupNavbar } from "./navbar.js";
 import { setupExtensionButton } from "./extension.js";
