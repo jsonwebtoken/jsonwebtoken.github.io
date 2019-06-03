@@ -26,15 +26,10 @@ describe('Public key downloader', function() {
 
   const jwks = {
     keys: [{
-      kty: 'RSA',
       kid: '1',
-      e: 'AQAB',
-      n: '1GPz-Er5h7PCk4v3pSlnaLYNYrp4sVc6Tx7FVz9d8m4zIS2qzcTM_6dRbMgZ4hBdD35NpYzU4z-d8lN27-J_jOzHnCiMdkY-w52dCofAkICh6ftkFlG9bFQyH8Jz5UtpVkZyy1dxCRz_sbRAzUdjUYsGvrKXg-3UYCL5SBCnt0ycrvr3iKX9k8IlMrFRB8lBJ6eQVzkzGsuivPaThXjVZ_OpY7W-XsDjut7cFgPKIc843tW4CNaDJ6j3afm-RFOok__xLQH5uA7HXS_yqfEchvzXfYfMxJY2d-Eqw4xTurm3TT07RnwJuN9slDJUrTH9EKkJkjZ7dn7fZtGjGTpaDQ',
-      x5c: ['test-x5c-key'],
+      x5c: ['test-x5c-key']
     }]
   };
-
-  const keyAsPEM = `-----BEGIN PUBLIC KEY-----\r\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1GPz+Er5h7PCk4v3pSln\r\naLYNYrp4sVc6Tx7FVz9d8m4zIS2qzcTM/6dRbMgZ4hBdD35NpYzU4z+d8lN27+J/\r\njOzHnCiMdkY+w52dCofAkICh6ftkFlG9bFQyH8Jz5UtpVkZyy1dxCRz/sbRAzUdj\r\nUYsGvrKXg+3UYCL5SBCnt0ycrvr3iKX9k8IlMrFRB8lBJ6eQVzkzGsuivPaThXjV\r\nZ/OpY7W+XsDjut7cFgPKIc843tW4CNaDJ6j3afm+RFOok//xLQH5uA7HXS/yqfEc\r\nhvzXfYfMxJY2d+Eqw4xTurm3TT07RnwJuN9slDJUrTH9EKkJkjZ7dn7fZtGjGTpa\r\nDQIDAQAB\r\n-----END PUBLIC KEY-----\r\n`;
 
   function httpGetMock(data) {
     return (url) => data ? Promise.resolve(data) : Promise.reject();
@@ -61,7 +56,7 @@ describe('Public key downloader', function() {
     }).downloadPublicKeyIfPossible;
 
     downloadPublicKeyIfPossible(decodedToken)
-      .should.eventually.include(keyAsPEM)
+      .should.eventually.include(jwks.keys[0].x5c[0])
       .then(() => {
         httpGetStub.should.have.been
                    .calledWith(baseUrl + '.well-known/openid-configuration');
