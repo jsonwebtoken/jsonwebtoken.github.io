@@ -39,12 +39,12 @@ function parseLocationQuery() {
     if (token) {
       metrics.track("token-in-url", { type: key });
 
-      setTokenEditorValue(token);
-
       if (locSearch.publicKey || locHash.publicKey) {
         metrics.track("pubkey-in-url");
         publicKeyTextArea.value = locSearch.publicKey || locHash.publicKey;
       }
+
+      setTokenEditorValue(token);
 
       debuggerSection.scrollIntoView(true);
 
