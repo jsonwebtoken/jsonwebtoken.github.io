@@ -102,7 +102,7 @@ export function verify(jwt, secretOrPublicKeyString, base64Secret = false) {
 
   const decoded = decode(jwt);
 
-  if(!decoded.header.alg) {
+  if(!decoded.header.alg || decoded.errors) {
     return Promise.resolve(false);
   }
 
@@ -133,51 +133,33 @@ export function decode(jwt) {
 
   const split = jwt.split('.');
 
-  try {
-    result.header = JSON.parse(b64u.decode(split[0]));
-  } catch(e) {
-    result.header = {};
+  if (!isValidBase64String(split[2])) {
     result.errors = true;
   }
 
   try {
+    if (!isValidBase64String(split[0])) {
+      result.errors = true;
+    }
+    result.header = JSON.parse(b64u.decode(split[0]));
+  } catch(e) {
+    result.errors = true;
+  }
+
+  try {
+    if (!isValidBase64String(split[1])) {
+      result.errors = true;
+    }
     result.payload = JSON.parse(b64u.decode(split[1]));
   } catch(e) {
-    result.payload = {};
     result.errors = true;
   }
 
   return result;
 }
 
-export function isValidBase64String(s, urlOnly) {
-  try {
-    const validChars = urlOnly ?
-      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_=' :
-      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_+/=';
-
-    let hasPadding = false;
-    for(let i = 0; i < s.length; ++i) {
-      hasPadding |= s.charAt(i) === '=';
-      if(validChars.indexOf(s.charAt(i)) === -1) {
-        return false;
-      }
-    }
-
-    if(hasPadding) {
-      for(let i = s.indexOf('='); i < s.length; ++i) {
-        if(s.charAt(i) !== '=') {
-          return false;
-        }
-      }
-
-      return s.length % 4 === 0;
-    }
-
-    return true;
-  } catch (e) {
-    return false;
-  }
+export function isValidBase64String(s) {
+  return /^[a-zA-Z0-9_-]*$/.test(s);
 }
 
 export function isToken(jwt, checkTypClaim = false) {
@@ -193,7 +175,7 @@ export function isToken(jwt, checkTypClaim = false) {
 
   const split = jwt.split('.');
   let valid = true;
-  split.forEach(s => valid = valid && isValidBase64String(s, true));
+  split.forEach(s => valid = valid && isValidBase64String(s));
 
   return valid;
 }

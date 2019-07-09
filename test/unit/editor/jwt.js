@@ -220,16 +220,13 @@ describe('JWT', function() {
 
     it('detects valid Base64 and Base64URL strings', function() {
       data.forEach(d => {
-        jwt.isValidBase64String(d.b64, false).should.be.true;
-        jwt.isValidBase64String(d.b64u, false).should.be.true;
         jwt.isValidBase64String(d.b64u).should.be.true;
-        jwt.isValidBase64String(d.b64u, true).should.be.true;
       });
     });
 
     it('fails on invalid Base64 and Base64 URL strings', function() {
       data.forEach(d => {
-        if(d.b64.match(/[\+\/]/)) {
+        if(d.b64.match(/[\+\/=]/)) {
           jwt.isValidBase64String(d.b64, true).should.be.false;
         }
       });

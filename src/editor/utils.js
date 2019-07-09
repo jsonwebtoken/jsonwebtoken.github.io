@@ -54,26 +54,6 @@ export function isString(value) {
   return typeof value === 'string' || value instanceof String;
 }
 
-function getBase64Format(token) {
-  try {
-    function getFormat(str) {
-      if(jwt.isValidBase64String(str, true)) {
-        return 'base64url';
-      } else if(jwt.isValidBase64String(str, false)) {
-        return 'base64';
-      } else {
-        return 'invalid';
-      }
-    }
-
-    const formats = token.split('.').map(getFormat);
-    return formats.every(r => r === formats[0]) ?
-      formats[0] : 'invalid';
-  } catch(e) {
-    return 'invalid';
-  }
-}
-
 function getRegisteredClaims(payload) {
   const result = [];
 
@@ -125,7 +105,6 @@ export function getSafeTokenInfo(token) {
       Object.assign(result, {
         decodedWithErrors: decoded.errors,
         encodedSize: token.length,
-        base64Format: getBase64Format(token),
         header: {
           alg: decoded.header.alg,
         },
