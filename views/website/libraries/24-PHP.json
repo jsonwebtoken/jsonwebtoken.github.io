@@ -341,6 +341,34 @@
       "gitHubRepoPath": "miladrahimi/php-jwt",
       "repoUrl": "https://github.com/miladrahimi/php-jwt",
       "installCommandHtml": "composer require miladrahimi/php-jwt"
+    },
+    {
+      "minimumVersion": "7.2.1",
+      "support": {
+        "sign": true,
+        "verify": true,
+        "iss": true,
+        "sub": true,
+        "aud": true,
+        "exp": true,
+        "nbf": true,
+        "iat": true,
+        "jti": true,
+        "hs256": true,
+        "hs384": true,
+        "hs512": true,
+        "rs256": true,
+        "rs384": true,
+        "rs512": true,
+        "es256": false,
+        "es384": false,
+        "es512": false
+      },
+      "authorUrl": "https://github.com/nowakowskir",
+      "authorName": "Radosław Nowakowski",
+      "gitHubRepoPath": "nowakowskir/php-jwt",
+      "repoUrl": "https://github.com/nowakowskir/php-jwt",
+      "installCommandHtml": "composer require nowakowskir/php-jwt"
     }
   ]
 }
