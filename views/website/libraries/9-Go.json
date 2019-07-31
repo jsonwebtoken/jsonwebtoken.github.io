@@ -341,6 +341,37 @@
       "gitHubRepoPath": null,
       "repoUrl": "https://gitlab.com/rucuriousyet/jwt",
       "installCommandHtml": "go get <a href=\"https://godoc.org/gitlab.com/rucuriousyet/jwt\">gitlab.com/rucuriousyet/jwt</a>"
+    },
+    {
+      "minimumVersion": null,
+      "support": {
+        "sign": true,
+        "verify": true,
+        "iss": true,
+        "sub": true,
+        "aud": true,
+        "exp": true,
+        "nbf": true,
+        "iat": true,
+        "jti": true,
+        "hs256": true,
+        "hs384": false,
+        "hs512": false,
+        "rs256": false,
+        "rs384": false,
+        "rs512": false,
+        "es256": false,
+        "es384": false,
+        "es512": false,
+        "ps256": false,
+        "ps384": false,
+        "ps512": false
+      },
+      "authorUrl": "https://github.com/brianvoe",
+      "authorName": "Brian Voelker",
+      "gitHubRepoPath": "brianvoe/sjwt",
+      "repoUrl": "https://github.com/brianvoe/sjwt",
+      "installCommandHtml": "go get <a href=\"https://godoc.org/github.com/brianvoe/sjwt\">github.com/brianvoe/sjwt</a>"
     }
   ]
 }

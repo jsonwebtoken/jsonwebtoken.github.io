@@ -52,6 +52,19 @@ function getKeyFromJwkKeySetUrl(kid, url) {
   });
 }
 
+function supportedJwk({ kty, crv }) {
+  switch (kty) {
+    case 'RSA':
+      return true;
+    case 'EC':
+      return ['P-256', 'P-384', 'P-521'].includes(crv)
+    // node-jose does not support e.g. OKP keys or non-registered curves such as P-256K
+    // we also don't populate the HMAC secret
+    default:
+      return false;
+  }
+}
+
 export function downloadPublicKeyIfPossible(decodedToken) {
   return new Promise((resolve, reject) => {
     const header = decodedToken.header;
@@ -80,9 +93,9 @@ export function downloadPublicKeyIfPossible(decodedToken) {
 
         return httpGet(data.jwks_uri)
       }).then(data => {
-        data = JSON.parse(data);
+        const { keys } = JSON.parse(data);
 
-        return jose.JWK.asKeyStore(data);
+        return jose.JWK.asKeyStore({ keys: keys.filter(supportedJwk) });
       }).then(jwks => {
 
         const keys = jwks.all({ alg: header.alg, kid: header.kid, use: 'sig' })
