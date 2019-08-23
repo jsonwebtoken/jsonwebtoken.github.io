@@ -60,7 +60,8 @@ Here's a commented example of the .NET language file (`0-.NET.json`). All fields
         "es512": true,
         "ps256": true,
         "ps384": true,
-        "ps512": true
+        "ps512": true,
+        "eddsa": true
       },
 
       // Author URL, can be GitHub profile, personal page

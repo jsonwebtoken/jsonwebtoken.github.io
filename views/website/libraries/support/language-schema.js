@@ -82,6 +82,10 @@ module.exports = {
               es256: { type: 'boolean' },
               es384: { type: 'boolean' },
               es512: { type: 'boolean' },
+              ps256: { type: 'boolean' },
+              ps384: { type: 'boolean' },
+              ps512: { type: 'boolean' },
+              eddsa: { type: 'boolean' },
             }
           }
         }
