@@ -81,7 +81,10 @@ article(data-accordion, class=`accordion ${lang.uniqueClass}`)
         p
           i(class=lib.support.ps512 ? 'icon-budicon-500' : (lib.support.ps512 !== undefined ? 'icon-budicon-501' : 'icon-unknown'))
           | PS512
-
+        p
+          i(class=lib.support.edDSA ? 'icon-budicon-500' : (lib.support.edDSA !== undefined ? 'icon-budicon-501' : 'icon-unknown'))
+          | EdDSA
+          
     .author-info
       .maintainer
         if lib.authorUrl
