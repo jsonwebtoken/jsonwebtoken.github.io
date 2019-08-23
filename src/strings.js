@@ -39,12 +39,18 @@ export default {
   },
   extension: {
     alreadyInstalled: 'Already installed',
-    addToBrowser: 'Add to Browser',    
+    addToBrowser: 'Add to Browser',
     noJwtsFound: 'No JWTs found',
     saveBackTo: 'Save back to '
   },
   editor: {
     signatureVerified: 'signature verified',
-    signatureInvalid: 'invalid signature'
+    signatureInvalid: 'invalid signature',
+    jwtInvalid: 'Invalid JWT'
+  },
+  warnings: {
+    headerBase64Invalid: 'Looks like your JWT header is not encoded correctly using base64url (https://tools.ietf.org/html/rfc4648#section-5). Note that padding ("=") must be omitted as per https://tools.ietf.org/html/rfc7515#section-2',
+    payloadBase64Invalid: 'Looks like your JWT payload is not encoded correctly using base64url (https://tools.ietf.org/html/rfc4648#section-5). Note that padding ("=") must be omitted as per https://tools.ietf.org/html/rfc7515#section-2',
+    signatureBase64Invalid: 'Looks like your JWT signature is not encoded correctly using base64url (https://tools.ietf.org/html/rfc4648#section-5). Note that padding ("=") must be omitted as per https://tools.ietf.org/html/rfc7515#section-2',
   }
 };

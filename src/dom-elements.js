@@ -13,6 +13,8 @@ export const payloadElement = document.querySelector('.js-payload');
 
 export const signatureStatusElement =
   document.querySelector('.validation-status.js-signature');
+export const editorWarnings =
+  document.querySelector('.js-editor-warnings');
 
 export const algorithmSelect = document.getElementById('algorithm-select');
 export const algorithmEs512 =

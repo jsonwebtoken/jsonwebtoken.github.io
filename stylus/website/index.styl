@@ -522,6 +522,9 @@ body
       .error .CodeMirror
         background-color #ffc0cb
 
+      .warning .CodeMirror
+        background-color #fff7c9
+
       .box-content
         height 0
         overflow hidden
@@ -536,6 +539,7 @@ body
 
       .input
         padding 10px
+        position relative
         +breakpoint("tablet")
           padding 20px
           // &[data-alg="HS256"]
@@ -1191,3 +1195,26 @@ footer
   margin: 0;
   display: inline;
 }
+
+.editor-warning
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  background: rgba(127,123,100,0.1)
+  margin: 0;
+  border-top: 1px solid rgba(155,155,155,0.5);
+
+  &.hidden
+    display: none
+
+  p
+    margin: 0
+
+  p + p
+    margin: 20px 0 0
+
+.jwt-playground .algorithm-code .tab-content .input:hover
+  .editor-warning
+    display: none;

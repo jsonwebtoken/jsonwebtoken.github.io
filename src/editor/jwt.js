@@ -2,7 +2,7 @@ import jose from 'node-jose';
 import b64u from 'base64url';
 import any from 'promise.any';
 import { pki } from 'node-forge';
-
+import strings from '../strings';strings
 import log from 'loglevel';
 
 // node-jose does not support keys shorter than block size. This is a
@@ -97,24 +97,27 @@ export function sign(header,
 
 export function verify(jwt, secretOrPublicKeyString, base64Secret = false) {
   if(!isToken(jwt)) {
-    return Promise.resolve(false);
+    return Promise.resolve({validSignature: false});
   }
 
   const decoded = decode(jwt);
 
   if(!decoded.header.alg || decoded.errors) {
-    return Promise.resolve(false);
+    return Promise.resolve({validSignature: false});
   }
 
   return getJoseKey(decoded.header, secretOrPublicKeyString, base64Secret).then(
     key => {
       return jose.JWS.createVerify(key)
                      .verify(jwt)
-                     .then(() => true, () => false);
+                     .then(() => ({
+                       validSignature: true,
+                       validBase64: jwt.split('.').reduce((valid, s) => valid = valid && isValidBase64String(s), true)
+                     }), () => ({validSignature: false}));
     }, e => {
       log.warn('Could not verify token, ' +
                'probably due to bad data in it or the keys: ', e);
-      return false;
+      return {validSignature: false};
     }
   );
 }
@@ -123,7 +126,8 @@ export function decode(jwt) {
   const result = {
     header: {},
     payload: {},
-    errors: false
+    errors: false,
+    warnings: [],
   };
 
   if(!jwt) {
@@ -134,12 +138,12 @@ export function decode(jwt) {
   const split = jwt.split('.');
 
   if (!isValidBase64String(split[2])) {
-    result.errors = true;
+    result.warnings.push(strings.warnings.signatureBase64Invalid);
   }
 
   try {
     if (!isValidBase64String(split[0])) {
-      result.errors = true;
+      result.warnings.push(strings.warnings.headerBase64Invalid);
     }
     result.header = JSON.parse(b64u.decode(split[0]));
   } catch(e) {
@@ -148,7 +152,7 @@ export function decode(jwt) {
 
   try {
     if (!isValidBase64String(split[1])) {
-      result.errors = true;
+      result.warnings.push(strings.warnings.payloadBase64Invalid);
     }
     result.payload = JSON.parse(b64u.decode(split[1]));
   } catch(e) {
@@ -158,7 +162,11 @@ export function decode(jwt) {
   return result;
 }
 
-export function isValidBase64String(s) {
+export function isValidBase64String(s, allowPadding = false) {
+  if (allowPadding) {
+    return /^[a-zA-Z0-9_=-]*$/.test(s);
+  }
+
   return /^[a-zA-Z0-9_-]*$/.test(s);
 }
 
@@ -175,7 +183,7 @@ export function isToken(jwt, checkTypClaim = false) {
 
   const split = jwt.split('.');
   let valid = true;
-  split.forEach(s => valid = valid && isValidBase64String(s));
+  split.forEach(s => valid = valid && isValidBase64String(s, true));
 
   return valid;
 }
