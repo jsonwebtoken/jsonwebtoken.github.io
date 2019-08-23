@@ -41,9 +41,8 @@ describe('JWT', function() {
 
   it('considers Base64 (not URL) encoded tokens invalid', function() {
     const token = b64u.toBase64(tokens.hs256.token);
-
     jwt.isToken(token).should.be.false;
-    return jwt.verify(token, tokens.hs256.secret).should.eventually.include({validBase64: false});
+    return jwt.verify(token, tokens.hs256.secret).should.eventually.include({validSignature: false});
   });
 
   describe('verifies valid tokens', function() {
@@ -94,10 +93,10 @@ describe('JWT', function() {
     promises.push(jwt.verify(token3 + '.', 'whatever'));
     promises.push(jwt.verify(token3 + '.' + split[2], 'whatever'));
 
-    return Promise.all(promises.map(p => p.then(v => !v, e => true)))
+    return Promise.all(promises.map(p => p.then(v => !v.validSignature, e => true)))
                   .then(all => all.every(v => v))
                   .finally(() => log.enableAll())
-                  .should.eventually.include({validSignature: true});
+                  .should.eventually.be.true;
   });
 
   it('signs/verifies tokens (HS256)', function() {
@@ -227,7 +226,7 @@ describe('JWT', function() {
     it('fails on invalid Base64 and Base64 URL strings', function() {
       data.forEach(d => {
         if(d.b64.match(/[\+\/=]/)) {
-          jwt.isValidBase64String(d.b64, true).should.be.false;
+          jwt.isValidBase64String(d.b64).should.be.false;
         }
       });
     });
