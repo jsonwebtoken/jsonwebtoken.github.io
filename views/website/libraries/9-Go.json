@@ -33,7 +33,7 @@
       "authorName": "dgrijalva",
       "gitHubRepoPath": "dgrijalva/jwt-go",
       "repoUrl": "https://github.com/dgrijalva/jwt-go",
-      "installCommandHtml": "go get github.com/dgrijalva/jwt-go"
+      "installCommandHtml": "go get <a href=\"https://godoc.org/github.com/dgrijalva/jwt-go\">github.com/dgrijalva/jwt-go</a>"
     },
     {
       "minimumVersion": null,
@@ -64,7 +64,7 @@
       "authorName": "DV",
       "gitHubRepoPath": "dvsekhvalnov/jose2go",
       "repoUrl": "https://github.com/dvsekhvalnov/jose2go",
-      "installCommandHtml": "go get github.com/dvsekhvalnov/jose2go"
+      "installCommandHtml": "go get <a href=\"https://godoc.org/github.com/dvsekhvalnov/jose2go\">github.com/dvsekhvalnov/jose2go</a>"
     },
     {
       "minimumVersion": null,
@@ -95,8 +95,7 @@
       "authorName": "SermoDigital",
       "gitHubRepoPath": "SermoDigital/jose",
       "repoUrl": "https://github.com/SermoDigital/jose",
-      "installCommandHtml":
-        "go get <a href=\"https://github.com/SermoDigital/jose\">github.com/SermoDigital/jose</a>"
+      "installCommandHtml": "go get <a href=\"https://godoc.org/github.com/SermoDigital/jose\">github.com/SermoDigital/jose</a>"
     },
     {
       "minimumVersion": null,
@@ -127,7 +126,7 @@
       "authorName": "robbert229",
       "gitHubRepoPath": "robbert229/jwt",
       "repoUrl": "https://github.com/robbert229/jwt",
-      "installCommandHtml": "go get github.com/robbert229/jwt"
+      "installCommandHtml": "go get <a href=\"https://godoc.org/github.com/robbert229/jwt\">github.com/robbert229/jwt</a>"
     },
     {
       "minimumVersion": null,
@@ -158,7 +157,7 @@
       "authorName": "DV",
       "gitHubRepoPath": "square/go-jose",
       "repoUrl": "https://github.com/square/go-jose",
-      "installCommandHtml": "go get github.com/square/go-jose"
+      "installCommandHtml": "go get <a href=\"https://godoc.org/github.com/square/go-jose\">github.com/square/go-jose</a>"
     },
     {
       "minimumVersion": null,
@@ -187,9 +186,9 @@
       },
       "authorUrl": "https://github.com/lestrrat",
       "authorName": "lestrrat",
-      "gitHubRepoPath": "lestrrat/go-jwx",
-      "repoUrl": "https://github.com/lestrrat/go-jwx",
-      "installCommandHtml": "go get github.com/lestrrat/go-jwx"
+      "gitHubRepoPath": "lestrrat-go/jwx",
+      "repoUrl": "https://github.com/lestrrat-go/jwx",
+      "installCommandHtml": "go get <a href=\"https://godoc.org/github.com/lestrrat-go/jwx\">github.com/lestrrat-go/jwx</a>"
     },
     {
       "minimumVersion": null,
@@ -217,7 +216,7 @@
       "authorName": "adam-hanna",
       "gitHubRepoPath": "adam-hanna/jwt-auth",
       "repoUrl": "https://github.com/adam-hanna/jwt-auth",
-      "installCommandHtml": "go get github.com/adam-hanna/jwt-auth"
+      "installCommandHtml": "go get <a href=\"https://godoc.org/github.com/adam-hanna/jwt-auth\">github.com/adam-hanna/jwt-auth</a>"
     },
     {
       "minimumVersion": null,
@@ -248,7 +247,7 @@
       "authorName": "nickvellios",
       "gitHubRepoPath": "nickvellios/gojwt",
       "repoUrl": "https://github.com/nickvellios/gojwt",
-      "installCommandHtml": "go get github.com/nickvellios/gojwt"
+      "installCommandHtml": "go get <a href=\"https://godoc.org/github.com/nickvellios/gojwt\">github.com/nickvellios/gojwt</a>"
     },
     {
       "minimumVersion": null,
@@ -271,15 +270,15 @@
         "es256": true,
         "es384": true,
         "es512": true,
-        "ps256": false,
-        "ps384": false,
-        "ps512": false
+        "ps256": true,
+        "ps384": true,
+        "ps512": true
       },
       "authorUrl": "https://github.com/gbrlsnchs",
-      "authorName": "gbrlsnchs",
+      "authorName": "Gabriel Sanches",
       "gitHubRepoPath": "gbrlsnchs/jwt",
       "repoUrl": "https://github.com/gbrlsnchs/jwt",
-      "installCommandHtml": "go get github.com/gbrlsnchs/jwt"
+      "installCommandHtml": "GO111MODULE=on go get <a href=\"https://godoc.org/github.com/gbrlsnchs/jwt\">github.com/gbrlsnchs/jwt/v3</a>"
     },
     {
       "minimumVersion": null,
@@ -310,7 +309,7 @@
       "authorName": "Pascal de Kloe",
       "gitHubRepoPath": "pascaldekloe/jwt",
       "repoUrl": "https://github.com/pascaldekloe/jwt",
-      "installCommandHtml": "go get github.com/pascaldekloe/jwt"
+      "installCommandHtml": "go get <a href=\"https://godoc.org/github.com/pascaldekloe/jwt\">github.com/pascaldekloe/jwt</a>"
     },
     {
       "minimumVersion": null,
@@ -341,7 +340,38 @@
       "authorName": "Seth Moeckel",
       "gitHubRepoPath": null,
       "repoUrl": "https://gitlab.com/rucuriousyet/jwt",
-      "installCommandHtml": "go get gitlab.com/rucuriousyet/jwt"
+      "installCommandHtml": "go get <a href=\"https://godoc.org/gitlab.com/rucuriousyet/jwt\">gitlab.com/rucuriousyet/jwt</a>"
+    },
+    {
+      "minimumVersion": null,
+      "support": {
+        "sign": true,
+        "verify": true,
+        "iss": true,
+        "sub": true,
+        "aud": true,
+        "exp": true,
+        "nbf": true,
+        "iat": true,
+        "jti": true,
+        "hs256": true,
+        "hs384": false,
+        "hs512": false,
+        "rs256": false,
+        "rs384": false,
+        "rs512": false,
+        "es256": false,
+        "es384": false,
+        "es512": false,
+        "ps256": false,
+        "ps384": false,
+        "ps512": false
+      },
+      "authorUrl": "https://github.com/brianvoe",
+      "authorName": "Brian Voelker",
+      "gitHubRepoPath": "brianvoe/sjwt",
+      "repoUrl": "https://github.com/brianvoe/sjwt",
+      "installCommandHtml": "go get <a href=\"https://godoc.org/github.com/brianvoe/sjwt\">github.com/brianvoe/sjwt</a>"
     }
   ]
 }

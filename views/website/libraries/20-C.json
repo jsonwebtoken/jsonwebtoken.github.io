@@ -64,7 +64,7 @@
       "authorName": "linuxwolf",
       "gitHubRepoPath": "cisco/cjose",
       "repoUrl": "https://github.com/cisco/cjose",
-      "installCommandHtml": "go get github.com/cisco/cjose"
+      "installCommandHtml": "git clone <a href=\"https://github.com/cisco/cjose\">https://github.com/cisco/cjose.git</a> && cd cjose && ./configure && make"
     }
   ]
 }
