@@ -58,7 +58,8 @@
         "es512": true,
         "ps256": true,
         "ps384": true,
-        "ps512": true
+        "ps512": true,
+        "eddsa": true
       },
       "authorUrl": "https://github.com/panva",
       "authorName": "Filip Skokan",
