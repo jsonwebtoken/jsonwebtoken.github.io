@@ -36,7 +36,8 @@ import {
   encodedTabLink,
   decodedTabLink,
   encodedTabElement,
-  decodedTabElement
+  decodedTabElement,
+  editorWarnings
 } from "../dom-elements.js";
 
 import log from "loglevel";
@@ -77,6 +78,14 @@ function markAsInvalid() {
   signatureStatusElement.classList.add("invalid-token");
   signatureStatusElement.innerHTML = `<i class="icon-budicon-501"></i> ${
     strings.editor.signatureInvalid
+  }`;
+}
+
+function markJWTAsInvalid() {
+  signatureStatusElement.classList.remove("valid-token");
+  signatureStatusElement.classList.add("invalid-token");
+  signatureStatusElement.innerHTML = `<i class="icon-budicon-501"></i> ${
+    strings.editor.jwtInvalid
   }`;
 }
 
@@ -212,6 +221,28 @@ function markAsInvalidWithElement(element, clearTokenEditor = true) {
   }
 }
 
+function showEditorWarnings(warnings) {
+  editorElement.classList.add("warning");
+  editorWarnings.classList.remove("hidden");
+  editorWarnings.innerHTML = '';
+
+  warnings.forEach(warning => {
+    const warningElement = document.createElement('p');
+    const warningLabel = document.createElement('strong');
+    const warningMessage = document.createTextNode(warning)
+    warningLabel.innerText = 'Warning: ';
+    warningElement.appendChild(warningLabel);
+    warningElement.appendChild(warningMessage);
+    editorWarnings.appendChild(warningElement)
+  });
+}
+
+function hideEditorWarnings() {
+  editorElement.classList.remove("warning");
+  editorWarnings.classList.add("hidden");
+  editorWarnings.innerHTML = '';
+}
+
 function encodeToken() {
   deferToNextLoop(fixEditorHeight);
 
@@ -300,6 +331,13 @@ function decodeToken() {
           tokenHash: tokenHash
         });
       } else {
+        if (decoded.warnings && decoded.warnings.length > 0) {
+          showEditorWarnings(decoded.warnings);
+          markJWTAsInvalid();
+        } else {
+          hideEditorWarnings();
+        }
+
         verifyToken();
       }
     } catch (e) {
@@ -332,13 +370,22 @@ function verifyToken() {
     ? secretInput.value
     : publicKeyTextArea.value;
 
-  verify(jwt, publicKeyOrSecret, secretBase64Checkbox.checked).then(valid => {
-    if (valid) {
-      markAsValid();
-      metrics.track("editor-jwt-verified", {
-        tokenHash: tokenHash,
-        secretBase64Checkbox: secretBase64Checkbox.checked
-      });
+  verify(jwt, publicKeyOrSecret, secretBase64Checkbox.checked).then(result => {
+    if (result.validSignature) {
+      if (!result.validBase64) {
+        markJWTAsInvalid();
+        metrics.track("editor-jwt-invalid", {
+          reason: "invalid base64",
+          tokenHash: tokenHash,
+          secretBase64Checkbox: secretBase64Checkbox.checked
+        });
+      } else {
+        markAsValid();
+        metrics.track("editor-jwt-verified", {
+          tokenHash: tokenHash,
+          secretBase64Checkbox: secretBase64Checkbox.checked
+        });
+      }
     } else {
       markAsInvalid();
       metrics.track("editor-jwt-invalid", {
