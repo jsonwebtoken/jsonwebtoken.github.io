@@ -86,7 +86,8 @@
         "es512": true,
         "ps256": true,
         "ps384": true,
-        "ps512": true
+        "ps512": true,
+        "eddsa": false
       },
       "authorUrl": "https://github.com/cisco",
       "authorName": "Cisco Systems",
