@@ -90,7 +90,7 @@
         "ps256": true,
         "ps384": true,
         "ps512": true,
-        "edDSA": true
+        "eddsa": true
       },
       "authorUrl": "https://github.com/simo5",
       "authorName": "Simo Sorce",
