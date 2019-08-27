@@ -1,5 +1,5 @@
 import log from "loglevel";
-import _ from "lodash";
+import debounce from 'lodash.debounce';
 
 
 export function init() {
@@ -121,7 +121,7 @@ export function init() {
   analytics.page();
 }
 
-export const track = _.debounce((event, data) => {
+export const track = debounce((event, data) => {
   if (window.metrics) {
     try {
       window.metrics.track(event, data);
@@ -129,4 +129,4 @@ export const track = _.debounce((event, data) => {
       log.error(`Metrics library error for event ${event}: ${e}`);
     }
   }
-}, 2000);
+}, 1000);
