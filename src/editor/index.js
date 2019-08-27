@@ -41,7 +41,6 @@ import {
 } from "../dom-elements.js";
 
 import log from "loglevel";
-import _ from "lodash";
 
 // The event manager lets us enable/disable events as needed without
 // manually tracking them. Events that need to be disabled should be
@@ -439,18 +438,18 @@ function setupEvents() {
   eventManager.addCodeMirrorEvent(
     tokenEditor,
     "change",
-    _.throttle(decodeToken, 1000)
+    decodeToken
   );
   // When parts of the decoded token are changed, it must be reencoded.
   eventManager.addCodeMirrorEvent(
     headerEditor,
     "change",
-    _.throttle(encodeToken, 1000)
+    encodeToken
   );
   eventManager.addCodeMirrorEvent(
     payloadEditor,
     "change",
-    _.throttle(encodeToken, 1000)
+    encodeToken
   );
 
   // HMAC secret, show tooltip if secret is too short.

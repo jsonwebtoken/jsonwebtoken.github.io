@@ -1,4 +1,6 @@
 import log from "loglevel";
+import _ from "lodash";
+
 
 export function init() {
   // Create a queue, but don't obliterate an existing one!
@@ -119,7 +121,7 @@ export function init() {
   analytics.page();
 }
 
-export function track(event, data) {
+export const track = _.debounce((event, data) => {
   if (window.metrics) {
     try {
       window.metrics.track(event, data);
@@ -127,4 +129,4 @@ export function track(event, data) {
       log.error(`Metrics library error for event ${event}: ${e}`);
     }
   }
-}
+}, 2000);
