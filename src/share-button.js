@@ -1,14 +1,11 @@
 import { copyTokenLink } from './utils.js';
 import { getTokenEditorValue } from './editor';
-import * as metrics from './metrics.js';
 
 import strings from './strings.js';
 
 export function setupShareJwtButton(shareJwtElement, shareJwtTextElement) {
   shareJwtElement.addEventListener('click', event => {
     event.preventDefault();
-
-    metrics.track('editor-share-button-clicked');
 
     const value = getTokenEditorValue();
     if(value.token) {

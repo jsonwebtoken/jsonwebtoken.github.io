@@ -1,5 +1,4 @@
 import { isWideScreen } from '../utils.js';
-import * as metrics from '../metrics.js';
 import * as jwt from './jwt.js';
 import registeredClaims from './jwt-iana-registered-claims.js';
 import forge from 'node-forge';
@@ -46,7 +45,6 @@ export function disableUnsupportedAlgorithms() {
   // TODO: test supported algorithms in runtime
   if(isSafari()) {
     algorithmEs512.disabled = true;
-    metrics.track('editor-disabled-es512-safari');
   }
 }
 
