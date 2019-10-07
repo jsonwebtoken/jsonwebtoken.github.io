@@ -18,7 +18,6 @@ import {
   minSecretLengthCheck,
   setupSecretLengthTooltip
 } from "./secret-length-tooltip.js";
-import * as metrics from "../metrics.js";
 import {
   algorithmSelect,
   signatureStatusElement,
@@ -46,23 +45,6 @@ import log from "loglevel";
 // manually tracking them. Events that need to be disabled should be
 // passed to the event manager.
 const eventManager = new EventManager();
-
-function trackToken(jwt, operation, extra) {
-  const tokenInfo = getSafeTokenInfo(jwt);
-
-  metrics.track(
-    "editor-jwt-tracked",
-    Object.assign(
-      {
-        operation: operation,
-        tokenInfo: tokenInfo
-      },
-      extra
-    )
-  );
-
-  return tokenInfo.hash;
-}
 
 function isSharedSecretAlgorithm(algorithm) {
   return algorithm && algorithm.indexOf("HS") === 0;
@@ -198,8 +180,6 @@ function setAlgorithmInHeader(algorithm) {
 function algorithmChangeHandler() {
   const algorithm = getSelectedAlgorithm();
 
-  metrics.track("editor-algorithm-selected", { algorithm: algorithm });
-
   displaySecretOrKeys(algorithm);
 
   if (isDefaultToken(getTrimmedValue(tokenEditor))) {
@@ -277,9 +257,6 @@ function encodeToken() {
       .then(encoded => {
         eventManager.withDisabledEvents(() => {
           tokenEditor.setValue(encoded);
-          trackToken(encoded, "encode", {
-            secretBase64Checkbox: secretBase64Checkbox.checked
-          });
         });
       })
       .catch(e => {
@@ -288,7 +265,6 @@ function encodeToken() {
           markAsInvalid();
           tokenEditor.setValue("");
         });
-        metrics.track("editor-encoding-error");
       })
       .finally(() => {
         verifyToken();
@@ -304,15 +280,9 @@ function decodeToken() {
       const jwt = getTrimmedValue(tokenEditor);
       const decoded = decode(jwt);
 
-      const tokenHash = trackToken(jwt, "decode");
-
       selectAlgorithm(decoded.header.alg);
       if (isPublicKeyAlgorithm(decoded.header.alg)) {
         downloadPublicKeyIfPossible(decoded).then(publicKey => {
-          metrics.track("editor-jwt-public-key-downloaded", {
-            tokenHash: tokenHash
-          });
-
           eventManager.withDisabledEvents(() => {
             publicKeyTextArea.value = publicKey;
             verifyToken();
@@ -325,10 +295,6 @@ function decodeToken() {
 
       if (decoded.errors) {
         markAsInvalidWithElement(editorElement, false);
-        metrics.track("editor-jwt-invalid", {
-          reason: `partial decode`,
-          tokenHash: tokenHash
-        });
       } else {
         if (decoded.warnings && decoded.warnings.length > 0) {
           showEditorWarnings(decoded.warnings);
@@ -341,11 +307,6 @@ function decodeToken() {
       }
     } catch (e) {
       log.warn("Failed to decode token: ", e);
-
-      metrics.track("editor-jwt-invalid", {
-        reason: `failed to decode token`,
-        tokenHash: trackToken(jwt)
-      });
     }
   });
 }
@@ -354,14 +315,8 @@ function verifyToken() {
   const jwt = getTrimmedValue(tokenEditor);
   const decoded = decode(jwt);
 
-  const tokenHash = trackToken(jwt, "verify");
-
   if (!decoded.header.alg || decoded.header.alg === "none") {
     markAsInvalid();
-    metrics.track("editor-jwt-invalid", {
-      reason: `header.alg value is ${decoded.header.alg}`,
-      tokenHash: tokenHash
-    });
     return;
   }
 
@@ -373,25 +328,11 @@ function verifyToken() {
     if (result.validSignature) {
       if (!result.validBase64) {
         markJWTAsInvalid();
-        metrics.track("editor-jwt-invalid", {
-          reason: "invalid base64",
-          tokenHash: tokenHash,
-          secretBase64Checkbox: secretBase64Checkbox.checked
-        });
       } else {
         markAsValid();
-        metrics.track("editor-jwt-verified", {
-          tokenHash: tokenHash,
-          secretBase64Checkbox: secretBase64Checkbox.checked
-        });
       }
     } else {
       markAsInvalid();
-      metrics.track("editor-jwt-invalid", {
-        reason: "invalid signature",
-        tokenHash: tokenHash,
-        secretBase64Checkbox: secretBase64Checkbox.checked
-      });
     }
   });
 }
