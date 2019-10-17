@@ -1,0 +1,55 @@
+extends layout
+
+block content
+  nav.navbar.closed
+    .container
+      .top-mobile
+        .menu-trigger
+          span
+
+        a.brand(href='/')
+          img(src='/img/pic_logo.svg').icon
+          img(src='/img/logo.svg').logo
+
+      nav.menu
+        a(href='#debugger-io').scrollto Debugger
+        a(href='#libraries-io').scrollto Libraries
+        a(href='/introduction') Introduction
+        a(href='https://community.auth0.com/c/identity/jwt', target='_blank') Ask
+        a(href='http://swag.auth0.com/', target='_blank') Get a T-shirt!
+
+      .social
+        a.a0(href='https://auth0.com/?utm_source=jwtio&utm_campaign=craftedby', target='_blank')
+          span.by-text Crafted by
+          img(src='/img/pic_logo_ft.svg', alt='Token Based Authentication')
+
+      a.supported(href='https://auth0.com/?utm_source=jwtio&utm_campaign=craftedby', target="_blank")
+          | Supported by
+          img(src='/img/ico_logo.svg', alt='Token Based Authentication')
+
+  section.banner-jwt
+    .container
+      a.logo(href='/')
+        img(src='/img/pic_logo.svg', alt='Token Based Authentication')
+
+      p
+        | JSON Web Tokens are an open, industry standard&nbsp;
+        a(href='https://tools.ietf.org/html/rfc7519', target='_blank') RFC 7519
+        |  method for representing claims securely between two parties.
+      p JWT.IO allows you to decode, verify and generate JWT.
+
+      a.btn.btn-lg(href="/introduction") Learn more about jwt
+
+  include extension.pug
+  
+  include ebook-image.pug
+
+  include token-editor.pug
+
+  include libraries.pug
+
+  include assets.pug
+
+  include counter.pug
+
+  script(src='/js/index.js')

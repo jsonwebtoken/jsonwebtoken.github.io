@@ -3,4 +3,6 @@ dist
 .tmp
 .DS_Store
 npm-debug.log
-
+.dockerignore
+Dockerfile
+yarn.lock

@@ -72,25 +72,25 @@ module.exports = grunt => {
           dest: 'dist/extension/css/'
         }]
       }
-    }, 
+    },
 
     crx: {
       pack: {
         src: "dist/extension/**/*",
-        dest: 'dist/chrome-jwt-debugger-extension-v' + 
+        dest: 'dist/chrome-jwt-debugger-extension-v' +
               `${extensionManifest.version}.zip`
       }
     },
 
     exec: {
       firefoxExtensionPack: {
-        command: 'node_modules/web-ext/bin/web-ext build ' + 
-                 '--source-dir=dist/extension --artifacts-dir=dist ' + 
+        command: 'node_modules/web-ext/bin/web-ext build ' +
+                 '--source-dir=dist/extension --artifacts-dir=dist ' +
                  '--overwrite-dest'
       },
       renameFirefoxExtension: {
-        command: `mv dist/jwt_debugger-${extensionManifest.version}.zip ` + 
-                 'dist/firefox-jwt-debugger-extension-' + 
+        command: `mv dist/jwt_debugger-${extensionManifest.version}.zip ` +
+                 'dist/firefox-jwt-debugger-extension-' +
                  `v${extensionManifest.version}.zip`
       }
     },
@@ -118,13 +118,14 @@ module.exports = grunt => {
         },
         files: {
           'dist/website/index.html': 'views/website/index.pug',
-          'dist/website/introduction/index.html': 
+          'dist/website/home/index.html': 'views/website/home.pug',
+          'dist/website/introduction/index.html':
             'views/website/introduction.pug'
         }
       },
       extension: {
         files: {
-          'dist/extension/index.html': 'views/extension/index.pug'          
+          'dist/extension/index.html': 'views/extension/index.pug'
         }
       }
     },
@@ -201,7 +202,7 @@ module.exports = grunt => {
           // Higher default timeout to account for some animations
           timeout: 10000
         },
-        src: ['test/functional/**.js']        
+        src: ['test/functional/**.js']
       }
     },
 
@@ -248,30 +249,30 @@ module.exports = grunt => {
     'exec:firefoxExtensionPack',
     'exec:renameFirefoxExtension'
   ]);
-  
+
   grunt.registerTask('build-extension-dev', [
     'clean:extension',
-    'copy:extension', 
+    'copy:extension',
     'build-extension-views',
     'webpack:extensionDev'
   ]);
-  
+
   grunt.registerTask('build', ['build-website', 'build-extension']);
-  
+
   grunt.registerTask('build-dev', [
     'build-website-dev',
     'build-extension-dev'
   ]);
 
   grunt.registerTask('unit-tests', ['webpack:unitTests', 'mochaTest:unit']);
-  
+
   grunt.registerTask('functional-tests', [
     'build-website-dev',
-    'connect:website',        
+    'connect:website',
     'mochaTest:functional'
   ]);
 
   grunt.registerTask('test', ['unit-tests', 'functional-tests']);
-  
+
   grunt.registerTask('default', ['build-dev', 'connect:website', 'watch']);
 };
