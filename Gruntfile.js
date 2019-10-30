@@ -118,7 +118,6 @@ module.exports = grunt => {
         },
         files: {
           'dist/website/index.html': 'views/website/index.pug',
-          'dist/website/home/index.html': 'views/website/home.pug',
           'dist/website/introduction/index.html':
             'views/website/introduction.pug'
         }
