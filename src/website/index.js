@@ -49,14 +49,6 @@ function parseLocationQuery() {
   }
 }
 
-function pickEbookOrExtensionBanner() {
-  if ((isChrome() || isFirefox()) && Math.random() >= 0.5) {
-    extensionSection.style.display = "block";
-  } else {
-    ebookSection.style.display = "block";
-  }
-}
-
 // Initialization
 setupNavbar();
 setupExtensionButton();
@@ -66,5 +58,4 @@ setupTokenEditor();
 parseLocationQuery();
 setupHighlighting();
 setupJwtCounter();
-pickEbookOrExtensionBanner();
 setupShareJwtButton(shareJwtButton, shareJwtTextElement);
