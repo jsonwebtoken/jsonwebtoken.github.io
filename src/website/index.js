@@ -51,7 +51,7 @@ function parseLocationQuery() {
 
 // Initialization
 setupNavbar();
-setupExtensionButton();
+// setupExtensionButton();
 setupSmoothScrolling();
 setupLibraries();
 setupTokenEditor();
