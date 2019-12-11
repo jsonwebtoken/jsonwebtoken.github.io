@@ -245,25 +245,24 @@ body
         margin-left 10px
         vertical-align middle
         transition background-color .5s
-        ../
-          &:before
-            content "Learn more about Auth0"
-            position absolute
-            min-width 180px
-            top 32px
-            background-color #555
-            color white
-            border-radius 3px
-            padding 4px
-            transition visibility 0s, opacity .5s
-            visibility hidden
-            opacity 0
-          &:hover
-            .crafted-by__question-mark
-              background-color white
-            &:before
-              opacity 1
-              visibility visible
+      &:before
+        content "Learn more about Auth0"
+        position fixed
+        width auto
+        padding 6px
+        top 64px
+        border-radius 3px
+        background-color #555
+        color white
+        transition visibility 0s, opacity .5s
+        visibility hidden
+        opacity 0
+      &:hover
+        .crafted-by__question-mark
+          background-color white
+        &:before
+          visibility visible
+          opacity 1
 
 
   .supported
