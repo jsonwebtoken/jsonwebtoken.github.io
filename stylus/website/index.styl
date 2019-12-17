@@ -234,6 +234,37 @@ body
         color white
         padding-right 10px
 
+      .crafted-by__question-mark
+        background-color #555
+        color black
+        font-size 10px
+        border-radius 50%
+        width 14px
+        height 14px
+        display inline-block
+        margin-left 10px
+        vertical-align middle
+        transition background-color .5s
+      &:before
+        content "Learn more about Auth0"
+        position fixed
+        width auto
+        padding 6px
+        top 64px
+        border-radius 3px
+        background-color #555
+        color white
+        transition visibility 0s, opacity .5s
+        visibility hidden
+        opacity 0
+      &:hover
+        .crafted-by__question-mark
+          background-color white
+        &:before
+          visibility visible
+          opacity 1
+
+
   .supported
     display none
 
