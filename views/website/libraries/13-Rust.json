@@ -96,6 +96,37 @@
       "gitHubRepoPath": "lawliet89/biscuit",
       "repoUrl": "https://github.com/lawliet89/biscuit",
       "installCommandHtml": "Cargo.toml: biscuit = \"*\""
+    },
+    {
+      "minimumVersion": null,
+      "support": {
+        "sign": true,
+        "verify": true,
+        "iss": true,
+        "sub": true,
+        "aud": true,
+        "exp": true,
+        "nbf": true,
+        "iat": true,
+        "jti": false,
+        "hs256": true,
+        "hs384": true,
+        "hs512": true,
+        "rs256": true,
+        "rs384": true,
+        "rs512": true,
+        "es256": true,
+        "es384": true,
+        "es512": false,
+        "ps256": true,
+        "ps384": true,
+        "ps512": true
+      },
+      "authorUrl": "https://github.com/rib",
+      "authorName": "Robert Bragg",
+      "gitHubRepoPath": "rib/jsonwebtokens",
+      "repoUrl": "https://github.com/rib/jsonwebtokens",
+      "installCommandHtml": "Cargo.toml: jsonwebtokens = \"*\""
     }
   ]
 }
