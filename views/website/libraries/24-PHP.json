@@ -22,7 +22,7 @@
         "rs256": true,
         "rs384": true,
         "rs512": true,
-        "es256": false,
+        "es256": true,
         "es384": false,
         "es512": false,
         "ps256": false,
