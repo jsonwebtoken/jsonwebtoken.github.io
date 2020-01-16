@@ -375,7 +375,7 @@
       "installCommandHtml": "go get <a href=\"https://godoc.org/github.com/brianvoe/sjwt\">github.com/brianvoe/sjwt</a>"
     },
     {
-      "minimumVersion": 1.12,
+      "minimumVersion": "1.12",
       "support": {
         "sign": true,
         "verify": true,
