@@ -373,6 +373,37 @@
       "gitHubRepoPath": "brianvoe/sjwt",
       "repoUrl": "https://github.com/brianvoe/sjwt",
       "installCommandHtml": "go get <a href=\"https://godoc.org/github.com/brianvoe/sjwt\">github.com/brianvoe/sjwt</a>"
+    },
+    {
+      "minimumVersion": "1.12",
+      "support": {
+        "sign": true,
+        "verify": true,
+        "iss": true,
+        "sub": true,
+        "aud": true,
+        "exp": true,
+        "nbf": true,
+        "iat": true,
+        "jti": true,
+        "hs256": true,
+        "hs384": true,
+        "hs512": true,
+        "rs256": true,
+        "rs384": true,
+        "rs512": true,
+        "es256": true,
+        "es384": true,
+        "es512": true,
+        "ps256": true,
+        "ps384": true,
+        "ps512": true
+      },
+      "authorUrl": "https://github.com/cristalhq",
+      "authorName": "Oleg Kovalov",
+      "gitHubRepoPath": "cristalhq/jwt",
+      "repoUrl": "https://github.com/cristalhq/jwt",
+      "installCommandHtml": "go get github.com/cristalhq/jwt"
     }
   ]
 }
