@@ -128,6 +128,37 @@
       "gitHubRepoPath": "pokowaka/jwt-cpp",
       "repoUrl": "https://github.com/pokowaka/jwt-cpp",
       "installCommandHtml": "git clone https://github.com/pokowaka/jwt-cpp"
+    },
+    {
+      "minimumVersion": null,
+      "support": {
+        "sign": true,
+        "verify": true,
+        "iss": false,
+        "sub": false,
+        "aud": false,
+        "exp": false,
+        "nbf": false,
+        "iat": false,
+        "jti": false,
+        "hs256": true,
+        "hs384": true,
+        "hs512": true,
+        "rs256": true,
+        "rs384": true,
+        "rs512": true,
+        "es256": true,
+        "es384": true,
+        "es512": true,
+        "ps256": false,
+        "ps384": false,
+        "ps512": false
+      },
+      "authorUrl": "https://github.com/pocoproject",
+      "authorName": "POCO C++ Libraries",
+      "gitHubRepoPath": "pocoproject/poco",
+      "repoUrl": "https://github.com/pocoproject/poco",
+      "installCommandHtml": "git clone https://github.com/pocoproject/poco.git"
     }
   ]
 }
