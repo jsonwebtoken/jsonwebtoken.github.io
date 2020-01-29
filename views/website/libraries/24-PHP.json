@@ -120,7 +120,8 @@
         "es512": true,
         "ps256": true,
         "ps384": true,
-        "ps512": true
+        "ps512": true,
+        "es256k": false
       },
       "authorUrl": "https://github.com/Spomky-Labs/jose",
       "authorName": "Spomky",
@@ -182,8 +183,9 @@
         "es512": true,
         "ps256": true,
         "ps384": true,
-        "ps512": true, 
-        "eddsa": true
+        "ps512": true,
+        "eddsa": true,
+        "es256k": true
       },
       "authorUrl": "https://github.com/Spomky",
       "authorName": "Spomky",
