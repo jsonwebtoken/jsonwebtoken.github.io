@@ -88,7 +88,7 @@ The output is three Base64-URL strings separated by dots that can be easily pass
 The following shows a JWT that has the previous header and payload encoded, and it is signed with a secret.
 ![Encoded JWT](https://cdn.auth0.com/content/jwt/encoded-jwt3.png)
 
-If you want to play with JWT and put these concepts into practice, you can use [jwt.io Debugger](http://jwt.io) to decode, verify, and generate JWTs.
+If you want to play with JWT and put these concepts into practice, you can use [jwt.io Debugger](https://jwt.io/index.html#debugger-io) to decode, verify, and generate JWTs.
 
 ![JWT.io Debugger](https://cdn.auth0.com/blog/legacy-app-auth/legacy-app-auth-5.png)
 
