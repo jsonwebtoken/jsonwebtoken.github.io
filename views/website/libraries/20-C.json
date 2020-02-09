@@ -65,6 +65,37 @@
       "gitHubRepoPath": "cisco/cjose",
       "repoUrl": "https://github.com/cisco/cjose",
       "installCommandHtml": "git clone <a href=\"https://github.com/cisco/cjose\">https://github.com/cisco/cjose.git</a> && cd cjose && ./configure && make"
+    },
+    {
+      "minimumVersion": null,
+      "support": {
+        "sign": true,
+        "verify": true,
+        "iss": false,
+        "sub": false,
+        "aud": false,
+        "exp": false,
+        "nbf": false,
+        "iat": false,
+        "jti": false,
+        "hs256": true,
+        "hs384": true,
+        "hs512": true,
+        "rs256": false,
+        "rs384": false,
+        "rs512": false,
+        "es256": false,
+        "es384": false,
+        "es512": false,
+        "ps256": false,
+        "ps384": false,
+        "ps512": false
+      },
+      "authorUrl": "https://github.com/TomzBench/jsmn-web-tokens",
+      "authorName": "Thomas",
+      "gitHubRepoPath": "TomzBench/jsmn-web-tokens",
+      "repoUrl": "https://github.com/TomzBench/jsmn-web-tokens",
+      "installCommandHtml": "git clone <a href=\"https://github.com/TomzBench/jsmn-web-tokens\">https://github.com/TomzBench/jsmn-web-tokens.git</a> && cd jsmn-web-tokens && cmake . && cmake --build . --target install"
     }
   ]
 }
