@@ -39,7 +39,11 @@ html(lang='en')
     
     // Google Tag Manager
     script.
-      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': newDate().getTime(),event:'gtm.js'});varf=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!=' dataLayer'? '&l='+ l:''; j.async=true; j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-W7FRLJ');
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-W7FRLJ');
     // End Google Tag Manager 
 
   body
@@ -48,17 +52,6 @@ html(lang='en')
       iframe(src='https://www.googletagmanager.com/ns.html?id=GTM-W7FRLJ', height='0', width='0', style='display:none;visibility:hidden')
     // End Google Tag Manager (noscript)
     
-    // Google Tag Manager legacy (remove soon)
-    noscript
-      iframe(src='//www.googletagmanager.com/ns.html?id=GTM-PT2SNS', height='0', width='0', style='display:none;visibility:hidden')
-    script.
-      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-      '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-      })(window,document,'script','dataLayer','GTM-PT2SNS');
-    // End Google Tag Manager —>
-
     block content
 
     footer
