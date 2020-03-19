@@ -31,9 +31,9 @@
       },
       "authorUrl": "https://github.com/troian",
       "authorName": "Artur Troian",
-      "gitHubRepoPath": "troian/josepp",
-      "repoUrl": "https://github.com/troian/josepp",
-      "installCommandHtml": "git clone https://github.com/troian/josepp"
+      "gitHubRepoPath": "troian/jwtpp",
+      "repoUrl": "https://github.com/troian/jwtpp",
+      "installCommandHtml": "git clone https://github.com/troian/jwtpp"
     },
     {
       "minimumVersion": null,
