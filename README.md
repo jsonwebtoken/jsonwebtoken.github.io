@@ -58,6 +58,7 @@ Here's a commented example of the .NET language file (`0-.NET.json`). All fields
         "es256": true,
         "es384": true,
         "es512": true,
+        "es256k": true,
         "ps256": true,
         "ps384": true,
         "ps512": true,
