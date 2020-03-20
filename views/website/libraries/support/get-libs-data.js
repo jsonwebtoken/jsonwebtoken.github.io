@@ -49,7 +49,7 @@ function getLibs() {
 
       orderedKeys = ['hs256', 'hs384', 'hs512',
                     'rs256', 'rs384', 'rs512',
-                    'es256', 'es384', 'es512'
+                    'es256', 'es384', 'es512', 'es256k',
                     'ps256', 'ps384', 'ps512', 'eddsa'];
 
       for(let i = 0; i < orderedKeys.length; ++i) {
