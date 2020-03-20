@@ -62,7 +62,7 @@ module.exports = {
             type: 'object',
             required: ['sign', 'verify', 'iss', 'sub', 'aud', 'exp', 'nbf',
                       'iat', 'jti', 'hs256', 'hs384', 'hs512', 'rs256',
-                      'rs384', 'rs512', 'es256', 'es384', 'es512'],
+                      'rs384', 'rs512', 'es256', 'es384', 'es512', 'es256k'],
             properties: {
               sign: { type: 'boolean' },
               verify: { type: 'boolean' },
@@ -82,6 +82,7 @@ module.exports = {
               es256: { type: 'boolean' },
               es384: { type: 'boolean' },
               es512: { type: 'boolean' },
+              es256k: { type: 'boolean' },
               ps256: { type: 'boolean' },
               ps384: { type: 'boolean' },
               ps512: { type: 'boolean' },
