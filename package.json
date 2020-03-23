@@ -48,7 +48,7 @@
     "isotope-layout": "^3.0.6",
     "jquery": "^3.4.1",
     "jstransformer-markdown-it": "^2.1.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.13",
     "loglevel": "^1.6.2",
     "mocha": "^5.2.0",
     "node-jose": "^1.1.3",
