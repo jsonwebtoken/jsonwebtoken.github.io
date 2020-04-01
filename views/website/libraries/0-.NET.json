@@ -186,7 +186,7 @@
       "authorName": "Yann Crumeyrolle",
       "gitHubRepoPath": "ycrumeyrolle/jwt",
       "repoUrl": "https://github.com/ycrumeyrolle/jwt",
-      "installCommandHtml": "Install-Package<br><a href=\"https://www.nuget.org/packages/JsonWebToken\">JsonWebToken</a>"
+      "installCommandHtml": "Install-Package <a href=\"https://www.nuget.org/packages/JsonWebToken\">JsonWebToken</a>"
     }
   ]
 }
