@@ -155,6 +155,38 @@
       "gitHubRepoPath": "jwt-dotnet/jwt",
       "repoUrl": "https://github.com/jwt-dotnet/jwt",
       "installCommandHtml": "Install-Package<br><a href=\"https://www.nuget.org/packages/JWT\">JWT</a>"
+    },
+    {
+      "minimumVersion": null,
+      "support": {
+        "sign": true,
+        "verify": true,
+        "iss": true,
+        "sub": true,
+        "aud": true,
+        "exp": true,
+        "nbf": true,
+        "iat": true,
+        "jti": true,
+        "hs256": true,
+        "hs384": true,
+        "hs512": true,
+        "rs256": true,
+        "rs384": true,
+        "rs512": true,
+        "es256": true,
+        "es384": true,
+        "es512": true,
+        "ps256": true,
+        "ps384": true,
+        "ps512": true,
+        "eddsa": false
+      },
+      "authorUrl": "https://github.com/ycrumeyrolle",
+      "authorName": "Yann Crumeyrolle",
+      "gitHubRepoPath": "ycrumeyrolle/jwt",
+      "repoUrl": "https://github.com/ycrumeyrolle/jwt",
+      "installCommandHtml": "Install-Package<br><a href=\"https://www.nuget.org/packages/JsonWebToken\">JsonWebToken</a>"
     }
   ]
 }
