@@ -132,13 +132,13 @@
             "support": {
                 "sign": true,
                 "verify": true,
-                "iss": false,
-                "sub": false,
-                "aud": false,
-                "exp": false,
-                "nbf": false,
-                "iat": false,
-                "jti": false,
+                "iss": true,
+                "sub": true,
+                "aud": true,
+                "exp": true,
+                "nbf": true,
+                "iat": true,
+                "jti": true,
                 "hs256": true,
                 "hs384": true,
                 "hs512": true,
@@ -157,7 +157,7 @@
             "authorName": "babelouest",
             "gitHubRepoPath": "babelouest/rhonabwy",
             "repoUrl": "https://github.com/babelouest/rhonabwy",
-            "installCommandHtml": "git clone <a href=\"https://github.com/babelouest/rhonabwy\">https://github.com/babelouest/rhonabwy.git</a> && mkdir build cd build && cmake .. && cmake --build . --target install"
+            "installCommandHtml": "<a href=\"https://github.com/babelouest/rhonabwy/releases/latest\">Download release package</a> or <a href=\"https://github.com/babelouest/rhonabwy\">install from source</a>"
         }
     ]
 }
