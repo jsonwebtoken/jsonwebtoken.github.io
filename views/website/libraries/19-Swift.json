@@ -129,6 +129,37 @@
       "repoUrl": "https://github.com/IBM-Swift/Swift-JWT",
       "installCommandHtml":
         ".package(url:\"https://github.com/IBM-Swift/Swift-JWT\", from: \"3.5.0\")"
+    },
+    {
+      "minimumVersion": null,
+      "support": {
+        "sign": true,
+        "verify": true,
+        "iss": false,
+        "sub": false,
+        "aud": false,
+        "exp": false,
+        "nbf": false,
+        "iat": false,
+        "jti": false,
+        "hs256": false,
+        "hs384": false,
+        "hs512": false,
+        "rs256": true,
+        "rs384": true,
+        "rs512": true,
+        "es256": true,
+        "es384": true,
+        "es512": true,
+        "ps256": true,
+        "ps384": true,
+        "ps512": true
+      },
+      "authorUrl": "https://github.com/airsidemobile",
+      "authorName": "Airside",
+      "gitHubRepoPath": "airsidemobile/JOSESwift",
+      "repoUrl": "https://github.com/airsidemobile/JOSESwift",
+      "installCommandHtml": "pod 'JOSESwift'"
     }
   ]
 }
