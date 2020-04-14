@@ -126,6 +126,38 @@
             "gitHubRepoPath": "TomzBench/jsmn-web-tokens",
             "repoUrl": "https://github.com/TomzBench/jsmn-web-tokens",
             "installCommandHtml": "git clone <a href=\"https://github.com/TomzBench/jsmn-web-tokens\">https://github.com/TomzBench/jsmn-web-tokens.git</a> && cd jsmn-web-tokens && cmake . && cmake --build . --target install"
+        },
+        {
+            "minimumVersion": null,
+            "support": {
+                "sign": true,
+                "verify": true,
+                "iss": true,
+                "sub": true,
+                "aud": true,
+                "exp": true,
+                "nbf": true,
+                "iat": true,
+                "jti": true,
+                "hs256": true,
+                "hs384": true,
+                "hs512": true,
+                "rs256": true,
+                "rs384": true,
+                "rs512": true,
+                "es256": true,
+                "es384": true,
+                "es512": true,
+                "ps256": true,
+                "ps384": true,
+                "ps512": true,
+                "eddsa": true
+            },
+            "authorUrl": "https://babelouest.github.io/",
+            "authorName": "babelouest",
+            "gitHubRepoPath": "babelouest/rhonabwy",
+            "repoUrl": "https://github.com/babelouest/rhonabwy",
+            "installCommandHtml": "<a href=\"https://github.com/babelouest/rhonabwy/releases/latest\">Download release package</a> or <a href=\"https://github.com/babelouest/rhonabwy\">install from source</a>"
         }
     ]
 }
