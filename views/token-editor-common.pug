@@ -8,10 +8,10 @@
         small edit the payload and secret
 
   .tab-content
-    #encoded-jwt.box-content.current
+    #encoded-jwt.box-content.current(heap-ignore="true")
       .input.js-input
         include token-editor-warnings.pug
-    #decoded-jwt.box-content
+    #decoded-jwt.box-content(heap-ignore="true")
       .output
         .jwt-explained.jwt-header
           p.text-line HEADER:
