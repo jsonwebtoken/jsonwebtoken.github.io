@@ -89,7 +89,9 @@
         "es512": true,
         "ps256": true,
         "ps384": true,
-        "ps512": true
+        "ps512": true,
+        "eddsa": false,
+        "es256k": true
       },
       "authorUrl": "https://github.com/nov",
       "authorName": "Nov Matake",
