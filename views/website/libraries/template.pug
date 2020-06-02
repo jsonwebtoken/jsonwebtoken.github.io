@@ -84,7 +84,10 @@ article(data-accordion, class=`accordion ${lang.uniqueClass}`)
         p
           i(class=lib.support.eddsa ? 'icon-budicon-500' : (lib.support.eddsa !== undefined ? 'icon-budicon-501' : 'icon-unknown'))
           | EdDSA
-          
+        p
+          i(class=lib.support.es256k ? 'icon-budicon-500' : (lib.support.es256k !== undefined ? 'icon-budicon-501' : 'icon-unknown'))
+          | ES256K
+
     .author-info
       .maintainer
         if lib.authorUrl

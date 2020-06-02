@@ -86,6 +86,7 @@ module.exports = {
               ps384: { type: 'boolean' },
               ps512: { type: 'boolean' },
               eddsa: { type: 'boolean' },
+              es256k: { type: 'boolean' },
             }
           }
         }
