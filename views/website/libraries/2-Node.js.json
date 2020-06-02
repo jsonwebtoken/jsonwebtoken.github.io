@@ -28,7 +28,8 @@
         "ps256": true,
         "ps384": true,
         "ps512": true,
-        "eddsa": false
+        "eddsa": false,
+        "es256k": false
       },
       "authorUrl": "https://github.com/auth0",
       "authorName": "Auth0",
@@ -60,7 +61,8 @@
         "ps256": true,
         "ps384": true,
         "ps512": true,
-        "eddsa": true
+        "eddsa": true,
+        "es256k": true
       },
       "authorUrl": "https://github.com/panva",
       "authorName": "Filip Skokan",
