@@ -29,7 +29,7 @@
         "ps384": true,
         "ps512": true,
         "es256k": true,
-        "EdDSA": true
+        "eddsa": true
       },
       "authorUrl": "https://github.com/DCIT",
       "authorName": "Karel Miko",
