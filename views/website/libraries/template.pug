@@ -7,7 +7,7 @@ article(data-accordion, class=`accordion ${lang.uniqueClass}`)
       .version
         p Minimum Version #{lib.minimumVersion}
           a(href='https://auth0.com/blog/critical-vulnerabilities-in-json-web-token-libraries/', target='_blank', data-metrics-lib-id=lib.repoUrl)
-            img(src='img/ico_question.svg')
+            img(src='img/ico_question.svg' alt='question mark icon' title='Learn more about vulnerabilities in JWT libraries')
     div(class={ 'panel-body': true, mversion: !!lib.minimumVersion })
       .column
         p
