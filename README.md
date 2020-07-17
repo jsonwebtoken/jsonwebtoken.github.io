@@ -111,4 +111,16 @@ To run tests, execute:
 
 Look at the end of the [Gruntfile](/Gruntfile.js) for other common tasks.
 
+#### Docker
+
+To build, run:
+
+`docker build -t jsonwebtoken.github.io .`
+
+To start serving the website:
+
+`docker run -d -p 8000:80 jsonwebtoken.github.io`.
+
+Now you can go to http://localhost:8000/ and browse jsonwebtoken!
+
 ### Happy hacking!
