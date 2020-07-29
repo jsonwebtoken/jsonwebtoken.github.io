@@ -53,19 +53,19 @@
         "rs256": true,
         "rs384": true,
         "rs512": true,
-        "es256": false,
-        "es384": false,
-        "es512": false,
+        "es256": true,
+        "es384": true,
+        "es512": true,
         "ps256": false,
         "ps384": false,
         "ps512": false
       },
-      "authorUrl": "https://github.com/siemensikkema",
-      "authorName": "Siemen Sikkema",
-      "gitHubRepoPath": "vapor/jwt",
-      "repoUrl": "https://github.com/vapor/jwt",
+      "authorUrl": "https://github.com/vapor",
+      "authorName": "Vapor",
+      "gitHubRepoPath": "vapor/jwt-kit",
+      "repoUrl": "https://github.com/vapor/jwt-kit",
       "installCommandHtml":
-        ".Package(url:\"https://github.com/vapor/jwt.git\", majorVersion: 1)"
+        ".package(url: \"https://github.com/vapor/jwt-kit.git\", from: \"4.0.0\")"
     },
     {
       "minimumVersion": null,
