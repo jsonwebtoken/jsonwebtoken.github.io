@@ -68,7 +68,7 @@ function markAsInvalid(errorMessages = []) {
             errorElement.appendChild(errorLabel);
             errorElement.appendChild(errorMessage);
             editorWarnings.appendChild(errorElement);
-        })
+        });
     } else {
         signatureStatusElement.innerHTML = `<i class="icon-budicon-501"></i> ${strings.editor.signatureInvalid}`;
     }
@@ -197,7 +197,11 @@ function algorithmChangeHandler() {
     }
 }
 
-function markAsInvalidWithElement(element, clearTokenEditor = true, errors = []) {
+function markAsInvalidWithElement(
+    element,
+    clearTokenEditor = true,
+    errors = []
+) {
     element.classList.add("error");
     markAsInvalid(errors);
 
@@ -306,11 +310,12 @@ function decodeToken() {
             if (decoded.errors) {
                 markAsInvalidWithElement(editorElement, false, decoded.warnings);
 
-                console.log(decoded.warnings.includes(strings.warnings.payloadInvalidJSON))
+                console.log(
+                    decoded.warnings.includes(strings.warnings.payloadInvalidJSON)
+                );
                 if (decoded.warnings.includes(strings.warnings.payloadInvalidJSON)) {
-                    markAsInvalidWithElement(payloadElement, false)
+                    markAsInvalidWithElement(payloadElement, false);
                 }
-
             } else {
                 if (decoded.warnings && decoded.warnings.length > 0) {
                     showEditorWarnings(decoded.warnings);
@@ -423,13 +428,15 @@ export function getTokenEditorValue() {
     return {
         token: getTrimmedValue(tokenEditor),
         publicKey: isPublicKeyAlgorithm(getSelectedAlgorithm()) ?
-            publicKeyTextArea.value : undefined,
+            publicKeyTextArea.value :
+            undefined,
     };
 }
 
 export function resetEditorWarnings() {
     signatureStatusElement.classList.add("valid-token");
     signatureStatusElement.classList.remove("invalid-token");
+    payloadElement.classList.remove("error");
     editorElement.classList.remove("error");
     editorElement.classList.remove("warning");
     editorWarnings.classList.add("hidden");
