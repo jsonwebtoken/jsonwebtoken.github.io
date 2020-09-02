@@ -310,9 +310,6 @@ function decodeToken() {
             if (decoded.errors) {
                 markAsInvalidWithElement(editorElement, false, decoded.warnings);
 
-                console.log(
-                    decoded.warnings.includes(strings.warnings.payloadInvalidJSON)
-                );
                 if (decoded.warnings.includes(strings.warnings.payloadInvalidJSON)) {
                     markAsInvalidWithElement(payloadElement, false);
                 }
