@@ -5,7 +5,7 @@
   "bgColor": "rgb(101,143,170)",
   "libs": [
     {
-      "minimumVersion": CF11,
+      "minimumVersion": "CF11",
       "support": {
         "sign": true,
         "verify": true,
