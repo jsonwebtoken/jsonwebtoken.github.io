@@ -470,6 +470,6 @@
       "gitHubRepoPath": "kataras/jwt",
       "repoUrl": "https://github.com/kataras/jwt",
       "installCommandHtml": "go get <a href=\"https://pkg.go.dev/github.com/kataras/jwt\">github.com/kataras/jwt</a>"
-    },
+    }
   ]
 }
