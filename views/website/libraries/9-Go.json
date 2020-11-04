@@ -438,6 +438,38 @@
       "gitHubRepoPath": "gilbsgilbs/jwit",
       "repoUrl": "https://github.com/gilbsgilbs/jwit",
       "installCommandHtml": "go get <a href=\"https://pkg.go.dev/github.com/gilbsgilbs/jwit\">github.com/gilbsgilbs/jwit</a>"
+    },
+    {
+      "minimumVersion": null,
+      "support": {
+        "sign": true,
+        "verify": true,
+        "iss": false,
+        "sub": false,
+        "aud": false,
+        "exp": true,
+        "nbf": true,
+        "iat": true,
+        "jti": false,
+        "hs256": true,
+        "hs384": true,
+        "hs512": true,
+        "rs256": true,
+        "rs384": true,
+        "rs512": true,
+        "es256": true,
+        "es384": true,
+        "es512": true,
+        "ps256": true,
+        "ps384": true,
+        "ps512": true,
+        "eddsa": true
+      },
+      "authorUrl": "https://github.com/kataras",
+      "authorName": "kataras",
+      "gitHubRepoPath": "kataras/jwt",
+      "repoUrl": "https://github.com/kataras/jwt",
+      "installCommandHtml": "go get <a href=\"https://pkg.go.dev/github.com/kataras/jwt\">github.com/kataras/jwt</a>"
     }
   ]
 }
