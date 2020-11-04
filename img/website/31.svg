@@ -1,27 +1,25 @@
-<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="142.6" height="142.6" viewBox="0 0 142.6 142.6">
-  <defs>
-    <style>
-      .cls-1 {
-        stroke: #231f20;
-        stroke-miterlimit: 10;
-        fill: url(#linear-gradient);
-      }
-
-      .cls-2 {
-        fill: #fff;
-      }
-    </style>
-    <linearGradient id="linear-gradient" x1="71.63" y1="120.36" x2="70.95" y2="19.13" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#1c4d71"/>
-      <stop offset="0.17" stop-color="#255578"/>
-      <stop offset="0.44" stop-color="#3d6b8b"/>
-      <stop offset="0.78" stop-color="#658faa"/>
-      <stop offset="1" stop-color="#83aac2"/>
-    </linearGradient>
-  </defs>
-  <rect class="cls-1" x="0.5" y="0.5" width="141.6" height="141.6" rx="12"/>
-  <g>
-    <path class="cls-2" d="M78.89,102c-2.67,1.34-8.7,2.78-16.53,2.78-22.27,0-33.74-13.86-33.74-32.21,0-22,15.67-34.22,35.17-34.22,7.55,0,13.29,1.53,15.87,2.86l-3,11.57A31.48,31.48,0,0,0,64.46,50.4c-11.57,0-20.55,7-20.55,21.32,0,12.9,7.65,21,20.65,21a36.27,36.27,0,0,0,12.13-2.1Z" transform="translate(-1.9 -1.29)"/>
-    <path class="cls-2" d="M86.71,57.2h28.5v8.65H97.29V76.5H114v8.58H97.29v18.75H86.71Z" transform="translate(-1.9 -1.29)"/>
-  </g>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="305px" height="305px" viewBox="0 0 305 305" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 62 (91390) - https://sketch.com -->
+    <title>Oval</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50.2330508%" y1="84.6468927%" x2="49.7528249%" y2="13.1567797%" id="linearGradient-1">
+            <stop stop-color="#1C4D71" offset="0%"></stop>
+            <stop stop-color="#255578" offset="17%"></stop>
+            <stop stop-color="#3D6B8B" offset="44%"></stop>
+            <stop stop-color="#658FAA" offset="78%"></stop>
+            <stop stop-color="#83AAC2" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <circle id="Oval" fill="#FFFFFF" cx="152.5" cy="152.5" r="152.5"></circle>
+        <g id="31" transform="translate(81.000000, 81.000000)" fill-rule="nonzero">
+            <rect id="Rectangle" stroke="#231F20" fill="url(#linearGradient-1)" x="0.5" y="0.5" width="141.6" height="141.6" rx="12"></rect>
+            <g id="Group" transform="translate(26.000000, 37.000000)" fill="#FFFFFF">
+                <path d="M50.99,63.71 C48.32,65.05 42.29,66.49 34.46,66.49 C12.19,66.49 0.72,52.63 0.72,34.28 C0.72,12.28 16.39,0.06 35.89,0.06 C43.44,0.06 49.18,1.59 51.76,2.92 L48.76,14.49 C44.8919337,12.8937037 40.74443,12.0846005 36.56,12.11 C24.99,12.11 16.01,19.11 16.01,33.43 C16.01,46.33 23.66,54.43 36.66,54.43 C40.7934562,54.4263028 44.8958673,53.716075 48.79,52.33 L50.99,63.71 Z" id="Path"></path>
+                <polygon id="Path" points="58.81 18.91 87.31 18.91 87.31 27.56 69.39 27.56 69.39 38.21 86.1 38.21 86.1 46.79 69.39 46.79 69.39 65.54 58.81 65.54"></polygon>
+            </g>
+        </g>
+    </g>
 </svg>
