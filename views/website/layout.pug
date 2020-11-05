@@ -73,7 +73,7 @@ html(lang='en')
     script.
       !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
 
-    // GDPR cookie banner
-    script(src="https://cdn.cookielaw.org/consent/c1198aef-6105-4bf5-9af7-ab5b543482e0.js")
-    script(type="text/javascript").
-      function OptanonWrapper() { }
+    div
+      div(id="consent_blackbar")
+      div(id="teconsent" style="position: absolute; bottom: -100px;")
+      script(async="async" src="//consent.trustarc.com/notice?domain=auth0banner.com&c=teconsent&js=nj&noticeType=bb&text=true" crossOrigin)
