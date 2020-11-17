@@ -28,7 +28,7 @@
         "ps256": true,
         "ps384": true,
         "ps512": true,
-        "eddsa": true,
+        "eddsa": true
       },
       "authorUrl": "https://github.com/jpadilla",
       "authorName": "José Padilla",
