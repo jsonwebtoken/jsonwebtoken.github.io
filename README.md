@@ -4,6 +4,12 @@
 
 [![Build Status](https://travis-ci.org/jsonwebtoken/jsonwebtoken.github.io.png?branch=master)](https://travis-ci.org/jsonwebtoken/jsonwebtoken.github.io)
 
+### Sponsor
+
+|||
+|-|-|
+|![auth0 logo](https://user-images.githubusercontent.com/83319/31722733-de95bbde-b3ea-11e7-96bf-4f4e8f915588.png)|If you want to quickly add secure (JSON Web) token-based authentication to your projects, feel free to check Auth0's documentation and free plan at [auth0.com/developers](https://auth0.com/developers?utm_source=GHsponsor&utm_medium=GHsponsor&utm_campaign=jwtio&utm_content=auth)|
+
 ### How to add a library
 
 To add a library, simply edit the right JSON file located at `views/website/libraries`. Each language gets its own file. Multiple libraries share the same language file.
