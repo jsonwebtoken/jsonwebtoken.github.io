@@ -84,6 +84,7 @@
         "rs256": true,
         "rs384": true,
         "rs512": true,
+        "eddsa": true,
         "es256": false,
         "es384": false,
         "es512": false,
