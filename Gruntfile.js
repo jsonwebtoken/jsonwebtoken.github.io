@@ -4,7 +4,6 @@ const getLanguages = require("./views/website/libraries/support/get-languages.js
 module.exports = (grunt) => {
     grunt.loadNpmTasks("grunt-contrib-copy");
     grunt.loadNpmTasks("grunt-contrib-stylus");
-    grunt.loadNpmTasks("grunt-contrib-pug");
     grunt.loadNpmTasks("grunt-webpack");
     grunt.loadNpmTasks("grunt-contrib-watch");
     grunt.loadNpmTasks("grunt-contrib-clean");
@@ -118,26 +117,6 @@ module.exports = (grunt) => {
             },
         },
 
-        pug: {
-            website: {
-                options: {
-                    //pretty: true,
-                    data: {
-                        languages: getLanguages(),
-                    },
-                },
-                files: {
-                    "dist/website/index.html": "views/website/index.pug",
-                    "dist/website/introduction/index.html": "views/website/introduction.pug",
-                },
-            },
-            extension: {
-                files: {
-                    "dist/extension/index.html": "views/extension/index.pug",
-                },
-            },
-        },
-
         webpack: {
             websiteProd: require("./webpack.website-prod.js"),
             websiteDev: require("./webpack.website-dev.js"),
@@ -224,7 +203,7 @@ module.exports = (grunt) => {
         },
     });
 
-    grunt.registerTask("build-website-views", ["stylus:website", "pug:website"]);
+    grunt.registerTask("build-website-views", ["stylus:website"]);
 
     grunt.registerTask("build-extension-views", [
         "stylus:extension",
