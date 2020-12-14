@@ -35,6 +35,7 @@ function fetchGithubStars() {
                         lib.stars = repo.data.stargazers_count;
                         return repo.data.stargazers_count;
                     })
+                    .catch((error) => console.log(error))
                 );
             }
         });

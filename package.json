@@ -11,6 +11,7 @@
         "express": "^4.17.1",
         "express-sslify": "^1.2.0",
         "lodash.debounce": "^4.0.8",
+        "pug": "^2.0.4",
         "querystring": "^0.2.0"
     },
     "devEngines": {
@@ -55,7 +56,6 @@
         "mocha": "^5.2.0",
         "node-jose": "^1.1.4",
         "promise.any": "^0.1.1",
-        "pug": "^2.0.3",
         "puppeteer": "^1.17.0",
         "request-promise-native": "^1.0.7",
         "sinon": "^4.5.0",
