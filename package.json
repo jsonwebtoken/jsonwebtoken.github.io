@@ -6,6 +6,8 @@
         "url": "https://github.com/jsonwebtoken/jsonwebtoken.github.io"
     },
     "dependencies": {
+        "@octokit/rest": "^18.0.12",
+        "dotenv": "^8.2.0",
         "express": "^4.17.1",
         "express-sslify": "^1.2.0",
         "lodash.debounce": "^4.0.8",
@@ -72,8 +74,9 @@
         "start": "node server.js",
         "test": "grunt test",
         "test:unit": "grunt unit-tests",
-        "build": "grunt build-website",
-        "build:extension": "grunt build-extension"
+        "build": "npm run build:libraries && grunt build-website",
+        "build:extension": "npm run build:libraries && grunt build-extension",
+        "build:libraries": "node libraries.js"
     },
     "heroku-run-build-script": true
 }

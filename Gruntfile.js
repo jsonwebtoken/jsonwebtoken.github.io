@@ -119,18 +119,6 @@ module.exports = (grunt) => {
         },
 
         pug: {
-            website: {
-                options: {
-                    //pretty: true,
-                    data: {
-                        languages: getLanguages(),
-                    },
-                },
-                files: {
-                    "dist/website/index.html": "views/website/index.pug",
-                    "dist/website/introduction/index.html": "views/website/introduction.pug",
-                },
-            },
             extension: {
                 files: {
                     "dist/extension/index.html": "views/extension/index.pug",
@@ -224,7 +212,7 @@ module.exports = (grunt) => {
         },
     });
 
-    grunt.registerTask("build-website-views", ["stylus:website", "pug:website"]);
+    grunt.registerTask("build-website-views", ["stylus:website"]);
 
     grunt.registerTask("build-extension-views", [
         "stylus:extension",

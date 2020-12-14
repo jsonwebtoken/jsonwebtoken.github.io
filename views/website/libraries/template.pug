@@ -98,8 +98,9 @@ article(data-accordion, class=`accordion ${lang.uniqueClass}`)
           i.icon-budicon-333(data-toggle='tooltip', title='', data-original-title='Maintainer')
           | #{lib.authorName}
         if lib.gitHubRepoPath
-          span.stars(data-repo=lib.gitHubRepoPath, style='display: inline;')
+          span.stars( style='display: inline;')
             i.icon-budicon-466
+            | #{lib.stars}
       .repository
         i.icon-1392070209-icon-social-github
         a(href=lib.repoUrl, data-metrics-lib-id=lib.repoUrl) View Repo
