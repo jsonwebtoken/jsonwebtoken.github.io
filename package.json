@@ -10,6 +10,7 @@
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
         "express-sslify": "^1.2.0",
+        "jstransformer-markdown": "^1.2.1",
         "lodash.debounce": "^4.0.8",
         "pug": "^2.0.4",
         "querystring": "^0.2.0"
@@ -50,7 +51,6 @@
         "inject-loader": "^3.0.1",
         "isotope-layout": "^3.0.6",
         "jquery": "^3.4.1",
-        "jstransformer-markdown-it": "^2.1.0",
         "lodash": "^4.17.13",
         "loglevel": "^1.6.2",
         "mocha": "^5.2.0",
