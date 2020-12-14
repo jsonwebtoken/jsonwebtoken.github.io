@@ -19,7 +19,11 @@ if (process.env.NODE_ENV === "production") {
 // app.use(fetchGithubStars);
 app.use(express.static("dist/website"));
 app.get("/", function(req, res) {
-    res.render("index", { test: "This is a test", languages: languages });
+    res.render("index", { languages: languages });
+});
+
+app.get("/introduction", function(req, res) {
+    res.render("introduction");
 });
 
 // Fallback for the homepage JWT handbook CTA A/B experiment we ran
