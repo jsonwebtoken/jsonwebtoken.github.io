@@ -1,5 +1,4 @@
 const webpack = require("webpack");
-const getLanguages = require("./views/website/libraries/support/get-languages.js");
 
 module.exports = {
     devtool: "source-map",
@@ -32,7 +31,6 @@ module.exports = {
         new webpack.ProvidePlugin({
             $: "jquery",
             jQuery: "jquery",
-            languages: getLanguages(),
         }),
     ],
 };

@@ -11,7 +11,6 @@
         "express": "^4.17.1",
         "express-sslify": "^1.2.0",
         "lodash.debounce": "^4.0.8",
-        "octokit": "^1.0.0-hello-world",
         "querystring": "^0.2.0"
     },
     "devEngines": {
@@ -77,8 +76,7 @@
         "test:unit": "grunt unit-tests",
         "build": "npm run build:libraries && grunt build-website",
         "build:extension": "npm run build:libraries && grunt build-extension",
-        "build:libraries": "node libraries.js",
-        "grunt": "grunt build-website"
+        "build:libraries": "node libraries.js"
     },
     "heroku-run-build-script": true
 }

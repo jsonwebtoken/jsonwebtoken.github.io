@@ -12,19 +12,6 @@ const librariesGrid = new Isotope(librariesElement, {
     },
 });
 
-function getStarsFromUrl(url) {
-    return httpGet(url).then((data) => {
-        const parsed = JSON.parse(data);
-        const count = parsed.stargazers_count;
-
-        if (Number.isInteger(count)) {
-            return count;
-        } else {
-            throw new Error("Bad data received for stars count.");
-        }
-    });
-}
-
 export function setupLibraries() {
     librariesSelect.addEventListener("change", (event) => {
         librariesGrid.arrange({

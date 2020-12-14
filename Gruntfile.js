@@ -4,6 +4,7 @@ const getLanguages = require("./views/website/libraries/support/get-languages.js
 module.exports = (grunt) => {
     grunt.loadNpmTasks("grunt-contrib-copy");
     grunt.loadNpmTasks("grunt-contrib-stylus");
+    grunt.loadNpmTasks("grunt-contrib-pug");
     grunt.loadNpmTasks("grunt-webpack");
     grunt.loadNpmTasks("grunt-contrib-watch");
     grunt.loadNpmTasks("grunt-contrib-clean");
@@ -113,6 +114,14 @@ module.exports = (grunt) => {
             extension: {
                 files: {
                     "dist/extension/css/index.css": "stylus/extension/index.styl",
+                },
+            },
+        },
+
+        pug: {
+            extension: {
+                files: {
+                    "dist/extension/index.html": "views/extension/index.pug",
                 },
             },
         },
