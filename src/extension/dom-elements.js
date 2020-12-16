@@ -4,6 +4,9 @@ export const shareJwtLink = document.querySelector('.jwt-clipboard-btn');
 export const shareJwtTextElement =
   document.getElementById('share-this-jwt-text');
 
+export const insertJwtCheckbox =
+  document.getElementById('insert-jwt-checkbox');
+
 export const cookiesOptGroup =
   document.querySelector('optgroup[label="Cookies"]');
 export const webStorageOptGroup =

@@ -26,6 +26,13 @@ block content
               .jwt-select.custom-select
                 include ../token-editor-algorithms.pug
 
+            .checkbox-field.h-block
+              span Add as header
+              input(
+                type='checkbox'
+                name='insert jwt'
+              )#insert-jwt-checkbox
+
             .share-this-jwt.h-block
               a.jwt-clipboard-btn(href="#")
                 span#share-this-jwt-text Share JWT

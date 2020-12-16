@@ -11,7 +11,8 @@
     },
 
     "background": {
-        "page": "bg.html"
+        "scripts": ["background.js"],
+        "persistent": true
     },
 
     "icons": {
@@ -37,6 +38,9 @@
         "cookies",
         "storage",
         "clipboardRead",
-        "clipboardWrite"
+        "clipboardWrite",
+        "webRequest",
+        "webRequestBlocking",
+        "<all_urls>"
     ]
 }
