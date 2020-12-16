@@ -24,10 +24,10 @@ chrome.runtime.onMessage.addListener(
 	if (sender.tab) {
       sendResponse({error: 'Not from extension'});
     }
-    if ("token" in request) {
+    if ('token' in request) {
       data['token'] = request.token;
     }
-    if ("isInsert" in request) {
+    if ('isInsert' in request) {
       data['isInsert'] = request.isInsert;
     }
 

@@ -3,7 +3,7 @@ import { getTokenEditorValue, setTokenEditorValue } from '../editor';
 export function setupInsertJwtCheckbox(insertJwtCheckbox) {
   const background = chrome.extension.getBackgroundPage();
 
-  addEventListener("unload", function (event) {
+  addEventListener('unload', function (event) {
     // Must write to background DOM; cannot use messaging API as
     // async sendMessage won't reach background script in time 
     const value = getTokenEditorValue();
