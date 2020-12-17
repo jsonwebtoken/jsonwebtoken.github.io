@@ -29,10 +29,10 @@
         "ps384": false,
         "ps512": false
       },
-      "authorUrl": "https://bitbucket.org/ssaasen",
-      "authorName": "Stefan Saasen",
+      "authorUrl": "https://hackage.haskell.org/package/jwt",
+      "authorName": "Brian McKenna",
       "gitHubRepoPath": null,
-      "repoUrl": "https://bitbucket.org/ssaasen/haskell-jwt",
+      "repoUrl": "https://bitbucket.org/puffnfresh/haskell-jwt",
       "installCommandHtml": "cabal install jwt"
     },
     {
