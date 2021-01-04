@@ -36,7 +36,7 @@
       "installCommandHtml": "composer require firebase/php-jwt"
     },
     {
-      "minimumVersion": "3.0.0",
+      "minimumVersion": "4.1.0",
       "support": {
         "sign": true,
         "verify": true,
@@ -53,6 +53,7 @@
         "rs256": true,
         "rs384": true,
         "rs512": true,
+        "eddsa": true,
         "es256": true,
         "es384": true,
         "es512": true,
