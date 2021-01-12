@@ -44,6 +44,10 @@ article(data-accordion, class=`accordion ${lang.uniqueClass}`)
           i(class=lib.support.jti ? 'icon-budicon-500' : 'icon-budicon-501')
           code jti
           |  check
+        p
+          i(class=lib.support.typ ? 'icon-budicon-500' : (lib.support.typ !== undefined ? 'icon-budicon-501' : 'icon-unknown'))
+          code typ
+          |  check
       .column
         p
           i(class=lib.support.hs256 ? 'icon-budicon-500' : 'icon-budicon-501')

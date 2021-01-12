@@ -37,7 +37,7 @@ function getLibs() {
 
       let orderedKeys = ['sign', 'verify', 'iss',
                         'sub', 'aud', 'exp',
-                        'nbf', 'iat', 'jti'];
+                        'nbf', 'iat', 'jti', 'typ'];
 
       for(let i = 0; i < orderedKeys.length; ++i) {
         r.support[orderedKeys[i]] =
