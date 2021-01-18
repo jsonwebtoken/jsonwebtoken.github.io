@@ -16,6 +16,7 @@
         "nbf": true,
         "iat": true,
         "jti": true,
+        "typ": true,
         "hs256": true,
         "hs384": true,
         "hs512": true,
