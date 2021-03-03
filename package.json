@@ -13,7 +13,7 @@
         "jstransformer-markdown": "^1.2.1",
         "jstransformer-markdown-it": "^2.1.0",
         "lodash.debounce": "^4.0.8",
-        "pug": "^2.0.4",
+        "pug": "^3.0.1",
         "querystring": "^0.2.0"
     },
     "devEngines": {
