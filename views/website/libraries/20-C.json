@@ -142,6 +142,7 @@
                 "nbf": true,
                 "iat": true,
                 "jti": true,
+                "typ": true,
                 "hs256": true,
                 "hs384": true,
                 "hs512": true,
@@ -154,7 +155,8 @@
                 "ps256": true,
                 "ps384": true,
                 "ps512": true,
-                "eddsa": true
+                "eddsa": true,
+                "es256k": false
             },
             "authorUrl": "https://babelouest.github.io/",
             "authorName": "babelouest",
