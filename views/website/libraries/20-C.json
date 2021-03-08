@@ -156,7 +156,7 @@
                 "ps384": true,
                 "ps512": true,
                 "eddsa": true,
-                "es256k": false
+                "es256k": true
             },
             "authorUrl": "https://babelouest.github.io/",
             "authorName": "babelouest",
