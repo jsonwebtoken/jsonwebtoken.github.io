@@ -32,7 +32,7 @@
         "chai-as-promised": "^7.1.1",
         "chai-json-schema": "^1.5.1",
         "clipboard-polyfill": "^2.8.1",
-        "codemirror": "^5.47.0",
+        "codemirror": "^5.58.2",
         "deep-freeze": "0.0.1",
         "esm": "^3.2.25",
         "flipclock": "^0.7.8",
