@@ -14,7 +14,7 @@
         "aud": false,
         "exp": true,
         "nbf": true,
-        "iat": false,
+        "iat": true,
         "jti": false,
         "hs256": true,
         "hs384": true,
@@ -29,11 +29,11 @@
         "ps384": false,
         "ps512": false
       },
-      "authorUrl": "https://github.com/dgrijalva",
-      "authorName": "dgrijalva",
-      "gitHubRepoPath": "dgrijalva/jwt-go",
-      "repoUrl": "https://github.com/dgrijalva/jwt-go",
-      "installCommandHtml": "go get <a href=\"https://godoc.org/github.com/dgrijalva/jwt-go\">github.com/dgrijalva/jwt-go</a>"
+      "authorUrl": "https://github.com/golang-jwt",
+      "authorName": "golang-jwt",
+      "gitHubRepoPath": "golang-jwt/jwt",
+      "repoUrl": "https://github.com/golang-jwt/jwt",
+      "installCommandHtml": "go get <a href=\"https://pkg.go.dev/github.com/golang-jwt/jwt\">github.com/golang-jwt/jwt</a>"
     },
     {
       "minimumVersion": null,
