@@ -27,7 +27,8 @@
         "es512": true,
         "ps256": false,
         "ps384": false,
-        "ps512": false
+        "ps512": false,
+        "eddsa": true        
       },
       "authorUrl": "https://github.com/golang-jwt",
       "authorName": "golang-jwt",
