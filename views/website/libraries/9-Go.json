@@ -5,7 +5,7 @@
   "bgColor": "rgb(71, 182, 196)",
   "libs": [
     {
-      "minimumVersion": "1.15",
+      "minimumVersion": "v3.2.2",
       "support": {
         "sign": true,
         "verify": true,
