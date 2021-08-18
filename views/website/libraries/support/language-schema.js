@@ -73,6 +73,7 @@ module.exports = {
               nbf: { type: 'boolean' },
               iat: { type: 'boolean' },
               jti: { type: 'boolean' },
+              typ: { type: 'boolean' },
               hs256: { type: 'boolean' },
               hs384: { type: 'boolean' },
               hs512: { type: 'boolean' },
