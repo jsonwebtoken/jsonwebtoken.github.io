@@ -1,4 +1,3 @@
-import { httpGet } from "../utils.js";
 import { librariesElement, librariesSelect } from "./dom-elements.js";
 
 import Isotope from "isotope-layout";
