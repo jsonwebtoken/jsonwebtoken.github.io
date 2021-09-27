@@ -3,14 +3,12 @@ const chaiAsPromised = require('chai-as-promised');
 const chaiArrays = require('chai-arrays');
 
 const express = require('express');
-const { importPKCS8, importSPKI } = require('jose/key/import')
+const { importPKCS8 } = require('jose/key/import')
 const { CompactSign } = require('jose/jws/compact/sign')
-const { exportJWK } = require('jose/key/export')
 
 const _ = require('lodash');
 
 const utils = require('./utils.js');
-const tokens = require('./tokens.js');
 const defaultTokens =
   require('esm')(module)('../../src/editor/default-tokens.js').default;
 const jwks = require('./jwks.json');
@@ -330,18 +328,18 @@ describe('Editor', function() {
     });
 
     describe('HS256/384/512', function() {
-      const algs = Object.keys(tokens).filter(alg => alg.includes('hs'));
+      const algs = Object.keys(defaultTokens).filter(alg => alg.includes('hs'));
 
       for(const alg of algs) {
         it(`Decodes ${alg.toUpperCase()} tokens`, async function() {
           const secretInput = await this.page.$('input[name="secret"]');
           await secretInput.click();
           await selectAll.call(this);
-          await secretInput.type(tokens[alg].secret);
+          await secretInput.type(defaultTokens[alg].secret);
 
           await this.page.click('.js-input');
           await selectAll.call(this);
-          await this.page.keyboard.type(tokens[alg].token);
+          await this.page.keyboard.type(defaultTokens[alg].token);
 
           // Wait for token processing.
           await this.page.waitFor(tokenProcessingWait);
@@ -353,12 +351,6 @@ describe('Editor', function() {
           });
 
           expect(valid).to.be.true;
-
-          const payload = await this.page.evaluate(() => {
-            return window.test.payloadEditor.getValue();
-          });
-
-          expect(payload).to.include(alg + 'test');
         });
 
         const bits = parseInt(alg.substr(2));
@@ -430,15 +422,15 @@ describe('Editor', function() {
           it(`${alg.toUpperCase()} using a ${format.toUpperCase()} key`, async function() {
             await this.page.click('.js-input');
             await selectAll.call(this);
-            await this.page.keyboard.type(tokens[alg].token);
+            await this.page.keyboard.type(defaultTokens[alg].token);
 
             const secretInput = await this.page.$('textarea[name="public-key"]');
             await secretInput.click();
             await selectAll.call(this);
 
-            let publicKey = tokens[alg].publicKey;
+            let publicKey = defaultTokens[alg].publicKey;
             if (format === 'jwk') {
-              publicKey = JSON.stringify(await importSPKI(publicKey).then(exportJWK))
+              publicKey = JSON.stringify(defaultTokens[alg].jwk)
             }
 
             await secretInput.type(publicKey);
@@ -453,12 +445,6 @@ describe('Editor', function() {
             });
 
             expect(valid).to.be.true;
-
-            const payload = await this.page.evaluate(() => {
-              return window.test.payloadEditor.getValue();
-            });
-
-            expect(payload).to.include(alg + 'test');
           });
         }
       }
@@ -474,12 +460,12 @@ describe('Editor', function() {
 
             let publicKey = defaultTokens[alg].publicKey;
             if (format === 'jwk') {
-              publicKey = JSON.stringify(await importSPKI(publicKey).then(exportJWK))
+              publicKey = JSON.stringify(defaultTokens[alg].jwk)
             }
 
             let privateKey = defaultTokens[alg].privateKey;
             if (format === 'jwk') {
-              privateKey = JSON.stringify(await importPKCS8(privateKey).then(exportJWK))
+              privateKey = JSON.stringify(defaultTokens[alg].jwk)
             }
 
             await this.page.click('textarea[name="public-key"]');
@@ -713,12 +699,12 @@ describe('Editor', function() {
 
       await this.page.click('.js-input');
       await selectAll.call(this);
-      await this.page.keyboard.type(tokens['rs256'].token);
+      await this.page.keyboard.type(defaultTokens['rs256'].token);
 
       const secretInput = await this.page.$('textarea[name="public-key"]');
       await secretInput.click();
       await selectAll.call(this);
-      await secretInput.type(tokens['rs256'].publicKey);
+      await secretInput.type(defaultTokens['rs256'].publicKey);
 
       // Wait for token processing.
       await this.page.waitFor(tokenProcessingWait);
@@ -754,12 +740,12 @@ describe('Editor', function() {
 
       await this.page.click('.js-input');
       await selectAll.call(this);
-      await this.page.keyboard.type(tokens['rs256'].token);
+      await this.page.keyboard.type(defaultTokens['rs256'].token);
 
       const secretInput = await this.page.$('textarea[name="public-key"]');
       await secretInput.click();
       await selectAll.call(this);
-      await secretInput.type(tokens['rs256'].publicKey);
+      await secretInput.type(defaultTokens['rs256'].publicKey);
 
       // Wait for token processing.
       await this.page.waitFor(tokenProcessingWait);
@@ -837,7 +823,7 @@ describe('Editor', function() {
       const secretInput = await this.page.$('textarea[name="public-key"]');
       await secretInput.click();
       await selectAll.call(this);
-      await secretInput.type(tokens['rs256'].publicKey);
+      await secretInput.type(defaultTokens['rs256'].publicKey);
 
       const privateKeyInput = await this.page.$('textarea[name="private-key"]');
       await privateKeyInput.click();
@@ -846,7 +832,7 @@ describe('Editor', function() {
 
       await this.page.click('.js-input');
       await selectAll.call(this);
-      await this.page.keyboard.type(tokens['rs256'].token);
+      await this.page.keyboard.type(defaultTokens['rs256'].token);
 
       await this.page.waitFor(1000);
 
@@ -865,7 +851,7 @@ describe('Editor', function() {
 
     await this.page.click('.js-input');
     await selectAll.call(this);
-    await this.page.keyboard.type(tokens.hs256.token);
+    await this.page.keyboard.type(defaultTokens.hs256.token);
 
     await this.page.select('#algorithm-select', 'HS384');
 
@@ -881,7 +867,7 @@ describe('Editor', function() {
 
     await this.page.click('.js-input');
     await selectAll.call(this);
-    await this.page.keyboard.type(tokens.none.token);
+    await this.page.keyboard.type('eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.');
 
     // Wait for token processing.
     await this.page.waitFor(tokenProcessingWait);
