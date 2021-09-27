@@ -48,7 +48,7 @@ describe('Public key downloader', function() {
     }]
   };
 
-  const keyAsPEM = `-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1GPz+Er5h7PCk4v3pSln\naLYNYrp4sVc6Tx7FVz9d8m4zIS2qzcTM/6dRbMgZ4hBdD35NpYzU4z+d8lN27+J/\njOzHnCiMdkY+w52dCofAkICh6ftkFlG9bFQyH8Jz5UtpVkZyy1dxCRz/sbRAzUdj\nUYsGvrKXg+3UYCL5SBCnt0ycrvr3iKX9k8IlMrFRB8lBJ6eQVzkzGsuivPaThXjV\nZ/OpY7W+XsDjut7cFgPKIc843tW4CNaDJ6j3afm+RFOok//xLQH5uA7HXS/yqfEc\nhvzXfYfMxJY2d+Eqw4xTurm3TT07RnwJuN9slDJUrTH9EKkJkjZ7dn7fZtGjGTpa\nDQIDAQAB\n-----END PUBLIC KEY-----\n`;
+  const keyAsJWK = JSON.stringify({ kty: jwks.keys[0].kty, n: jwks.keys[0].n, e: jwks.keys[0].e }, null, 2)
 
   it('Finds keys in iss + .well-known URL', function(done) {
     const decodedToken = _.defaultsDeep({}, decodedBaseToken, {
@@ -74,7 +74,7 @@ describe('Public key downloader', function() {
     }).downloadPublicKeyIfPossible;
 
     downloadPublicKeyIfPossible(decodedToken)
-      .should.eventually.include(keyAsPEM)
+      .should.eventually.include(keyAsJWK)
       .then(() => {
         httpGetStub.should.have.been
                    .calledWith(baseUrl + '.well-known/openid-configuration');
@@ -97,7 +97,7 @@ describe('Public key downloader', function() {
     }).downloadPublicKeyIfPossible;
 
     downloadPublicKeyIfPossible(decodedToken)
-      .should.eventually.include(keyAsPEM)
+      .should.eventually.include(JSON.stringify(jwks.keys[0], null, 2))
       .then(() => {
         httpGetStub.should.have.callCount(0);
       }).should.notify(done);
@@ -123,7 +123,7 @@ describe('Public key downloader', function() {
     }).downloadPublicKeyIfPossible;
 
     downloadPublicKeyIfPossible(decodedToken)
-      .should.eventually.include(keyAsPEM)
+      .should.eventually.include(keyAsJWK)
       .then(() => {
         httpGetStub.should.have.callCount(0);
       })

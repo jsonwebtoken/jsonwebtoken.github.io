@@ -1,5 +1,4 @@
 import { createRemoteJWKSet } from 'jose/jwks/remote'
-import { EmbeddedJWK } from 'jose/jwk/embedded'
 import * as keyExport from 'jose/key/export'
 
 import { httpGet } from '../utils.js';
@@ -26,7 +25,7 @@ function getKeyFromX5Claims(claims) {
 }
 
 function getKeyFromJwkKeySetUrl(header, url) {
-  return createRemoteJWKSet(new URL(url))(header, {}).then((key) => keyExport.exportSPKI(key))
+  return createRemoteJWKSet(new URL(url))(header, {}).then(keyExport.exportJWK).then((jwk) => JSON.stringify(jwk, null, 2))
 }
 
 export function downloadPublicKeyIfPossible(decodedToken) {
@@ -44,7 +43,7 @@ export function downloadPublicKeyIfPossible(decodedToken) {
     } else if(header.jku) {
       getKeyFromJwkKeySetUrl(header, header.jku).then(resolve, reject);
     } else if(header.jwk) {
-      EmbeddedJWK(header, {}).then((key) => keyExport.exportSPKI(key)).then(resolve, reject);
+      resolve(JSON.stringify(header.jwk, null, 2))
     } else if(payload.iss) {
       const url = payload.iss + (payload.iss.substr(-1) === '/' ? '.well-known/openid-configuration' : '/.well-known/openid-configuration')
 

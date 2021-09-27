@@ -578,7 +578,7 @@ describe('Editor', function() {
         const publicKey = await this.page.$eval('textarea[name="public-key"]',
           publicKeyElement => publicKeyElement.value);
 
-        expect(publicKey).to.include(defaultTokens.rs256.publicKey);
+        expect(jwks.keys[0]).to.contain(JSON.parse(publicKey))
       });
 
       it('jku', async function() {
@@ -604,7 +604,7 @@ describe('Editor', function() {
         const publicKey = await this.page.$eval('textarea[name="public-key"]',
           publicKeyElement => publicKeyElement.value);
 
-        expect(publicKey).to.include(defaultTokens.rs256.publicKey);
+        expect(jwks.keys[0]).to.contain(JSON.parse(publicKey))
       });
 
       it('x5c', async function() {
