@@ -5,6 +5,7 @@ module.exports = (grunt) => {
     grunt.loadNpmTasks("grunt-contrib-copy");
     grunt.loadNpmTasks("grunt-contrib-stylus");
     grunt.loadNpmTasks("grunt-contrib-pug");
+    grunt.loadNpmTasks("grunt-contrib-pug");
     grunt.loadNpmTasks("grunt-webpack");
     grunt.loadNpmTasks("grunt-contrib-watch");
     grunt.loadNpmTasks("grunt-contrib-clean");
@@ -119,6 +120,17 @@ module.exports = (grunt) => {
         },
 
         pug: {
+            website: {
+                options: {
+                    data: {
+                        languages: getLanguages(),
+                    },
+                },
+                files: {
+                    "dist/website/index.html": "views/website/index.pug",
+                    "dist/website/introduction/index.html": "views/website/introduction.pug",
+                },
+            },
             extension: {
                 files: {
                     "dist/extension/index.html": "views/extension/index.pug",
@@ -258,6 +270,7 @@ module.exports = (grunt) => {
 
     grunt.registerTask("functional-tests", [
         "build-website-dev",
+        "pug:website",
         "connect:website",
         "mochaTest:functional",
     ]);

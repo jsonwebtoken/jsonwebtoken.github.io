@@ -3,6 +3,7 @@ import chaiAsPromised from 'chai-as-promised';
 import _ from 'lodash';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
+import nock from 'nock';
 
 import publicKeyDownloadInjector from
   'inject-loader!../../../src/editor/public-key-download.js';
@@ -12,7 +13,20 @@ chai.use(sinonChai);
 chai.should();
 
 describe('Public key downloader', function() {
-  const baseUrl = '/';
+  before(() => {
+    nock.disableNetConnect();
+  })
+
+  after(() => {
+    nock.enableNetConnect();
+  })
+
+  afterEach(() => {
+    nock.isDone().should.be.true;
+    nock.cleanAll();
+  });
+
+  const baseUrl = 'http://local.dev/';
 
   const decodedBaseToken = {
     header: {
@@ -34,11 +48,7 @@ describe('Public key downloader', function() {
     }]
   };
 
-  const keyAsPEM = `-----BEGIN PUBLIC KEY-----\r\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1GPz+Er5h7PCk4v3pSln\r\naLYNYrp4sVc6Tx7FVz9d8m4zIS2qzcTM/6dRbMgZ4hBdD35NpYzU4z+d8lN27+J/\r\njOzHnCiMdkY+w52dCofAkICh6ftkFlG9bFQyH8Jz5UtpVkZyy1dxCRz/sbRAzUdj\r\nUYsGvrKXg+3UYCL5SBCnt0ycrvr3iKX9k8IlMrFRB8lBJ6eQVzkzGsuivPaThXjV\r\nZ/OpY7W+XsDjut7cFgPKIc843tW4CNaDJ6j3afm+RFOok//xLQH5uA7HXS/yqfEc\r\nhvzXfYfMxJY2d+Eqw4xTurm3TT07RnwJuN9slDJUrTH9EKkJkjZ7dn7fZtGjGTpa\r\nDQIDAQAB\r\n-----END PUBLIC KEY-----\r\n`;
-
-  function httpGetMock(data) {
-    return (url) => data ? Promise.resolve(data) : Promise.reject();
-  }
+  const keyAsPEM = `-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1GPz+Er5h7PCk4v3pSln\naLYNYrp4sVc6Tx7FVz9d8m4zIS2qzcTM/6dRbMgZ4hBdD35NpYzU4z+d8lN27+J/\njOzHnCiMdkY+w52dCofAkICh6ftkFlG9bFQyH8Jz5UtpVkZyy1dxCRz/sbRAzUdj\nUYsGvrKXg+3UYCL5SBCnt0ycrvr3iKX9k8IlMrFRB8lBJ6eQVzkzGsuivPaThXjV\nZ/OpY7W+XsDjut7cFgPKIc843tW4CNaDJ6j3afm+RFOok//xLQH5uA7HXS/yqfEc\nhvzXfYfMxJY2d+Eqw4xTurm3TT07RnwJuN9slDJUrTH9EKkJkjZ7dn7fZtGjGTpa\nDQIDAQAB\n-----END PUBLIC KEY-----\n`;
 
   it('Finds keys in iss + .well-known URL', function(done) {
     const decodedToken = _.defaultsDeep({}, decodedBaseToken, {
@@ -51,8 +61,11 @@ describe('Public key downloader', function() {
     });
 
     const httpGetStub = sinon.stub()
-      .onCall(0).resolves(JSON.stringify({ jwks_uri: '/.well-known/jwks.json' }))
-      .onCall(1).resolves(JSON.stringify(jwks));
+      .onCall(0).resolves(JSON.stringify({ jwks_uri: baseUrl + '.well-known/jwks.json' }))
+
+    nock(baseUrl)
+      .get('/.well-known/jwks.json')
+      .reply(200, jwks)
 
     const downloadPublicKeyIfPossible = publicKeyDownloadInjector({
       '../utils.js': {
@@ -65,8 +78,6 @@ describe('Public key downloader', function() {
       .then(() => {
         httpGetStub.should.have.been
                    .calledWith(baseUrl + '.well-known/openid-configuration');
-        httpGetStub.should.have.been
-                   .calledWith(baseUrl + '.well-known/jwks.json');
       }).should.notify(done);
   });
 
@@ -86,7 +97,7 @@ describe('Public key downloader', function() {
     }).downloadPublicKeyIfPossible;
 
     downloadPublicKeyIfPossible(decodedToken)
-      .should.eventually.include(jwks.keys[0].x5c[0])
+      .should.eventually.include(keyAsPEM)
       .then(() => {
         httpGetStub.should.have.callCount(0);
       }).should.notify(done);
@@ -100,47 +111,9 @@ describe('Public key downloader', function() {
       }
     });
 
-    const httpGetStub = sinon.stub().resolves(JSON.stringify(jwks));
-    const downloadPublicKeyIfPossible = publicKeyDownloadInjector({
-      '../utils.js': {
-        httpGet: httpGetStub
-      }
-    }).downloadPublicKeyIfPossible;
-
-    downloadPublicKeyIfPossible(decodedToken)
-      .should.eventually.include(jwks.keys[0].x5c[0])
-      .then(() => {
-        httpGetStub.should.have.been.calledWith(baseUrl);
-      }).should.notify(done);
-  });
-
-  it('Finds keys in x5u header claim', function(done) {
-    const decodedToken = _.defaultsDeep({}, decodedBaseToken, {
-      header: {
-        x5u: baseUrl
-      }
-    });
-
-    const httpGetStub = sinon.stub().resolves(jwks.keys[0].x5c[0]);
-    const downloadPublicKeyIfPossible = publicKeyDownloadInjector({
-      '../utils.js': {
-        httpGet: httpGetStub
-      }
-    }).downloadPublicKeyIfPossible;
-
-    downloadPublicKeyIfPossible(decodedToken)
-      .should.eventually.include(jwks.keys[0].x5c[0])
-      .then(() => {
-        httpGetStub.should.have.been.calledWith(baseUrl);
-      }).should.notify(done);
-  });
-
-  it('Finds keys in x5c string header claim', function(done) {
-    const decodedToken = _.defaultsDeep({}, decodedBaseToken, {
-      header: {
-        x5c: jwks.keys[0].x5c[0]
-      }
-    });
+    nock(baseUrl)
+      .get('/')
+      .reply(200, jwks)
 
     const httpGetStub = sinon.stub().rejects('Should not be called');
     const downloadPublicKeyIfPossible = publicKeyDownloadInjector({
@@ -150,9 +123,31 @@ describe('Public key downloader', function() {
     }).downloadPublicKeyIfPossible;
 
     downloadPublicKeyIfPossible(decodedToken)
-      .should.eventually.include(jwks.keys[0].x5c[0])
+      .should.eventually.include(keyAsPEM)
       .then(() => {
         httpGetStub.should.have.callCount(0);
+      })
+      .should.notify(done);
+  });
+
+  it('Finds keys in x5u header claim', function(done) {
+    const decodedToken = _.defaultsDeep({}, decodedBaseToken, {
+      header: {
+        x5u: baseUrl
+      }
+    });
+
+    const httpGetStub = sinon.stub().resolves(jwks.keys[0].x5c);
+    const downloadPublicKeyIfPossible = publicKeyDownloadInjector({
+      '../utils.js': {
+        httpGet: httpGetStub
+      }
+    }).downloadPublicKeyIfPossible;
+
+    downloadPublicKeyIfPossible(decodedToken)
+      .should.eventually.include(jwks.keys[0].x5c)
+      .then(() => {
+        httpGetStub.should.have.been.calledWith(baseUrl);
       }).should.notify(done);
   });
 
@@ -171,7 +166,7 @@ describe('Public key downloader', function() {
     }).downloadPublicKeyIfPossible;
 
     downloadPublicKeyIfPossible(decodedToken)
-      .should.eventually.include(jwks.keys[0].x5c[0])
+      .should.eventually.include(jwks.keys[0].x5c)
       .then(() => {
         httpGetStub.should.have.callCount(0);
       }).should.notify(done);
@@ -181,7 +176,7 @@ describe('Public key downloader', function() {
     const decodedToken = _.defaultsDeep({}, decodedBaseToken, {
       header: {
         kid: '1',
-        jku: baseUrl
+        x5u: baseUrl
       }
     });
 
@@ -208,62 +203,33 @@ describe('Public key downloader', function() {
       }
     });
 
-    let httpGetStub;
+    const httpGetStub = sinon.stub().rejects('Should not be called');
     const downloadPublicKeyIfPossible = publicKeyDownloadInjector({
       '../utils.js': {
-        httpGet: url => httpGetStub(url)
+        httpGet: httpGetStub
       }
     }).downloadPublicKeyIfPossible;
 
     it('when the keys object is not an array', function(done) {
-      httpGetStub = sinon.stub().resolves({
-        keys: {}
-      });
+
+
+      nock(baseUrl)
+        .get('/')
+        .reply(200, { keys: {} })
 
       downloadPublicKeyIfPossible(decodedToken)
         .should.be.rejected
-        .then(() => {
-          httpGetStub.should.have.been.calledWith(baseUrl);
-        }).should.notify(done);
+        .should.notify(done);
     });
 
     it('when the keys object does not exist', function(done) {
-      httpGetStub = sinon.stub().resolves({
-      });
+      nock(baseUrl)
+        .get('/')
+        .reply(200, {})
 
       downloadPublicKeyIfPossible(decodedToken)
         .should.be.rejected
-        .then(() => {
-          httpGetStub.should.have.been.calledWith(baseUrl);
-        }).should.notify(done);
-    });
-
-    it('when there is no kid', function(done) {
-      httpGetStub = sinon.stub().resolves({
-        keys: [{
-          x5c: jwks.keys[0].x5c
-        }]
-      });
-
-      downloadPublicKeyIfPossible(decodedToken)
-        .should.be.rejected
-        .then(() => {
-          httpGetStub.should.have.been.calledWith(baseUrl);
-        }).should.notify(done);
-    });
-
-    it('when there are no x5u or x5c claims', function(done) {
-      httpGetStub = sinon.stub().resolves({
-        keys: [{
-          kid: '1'
-        }]
-      });
-
-      downloadPublicKeyIfPossible(decodedToken)
-        .should.be.rejected
-        .then(() => {
-          httpGetStub.should.have.been.calledWith(baseUrl);
-        }).should.notify(done);
+        .should.notify(done);
     });
   });
 });

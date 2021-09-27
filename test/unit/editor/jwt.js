@@ -5,20 +5,10 @@ import b64u from 'base64url';
 import log from 'loglevel';
 import chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
-import { randomFillSync } from 'crypto';
+import { randomFillSync, generateKeyPair } from 'crypto';
 
 chai.use(chaiAsPromised);
 chai.should();
-
-const publicKeyPlainRSA =
-`-----BEGIN RSA PUBLIC KEY-----
-MIIBCgKCAQEAnzyis1ZjfNB0bBgKFMSvvkTtwlvBsaJq7S5wA+kzeVOVpVWwkWdV
-ha4s38XM/pa/yr47av7+z3VTmvDRyAHcaT92whREFpLv9cj5lTeJSibyr/Mrm/Yt
-jCZVWgaOYIhwrXwKLqPr/11inWsAkfIytvHWTxZYEcXLgAXFuUuaS3uF9gEiNQwz
-GTU1v0FqkqTBr4B8nW3HCN47XUu0t8Y0e+lf4s4OxQawWD79J9/5d3Ry0vbV3Am1
-FtGJiJvOwRsIfVChDpYStTcHTCMqtvWbV6L11BWkpzGXSW4Hv43qa+GSYOD2QU68
-Mb59oSk2OB+BtOLpJofmbGEGgvmwyCI9MwIDAQAB
------END RSA PUBLIC KEY-----`;
 
 describe('JWT', function() {
   it('detects tokens', function() {
@@ -43,20 +33,6 @@ describe('JWT', function() {
     const token = b64u.toBase64(tokens.hs256.token);
     jwt.isToken(token).should.be.false;
     return jwt.verify(token, tokens.hs256.secret).should.eventually.include({validSignature: false});
-  });
-
-  describe('verifies valid tokens', function() {
-    Object.keys(tokens).forEach(alg => {
-      it(alg.toUpperCase(), function() {
-        if(alg.indexOf('hs') !== -1) {
-          return jwt.verify(tokens[alg].token, tokens[alg].secret)
-                    .should.eventually.include({validSignature: true});
-        } else {
-          return jwt.verify(tokens[alg].token, tokens[alg].publicKey)
-                    .should.eventually.be.include({validSignature: true});
-        }
-      });
-    });
   });
 
   it('fails to verify invalid tokens ' +
@@ -99,29 +75,68 @@ describe('JWT', function() {
                   .should.eventually.be.true;
   });
 
-  it('signs/verifies tokens (HS256)', function() {
-    const header = {
-      alg: 'HS256'
-    };
-    const payload = {
-      sub: 'test'
-    };
+  for (const [alg, vector] of Object.entries(tokens)) {
+    let { privateKey, publicKey, jwk } = vector;
+    if (vector.secret) {
+      privateKey = publicKey = vector.secret;
+    }
 
-    return jwt.sign(header, payload, 'secret').then(token => {
-      token.should.be.a('string');
+    it(`signs/verifies ${alg.toUpperCase()}`, function () {
+      const header = { alg: alg.toUpperCase(), iat: Date.now() };
+      const payload = { sub: 'test' };
 
-      const split = token.split('.');
-      split.should.have.lengthOf(3);
+      // test the default token
+      return jwt.verify(vector.token, publicKey).should.eventually.include({validSignature: true})
+        .then(() => {
+          // test signing
+          return jwt.sign(header, payload, privateKey).then(token => {
+            token.should.be.a('string');
 
-      const decoded = jwt.decode(token);
-      decoded.header.should.deep.equal(header);
-      decoded.payload.should.deep.equal(payload);
+            const split = token.split('.');
+            split.should.have.lengthOf(3);
 
-      return jwt.verify(token, 'secret').should.eventually.include({validSignature: true});
+            const decoded = jwt.decode(token);
+            decoded.header.should.deep.equal(header);
+            decoded.payload.should.deep.equal(payload);
+
+            // test verifying just signed token
+            return jwt.verify(token, publicKey)
+                      .should.eventually.include({validSignature: true});
+          });
+        });
     });
-  });
 
-  it('signs/verifies tokens (RS256)', function() {
+    if (jwk) {
+      it(`signs/verifies ${alg.toUpperCase()} with a JWK`, function () {
+        const header = { alg: alg.toUpperCase(), iat: Date.now() };
+        const payload = { sub: 'test' };
+
+        const jsonJWK = JSON.stringify(jwk, null, 4)
+
+        // test the default token
+        return jwt.verify(vector.token, jsonJWK).should.eventually.include({validSignature: true})
+          .then(() => {
+            // test signing
+            return jwt.sign(header, payload, jsonJWK).then(token => {
+              token.should.be.a('string');
+
+              const split = token.split('.');
+              split.should.have.lengthOf(3);
+
+              const decoded = jwt.decode(token);
+              decoded.header.should.deep.equal(header);
+              decoded.payload.should.deep.equal(payload);
+
+              // test verifying just signed token
+              return jwt.verify(token, jsonJWK)
+                        .should.eventually.include({validSignature: true});
+            });
+          });
+      });
+    }
+  }
+
+  it('signs and verifies tokens using a PKCS1 RSA keys', function() {
     const header = {
       alg: 'RS256'
     };
@@ -129,77 +144,19 @@ describe('JWT', function() {
       sub: 'test'
     };
 
-    return jwt.sign(header, payload, tokens.rs256.privateKey).then(token => {
-      token.should.be.a('string');
-
-      const split = token.split('.');
-      split.should.have.lengthOf(3);
-
-      const decoded = jwt.decode(token);
-      decoded.header.should.deep.equal(header);
-      decoded.payload.should.deep.equal(payload);
-
-      return jwt.verify(token, tokens.rs256.publicKey)
-                .should.eventually.include({validSignature: true});
-    });
-  });
-
-  it('signs/verifies tokens (ES256)', function() {
-    const header = {
-      alg: 'ES256'
-    };
-    const payload = {
-      sub: 'test'
-    };
-
-    return jwt.sign(header, payload, tokens.es256.privateKey).then(token => {
-      token.should.be.a('string');
-
-      const split = token.split('.');
-      split.should.have.lengthOf(3);
-
-      const decoded = jwt.decode(token);
-      decoded.header.should.deep.equal(header);
-      decoded.payload.should.deep.equal(payload);
-
-      return jwt.verify(token, tokens.es256.publicKey)
-                .should.eventually.include({validSignature: true});
-    });
-  });
-
-  it('signs/verifies tokens (PS256)', function() {
-    const header = {
-      alg: 'PS256'
-    };
-    const payload = {
-      sub: 'test'
-    };
-
-    return jwt.sign(header, payload, tokens.ps256.privateKey).then(token => {
-      token.should.be.a('string');
-
-      const split = token.split('.');
-      split.should.have.lengthOf(3);
-
-      const decoded = jwt.decode(token);
-      decoded.header.should.deep.equal(header);
-      decoded.payload.should.deep.equal(payload);
-
-      return jwt.verify(token, tokens.ps256.publicKey)
-                .should.eventually.include({validSignature: true});
-    });
-  });
-
-  it('verifies tokens (RS256) using a plain RSA public key', function() {
-    const header = {
-      alg: 'RS256'
-    };
-    const payload = {
-      sub: 'test'
-    };
-
-    return jwt.sign(header, payload, tokens.rs256.privateKey).then(token => {
-      return jwt.verify(token, publicKeyPlainRSA).should.eventually.include({validSignature: true});
+    return new Promise((resolve, reject) => {
+      generateKeyPair('rsa', {
+        modulusLength: 2048,
+        privateKeyEncoding: { format: 'pem', type: 'pkcs1' },
+        publicKeyEncoding: { format: 'pem', type: 'pkcs1' },
+      }, (err, publicKey, privateKey) => {
+        if (err) return reject(err);
+        return resolve({ publicKey, privateKey });
+      })
+    }).then(({ privateKey, publicKey }) => {
+      return jwt.sign(header, payload, privateKey).then((token) => {
+        return jwt.verify(token, publicKey).should.eventually.include({validSignature: true});
+      });
     });
   });
 

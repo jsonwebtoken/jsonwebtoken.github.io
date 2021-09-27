@@ -73,7 +73,8 @@ html(lang='en')
     script.
       !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
 
-    div
-      div(id="consent_blackbar")
-      div(id="teconsent" style="position: absolute; bottom: -100px;")
-      script(async="async" src="//consent.trustarc.com/notice?domain=auth0banner.com&c=teconsent&js=nj&noticeType=bb&text=true" crossOrigin)
+    if process.env.NODE_ENV === "production"
+      div
+        div(id="consent_blackbar")
+        div(id="teconsent" style="position: absolute; bottom: -100px;")
+        script(async="async" src="//consent.trustarc.com/notice?domain=auth0banner.com&c=teconsent&js=nj&noticeType=bb&text=true" crossOrigin)
