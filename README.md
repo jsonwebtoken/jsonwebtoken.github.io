@@ -2,8 +2,6 @@
 
 <img src="https://cdn.auth0.com/blog/jwtio/jwtio.png"/>
 
-[![Build Status](https://travis-ci.org/jsonwebtoken/jsonwebtoken.github.io.png?branch=master)](https://travis-ci.org/jsonwebtoken/jsonwebtoken.github.io)
-
 ### Sponsor
 
 |||

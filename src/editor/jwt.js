@@ -1,74 +1,61 @@
-import jose from 'node-jose';
 import b64u from 'base64url';
 import any from 'promise.any';
-import { pki } from 'node-forge';
 import strings from '../strings';
-strings
 import log from 'loglevel';
-import { findLastIndex } from 'lodash';
+import * as keyImport from 'jose/key/import'
+import CompactSign from 'jose/jws/compact/sign'
+import compactVerify from 'jose/jws/compact/verify'
+import { pki } from 'node-forge';
 
-// node-jose does not support keys shorter than block size. This is a
-// limitation from their implementation and could be resolved in the future.
-// See: https://github.com/cisco/node-jose/blob/master/lib/jwk/octkey.js#L141
-function paddedKey(key, alg, base64Secret) {
-    const blockSizeBytes = alg.indexOf('256') !== -1 ? 512 / 8 : 1024 / 8;
+function symmetricSecret(key, alg, base64Secret) {
+    let secret = base64Secret ? Buffer.from(key, 'base64') : Buffer.from(key);
 
-    let buf = base64Secret ? Buffer.from(key, 'base64') : Buffer.from(key);
+    const len = Math.max(parseInt(alg.substr(-3), 10) >> 3, secret.byteLength);
 
-    if (buf.length < blockSizeBytes) {
-        const oldBuf = buf;
-        buf = Buffer.alloc(blockSizeBytes);
-        buf.set(oldBuf);
-    }
+    const padded = new Uint8Array(len);
+    padded.set(secret);
 
-    return b64u.encode(buf);
+    return Promise.resolve(padded);
 }
 
-/*
- * This function handles plain RSA keys not wrapped in a
- * X.509 SubjectPublicKeyInfo structure. It returns a PEM encoded public key
- * wrapper in that structure.
- * See: https://stackoverflow.com/questions/18039401/how-can-i-transform-between-the-two-styles-of-public-key-format-one-begin-rsa
- * @param {String} publicKey The public key as a PEM string.
- * @returns {String} The PEM encoded public key in
- *                   X509 SubjectPublicKeyInfo format.
- */
-function plainRsaKeyToX509Key(key) {
-    try {
-        const startTag = '-----BEGIN RSA PUBLIC KEY-----';
-        const endTag = '-----END RSA PUBLIC KEY-----';
-        const startTagPos = key.indexOf(startTag);
-        const endTagPos = key.indexOf(endTag);
+const types = {
+    'PRIVATE': 1,
+    'PUBLIC': 2,
+};
 
-        return startTagPos !== -1 && endTagPos !== -1 ?
-            pki.publicKeyToPem(pki.publicKeyFromPem(key)) :
-            key;
-    } catch (e) {
-        // If anything fails, it may not be a plain RSA key, so return the same key.
-        return key;
-    }
-}
+const rawPublic = ({ alg, oth, d, p, q, dp, dq, qi, use, key_ops, ext, ...jwk }) => jwk;
+const rawPrivate = ({ alg, use, key_ops, ext, ...jwk }) => jwk;
 
-function getJoseKey(header, key, base64Secret) {
+function getJoseKey(header, key, base64Secret, type) {
     if (header.alg.indexOf('HS') === 0) {
-        return jose.JWK.asKey({
-            kty: 'oct',
-            use: 'sig',
-            alg: header.alg,
-            k: paddedKey(key, header.alg, base64Secret)
-        });
-    } else {
-        if (header.alg.indexOf('RS') === 0) {
-            key = plainRsaKeyToX509Key(key);
-        }
+        return symmetricSecret(key, header.alg, base64Secret)
+    }
 
-        return any(['pem', 'json'].map(form => {
-            try {
-                return jose.JWK.asKey(key, form);
-            } catch (e) {
-                return Promise.reject(e);
+    switch (type) {
+        case types.PRIVATE:
+            if (key.startsWith('-----BEGIN RSA PRIVATE KEY-----')) {
+                key = pki.privateKeyInfoToPem(pki.wrapRsaPrivateKey(pki.privateKeyToAsn1(pki.privateKeyFromPem(key))))
             }
-        }));
+            return any([
+                keyImport.importPKCS8(key, header.alg),
+                Promise.resolve().then(() => JSON.parse(key)).then(rawPrivate).then((jwk) => {
+                    if (!('d' in jwk)) throw new Error('not a private JWK')
+                    return keyImport.importJWK(jwk, header.alg)
+                })
+            ])
+        case types.PUBLIC:
+            if (key.startsWith('-----BEGIN RSA PUBLIC KEY-----')) {
+                key = pki.publicKeyToPem(pki.publicKeyFromPem(key))
+            }
+            return any([
+                keyImport.importSPKI(key, header.alg),
+                keyImport.importX509(key, header.alg),
+                Promise.resolve().then(() => JSON.parse(key)).then(rawPublic).then((jwk) => {
+                    return keyImport.importJWK(jwk, header.alg)
+                })
+            ])
+        default:
+            throw new Error('unreachable')
     }
 }
 
@@ -80,19 +67,15 @@ export function sign(header,
         return Promise.reject(new Error('Missing "alg" claim in header'));
     }
 
-    return getJoseKey(header, secretOrPrivateKeyString, base64Secret).then(
+    return getJoseKey(header, secretOrPrivateKeyString, base64Secret, types.PRIVATE).then(
         key => {
             if (!(typeof payload === 'string' || payload instanceof String)) {
                 payload = JSON.stringify(payload);
             }
 
-            return jose.JWS.createSign({
-                fields: header,
-                format: 'compact'
-            }, {
-                key: key,
-                reference: false
-            }).update(payload, 'utf8').final();
+            return new CompactSign(new TextEncoder().encode(payload))
+                .setProtectedHeader(header)
+                .sign(key);
         }
     );
 }
@@ -108,17 +91,18 @@ export function verify(jwt, secretOrPublicKeyString, base64Secret = false) {
         return Promise.resolve({ validSignature: false });
     }
 
-    return getJoseKey(decoded.header, secretOrPublicKeyString, base64Secret).then(
+    return getJoseKey(decoded.header, secretOrPublicKeyString, base64Secret, types.PUBLIC).then(
         key => {
-            return jose.JWS.createVerify(key)
-                .verify(jwt)
+            return compactVerify(jwt, key)
                 .then(() => ({
                     validSignature: true,
                     validBase64: jwt.split('.').reduce((valid, s) => valid = valid && isValidBase64String(s), true)
-                }), () => ({ validSignature: false }));
+                }), (e) => {
+                    log.warn('Could not verify token: ', e);
+                    return { validSignature: false }
+                });
         }, e => {
-            log.warn('Could not verify token, ' +
-                'probably due to bad data in it or the keys: ', e);
+            log.warn('Could not load the key(s): ', e);
             return { validSignature: false };
         }
     );

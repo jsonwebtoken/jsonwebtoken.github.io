@@ -18,7 +18,9 @@ async function launchBrowser() {
   // Initial navigation may take long due to outside requests.
   this.timeout(30000);
 
-  this.browser = await puppeteer.launch();
+  this.browser = await puppeteer.launch({
+		args: ['--disable-dev-shm-usage']
+	});
   this.page = await this.browser.newPage();
   await this.page.setViewport({
     width: 1920,

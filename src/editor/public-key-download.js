@@ -1,24 +1,15 @@
-import jose from 'node-jose';
+import { createRemoteJWKSet } from 'jose/jwks/remote'
+import * as keyExport from 'jose/key/export'
 
 import { httpGet } from '../utils.js';
 
 function getKeyFromX5c(x5c) {
-  if(!x5c) {
-    throw new Error('x5c claim not present?');
+  if(!Array.isArray(x5c) || typeof x5c[0] !== 'string') {
+    throw new Error('x5c claim not present or invalid');
   }
 
-  if(!(x5c instanceof Array)) {
-    x5c = [ x5c ];
-  }
-
-  let certChain = '';
-  x5c.forEach(cert => {
-    certChain += '-----BEGIN CERTIFICATE-----\n';
-    certChain += cert + '\n';
-    certChain += '-----END CERTIFICATE-----\n';
-  });
-
-  return certChain;
+  const newlined = (x5c[0].match(/.{1,64}/g) || []).join('\n')
+  return `-----BEGIN CERTIFICATE-----\n${newlined}\n-----END CERTIFICATE-----`
 }
 
 function getKeyFromX5Claims(claims) {
@@ -33,36 +24,8 @@ function getKeyFromX5Claims(claims) {
   });
 }
 
-function getKeyFromJwkKeySetUrl(kid, url) {
-  return httpGet(url).then(data => {
-    data = JSON.parse(data);
-
-    if(!data || !data.keys || !(data.keys instanceof Array)) {
-      throw new Error(`Could not get JWK key set from URL: ${url}`);
-    }
-
-    for(let i = 0; i < data.keys.length; ++i) {
-      const jwk = data.keys[i];
-      if(jwk.kid === kid) {
-        return getKeyFromX5Claims(jwk);
-      }
-    }
-
-    throw new Error(`Could not find key with kid ${kid} in URL: ${url}`);
-  });
-}
-
-function supportedJwk({ kty, crv }) {
-  switch (kty) {
-    case 'RSA':
-      return true;
-    case 'EC':
-      return ['P-256', 'P-384', 'P-521'].includes(crv)
-    // node-jose does not support e.g. OKP keys or non-registered curves such as P-256K
-    // we also don't populate the HMAC secret
-    default:
-      return false;
-  }
+function getKeyFromJwkKeySetUrl(header, url) {
+  return createRemoteJWKSet(new URL(url))(header, {}).then(keyExport.exportJWK).then((jwk) => JSON.stringify(jwk, null, 2))
 }
 
 export function downloadPublicKeyIfPossible(decodedToken) {
@@ -76,11 +39,11 @@ export function downloadPublicKeyIfPossible(decodedToken) {
     }
 
     if(header.x5c || header.x5u) {
-      resolve(getKeyFromX5Claims(header));
+      getKeyFromX5Claims(header).then(resolve, reject);
     } else if(header.jku) {
-      resolve(getKeyFromJwkKeySetUrl(header.kid, header.jku));
+      getKeyFromJwkKeySetUrl(header, header.jku).then(resolve, reject);
     } else if(header.jwk) {
-      resolve(getKeyFromX5Claims(header.jwk));
+      resolve(JSON.stringify(header.jwk, null, 2))
     } else if(payload.iss) {
       const url = payload.iss + (payload.iss.substr(-1) === '/' ? '.well-known/openid-configuration' : '/.well-known/openid-configuration')
 
@@ -91,20 +54,7 @@ export function downloadPublicKeyIfPossible(decodedToken) {
           throw new Error(`Could not get jwks_uri from URL: ${url}`);
         }
 
-        return httpGet(data.jwks_uri)
-      }).then(data => {
-        const { keys } = JSON.parse(data);
-
-        return jose.JWK.asKeyStore({ keys: keys.filter(supportedJwk) });
-      }).then(jwks => {
-
-        const keys = jwks.all({ alg: header.alg, kid: header.kid, use: 'sig' })
-
-        if (keys.length !== 1) {
-          throw new Error('Could not find a single definitive key in jwks_uri');
-        }
-
-        resolve(keys[0].toPEM())
+        return getKeyFromJwkKeySetUrl(header, data.jwks_uri).then(resolve);
       }).catch(reject);
     } else {
       reject('No details about key');

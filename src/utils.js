@@ -30,49 +30,6 @@ export function httpGet(url, cache = true) {
   });
 }
 
-/*export function isValidKey(key) {
-  // Four tries: no header, header for cert, header for pub key,
-  // header for priv key
-
-  const headers = [{
-    prologue: '',
-    epilogue: ''
-  },{
-    prologue: '-----BEGIN CERTIFICATE-----\n',
-    epilogue: '-----END CERTIFICATE-----\n'
-  }, {
-    prologue: '-----BEGIN PUBLIC KEY-----\n',
-    epilogue: '-----END PUBLIC KEY-----\n'
-  }, {
-    prologue: '-----BEGIN PRIVATE KEY-----\n',
-    epilogue: '-----END PRIVATE KEY-----\n'
-  }, {
-    prologue: '-----BEGIN RSA PRIVATE KEY-----\n',
-    epilogue: '-----END RSA PRIVATE KEY-----\n'
-  }];
-
-  for(let i = 0; i < headers.length; ++i) {
-    const header = headers[i];
-    try {
-      let newKey = header.prologue;
-      newKey += key + '\n';
-      newKey += header.epilogue;
-
-      return {
-        valid: !!KEYUTIL.getKey(newKey),
-        key: newKey
-      };
-    } catch(e2) {
-      // Ignore
-    }
-  }
-
-  return {
-    valid: false,
-    key: key
-  };
-}*/
-
 export function deferToNextLoop(func) {
   setTimeout(func, 1);
 }
