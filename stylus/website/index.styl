@@ -479,7 +479,7 @@ body
 
   @media (min-width: 768px)
     height: 235px;
-    margin-top: 70px
+    margin: 8rem 0
     padding: 65px 235px 65px 65px;
     box-shadow:  0 10px 20px 0 rgba(0,0,0,0.25)
     text-align: left;
@@ -905,8 +905,13 @@ body
     .column
       margin-bottom 20px
       text-align center
+      &.libraries 
+        margin: 0 0 20px 0;
       +breakpoint("tablet")
         margin-bottom 0
+
+        &.libraries
+          margin: -2rem 0;
 
   h2
     font-size 30px
@@ -914,6 +919,19 @@ body
     text-align center
     margin 0
     font-weight normal
+
+  .libraries
+    background rgba(255, 255, 255, .05)
+    +breakpoint("tablet")
+      height 373px
+
+    .libraries-container
+      padding: 2rem
+
+    p 
+      color white
+      font-size 20px
+      line-height 1.2
 
   .logotype
     img
@@ -1022,6 +1040,14 @@ body
     background-color #D63AFF
     color white
     border none
+
+  &.btn-ghost
+    background transparent
+    border 1px solid #D63AFF
+    color #D63AFF
+
+  & + .btn
+    margin-left 2rem
 
   .token
     margin-top 35px
