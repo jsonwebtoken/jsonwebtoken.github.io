@@ -30,6 +30,13 @@ describe('Editor', function() {
 
     after(utils.closeBrowser);
 
+    it('Displays editor when clicking on navbar', async function() {
+        await this.page.click('a[href="/#debugger-io"]');
+        // Wait for scroll
+        await this.page.waitFor(3000);
+        expect(await this.page.$eval('#debugger-io', isVisible)).to.be.true;
+    });
+
     it('HS256 should be selected by default', async function() {
         const selected = await this.page.$eval('#algorithm-select', select => {
             return select.options[select.selectedIndex].value;
