@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  push:
+    paths-ignore:
+      - "views/website/libraries/*.json"
+  pull_request:
+    paths-ignore:
+      - "views/website/libraries/*.json"
+
+jobs:
+  test:
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
+          node-version: '14'
+      - run: npm install
+      - run: npm test

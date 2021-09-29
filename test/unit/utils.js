@@ -4,8 +4,6 @@ import xhrMock from 'xhr-mock';
 
 import { httpGet } from '../../src/utils.js';
 
-import { randomFillSync } from 'crypto';
-
 chai.use(chaiAsPromised);
 chai.should();
 

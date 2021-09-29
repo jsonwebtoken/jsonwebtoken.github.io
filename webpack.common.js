@@ -33,4 +33,14 @@ module.exports = {
             jQuery: "jquery",
         }),
     ],
+    resolve: {
+        alias: {
+            'jose/key/import': 'jose/dist/browser/key/import',
+            'jose/key/export': 'jose/dist/browser/key/export',
+            'jose/jws/compact/sign': 'jose/dist/browser/jws/compact/sign',
+            'jose/jws/compact/verify': 'jose/dist/browser/jws/compact/verify',
+            'jose/jwks/remote': 'jose/dist/browser/jwks/remote',
+            'jose/jwk/embedded': 'jose/dist/browser/jwk/embedded',
+        }
+    }
 };

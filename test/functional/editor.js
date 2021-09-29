@@ -3,12 +3,12 @@ const chaiAsPromised = require('chai-as-promised');
 const chaiArrays = require('chai-arrays');
 
 const express = require('express');
-const jose = require('node-jose');
+const { importPKCS8 } = require('jose/key/import')
+const { CompactSign } = require('jose/jws/compact/sign')
 
 const _ = require('lodash');
 
 const utils = require('./utils.js');
-const tokens = require('./tokens.js');
 const defaultTokens =
   require('esm')(module)('../../src/editor/default-tokens.js').default;
 const jwks = require('./jwks.json');
@@ -328,22 +328,18 @@ describe('Editor', function() {
     });
 
     describe('HS256/384/512', function() {
-      const algs = Object.keys(tokens).filter(alg => alg.includes('hs'));
+      const algs = Object.keys(defaultTokens).filter(alg => alg.includes('hs'));
 
       for(const alg of algs) {
         it(`Decodes ${alg.toUpperCase()} tokens`, async function() {
           const secretInput = await this.page.$('input[name="secret"]');
           await secretInput.click();
           await selectAll.call(this);
-          await secretInput.type(tokens[alg].secret, {
-            delay: typingDelay
-          });
+          await secretInput.type(defaultTokens[alg].secret);
 
           await this.page.click('.js-input');
           await selectAll.call(this);
-          await this.page.keyboard.type(tokens[alg].token, {
-            delay: typingDelay
-          });
+          await this.page.keyboard.type(defaultTokens[alg].token);
 
           // Wait for token processing.
           await this.page.waitFor(tokenProcessingWait);
@@ -355,12 +351,6 @@ describe('Editor', function() {
           });
 
           expect(valid).to.be.true;
-
-          const payload = await this.page.evaluate(() => {
-            return window.test.payloadEditor.getValue();
-          });
-
-          expect(payload).to.include(alg + 'test');
         });
 
         const bits = parseInt(alg.substr(2));
@@ -425,79 +415,76 @@ describe('Editor', function() {
 
   describe('Public-key', function() {
     describe('Decodes RS/ES/PS tokens', function() {
-      const algs = Object.keys(defaultTokens)
-                         .filter(alg => !alg.includes('hs'));
+      const algs = Object.keys(defaultTokens).filter(alg => !alg.includes('hs'));
 
       for(const alg of algs) {
-        it(alg.toUpperCase(), async function() {
-          await this.page.click('.js-input');
-          await selectAll.call(this);
-          await this.page.keyboard.type(tokens[alg].token, {
-            delay: typingDelay
+        for (const format of ['pem', 'jwk']) {
+          it(`${alg.toUpperCase()} using a ${format.toUpperCase()} key`, async function() {
+            await this.page.click('.js-input');
+            await selectAll.call(this);
+            await this.page.keyboard.type(defaultTokens[alg].token);
+
+            const secretInput = await this.page.$('textarea[name="public-key"]');
+            await secretInput.click();
+            await selectAll.call(this);
+
+            let publicKey = defaultTokens[alg].publicKey;
+            if (format === 'jwk') {
+              publicKey = JSON.stringify(defaultTokens[alg].jwk)
+            }
+
+            await secretInput.type(publicKey);
+
+            // Wait for token processing.
+            await this.page.waitFor(tokenProcessingWait);
+            await this.page.waitFor(tokenEditorThrottleWait);
+
+            const valid = await this.page.$eval('.validation-status', status => {
+              return status.classList.contains('valid-token') &&
+                    status.textContent.indexOf('verified') !== -1;
+            });
+
+            expect(valid).to.be.true;
           });
-
-          const secretInput = await this.page.$('textarea[name="public-key"]');
-          await secretInput.click();
-          await selectAll.call(this);
-          await secretInput.type(tokens[alg].publicKey, {
-            delay: typingDelay
-          });
-
-          // Wait for token processing.
-          await this.page.waitFor(tokenProcessingWait);
-          await this.page.waitFor(tokenEditorThrottleWait);
-
-          const valid = await this.page.$eval('.validation-status', status => {
-            return status.classList.contains('valid-token') &&
-                  status.textContent.indexOf('verified') !== -1;
-          });
-
-          expect(valid).to.be.true;
-
-          const payload = await this.page.evaluate(() => {
-            return window.test.payloadEditor.getValue();
-          });
-
-          expect(payload).to.include(alg + 'test');
-        });
+        }
       }
     });
 
     describe('Encodes RS/ES/PS tokens', function() {
-      describe('RS/PS', async function() {
-        before(async function() {
-          await this.page.select('#algorithm-select', 'RS256');
+      const algs = Object.keys(defaultTokens).filter(alg => !alg.includes('hs'));
 
-          await this.page.click('textarea[name="public-key"]');
-          await selectAll.call(this);
-          await this.page.keyboard.type(defaultTokens['rs256'].publicKey, {
-            delay: typingDelay
-          });
+      for(const alg of algs) {
+        for (const format of ['pem', 'jwk']) {
+          it(`${alg.toUpperCase()} using a ${format.toUpperCase()} key`, async function() {
+            await this.page.select('#algorithm-select', alg.toUpperCase());
 
-          await this.page.click('textarea[name="private-key"]');
-          await selectAll.call(this);
-          await this.page.keyboard.type(defaultTokens['rs256'].privateKey, {
-            delay: typingDelay
-          });
-        });
+            let publicKey = defaultTokens[alg].publicKey;
+            if (format === 'jwk') {
+              publicKey = JSON.stringify(defaultTokens[alg].jwk)
+            }
 
-        const algs =
-          Object.keys(defaultTokens)
-                .filter(alg => alg.includes('rs') || alg.includes('ps'));
+            let privateKey = defaultTokens[alg].privateKey;
+            if (format === 'jwk') {
+              privateKey = JSON.stringify(defaultTokens[alg].jwk)
+            }
 
-        for(const alg of algs) {
-          it(alg.toUpperCase(), async function() {
-            //this.timeout(30000);
+            await this.page.click('textarea[name="public-key"]');
+            await selectAll.call(this);
+            await this.page.keyboard.type(publicKey, {
+              delay: typingDelay
+            });
+
+            await this.page.click('textarea[name="private-key"]');
+            await selectAll.call(this);
+            await this.page.keyboard.type(privateKey, {
+              delay: typingDelay
+            });
 
             await this.page.evaluate(token => {
               window.test.tokenEditor.setValue(token);
             }, defaultTokens[alg].token);
 
             await this.page.select('#algorithm-select', alg.toUpperCase());
-
-            const oldToken = await this.page.evaluate(() => {
-              return window.test.tokenEditor.getValue();
-            });
 
             await this.page.click('.js-header');
             await selectAll.call(this);
@@ -525,91 +512,17 @@ describe('Editor', function() {
             });
 
             expect(newToken).to.not.be.empty;
-            expect(newToken).to.not.equal(oldToken);
 
             const valid = await this.page.$eval('.validation-status',
               status => {
                 return status.classList.contains('valid-token') &&
-                       status.textContent.indexOf('verified') !== -1;
+                        status.textContent.indexOf('verified') !== -1;
               });
 
             expect(valid).to.be.true;
           });
         }
-      });
-
-      describe('ES', async function() {
-        before(async function() {
-          await this.page.select('#algorithm-select', 'ES256');
-
-          await this.page.click('textarea[name="public-key"]');
-          await selectAll.call(this);
-          await this.page.keyboard.type(defaultTokens['es256'].publicKey, {
-            delay: typingDelay
-          });
-
-          await this.page.click('textarea[name="private-key"]');
-          await selectAll.call(this);
-          await this.page.keyboard.type(defaultTokens['es256'].privateKey, {
-            delay: typingDelay
-          });
-        });
-
-        const algs = Object.keys(defaultTokens)
-                           .filter(alg => alg.includes('es'));
-
-        for(const alg of algs) {
-          it(alg.toUpperCase(), async function() {
-            //this.timeout(30000);
-
-            await this.page.evaluate(token => {
-              window.test.tokenEditor.setValue(token);
-            }, defaultTokens[alg].token);
-
-            await this.page.select('#algorithm-select', alg.toUpperCase());
-
-            const oldToken = await this.page.evaluate(() => {
-              return window.test.tokenEditor.getValue();
-            });
-
-            await this.page.click('.js-header');
-            await selectAll.call(this);
-            await this.page.keyboard.type(JSON.stringify({
-              alg: alg.toUpperCase(),
-              typ: 'JWT'
-            }, null, 2), {
-              delay: typingDelay
-            });
-
-            await this.page.click('.js-payload');
-            await selectAll.call(this);
-            await this.page.keyboard.type(JSON.stringify({
-              sub: 'test'
-            }, null, 2), {
-              delay: typingDelay
-            });
-
-            // Wait for token processing.
-            await this.page.waitFor(tokenProcessingWait);
-            await this.page.waitFor(tokenEditorThrottleWait);
-
-            const newToken = await this.page.evaluate(() => {
-              return window.test.tokenEditor.getValue();
-            });
-
-            expect(newToken).to.not.be.empty;
-            expect(newToken).to.not.equal(oldToken);
-
-            const valid = await this.page.$eval('.validation-status',
-              status => {
-                return status.classList.contains('valid-token') &&
-                       status.textContent.indexOf('verified') !== -1;
-              });
-
-            expect(valid).to.be.true;
-          });
-        }
-      });
+      }
     });
 
     describe('Should download public-keys when possible', function() {
@@ -645,26 +558,19 @@ describe('Editor', function() {
       });
 
       it('iss URL + .well-known', async function() {
-        const key = await jose.JWK.asKey(defaultTokens.rs256.privateKey, 'pem');
-        const token = await jose.JWS.createSign({
-          fields: {
-            alg: 'RS256',
-            typ: 'JWT',
-            kid: '1'
-          },
-          format: 'compact'
-        }, {
-          key: key
-        }).update(JSON.stringify({
+        const key = await importPKCS8(defaultTokens.rs256.privateKey, 'RS256');
+        const token = await new CompactSign(Buffer.from(JSON.stringify({
           sub: 'test',
           iss: 'http://localhost:3000/'
-        }), 'utf8').final();
+        }))).setProtectedHeader({
+          alg: 'RS256',
+          typ: 'JWT',
+          kid: '1'
+        }).sign(key);
 
         await this.page.click('.js-input');
         await selectAll.call(this);
-        await this.page.keyboard.type(token, {
-          delay: typingDelay
-        });
+        await this.page.keyboard.type(token);
 
         await this.page.waitFor(2000);
         await this.page.waitFor(tokenEditorThrottleWait);
@@ -672,39 +578,25 @@ describe('Editor', function() {
         const publicKey = await this.page.$eval('textarea[name="public-key"]',
           publicKeyElement => publicKeyElement.value);
 
-        expect(publicKey).to.include(`-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnzyis1ZjfNB0bBgKFMSv\nvkTtwlvBsaJq7S5wA+kzeVOVpVWwkWdVha4s38XM/pa/yr47av7+z3VTmvDRyAHc\naT92whREFpLv9cj5lTeJSibyr/Mrm/YtjCZVWgaOYIhwrXwKLqPr/11inWsAkfIy\ntvHWTxZYEcXLgAXFuUuaS3uF9gEiNQwzGTU1v0FqkqTBr4B8nW3HCN47XUu0t8Y0\ne+lf4s4OxQawWD79J9/5d3Ry0vbV3Am1FtGJiJvOwRsIfVChDpYStTcHTCMqtvWb\nV6L11BWkpzGXSW4Hv43qa+GSYOD2QU68Mb59oSk2OB+BtOLpJofmbGEGgvmwyCI9\nMwIDAQAB\n-----END PUBLIC KEY-----`);
-
-        const valid = await this.page.$eval('.validation-status', status => {
-          return status.classList.contains('valid-token') &&
-                status.textContent.indexOf('verified') !== -1;
-        });
-
-        expect(valid).to.be.true;
+        expect(jwks.keys[0]).to.contain(JSON.parse(publicKey))
       });
 
       it('jku', async function() {
         //this.timeout(20000);
 
-        const key = await jose.JWK.asKey(defaultTokens.rs256.privateKey, 'pem');
-        const token = await jose.JWS.createSign({
-          fields: {
-            alg: 'RS256',
-            typ: 'JWT',
-            kid: '1',
-            jku: 'http://localhost:3000/.well-known/jwks.json'
-          },
-          format: 'compact'
-        }, {
-          key: key
-        }).update(JSON.stringify({
+        const key = await importPKCS8(defaultTokens.rs256.privateKey, 'RS256');
+        const token = await new CompactSign(Buffer.from(JSON.stringify({
           sub: 'test'
-        }), 'utf8').final();
+        }))).setProtectedHeader({
+          alg: 'RS256',
+          typ: 'JWT',
+          kid: '1',
+          jku: 'http://localhost:3000/.well-known/jwks.json'
+        }).sign(key);
 
         await this.page.click('.js-input');
         await selectAll.call(this);
-        await this.page.keyboard.type(token, {
-          delay: typingDelay
-        });
+        await this.page.keyboard.type(token);
 
         await this.page.waitFor(2000);
         await this.page.waitFor(tokenEditorThrottleWait);
@@ -712,52 +604,31 @@ describe('Editor', function() {
         const publicKey = await this.page.$eval('textarea[name="public-key"]',
           publicKeyElement => publicKeyElement.value);
 
-        expect(publicKey).to.include(jwks.keys[0].x5c[0]);
-
-        const valid = await this.page.$eval('.validation-status', status => {
-          return status.classList.contains('valid-token') &&
-                status.textContent.indexOf('verified') !== -1;
-        });
-
-        expect(valid).to.be.true;
+        expect(jwks.keys[0]).to.contain(JSON.parse(publicKey))
       });
 
       it('x5c', async function() {
         //this.timeout(35000);
 
-        const key = await jose.JWK.asKey(defaultTokens.rs256.privateKey, 'pem');
-        const token = await jose.JWS.createSign({
-          fields: {
-            alg: 'RS256',
-            typ: 'JWT',
-            x5c: jwks.keys[0].x5c[0]
-          },
-          format: 'compact'
-        }, {
-          key: key
-        }).update(JSON.stringify({
-          sub: 'test',
-        }), 'utf8').final();
+        const key = await importPKCS8(defaultTokens.rs256.privateKey, 'RS256');
+        const token = await new CompactSign(Buffer.from(JSON.stringify({
+          sub: 'test'
+        }))).setProtectedHeader({
+          alg: 'RS256',
+          typ: 'JWT',
+          x5c: jwks.keys[0].x5c
+        }).sign(key);
 
         await this.page.click('.js-input');
         await selectAll.call(this);
-        await this.page.keyboard.type(token, {
-          delay: typingDelay
-        });
+        await this.page.keyboard.type(token);
 
         await this.page.waitFor(2000);
 
         const publicKey = await this.page.$eval('textarea[name="public-key"]',
           publicKeyElement => publicKeyElement.value);
 
-        expect(publicKey).to.include(jwks.keys[0].x5c[0]);
-
-        const valid = await this.page.$eval('.validation-status', status => {
-          return status.classList.contains('valid-token') &&
-                status.textContent.indexOf('verified') !== -1;
-        });
-
-        expect(valid).to.be.true;
+        expect(publicKey).to.include('-----BEGIN CERTIFICATE-----\nMIIDBjCCAe4CCQDOaPo3zzlhlzANBgkqhkiG9w0BAQsFADBFMQswCQYDVQQGEwJV\nUzETMBEGA1UECAwKU29tZS1TdGF0ZTEhMB8GA1UECgwYSW50ZXJuZXQgV2lkZ2l0\ncyBQdHkgTHRkMB4XDTE5MDYwNTEwMDg0OVoXDTIwMDYwNDEwMDg0OVowRTELMAkG\nA1UEBhMCVVMxEzARBgNVBAgMClNvbWUtU3RhdGUxITAfBgNVBAoMGEludGVybmV0\nIFdpZGdpdHMgUHR5IEx0ZDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEB\nAJ88orNWY3zQdGwYChTEr75E7cJbwbGiau0ucAPpM3lTlaVVsJFnVYWuLN/FzP6W\nv8q+O2r+/s91U5rw0cgB3Gk/dsIURBaS7/XI+ZU3iUom8q/zK5v2LYwmVVoGjmCI\ncK18Ci6j6/9dYp1rAJHyMrbx1k8WWBHFy4AFxblLmkt7hfYBIjUMMxk1Nb9BapKk\nwa+AfJ1txwjeO11LtLfGNHvpX+LODsUGsFg+/Sff+Xd0ctL21dwJtRbRiYibzsEb\nCH1QoQ6WErU3B0wjKrb1m1ei9dQVpKcxl0luB7+N6mvhkmDg9kFOvDG+faEpNjgf\ngbTi6SaH5mxhBoL5sMgiPTMCAwEAATANBgkqhkiG9w0BAQsFAAOCAQEAU4Nx25sl\niX8gD10Oik+RpBpHmsuZBU6q3nqYQKMlVdKFVeuptdqNjnVZY0WSSYvAUdtZ1kCu\nkMxjhvPb+LVaCkfOfXEuSqyjN55C1vDLpCV0xMb3irltYaWRIeHkqlRxRmoS+569\nZ/qg+JqZnCuEc6CeLLkzhVq+zagJkJs3evpSmofrY4qzJ1s1rygqSUhyS5NoyGAX\nCHba+m+7qMuSC3yOEPfiuAh9h6D/RltGi1iQ9Yqi4DoKlW9mfKGXbDn8thkGNdc7\n6yffilC8B/7Q8d5Btox/fE9yNI4YVhUEo+MkvUMnT1KS9fbw0o6fTjSa0D2oaHSO\nyBSs097rzC1PIw==\n-----END CERTIFICATE-----');
       });
     });
 
@@ -828,16 +699,12 @@ describe('Editor', function() {
 
       await this.page.click('.js-input');
       await selectAll.call(this);
-      await this.page.keyboard.type(tokens['rs256'].token, {
-        delay: typingDelay
-      });
+      await this.page.keyboard.type(defaultTokens['rs256'].token);
 
       const secretInput = await this.page.$('textarea[name="public-key"]');
       await secretInput.click();
       await selectAll.call(this);
-      await secretInput.type(tokens['rs256'].publicKey, {
-        delay: typingDelay
-      });
+      await secretInput.type(defaultTokens['rs256'].publicKey);
 
       // Wait for token processing.
       await this.page.waitFor(tokenProcessingWait);
@@ -873,16 +740,12 @@ describe('Editor', function() {
 
       await this.page.click('.js-input');
       await selectAll.call(this);
-      await this.page.keyboard.type(tokens['rs256'].token, {
-        delay: typingDelay
-      });
+      await this.page.keyboard.type(defaultTokens['rs256'].token);
 
       const secretInput = await this.page.$('textarea[name="public-key"]');
       await secretInput.click();
       await selectAll.call(this);
-      await secretInput.type(tokens['rs256'].publicKey, {
-        delay: typingDelay
-      });
+      await secretInput.type(defaultTokens['rs256'].publicKey);
 
       // Wait for token processing.
       await this.page.waitFor(tokenProcessingWait);
@@ -960,9 +823,7 @@ describe('Editor', function() {
       const secretInput = await this.page.$('textarea[name="public-key"]');
       await secretInput.click();
       await selectAll.call(this);
-      await secretInput.type(tokens['rs256'].publicKey, {
-        delay: typingDelay
-      });
+      await secretInput.type(defaultTokens['rs256'].publicKey);
 
       const privateKeyInput = await this.page.$('textarea[name="private-key"]');
       await privateKeyInput.click();
@@ -971,9 +832,7 @@ describe('Editor', function() {
 
       await this.page.click('.js-input');
       await selectAll.call(this);
-      await this.page.keyboard.type(tokens['rs256'].token, {
-        delay: typingDelay
-      });
+      await this.page.keyboard.type(defaultTokens['rs256'].token);
 
       await this.page.waitFor(1000);
 
@@ -992,9 +851,7 @@ describe('Editor', function() {
 
     await this.page.click('.js-input');
     await selectAll.call(this);
-    await this.page.keyboard.type(tokens.hs256.token, {
-      delay: typingDelay
-    });
+    await this.page.keyboard.type(defaultTokens.hs256.token);
 
     await this.page.select('#algorithm-select', 'HS384');
 
@@ -1010,9 +867,7 @@ describe('Editor', function() {
 
     await this.page.click('.js-input');
     await selectAll.call(this);
-    await this.page.keyboard.type(tokens.none.token, {
-      delay: typingDelay
-    });
+    await this.page.keyboard.type('eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.');
 
     // Wait for token processing.
     await this.page.waitFor(tokenProcessingWait);

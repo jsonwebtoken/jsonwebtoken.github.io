@@ -3,7 +3,7 @@ const { Octokit } = require("@octokit/rest");
 const dotenv = require("dotenv").config();
 const getLanguages = require("./views/website/libraries/support/get-languages.js");
 const octokit = new Octokit({
-    auth: process.env.GITHUB,
+    auth: process.env.GITHUB || process.env.GITHUB_TOKEN,
 });
 
 function fetchGithubStars() {

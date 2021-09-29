@@ -92,7 +92,8 @@ describe('Libraries', function() {
     })).to.be.true;
   });
 
-  it('Has a data-repo attribute for star counts if repo ' + 
+  // skipped since we're pulling these on the server now
+  it.skip('Has a data-repo attribute for star counts if repo ' +
           'is in GitHub', async function() {
     const repos = await this.page.$$eval('.panel-wrap', bodies => {
       const result = [];
