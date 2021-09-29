@@ -268,6 +268,9 @@ body
   .supported
     display none
 
+    .logo-mobile
+      height 18px
+
   &.fixed
     .brand
       .icon
@@ -479,7 +482,7 @@ body
 
   @media (min-width: 768px)
     height: 235px;
-    margin-top: 70px
+    margin: 8rem 0
     padding: 65px 235px 65px 65px;
     box-shadow:  0 10px 20px 0 rgba(0,0,0,0.25)
     text-align: left;
@@ -714,6 +717,7 @@ body
         float left
     .filter
       display inline-block
+      margin 0 auto 2rem auto
       +breakpoint("tablet")
         float right
 
@@ -904,8 +908,13 @@ body
     .column
       margin-bottom 20px
       text-align center
+      &.libraries 
+        margin: 0 0 20px 0;
       +breakpoint("tablet")
         margin-bottom 0
+
+        &.libraries
+          margin: -2rem 0;
 
   h2
     font-size 30px
@@ -913,6 +922,19 @@ body
     text-align center
     margin 0
     font-weight normal
+
+  .libraries
+    background rgba(255, 255, 255, .05)
+    +breakpoint("tablet")
+      height 373px
+
+    .libraries-container
+      padding: 2rem
+
+    p 
+      color white
+      font-size 20px
+      line-height 1.2
 
   .logotype
     img
@@ -988,6 +1010,9 @@ body
     padding 60px 0
     font-size 26px
 
+  .logo 
+    height 55px
+
   img
     margin-bottom 35px
 
@@ -1009,11 +1034,11 @@ body
   display inline-block
   margin-top 30px
   &.btn-success
-    background-color #eb5424
+    background-color #635dff
     color white
     border-color transparent
     &:hover
-      background-color darken(#eb5424, 30%)
+      background-color #564ed1
       color white
 
 .btn, a.btn
@@ -1021,6 +1046,14 @@ body
     background-color #D63AFF
     color white
     border none
+
+  &.btn-ghost
+    background transparent
+    border 1px solid #D63AFF
+    color #D63AFF
+
+  & + .btn
+    margin-left 2rem
 
   .token
     margin-top 35px
@@ -1207,6 +1240,9 @@ footer
       color white
     img
       margin-left 5px
+
+  .logo 
+    height 18px
 
   .pull-request
     +breakpoint("tablet")

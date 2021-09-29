@@ -128,6 +128,7 @@ module.exports = (grunt) => {
                 files: {
                     "dist/website/index.html": "views/website/index.pug",
                     "dist/website/introduction/index.html": "views/website/introduction.pug",
+                    "dist/website/libraries/index.html": "views/website/libraries.pug",
                 },
             },
             extension: {
