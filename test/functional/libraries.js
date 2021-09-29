@@ -12,7 +12,7 @@ chai.use(chaiAsPromised);
 chai.use(chaiArrays);
 const expect = chai.expect;
 
-describe.only('Libraries', function() {
+describe('Libraries', function() {
     before(utils.launchBrowser)
     before(async function() {
         await this.page.goto(`http://localhost:8000/libraries`);
