@@ -16,8 +16,10 @@ import queryString from "querystring";
 /* For initialization, look at the end of this file */
 
 function parseLocationQuery() {
-    const locSearch = queryString.parse(document.location.search.substr(1));
-    const locHash = queryString.parse(document.location.hash.substr(1));
+    const source = {
+        ...queryString.parse(document.location.search.substr(1)),
+        ...queryString.parse(document.location.hash.substr(1))
+    }
 
     const keys = [
         "id_token",
@@ -27,11 +29,11 @@ function parseLocationQuery() {
         "debugger-io?token"
     ];
     for (const key of keys) {
-        const token = locSearch[key] || locHash[key];
+        const token = source[key];
 
         if (token) {
-            if (locSearch.publicKey || locHash.publicKey) {
-                publicKeyTextArea.value = locSearch.publicKey || locHash.publicKey;
+            if (source.publicKey) {
+                publicKeyTextArea.value = source.publicKey;
             }
 
             setTokenEditorValue(token);

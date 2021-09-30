@@ -17,21 +17,19 @@ describe('Libraries', function() {
 
   it('Each language has a unique name', function() {
     const names = new Set();
-    
-    for(const lang of languages) {
-      names.has(lang.name).should.be.false;
-      names.add(lang.name);
-    }
+    languages
+      .map(({ name }) => name)
+      .forEach(Set.prototype.add.bind(names))
+    names.size.should.equal(languages.length);
   });
 
   it('uniqueClass is unique for each language', function() {
     const classes = new Set();
-    
-    for(const lang of languages) {
-      classes.has(lang.uniqueClass).should.be.false;
-      classes.add(lang.uniqueClass);
-    }
-  });  
+    languages
+      .map(({ uniqueClass }) => uniqueClass)
+      .forEach(Set.prototype.add.bind(classes))
+    classes.size.should.equal(languages.length);
+  });
 
   it('Have a correct schema', function() {
     for(const lang of languages) {

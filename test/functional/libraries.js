@@ -169,4 +169,18 @@ describe('Libraries', function() {
                 return result;
             })).to.be.empty;
         });
+
+    it('Can pre-select a language with a name', async function () {
+        await this.page.goto(`http://localhost:8000/libraries?language=Node.js`);
+        expect(await this.page.$eval('.net', isVisible)).to.be.false;
+        expect(await this.page.$eval('.php', isVisible)).to.be.false;
+        expect(await this.page.$eval('.node', isVisible)).to.be.true;
+    });
+
+    it('Can pre-select a language with a class', async function () {
+        await this.page.goto(`http://localhost:8000/libraries?language=node`);
+        expect(await this.page.$eval('.net', isVisible)).to.be.false;
+        expect(await this.page.$eval('.php', isVisible)).to.be.false;
+        expect(await this.page.$eval('.node', isVisible)).to.be.true;
+    });
 });
