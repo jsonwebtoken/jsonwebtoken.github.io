@@ -41,15 +41,5 @@ module.exports = merge(common, {
         }
       }
     }]
-  },
-  resolve: {
-    alias: {
-      'jose/key/import': 'jose/dist/node/cjs/key/import',
-      'jose/key/export': 'jose/dist/node/cjs/key/export',
-      'jose/jws/compact/sign': 'jose/dist/node/cjs/jws/compact/sign',
-      'jose/jws/compact/verify': 'jose/dist/node/cjs/jws/compact/verify',
-      'jose/jwks/remote': 'jose/dist/node/cjs/jwks/remote',
-      'jose/jwk/embedded': 'jose/dist/node/cjs/jwk/embedded',
-    }
   }
 });
