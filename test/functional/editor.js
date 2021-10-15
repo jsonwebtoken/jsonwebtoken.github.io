@@ -3,8 +3,7 @@ const chaiAsPromised = require('chai-as-promised');
 const chaiArrays = require('chai-arrays');
 
 const express = require('express');
-const { importPKCS8 } = require('jose/key/import')
-const { CompactSign } = require('jose/jws/compact/sign')
+const jose = require('jose');
 
 const _ = require('lodash');
 
@@ -558,8 +557,8 @@ describe('Editor', function() {
             });
 
             it('iss URL + .well-known', async function() {
-                const key = await importPKCS8(defaultTokens.rs256.privateKey, 'RS256');
-                const token = await new CompactSign(Buffer.from(JSON.stringify({
+                const key = await jose.importPKCS8(defaultTokens.rs256.privateKey, 'RS256');
+                const token = await new jose.CompactSign(Buffer.from(JSON.stringify({
                     sub: 'test',
                     iss: 'http://localhost:3000/'
                 }))).setProtectedHeader({
@@ -584,8 +583,8 @@ describe('Editor', function() {
             it('jku', async function() {
                 //this.timeout(20000);
 
-                const key = await importPKCS8(defaultTokens.rs256.privateKey, 'RS256');
-                const token = await new CompactSign(Buffer.from(JSON.stringify({
+                const key = await jose.importPKCS8(defaultTokens.rs256.privateKey, 'RS256');
+                const token = await new jose.CompactSign(Buffer.from(JSON.stringify({
                     sub: 'test'
                 }))).setProtectedHeader({
                     alg: 'RS256',
@@ -610,8 +609,8 @@ describe('Editor', function() {
             it('x5c', async function() {
                 //this.timeout(35000);
 
-                const key = await importPKCS8(defaultTokens.rs256.privateKey, 'RS256');
-                const token = await new CompactSign(Buffer.from(JSON.stringify({
+                const key = await jose.importPKCS8(defaultTokens.rs256.privateKey, 'RS256');
+                const token = await new jose.CompactSign(Buffer.from(JSON.stringify({
                     sub: 'test'
                 }))).setProtectedHeader({
                     alg: 'RS256',

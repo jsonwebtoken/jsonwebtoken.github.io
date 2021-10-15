@@ -1,5 +1,4 @@
-import { createRemoteJWKSet } from 'jose/jwks/remote'
-import * as keyExport from 'jose/key/export'
+import * as jose from 'jose'
 
 import { httpGet } from '../utils.js';
 
@@ -25,7 +24,7 @@ function getKeyFromX5Claims(claims) {
 }
 
 function getKeyFromJwkKeySetUrl(header, url) {
-  return createRemoteJWKSet(new URL(url))(header, {}).then(keyExport.exportJWK).then((jwk) => JSON.stringify(jwk, null, 2))
+  return jose.createRemoteJWKSet(new URL(url))(header, {}).then(jose.exportJWK).then((jwk) => JSON.stringify(jwk, null, 2))
 }
 
 export function downloadPublicKeyIfPossible(decodedToken) {

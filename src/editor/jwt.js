@@ -2,9 +2,7 @@ import b64u from 'base64url';
 import any from 'promise.any';
 import strings from '../strings';
 import log from 'loglevel';
-import * as keyImport from 'jose/key/import'
-import CompactSign from 'jose/jws/compact/sign'
-import compactVerify from 'jose/jws/compact/verify'
+import * as jose from 'jose'
 import { pki } from 'node-forge';
 
 function symmetricSecret(key, alg, base64Secret) {
@@ -37,10 +35,10 @@ function getJoseKey(header, key, base64Secret, type) {
                 key = pki.privateKeyInfoToPem(pki.wrapRsaPrivateKey(pki.privateKeyToAsn1(pki.privateKeyFromPem(key))))
             }
             return any([
-                keyImport.importPKCS8(key, header.alg),
+                jose.importPKCS8(key, header.alg),
                 Promise.resolve().then(() => JSON.parse(key)).then(rawPrivate).then((jwk) => {
                     if (!('d' in jwk)) throw new Error('not a private JWK')
-                    return keyImport.importJWK(jwk, header.alg)
+                    return jose.importJWK(jwk, header.alg)
                 })
             ])
         case types.PUBLIC:
@@ -48,10 +46,10 @@ function getJoseKey(header, key, base64Secret, type) {
                 key = pki.publicKeyToPem(pki.publicKeyFromPem(key))
             }
             return any([
-                keyImport.importSPKI(key, header.alg),
-                keyImport.importX509(key, header.alg),
+                jose.importSPKI(key, header.alg),
+                jose.importX509(key, header.alg),
                 Promise.resolve().then(() => JSON.parse(key)).then(rawPublic).then((jwk) => {
-                    return keyImport.importJWK(jwk, header.alg)
+                    return jose.importJWK(jwk, header.alg)
                 })
             ])
         default:
@@ -73,7 +71,7 @@ export function sign(header,
                 payload = JSON.stringify(payload);
             }
 
-            return new CompactSign(new TextEncoder().encode(payload))
+            return new jose.CompactSign(new TextEncoder().encode(payload))
                 .setProtectedHeader(header)
                 .sign(key);
         }
@@ -93,7 +91,7 @@ export function verify(jwt, secretOrPublicKeyString, base64Secret = false) {
 
     return getJoseKey(decoded.header, secretOrPublicKeyString, base64Secret, types.PUBLIC).then(
         key => {
-            return compactVerify(jwt, key)
+            return jose.compactVerify(jwt, key)
                 .then(() => ({
                     validSignature: true,
                     validBase64: jwt.split('.').reduce((valid, s) => valid = valid && isValidBase64String(s), true)
