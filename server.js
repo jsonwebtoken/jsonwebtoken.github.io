@@ -36,6 +36,11 @@ app.get("/home", function(req, res) {
     res.redirect("/");
 });
 
+// Path routes to home if JWT format recognized.
+app.get("/ey*", function(req, res) {
+    res.render("index");
+});
+
 app.listen(process.env.PORT || 3000, function() {
     console.log("Started.");
 });

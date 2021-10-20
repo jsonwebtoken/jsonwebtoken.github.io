@@ -45,10 +45,12 @@ function parseLocationQuery() {
     }
 }
 
+const checkForJWTInUrl = document.location.pathname.substr(1);
+
 // Initialization
 setupNavbar();
 setupSmoothScrolling();
-setupTokenEditor();
+setupTokenEditor(checkForJWTInUrl);
 parseLocationQuery();
 setupHighlighting();
 setupJwtCounter();

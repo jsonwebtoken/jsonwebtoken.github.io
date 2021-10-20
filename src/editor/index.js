@@ -141,21 +141,29 @@ function isDefaultToken(token) {
     return false;
 }
 
-export function useDefaultToken(algorithm) {
+export function useDefaultToken(urlJWT, defaultAlgorithm) {
     eventManager.withDisabledEvents(() => {
-        const defaults = defaultTokens[algorithm.toLowerCase()];
-        const decoded = decode(defaults.token);
+        let decoded;
+        // If JWT exists in URL, populate editor.
+        // Otherwise, fall back on defaults.
+        if(urlJWT){        
+            decoded = decode(urlJWT);
+            tokenEditor.setValue(urlJWT);           
+        } else {
+            const defaults = defaultTokens[defaultAlgorithm.toLowerCase()];
+            decoded = decode(defaults.token);
+            tokenEditor.setValue(defaults.token);
 
-        tokenEditor.setValue(defaults.token);
+            if (isSharedSecretAlgorithm(defaultAlgorithm)) {
+                secretInput.value = defaults.secret;
+            } else {
+                publicKeyTextArea.value = defaults.publicKey;
+                privateKeyTextArea.value = defaults.privateKey;
+            }
+        }
+
         headerEditor.setValue(stringify(decoded.header));
         payloadEditor.setValue(stringify(decoded.payload));
-
-        if (isSharedSecretAlgorithm(algorithm)) {
-            secretInput.value = defaults.secret;
-        } else {
-            publicKeyTextArea.value = defaults.publicKey;
-            privateKeyTextArea.value = defaults.privateKey;
-        }
 
         markAsValid();
     });
@@ -440,11 +448,11 @@ export function resetEditorWarnings() {
     editorWarnings.innerHTML = "";
 }
 
-export function setupTokenEditor() {
+export function setupTokenEditor(urlJWT) {
     disableUnsupportedAlgorithms();
     setupEvents();
     selectAlgorithm("HS256");
-    useDefaultToken("HS256");
+    useDefaultToken(urlJWT, "HS256");
     fixEditorHeight();
     setupSecretLengthTooltip();
     setupClaimsTooltip();
