@@ -138,19 +138,15 @@ export function decode(jwt) {
         if (!isValidBase64String(split[1])) {
             result.warnings.push(strings.warnings.payloadBase64Invalid);
         }
-        result.payload = JSON.parse(b64u.decode(split[1]));
-    } catch (e) {
-        result.errors = true;
-    }
+        result.payload = b64u.decode(split[1]);
+    } catch (e) {}
 
     try {
         if (!isValidJSON(b64u.decode(split[1]))) {
             result.warnings.push(strings.warnings.payloadInvalidJSON);
-            result.payload = b64u.decode(split[1])
         }
-    } catch (e) {
-        result.errors = true;
-    }
+        result.payload = JSON.parse(b64u.decode(split[1]))
+    } catch (e) {}
 
     return result;
 }
