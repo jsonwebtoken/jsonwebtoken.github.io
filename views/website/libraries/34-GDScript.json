@@ -37,7 +37,7 @@
         "hs256": true,
         "hs384": false,
         "hs512": false,
-        "rs256": false,
+        "rs256": true,
         "rs384": false,
         "rs512": false,
         "es256": false,
