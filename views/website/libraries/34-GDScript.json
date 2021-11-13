@@ -1,29 +1,11 @@
 {
-  // Language name (unique)
   "name": "GDScript",
-
-  // Unique identifier that will be used as a CSS class
-  // for this language (only valid CSS class names).
   "uniqueClass": "gdscript",
-
-  // The language icon, SVG format preferred, should be placed
-  // in /img directory.
   "image": "/img/34.svg",
-
-  // The color of header that displays the name of the language
-  // and the icon. This is a valid CSS color definition.
   "bgColor": "rgb(71, 140, 191)",
-
-  // An array of libraries for this language.
   "libs": [
     {
-      // In case the library suffered from a vulnerability, the
-      // minimum version in which the vuln was fixed must be
-      // listed here. Optional (can be null).
-      "minimumVersion": "1.4", // or null
-
-      // Supported features, true for supported,
-      // false for not supported.
+      "minimumVersion": "1.5",
       "support": {
         "sign": true,
         "verify": true,
@@ -48,22 +30,10 @@
         "ps512": false,
         "eddsa": false
       },
-
-      // Author URL, can be GitHub profile, personal page
-      // company page, etc. Can be null.
-      "authorUrl": "https://github.com/fenix-hub", // or null
-
-      // Author name.
+      "authorUrl": "https://github.com/fenix-hub",
       "authorName": "fenix-hub",
-
-      // For the star count, this is the GitHub repository path,
-      // (usually user/repo). Can be null (no star count shown).
-      "gitHubRepoPath": "fenix-hub/godot-engine.jwt", // or null
-
-      // URL for source code.
+      "gitHubRepoPath": "fenix-hub/godot-engine.jwt",
       "repoUrl": "https://github.com/fenix-hub/godot-engine.jwt",
-
-      // Install command, can be HTML or plain text.
       "installCommandHtml": "git clone https://github.com/fenix-hub/godot-engine.jwt"
     }
   ]
