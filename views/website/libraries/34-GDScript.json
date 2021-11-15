@@ -31,7 +31,7 @@
         "eddsa": false
       },
       "authorUrl": "https://github.com/fenix-hub",
-      "authorName": "fenix-hub",
+      "authorName": "Nicolò Santilio",
       "gitHubRepoPath": "fenix-hub/godot-engine.jwt",
       "repoUrl": "https://github.com/fenix-hub/godot-engine.jwt",
       "installCommandHtml": "git clone https://github.com/fenix-hub/godot-engine.jwt"
