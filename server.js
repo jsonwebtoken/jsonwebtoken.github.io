@@ -1,7 +1,6 @@
 const express = require("express");
 const enforce = require("express-sslify");
 const languages = require("./libraries.json");
-const dotenv = require("dotenv").config();
 
 const app = express();
 
@@ -18,10 +17,7 @@ if (process.env.NODE_ENV === "production") {
     );
 }
 
-app.use((req, res, next) => {
-    res.locals.COOKIE_CONSENT_DOMAIN_ID = process.env.COOKIE_CONSENT_DOMAIN_ID;
-    next();
-});
+// app.use(fetchGithubStars);
 app.use(express.static("dist/website"));
 app.get("/", function(req, res) {
     res.render("index");
@@ -32,9 +28,7 @@ app.get("/introduction", function(req, res) {
 });
 
 app.get("/libraries", function(req, res) {
-    res.render("libraries", {
-        languages: languages
-    });
+    res.render("libraries", { languages: languages });
 });
 
 // Fallback for the homepage JWT handbook CTA A/B experiment we ran

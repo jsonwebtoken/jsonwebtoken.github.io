@@ -38,10 +38,20 @@ html(lang='en')
     // Chrome extension link, required for inline installs
     link(rel="chrome-webstore-item", href="https://chrome.google.com/webstore/detail/ppmmlchacdbknfphdeafcbmklcghghmd")
     
+    // Google Tag Manager
+    script.
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-W7FRLJ');
+    // End Google Tag Manager 
+
   body
     // Google Tag Manager (noscript)
     noscript
       iframe(src='https://www.googletagmanager.com/ns.html?id=GTM-W7FRLJ', height='0', width='0', style='display:none;visibility:hidden')
+    // End Google Tag Manager (noscript)
     
     include ./navigation.pug
     
@@ -62,6 +72,11 @@ html(lang='en')
           .column.social-counter
             a.twitter-follow-button(href='https://twitter.com/auth0', data-show-count='true') Follow @auth0
 
+    script.
+      !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+
     if process.env.NODE_ENV === "production"
-      script(src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js", type="text/javascript", charset="UTF-8", data-domain-script=COOKIE_CONSENT_DOMAIN_ID, id="consent-script")    
-      script(src="/js/cookie-consent.js")
+      div
+        div(id="consent_blackbar")
+        div(id="teconsent" style="position: absolute; bottom: -100px;")
+        script(async="async" src="//consent.trustarc.com/notice?domain=auth0banner.com&c=teconsent&js=nj&noticeType=bb&text=true" crossOrigin)
