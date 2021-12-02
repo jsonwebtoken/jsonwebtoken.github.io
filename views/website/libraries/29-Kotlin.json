@@ -45,7 +45,7 @@
         "aud": true,
         "exp": true,
         "nbf": true,
-        "iat": false,
+        "iat": true,
         "jti": false,
         "hs256": true,
         "hs384": true,
@@ -65,7 +65,7 @@
       "authorName": "nefilim",
       "gitHubRepoPath": "nefilim/kJWT",
       "repoUrl": "https://github.com/nefilim/kJWT",
-      "installCommandHtml": "maven GAV: com.github.nefilim:kjwt-core:0.2.0"
+      "installCommandHtml": "maven GAV: io.github.nefilim.kjwt:kjwt-core:0.2.0"
     }
   ]
 }
