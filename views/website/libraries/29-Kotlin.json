@@ -36,7 +36,7 @@
       "installCommandHtml": "maven: com.github.PhilJay / JWT / 1.1.5"
     },
     {
-      "minimumVersion": "0.2.0",
+      "minimumVersion": null,
       "support": {
         "sign": true,
         "verify": true,
@@ -65,7 +65,7 @@
       "authorName": "nefilim",
       "gitHubRepoPath": "nefilim/kJWT",
       "repoUrl": "https://github.com/nefilim/kJWT",
-      "installCommandHtml": "maven GAV: io.github.nefilim.kjwt:kjwt-core:0.2.0"
+      "installCommandHtml": "maven GAV: io.github.nefilim.kjwt:kjwt-core:0.3.0"
     }
   ]
 }
