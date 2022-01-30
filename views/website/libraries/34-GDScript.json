@@ -5,7 +5,7 @@
   "bgColor": "rgb(71, 140, 191)",
   "libs": [
     {
-      "minimumVersion": "1.5",
+      "minimumVersion": "3.x",
       "support": {
         "sign": true,
         "verify": true,
@@ -34,6 +34,38 @@
       "authorName": "Nicolò Santilio",
       "gitHubRepoPath": "fenix-hub/godot-engine.jwt",
       "repoUrl": "https://github.com/fenix-hub/godot-engine.jwt",
+      "installCommandHtml": "git clone https://github.com/fenix-hub/godot-engine.jwt"
+    },
+    {
+      "minimumVersion": "4.x",
+      "support": {
+        "sign": true,
+        "verify": true,
+        "iss": true,
+        "sub": true,
+        "aud": true,
+        "exp": true,
+        "nbf": true,
+        "iat": true,
+        "jti": true,
+        "hs256": true,
+        "hs384": false,
+        "hs512": false,
+        "rs256": true,
+        "rs384": false,
+        "rs512": false,
+        "es256": false,
+        "es384": false,
+        "es512": false,
+        "ps256": false,
+        "ps384": false,
+        "ps512": false,
+        "eddsa": false
+      },
+      "authorUrl": "https://github.com/fenix-hub",
+      "authorName": "Nicolò Santilio",
+      "gitHubRepoPath": "fenix-hub/godot-engine.jwt",
+      "repoUrl": "https://github.com/fenix-hub/godot-engine.jwt/tree/main-godot4",
       "installCommandHtml": "git clone https://github.com/fenix-hub/godot-engine.jwt"
     }
   ]
