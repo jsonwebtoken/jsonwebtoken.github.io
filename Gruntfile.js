@@ -224,7 +224,7 @@ module.exports = (grunt) => {
         },
     });
 
-    grunt.registerTask("build-website-views", ["stylus:website"]);
+    grunt.registerTask("build-website-views", ["stylus:website", "pug:website"]);
 
     grunt.registerTask("build-extension-views", [
         "stylus:extension",
