@@ -1,11 +1,11 @@
 {
-    "manifest_version": 2,
+    "manifest_version": 3,
 
     "name": "JWT Debugger",
     "description": "The JWT.io debugger as a Web Extension",
     "version": "3.3.0",
 
-    "browser_action": {
+    "action": {
         "default_icon": "img/favicon/favicon-96x96.png",
         "default_popup": "index.html"
     },
@@ -29,6 +29,7 @@
     },
 
     "permissions": [
+        "scripting",
         "activeTab",
         "cookies",
         "clipboardRead",

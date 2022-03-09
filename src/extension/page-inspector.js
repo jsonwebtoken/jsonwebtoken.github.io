@@ -1,11 +1,11 @@
 import { isToken } from '../editor/jwt.js'
 import { getTokenEditorValue, setTokenEditorValue } from '../editor';
-import { 
+import {
   cookiesOptGroup,
   webStorageOptGroup,
   saveBackElement,
   saveBackLink,
-  storageSelect  
+  storageSelect
 } from './dom-elements.js';
 import strings from '../strings.js';
 
@@ -14,18 +14,18 @@ function updateOptGroups() {
 
   optGroups.forEach(optGroup => {
     const hasJWTs = optGroup.querySelectorAll(':not(.load-from-no-jwts)')
-                            .length > 0;
+      .length > 0;
     if (hasJWTs) {
       const toRemove = optGroup.querySelectorAll('.load-from-no-jwts');
       Array.prototype.forEach.call(toRemove, e => e.remove());
-    } else {      
+    } else {
       const noJwtOption = document.createElement('option');
       noJwtOption.classList.add('load-from-no-jwts');
       noJwtOption.text = strings.extension.noJwtsFound;
       noJwtOption.disabled = true;
 
       optGroup.innerHTML = ''; // Remove all elements
-      optGroup.appendChild(noJwtOption);      
+      optGroup.appendChild(noJwtOption);
     }
   });
 }
@@ -39,7 +39,7 @@ function messageHandler(message) {
 
   message.tokens.forEach(token => {
     if (!isToken(token.value)) {
-      if(message.type === 'cookies') {
+      if (message.type === 'cookies') {
         return;
       }
 
@@ -62,7 +62,7 @@ function messageHandler(message) {
     e.value = token.value;
     e.setAttribute('data-type', token.type);
 
-    if(token.cookie) {
+    if (token.cookie) {
       e.setAttribute('data-cookie', JSON.stringify(token.cookie));
     }
 
@@ -81,20 +81,20 @@ function messageHandler(message) {
 function saveCookie(url, cookie, oldCookie) {
   // Some cookies get duplicated otherwise (chrome.cookies.set bug?)
   chrome.cookies.remove({
-      url: url,
-      name: oldCookie.name,
-      storeId: oldCookie.storeId
+    url: url,
+    name: oldCookie.name,
+    storeId: oldCookie.storeId
   });
   chrome.cookies.set({
-      url: url,
-      name: oldCookie.name,
-      value: cookie.value,
-      domain: oldCookie.domain,
-      path: oldCookie.path,
-      secure: oldCookie.secure,
-      httpOnly: oldCookie.httpOnly,
-      expirationDate: oldCookie.expirationDate,
-      storeId: oldCookie.storeId
+    url: url,
+    name: oldCookie.name,
+    value: cookie.value,
+    domain: oldCookie.domain,
+    path: oldCookie.path,
+    secure: oldCookie.secure,
+    httpOnly: oldCookie.httpOnly,
+    expirationDate: oldCookie.expirationDate,
+    storeId: oldCookie.storeId
   });
 }
 
@@ -112,9 +112,9 @@ function saveBackClick() {
       name: name,
       value: value
     };
-    if(type === 'cookie') {
-      saveCookie(tabs[0].url, data, 
-                 JSON.parse(selected.getAttribute('data-cookie')));
+    if (type === 'cookie') {
+      saveCookie(tabs[0].url, data,
+        JSON.parse(selected.getAttribute('data-cookie')));
     } else {
       chrome.tabs.sendMessage(tabs[0].id, data);
     }
@@ -124,7 +124,7 @@ function saveBackClick() {
 function storedJwtSelect() {
   const selected = storageSelect.options[storageSelect.selectedIndex];
 
-  if(selected.getAttribute('name') === '0') { // "None" selected
+  if (selected.getAttribute('name') === '0') { // "None" selected
     saveBackElement.classList.add('hide');
     return;
   }
@@ -146,9 +146,9 @@ function setupListeners() {
 }
 
 function getCookies() {
-  chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+  getCurrentTabThen((tab) => {
     chrome.cookies.getAll({
-      url: tabs[0].url,
+      url: tab.url,
     }, cookies => {
       const result = cookies.map(cookie => {
         return {
@@ -164,16 +164,26 @@ function getCookies() {
         tokens: result
       });
     });
-  });
+  })
+}
+
+function getCurrentTabThen(callback) {
+  return chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+    if (typeof callback === 'function') {
+      callback(tabs[0])
+    }
+  })
 }
 
 function setupInjectedCode() {
   chrome.runtime.onMessage.addListener(messageHandler);
 
-  chrome.tabs.executeScript({
-    file: 'js/webstorage.js',
-    runAt: "document_idle"
-  });
+  getCurrentTabThen(tab => {
+    chrome.scripting.executeScript({
+      files: ['js/webstorage.js'],
+      target: { tabId: tab.id, allFrames: true }
+    });
+  })
 }
 
 export function setupTokenPageInspector() {
