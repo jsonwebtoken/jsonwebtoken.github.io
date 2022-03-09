@@ -54,7 +54,7 @@ module.exports = (grunt) => {
                 files: [{
                         expand: true,
                         flatten: true,
-                        src: ["manifest.json", "html/extension/bg.html"],
+                        src: ["manifest.json"],
                         dest: "dist/extension",
                     },
                     {

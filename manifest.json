@@ -10,10 +10,6 @@
         "default_popup": "index.html"
     },
 
-    "background": {
-        "page": "bg.html"
-    },
-
     "icons": {
         "16": "img/favicon/favicon-16x16.png",
         "32": "img/favicon/favicon-32x32.png",
