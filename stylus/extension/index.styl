@@ -1,13 +1,19 @@
 @import '../website/index'
 
+body
+  width 756px
+
 .container
-  width 800px
+  overflow unset
+
+.section
+  background white
+  z-index 10
 
 .jwt-clipboard-btn
   background #000
   display inline-block
   padding 6px 6px
-  padding-left 15px
   color #fff !important
   text-decoration none !important
   border-radius 20px
@@ -16,8 +22,7 @@
   letter-spacing .5px
   position relative
   line-height 20px
-  padding-right 40px
-  width 170px
+  padding-right 30px
   text-align center
 
   &:hover
@@ -28,8 +33,9 @@
 
   img
     position absolute
-    top 5px
-    right 7px
+    top 50%
+    transform translateY(-50%)
+    right 5px
 
 .h-block
   display inline-block;
@@ -38,42 +44,76 @@
     margin-left: 15px;
 
 .jwt-playground
-  padding-top 12px
 
   .save-back
     color #0094c1
     margin-left 15px
 
-  .colophon
-    margin-top 12px
-    margin-bottom 12px
-    position relative
-    font-size 12px
-
-    img
-      height 14px
-
-    .share-callouts
-      margin-left 20px
-
-      svg
-        position relative
-        top 5px
-        margin-left 4px
-
-    a
-      text-decoration none
-      color currentColor
-
-    .keep-deco:hover
-      text-decoration underline
-
+  
   .top-section
+    padding 6px
+    border-bottom solid 1px #D8D8D8;
+    box-shadow 0 4px 8px -4px rgba(0,0,0,0.2)
     margin-bottom 10px
+
+    position sticky
+    top 0
+
+    display flex
+    justify-content space-between
+    align-items center
+    gap 0
 
     a
       outline none
 
+  .bottom-section
+    padding-top 6px
+    margin-top 10px
+    border-bottom solid 1px #D8D8D8
+    position sticky
+    bottom 0
+    box-shadow 0 -4px 8px -4px rgba(0,0,0,0.2)
+
+    .validation-status
+      margin-top 0px
+      padding 5px 0
+      font-size 20px
+      text-align center
+      &.valid-token
+        background-color #00B9F1
+        color white
+      &.invalid-token
+        background-color red
+        color white
+
+      i 
+        line-height 22px
+        font-size 20px
+
+    .colophon
+      margin-top 4px
+      position relative
+      font-size 12px
+
+      img
+        height 14px
+
+      .share-callouts
+        margin-left 20px
+
+        svg
+          position relative
+          top 5px
+          margin-left 4px
+
+      a
+        text-decoration none
+        color currentColor
+
+      .keep-deco:hover
+        text-decoration underline  
+  
   .keyboard-info
     display inline-block
     margin-left 20px
@@ -82,22 +122,7 @@
 
   .algorithm
     text-align right
-
-  .validation-status
-    margin-top 10px
-    padding 5px 0
-    font-size 20px
-    text-align center
-    &.valid-token
-      background-color #00B9F1
-      color white
-    &.invalid-token
-      background-color red
-      color white
-
-    i 
-      line-height 22px
-      font-size 20px
+    margin-right: 0 !important;
 
   .algorithm-code
     margin-top 0px
