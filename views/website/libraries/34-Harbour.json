@@ -1,7 +1,7 @@
 {
   "name": "Harbour",
   "uniqueClass": "jwt",
-  "image": "/img/34.webp",
+  "image": "/img/34.png",
   "bgColor": "rgb(227, 28, 35)",
   "libs": [
     {
