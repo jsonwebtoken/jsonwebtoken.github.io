@@ -35,3 +35,5 @@ export const secretInput =
   document.querySelector('.jwt-signature input[name="secret"]');
 export const secretBase64Checkbox =
   document.getElementById('is-base64-encoded');
+export const signatureArea =
+  document.querySelector('.jwt-explained.jwt-signature')

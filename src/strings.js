@@ -46,6 +46,7 @@ export default {
     editor: {
         signatureVerified: 'signature verified',
         signatureInvalid: 'invalid signature',
+        unsecuredJwt: 'Unsecured JWT',
         jwtInvalid: 'Invalid JWT'
     },
     warnings: {

@@ -65,12 +65,16 @@ export function sign(header,
         return Promise.reject(new Error('Missing "alg" claim in header'));
     }
 
+    if (!(typeof payload === 'string' || payload instanceof String)) {
+        payload = JSON.stringify(payload);
+    }
+
+    if (header.alg === 'none') {
+        return Promise.resolve(`${jose.base64url.encode(JSON.stringify(header))}.${jose.base64url.encode(new TextEncoder().encode(payload))}.`)
+    }
+
     return getJoseKey(header, secretOrPrivateKeyString, base64Secret, types.PRIVATE).then(
         key => {
-            if (!(typeof payload === 'string' || payload instanceof String)) {
-                payload = JSON.stringify(payload);
-            }
-
             return new jose.CompactSign(new TextEncoder().encode(payload))
                 .setProtectedHeader(header)
                 .sign(key);
@@ -89,12 +93,20 @@ export function verify(jwt, secretOrPublicKeyString, base64Secret = false) {
         return Promise.resolve({ validSignature: false });
     }
 
+    if (decoded.header.alg === 'none') {
+        return Promise.resolve({
+            validSignature: false,
+            unsecuredJwt: true,
+            validBase64: jwt.split('.').every((s) => isValidBase64String(s))
+        })
+    }
+
     return getJoseKey(decoded.header, secretOrPublicKeyString, base64Secret, types.PUBLIC).then(
         key => {
             return jose.compactVerify(jwt, key)
                 .then(() => ({
                     validSignature: true,
-                    validBase64: jwt.split('.').reduce((valid, s) => valid = valid && isValidBase64String(s), true)
+                    validBase64: jwt.split('.').every((s) => isValidBase64String(s))
                 }), (e) => {
                     log.warn('Could not verify token: ', e);
                     return { validSignature: false }

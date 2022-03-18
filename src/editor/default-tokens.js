@@ -186,5 +186,10 @@ export default {
     privateKey: rsaPrivateKey,
     jwk: rsaJwk,
     publicKey: rsaPublicKey
+  },
+  none: {
+    token: 'eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.',
+    privateKey: '',
+    publicKey: ''
   }
 };

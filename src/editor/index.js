@@ -36,6 +36,7 @@ import {
     encodedTabElement,
     decodedTabElement,
     editorWarnings,
+    signatureArea,
 } from "../dom-elements.js";
 
 import log from "loglevel";
@@ -74,6 +75,12 @@ function markAsInvalid(errorMessages = []) {
     }
 }
 
+function markAsUnsecuredJwt() {
+    signatureStatusElement.classList.remove("valid-token");
+    signatureStatusElement.classList.add("invalid-token");
+    signatureStatusElement.innerHTML = `<i class="icon-budicon-501"></i> ${strings.editor.unsecuredJwt}`;
+}
+
 function markJWTAsInvalid() {
     signatureStatusElement.classList.remove("valid-token");
     signatureStatusElement.classList.add("invalid-token");
@@ -99,7 +106,11 @@ function displaySecretOrKeys(algorithm) {
         hmacShaTextSpan.firstChild.textContent = `HMACSHA${algoSize}`;
         secretEditorContainer.style.display = "";
         keyEditorContainer.style.display = "none";
+        signatureArea.style.display = ""
+    } else if (algorithm === 'none') {
+        signatureArea.style.display = "none"
     } else {
+        signatureArea.style.display = ""
         const texts = {
             RS: "RSASHA",
             PS: "RSAPSSSHA",
@@ -157,7 +168,11 @@ export function useDefaultToken(algorithm) {
             privateKeyTextArea.value = defaults.privateKey;
         }
 
-        markAsValid();
+        if (algorithm !== 'none') {
+            markAsValid();
+        } else {
+            markAsUnsecuredJwt();
+        }
     });
 }
 
@@ -333,7 +348,7 @@ function verifyToken() {
     const jwt = getTrimmedValue(tokenEditor);
     const decoded = decode(jwt);
 
-    if (!decoded.header.alg || decoded.header.alg === "none") {
+    if (!decoded.header.alg) {
         markAsInvalid();
         return;
     }
@@ -349,6 +364,8 @@ function verifyToken() {
                 } else {
                     markAsValid();
                 }
+            } else if (decoded.header.alg === 'none') {
+                markAsUnsecuredJwt();
             } else {
                 markAsInvalid();
             }

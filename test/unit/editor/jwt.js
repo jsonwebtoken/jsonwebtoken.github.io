@@ -81,30 +81,57 @@ describe('JWT', function() {
       privateKey = publicKey = vector.secret;
     }
 
-    it(`signs/verifies ${alg.toUpperCase()}`, function () {
-      const header = { alg: alg.toUpperCase(), iat: Date.now() };
-      const payload = { sub: 'test' };
+    if (alg !== 'none') {
+      it(`signs/verifies ${alg.toUpperCase()}`, function () {
+        const header = { alg: alg.toUpperCase(), iat: Date.now() };
+        const payload = { sub: 'test' };
 
-      // test the default token
-      return jwt.verify(vector.token, publicKey).should.eventually.include({validSignature: true})
-        .then(() => {
-          // test signing
-          return jwt.sign(header, payload, privateKey).then(token => {
-            token.should.be.a('string');
+        // test the default token
+        return jwt.verify(vector.token, publicKey).should.eventually.include({validSignature: true})
+          .then(() => {
+            // test signing
+            return jwt.sign(header, payload, privateKey).then(token => {
+              token.should.be.a('string');
 
-            const split = token.split('.');
-            split.should.have.lengthOf(3);
+              const split = token.split('.');
+              split.should.have.lengthOf(3);
 
-            const decoded = jwt.decode(token);
-            decoded.header.should.deep.equal(header);
-            decoded.payload.should.deep.equal(payload);
+              const decoded = jwt.decode(token);
+              decoded.header.should.deep.equal(header);
+              decoded.payload.should.deep.equal(payload);
 
-            // test verifying just signed token
-            return jwt.verify(token, publicKey)
-                      .should.eventually.include({validSignature: true});
+              // test verifying just signed token
+              return jwt.verify(token, publicKey)
+                        .should.eventually.include({validSignature: true});
+            });
           });
-        });
-    });
+      });
+    } else {
+      it(`encodes/decodes ${alg}`, function () {
+        const header = { alg, iat: Date.now() };
+        const payload = { sub: 'test' };
+
+        // test the default token
+        return jwt.verify(vector.token).should.eventually.include({validSignature: false, unsecuredJwt: true})
+          .then(() => {
+            // test signing
+            return jwt.sign(header, payload).then(token => {
+              token.should.be.a('string');
+
+              const split = token.split('.');
+              split.should.have.lengthOf(3);
+
+              const decoded = jwt.decode(token);
+              decoded.header.should.deep.equal(header);
+              decoded.payload.should.deep.equal(payload);
+
+              // test verifying unsecured jwt
+              return jwt.verify(token, publicKey)
+                        .should.eventually.include({validSignature: false, unsecuredJwt: true});
+            });
+          });
+      });
+    }
 
     if (jwk) {
       it(`signs/verifies ${alg.toUpperCase()} with a JWK`, function () {
