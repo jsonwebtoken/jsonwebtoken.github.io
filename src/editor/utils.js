@@ -35,13 +35,15 @@ export function getSelectedAlgorithm() {
   return selected.value;
 }
 
-export function isWebkit() {
-  return browser.engine.name === 'WebKit';
+export function p521Supported() {
+  return browser.engine.name !== 'WebKit' ||
+    (browser.browser.name === 'Safari' && parseInt(browser.browser.version, 10) >= 15) ||
+    (browser.os.name === 'iOS' && parseInt(browser.os.version, 10) >= 15);
 }
 
 export function disableUnsupportedAlgorithms() {
   // TODO: test supported algorithms in runtime
-  if(isWebkit()) {
+  if(p521Supported() === false) {
     algorithmEs512.disabled = true;
   }
 }
