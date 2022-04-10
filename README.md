@@ -1,5 +1,7 @@
 ## JWT.io
 
+JWT.IO allows you to decode, verify and generate JWT.
+
 <img src="https://cdn.auth0.com/blog/jwtio/jwtio.png"/>
 
 ### Sponsor
@@ -114,5 +116,10 @@ To run tests, execute:
 ```
 
 Look at the end of the [Gruntfile](/Gruntfile.js) for other common tasks.
+
+
+### License
+
+JWT.io is licensed under [The MIT License (MIT)](https://github.com/jsonwebtoken/jsonwebtoken.github.io/blob/master/LICENSE.txt)
 
 ### Happy hacking!
