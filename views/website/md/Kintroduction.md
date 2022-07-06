@@ -58,7 +58,7 @@ An example payload could be:
 ```
 {
   "sub": "1234567890",
-  "name": "John Doe",
+  "name": "KAMPANAT THUMWONG e",
   "admin": true
 }
 ```
