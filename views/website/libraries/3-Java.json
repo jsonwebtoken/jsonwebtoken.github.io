@@ -186,6 +186,39 @@
       "gitHubRepoPath": "vert-x3/vertx-auth",
       "repoUrl": "https://github.com/vert-x3/vertx-auth",
       "installCommandHtml": "maven: io.vertx / vertx-auth-jwt / 3.5.1"
+    },
+    {
+      "minimumVersion": null,
+      "support": {
+        "sign": true,
+        "verify": true,
+        "iss": true,
+        "sub": true,
+        "aud": true,
+        "exp": true,
+        "nbf": true,
+        "iat": true,
+        "jti": false,
+        "hs256": true,
+        "hs384": true,
+        "hs512": true,
+        "rs256": true,
+        "rs384": true,
+        "rs512": true,
+        "es256": true,
+        "es256k": true,
+        "es384": true,
+        "es512": true,
+        "ps256": true,
+        "ps384": true,
+        "ps512": true,
+        "EdDSA": true
+      },
+      "authorUrl": "https://github.com/inverno-io",
+      "authorName": "Inverno Framework",
+      "gitHubRepoPath": "inverno-io/inverno-mods/tree/master/inverno-security-jose",
+      "repoUrl": "https://github.com/inverno-io/inverno-mods/tree/master/inverno-security-jose",
+      "installCommandHtml": "maven: io.inverno.mod / inverno-security-jose / 1.5.1"
     }
   ]
 }
