@@ -6,6 +6,8 @@ export default [
   'nbf',
   'iat',
   'jti',
+  'jku',
+  'x5u',
   'name',
   'given_name',
   'family_name',

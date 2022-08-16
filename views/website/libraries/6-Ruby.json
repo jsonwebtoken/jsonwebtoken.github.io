@@ -16,6 +16,8 @@
         "nbf": true,
         "iat": true,
         "jti": true,
+        "jku": false,
+        "x5u": false,
         "hs256": true,
         "hs384": true,
         "hs512": true,
