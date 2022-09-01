@@ -47,6 +47,7 @@
         "nbf": true,
         "iat": true,
         "jti": true,
+        "typ": true,
         "hs256": true,
         "hs384": true,
         "hs512": true,
@@ -56,6 +57,7 @@
         "es256": true,
         "es384": true,
         "es512": true,
+        "es256k": true,
         "ps256": true,
         "ps384": true,
         "ps512": true
@@ -64,7 +66,7 @@
       "authorName": "Brian Campbell",
       "gitHubRepoPath": null,
       "repoUrl": "https://bitbucket.org/b_c/jose4j",
-      "installCommandHtml": "maven: org.bitbucket.b_c / jose4j / 0.6.3"
+      "installCommandHtml": "maven: org.bitbucket.b_c / jose4j / 0.8.0"
     },
     {
       "minimumVersion": null,
