@@ -29,7 +29,7 @@
         "ps256": true,
         "ps384": true,
         "ps512": true,
-        "eddsa": true,
+        "eddsa": false,
         "es256k": false
       },
       "authorUrl": "https://github.com/panva",
