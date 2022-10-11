@@ -60,13 +60,14 @@
         "es256k": true,
         "ps256": true,
         "ps384": true,
-        "ps512": true
+        "ps512": true,
+        "EdDSA": true
       },
       "authorUrl": "https://twitter.com/__b_c",
       "authorName": "Brian Campbell",
       "gitHubRepoPath": null,
       "repoUrl": "https://bitbucket.org/b_c/jose4j",
-      "installCommandHtml": "maven: org.bitbucket.b_c / jose4j / 0.8.0"
+      "installCommandHtml": "maven: org.bitbucket.b_c / jose4j / 0.9.0"
     },
     {
       "minimumVersion": null,
