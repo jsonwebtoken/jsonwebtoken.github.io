@@ -1240,6 +1240,11 @@ footer
       color white
     img
       margin-left 5px
+    .as-anchor
+      color: white
+      background: none
+      padding: 0
+      border: none
 
   .logo 
     height 18px
@@ -1264,6 +1269,38 @@ footer
   .social-counter
     +breakpoint("tablet")
       text-align right
+
+  #ccpa-modal
+    display: none
+    position: fixed
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+    width: 90%
+    height: auto
+    background: white
+    z-index: 10000
+    color: black
+    border-radius: 16px
+    padding: 24px
+    text-align: left
+    +breakpoint("tablet")
+      width: 50%
+    #close-ccpa
+      background: none
+      border: none
+      padding: 0
+      position: absolute
+      top: 20px
+      right: 30px
+      font-size: 24px
+      line-height: 24px
+    .settings
+      color: #635dff
+      appearance: none
+      border: none
+      background: none
+      padding: 0
 
 .warning
   display block
