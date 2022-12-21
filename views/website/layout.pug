@@ -37,14 +37,14 @@ html(lang='en')
 
     // Chrome extension link, required for inline installs
     link(rel="chrome-webstore-item", href="https://chrome.google.com/webstore/detail/ppmmlchacdbknfphdeafcbmklcghghmd")
-    
+
   body
     // Google Tag Manager (noscript)
     noscript
       iframe(src='https://www.googletagmanager.com/ns.html?id=GTM-W7FRLJ', height='0', width='0', style='display:none;visibility:hidden')
-    
+
     include ./navigation.pug
-    
+
     block content
 
     footer
@@ -57,9 +57,22 @@ html(lang='en')
               span •
               a(href='https://auth0.com/web-terms', target="_blank")
                 | Terms of Service
+              span •
+              button.as-anchor#open-ccpa
+                | Your Privacy Choices 
+              img.ccpa-toggle(src='https://cdn.auth0.com/website/footer/ccpa.svg' alt='Privacy choices')
             a(href='https://auth0.com/developers/', target="_blank")
               | Supported by
               img(src='/img/ico_logo.svg' alt='Supported by Auth0 - JWT.io Token Based Authentication').logo
+            #ccpa-modal
+              button#close-ccpa x
+              h3 Your Privacy Choices
+              p Depending on your state of residence, including if you are a California resident, you have the right to opt out of certain sharing of personal information with third-party ad partners. We may share personal information with third-party ad partners, such as through cookies or by providing lists of email addresses for potential customers, so that we can reach them across the web with relevant ads.
+              p If you wish to opt out of this sharing of your personal data in connection with cookies, please update your 
+                button.settings(onClick="window.OneTrust.ToggleInfoDisplay()") cookie settings.
+              p If you wish to opt out of email-based sharing, provide your email address at 
+                a.settings(href="https://www.okta.com/your-privacy-choices/", target="_blank") this link.
+
           .column.pull-request
             span Missing something?
             a(href='https://github.com/jsonwebtoken/jsonwebtoken.github.io/tree/master/views', target="_blank") Send a Pull Request
