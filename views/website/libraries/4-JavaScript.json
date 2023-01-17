@@ -67,37 +67,6 @@
       "installCommandHtml": "npm install jsrsasign"
     },
     {
-      "minimumVersion": null,
-      "support": {
-        "sign": true,
-        "verify": true,
-        "iss": false,
-        "sub": false,
-        "aud": false,
-        "exp": false,
-        "nbf": false,
-        "iat": false,
-        "jti": false,
-        "hs256": true,
-        "hs384": true,
-        "hs512": true,
-        "rs256": true,
-        "rs384": true,
-        "rs512": true,
-        "es256": true,
-        "es384": true,
-        "es512": true,
-        "ps256": true,
-        "ps384": true,
-        "ps512": true
-      },
-      "authorUrl": "https://github.com/square",
-      "authorName": "Square, Inc.",
-      "gitHubRepoPath": "square/js-jose",
-      "repoUrl": "https://github.com/square/js-jose",
-      "installCommandHtml": "npm install jose-jwe-jws"
-    },
-    {
       "minimumVersion": "0.9.4",
       "support": {
         "sign": true,
