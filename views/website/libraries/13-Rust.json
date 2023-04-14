@@ -87,6 +87,8 @@
         "es256": false,
         "es384": false,
         "es512": false,
+        "es256k": false,
+        "eddsa": false,
         "ps256": true,
         "ps384": true,
         "ps512": true
