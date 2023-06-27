@@ -1,11 +1,11 @@
 {
-  "name": "Bun",
-  "uniqueClass": "bun",
-  "image": "/img/35.svg",
-  "bgColor": "rgb(251, 240, 223)",
+  "name": "Dart",
+  "uniqueClass": "dart",
+  "image": "/img/36.png",
+  "bgColor": "rgb(2, 89, 156)",
   "libs": [
     {
-      "minimumVersion": null,
+      "minimumVersion": "2.7.0",
       "support": {
         "sign": true,
         "verify": true,
@@ -16,7 +16,7 @@
         "nbf": true,
         "iat": true,
         "jti": true,
-        "typ": true,
+				"typ": true,
         "hs256": true,
         "hs384": true,
         "hs512": true,
@@ -26,17 +26,17 @@
         "es256": true,
         "es384": true,
         "es512": true,
-        "ps256": true,
-        "ps384": true,
-        "ps512": true,
         "eddsa": true,
+        "ps256": false,
+        "ps384": false,
+        "ps512": false,
         "es256k": false
       },
-      "authorUrl": "https://github.com/panva",
-      "authorName": "Filip Skokan",
-      "gitHubRepoPath": "panva/jose",
-      "repoUrl": "https://github.com/panva/jose",
-      "installCommandHtml": "bun add jose"
+      "authorUrl": "https://github.com/jonasroussel",
+      "authorName": "Jonas Roussel",
+      "gitHubRepoPath": "jonasroussel/dart_jsonwebtoken",
+      "repoUrl": "https://github.com/jonasroussel/dart_jsonwebtoken",
+      "installCommandHtml": "dart pub add dart_jsonwebtoken"
     }
   ]
 }
