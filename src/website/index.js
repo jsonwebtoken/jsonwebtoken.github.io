@@ -11,7 +11,6 @@ import {
     shareJwtTextElement,
 } from "./dom-elements.js";
 import { CCPAModal } from "./ccpa-modal.js";
-import { TopBanner } from "./top-banner.js";
 
 import queryString from "querystring";
 
@@ -56,4 +55,3 @@ setupHighlighting();
 setupJwtCounter();
 setupShareJwtButton(shareJwtButton, shareJwtTextElement);
 CCPAModal();
-TopBanner();
