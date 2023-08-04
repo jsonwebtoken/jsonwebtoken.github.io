@@ -6,7 +6,7 @@
 
 |||
 |-|-|
-|![auth0 logo](https://user-images.githubusercontent.com/83319/31722733-de95bbde-b3ea-11e7-96bf-4f4e8f915588.png)|If you want to quickly add secure (JSON Web) token-based authentication to your projects, feel free to check Auth0's documentation and free plan at [auth0.com/developers](https://auth0.com/developers?utm_source=GHsponsor&utm_medium=GHsponsor&utm_campaign=jwtio&utm_content=auth)|
+|![auth0 logo](https://user-images.githubusercontent.com/83319/31722733-de95bbde-b3ea-11e7-96bf-4f4e8f915588.png)|If you want to quickly add secure (JSON Web) token-based authentication to your projects, feel free to check Auth0's documentation and free plan at [developer.auth0.com](https://developer.auth0.com)|
 
 ### How to add a library
 
