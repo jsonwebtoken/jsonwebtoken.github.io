@@ -16,7 +16,7 @@
         "nbf": true,
         "iat": true,
         "jti": true,
-				"typ": true,
+        "typ": true,
         "hs256": true,
         "hs384": true,
         "hs512": true,
@@ -27,10 +27,10 @@
         "es384": true,
         "es512": true,
         "eddsa": true,
-        "ps256": false,
-        "ps384": false,
-        "ps512": false,
-        "es256k": false
+        "ps256": true,
+        "ps384": true,
+        "ps512": true,
+        "es256k": true
       },
       "authorUrl": "https://github.com/jonasroussel",
       "authorName": "Jonas Roussel",
