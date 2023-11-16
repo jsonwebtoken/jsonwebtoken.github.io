@@ -255,7 +255,7 @@
       "installCommandHtml": "composer require adhocore/jwt"
     },
     {
-      "minimumVersion": null,
+      "minimumVersion": "3.1.1",
       "support": {
         "sign": true,
         "verify": true,
@@ -266,15 +266,18 @@
         "nbf": true,
         "iat": true,
         "jti": true,
+        "typ": true,
         "hs256": true,
         "hs384": true,
         "hs512": true,
         "rs256": true,
         "rs384": true,
         "rs512": true,
-        "es256": false,
-        "es384": false,
+        "es256": true,
+        "es256k": true,
+        "es384": true,
         "es512": false,
+        "eddsa": true,
         "ps256": false,
         "ps384": false,
         "ps512": false
