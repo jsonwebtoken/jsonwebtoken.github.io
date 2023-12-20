@@ -8,3 +8,4 @@ Dockerfile
 yarn.lock
 .env
 libraries.json
+.idea/*
