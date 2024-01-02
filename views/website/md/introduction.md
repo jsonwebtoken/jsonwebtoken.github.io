@@ -90,7 +90,7 @@ The following shows a JWT that has the previous header and payload encoded, and 
 
 If you want to play with JWT and put these concepts into practice, you can use [jwt.io Debugger](https://jwt.io/#debugger-io) to decode, verify, and generate JWTs.
 
-![JWT.io Debugger](https://cdn.auth0.com/blog/legacy-app-auth/legacy-app-auth-5.png)
+![JWT.io Debugger](https://cdn.auth0.com/website/jwt/introduction/debugger.png)
 
 ## How do JSON Web Tokens work?
 In authentication, when the user successfully logs in using their credentials, a JSON Web Token will be returned. Since tokens are credentials, great care must be taken to prevent security issues. In general, you should not keep tokens longer than required.
@@ -111,7 +111,7 @@ If the token is sent in the `Authorization` header, Cross-Origin Resource Sharin
 
 The following diagram shows how a JWT is obtained and used to access APIs or resources:
 
-![How does a JSON Web Token work](https://cdn2.auth0.com/docs/media/articles/api-auth/client-credentials-grant.png)
+![How does a JSON Web Token work](https://cdn.auth0.com/website/jwt/introduction/client-credentials-grant.png)
 
 1. The application or client requests authorization to the authorization server. This is performed through one of the different authorization flows. For example, a typical [OpenID Connect](http://openid.net/connect/) compliant web application will go through the `/oauth/authorize` endpoint using the [authorization code flow](http://openid.net/specs/openid-connect-core-1_0.html#CodeFlowAuth).
 2. When the authorization is granted, the authorization server returns an access token to the application.
@@ -134,4 +134,4 @@ Regarding usage, JWT is used at Internet scale. This highlights the ease of clie
 ![Comparing the length of an encoded JWT and an encoded SAML](https://cdn.auth0.com/content/jwt/comparing-jwt-vs-saml2.png)
 _Comparison of the length of an encoded JWT and an encoded SAML_
 
-If you want to read more about JSON Web Tokens and even start using them to perform authentication in your own applications, browse to the [JSON Web Token landing page](http://auth0.com/learn/json-web-tokens) at Auth0.
+If you want to read more about JSON Web Tokens and even start using them to perform authentication in your own applications, browse to the [JSON Web Token landing page](http://auth0.com/learn/json-web-tokens) at Auth0 by Okta.
