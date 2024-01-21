@@ -160,6 +160,41 @@
       "gitHubRepoPath": "airsidemobile/JOSESwift",
       "repoUrl": "https://github.com/airsidemobile/JOSESwift",
       "installCommandHtml": "pod 'JOSESwift'"
+    },
+    {
+      "minimumVersion": null,
+      "support": {
+        "sign": true,
+        "verify": true,
+        "iss": true,
+        "sub": true,
+        "aud": true,
+        "exp": true,
+        "nbf": true,
+        "iat": true,
+        "jti": true,
+        "typ": true,
+        "hs256": true,
+        "hs384": true,
+        "hs512": true,
+        "rs256": true,
+        "rs384": true,
+        "rs512": true,
+        "es256": true,
+        "es384": true,
+        "es512": true,
+        "es256k": true,
+        "ps256": true,
+        "ps384": true,
+        "ps512": true,
+        "eddsa": true
+      },
+      "authorUrl": "https://github.com/beatt83",
+      "authorName": "Gonçalo Frade",
+      "gitHubRepoPath": "beatt83/jose-swift",
+      "repoUrl": "https://github.com/beatt83/jose-swift",
+      "installCommandHtml":
+        ".package(url: \"https://github.com/beatt83/jose-swift.git\", .upToNextMinor(from: \"4.0.0\"))"
     }
   ]
 }
