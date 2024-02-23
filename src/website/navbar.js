@@ -1,12 +1,12 @@
 import { getOffsetBoundingClientRect } from './utils.js';
 
-import { 
+import {
   navbarElement,
   menuTriggerElement,
   menuLinks,
   sectionElements,
   menuScrollableLinks
-} from './dom-elements.js';
+} from './dom-elements-common.js';
 
 export function setupNavbar() {
   window.addEventListener('scroll', () => {
