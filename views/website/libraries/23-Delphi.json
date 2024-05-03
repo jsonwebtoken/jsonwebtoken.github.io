@@ -52,23 +52,23 @@
         "iat": true,
         "jti": true,
         "hs256": true,
-        "hs384": false,
-        "hs512": false,
-        "rs256": false,
-        "rs384": false,
-        "rs512": false,
+        "hs384": true,
+        "hs512": true,
+        "rs256": true,
+        "rs384": true,
+        "rs512": true,
         "es256": true,
-        "es384": false,
-        "es512": false,
-        "ps256": false,
-        "ps384": false,
-        "ps512": false
+        "es384": true,
+        "es512": true,
+        "ps256": true,
+        "ps384": true,
+        "ps512": true
       },
       "authorUrl": "https://github.com/synopse",
       "authorName": "Synopse",
-      "gitHubRepoPath": "synopse/mORMot",
-      "repoUrl": "https://github.com/synopse/mORMot",
-      "installCommandHtml": "git clone https://github.com/synopse/mORMot"
+      "gitHubRepoPath": "synopse/mORMot2",
+      "repoUrl": "https://github.com/synopse/mORMot2",
+      "installCommandHtml": "git clone https://github.com/synopse/mORMot2"
     }
   ]
 }
