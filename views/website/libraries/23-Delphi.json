@@ -51,6 +51,7 @@
         "nbf": true,
         "iat": true,
         "jti": true,
+        "typ": true,
         "hs256": true,
         "hs384": true,
         "hs512": true,
@@ -58,11 +59,13 @@
         "rs384": true,
         "rs512": true,
         "es256": true,
+        "es256k": true,
         "es384": true,
         "es512": true,
         "ps256": true,
         "ps384": true,
-        "ps512": true
+        "ps512": true,
+        "eddsa": true
       },
       "authorUrl": "https://github.com/synopse",
       "authorName": "Synopse",
