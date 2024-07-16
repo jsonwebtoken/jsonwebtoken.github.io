@@ -337,8 +337,8 @@
       },
       "authorUrl": "https://github.com/carloscarucce",
       "authorName": "Carlos A. B. Carucce",
-      "gitHubRepoPath": "webdevcave/jwt",
-      "repoUrl": "https://github.com/WebdevCave/jwt",
+      "gitHubRepoPath": "webdevcave/jwt-php",
+      "repoUrl": "https://github.com/WebdevCave/jwt-php",
       "installCommandHtml": "composer require webdevcave/jwt"
     }
   ]
