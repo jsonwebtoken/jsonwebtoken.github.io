@@ -10,10 +10,6 @@ const MESSAGE_BAR_STATUS = {
 
 const messageBar = {
   status: MESSAGE_BAR_STATUS.ACTIVE,
-  cta: {
-    message: "Missed DevDay24? Register for the Best of DevDay",
-    url: "https://pages.okta.com/2024-11-WBN-Best-of-Dev-Day_LP/",
-  },
   id: {
     key: "messageBar_id",
     value: "BEST_OF_DEVDAY_2024",
