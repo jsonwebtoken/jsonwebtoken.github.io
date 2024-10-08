@@ -127,8 +127,7 @@
       "authorName": "IBM Swift",
       "gitHubRepoPath": "IBM-Swift/Swift-JWT",
       "repoUrl": "https://github.com/IBM-Swift/Swift-JWT",
-      "installCommandHtml":
-      ".package(url:\"https://github.com/IBM-Swift/Swift-JWT\", from: \"3.5.0\")"
+      "installCommandHtml": ".package(url:\"https://github.com/IBM-Swift/Swift-JWT\", from: \"3.5.0\")"
     },
     {
       "minimumVersion": null,
