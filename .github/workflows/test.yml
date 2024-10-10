@@ -19,6 +19,6 @@ jobs:
         with:
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
-          node-version: '14'
+          node-version: '16'
       - run: npm install
       - run: npm test
