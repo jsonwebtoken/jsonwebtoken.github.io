@@ -126,7 +126,7 @@ body {
 
   &.top-banner-open {
     margin-top: 5px;
-    transition: all 0.4s linear;
+    transition: margin-top 0.4s linear;
 
     +breakpoint('tablet') {
       margin-top: 48px;
@@ -141,10 +141,20 @@ body {
     border-bottom: 1px solid rgba(#4A4A4A, 0.6);
     clearfix();
     margin: 0 -15px;
+    padding-top: 0;
+    transition: padding-top 0.4s linear;
 
     +breakpoint('tablet') {
       border: none;
       margin: 0;
+    }
+
+    &.top-banner-open {
+      padding-top: 50px;
+
+      +breakpoint('tablet') {
+        padding-top: 0;
+      }
     }
   }
 
@@ -439,6 +449,19 @@ body {
       img {
         margin-left: 5px;
       }
+    }
+  }
+}
+
+.content {
+  +breakpoint('tablet') {
+    padding-top: 0;
+    transition: padding-top 0.4s linear;
+  }
+
+  &.top-banner-open {
+    +breakpoint('tablet') {
+      padding-top: 50px;
     }
   }
 }
@@ -1851,14 +1874,14 @@ footer {
   width: 100%;
   height: 48px;
   z-index: 100;
-  transition: all 0.4s linear;
+  transition: height 0.4s linear;
 
   &.closed {
     visibility: hidden;
     height: 0;
     opacity: 0;
     padding: 0;
-    transition: all 0.4s linear;
+    transition: height 0.4s linear;
   }
 }
 

@@ -30,14 +30,16 @@ const closeMessageBar = () => {
 
   document.querySelector(".top-banner-bg").classList.add("closed");
   document.querySelector(".top-banner").classList.add("closed");
-  document.querySelector(".top-banner-spacer").classList.add("hide");
+  document.querySelector(".content").classList.remove("top-banner-open");
+  document.querySelector(".top-mobile").classList.remove("top-banner-open");
   document.querySelector(".navbar").classList.remove("top-banner-open");
 };
 
 const renderTopBanner = () => {
   document.querySelector(".top-banner-bg").classList.remove("closed");
   document.querySelector(".top-banner").classList.remove("closed");
-  document.querySelector(".top-banner-spacer").classList.remove("hide");
+  document.querySelector(".content").classList.add("top-banner-open");
+  document.querySelector(".top-mobile").classList.add("top-banner-open");
   document.querySelector(".navbar").classList.add("top-banner-open");
 };
 
