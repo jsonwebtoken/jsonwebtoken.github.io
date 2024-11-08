@@ -5,6 +5,40 @@
   "bgColor": "rgb(119, 123, 180)",
   "libs": [
     {
+      "minimumVersion": null,
+      "support": {
+        "sign": true,
+        "verify": true,
+        "iss": true,
+        "sub": true,
+        "aud": true,
+        "exp": true,
+        "nbf": true,
+        "iat": true,
+        "jti": false,
+        "typ": true,
+        "hs256": true,
+        "hs384": true,
+        "hs512": true,
+        "rs256": true,
+        "rs384": true,
+        "rs512": true,
+        "es256": true,
+        "es384": true,
+        "es512": true,
+        "ps256": false,
+        "ps384": false,
+        "ps512": false,
+        "eddsa": true,
+        "es256k": true
+      },
+      "authorUrl": "https://github.com/localzet",
+      "authorName": "localzet",
+      "gitHubRepoPath": "localzet/jwt",
+      "repoUrl": "https://github.com/localzet/jwt",
+      "installCommandHtml": "composer require localzet/jwt"
+    },
+    {
       "minimumVersion": "2.0.0",
       "support": {
         "sign": true,
