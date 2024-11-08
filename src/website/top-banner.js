@@ -12,7 +12,7 @@ const messageBar = {
   status: MESSAGE_BAR_STATUS.ACTIVE,
   id: {
     key: "messageBar_id",
-    value: "BEST_OF_DEVDAY_2024",
+    value: "JWT_IO_FEEDBACK",
   },
   state: {
     key: "messageBar_state",
