@@ -160,6 +160,38 @@
       "gitHubRepoPath": "rib/jsonwebtokens",
       "repoUrl": "https://github.com/rib/jsonwebtokens",
       "installCommandHtml": "Cargo.toml: jsonwebtokens = \"*\""
+    },
+    {
+      "minimumVersion": null,
+      "support": {
+        "sign": true,
+        "verify": true,
+        "iss": true,
+        "sub": true,
+        "aud": true,
+        "exp": true,
+        "nbf": true,
+        "iat": true,
+        "jti": false,
+        "hs256": true,
+        "hs384": true,
+        "hs512": true,
+        "rs256": true,
+        "rs384": true,
+        "rs512": true,
+        "es256": true,
+        "es384": true,
+        "es512": false,
+        "ps256": true,
+        "ps384": true,
+        "ps512": true,
+        "eddsa": true
+      },
+      "authorUrl": "https://github.com/jedisct1",
+      "authorName": "Frank Denis",
+      "gitHubRepoPath": "jedisct1/rust-jwt-simple",
+      "repoUrl": "https://github.com/jedisct1/rust-jwt-simple",
+      "installCommandHtml": "Cargo.toml: jwt-simple = \"*\""
     }
   ]
 }
