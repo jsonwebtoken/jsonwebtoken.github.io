@@ -35,7 +35,8 @@
       "authorName": "Firebase",
       "gitHubRepoPath": "firebase/php-jwt",
       "repoUrl": "https://github.com/firebase/php-jwt",
-      "installCommandHtml": "composer require firebase/php-jwt"
+      "installCommandHtml": "composer require firebase/php-jwt",
+      "repoLatestCommitYear": 2024
     },
     {
       "minimumVersion": "4.1.0",
@@ -67,7 +68,8 @@
       "authorName": "Luís Cobucci",
       "gitHubRepoPath": "lcobucci/jwt",
       "repoUrl": "https://github.com/lcobucci/jwt",
-      "installCommandHtml": "composer require lcobucci/jwt"
+      "installCommandHtml": "composer require lcobucci/jwt",
+      "repoLatestCommitYear": 2024
     },
     {
       "minimumVersion": null,
@@ -98,7 +100,8 @@
       "authorName": "Emarref",
       "gitHubRepoPath": "emarref/jwt",
       "repoUrl": "https://github.com/emarref/jwt",
-      "installCommandHtml": "composer require emarref/jwt"
+      "installCommandHtml": "composer require emarref/jwt",
+      "repoLatestCommitYear": 2017
     },
     {
       "minimumVersion": null,
@@ -129,7 +132,9 @@
       "authorName": "Nov Matake",
       "gitHubRepoPath": "nov/jose-php",
       "repoUrl": "https://github.com/nov/jose-php",
-      "installCommandHtml": "composer require gree/jose"
+      "installCommandHtml": "composer require gree/jose",
+      "repoArchived": true,
+      "repoLatestCommitYear": 2022
     },
     {
       "minimumVersion": null,
@@ -162,7 +167,8 @@
       "authorName": "Spomky",
       "gitHubRepoPath": "web-token/jwt-framework",
       "repoUrl": "https://github.com/web-token/jwt-framework",
-      "installCommandHtml": "composer require web-token/jwt-framework"
+      "installCommandHtml": "composer require web-token/jwt-framework",
+      "repoLatestCommitYear": 2024
     },
     {
       "minimumVersion": null,
@@ -190,7 +196,8 @@
       "authorName": "Vaibhav Pandey",
       "gitHubRepoPath": "vaibhavpandeyvpz/jweety",
       "repoUrl": "https://github.com/vaibhavpandeyvpz/jweety",
-      "installCommandHtml": "composer require vaibhavpandeyvpz/jweety"
+      "installCommandHtml": "composer require vaibhavpandeyvpz/jweety",
+      "repoLatestCommitYear": 2017
     },
     {
       "minimumVersion": null,
@@ -221,7 +228,8 @@
       "authorName": "ZiHang Gao",
       "gitHubRepoPath": "cdoco/php-jwt",
       "repoUrl": "https://github.com/cdoco/php-jwt",
-      "installCommandHtml": "git clone https://github.com/cdoco/php-jwt"
+      "installCommandHtml": "git clone https://github.com/cdoco/php-jwt",
+      "repoLatestCommitYear": 2021
     },
     {
       "minimumVersion": null,
@@ -252,7 +260,8 @@
       "authorName": "Jitendra Adhikari",
       "gitHubRepoPath": "adhocore/jwt",
       "repoUrl": "https://github.com/adhocore/jwt",
-      "installCommandHtml": "composer require adhocore/jwt"
+      "installCommandHtml": "composer require adhocore/jwt",
+      "repoLatestCommitYear": 2024
     },
     {
       "minimumVersion": null,
@@ -283,7 +292,8 @@
       "authorName": "Milad Rahimi",
       "gitHubRepoPath": "miladrahimi/php-jwt",
       "repoUrl": "https://github.com/miladrahimi/php-jwt",
-      "installCommandHtml": "composer require miladrahimi/php-jwt"
+      "installCommandHtml": "composer require miladrahimi/php-jwt",
+      "repoLatestCommitYear": 2024
     },
     {
       "minimumVersion": "7.2.1",
@@ -311,7 +321,8 @@
       "authorName": "Radosław Nowakowski",
       "gitHubRepoPath": "nowakowskir/php-jwt",
       "repoUrl": "https://github.com/nowakowskir/php-jwt",
-      "installCommandHtml": "composer require nowakowskir/php-jwt"
+      "installCommandHtml": "composer require nowakowskir/php-jwt",
+      "repoLatestCommitYear": 2024
     }
   ]
 }

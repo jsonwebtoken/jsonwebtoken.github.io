@@ -33,7 +33,8 @@
       "authorName": "yourkarma & lolgear",
       "gitHubRepoPath": "yourkarma/JWT",
       "repoUrl": "https://github.com/yourkarma/JWT",
-      "installCommandHtml": "pod 'JWT'"
+      "installCommandHtml": "pod 'JWT'",
+      "repoLatestCommitYear": 2022
     }
   ]
 }

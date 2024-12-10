@@ -33,7 +33,8 @@
       "authorName": "Michel Pelletier",
       "gitHubRepoPath": "michelp/pgjwt",
       "repoUrl": "https://github.com/michelp/pgjwt",
-      "installCommandHtml": "CREATE EXTENSION pgjwt;"
+      "installCommandHtml": "CREATE EXTENSION pgjwt;",
+      "repoLatestCommitYear": 2023
     }
   ]
 }

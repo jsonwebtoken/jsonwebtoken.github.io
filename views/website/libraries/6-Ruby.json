@@ -33,7 +33,8 @@
       "authorName": "Lindsay & Rudat",
       "gitHubRepoPath": "progrium/ruby-jwt",
       "repoUrl": "https://github.com/progrium/ruby-jwt",
-      "installCommandHtml": "gem install jwt"
+      "installCommandHtml": "gem install jwt",
+      "repoLatestCommitYear": 2024
     },
     {
       "minimumVersion": null,
@@ -64,7 +65,8 @@
       "authorName": "Fleshman",
       "gitHubRepoPath": "garyf/json_web_token",
       "repoUrl": "https://github.com/garyf/json_web_token",
-      "installCommandHtml": "gem install json_web_token"
+      "installCommandHtml": "gem install json_web_token",
+      "repoLatestCommitYear": 2017
     },
     {
       "minimumVersion": null,
@@ -97,7 +99,8 @@
       "authorName": "Nov Matake",
       "gitHubRepoPath": "nov/json-jwt",
       "repoUrl": "https://github.com/nov/json-jwt",
-      "installCommandHtml": "gem install json-jwt"
+      "installCommandHtml": "gem install json-jwt",
+      "repoLatestCommitYear": 2024
     },
     {
       "minimumVersion": null,
@@ -125,7 +128,8 @@
       "authorName": "Andrew Bennett",
       "gitHubRepoPath": "potatosalad/ruby-jose",
       "repoUrl": "https://github.com/potatosalad/ruby-jose",
-      "installCommandHtml": "gem install jose"
+      "installCommandHtml": "gem install jose",
+      "repoLatestCommitYear": 2024
     }
   ]
 }
