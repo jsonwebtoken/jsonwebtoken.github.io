@@ -33,7 +33,8 @@
       "authorName": "Andrey Antukh",
       "gitHubRepoPath": "funcool/buddy",
       "repoUrl": "https://github.com/funcool/buddy/",
-      "installCommandHtml": "lein: [funcool/buddy \"2.0.0\"]"
+      "installCommandHtml": "lein: [funcool/buddy \"2.0.0\"]",
+      "repoLatestCommitYear": 2021
     }
   ]
 }

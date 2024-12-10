@@ -33,7 +33,9 @@
       "authorName": "olehlong",
       "gitHubRepoPath": "olehlong/jwtd",
       "repoUrl": "https://github.com/olehlong/jwtd",
-      "installCommandHtml": "dub fetch jwtd"
+      "installCommandHtml": "dub fetch jwtd",
+      "repoArchived": true,
+      "repoLatestCommitYear": 2020
     },
     {
       "minimumVersion": null,
@@ -64,7 +66,9 @@
       "authorName": "zolamk",
       "gitHubRepoPath": "zolamk/jwt",
       "repoUrl": "https://github.com/zolamk/jwt",
-      "installCommandHtml": "dub fetch jwt"
+      "installCommandHtml": "dub fetch jwt",
+      "repoArchived": true,
+      "repoLatestCommitYear": 2017
     }
   ]
 }

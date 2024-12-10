@@ -36,7 +36,8 @@
       "authorName": "Filip Skokan",
       "gitHubRepoPath": "panva/jose",
       "repoUrl": "https://github.com/panva/jose",
-      "installCommandHtml": "bun add jose"
+      "installCommandHtml": "bun add jose",
+      "repoLatestCommitYear": 2024
     }
   ]
 }

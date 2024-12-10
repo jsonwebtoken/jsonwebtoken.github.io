@@ -28,13 +28,14 @@
         "ps256": true,
         "ps384": true,
         "ps512": true,
-        "eddsa": true        
+        "eddsa": true
       },
       "authorUrl": "https://github.com/golang-jwt",
       "authorName": "golang-jwt",
       "gitHubRepoPath": "golang-jwt/jwt",
       "repoUrl": "https://github.com/golang-jwt/jwt",
-      "installCommandHtml": "go get <a href=\"https://pkg.go.dev/github.com/golang-jwt/jwt/v5\">github.com/golang-jwt/jwt/v5</a>"
+      "installCommandHtml": "go get <a href=\"https://pkg.go.dev/github.com/golang-jwt/jwt/v5\">github.com/golang-jwt/jwt/v5</a>",
+      "repoLatestCommitYear": 2024
     },
     {
       "minimumVersion": null,
@@ -65,7 +66,8 @@
       "authorName": "DV",
       "gitHubRepoPath": "dvsekhvalnov/jose2go",
       "repoUrl": "https://github.com/dvsekhvalnov/jose2go",
-      "installCommandHtml": "go get <a href=\"https://godoc.org/github.com/dvsekhvalnov/jose2go\">github.com/dvsekhvalnov/jose2go</a>"
+      "installCommandHtml": "go get <a href=\"https://godoc.org/github.com/dvsekhvalnov/jose2go\">github.com/dvsekhvalnov/jose2go</a>",
+      "repoLatestCommitYear": 2024
     },
     {
       "minimumVersion": null,
@@ -96,7 +98,8 @@
       "authorName": "SermoDigital",
       "gitHubRepoPath": "SermoDigital/jose",
       "repoUrl": "https://github.com/SermoDigital/jose",
-      "installCommandHtml": "go get <a href=\"https://godoc.org/github.com/SermoDigital/jose\">github.com/SermoDigital/jose</a>"
+      "installCommandHtml": "go get <a href=\"https://godoc.org/github.com/SermoDigital/jose\">github.com/SermoDigital/jose</a>",
+      "repoLatestCommitYear": 2018
     },
     {
       "minimumVersion": null,
@@ -127,7 +130,9 @@
       "authorName": "robbert229",
       "gitHubRepoPath": "robbert229/jwt",
       "repoUrl": "https://github.com/robbert229/jwt",
-      "installCommandHtml": "go get <a href=\"https://godoc.org/github.com/robbert229/jwt\">github.com/robbert229/jwt</a>"
+      "installCommandHtml": "go get <a href=\"https://godoc.org/github.com/robbert229/jwt\">github.com/robbert229/jwt</a>",
+      "repoArchived": true,
+      "repoLatestCommitYear": 2018
     },
     {
       "minimumVersion": null,
@@ -158,7 +163,9 @@
       "authorName": "DV",
       "gitHubRepoPath": "square/go-jose",
       "repoUrl": "https://github.com/square/go-jose",
-      "installCommandHtml": "go get <a href=\"https://godoc.org/github.com/square/go-jose\">github.com/square/go-jose</a>"
+      "installCommandHtml": "go get <a href=\"https://godoc.org/github.com/square/go-jose\">github.com/square/go-jose</a>",
+      "repoArchived": true,
+      "repoLatestCommitYear": 2023
     },
     {
       "minimumVersion": null,
@@ -191,7 +198,8 @@
       "authorName": "lestrrat",
       "gitHubRepoPath": "lestrrat-go/jwx",
       "repoUrl": "https://github.com/lestrrat-go/jwx",
-      "installCommandHtml": "go get <a href=\"https://godoc.org/github.com/lestrrat-go/jwx\">github.com/lestrrat-go/jwx</a>"
+      "installCommandHtml": "go get <a href=\"https://godoc.org/github.com/lestrrat-go/jwx\">github.com/lestrrat-go/jwx</a>",
+      "repoLatestCommitYear": 2024
     },
     {
       "minimumVersion": null,
@@ -219,7 +227,8 @@
       "authorName": "adam-hanna",
       "gitHubRepoPath": "adam-hanna/jwt-auth",
       "repoUrl": "https://github.com/adam-hanna/jwt-auth",
-      "installCommandHtml": "go get <a href=\"https://godoc.org/github.com/adam-hanna/jwt-auth\">github.com/adam-hanna/jwt-auth</a>"
+      "installCommandHtml": "go get <a href=\"https://godoc.org/github.com/adam-hanna/jwt-auth\">github.com/adam-hanna/jwt-auth</a>",
+      "repoLatestCommitYear": 2021
     },
     {
       "minimumVersion": null,
@@ -250,7 +259,8 @@
       "authorName": "nickvellios",
       "gitHubRepoPath": "nickvellios/gojwt",
       "repoUrl": "https://github.com/nickvellios/gojwt",
-      "installCommandHtml": "go get <a href=\"https://godoc.org/github.com/nickvellios/gojwt\">github.com/nickvellios/gojwt</a>"
+      "installCommandHtml": "go get <a href=\"https://godoc.org/github.com/nickvellios/gojwt\">github.com/nickvellios/gojwt</a>",
+      "repoLatestCommitYear": 2017
     },
     {
       "minimumVersion": null,
@@ -281,7 +291,8 @@
       "authorName": "Gabriel Sanches",
       "gitHubRepoPath": "gbrlsnchs/jwt",
       "repoUrl": "https://github.com/gbrlsnchs/jwt",
-      "installCommandHtml": "GO111MODULE=on go get <a href=\"https://godoc.org/github.com/gbrlsnchs/jwt\">github.com/gbrlsnchs/jwt/v3</a>"
+      "installCommandHtml": "GO111MODULE=on go get <a href=\"https://godoc.org/github.com/gbrlsnchs/jwt\">github.com/gbrlsnchs/jwt/v3</a>",
+      "repoLatestCommitYear": 2021
     },
     {
       "minimumVersion": null,
@@ -313,7 +324,8 @@
       "authorName": "Pascal de Kloe",
       "gitHubRepoPath": "pascaldekloe/jwt",
       "repoUrl": "https://github.com/pascaldekloe/jwt",
-      "installCommandHtml": "go get <a href=\"https://godoc.org/github.com/pascaldekloe/jwt\">github.com/pascaldekloe/jwt</a>"
+      "installCommandHtml": "go get <a href=\"https://godoc.org/github.com/pascaldekloe/jwt\">github.com/pascaldekloe/jwt</a>",
+      "repoLatestCommitYear": 2023
     },
     {
       "minimumVersion": null,
@@ -344,7 +356,8 @@
       "authorName": "Brian Voelker",
       "gitHubRepoPath": "brianvoe/sjwt",
       "repoUrl": "https://github.com/brianvoe/sjwt",
-      "installCommandHtml": "go get <a href=\"https://godoc.org/github.com/brianvoe/sjwt\">github.com/brianvoe/sjwt</a>"
+      "installCommandHtml": "go get <a href=\"https://godoc.org/github.com/brianvoe/sjwt\">github.com/brianvoe/sjwt</a>",
+      "repoLatestCommitYear": 2024
     },
     {
       "minimumVersion": "1.12",
@@ -376,7 +389,8 @@
       "authorName": "Oleg Kovalov",
       "gitHubRepoPath": "cristalhq/jwt",
       "repoUrl": "https://github.com/cristalhq/jwt",
-      "installCommandHtml": "go get github.com/cristalhq/jwt"
+      "installCommandHtml": "go get github.com/cristalhq/jwt",
+      "repoLatestCommitYear": 2024
     },
     {
       "minimumVersion": null,
@@ -409,7 +423,8 @@
       "authorName": "gilbsgilbs",
       "gitHubRepoPath": "gilbsgilbs/jwit",
       "repoUrl": "https://github.com/gilbsgilbs/jwit",
-      "installCommandHtml": "go get <a href=\"https://pkg.go.dev/github.com/gilbsgilbs/jwit\">github.com/gilbsgilbs/jwit</a>"
+      "installCommandHtml": "go get <a href=\"https://pkg.go.dev/github.com/gilbsgilbs/jwit\">github.com/gilbsgilbs/jwit</a>",
+      "repoLatestCommitYear": 2024
     },
     {
       "minimumVersion": null,
@@ -441,7 +456,8 @@
       "authorName": "kataras",
       "gitHubRepoPath": "kataras/jwt",
       "repoUrl": "https://github.com/kataras/jwt",
-      "installCommandHtml": "go get <a href=\"https://pkg.go.dev/github.com/kataras/jwt\">github.com/kataras/jwt</a>"
+      "installCommandHtml": "go get <a href=\"https://pkg.go.dev/github.com/kataras/jwt\">github.com/kataras/jwt</a>",
+      "repoLatestCommitYear": 2024
     }
   ]
 }

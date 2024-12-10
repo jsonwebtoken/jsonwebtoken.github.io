@@ -33,7 +33,8 @@
       "authorName": "tjcelaya",
       "gitHubRepoPath": "tjcelaya/jwt.q",
       "repoUrl": "https://github.com/tjcelaya/jwt.q",
-      "installCommandHtml": "git clone https://github.com/tjcelaya/jwt.q"
+      "installCommandHtml": "git clone https://github.com/tjcelaya/jwt.q",
+      "repoLatestCommitYear": 2015
     }
   ]
 }

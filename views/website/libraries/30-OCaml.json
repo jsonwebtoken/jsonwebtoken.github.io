@@ -33,7 +33,8 @@
       "authorName": "Ulrik Strid",
       "gitHubRepoPath": "ulrikstrid/reason-jose",
       "repoUrl": "https://github.com/ulrikstrid/reason-jose",
-      "installCommandHtml": "opam install jose"
+      "installCommandHtml": "opam install jose",
+      "repoLatestCommitYear": 2023
     }
   ]
 }

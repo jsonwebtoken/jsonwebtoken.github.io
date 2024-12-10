@@ -35,7 +35,8 @@
       "authorName": "Karel Miko",
       "gitHubRepoPath": "DCIT/perl-Crypt-JWT",
       "repoUrl": "https://github.com/DCIT/perl-Crypt-JWT",
-      "installCommandHtml": "cpanm Crypt::JWT"
+      "installCommandHtml": "cpanm Crypt::JWT",
+      "repoLatestCommitYear": 2023
     }
   ]
 }

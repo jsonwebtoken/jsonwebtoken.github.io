@@ -33,7 +33,8 @@
       "authorName": "Microsoft",
       "gitHubRepoPath": "AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet",
       "repoUrl": "https://github.com/MSOpenTech/azure-activedirectory-identitymodel-extensions-for-dotnet",
-      "installCommandHtml": "Install-Package<br><a href=\"https://www.nuget.org/packages/System.IdentityModel.Tokens.Jwt/\">System.IdentityModel.Tokens.Jwt</a>"
+      "installCommandHtml": "Install-Package<br><a href=\"https://www.nuget.org/packages/System.IdentityModel.Tokens.Jwt/\">System.IdentityModel.Tokens.Jwt</a>",
+      "repoLatestCommitYear": 2024
     },
     {
       "minimumVersion": null,
@@ -64,7 +65,8 @@
       "authorName": "Alexander Batishchev",
       "gitHubRepoPath": "jwt-dotnet/jwt",
       "repoUrl": "https://github.com/jwt-dotnet/jwt",
-      "installCommandHtml": "Install-Package<br><a href=\"https://www.nuget.org/packages/JWT\">JWT.NET</a>"
+      "installCommandHtml": "Install-Package<br><a href=\"https://www.nuget.org/packages/JWT\">JWT.NET</a>",
+      "repoLatestCommitYear": 2024
     },
     {
       "minimumVersion": null,
@@ -95,7 +97,8 @@
       "authorName": "DV",
       "gitHubRepoPath": "dvsekhvalnov/jose-jwt",
       "repoUrl": "https://github.com/dvsekhvalnov/jose-jwt",
-      "installCommandHtml": "Install-Package<br><a href=\"http://www.nuget.org/packages/jose-jwt/\">jose-jwt</a>"
+      "installCommandHtml": "Install-Package<br><a href=\"http://www.nuget.org/packages/jose-jwt/\">jose-jwt</a>",
+      "repoLatestCommitYear": 2024
     },
     {
       "minimumVersion": null,
@@ -123,7 +126,8 @@
       "authorName": "DV",
       "gitHubRepoPath": "dvsekhvalnov/jose-rt",
       "repoUrl": "https://github.com/dvsekhvalnov/jose-rt",
-      "installCommandHtml": "Install-Package<br><a href=\"http://www.nuget.org/packages/jose-rt/\">jose-rt</a>"
+      "installCommandHtml": "Install-Package<br><a href=\"http://www.nuget.org/packages/jose-rt/\">jose-rt</a>",
+      "repoLatestCommitYear": 2015
     },
     {
       "minimumVersion": null,
@@ -154,7 +158,8 @@
       "authorName": "Kingcean Tuan",
       "gitHubRepoPath": "nuscien/trivial",
       "repoUrl": "https://github.com/nuscien/trivial",
-      "installCommandHtml": "Install-Package<br><a href=\"https://www.nuget.org/packages/Trivial\">Trivial</a>"
+      "installCommandHtml": "Install-Package<br><a href=\"https://www.nuget.org/packages/Trivial\">Trivial</a>",
+      "repoLatestCommitYear": 2024
     },
     {
       "minimumVersion": null,
@@ -186,7 +191,8 @@
       "authorName": "Yann Crumeyrolle",
       "gitHubRepoPath": "ycrumeyrolle/jwt",
       "repoUrl": "https://github.com/ycrumeyrolle/jwt",
-      "installCommandHtml": "Install-Package <a href=\"https://www.nuget.org/packages/JsonWebToken\">JsonWebToken</a>"
+      "installCommandHtml": "Install-Package <a href=\"https://www.nuget.org/packages/JsonWebToken\">JsonWebToken</a>",
+      "repoLatestCommitYear": 2024
     }
   ]
 }

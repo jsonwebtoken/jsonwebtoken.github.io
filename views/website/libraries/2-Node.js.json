@@ -36,7 +36,8 @@
       "authorName": "Auth0",
       "gitHubRepoPath": "auth0/node-jsonwebtoken",
       "repoUrl": "https://github.com/auth0/node-jsonwebtoken",
-      "installCommandHtml": "npm install jsonwebtoken"
+      "installCommandHtml": "npm install jsonwebtoken",
+      "repoLatestCommitYear": 2023
     },
     {
       "minimumVersion": null,
@@ -70,7 +71,8 @@
       "authorName": "Filip Skokan",
       "gitHubRepoPath": "panva/jose",
       "repoUrl": "https://github.com/panva/jose",
-      "installCommandHtml": "npm install jose"
+      "installCommandHtml": "npm install jose",
+      "repoLatestCommitYear": 2024
     },
     {
       "minimumVersion": null,
@@ -104,7 +106,8 @@
       "authorName": "AWS",
       "gitHubRepoPath": "awslabs/aws-jwt-verify",
       "repoUrl": "https://github.com/awslabs/aws-jwt-verify",
-      "installCommandHtml": "npm install aws-jwt-verify"
+      "installCommandHtml": "npm install aws-jwt-verify",
+      "repoLatestCommitYear": 2024
     }
   ]
 }

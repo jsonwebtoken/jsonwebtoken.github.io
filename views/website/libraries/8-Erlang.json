@@ -33,7 +33,8 @@
       "authorName": "Gregoire Lejeune",
       "gitHubRepoPath": "G-Corp/jwerl",
       "repoUrl": "https://github.com/G-Corp/jwerl",
-      "installCommandHtml": "git clone https://github.com/G-Corp/jwerl.git"
+      "installCommandHtml": "git clone https://github.com/G-Corp/jwerl.git",
+      "repoLatestCommitYear": 2022
     }
   ]
 }

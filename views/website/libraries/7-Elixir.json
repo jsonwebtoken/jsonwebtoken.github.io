@@ -33,8 +33,8 @@
       "authorName": "Fleshman",
       "gitHubRepoPath": "garyf/json_web_token_ex",
       "repoUrl": "https://github.com/garyf/json_web_token_ex",
-      "installCommandHtml":
-        "defp deps, do: [{:json_web_token, \"~&gt; 0.2.5\"}]"
+      "installCommandHtml": "defp deps, do: [{:json_web_token, \"~&gt; 0.2.5\"}]",
+      "repoLatestCommitYear": 2017
     },
     {
       "minimumVersion": null,
@@ -66,7 +66,8 @@
       "authorName": "bryanjos",
       "gitHubRepoPath": "bryanjos/joken",
       "repoUrl": "https://github.com/bryanjos/joken",
-      "installCommandHtml": "defp deps, do: [{:joken, \"~&gt; 1.2\"}]"
+      "installCommandHtml": "defp deps, do: [{:joken, \"~&gt; 1.2\"}]",
+      "repoLatestCommitYear": 2024
     },
     {
       "minimumVersion": null,
@@ -94,7 +95,8 @@
       "authorName": "hassox",
       "gitHubRepoPath": "ueberauth/guardian",
       "repoUrl": "https://github.com/ueberauth/guardian",
-      "installCommandHtml": "defp deps, do: [{:guardian, \"~&gt; 1.0    \"}]"
+      "installCommandHtml": "defp deps, do: [{:guardian, \"~&gt; 1.0    \"}]",
+      "repoLatestCommitYear": 2024
     }
   ]
 }

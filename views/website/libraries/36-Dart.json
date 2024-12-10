@@ -36,7 +36,8 @@
       "authorName": "Jonas Roussel",
       "gitHubRepoPath": "jonasroussel/dart_jsonwebtoken",
       "repoUrl": "https://github.com/jonasroussel/dart_jsonwebtoken",
-      "installCommandHtml": "dart pub add dart_jsonwebtoken"
+      "installCommandHtml": "dart pub add dart_jsonwebtoken",
+      "repoLatestCommitYear": 2024
     }
   ]
 }

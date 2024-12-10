@@ -34,7 +34,8 @@
       "authorName": "Artur Troian",
       "gitHubRepoPath": "troian/jwtpp",
       "repoUrl": "https://github.com/troian/jwtpp",
-      "installCommandHtml": "git clone https://github.com/troian/jwtpp"
+      "installCommandHtml": "git clone https://github.com/troian/jwtpp",
+      "repoLatestCommitYear": 2023
     },
     {
       "minimumVersion": null,
@@ -68,7 +69,8 @@
       "authorName": "Dominik Thalhammer",
       "gitHubRepoPath": "Thalhammer/jwt-cpp",
       "repoUrl": "https://github.com/Thalhammer/jwt-cpp",
-      "installCommandHtml": "git clone https://github.com/Thalhammer/jwt-cpp"
+      "installCommandHtml": "git clone https://github.com/Thalhammer/jwt-cpp",
+      "repoLatestCommitYear": 2024
     },
     {
       "minimumVersion": null,
@@ -99,7 +101,8 @@
       "authorName": "Arun Muralidharan",
       "gitHubRepoPath": "arun11299/cpp-jwt",
       "repoUrl": "https://github.com/arun11299/cpp-jwt",
-      "installCommandHtml": "git clone https://github.com/arun11299/cpp-jwt"
+      "installCommandHtml": "git clone https://github.com/arun11299/cpp-jwt",
+      "repoLatestCommitYear": 2024
     },
     {
       "minimumVersion": null,
@@ -131,7 +134,8 @@
       "authorName": "Erwin Jansen",
       "gitHubRepoPath": "pokowaka/jwt-cpp",
       "repoUrl": "https://github.com/pokowaka/jwt-cpp",
-      "installCommandHtml": "git clone https://github.com/pokowaka/jwt-cpp"
+      "installCommandHtml": "git clone https://github.com/pokowaka/jwt-cpp",
+      "repoLatestCommitYear": 2023
     },
     {
       "minimumVersion": null,
@@ -162,7 +166,8 @@
       "authorName": "POCO C++ Libraries",
       "gitHubRepoPath": "pocoproject/poco",
       "repoUrl": "https://github.com/pocoproject/poco",
-      "installCommandHtml": "git clone https://github.com/pocoproject/poco.git"
+      "installCommandHtml": "git clone https://github.com/pocoproject/poco.git",
+      "repoLatestCommitYear": 2024
     }
   ]
 }

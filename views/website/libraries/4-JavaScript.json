@@ -36,7 +36,8 @@
       "authorName": "Filip Skokan",
       "gitHubRepoPath": "panva/jose",
       "repoUrl": "https://github.com/panva/jose",
-      "installCommandHtml": "npm install jose"
+      "installCommandHtml": "npm install jose",
+      "repoLatestCommitYear": 2024
     },
     {
       "minimumVersion": "3.2.0",
@@ -64,7 +65,8 @@
       "authorName": "Kenji Urushima",
       "gitHubRepoPath": "kjur/jsrsasign",
       "repoUrl": "https://github.com/kjur/jsrsasign",
-      "installCommandHtml": "npm install jsrsasign"
+      "installCommandHtml": "npm install jsrsasign",
+      "repoLatestCommitYear": 2024
     },
     {
       "minimumVersion": "0.9.4",
@@ -97,7 +99,8 @@
       "authorName": "Cisco Systems",
       "gitHubRepoPath": "cisco/node-jose",
       "repoUrl": "https://github.com/cisco/node-jose",
-      "installCommandHtml": "npm install node-jose"
+      "installCommandHtml": "npm install node-jose",
+      "repoLatestCommitYear": 2023
     }
   ]
 }

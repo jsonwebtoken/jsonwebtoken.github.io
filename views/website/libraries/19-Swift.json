@@ -33,7 +33,8 @@
       "authorName": "Kyle Fuller",
       "gitHubRepoPath": "kylef/JSONWebToken.swift",
       "repoUrl": "https://github.com/kylef/JSONWebToken.swift",
-      "installCommandHtml": "pod 'JSONWebToken'"
+      "installCommandHtml": "pod 'JSONWebToken'",
+      "repoLatestCommitYear": 2019
     },
     {
       "minimumVersion": null,
@@ -66,7 +67,8 @@
       "authorName": "Vapor",
       "gitHubRepoPath": "vapor/jwt-kit",
       "repoUrl": "https://github.com/vapor/jwt-kit",
-      "installCommandHtml": ".package(url: \"https://github.com/vapor/jwt-kit.git\", from: \"5.0.0\")"
+      "installCommandHtml": ".package(url: \"https://github.com/vapor/jwt-kit.git\", from: \"5.0.0\")",
+      "repoLatestCommitYear": 2024
     },
     {
       "minimumVersion": null,
@@ -97,7 +99,8 @@
       "authorName": "Wstunes",
       "gitHubRepoPath": "Wstunes/SwiftyJWT",
       "repoUrl": "https://github.com/Wstunes/SwiftyJWT",
-      "installCommandHtml": "pod 'SwiftyJWT'"
+      "installCommandHtml": "pod 'SwiftyJWT'",
+      "repoLatestCommitYear": 2020
     },
     {
       "minimumVersion": null,
@@ -128,7 +131,8 @@
       "authorName": "IBM Swift",
       "gitHubRepoPath": "IBM-Swift/Swift-JWT",
       "repoUrl": "https://github.com/IBM-Swift/Swift-JWT",
-      "installCommandHtml": ".package(url:\"https://github.com/IBM-Swift/Swift-JWT\", from: \"3.5.0\")"
+      "installCommandHtml": ".package(url:\"https://github.com/IBM-Swift/Swift-JWT\", from: \"3.5.0\")",
+      "repoLatestCommitYear": 2024
     },
     {
       "minimumVersion": null,
@@ -159,7 +163,8 @@
       "authorName": "Airside",
       "gitHubRepoPath": "airsidemobile/JOSESwift",
       "repoUrl": "https://github.com/airsidemobile/JOSESwift",
-      "installCommandHtml": "pod 'JOSESwift'"
+      "installCommandHtml": "pod 'JOSESwift'",
+      "repoLatestCommitYear": 2024
     },
     {
       "minimumVersion": null,
@@ -193,8 +198,8 @@
       "authorName": "Gonçalo Frade",
       "gitHubRepoPath": "beatt83/jose-swift",
       "repoUrl": "https://github.com/beatt83/jose-swift",
-      "installCommandHtml":
-        ".package(url: \"https://github.com/beatt83/jose-swift.git\", .upToNextMinor(from: \"4.0.0\"))"
+      "installCommandHtml": ".package(url: \"https://github.com/beatt83/jose-swift.git\", .upToNextMinor(from: \"4.0.0\"))",
+      "repoLatestCommitYear": 2024
     }
   ]
 }

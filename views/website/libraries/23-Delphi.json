@@ -36,8 +36,8 @@
       "authorName": "Paolo Rossi",
       "gitHubRepoPath": "paolo-rossi/delphi-jose-jwt",
       "repoUrl": "https://github.com/paolo-rossi/delphi-jose-jwt",
-      "installCommandHtml":
-        "git clone https://github.com/paolo-rossi/delphi-jose-jwt"
+      "installCommandHtml": "git clone https://github.com/paolo-rossi/delphi-jose-jwt",
+      "repoLatestCommitYear": 2024
     },
     {
       "minimumVersion": null,
@@ -68,7 +68,8 @@
       "authorName": "Synopse",
       "gitHubRepoPath": "synopse/mORMot",
       "repoUrl": "https://github.com/synopse/mORMot",
-      "installCommandHtml": "git clone https://github.com/synopse/mORMot"
+      "installCommandHtml": "git clone https://github.com/synopse/mORMot",
+      "repoLatestCommitYear": 2024
     }
   ]
 }

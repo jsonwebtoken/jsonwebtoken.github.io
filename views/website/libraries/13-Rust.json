@@ -33,7 +33,8 @@
       "authorName": "GildedHonour",
       "gitHubRepoPath": "GildedHonour/rust-jwt",
       "repoUrl": "https://github.com/GildedHonour/rust-jwt",
-      "installCommandHtml": "cargo: name = \"frank_jwt\" version = \"*\""
+      "installCommandHtml": "cargo: name = \"frank_jwt\" version = \"*\"",
+      "repoLatestCommitYear": 2023
     },
     {
       "minimumVersion": null,
@@ -64,7 +65,8 @@
       "authorName": "Keats",
       "gitHubRepoPath": "Keats/jsonwebtoken",
       "repoUrl": "https://github.com/Keats/jsonwebtoken",
-      "installCommandHtml": "cargo: name = \"jsonwebtoken\" version = \"*\""
+      "installCommandHtml": "cargo: name = \"jsonwebtoken\" version = \"*\"",
+      "repoLatestCommitYear": 2024
     },
     {
       "minimumVersion": null,
@@ -97,7 +99,8 @@
       "authorName": "Jade",
       "gitHubRepoPath": "JadedBlueEyes/jsonwebtoken",
       "repoUrl": "https://github.com/JadedBlueEyes/jsonwebtoken",
-      "installCommandHtml": "cargo: name = \"jsonwebtoken-rustcrypto\" version = \"*\""
+      "installCommandHtml": "cargo: name = \"jsonwebtoken-rustcrypto\" version = \"*\"",
+      "repoLatestCommitYear": 2023
     },
     {
       "minimumVersion": null,
@@ -128,7 +131,8 @@
       "authorName": "Yong Wen Chua",
       "gitHubRepoPath": "lawliet89/biscuit",
       "repoUrl": "https://github.com/lawliet89/biscuit",
-      "installCommandHtml": "Cargo.toml: biscuit = \"*\""
+      "installCommandHtml": "Cargo.toml: biscuit = \"*\"",
+      "repoLatestCommitYear": 2023
     },
     {
       "minimumVersion": null,
@@ -159,7 +163,8 @@
       "authorName": "Robert Bragg",
       "gitHubRepoPath": "rib/jsonwebtokens",
       "repoUrl": "https://github.com/rib/jsonwebtokens",
-      "installCommandHtml": "Cargo.toml: jsonwebtokens = \"*\""
+      "installCommandHtml": "Cargo.toml: jsonwebtokens = \"*\"",
+      "repoLatestCommitYear": 2023
     }
   ]
 }
