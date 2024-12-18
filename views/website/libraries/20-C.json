@@ -8,13 +8,13 @@
             "support": {
                 "sign": true,
                 "verify": true,
-                "iss": false,
-                "sub": false,
-                "aud": false,
-                "exp": false,
-                "nbf": false,
-                "iat": false,
-                "jti": false,
+                "iss": true,
+                "sub": true,
+                "aud": true,
+                "exp": true,
+                "nbf": true,
+                "iat": true,
+                "jti": true,
                 "hs256": true,
                 "hs384": true,
                 "hs512": true,
@@ -24,15 +24,17 @@
                 "es256": true,
                 "es384": true,
                 "es512": true,
-                "ps256": false,
-                "ps384": false,
-                "ps512": false
+                "ps256": true,
+                "ps384": true,
+                "ps512": true,
+                "es256k": true,
+                "eddsa": true
             },
             "authorUrl": "https://github.com/benmcollins",
-            "authorName": "benmcollins",
+            "authorName": "Ben Collins",
             "gitHubRepoPath": "benmcollins/libjwt",
             "repoUrl": "https://github.com/benmcollins/libjwt",
-            "installCommandHtml": "add-apt-repository ppa:ben-collins/libjwt"
+            "installCommandHtml": "brew install libjwt; apt-get install libjwt-dev"
         },
         {
             "minimumVersion": null,
