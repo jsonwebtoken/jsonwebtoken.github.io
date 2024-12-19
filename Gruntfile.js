@@ -48,6 +48,10 @@ module.exports = (grunt) => {
                         src: ["sitemap.xml"],
                         dest: "dist/website/",
                     },
+                    {
+                        src: ["robots.txt"],
+                        dest: "dist/website/",
+                    },
                 ],
             },
             extension: {
