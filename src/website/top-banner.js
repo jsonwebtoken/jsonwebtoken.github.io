@@ -12,7 +12,7 @@ const messageBar = {
   status: MESSAGE_BAR_STATUS.ACTIVE,
   id: {
     key: "messageBar_id",
-    value: "JWT_IO_FEEDBACK",
+    value: "JWT_V2_FEEDBACK",
   },
   state: {
     key: "messageBar_state",
