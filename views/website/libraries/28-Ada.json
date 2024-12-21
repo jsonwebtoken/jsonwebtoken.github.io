@@ -33,7 +33,8 @@
       "authorName": "reznikmm",
       "gitHubRepoPath": "reznikmm/jwt",
       "repoUrl": "https://github.com/reznikmm/jwt",
-      "installCommandHtml": "alr get jwt"
+      "installCommandHtml": "alr get jwt",
+      "repoLatestCommitYear": 2020
     }
   ]
 }

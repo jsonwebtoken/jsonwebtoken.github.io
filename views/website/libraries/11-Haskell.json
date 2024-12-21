@@ -33,7 +33,9 @@
       "authorName": "Brian McKenna",
       "gitHubRepoPath": null,
       "repoUrl": "https://bitbucket.org/puffnfresh/haskell-jwt",
-      "installCommandHtml": "cabal install jwt"
+      "installCommandHtml": "cabal install jwt",
+      "repoArchived": true,
+      "repoLatestCommitYear": 2019
     },
     {
       "minimumVersion": null,
@@ -64,7 +66,8 @@
       "authorName": "Fraser Tweedale",
       "gitHubRepoPath": "frasertweedale/hs-jose",
       "repoUrl": "https://github.com/frasertweedale/hs-jose",
-      "installCommandHtml": "cabal install jose"
+      "installCommandHtml": "cabal install jose",
+      "repoLatestCommitYear": 2024
     }
   ]
 }
