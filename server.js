@@ -2,6 +2,8 @@ const express = require("express");
 const enforce = require("express-sslify");
 const languages = require("./libraries.json");
 const dotenv = require("dotenv").config();
+const Negotiator = require("negotiator");
+const localeMatcher = require("@formatjs/intl-localematcher");
 
 const app = express();
 
@@ -19,16 +21,17 @@ if (process.env.NODE_ENV === "production") {
 }
 
 app.use((req, res, next) => {
-    const acceptLanguage = req.headers['accept-language'];
+    const languagesFromRequestHeaders = new Negotiator(req).languages();
+    const LANGUAGE_CODES = ["en", "ja"]
+    const DEFAULT_LANGUAGE_CODE = ["en"]
 
-    if(acceptLanguage){
-        const preferredLanguage = acceptLanguage.split(",")[0].split("-")[0];
+    const languageFromRequestHeader = localeMatcher.match(
+        languagesFromRequestHeaders,
+        LANGUAGE_CODES,
+        DEFAULT_LANGUAGE_CODE,
+    );
 
-        req.preferredLanguage = preferredLanguage;
-    }else{
-        req.preferredLanguage = 'en';
-    }
-
+    req.preferredLanguage = languageFromRequestHeader;
     next();
 })
 
