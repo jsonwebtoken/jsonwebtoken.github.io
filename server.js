@@ -19,21 +19,40 @@ if (process.env.NODE_ENV === "production") {
 }
 
 app.use((req, res, next) => {
+    const acceptLanguage = req.headers['accept-language'];
+
+    if(acceptLanguage){
+        const preferredLanguage = acceptLanguage.split(",")[0].split("-")[0];
+
+        req.preferredLanguage = preferredLanguage;
+    }else{
+        req.preferredLanguage = 'en';
+    }
+
+    next();
+})
+
+app.use((req, res, next) => {
     res.locals.COOKIE_CONSENT_DOMAIN_ID = process.env.COOKIE_CONSENT_DOMAIN_ID;
     next();
 });
 app.use(express.static("dist/website"));
 app.get("/", function(req, res) {
-    res.render("index");
+    res.render("index", {
+        preferredLanguage: req.preferredLanguage,
+    });
 });
 
 app.get("/introduction", function(req, res) {
-    res.render("introduction");
+    res.render("introduction", {
+        preferredLanguage: req.preferredLanguage,
+    });
 });
 
 app.get("/libraries", function(req, res) {
     res.render("libraries", {
-        languages: languages
+        languages: languages,
+        preferredLanguage: req.preferredLanguage,
     });
 });
 

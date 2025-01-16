@@ -1,8 +1,12 @@
 .top-banner-bg.closed
 .top-banner.closed
   .top-banner-container
-    a(href="https://a0.to/jwt-io-feedback" target="_blank") Get an exclusive look at jwt.io v2 and help us shape its final form with your feedback.
-      span(aria-hiden="true") →
+    if preferredLanguage === 'ja'
+      a(href="https://a0.to/jwt-io-feedback-ja" target="_blank") jwt.io v2ベータバージョン: フィードバックをお寄せください。
+        span(aria-hiden="true") →
+    else
+      a(href="https://a0.to/jwt-io-feedback" target="_blank") Get an exclusive look at jwt.io v2 and help us shape its final form with your feedback.
+        span(aria-hiden="true") →
     button.close-top-banner +
 
 nav.navbar
