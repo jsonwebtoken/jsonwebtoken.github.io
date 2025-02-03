@@ -9,8 +9,8 @@
       "support": {
         "sign": true,
         "verify": true,
-        "iss": false,
-        "sub": false,
+        "iss": true,
+        "sub": true,
         "aud": true,
         "exp": true,
         "nbf": true,
@@ -25,16 +25,16 @@
         "es256": true,
         "es384": true,
         "es512": true,
-        "ps256": false,
-        "ps384": false,
-        "ps512": false,
+        "ps256": true,
+        "ps384": true,
+        "ps512": true,
         "eddsa": true        
       },
       "authorUrl": "https://github.com/golang-jwt",
       "authorName": "golang-jwt",
       "gitHubRepoPath": "golang-jwt/jwt",
       "repoUrl": "https://github.com/golang-jwt/jwt",
-      "installCommandHtml": "go get <a href=\"https://pkg.go.dev/github.com/golang-jwt/jwt/v4\">github.com/golang-jwt/jwt/v4</a>"
+      "installCommandHtml": "go get <a href=\"https://pkg.go.dev/github.com/golang-jwt/jwt/v5\">github.com/golang-jwt/jwt/v5</a>"
     },
     {
       "minimumVersion": null,

@@ -2,6 +2,8 @@ const express = require("express");
 const enforce = require("express-sslify");
 const languages = require("./libraries.json");
 const dotenv = require("dotenv").config();
+const Negotiator = require("negotiator");
+const localeMatcher = require("@formatjs/intl-localematcher");
 
 const app = express();
 
@@ -19,21 +21,41 @@ if (process.env.NODE_ENV === "production") {
 }
 
 app.use((req, res, next) => {
+    const languagesFromRequestHeaders = new Negotiator(req).languages();
+    const LANGUAGE_CODES = ["en", "ja"]
+    const DEFAULT_LANGUAGE_CODE = ["en"]
+
+    const languageFromRequestHeader = localeMatcher.match(
+        languagesFromRequestHeaders,
+        LANGUAGE_CODES,
+        DEFAULT_LANGUAGE_CODE,
+    );
+
+    req.preferredLanguage = languageFromRequestHeader;
+    next();
+})
+
+app.use((req, res, next) => {
     res.locals.COOKIE_CONSENT_DOMAIN_ID = process.env.COOKIE_CONSENT_DOMAIN_ID;
     next();
 });
 app.use(express.static("dist/website"));
 app.get("/", function(req, res) {
-    res.render("index");
+    res.render("index", {
+        preferredLanguage: req.preferredLanguage,
+    });
 });
 
 app.get("/introduction", function(req, res) {
-    res.render("introduction");
+    res.render("introduction", {
+        preferredLanguage: req.preferredLanguage,
+    });
 });
 
 app.get("/libraries", function(req, res) {
     res.render("libraries", {
-        languages: languages
+        languages: languages,
+        preferredLanguage: req.preferredLanguage,
     });
 });
 

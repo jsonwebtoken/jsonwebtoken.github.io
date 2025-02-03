@@ -45,7 +45,8 @@ html(lang='en')
 
     include ./navigation.pug
 
-    block content
+    .content
+      block content
 
     footer
       .container
@@ -62,8 +63,8 @@ html(lang='en')
                 | Your Privacy Choices 
               img.ccpa-toggle(src='https://cdn.auth0.com/website/footer/ccpa.svg' alt='Privacy choices')
             a(href='https://developer.auth0.com', target="_blank")
-              | Supported by
-              img(src='/img/ico_logo.svg' alt='Supported by Auth0 - JWT.io Token Based Authentication').logo
+              | Crafted by
+              img(src='/img/auth0_logo.svg' alt='Crafted by Auth0 - JWT.io Token Based Authentication').logo
             #ccpa-modal
               button#close-ccpa x
               h3 Your Privacy Choices

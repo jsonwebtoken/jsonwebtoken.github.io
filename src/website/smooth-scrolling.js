@@ -1,4 +1,4 @@
-import { menuScrollableLinks, navbarElement } from './dom-elements.js';
+import { menuScrollableLinks, navbarElement } from './dom-elements-common.js';
 import { isWideScreen } from '../utils.js';
 
 import $ from 'jquery';
@@ -9,7 +9,7 @@ import log from 'loglevel';
 // jQuery somewhere else.
 export function smoothScrollTo(element) {
   // TODO: don't use jQuery
-  
+
   const navHeight = $(navbarElement).height();
   const targetElement = $(element);
 

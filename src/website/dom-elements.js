@@ -1,14 +1,6 @@
 export * from '../dom-elements.js';
 export * from './dom-elements-common.js';
 
-export const navbarElement = document.querySelector('nav.navbar');
-export const menuTriggerElement = document.querySelector('.menu-trigger');
-export const menuLinks = document.querySelectorAll('.navbar .menu a');
-export const menuScrollableLinks =
-    navbarElement.querySelectorAll('a.scrollto');
-
-export const sectionElements = document.getElementsByTagName('section');
-
 export const extensionSection = document.querySelector('.update-site');
 export const ebookSection = document.querySelector('.jtw-ebook-banner');
 
