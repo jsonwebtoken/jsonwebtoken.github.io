@@ -20,12 +20,11 @@ function addScripts(lvl) {
         }
 
         const dataLayerInfo = {
-            event: "ab-viewed",
-            experiment: "OKTA_NEW_HOMEPAGE_v1",
-            variation: "control"
+            'event': "ab-viewed",
+            'experiment': "JWT_NEW_DESIGN",
+            'variation': "control"
         };
 
-        //add the data to each data layer object
         window.digitalData.abInfo = dataLayerInfo;
         window.dataLayer.push(dataLayerInfo);
         // GTM
