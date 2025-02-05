@@ -11,6 +11,23 @@ function addScripts(lvl) {
 
     // Necessary
     if (lvl.includes(COOKIE_CONSENT_NECESSARY)) {
+        if (!window.digitalData) {
+            window.digitalData = {};
+        }
+
+        if (!window.dataLayer) {
+            window.dataLayer = [];
+        }
+
+        const dataLayerInfo = {
+            event: "ab-viewed",
+            experiment: "OKTA_NEW_HOMEPAGE_v1",
+            variation: "control"
+        };
+
+        //add the data to each data layer object
+        window.digitalData.abInfo = dataLayerInfo;
+        window.dataLayer.push(dataLayerInfo);
         // GTM
         (function(w, d, s, l, i) {
             w[l] = w[l] || [];
