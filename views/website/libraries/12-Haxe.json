@@ -33,7 +33,8 @@
       "authorName": "Kevin Leung",
       "gitHubRepoPath": "kevinresol/jsonwebtoken",
       "repoUrl": "https://github.com/kevinresol/jsonwebtoken",
-      "installCommandHtml": "haxelib install jsonwebtoken"
+      "installCommandHtml": "haxelib install jsonwebtoken",
+      "repoLatestCommitYear": 2021
     }
   ]
 }

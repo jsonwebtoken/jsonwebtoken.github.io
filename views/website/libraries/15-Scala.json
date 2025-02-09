@@ -33,8 +33,8 @@
       "authorName": "jasongoodwin",
       "gitHubRepoPath": "jasongoodwin/authentikat-jwt",
       "repoUrl": "https://github.com/jasongoodwin/authentikat-jwt",
-      "installCommandHtml":
-        "sbt: \"com.jason-goodwin\" %% \"authentikat-jwt\" % \"0.4.5\""
+      "installCommandHtml": "sbt: \"com.jason-goodwin\" %% \"authentikat-jwt\" % \"0.4.5\"",
+      "repoLatestCommitYear": 2019
     },
     {
       "minimumVersion": null,
@@ -65,7 +65,8 @@
       "authorName": "pauldijou",
       "gitHubRepoPath": "pauldijou/jwt-scala",
       "repoUrl": "https://github.com/pauldijou/jwt-scala",
-      "installCommandHtml": "sbt: \"pdi\" %% \"jwt-core\" % \"0.14.1\""
+      "installCommandHtml": "sbt: \"pdi\" %% \"jwt-core\" % \"0.14.1\"",
+      "repoLatestCommitYear": 2024
     },
     {
       "minimumVersion": null,
@@ -96,8 +97,9 @@
       "authorName": "iain-logan",
       "gitHubRepoPath": "iain-logan/jwt",
       "repoUrl": "https://github.com/iain-logan/jwt",
-      "installCommandHtml":
-        "libraryDependencies += \"io.igl\" %% \"jwt\" % \"1.2.2\""
+      "installCommandHtml": "libraryDependencies += \"io.igl\" %% \"jwt\" % \"1.2.2\"",
+      "repoArchived": true,
+      "repoLatestCommitYear": 2018
     },
     {
       "minimumVersion": null,
@@ -128,8 +130,8 @@
       "authorName": "janjaali",
       "gitHubRepoPath": "janjaali/spray-jwt",
       "repoUrl": "https://github.com/janjaali/spray-jwt",
-      "installCommandHtml":
-        "libraryDependencies += \"com.github.janjaali\" %% \"spray-jwt\" % \"1.0.0\""
+      "installCommandHtml": "libraryDependencies += \"com.github.janjaali\" %% \"spray-jwt\" % \"1.0.0\"",
+      "repoLatestCommitYear": 2017
     },
     {
       "minimumVersion": null,
@@ -160,8 +162,8 @@
       "authorName": "blackdoor software",
       "gitHubRepoPath": "blackdoor/jose",
       "repoUrl": "https://github.com/blackdoor/jose",
-      "installCommandHtml":
-        "sbt: libraryDependencies += &quot;black.door&quot; %% &quot;jose&quot; % &quot;0.2.2&quot;\nmill: ivy&quot;black.door::jose:0.2.2&quot;"
+      "installCommandHtml": "sbt: libraryDependencies += &quot;black.door&quot; %% &quot;jose&quot; % &quot;0.2.2&quot;\nmill: ivy&quot;black.door::jose:0.2.2&quot;",
+      "repoLatestCommitYear": 2023
     }
   ]
 }

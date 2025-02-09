@@ -33,7 +33,8 @@
       "authorName": "Vasily Pintov",
       "gitHubRepoPath": "pintov/1c-jwt",
       "repoUrl": "https://github.com/pintov/1c-jwt",
-      "installCommandHtml": "git clone https://github.com/pintov/1c-jwt"
+      "installCommandHtml": "git clone https://github.com/pintov/1c-jwt",
+      "repoLatestCommitYear": 2023
     }
   ]
 }

@@ -36,7 +36,8 @@
       "authorName": "Filip Skokan",
       "gitHubRepoPath": "panva/jose",
       "repoUrl": "https://github.com/panva/jose",
-      "installCommandHtml": "see https://deno.land/x/jose"
+      "installCommandHtml": "see https://deno.land/x/jose",
+      "repoLatestCommitYear": 2024
     }
   ]
 }

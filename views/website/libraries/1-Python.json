@@ -35,7 +35,8 @@
       "authorName": "José Padilla",
       "gitHubRepoPath": "jpadilla/pyjwt",
       "repoUrl": "https://github.com/jpadilla/pyjwt/",
-      "installCommandHtml": "pip install pyjwt"
+      "installCommandHtml": "pip install pyjwt",
+      "repoLatestCommitYear": 2024
     },
     {
       "minimumVersion": null,
@@ -66,7 +67,8 @@
       "authorName": "Michael Davis",
       "gitHubRepoPath": "mpdavis/python-jose",
       "repoUrl": "https://github.com/mpdavis/python-jose/",
-      "installCommandHtml": "pip install python-jose"
+      "installCommandHtml": "pip install python-jose",
+      "repoLatestCommitYear": 2024
     },
     {
       "minimumVersion": null,
@@ -100,7 +102,8 @@
       "authorName": "Simo Sorce",
       "gitHubRepoPath": "latchset/jwcrypto",
       "repoUrl": "https://github.com/latchset/jwcrypto/",
-      "installCommandHtml": "pip install jwcrypto"
+      "installCommandHtml": "pip install jwcrypto",
+      "repoLatestCommitYear": 2024
     },
     {
       "minimumVersion": null,
@@ -133,7 +136,8 @@
       "authorName": "Hsiaoming Yang",
       "gitHubRepoPath": "lepture/authlib",
       "repoUrl": "https://github.com/lepture/authlib",
-      "installCommandHtml": "pip install authlib"
+      "installCommandHtml": "pip install authlib",
+      "repoLatestCommitYear": 2024
     }
   ]
 }

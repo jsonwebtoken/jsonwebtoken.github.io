@@ -33,7 +33,8 @@
       "authorName": "Auth0",
       "gitHubRepoPath": "auth0/java-jwt",
       "repoUrl": "https://github.com/auth0/java-jwt",
-      "installCommandHtml": "maven: com.auth0 / java-jwt / 3.3.0"
+      "installCommandHtml": "maven: com.auth0 / java-jwt / 3.3.0",
+      "repoLatestCommitYear": 2024
     },
     {
       "minimumVersion": null,
@@ -67,7 +68,8 @@
       "authorName": "Brian Campbell",
       "gitHubRepoPath": null,
       "repoUrl": "https://bitbucket.org/b_c/jose4j",
-      "installCommandHtml": "maven: org.bitbucket.b_c / jose4j / 0.9.3"
+      "installCommandHtml": "maven: org.bitbucket.b_c / jose4j / 0.9.3",
+      "repoLatestCommitYear": 2024
     },
     {
       "minimumVersion": null,
@@ -98,7 +100,8 @@
       "authorName": "connect2id",
       "gitHubRepoPath": null,
       "repoUrl": "https://bitbucket.org/connect2id/nimbus-jose-jwt",
-      "installCommandHtml": "maven: com.nimbusds / nimbus-jose-jwt / 5.7"
+      "installCommandHtml": "maven: com.nimbusds / nimbus-jose-jwt / 5.7",
+      "repoLatestCommitYear": 2024
     },
     {
       "minimumVersion": null,
@@ -129,7 +132,8 @@
       "authorName": "Les Hazlewood",
       "gitHubRepoPath": "jwtk/jjwt",
       "repoUrl": "https://github.com/jwtk/jjwt",
-      "installCommandHtml": "maven: io.jsonwebtoken / jjwt-root / 0.11.1"
+      "installCommandHtml": "maven: io.jsonwebtoken / jjwt-root / 0.11.1",
+      "repoLatestCommitYear": 2024
     },
     {
       "minimumVersion": null,
@@ -160,7 +164,8 @@
       "authorName": "FusionAuth",
       "gitHubRepoPath": "fusionauth/fusionauth-jwt",
       "repoUrl": "https://github.com/fusionauth/fusionauth-jwt",
-      "installCommandHtml": "maven: io.fusionauth / fusionauth-jwt / 5.2.2"
+      "installCommandHtml": "maven: io.fusionauth / fusionauth-jwt / 5.2.2",
+      "repoLatestCommitYear": 2024
     },
     {
       "minimumVersion": null,
@@ -188,7 +193,8 @@
       "authorName": "Vert.x",
       "gitHubRepoPath": "vert-x3/vertx-auth",
       "repoUrl": "https://github.com/vert-x3/vertx-auth",
-      "installCommandHtml": "maven: io.vertx / vertx-auth-jwt / 3.5.1"
+      "installCommandHtml": "maven: io.vertx / vertx-auth-jwt / 3.5.1",
+      "repoLatestCommitYear": 2024
     },
     {
       "minimumVersion": null,
@@ -221,7 +227,8 @@
       "authorName": "Inverno Framework",
       "gitHubRepoPath": "inverno-io/inverno-mods/tree/master/inverno-security-jose",
       "repoUrl": "https://github.com/inverno-io/inverno-mods/tree/master/inverno-security-jose",
-      "installCommandHtml": "maven: io.inverno.mod / inverno-security-jose / 1.5.2"
+      "installCommandHtml": "maven: io.inverno.mod / inverno-security-jose / 1.5.2",
+      "repoLatestCommitYear": 2024
     }
   ]
 }
