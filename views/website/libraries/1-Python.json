@@ -5,17 +5,17 @@
   "bgColor": "rgb(55, 126, 240)",
   "libs": [
     {
-      "minimumVersion": "1.0.1",
+      "minimumVersion": "2.10.0",
       "support": {
         "sign": true,
         "verify": true,
         "iss": true,
-        "sub": false,
+        "sub": true,
         "aud": true,
         "exp": true,
         "nbf": true,
         "iat": true,
-        "jti": false,
+        "jti": true,
         "hs256": true,
         "hs384": true,
         "hs512": true,
