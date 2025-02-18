@@ -7,7 +7,7 @@
     },
     "dependencies": {
         "@formatjs/intl-localematcher": "^0.5.10",
-        "@octokit/rest": "^18.0.12",
+        "@octokit/rest": "^21.1.1",
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
         "express-sslify": "^1.2.0",
