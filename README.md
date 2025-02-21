@@ -115,4 +115,36 @@ To run tests, execute:
 
 Look at the end of the [Gruntfile](/Gruntfile.js) for other common tasks.
 
+### How to run project locally
+
+- Make sure you have Node version <= 16 installed.
+  
+- Clone the project: 
+
+```bash
+git clone org-6887375@github.com:jsonwebtoken/jsonwebtoken.github.io.git
+```
+- Make the project directory your current directory:
+
+```bash
+cd jsonwebtoken.github.io
+```
+
+- Install required dependencies:
+
+```bash
+npm install
+```
+- Build the project:
+
+```bash
+npm run build
+```
+- Run the development server: 
+
+```bash
+npm run start
+```
+- Visit: [http://localhost:3000](http://localhost:3000)
+
 ### Happy hacking!
