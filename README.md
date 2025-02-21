@@ -117,7 +117,7 @@ Look at the end of the [Gruntfile](/Gruntfile.js) for other common tasks.
 
 ### How to run project locally
 
-- Make sure you have Node version <= 16 installed.
+- Make sure that you run these commands using Node `v16.x.x`.
   
 - Clone the project: 
 
