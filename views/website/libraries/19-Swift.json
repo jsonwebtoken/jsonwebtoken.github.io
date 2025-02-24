@@ -195,6 +195,40 @@
       "repoUrl": "https://github.com/beatt83/jose-swift",
       "installCommandHtml":
         ".package(url: \"https://github.com/beatt83/jose-swift.git\", .upToNextMinor(from: \"4.0.0\"))"
+    },
+    {
+      "minimumVersion": null,
+      "support": {
+        "sign": true,
+        "verify": true,
+        "iss": true,
+        "sub": true,
+        "aud": true,
+        "exp": true,
+        "nbf": true,
+        "iat": true,
+        "jti": true,
+        "typ": true,
+        "hs256": true,
+        "hs384": true,
+        "hs512": true,
+        "rs256": true,
+        "rs384": true,
+        "rs512": true,
+        "es256": true,
+        "es384": true,
+        "es512": true,
+        "ps256": true,
+        "ps384": true,
+        "ps512": true,
+        "eddsa": true
+      },
+      "authorUrl": "https://github.com/amosavian",
+      "authorName": "Amir Abbas Mousavian",
+      "gitHubRepoPath": "amosavian/JWSETKit",
+      "repoUrl": "https://github.com/amosavian/JWSETKit",
+      "installCommandHtml":
+        ".package(url:\"https://github.com/amosavian/JWSETKit\", from: \"0.23.0\")"
     }
   ]
 }
