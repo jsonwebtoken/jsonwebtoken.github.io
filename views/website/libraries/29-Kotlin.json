@@ -97,7 +97,7 @@
       "authorName": "Yong Seo PARK",
       "gitHubRepoPath": "saro-lab/jwt",
       "repoUrl": "https://github.com/saro-lab/jwt",
-      "installCommandHtml": "maven: me.saro / jwt / 3.0.0"
+      "installCommandHtml": "maven: me.saro / jwt / 6.0.0"
     }
   ]
 }
