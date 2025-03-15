@@ -66,6 +66,38 @@
       "gitHubRepoPath": "nefilim/kJWT",
       "repoUrl": "https://github.com/nefilim/kJWT",
       "installCommandHtml": "maven GAV: io.github.nefilim.kjwt:kjwt-core:0.3.0"
+    },
+    {
+      "minimumVersion": null,
+      "support": {
+        "sign": true,
+        "verify": true,
+        "iss": true,
+        "sub": true,
+        "aud": true,
+        "exp": true,
+        "nbf": true,
+        "iat": true,
+        "jti": true,
+        "typ": true,
+        "hs256": true,
+        "hs384": true,
+        "hs512": true,
+        "rs256": true,
+        "rs384": true,
+        "rs512": true,
+        "es256": true,
+        "es384": true,
+        "es512": true,
+        "ps256": true,
+        "ps384": true,
+        "ps512": true
+      },
+      "authorUrl": "https://github.com/ac-saro",
+      "authorName": "Yong Seo PARK",
+      "gitHubRepoPath": "saro-lab/jwt",
+      "repoUrl": "https://github.com/saro-lab/jwt",
+      "installCommandHtml": "maven: me.saro / jwt / 6.0.0"
     }
   ]
 }
