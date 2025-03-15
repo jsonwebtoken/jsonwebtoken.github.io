@@ -1,4 +1,15 @@
-nav.navbar.closed
+.top-banner-bg.closed
+.top-banner.closed
+  .top-banner-container
+    if preferredLanguage === 'ja'
+      a(href="https://a0.to/jwt-io-feedback-ja" target="_blank") jwt.io v2ベータバージョン: フィードバックをお寄せください。
+        span(aria-hiden="true") →
+    else
+      a(href="https://a0.to/jwt-io-feedback" target="_blank") Get an exclusive look at jwt.io v2 and help us shape its final form with your feedback.
+        span(aria-hiden="true") →
+    button.close-top-banner +
+
+nav.navbar
     .container
       .top-mobile
         .menu-trigger
@@ -17,9 +28,9 @@ nav.navbar.closed
       .social
         a.a0(href='https://developer.auth0.com', target='_blank')
           span.by-text Crafted by
-          img(src='/img/auth0_logo_header.svg', alt='Crafted by Auth0 - JWT.io Token Based Authentication')
+          img(src='/img/auth0_logo.svg', alt='Crafted by Auth0 - JWT.io Token Based Authentication')
           span.crafted-by__question-mark ?
 
       a.supported(href='https://auth0.com', target="_blank")
           | Crafted by
-          img(src='/img/auth0_logo_ft.svg', alt='Crafted by Auth0 - JWT.io Token Based Authentication').logo-mobile
+          img(src='/img/auth0_logo.svg', alt='Crafted by Auth0 - JWT.io Token Based Authentication').logo-mobile

@@ -6,6 +6,7 @@
         "url": "https://github.com/jsonwebtoken/jsonwebtoken.github.io"
     },
     "dependencies": {
+        "@formatjs/intl-localematcher": "^0.5.10",
         "@octokit/rest": "^18.0.12",
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
@@ -13,6 +14,7 @@
         "jstransformer-markdown": "^1.2.1",
         "jstransformer-markdown-it": "^2.1.0",
         "lodash.debounce": "^4.0.8",
+        "negotiator": "^1.0.0",
         "pug": "^2.0.4",
         "querystring": "^0.2.0"
     },

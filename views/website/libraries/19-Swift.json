@@ -47,6 +47,7 @@
         "nbf": true,
         "iat": true,
         "jti": true,
+        "typ": true,
         "hs256": true,
         "hs384": true,
         "hs512": true,
@@ -56,16 +57,16 @@
         "es256": true,
         "es384": true,
         "es512": true,
-        "ps256": false,
-        "ps384": false,
-        "ps512": false
+        "ps256": true,
+        "ps384": true,
+        "ps512": true,
+        "eddsa": true
       },
       "authorUrl": "https://github.com/vapor",
       "authorName": "Vapor",
       "gitHubRepoPath": "vapor/jwt-kit",
       "repoUrl": "https://github.com/vapor/jwt-kit",
-      "installCommandHtml":
-        ".package(url: \"https://github.com/vapor/jwt-kit.git\", from: \"4.0.0\")"
+      "installCommandHtml": ".package(url: \"https://github.com/vapor/jwt-kit.git\", from: \"5.0.0\")"
     },
     {
       "minimumVersion": null,
@@ -127,8 +128,7 @@
       "authorName": "IBM Swift",
       "gitHubRepoPath": "IBM-Swift/Swift-JWT",
       "repoUrl": "https://github.com/IBM-Swift/Swift-JWT",
-      "installCommandHtml":
-        ".package(url:\"https://github.com/IBM-Swift/Swift-JWT\", from: \"3.5.0\")"
+      "installCommandHtml": ".package(url:\"https://github.com/IBM-Swift/Swift-JWT\", from: \"3.5.0\")"
     },
     {
       "minimumVersion": null,
@@ -160,6 +160,41 @@
       "gitHubRepoPath": "airsidemobile/JOSESwift",
       "repoUrl": "https://github.com/airsidemobile/JOSESwift",
       "installCommandHtml": "pod 'JOSESwift'"
+    },
+    {
+      "minimumVersion": null,
+      "support": {
+        "sign": true,
+        "verify": true,
+        "iss": true,
+        "sub": true,
+        "aud": true,
+        "exp": true,
+        "nbf": true,
+        "iat": true,
+        "jti": true,
+        "typ": true,
+        "hs256": true,
+        "hs384": true,
+        "hs512": true,
+        "rs256": true,
+        "rs384": true,
+        "rs512": true,
+        "es256": true,
+        "es384": true,
+        "es512": true,
+        "es256k": true,
+        "ps256": true,
+        "ps384": true,
+        "ps512": true,
+        "eddsa": true
+      },
+      "authorUrl": "https://github.com/beatt83",
+      "authorName": "Gonçalo Frade",
+      "gitHubRepoPath": "beatt83/jose-swift",
+      "repoUrl": "https://github.com/beatt83/jose-swift",
+      "installCommandHtml":
+        ".package(url: \"https://github.com/beatt83/jose-swift.git\", .upToNextMinor(from: \"4.0.0\"))"
     }
   ]
 }
