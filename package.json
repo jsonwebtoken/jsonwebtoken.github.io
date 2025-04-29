@@ -15,7 +15,7 @@
         "jstransformer-markdown-it": "^2.1.0",
         "lodash.debounce": "^4.0.8",
         "negotiator": "^1.0.0",
-        "pug": "^2.0.4",
+        "pug": "^3.0.3",
         "querystring": "^0.2.0"
     },
     "devDependencies": {
@@ -41,7 +41,7 @@
         "grunt-contrib-clean": "^1.1.0",
         "grunt-contrib-connect": "^1.0.2",
         "grunt-contrib-copy": "^1.0.0",
-        "grunt-contrib-pug": "^1.0.0",
+        "grunt-contrib-pug": "^3.0.0",
         "grunt-contrib-stylus": "^1.2.0",
         "grunt-contrib-watch": "^1.1.0",
         "grunt-crx": "^1.0.5",
