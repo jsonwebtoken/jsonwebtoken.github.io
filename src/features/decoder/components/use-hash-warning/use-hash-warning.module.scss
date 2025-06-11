@@ -1,0 +1,60 @@
+@use "@/libs/theme/styles/variables" as *;
+@use "@/libs/theme/styles/mixins" as *;
+
+.backdrop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+
+  z-index: 9999;
+
+  backdrop-filter: blur(0.5rem);
+
+  cursor: pointer;
+
+  &[aria-hidden="false"] {
+    visibility: visible;
+    animation: fadeIn 0.2s linear;
+  }
+
+  &[aria-hidden="true"] {
+    visibility: hidden;
+  }
+
+  @media #{$breakpoint-dimension-xs} {
+    min-width: auto;
+  }
+}
+
+.container {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  left: 2rem;
+  padding: 1.5rem 2rem;
+  background-color: var(--color_bg_state_danger_subtle);
+  color: var(--color_fg_on_state_danger_subtle);
+  border: 1px solid var(--color_border_state_danger);
+  z-index: 999;
+  font-size: 0.865rem;
+  border-radius: 0.5rem;
+}
+
+.button {
+  background-color: transparent;
+  color: var(--color_fg_on_state_danger_subtle);
+  border: none;
+  position: absolute;
+  top: 0.25rem;
+  right: 0.75rem;
+  font-size: 1.5rem;
+  transform: rotate(45deg);
+  cursor: pointer;
+}

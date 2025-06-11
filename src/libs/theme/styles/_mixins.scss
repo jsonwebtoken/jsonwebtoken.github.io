@@ -1,0 +1,56 @@
+@use "@/libs/theme/styles/variables" as *;
+
+@mixin Container {
+  width: 100%;
+}
+
+@mixin ExtendedGrid {
+  width: 100%;
+  max-width: $extended-grid-max-width;
+  margin: 0 auto;
+}
+
+@mixin InnerContentGrid {
+  display: grid;
+  grid-template-columns: repeat($breakpoint-columns-xxs, minmax(0, 1fr));
+  column-gap: $breakpoint-gutter-xxs;
+  width: calc(100% - ($breakpoint-outer-margin-xxs * 2));
+  max-width: $inner-content-grid-max-width;
+  margin: 0 auto;
+
+  @media #{$breakpoint-dimension-sm} {
+    width: calc(100% - ($breakpoint-outer-margin-sm * 2));
+    grid-template-columns: repeat($breakpoint-columns-sm, minmax(0, 1fr));
+  }
+
+  @media #{$breakpoint-dimension-lg} {
+    width: calc(100% - ($breakpoint-outer-margin-lg * 2));
+  }
+
+  @media #{$breakpoint-dimension-xl} {
+    column-gap: $breakpoint-gutter-xl;
+  }
+}
+
+@mixin InnerContentFlex {
+  display: flex;
+  width: calc(100% - ($breakpoint-outer-margin-xxs * 2));
+  max-width: $inner-content-grid-max-width;
+  margin: 0 auto;
+
+  @media #{$breakpoint-dimension-sm} {
+    width: calc(100% - ($breakpoint-outer-margin-sm * 2));
+  }
+
+  @media #{$breakpoint-dimension-lg} {
+    width: calc(100% - ($breakpoint-outer-margin-lg * 2));
+  }
+}
+
+@mixin LocaleLineHeight($locale, $font-size) {
+  @if $locale == "ja" {
+    line-height: #{$font-size + 0.875rem};
+  } @else {
+    line-height: #{$font-size + 0.5rem};
+  }
+}

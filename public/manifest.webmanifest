@@ -1,0 +1,21 @@
+{
+  "name": "JSON Web Tokens",
+  "short_name": "JWT.io",
+  "description": "JSON Web Tokens are an open, industry standard RFC 7519 method for representing claims securely between two parties.",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#111111",
+  "background_color": "#111111",
+  "icons": [
+    {
+      "src": "/icon/192?79b95971ac6100cf",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon/512?79b95971ac6100cf",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

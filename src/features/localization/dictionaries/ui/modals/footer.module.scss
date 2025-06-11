@@ -1,0 +1,24 @@
+.modalButton {
+  background: transparent;
+  column-gap: inherit;
+  border: none;
+  padding: 0;
+  margin: 0;
+  text-decoration: underline;
+  color: var(--color_fg_link_primary);
+  font-size: 0.875rem;
+  line-height: 1.375rem;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.modalLink {
+  background: transparent;
+  column-gap: inherit;
+  border: none;
+  padding: 0;
+  margin: 0;
+  text-decoration: underline;
+  color: var(--color_fg_link_primary);
+  cursor: pointer;
+}

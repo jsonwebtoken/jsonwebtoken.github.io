@@ -1,4 +1,0 @@
-User-agent: *
-Disallow: /beta/
-Allow: /
-Sitemap: https://jwt.io/sitemap.xml

@@ -1,0 +1,69 @@
+@use "@/libs/theme/styles/variables" as *;
+@use "@/libs/theme/styles/mixins" as *;
+
+.content {
+  @include InnerContentGrid;
+
+  grid-row-gap: 0.5rem;
+}
+
+.content__input {
+  grid-column: span 6;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.content__output {
+  grid-column: span 6;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.grid__title {
+  grid-column: 1 / -1;
+  width: 100%;
+  color: var(--color_fg_bold);
+  font-size: 1.5rem;
+  line-height: 2.25rem;
+  letter-spacing: -0.8px;
+  display: flex;
+  justify-content: space-between;
+
+  :global(html[lang="ja"]) & {
+    font-size: 1.125rem;
+    line-height: 1.625rem;
+  }
+
+  @media #{$breakpoint-dimension-sm} {
+    scroll-margin-top: calc($navbar-height + $workflows-navbar-height + 1rem);
+    font-size: 1.75rem;
+    line-height: 2.25rem;
+  }
+}
+
+.input__description {
+  grid-column: span 6;
+  width: 100%;
+  color: var(--color_fg_default);
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.625rem;
+  row-gap: 0.25rem;
+
+  font-size: 0.875rem;
+  line-height: 1.375rem;
+
+  & strong {
+    font-weight: 500;
+  }
+
+  @media #{$breakpoint-dimension-sm} {
+    grid-column: span 12;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}

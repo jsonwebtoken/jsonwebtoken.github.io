@@ -1,0 +1,101 @@
+@use "@/libs/theme/styles/variables" as *;
+@use "@/libs/theme/styles/mixins" as *;
+
+.container {
+  @include Container;
+}
+
+.content {
+  @include InnerContentFlex;
+  flex-direction: column;
+  align-items: center;
+
+  padding-top: 2.5rem;
+  padding-bottom: 3.5rem;
+
+  @media #{$breakpoint-dimension-xs} {
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+  }
+
+  @media #{$breakpoint-dimension-md} {
+    padding-top: 4.5rem;
+    padding-bottom: 4.5rem;
+  }
+}
+
+.hero {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+
+  @media #{$breakpoint-dimension-xs} {
+    gap: 1rem;
+  }
+
+  @media #{$breakpoint-dimension-md} {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.heroTitle {
+  color: var(--color_fg_bold);
+
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 2.5rem;
+  letter-spacing: -0.8px;
+
+  @media #{$breakpoint-dimension-xs} {
+    font-size: 2.5rem;
+    line-height: 3rem;
+  }
+}
+
+.filter {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.label {
+  color: var(--color_fg_bold);
+  font-size: 1rem;
+  line-height: 1.5rem;
+  letter-spacing: 0.1px;
+}
+
+.select__wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+}
+
+.select {
+  display: flex;
+  width: 160px;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  background: transparent;
+  color: var(--color_fg_bold);
+  font-variant-numeric: slashed-zero;
+  font-feature-settings:
+    "clig" off,
+    "liga" off;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  letter-spacing: 0.2px;
+
+  padding: 0.75rem 1rem;
+  align-items: center;
+  align-self: stretch;
+  border-radius: 0.25rem;
+
+  appearance: none;
+}

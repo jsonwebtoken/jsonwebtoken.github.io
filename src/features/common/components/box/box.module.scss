@@ -1,0 +1,14 @@
+@use "@/libs/theme/styles/variables" as *;
+@use "@/libs/theme/styles/mixins" as *;
+
+.container {
+  @include Container;
+}
+
+.wrapper {
+  @include ExtendedGrid;
+}
+
+.content {
+  @include InnerContentGrid;
+}

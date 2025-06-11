@@ -1,0 +1,6 @@
+export const COOKIE_LEVELS = {
+  NECESSARY: 1,
+  PERFORMANCE: 2,
+  FUNCTIONAL: 3,
+  ADVERTISING: 4,
+};

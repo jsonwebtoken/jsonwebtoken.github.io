@@ -1,0 +1,17 @@
+.brand {
+  display: flex;
+  align-items: center;
+  height: 2rem;
+  position: relative;
+
+  svg {
+    height: inherit;
+    width: auto;
+  }
+
+  &:focus-visible {
+    outline: solid 1px var(--color_border_focus);
+    outline-offset: 0.125rem;
+    border-radius: 0.125rem;
+  }
+}

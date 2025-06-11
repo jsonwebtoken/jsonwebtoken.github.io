@@ -1,0 +1,34 @@
+@use "@/libs/theme/styles/variables" as *;
+@use "@/libs/theme/styles/mixins" as *;
+
+.table {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  overflow-y: auto;
+  overflow-x: auto;
+
+  &::-webkit-scrollbar {
+    width: 0.75rem;
+    height: 0.75rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 2rem transparent;
+    cursor: pointer !important;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border: 0.25rem solid transparent;
+    background-clip: padding-box;
+    border-radius: 9999px;
+    background-color: var(--color_bg_scrollbar);
+  }
+
+  &::-webkit-scrollbar-corner {
+    background-color: transparent;
+  }
+
+  @media #{$breakpoint-dimension-sm} {
+    grid-template-columns: repeat(12, 1fr);
+  }
+}

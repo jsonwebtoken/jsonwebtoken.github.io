@@ -1,0 +1,94 @@
+@use "@/libs/theme/styles/variables" as *;
+@use "@/libs/theme/styles/mixins" as *;
+
+.container {
+  @include Container;
+  position: relative;
+  overflow: hidden;
+
+  @media #{$breakpoint-dimension-xxs} {
+    &:before {
+      background-size: cover;
+    }
+  }
+
+  @media #{$breakpoint-dimension-md} {
+    background-color: unset;
+
+    :global(body[data-theme="light"]) & {
+      background-color: unset;
+    }
+    :global(body[data-theme="system-light"]) & {
+      background-color: unset;
+    }
+
+    &:before {
+      background: unset;
+    }
+
+    :global(body[data-theme="light"]) &:before {
+      background: unset;
+    }
+    :global(body[data-theme="system-light"]) &:before {
+      background: unset;
+    }
+
+    &:after {
+      display: none;
+      background: none;
+    }
+  }
+}
+
+.wrapper {
+  @include ExtendedGrid;
+  justify-content: center;
+
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.content {
+  @include InnerContentFlex;
+  justify-content: center;
+  overflow: hidden;
+  flex-direction: column;
+
+  @media #{$breakpoint-dimension-sm} {
+    @include InnerContentGrid;
+  }
+}
+
+.hero {
+  z-index: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem 0;
+  gap: 1rem;
+
+  @media #{$breakpoint-dimension-sm} {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: subgrid;
+    gap: 1rem;
+  }
+}
+
+.hero__title {
+  grid-column: 1 / -1;
+  width: 100%;
+  margin: 0;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  color: var(--color_fg_bold);
+  font-variant-numeric: lining-nums proportional-nums;
+  padding: 0.5rem 0;
+  text-align: center;
+
+  :global(html[lang="ja"]) & {
+    @include LocaleLineHeight("ja", 1.5rem);
+  }
+}
