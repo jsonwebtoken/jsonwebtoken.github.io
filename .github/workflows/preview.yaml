@@ -10,7 +10,7 @@ on:
 jobs:
   Deploy-Preview:
     runs-on:
-      labels: ubuntu-22.04-2cpu-8ram-75ssd
+      labels: ubuntu-latest
     environment: preview
     outputs:
       deploymentUrl: ${{ steps.deploy.outputs.deploymentUrl }}
@@ -36,7 +36,7 @@ jobs:
 
   Add-Comment:
     runs-on:
-      labels: ubuntu-22.04-2cpu-8ram-75ssd
+      labels: ubuntu-latest
     needs: Deploy-Preview
     permissions:
       issues: write

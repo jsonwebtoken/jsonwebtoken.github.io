@@ -1,11 +1,10 @@
-name: Vercel Production Deployment
+name: Vercel Preview Community Deployment
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.PREVIEW_VERCEL_PROJECT_ID }}
 on:
   push:
     branches:
-      - main
       - production
 jobs:
   Deploy-Production:
