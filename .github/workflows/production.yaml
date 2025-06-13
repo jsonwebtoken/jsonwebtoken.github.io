@@ -5,7 +5,7 @@ env:
 on:
   push:
     branches:
-      - master
+      - main
       - production
 jobs:
   Deploy-Production:

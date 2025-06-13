@@ -5,7 +5,7 @@ env:
 on:
   push:
     branches-ignore:
-      - master
+      - main
       - production
 jobs:
   Deploy-Preview:
@@ -36,7 +36,7 @@ jobs:
 
   Add-Comment:
     runs-on:
-      labels: ubuntu-latest
+      labels: ubuntu-22.04-2cpu-8ram-75ssd
     needs: Deploy-Preview
     permissions:
       issues: write
