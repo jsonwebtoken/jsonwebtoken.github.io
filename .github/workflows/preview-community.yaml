@@ -18,4 +18,4 @@ jobs:
       - name: Deploy on Vercel
         id: deploy
         run: |
-          vercel deploy --prod --yes --token=${{ secrets.VERCEL_ACCESS_TOKEN }}
+          vercel deploy --prod --token=${{ secrets.VERCEL_ACCESS_TOKEN }}
