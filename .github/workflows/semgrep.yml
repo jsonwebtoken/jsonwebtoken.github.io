@@ -8,7 +8,7 @@ jobs:
   semgrep:
     name: Scan
     runs-on:
-      labels: ubuntu-22.04-2cpu-8ram-75ssd
+      labels: ubuntu-latest
     container:
       image: returntocorp/semgrep
     if: (github.actor != 'dependabot[bot]' && github.actor != 'snyk-bot')
