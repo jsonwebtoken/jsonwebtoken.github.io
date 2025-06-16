@@ -1,0 +1,128 @@
+.container {
+  flex: 1;
+  position: relative;
+  font-size: 0.875rem;
+  overflow-y: scroll;
+  overflow-x: auto;
+  padding: 1rem;
+
+  & pre {
+    line-height: 1.375rem;
+
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-all;
+  }
+
+  &::-webkit-scrollbar {
+    width: 0.75rem;
+    height: 0.75rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 2rem transparent;
+    cursor: pointer !important;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border: 0.25rem solid transparent;
+    background-clip: padding-box;
+    border-radius: 9999px;
+    background-color: var(--color_bg_scrollbar);
+  }
+
+  &::-webkit-scrollbar-corner {
+    background-color: transparent;
+  }
+}
+
+.snippet {
+  &::-webkit-scrollbar {
+    width: 0.75rem;
+    height: 0.75rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 2rem transparent;
+    cursor: pointer !important;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border: 0.25rem solid transparent;
+    background-clip: padding-box;
+    border-radius: 9999px;
+    background-color: var(--color_bg_scrollbar);
+  }
+
+  &::-webkit-scrollbar-corner {
+    background-color: transparent;
+  }
+}
+
+.line {
+  position: relative;
+}
+
+.button {
+  cursor: help;
+  width: fit-content;
+  padding: 0;
+  background: none;
+  outline: none;
+  border: none;
+  border-bottom: 1px dotted var(--color_border_state_info);
+  font-size: 0.875rem;
+}
+
+.propertyTooltip {
+  border-radius: 4px;
+  background: var(--color_bg_state_info_subtle);
+  color: var(--color_fg_on_state_info_subtle);
+  border: 1px solid var(--color_border_state_info);
+  font-size: 0.75rem;
+  line-height: 1.25rem;
+  forced-color-adjust: none;
+  outline: none;
+  padding: 2px 8px;
+  max-width: 150px;
+  /* fixes FF gap */
+  transform: translate3d(0, 0, 0);
+  transition:
+    transform 200ms,
+    opacity 200ms;
+
+  &[data-entering],
+  &[data-exiting] {
+    transform: var(--origin);
+    opacity: 0;
+  }
+
+  &[data-placement="top"] {
+    margin-bottom: 8px;
+    --origin: translateY(4px);
+  }
+
+  &[data-placement="bottom"] {
+    margin-top: 8px;
+    --origin: translateY(-4px);
+    & .react-aria-OverlayArrow svg {
+      transform: rotate(180deg);
+    }
+  }
+
+  &[data-placement="right"] {
+    margin-left: 8px;
+    --origin: translateX(-4px);
+    & .react-aria-OverlayArrow svg {
+      transform: rotate(90deg);
+    }
+  }
+
+  &[data-placement="left"] {
+    margin-right: 8px;
+    --origin: translateX(4px);
+    & .react-aria-OverlayArrow svg {
+      transform: rotate(-90deg);
+    }
+  }
+}

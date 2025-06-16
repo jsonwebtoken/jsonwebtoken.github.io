@@ -1,150 +1,64 @@
-## JWT.io
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-<img src="https://cdn.auth0.com/blog/jwtio/jwtio.png"/>
+## Getting Started
 
-### Sponsor
-
-|||
-|-|-|
-|![auth0 logo](https://user-images.githubusercontent.com/83319/31722733-de95bbde-b3ea-11e7-96bf-4f4e8f915588.png)|If you want to quickly add secure (JSON Web) token-based authentication to your projects, feel free to check Auth0's documentation and free plan at [developer.auth0.com](https://developer.auth0.com)|
-
-### How to add a library
-
-To add a library, simply edit the right JSON file located at `views/website/libraries`. Each language gets its own file. Multiple libraries share the same language file.
-
-To add a new language, simply add a JSON file in the same folder as the others. It will get automatically recognized. If you add a new language, you will need to provide a proper icon for it and place it in the `img` folder.
-
-Here's a commented example of the .NET language file (`0-.NET.json`). All fields must have valid values unless noted:
-
-```javascript
-{
-  // Language name (unique)
-  "name": ".NET",
-
-  // Unique identifier that will be used as a CSS class
-  // for this language (only valid CSS class names).
-  "uniqueClass": "net",
-
-  // The language icon, SVG format preferred, should be placed
-  // in /img directory.
-  "image": "/img/1.svg",
-
-  // The color of header that displays the name of the language
-  // and the icon. This is a valid CSS color definition.
-  "bgColor": "rgb(42, 168, 229)",
-
-  // An array of libraries for this language.
-  "libs": [
-    {
-      // In case the library suffered from a vulnerability, the
-      // minimum version in which the vuln was fixed must be
-      // listed here. Optional (can be null).
-      "minimumVersion": "1.0.1", // or null
-
-      // Supported features, true for supported,
-      // false for not supported.
-      "support": {
-        "sign": true,
-        "verify": true,
-        "iss": true,
-        "sub": true,
-        "aud": true,
-        "exp": true,
-        "nbf": true,
-        "iat": true,
-        "jti": true,
-        "hs256": true,
-        "hs384": true,
-        "hs512": true,
-        "rs256": true,
-        "rs384": true,
-        "rs512": true,
-        "es256": true,
-        "es384": true,
-        "es512": true,
-        "ps256": true,
-        "ps384": true,
-        "ps512": true,
-        "eddsa": true
-      },
-
-      // Author URL, can be GitHub profile, personal page
-      // company page, etc. Can be null.
-      "authorUrl": "https://www.microsoft.com", // or null
-
-      // Author name.
-      "authorName": "Microsoft",
-
-      // For the star count, this is the GitHub repository path,
-      // (usually user/repo). Can be null (no star count shown).
-      "gitHubRepoPath": "AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet", // or null
-
-      // URL for source code.
-      "repoUrl": "https://github.com/MSOpenTech/azure-activedirectory-identitymodel-extensions-for-dotnet",
-
-      // Install command, can be HTML or plain text.
-      "installCommandHtml": "Install-Package<br><a href=\"https://www.nuget.org/packages/System.IdentityModel.Tokens.Jwt/\">System.IdentityModel.Tokens.Jwt</a>"
-    }
-  ]
-}
-```
-
-### How to build
-
-First, install the required dependencies:
-
-```sh
-npm install
-```
-
-In order to build (and run) the project execute:
-
-```sh
-./node_modules/.bin/grunt
-```
-
-You will find the generated files in the `dist` directory. For the website, you can run a server at its root. For example: `http-server dist/website`. The default `grunt` task runs a server
-at [https://127.0.0.1:8000](https://127.0.0.1:8000) and watches
-for changes.
-
-To run tests, execute:
-
-```
-./node_modules/.bin/grunt test
-```
-
-Look at the end of the [Gruntfile](/Gruntfile.js) for other common tasks.
-
-### How to run project locally
-
-- Make sure that you run these commands using Node `v16.x.x`.
-  
-- Clone the project: 
+First, run the development server:
 
 ```bash
-git clone org-6887375@github.com:jsonwebtoken/jsonwebtoken.github.io.git
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
-- Make the project directory your current directory:
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+
+This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+
+## Generate Data for Libraries page
+
+First, create a GitHub Application.
+
+Generate a private key for the GitHub application.
+
+Install the application.
+
+Generate a `.env` file based on the `.env.example` file:
 
 ```bash
-cd jsonwebtoken.github.io
+cp .env.example .env
 ```
 
-- Install required dependencies:
+Then, you'll need to add the values with your private key, app id and installation id into the `.env`file:
 
 ```bash
-npm install
+GITHUB_APP_ID=
+GITHUB_APP_PRIVATE_KEY=
+GITHUB_INSTALLATION_ID=
 ```
-- Build the project:
+
+Run the `libraries.js` script to generate the `libraries.json` file:
 
 ```bash
-npm run build
+node libraries.js
 ```
-- Run the development server: 
 
-```bash
-npm run start
-```
-- Visit: [http://localhost:3000](http://localhost:3000)
+## Learn More
 
-### Happy hacking!
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

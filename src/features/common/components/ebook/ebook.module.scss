@@ -1,0 +1,208 @@
+@use "@/libs/theme/styles/variables" as *;
+@use "@/libs/theme/styles/mixins" as *;
+
+.container {
+  @include Container;
+  position: relative;
+  overflow: hidden;
+  background: var(--color_bg_auth0-cta);
+
+  &:before {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    content: "";
+    width: 100%;
+    height: 100%;
+
+    background: url("https://cdn.auth0.com/website/passkeys-playground/assets/cta-mobile.png")
+      no-repeat;
+    background-size: cover;
+  }
+
+  @media only screen and (min-width: 480px) {
+    &:before {
+      background: url("https://cdn.auth0.com/website/passkeys-playground/assets/cta-mobile.png")
+        no-repeat;
+      background-size: cover;
+    }
+  }
+
+  @media #{$breakpoint-dimension-sm} {
+    &:before {
+      background: url("/images/auth0-background.svg") no-repeat right
+        center;
+      background-size: cover;
+    }
+  }
+
+  @media #{$breakpoint-dimension-md} {
+    background: unset;
+
+    &:before {
+      background: none;
+    }
+
+    &:after {
+      display: none;
+      background: none;
+    }
+  }
+}
+
+.wrapper {
+  @include ExtendedGrid;
+  position: relative;
+  justify-content: center;
+
+  border-radius: 0;
+  overflow: hidden;
+
+  @media #{$breakpoint-dimension-xl} {
+    border-radius: 1.5rem;
+  }
+}
+
+.content {
+  @include InnerContentGrid;
+  position: relative;
+  padding: 1.5rem 0 14rem;
+  isolation: isolate;
+
+  &:after {
+    position: absolute;
+    content: "";
+    bottom: -1.5rem;
+    right: 0;
+    background: url("/images/ebook-image.png") center no-repeat;
+    background-size: contain;
+    width: 100%;
+    height: 75%;
+  }
+
+  @media #{$breakpoint-dimension-xs} {
+    padding-bottom: 1.5rem;
+    column-gap: 6rem;
+
+    &:after {
+      position: absolute;
+      content: "";
+      top: 0;
+      right: 0;
+      background: url("/images/ebook-image.png") center no-repeat;
+      background-size: cover;
+      height: 100%;
+      width: 32%;
+      z-index: 10;
+    }
+  }
+
+  @media #{$breakpoint-dimension-xs} {
+    column-gap: 0;
+  }
+
+  @media #{$breakpoint-dimension-md} {
+    background: var(--color_bg_auth0-cta);
+    padding: 2rem 2.5rem;
+    border-radius: 1rem;
+    overflow: hidden;
+
+    &:before {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      content: "";
+      width: 100%;
+      height: 100%;
+      background-size: contain;
+
+      background: url("/images/auth0-background.svg") no-repeat right
+        bottom;
+      background-size: cover;
+    }
+  }
+}
+
+.ebookBanner__copy {
+  grid-column: 1 / span 6;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+
+  @media #{$breakpoint-dimension-xs} {
+    grid-column: 1 / span 4;
+  }
+
+  @media #{$breakpoint-dimension-sm} {
+    grid-column: 1 / span 8;
+  }
+}
+
+.ebookBanner__title {
+  color: var(--color_fg_bold);
+
+  font-size: 1.5rem;
+  line-height: 2rem;
+  letter-spacing: 0.05px;
+  font-weight: 500;
+}
+
+.ebookBanner__description {
+  color: var(--color_fg_default);
+  font-size: 1rem;
+  line-height: 1.25rem;
+  margin-top: 0.5rem;
+}
+
+.ebookBanner__link {
+  margin-top: 1.5rem;
+  display: flex;
+  padding: 0.5rem 1rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  align-self: stretch;
+
+  border-radius: 0.375rem;
+  background: linear-gradient(
+    120deg,
+    #191919 -29.78%,
+    #4016a0 11.61%,
+    #3f59e4 100.07%
+  );
+
+  color: $neutrals-light-100-snow;
+  font-size: 0.875rem;
+  line-height: 1.375rem;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+
+  :global(html[lang="ja"]) & {
+    @include LocaleLineHeight("ja", 1rem);
+  }
+
+  &:focus-visible {
+    outline: solid 1px var(--color_border_focus);
+    outline-offset: 0.125rem;
+    border-radius: 0.125rem;
+  }
+
+  @media #{$breakpoint-dimension-sm} {
+    width: fit-content;
+  }
+}
+
+.ebookBanner__linkIcon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 0.75rem;
+  width: 0.75rem;
+
+  svg {
+    height: 0.75rem;
+    width: 0.75rem;
+    fill: $neutrals-light-100-snow;
+  }
+}

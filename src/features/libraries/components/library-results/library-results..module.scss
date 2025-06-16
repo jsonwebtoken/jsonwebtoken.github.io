@@ -1,0 +1,26 @@
+@use "@/libs/theme/styles/variables" as *;
+@use "@/libs/theme/styles/mixins" as *;
+
+.content {
+  @include InnerContentGrid;
+
+  grid-row-gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.grid {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 2rem;
+
+  @media #{$breakpoint-dimension-sm} {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  @media #{$breakpoint-dimension-lg} {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+}

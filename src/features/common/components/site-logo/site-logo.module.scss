@@ -1,0 +1,35 @@
+.container {
+  position: relative;
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
+
+.brand__logo {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.brand__headline {
+  display: flex;
+  flex-direction: column;
+  margin-left: 0.625rem;
+  color: var(--color_fg_bold);
+}
+
+.brand__title {
+  display: flex;
+  font-size: 1.25rem;
+  line-height: 1.25rem;
+  margin-top: 0;
+  letter-spacing: 0.02rem;
+}
+
+.brand__subtitle {
+  display: flex;
+  font-size: 0.75rem;
+  line-height: 0.75rem;
+  margin-top: 1px;
+  letter-spacing: 0.02rem;
+}

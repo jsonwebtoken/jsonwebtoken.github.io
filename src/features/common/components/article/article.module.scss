@@ -1,0 +1,192 @@
+@use "@/libs/theme/styles/variables" as *;
+@use "@/libs/theme/styles/mixins" as *;
+
+.container {
+  @include Container;
+}
+
+.content {
+  @include InnerContentGrid;
+
+  padding: 3rem 0 3rem 0;
+  gap: 2rem;
+
+  @media #{$breakpoint-dimension-sm} {
+    padding: 3rem 0 4rem 0;
+  }
+
+  @media #{$breakpoint-dimension-md} {
+    gap: 3rem;
+    padding: 4rem 0 4rem 0;
+  }
+}
+
+.article {
+  display: flex;
+  flex-direction: column;
+
+  grid-column: span 6;
+  max-width: 48.5rem;
+  justify-self: center;
+
+  @media #{$breakpoint-dimension-sm} {
+    grid-column: span 12;
+    grid-template-columns: repeat(8, 1fr);
+  }
+
+  @media #{$breakpoint-dimension-md} {
+    grid-column: span 12;
+    grid-template-columns: repeat(12, 1fr);
+  }
+
+  h2 {
+    color: var(--color_fg_bold);
+    font-feature-settings:
+      "clig" off,
+      "liga" off;
+    font-size: 2rem;
+    line-height: 2.5rem;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: -0.05rem;
+    margin-bottom: 1.5rem;
+    font-family: var(--font-secondary), sans-serif;
+
+    :global(html[lang="ja"]) & {
+      @include LocaleLineHeight("ja", 2rem);
+      font-family: var(--font-japanese), sans-serif;
+    }
+
+    @media #{$breakpoint-dimension-md} {
+      margin-top: 2.5rem;
+    }
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  h3 {
+    color: var(--color_fg_bold);
+
+    font-size: 1.5rem;
+    line-height: 2rem;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: -0.05rem;
+    margin-bottom: 2rem;
+    font-family: var(--font-secondary), sans-serif;
+
+    :global(html[lang="ja"]) & {
+      @include LocaleLineHeight("ja", 2rem);
+      font-family: var(--font-japanese), sans-serif;
+    }
+  }
+
+  p {
+    color: var(--color_fg_default);
+    font-feature-settings:
+      "clig" off,
+      "liga" off;
+    font-size: 1rem;
+    line-height: 1.5em;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: -0.005rem;
+    margin-bottom: 2rem;
+
+    :global(html[lang="ja"]) & {
+      @include LocaleLineHeight("ja", 1.5rem);
+    }
+
+    strong {
+      color: var(--color_fg_bold);
+      font-weight: 500;
+    }
+  }
+
+  ul,
+  ol {
+    list-style-position: inside;
+    margin-top: 0;
+
+    ul,
+    ol {
+      list-style-position: inside;
+      margin-left: 1.5rem;
+      padding-left: 0;
+    }
+  }
+
+  li {
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+    line-height: 2rem;
+    color: var(--color_fg_default);
+    letter-spacing: -0.01px;
+    text-indent: -1.5rem;
+    padding-left: 1.5rem;
+
+    :global(html[lang="ja"]) & {
+      @include LocaleLineHeight("ja", 2rem);
+    }
+  }
+
+  a {
+    &,
+    &:hover,
+    &:active {
+      color: var(--color_fg_link_primary);
+      text-decoration: underline;
+      font-weight: 400;
+    }
+  }
+
+  strong {
+    color: var(--color_fg_default);
+    font-weight: 500;
+  }
+
+  pre {
+    margin-bottom: 2rem;
+    background-color: var(--color_bg_code-editor);
+    color: var(--color_fg_default);
+    font-size: 0.875rem;
+    line-height: 1.375rem;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 0.15px;
+    padding: 0.75rem;
+    border: 1px solid var(--color_border_bold);
+    border-radius: 0.25rem;
+
+    code {
+      color: var(--color_code_dark_blue2);
+      background-color: var(--color_bg_code-editor);
+      font-weight: 500;
+    }
+
+    @media #{$breakpoint-dimension-sm} {
+      border-radius: 0.5rem;
+      padding: 1rem;
+    }
+  }
+
+  blockquote {
+    background-color: var(--color_bg_state_info_subtle);
+    padding: 1rem 1.5rem;
+    margin: 2rem 0 2rem 0;
+    border-radius: 0 0.5rem 0.5rem 0;
+    border-left: 4px solid var(--color_border_state_info);
+
+    & * {
+      color: var(--color_fg_on_state_info_subtle);
+      padding: 0;
+      margin: 0;
+    }
+  }
+
+  *:has(+ blockquote) {
+    margin-bottom: 0;
+  }
+}

@@ -1,0 +1,59 @@
+@use "@/libs/theme/styles/variables" as *;
+@use "@/libs/theme/styles/mixins" as *;
+
+$picker-width-sm: 3.25rem;
+$picker-list-width-sm: 4.75rem;
+$picker-list-offset-sm: calc(($picker-list-width-sm - $picker-width-sm) / 2);
+
+$picker-width-md: 3.25rem;
+$picker-list-width-md: 7rem;
+$picker-list-offset-md: calc(($picker-list-width-md - $picker-width-md) / 2);
+
+$picker-width-lg: 5rem;
+$picker-list-width-lg: 7rem;
+$picker-list-offset-lg: calc(($picker-list-width-lg - $picker-width-lg) / 2);
+
+.picker {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: transparent;
+  border: none;
+  color: var(--color_fg_bold);
+  cursor: pointer;
+  gap: 0.75rem;
+
+  //width: $picker-width-sm;
+
+  @media #{$breakpoint-dimension-md} {
+    &[data-has-label="true"] {
+      width: 100%;
+    }
+  }
+}
+
+.picker__label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  list-style-type: none;
+  margin: 0;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  line-height: 1.3125rem;
+  letter-spacing: -0.05px;
+
+  width: 100%;
+
+  height: 100%;
+
+  & svg {
+    stroke: var(--color_fg_bold);
+  }
+}
+
+.picker__fullName {
+  display: flex;
+}

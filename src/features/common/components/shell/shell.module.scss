@@ -1,0 +1,10 @@
+@use "@/libs/theme/styles/variables" as *;
+
+.container {
+  display: grid;
+  grid-template-rows: 1fr;
+  height: 100%;
+  width: 100%;
+  min-width: $page-min-width;
+  margin: 0 auto;
+}

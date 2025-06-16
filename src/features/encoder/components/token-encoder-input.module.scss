@@ -1,0 +1,26 @@
+@use "@/libs/theme/styles/variables" as *;
+@use "@/libs/theme/styles/mixins" as *;
+
+.encoderCards {
+  display: none;
+
+  @media #{$breakpoint-dimension-sm} {
+    display: grid;
+    grid-column: span 6;
+    grid-template-columns: repeat(6, 1fr);
+    width: 100%;
+    gap: 1rem;
+  }
+}
+
+.encoderCardTabs {
+  grid-column: span 6;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  width: 100%;
+  gap: 1rem;
+
+  @media #{$breakpoint-dimension-sm} {
+    display: none;
+  }
+}

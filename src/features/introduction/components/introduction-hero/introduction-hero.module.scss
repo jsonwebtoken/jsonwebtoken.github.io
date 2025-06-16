@@ -1,0 +1,40 @@
+@use "@/libs/theme/styles/variables" as *;
+@use "@/libs/theme/styles/mixins" as *;
+
+.container {
+  @include Container;
+
+  background: var(--color_bg_page);
+  border-bottom: 1px solid var(--color_border_bold);
+}
+
+.content {
+  @include InnerContentFlex;
+  flex-direction: column;
+  align-items: center;
+
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+
+  @media #{$breakpoint-dimension-xs} {
+    padding-top: 4.5rem;
+    padding-bottom: 4.5rem;
+  }
+}
+
+.title {
+  color: var(--color_fg_bold);
+  text-align: center;
+  font-size: 2rem;
+  line-height: 2.5rem;
+  font-weight: 400;
+  letter-spacing: -0.96px;
+
+  @media #{$breakpoint-dimension-xs} {
+    font-size: 2.5rem;
+  }
+
+  @media #{$breakpoint-dimension-sm} {
+    font-size: 3rem;
+  }
+}
