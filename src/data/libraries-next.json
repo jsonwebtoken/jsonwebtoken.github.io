@@ -340,7 +340,7 @@
         "authorName": "Filip Skokan",
         "gitHubRepoPath": "panva/jose",
         "repoUrl": "https://github.com/panva/jose",
-        "installCommandMarkdown": ["bun add jose"],
+        "installCommandMarkdown": ["npm docs jose"],
         "stars": 4980
       }
     ]
@@ -1112,7 +1112,7 @@
         "authorName": "Filip Skokan",
         "gitHubRepoPath": "panva/jose",
         "repoUrl": "https://github.com/panva/jose",
-        "installCommandMarkdown": ["see https://deno.land/x/jose"],
+        "installCommandMarkdown": ["npm docs jose"],
         "stars": 4980
       }
     ]
@@ -2242,7 +2242,7 @@
         "authorName": "Filip Skokan",
         "gitHubRepoPath": "panva/jose",
         "repoUrl": "https://github.com/panva/jose",
-        "installCommandMarkdown": ["npm install jose"],
+        "installCommandMarkdown": ["npm docs jose"],
         "stars": 4980
       },
       {
@@ -2548,7 +2548,7 @@
         "authorName": "Filip Skokan",
         "gitHubRepoPath": "panva/jose",
         "repoUrl": "https://github.com/panva/jose",
-        "installCommandMarkdown": ["npm install jose"],
+        "installCommandMarkdown": ["npm docs jose"],
         "stars": 4980
       },
       {
