@@ -8,10 +8,10 @@ const withJapanese = process.env.NEXT_PUBLIC_WITH_JAPANESE === "enabled";
 export const enLayoutDictionary: LayoutDictionaryModel = {
   ribbon: {
     cta: {
-      title: "Developer Day is coming to your screen",
-      description: "(Join us)",
+      title: "Get up-to-speed with JSON Web Tokens.",
+      description: "Get the JWT Handbook for free",
       link: {
-        url: "https://a0.to/devday25-rsvp",
+        url: "https://auth0.com/resources/ebooks/jwt-handbook?utm_source=jwt&utm_medium=microsites&utm_campaign=jwt",
         icon: {
           label: "Arrow pointing northeast",
         },
