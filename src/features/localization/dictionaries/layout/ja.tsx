@@ -8,10 +8,10 @@ const withJapanese = process.env.NEXT_PUBLIC_WITH_JAPANESE === "enabled";
 export const jaLayoutDictionary: LayoutDictionaryModel = {
   ribbon: {
     cta: {
-      title: "jwt.io v2ベータバージョン:",
-      description: "フィードバックをお寄せください。",
+      title: "より詳しくJSON Web Token (JWT) を知るには？",
+      description: "「JWTハンドブック」をダウンロード",
       link: {
-        url: "https://a0.to/jwt-io-feedback-ja",
+        url: "https://auth0.com/resources/ebooks/jp-jwt-handbook",
         icon: {
           label: "北東を指す矢",
         },
