@@ -84,7 +84,7 @@ export const jaLayoutDictionary: LayoutDictionaryModel = {
       url: BASE_URL,
       label: "JWTデバッガー",
     },
-    copyright: `Copyright © ${new Date().getFullYear()} Okta. 全て rights reserved.`,
+    copyright: `Copyright © ${new Date().getFullYear()} Okta. All rights reserved.`,
     resources: {
       title: "Auth0が運営する姉妹サイト",
       links: [
