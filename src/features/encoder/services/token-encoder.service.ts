@@ -86,12 +86,12 @@ class _TokenEncoderService {
 
     const header = isNoneAlg(algorithm)
       ? {
-          alg: algorithm,
-        }
+        alg: algorithm,
+      }
       : {
-          alg: algorithm,
-          typ: "JWT",
-        };
+        alg: algorithm,
+        typ: "JWT",
+      };
 
     /**
      * We need to update the value of this payload; otherwise, the controlledPayload observable
@@ -605,7 +605,7 @@ class _TokenEncoderService {
         header: decodedHeader,
         headerWarnings:
           getValidatedHeaderResult.value.headerWarnings &&
-          getValidatedHeaderResult.value.headerWarnings.length > 0
+            getValidatedHeaderResult.value.headerWarnings.length > 0
             ? getValidatedHeaderResult.value.headerWarnings
             : null,
       });
@@ -647,7 +647,7 @@ class _TokenEncoderService {
       header: decodedHeader,
       headerWarnings:
         getValidatedHeaderResult.value.headerWarnings &&
-        getValidatedHeaderResult.value.headerWarnings.length > 0
+          getValidatedHeaderResult.value.headerWarnings.length > 0
           ? getValidatedHeaderResult.value.headerWarnings
           : null,
     });
@@ -837,28 +837,28 @@ class _TokenEncoderService {
   async encodeJwt(
     params:
       | {
-          algType: SigningAlgCategoryValues.ANY;
-          header: DecodedJwtHeaderModel;
-          payload: DecodedJwtPayloadModel;
-          symmetricSecretKey: string;
-          symmetricSecretKeyEncoding: EncodingValues;
-          asymmetricPrivateKey: string;
-          asymmetricPrivateKeyFormat: AsymmetricKeyFormatValues;
-        }
+        algType: SigningAlgCategoryValues.ANY;
+        header: DecodedJwtHeaderModel;
+        payload: DecodedJwtPayloadModel;
+        symmetricSecretKey: string;
+        symmetricSecretKeyEncoding: EncodingValues;
+        asymmetricPrivateKey: string;
+        asymmetricPrivateKeyFormat: AsymmetricKeyFormatValues;
+      }
       | {
-          algType: SigningAlgCategoryValues.SYMMETRIC;
-          header: DecodedJwtHeaderModel;
-          payload: DecodedJwtPayloadModel;
-          symmetricSecretKey: string;
-          symmetricSecretKeyEncoding: EncodingValues;
-        }
+        algType: SigningAlgCategoryValues.SYMMETRIC;
+        header: DecodedJwtHeaderModel;
+        payload: DecodedJwtPayloadModel;
+        symmetricSecretKey: string;
+        symmetricSecretKeyEncoding: EncodingValues;
+      }
       | {
-          algType: SigningAlgCategoryValues.ASYMMETRIC;
-          header: DecodedJwtHeaderModel;
-          payload: DecodedJwtPayloadModel;
-          asymmetricPrivateKey: string;
-          asymmetricPrivateKeyFormat: AsymmetricKeyFormatValues;
-        },
+        algType: SigningAlgCategoryValues.ASYMMETRIC;
+        header: DecodedJwtHeaderModel;
+        payload: DecodedJwtPayloadModel;
+        asymmetricPrivateKey: string;
+        asymmetricPrivateKeyFormat: AsymmetricKeyFormatValues;
+      },
   ): Promise<
     Result<
       {
@@ -881,18 +881,18 @@ class _TokenEncoderService {
 
       encodeJWTResult = isHmacAlg(header.alg)
         ? await this.encodeJWTWithHmacAlg(
-            header,
-            payload,
-            symmetricSecretKey,
-            symmetricSecretKeyEncoding,
-          )
+          header,
+          payload,
+          symmetricSecretKey,
+          symmetricSecretKeyEncoding,
+        )
         : isDigitalSignatureAlg(header.alg)
           ? await this.encodeJWTWithDigitalSignatureAlg(
-              header,
-              payload,
-              asymmetricPrivateKey,
-              asymmetricPrivateKeyFormat,
-            )
+            header,
+            payload,
+            asymmetricPrivateKey,
+            asymmetricPrivateKeyFormat,
+          )
           : null;
     }
 
@@ -1063,14 +1063,14 @@ class _TokenEncoderService {
     const encodeJwtResult = isNoneAlg(header.alg)
       ? await this.encodeUnsecuredJWT(header, payload)
       : await this.encodeJwt({
-          algType: SigningAlgCategoryValues.ANY,
-          header,
-          payload,
-          symmetricSecretKey: params.symmetricSecretKey,
-          symmetricSecretKeyEncoding: params.symmetricSecretKeyEncoding,
-          asymmetricPrivateKey: params.asymmetricPrivateKey,
-          asymmetricPrivateKeyFormat: params.asymmetricPrivateKeyFormat,
-        });
+        algType: SigningAlgCategoryValues.ANY,
+        header,
+        payload,
+        symmetricSecretKey: params.symmetricSecretKey,
+        symmetricSecretKeyEncoding: params.symmetricSecretKeyEncoding,
+        asymmetricPrivateKey: params.asymmetricPrivateKey,
+        asymmetricPrivateKeyFormat: params.asymmetricPrivateKeyFormat,
+      });
 
     if (encodeJwtResult.isErr()) {
       return {
@@ -1132,7 +1132,9 @@ class _TokenEncoderService {
       payload: params.payload,
       payloadErrors: null,
       encodingWarnings: null,
-      signingErrors: null,
+      signingErrors: params.header ? null : [
+        "Fix any errors in the JWT header to enable editing this field.",
+      ],
     };
 
     const processPayloadResult = this.processPayload({
@@ -1170,14 +1172,14 @@ class _TokenEncoderService {
     const encodeJwtResult = isNoneAlg(header.alg)
       ? await this.encodeUnsecuredJWT(header, payload)
       : await this.encodeJwt({
-          algType: SigningAlgCategoryValues.ANY,
-          header,
-          payload,
-          symmetricSecretKey: params.symmetricSecretKey,
-          symmetricSecretKeyEncoding: params.symmetricSecretKeyEncoding,
-          asymmetricPrivateKey: params.asymmetricPrivateKey,
-          asymmetricPrivateKeyFormat: params.asymmetricPrivateKeyFormat,
-        });
+        algType: SigningAlgCategoryValues.ANY,
+        header,
+        payload,
+        symmetricSecretKey: params.symmetricSecretKey,
+        symmetricSecretKeyEncoding: params.symmetricSecretKeyEncoding,
+        asymmetricPrivateKey: params.asymmetricPrivateKey,
+        asymmetricPrivateKeyFormat: params.asymmetricPrivateKeyFormat,
+      });
 
     if (encodeJwtResult.isErr()) {
       return {
