@@ -1132,7 +1132,9 @@ class _TokenEncoderService {
       payload: params.payload,
       payloadErrors: null,
       encodingWarnings: null,
-      signingErrors: null,
+      signingErrors: params.header ? null : [
+        "Fix any errors in the JWT header to enable editing this field.",
+      ],
     };
 
     const processPayloadResult = this.processPayload({
