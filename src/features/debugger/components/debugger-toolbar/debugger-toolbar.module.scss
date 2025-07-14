@@ -46,6 +46,10 @@
   }
 }
 
+.titleTab:hover {
+  opacity: 1;
+}
+
 .titleTab__compactLabel {
   @media #{$tablet} {
     display: none;
