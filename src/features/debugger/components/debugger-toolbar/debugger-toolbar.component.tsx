@@ -23,10 +23,6 @@ export const DebuggerToolbarComponent: React.FC<
   const setActiveWidget$ = useDebuggerStore((state) => state.setActiveWidget$);
   const isDecoder = activeWidget$ === DebuggerWidgetValues.DECODER;
   
-  useEffect(() => {
-    tabRefs.current[isDecoder ? 0 : 1]?.focus();
-  }, [isDecoder]);
-
   const handleKeyDown = (e: React.KeyboardEvent<HTMLLIElement>) => {
     const { key } = e;
 

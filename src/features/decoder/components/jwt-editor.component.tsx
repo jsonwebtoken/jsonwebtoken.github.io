@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { EditorComponent } from "@/features/common/components/code-editor/editor.component";
 
 interface JwtEditorComponentProps {
@@ -14,6 +14,8 @@ export const JwtEditorComponent: React.FC<JwtEditorComponentProps> = ({
     <EditorComponent
       aria-label="JWT editor input"
       value={token}
+      autoFocus
+      focusOnWindowFocus
       onValueChange={(code) => handleJwtChange(code)}
       highlight={(code) => {
         if (!code) {
