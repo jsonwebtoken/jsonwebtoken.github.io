@@ -1,0 +1,40 @@
+.circular__spinner {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+}
+
+.spinner__svg {
+    animation: rotate 1s linear infinite;
+    width: 100%;
+    height: 100%;
+}
+
+.spinner__circle {
+    stroke: var(--color_fg_default);
+    stroke-dasharray: 90 150;
+    stroke-dashoffset: 0;
+    stroke-linecap: round;
+    animation: dash 1.5s ease-in-out infinite;
+}
+
+@keyframes rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes dash {
+    0% {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 100, 200;
+        stroke-dashoffset: -15;
+    }
+    100% {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: -126;
+    }
+}
