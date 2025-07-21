@@ -93,10 +93,16 @@ export class EditorComponent extends React.Component<Props, State> {
     }
   }
 
-  componentWillUnmount() {
-    if (this.props.focusOnWindowFocus) {
-      window.removeEventListener("focus", this._focusInput);
+  componentDidUpdate(prevProps: Readonly<Props>): void {
+    if (prevProps.focusOnWindowFocus !== this.props.focusOnWindowFocus) {
+      this.props.focusOnWindowFocus
+        ? window.addEventListener("focus", this._focusInput)
+        : window.removeEventListener("focus", this._focusInput);
     }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("focus", this._focusInput);
   }
 
   private _recordCurrentState = () => {
