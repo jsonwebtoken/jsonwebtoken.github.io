@@ -22,5 +22,8 @@ jobs:
 
             - name: Run Vitest
               run: npx vitest run
+            
+            - name: Install Playwright Browsers
+              run: npx playwright test
 
         
