@@ -18,6 +18,7 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
   textareaId?: string;
   textareaClassName?: string;
   autoFocus?: boolean;
+  focusOnWindowFocus?: boolean;
   disabled?: boolean;
   form?: string;
   maxLength?: number;
@@ -87,6 +88,21 @@ export class EditorComponent extends React.Component<Props, State> {
 
   componentDidMount() {
     this._recordCurrentState();
+    if (this.props.focusOnWindowFocus) {
+      window.addEventListener("focus", this._focusInput);
+    }
+  }
+
+  componentDidUpdate(prevProps: Readonly<Props>): void {
+    if (prevProps.focusOnWindowFocus !== this.props.focusOnWindowFocus) {
+      this.props.focusOnWindowFocus
+        ? window.addEventListener("focus", this._focusInput)
+        : window.removeEventListener("focus", this._focusInput);
+    }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("focus", this._focusInput);
   }
 
   private _recordCurrentState = () => {
@@ -159,6 +175,13 @@ export class EditorComponent extends React.Component<Props, State> {
     // Add the new operation to the stack
     this._history.stack.push({ ...record, timestamp });
     this._history.offset++;
+  };
+
+  private _focusInput = () => {
+    const input = this._input;
+
+    if (!input) return;
+    input.focus();
   };
 
   private _updateInput = (record: Record) => {
@@ -466,7 +489,7 @@ export class EditorComponent extends React.Component<Props, State> {
         selectionStart,
         selectionEnd,
       },
-      true,
+      true
     );
 
     this.props.onValueChange(value);
@@ -516,6 +539,7 @@ export class EditorComponent extends React.Component<Props, State> {
       insertSpaces,
       ignoreTabKey,
       preClassName,
+      focusOnWindowFocus,
       ...rest
     } = this.props;
 
