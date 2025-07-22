@@ -38,6 +38,7 @@ export const DecodedHeaderOutputComponent: React.FC<
   );
 
   const decodedHeader$ = useDecoderStore((state) => state.decodedHeader);
+  const isLoading = useDecoderStore((state) => state.isLoading)
 
   const cards: CardComponentProps[] = [
     {
@@ -105,6 +106,7 @@ export const DecodedHeaderOutputComponent: React.FC<
       initialTabId={decodedHeaderInitialTabId}
       languageCode={languageCode}
       title={dictionary.title}
+      isLoading={isLoading}
       cards={cards}
       handleTabChange={setDecodedHeaderTabValue$}
     />
