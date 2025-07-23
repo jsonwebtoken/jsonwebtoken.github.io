@@ -25,10 +25,9 @@ export const JwtInputComponent: React.FC<JwtInputComponentProps> = ({
   languageCode,
   dictionary,
 }) => {
-  const [autoFocusEnabled, setAutofocusEnabled] = useState(() => {
-    const saved = localStorage.getItem("autofocus-enabled");
-    return saved ? !!JSON.parse(saved) : false
-  });
+  const [autoFocusEnabled, setAutofocusEnabled] = useState<boolean | undefined>(
+    undefined
+  );
   const handleJwtChange$ = useDecoderStore((state) => state.handleJwtChange);
   const jwt$ = useDecoderStore((state) => state.jwt);
   const decodeErrors$ = useDecoderStore((state) => state.decodingErrors);
@@ -52,9 +51,14 @@ export const JwtInputComponent: React.FC<JwtInputComponentProps> = ({
   };
 
   const handleCheckboxChange = (selected: boolean) => {
-    localStorage.setItem("autofocus-enabled", JSON.stringify(selected))
-    setAutofocusEnabled(selected)
-  }
+    localStorage.setItem("autofocus-enabled", JSON.stringify(selected));
+    setAutofocusEnabled(selected);
+  };
+
+  useEffect(() => {
+    const saved = localStorage.getItem("autofocus-enabled");
+    setAutofocusEnabled(saved ? !!JSON.parse(saved) : false);
+  }, []);
 
   useEffect(() => {
     setToken(jwt$);
@@ -64,7 +68,10 @@ export const JwtInputComponent: React.FC<JwtInputComponentProps> = ({
     <>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <span className={styles.headline}>{dictionary.headline}</span>
-        <CheckboxComponent isSelected={autoFocusEnabled} onChange={e => handleCheckboxChange(e)}>
+        <CheckboxComponent
+          isSelected={autoFocusEnabled}
+          onChange={(e) => handleCheckboxChange(e)}
+        >
           <span className={styles.checkbox__label}>Enable auto-focus</span>
         </CheckboxComponent>
       </div>
@@ -99,7 +106,13 @@ export const JwtInputComponent: React.FC<JwtInputComponentProps> = ({
           ),
         }}
       >
-        <JwtEditorComponent token={token} handleJwtChange={handleJwtChange} autoFocus={autoFocusEnabled}/>
+        {autoFocusEnabled !== undefined ? (
+          <JwtEditorComponent
+            token={token}
+            handleJwtChange={handleJwtChange}
+            autoFocus={autoFocusEnabled}
+          />
+        ) : null}
       </CardComponent>
     </>
   );
