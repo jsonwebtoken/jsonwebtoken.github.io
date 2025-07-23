@@ -6,6 +6,7 @@ export default defineConfig({
     coverage: {
       provider: "istanbul",
     },
+    exclude: ['e2e', 'node_modules']
   },
   plugins: [tsconfigPaths()],
 });
