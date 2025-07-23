@@ -53,10 +53,11 @@ test.describe("Can interact with JWT Decoder JWT editor", () => {
     await expect(jwtEditorInput).toHaveValue(inputValue);
   });
 
-  test("can copy value in JWT editor", async ({ page, context }) => {
+  test("can copy value in JWT editor", async ({ page, context, browserName }) => {
+    const permissions = browserName === 'firefox' ? [] : ["clipboard-read", "clipboard-write"]
     const inputValue = (TestJwts.RS512 as JwtSignedWithDigitalModel).withPemKey
       .jwt;
-    await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+    await context.grantPermissions(permissions);
 
     const lang = await getLang(page);
     expectToBeNonNull(lang);
