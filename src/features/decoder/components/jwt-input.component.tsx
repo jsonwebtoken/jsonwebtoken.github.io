@@ -14,6 +14,7 @@ import { CardToolbarComponent } from "@/features/common/components/card-toolbar/
 import { CardToolbarCopyButtonComponent } from "@/features/common/components/card-toolbar-buttons/card-toolbar-copy-button/card-toolbar-copy-button.component";
 import { CardToolbarClearButtonComponent } from "@/features/common/components/card-toolbar-buttons/card-toolbar-clear-button/card-toolbar-clear-button.component";
 import styles from "./jwt-input.module.scss";
+import { CheckboxComponent } from "@/features/common/components/checkbox/checkbox.component";
 
 type JwtInputComponentProps = {
   languageCode: string;
@@ -24,6 +25,9 @@ export const JwtInputComponent: React.FC<JwtInputComponentProps> = ({
   languageCode,
   dictionary,
 }) => {
+  const [autoFocusEnabled, setAutofocusEnabled] = useState<boolean | undefined>(
+    undefined
+  );
   const handleJwtChange$ = useDecoderStore((state) => state.handleJwtChange);
   const jwt$ = useDecoderStore((state) => state.jwt);
   const decodeErrors$ = useDecoderStore((state) => state.decodingErrors);
@@ -31,7 +35,7 @@ export const JwtInputComponent: React.FC<JwtInputComponentProps> = ({
   const decoderInputs$ = useDebuggerStore((state) => state.decoderInputs$);
 
   const [token, setToken] = useState<string>(
-    decoderInputs$.jwt || DEFAULT_JWT.token,
+    decoderInputs$.jwt || DEFAULT_JWT.token
   );
 
   const clearValue = async () => {
@@ -46,13 +50,31 @@ export const JwtInputComponent: React.FC<JwtInputComponentProps> = ({
     handleJwtChange$(cleanValue);
   };
 
+  const handleCheckboxChange = (selected: boolean) => {
+    localStorage.setItem("autofocus-enabled", JSON.stringify(selected));
+    setAutofocusEnabled(selected);
+  };
+
+  useEffect(() => {
+    const saved = localStorage.getItem("autofocus-enabled");
+    setAutofocusEnabled(saved ? !!JSON.parse(saved) : false);
+  }, []);
+
   useEffect(() => {
     setToken(jwt$);
   }, [jwt$]);
 
   return (
     <>
-      <span className={styles.headline}>{dictionary.headline}</span>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <span className={styles.headline}>{dictionary.headline}</span>
+        <CheckboxComponent
+          isSelected={autoFocusEnabled}
+          onChange={(e) => handleCheckboxChange(e)}
+        >
+          <span className={styles.checkbox__label}>Enable auto-focus</span>
+        </CheckboxComponent>
+      </div>
       <CardComponent
         id={dataTestidDictionary.decoder.jwtEditor.id}
         languageCode={languageCode}
@@ -84,7 +106,13 @@ export const JwtInputComponent: React.FC<JwtInputComponentProps> = ({
           ),
         }}
       >
-        <JwtEditorComponent token={token} handleJwtChange={handleJwtChange} />
+        {autoFocusEnabled !== undefined ? (
+          <JwtEditorComponent
+            token={token}
+            handleJwtChange={handleJwtChange}
+            autoFocus={autoFocusEnabled}
+          />
+        ) : null}
       </CardComponent>
     </>
   );

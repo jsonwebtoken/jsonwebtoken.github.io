@@ -21,6 +21,7 @@ import {
   TabPanel,
   Tabs,
 } from "react-aria-components";
+import { Spinner } from "../spinner/spinner.component";
 
 type CardTabsProps = {
   resizeId: string;
@@ -28,6 +29,7 @@ type CardTabsProps = {
   title: string | null;
   cards: CardComponentProps[];
   activeTabId: string;
+  isLoading?: boolean;
   handleActiveCardChange: (tabId: string) => void;
 };
 
@@ -35,17 +37,18 @@ const CardTabs: React.FC<CardTabsProps> = ({
   resizeId,
   title,
   cards,
+  isLoading,
   activeTabId,
   handleActiveCardChange,
 }) => {
   const tabsId = useId();
 
   const outputModalState$ = useDebuggerStore(
-    (state) => state.outputModalState$,
+    (state) => state.outputModalState$
   );
   const outputModalId$ = useDebuggerStore((state) => state.outputModalId$);
   const closeOutputModal$ = useDebuggerStore(
-    (state) => state.closeOutputModal$,
+    (state) => state.closeOutputModal$
   );
 
   const activeCard = cards.filter((card) => card.id === activeTabId)[0];
@@ -166,9 +169,12 @@ const CardTabs: React.FC<CardTabsProps> = ({
         className={styles.cardTabs__container}
       >
         {title && (
-          <h4 id={tabsId} className={styles.cardTabs__title}>
-            {title}
-          </h4>
+          <div className={styles.cardTabs__title__container}>
+            <h4 id={tabsId} className={styles.cardTabs__title}>
+              {title}
+            </h4>
+            {isLoading && <Spinner />}
+          </div>
         )}
         <Tabs
           selectedKey={activeCard.id}
@@ -269,6 +275,7 @@ type CardTabsWithTabPersistenceComponentProps = {
   languageCode: string;
   title: string | null;
   cards: CardComponentProps[];
+  isLoading?: boolean;
   handleTabChange: (key: string) => void;
 };
 
@@ -281,6 +288,7 @@ export const CardTabsWithTabPersistenceComponentProps: React.FC<
   languageCode,
   title,
   cards,
+  isLoading,
   handleTabChange,
 }) => {
   const [activeTabId, setActiveTabId] = useState<string>(initialTabId);
@@ -309,6 +317,7 @@ export const CardTabsWithTabPersistenceComponentProps: React.FC<
       languageCode={languageCode}
       title={title}
       cards={cards}
+      isLoading={isLoading}
       activeTabId={activeTabId}
       handleActiveCardChange={handleActiveCardChange}
     />

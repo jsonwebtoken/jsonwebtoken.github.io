@@ -48,6 +48,7 @@ export type DecoderStoreState = {
   asymmetricPublicKeyFormat: AsymmetricKeyFormatValues;
   decodedHeader: string;
   decodedPayload: string;
+  isLoading: boolean;
   signatureStatus: JwtSignatureStatusValues;
   controlledSymmetricSecretKey: {
     id: number;
@@ -70,11 +71,11 @@ type DecoderStoreActions = {
   handleJwtChange: (newToken: string) => void;
   handleSymmetricSecretKeyChange: (newSymmetricSecretKey: string) => void;
   handleSymmetricSecretKeyEncodingChange: (
-    newSymmetricSecretKey: EncodingValues,
+    newSymmetricSecretKey: EncodingValues
   ) => void;
   handleAsymmetricPublicKeyChange: (newAsymmetricPublicKey: string) => void;
   handleAsymmetricPublicKeyFormatChange: (
-    newFormat: AsymmetricKeyFormatValues,
+    newFormat: AsymmetricKeyFormatValues
   ) => void;
   resetControlledSymmetricSecretKey: () => void;
   resetControlledAsymmetricPublicKey: () => void;
@@ -92,6 +93,7 @@ export const initialState: DecoderStoreState = {
   asymmetricPublicKeyFormat: AsymmetricKeyFormatValues.PEM,
   decodedHeader: DEFAULT_DECODED_HEADER,
   decodedPayload: DEFAULT_DECODED_PAYLOAD,
+  isLoading: false,
   signatureStatus: JwtSignatureStatusValues.VALID,
   signatureWarnings: null,
   decodingErrors: null,
@@ -120,6 +122,12 @@ export const useDecoderStore = create<DecoderStore>()(
         asymmetricPublicKeyFormat,
       } = get();
 
+      set({
+        isLoading: true,
+        decodedHeader: "",
+        decodedPayload: "",
+      });
+
       const update = await TokenDecoderService.handleJwtChange({
         alg,
         symmetricSecretKey,
@@ -129,7 +137,10 @@ export const useDecoderStore = create<DecoderStore>()(
         newToken,
       });
 
-      set(update);
+      set({
+        ...update,
+        isLoading: false,
+      });
     },
     handleSymmetricSecretKeyChange: async (newSymmetricSecretKey) => {
       const { jwt, symmetricSecretKeyEncoding } = get();
@@ -208,5 +219,5 @@ export const useDecoderStore = create<DecoderStore>()(
 
       set(update);
     },
-  })),
+  }))
 );
