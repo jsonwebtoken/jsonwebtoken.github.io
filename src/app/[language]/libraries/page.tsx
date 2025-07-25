@@ -9,7 +9,6 @@ import { LibraryCategoryModel } from "@/features/libraries/models/library-catego
 import { DATA_PATH } from "@/libs/config/project-paths.constants";
 import { DEFAULT_LANGUAGE_CODE } from "@/features/localization/localization.config";
 import { getLibrariesDictionary } from "@/features/localization/services/language-dictionary.service";
-import { LIBRARIES_FILTER_DEFAULT_VALUE } from "@/libs/config/project.constants";
 import { StructuredData } from "@/features/seo/components/structured-data.component";
 import { generateArticleStructuredData } from "@/features/seo/services/structured-data.service";
 import { PageMetadataProps } from "@/features/common/models/page-metadata.props";
@@ -18,11 +17,13 @@ import { generatePageMetadata } from "@/libs/metadata/metadata.service";
 import { createUrlPath } from "@/libs/utils/path.utils";
 import { siteTree } from "@/features/seo/site-tree";
 import { getAuth0Dictionary } from "@/features/localization/services/ui-language-dictionary.service";
+import { LibraryModel } from "@/features/libraries/models/library.model";
+import { LibrariesDictionaryModel } from "@/features/localization/models/libraries-dictionary.model";
 
 export async function generateMetadata({
   params: { language },
 }: PageMetadataProps): Promise<Metadata> {
-  const dictionary = getLibrariesDictionary(language);
+  const dictionary: LibrariesDictionaryModel = getLibrariesDictionary(language);
 
   return generatePageMetadata({
     languageCode: language,
@@ -37,7 +38,8 @@ export default function Libraries({
 }: {
   params: { language: string };
   searchParams?: {
-    filter?: string;
+    programming_language?: string;
+    algorithm?: keyof LibraryModel["support"];
   };
 }) {
   const librariesDictionary = getLibrariesDictionary(languageCode);
@@ -47,19 +49,40 @@ export default function Libraries({
     encoding: "utf-8",
   });
 
-  const query: string | null = searchParams?.filter || "";
+  const programmingLanguage = searchParams?.programming_language ?? "" ;
+  const algorithm = searchParams?.algorithm;
+  const query = programmingLanguage !== "" ? programmingLanguage : algorithm ?? "";
   const dictionary = JSON.parse(source) as LibraryDictionaryModel;
 
   const categoryOptions: { id: string; name: string }[] = Object.values(
-    dictionary,
+    dictionary
   ).map((library) => ({
     id: library.id,
     name: library.name,
   }));
 
-  let categories: LibraryCategoryModel[] = dictionary[query]
-    ? [dictionary[query]]
+  const algorithmOptions: { value: string; label: string}[] = Object.keys(Object.values(
+    dictionary
+  )[0].libs[0].support).map(key => ({
+    value: key,
+    label: key.toUpperCase()
+  }))
+
+  const categories: LibraryCategoryModel[] = dictionary[programmingLanguage]
+    ? [dictionary[programmingLanguage]]
     : Object.values(dictionary);
+
+  const filteredCategories = algorithm
+    ? categories.map((category) => {
+        const filteredLibs = category.libs.filter(
+          (lib) => lib.support[algorithm]
+        );
+        return {
+          ...category,
+          libs: filteredLibs,
+        };
+      })
+    : categories;
 
   return (
     <>
@@ -166,11 +189,12 @@ export default function Libraries({
         languageCode={languageCode}
         query={query || librariesDictionary.filterPicker.defaultValue.value}
         categoryOptions={categoryOptions}
+        algorithmOptions={algorithmOptions}
         dictionary={librariesDictionary}
       />
       <LibraryResultsComponent
         languageCode={languageCode}
-        categories={categories}
+        categories={filteredCategories}
         dictionary={librariesDictionary}
       />
       <Auth0CtaComponent
