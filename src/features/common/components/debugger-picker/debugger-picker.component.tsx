@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./debugger-picker.module.scss";
 import Select, { SingleValue } from "react-select";
 import { DebuggerPickerOptionModel } from "@/features/common/models/debugger-picker-option.model";
+import { LibraryFilterLabel } from "@/features/libraries/models/library-filters.model";
 
 interface PickerLabelProps {
   label: string | null;
@@ -19,8 +20,8 @@ interface DebuggerPickerComponentProps {
   label: string | null;
   languageCode: string;
   options: DebuggerPickerOptionModel[];
-  selectedOptionCode: DebuggerPickerOptionModel | null;
-  handleSelection: (value: string) => void;
+  selectedOptionCode: DebuggerPickerOptionModel["options"][0] | null;
+  handleSelection: (selection: string, parentLabel?: LibraryFilterLabel) => void
   placeholder: string | null;
   minWidth: string | null;
 }
@@ -37,12 +38,14 @@ export const DebuggerPickerComponent: React.FC<
 }) => {
   const [isClient, setIsClient] = useState(false);
 
-  const handleChange = (selection: SingleValue<DebuggerPickerOptionModel>) => {
+  const handleChange = (
+    selection: SingleValue<DebuggerPickerOptionModel["options"][0]>
+  ) => {
     if (!selection) {
       return;
     }
-
-    handleSelection(selection.value);
+    const parentLabel = options.find(group => group.options.some(opt => opt.value === selection.value))?.label
+    handleSelection(selection.value, parentLabel);
   };
 
   useEffect(() => {
