@@ -14,6 +14,7 @@ import { LibrariesDictionaryModel } from "@/features/localization/models/librari
 import { DebuggerPickerComponent } from "@/features/common/components/debugger-picker/debugger-picker.component";
 import { LibraryFilterLabel } from "../../models/library-filters.model";
 import { DebuggerPickerOptionModel } from "@/features/common/models/debugger-picker-option.model";
+import { GroupBase } from "react-select";
 
 interface LibraryHeroComponentProps {
   languageCode: string;
@@ -75,12 +76,12 @@ export const LibraryHeroComponent: React.FC<LibraryHeroComponentProps> = ({
         label: "Algorithm",
         options: [...algorithmOptions],
       },
-    ] as DebuggerPickerOptionModel[];
+    ] as GroupBase<DebuggerPickerOptionModel>[];
   }, [
     categoryOptions,
     dictionary.filterPicker.defaultValue.label,
     dictionary.filterPicker.defaultValue.value,
-    algorithmOptions
+    algorithmOptions,
   ]);
 
   return (

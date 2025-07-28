@@ -11,7 +11,6 @@ import { useDecoderStore } from "@/features/decoder/services/decoder.store";
 import { useDebuggerStore } from "@/features/debugger/services/debugger.store";
 import { DebuggerWidgetValues } from "@/features/common/values/debugger-widget.values";
 import { DebuggerPickerComponent } from "@/features/common/components/debugger-picker/debugger-picker.component";
-import { DebuggerPickerOptionModel } from "@/features/common/models/debugger-picker-option.model";
 import {
   algDictionary,
   jwsExampleAlgHeaderParameterValuesDictionary,
@@ -19,6 +18,7 @@ import {
 import { useButton } from "@react-aria/button";
 import { clsx } from "clsx";
 import { PrimaryFont } from "@/libs/theme/fonts";
+import { DebuggerPickerOptionModel } from "@/features/common/models/debugger-picker-option.model";
 
 enum PickerStates {
   IDLE = "IDLE",
