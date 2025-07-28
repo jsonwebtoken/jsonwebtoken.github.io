@@ -40,6 +40,7 @@ export default function Libraries({
   searchParams?: {
     programming_language?: string;
     algorithm?: keyof LibraryModel["support"];
+    support?: keyof LibraryModel["support"]
   };
 }) {
   const librariesDictionary = getLibrariesDictionary(languageCode);
@@ -49,10 +50,15 @@ export default function Libraries({
     encoding: "utf-8",
   });
 
-  const programmingLanguage = searchParams?.programming_language ?? "" ;
+  const programmingLanguage = searchParams?.programming_language;
   const algorithm = searchParams?.algorithm;
-  const query = programmingLanguage !== "" ? programmingLanguage : algorithm ?? "";
+  const support = searchParams?.support;
+  const query = programmingLanguage ?? algorithm ?? support ?? "";
   const dictionary = JSON.parse(source) as LibraryDictionaryModel;
+  const allOptions = Object.keys(Object.values(dictionary)[0].libs[0].support);
+  const indexAlgorithmStart = allOptions.findIndex(
+    (option) => option == "hs256"
+  );
 
   const categoryOptions: { id: string; name: string }[] = Object.values(
     dictionary
@@ -61,21 +67,30 @@ export default function Libraries({
     name: library.name,
   }));
 
-  const algorithmOptions: { value: string; label: string}[] = Object.keys(Object.values(
-    dictionary
-  )[0].libs[0].support).map(key => ({
-    value: key,
-    label: key.toUpperCase()
-  }))
+  const supportOptions: { value: string; label: string }[] = allOptions
+    .slice(0, indexAlgorithmStart)
+    .map((key) => ({
+      value: key,
+      label: key.toUpperCase(),
+    }));
 
-  const categories: LibraryCategoryModel[] = dictionary[programmingLanguage]
+  const algorithmOptions: { value: string; label: string }[] = allOptions
+    .slice(indexAlgorithmStart)
+    .map((key) => ({
+      value: key,
+      label: key.toUpperCase(),
+    }));
+
+  const categories: LibraryCategoryModel[] = programmingLanguage
     ? [dictionary[programmingLanguage]]
     : Object.values(dictionary);
 
-  const filteredCategories = algorithm
+  const categoryToFilter = algorithm ?? support
+
+  const filteredCategories = categoryToFilter
     ? categories.map((category) => {
         const filteredLibs = category.libs.filter(
-          (lib) => lib.support[algorithm]
+          (lib) => lib.support[categoryToFilter]
         );
         return {
           ...category,
@@ -190,6 +205,7 @@ export default function Libraries({
         query={query || librariesDictionary.filterPicker.defaultValue.value}
         categoryOptions={categoryOptions}
         algorithmOptions={algorithmOptions}
+        supportOptions={supportOptions}
         dictionary={librariesDictionary}
       />
       <LibraryResultsComponent

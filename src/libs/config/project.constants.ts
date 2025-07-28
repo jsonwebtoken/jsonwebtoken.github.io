@@ -1,8 +1,9 @@
 export const BASE_URL = "https://jwt.io";
 export const LIBRARIES_FILTER_QUERY_PARAM_KEY = "filter";
 export const LIBRARIES_FILTER_DEFAULT_VALUE = "all";
-export const LIBRARIES_FILTER_PROGRAMMING_LANGUAGE_KEY = "programming_language"
-export const LIBRARIES_FILTER_ALGORITHM_KEY = "algorithm"
+export const LIBRARIES_FILTER_PROGRAMMING_LANGUAGE_KEY = "programming_language";
+export const LIBRARIES_FILTER_ALGORITHM_KEY = "algorithm";
+export const LIBRARIES_FILTER_SUPPORT_KEY = "support";
 export enum SupportedTokenHashParamValues {
   TOKEN = "token",
   ACCESS_TOKEN = "access_token",

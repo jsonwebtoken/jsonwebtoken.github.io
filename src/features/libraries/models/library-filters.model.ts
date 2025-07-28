@@ -1,1 +1,1 @@
-export type LibraryFilterLabel = "ProgrammingLanguage" | "Algorithm"
+export type LibraryFilterLabel = "ProgrammingLanguage" | "Algorithm" | "Support"

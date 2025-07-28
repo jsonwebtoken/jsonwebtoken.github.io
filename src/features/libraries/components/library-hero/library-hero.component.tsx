@@ -7,6 +7,7 @@ import { usePathname, useRouter } from "next/navigation";
 import {
   LIBRARIES_FILTER_ALGORITHM_KEY,
   LIBRARIES_FILTER_PROGRAMMING_LANGUAGE_KEY,
+  LIBRARIES_FILTER_SUPPORT_KEY,
 } from "@/libs/config/project.constants";
 import { clsx } from "clsx";
 import { getLocalizedSecondaryFont } from "@/libs/theme/fonts";
@@ -21,6 +22,7 @@ interface LibraryHeroComponentProps {
   query: string;
   categoryOptions: { id: string; name: string }[];
   algorithmOptions: { value: string; label: string }[];
+  supportOptions: { value: string; label: string }[];
   dictionary: LibrariesDictionaryModel;
 }
 
@@ -29,6 +31,7 @@ export const LibraryHeroComponent: React.FC<LibraryHeroComponentProps> = ({
   query,
   categoryOptions,
   algorithmOptions,
+  supportOptions,
   dictionary,
 }) => {
   const pathname = usePathname();
@@ -48,6 +51,9 @@ export const LibraryHeroComponent: React.FC<LibraryHeroComponentProps> = ({
         break;
       case "Algorithm":
         params.set(LIBRARIES_FILTER_ALGORITHM_KEY, selection);
+        break;
+      case "Support":
+        params.set(LIBRARIES_FILTER_SUPPORT_KEY, selection);
         break;
       default:
         break;
@@ -73,6 +79,10 @@ export const LibraryHeroComponent: React.FC<LibraryHeroComponentProps> = ({
         ],
       },
       {
+        label: "Support",
+        options: [...supportOptions],
+      },
+      {
         label: "Algorithm",
         options: [...algorithmOptions],
       },
@@ -82,6 +92,7 @@ export const LibraryHeroComponent: React.FC<LibraryHeroComponentProps> = ({
     dictionary.filterPicker.defaultValue.label,
     dictionary.filterPicker.defaultValue.value,
     algorithmOptions,
+    supportOptions
   ]);
 
   return (
