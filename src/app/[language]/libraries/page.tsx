@@ -40,7 +40,7 @@ export default function Libraries({
   searchParams?: {
     programming_language?: string;
     algorithm?: keyof LibraryModel["support"];
-    support?: keyof LibraryModel["support"]
+    support?: keyof LibraryModel["support"];
   };
 }) {
   const librariesDictionary = getLibrariesDictionary(languageCode);
@@ -57,7 +57,7 @@ export default function Libraries({
   const dictionary = JSON.parse(source) as LibraryDictionaryModel;
   const allOptions = Object.keys(Object.values(dictionary)[0].libs[0].support);
   const indexAlgorithmStart = allOptions.findIndex(
-    (option) => option == "hs256"
+    (option) => option === "hs256"
   );
 
   const categoryOptions: { id: string; name: string }[] = Object.values(
@@ -81,11 +81,12 @@ export default function Libraries({
       label: key.toUpperCase(),
     }));
 
-  const categories: LibraryCategoryModel[] = programmingLanguage
-    ? [dictionary[programmingLanguage]]
-    : Object.values(dictionary);
+  const categories: LibraryCategoryModel[] =
+    programmingLanguage && programmingLanguage !== "all"
+      ? [dictionary[programmingLanguage]]
+      : Object.values(dictionary);
 
-  const categoryToFilter = algorithm ?? support
+  const categoryToFilter = algorithm ?? support;
 
   const filteredCategories = categoryToFilter
     ? categories.map((category) => {
