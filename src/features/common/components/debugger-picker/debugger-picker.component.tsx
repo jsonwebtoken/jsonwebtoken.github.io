@@ -1,11 +1,28 @@
 import React, { useEffect, useState } from "react";
 import styles from "./debugger-picker.module.scss";
-import Select, { SingleValue } from "react-select";
+import Select, { SingleValue, OptionsOrGroups, GroupBase } from "react-select";
 import { DebuggerPickerOptionModel } from "@/features/common/models/debugger-picker-option.model";
+import { LibraryFilterLabel } from "@/features/libraries/models/library-filters.model";
+
 
 interface PickerLabelProps {
   label: string | null;
 }
+
+const getGroupLabel = (
+  options: OptionsOrGroups<
+    DebuggerPickerOptionModel,
+    GroupBase<DebuggerPickerOptionModel>
+  >,
+  selected: DebuggerPickerOptionModel
+): LibraryFilterLabel | undefined => {
+  if (!Array.isArray(options)) return undefined;
+
+  const group = (options as GroupBase<DebuggerPickerOptionModel>[]).find(
+    (group) => group.options.some((opt) => opt.value === selected.value)
+  );
+  return group ? group.label as LibraryFilterLabel : undefined;
+};
 
 const PickerLabel: React.FC<PickerLabelProps> = ({ label }) => {
   return (
@@ -18,9 +35,16 @@ const PickerLabel: React.FC<PickerLabelProps> = ({ label }) => {
 interface DebuggerPickerComponentProps {
   label: string | null;
   languageCode: string;
-  options: DebuggerPickerOptionModel[];
+  options: OptionsOrGroups<
+    DebuggerPickerOptionModel,
+    GroupBase<DebuggerPickerOptionModel>
+  >;
+  isGrouped?: boolean;
   selectedOptionCode: DebuggerPickerOptionModel | null;
-  handleSelection: (value: string) => void;
+  handleSelection: (
+    selection: string,
+    parentLabel?: LibraryFilterLabel
+  ) => void;
   placeholder: string | null;
   minWidth: string | null;
 }
@@ -37,12 +61,14 @@ export const DebuggerPickerComponent: React.FC<
 }) => {
   const [isClient, setIsClient] = useState(false);
 
-  const handleChange = (selection: SingleValue<DebuggerPickerOptionModel>) => {
+  const handleChange = (
+    selection: SingleValue<DebuggerPickerOptionModel>
+  ) => {
     if (!selection) {
       return;
     }
-
-    handleSelection(selection.value);
+    const groupLabel = getGroupLabel(options, selection);
+    handleSelection(selection.value, groupLabel);
   };
 
   useEffect(() => {
