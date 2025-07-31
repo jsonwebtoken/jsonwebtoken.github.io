@@ -3,6 +3,7 @@ import styles from "./debugger-picker.module.scss";
 import Select, { SingleValue, OptionsOrGroups, GroupBase } from "react-select";
 import { DebuggerPickerOptionModel } from "@/features/common/models/debugger-picker-option.model";
 import { LibraryFilterLabel } from "@/features/libraries/models/library-filters.model";
+import { isGroupedOptionsType } from "./utils";
 
 
 interface PickerLabelProps {
@@ -16,7 +17,7 @@ const getGroupLabel = (
   >,
   selected: DebuggerPickerOptionModel
 ): LibraryFilterLabel | undefined => {
-  if (!Array.isArray(options)) return undefined;
+  if(!isGroupedOptionsType(options)) return undefined
 
   const group = (options as GroupBase<DebuggerPickerOptionModel>[]).find(
     (group) => group.options.some((opt) => opt.value === selected.value)
