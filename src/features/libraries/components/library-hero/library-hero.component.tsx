@@ -3,17 +3,26 @@
 import React, { useMemo } from "react";
 import styles from "./library-hero.module.scss";
 import { BoxComponent } from "@/features/common/components/box/box.component";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { LIBRARIES_FILTER_QUERY_PARAM_KEY } from "@/libs/config/project.constants";
+import { usePathname, useRouter } from "next/navigation";
+import {
+  LIBRARIES_FILTER_ALGORITHM_KEY,
+  LIBRARIES_FILTER_PROGRAMMING_LANGUAGE_KEY,
+  LIBRARIES_FILTER_SUPPORT_KEY,
+} from "@/libs/config/project.constants";
 import { clsx } from "clsx";
 import { getLocalizedSecondaryFont } from "@/libs/theme/fonts";
 import { LibrariesDictionaryModel } from "@/features/localization/models/libraries-dictionary.model";
 import { DebuggerPickerComponent } from "@/features/common/components/debugger-picker/debugger-picker.component";
+import { LibraryFilterLabel } from "../../models/library-filters.model";
+import { DebuggerPickerOptionModel } from "@/features/common/models/debugger-picker-option.model";
+import { GroupBase } from "react-select";
 
 interface LibraryHeroComponentProps {
   languageCode: string;
   query: string;
   categoryOptions: { id: string; name: string }[];
+  algorithmOptions: { value: string; label: string }[];
+  supportOptions: { value: string; label: string }[];
   dictionary: LibrariesDictionaryModel;
 }
 
@@ -21,41 +30,69 @@ export const LibraryHeroComponent: React.FC<LibraryHeroComponentProps> = ({
   languageCode,
   query,
   categoryOptions,
+  algorithmOptions,
+  supportOptions,
   dictionary,
 }) => {
-  const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  const handleSelection = (selection: string) => {
-    const params = new URLSearchParams(searchParams);
-
-    if (selection) {
-      params.set(LIBRARIES_FILTER_QUERY_PARAM_KEY, selection);
-    } else {
-      params.delete(LIBRARIES_FILTER_QUERY_PARAM_KEY);
+  const handleSelection = (
+    selection: string,
+    parentLabel?: LibraryFilterLabel
+  ) => {
+    if (!parentLabel) {
+      return;
     }
-
+    const params = new URLSearchParams("");
+    switch (parentLabel) {
+      case "ProgrammingLanguage":
+        params.set(LIBRARIES_FILTER_PROGRAMMING_LANGUAGE_KEY, selection);
+        break;
+      case "Algorithm":
+        params.set(LIBRARIES_FILTER_ALGORITHM_KEY, selection);
+        break;
+      case "Support":
+        params.set(LIBRARIES_FILTER_SUPPORT_KEY, selection);
+        break;
+      default:
+        break;
+    }
     replace(`${pathname}?${params.toString()}`);
   };
 
   const options = useMemo(() => {
     return [
       {
-        value: dictionary.filterPicker.defaultValue.value,
-        label: dictionary.filterPicker.defaultValue.label,
+        label: "ProgrammingLanguage",
+        options: [
+          {
+            value: dictionary.filterPicker.defaultValue.value,
+            label: dictionary.filterPicker.defaultValue.label,
+          },
+          ...categoryOptions.map((categoryOption) => {
+            return {
+              value: categoryOption.id,
+              label: categoryOption.name,
+            };
+          }),
+        ],
       },
-      ...categoryOptions.map((categoryOption) => {
-        return {
-          value: categoryOption.id,
-          label: categoryOption.name,
-        };
-      }),
-    ];
+      {
+        label: "Support",
+        options: [...supportOptions],
+      },
+      {
+        label: "Algorithm",
+        options: [...algorithmOptions],
+      },
+    ] as GroupBase<DebuggerPickerOptionModel>[];
   }, [
     categoryOptions,
     dictionary.filterPicker.defaultValue.label,
     dictionary.filterPicker.defaultValue.value,
+    algorithmOptions,
+    supportOptions
   ]);
 
   return (
@@ -67,7 +104,7 @@ export const LibraryHeroComponent: React.FC<LibraryHeroComponentProps> = ({
         <h1
           className={clsx(
             styles.heroTitle,
-            getLocalizedSecondaryFont(languageCode),
+            getLocalizedSecondaryFont(languageCode)
           )}
         >
           {dictionary.title}
@@ -80,7 +117,9 @@ export const LibraryHeroComponent: React.FC<LibraryHeroComponentProps> = ({
               languageCode={languageCode}
               options={options}
               selectedOptionCode={
-                options.filter((option) => option.value === query)[0]
+                options
+                  .flatMap((group) => group.options)
+                  .filter((option) => option.value === query)[0]
               }
               handleSelection={handleSelection}
               placeholder={null}
