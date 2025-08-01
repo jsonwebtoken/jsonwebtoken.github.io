@@ -90,7 +90,7 @@ export const safeJsonStringify = fromThrowable(JSON.stringify, (e) => {
 });
 
 export const safeNewUint8ArrayFromBuffer = fromThrowable(
-  (buffer: ArrayBufferLike) => new Uint8Array(buffer),
+  (buffer: Buffer) => new Uint8Array(buffer),
   (e) => {
     if (e instanceof Error) {
       return e.message;

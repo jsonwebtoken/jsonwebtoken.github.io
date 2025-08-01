@@ -1,14 +1,13 @@
-name: Vercel Production Deployment
-env:
-  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+name: Run Tests
+
 on:
-  push:
-    branches:
-      - master
-      - production
+    pull_request:
+        branches: [master]
+    push:
+        branches: [master]
+
 jobs:
-  test:
+    test:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
@@ -36,17 +35,5 @@ jobs:
               with:
                 name: playwright-traces
                 path: playwright-report/**/trace.zip
-    
-  Deploy-Production:
-    needs: test
-    runs-on:
-      labels: ubuntu-latest
-    steps:
-      - name: Checkout the Codebase
-        uses: actions/checkout@v4
-      - name: Install Vercel CLI
-        run: npm install --global vercel@latest
-      - name: Deploy on Vercel
-        id: deploy
-        run: |
-          vercel deploy --prod --token=${{ secrets.VERCEL_ACCESS_TOKEN }}
+
+        
