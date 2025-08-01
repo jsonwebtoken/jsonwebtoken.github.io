@@ -22,8 +22,14 @@ export const extractJwt = (value: string): string => {
     return "";
   }
 
-  const jwt = value.split(/\s+/).filter((element) => element.startsWith("ey"));
+  // Check if it's a JWT string with newlines - compact it if so
+  if (value.trim().startsWith("ey") && (value.match(/\./g) || []).length >= 2) {
+    // It looks like a valid JWT, so remove all whitespace (including newlines)
+    return value.replace(/\s+/g, "");
+  }
 
+  // Otherwise, use the extraction logic to find JWT in a larger text block
+  const jwt = value.split(/\s+/).filter((element) => element.startsWith("ey"));
   return jwt[0] || value;
 };
 
