@@ -836,7 +836,7 @@ export const getSymmetricSecretKeyByteArray = (
 
     const buffer = safeBase64urlToBufferResult.value;
 
-    const safeNewUint8ArrayResult = safeNewUint8ArrayFromBuffer(buffer.buffer);
+    const safeNewUint8ArrayResult = safeNewUint8ArrayFromBuffer(buffer);
 
     if (safeNewUint8ArrayResult.isErr()) {
       return err(safeNewUint8ArrayResult.error);
