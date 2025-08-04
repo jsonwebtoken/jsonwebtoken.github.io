@@ -1,0 +1,29 @@
+.container {
+   position: sticky;
+    color: white;
+    height: 100vh;
+    flex-shrink: 0;
+    top: 0;
+    padding: 100px 30px 0px;
+    border-right: 1px solid white;
+    max-width: 250px;
+    overflow-y: auto
+}
+
+.title {
+ margin-bottom: 36px; 
+ padding-right: 8px;
+ cursor: pointer; 
+}
+
+.list {
+    list-style-type: none;
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+}
