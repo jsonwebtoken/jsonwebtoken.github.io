@@ -1,11 +1,11 @@
+@use "@/libs/theme/styles/variables" as *;
+
 .container {
     min-height: 100vh;
     display: flex;
-    flex-direction: row
-}
+    flex-direction: column;
 
-@media (max-width: 768px) {
-    .container {
-       flex-direction: column;
+    @media #{$breakpoint-dimension-sm} {
+        flex-direction: row;
     }
 }
