@@ -36,6 +36,7 @@ import { AsymmetricKeyFormatValues } from "@/features/common/values/asymmetric-k
 import { useDebuggerStore } from "@/features/debugger/services/debugger.store";
 import { SigningAlgCategoryValues } from "@/features/common/values/signing-alg-category.values";
 import { EncoderInputsModel } from "@/features/debugger/models/encoder-inputs.model";
+import { EncoderResult } from "@/features/common/models/encoder-result.model";
 
 type EncodingHeaderErrors = {
   headerErrors: string[] | null;
@@ -183,7 +184,8 @@ class _TokenEncoderService {
       }
 
       if (encodeJWTResult.isOk()) {
-        stateUpdate.jwt = encodeJWTResult.value.trim();
+        stateUpdate.jwt = encodeJWTResult.value.jwt.trim();
+        stateUpdate.signingErrors = encodeJWTResult.value.signingErrors;
       }
 
       return {
@@ -214,7 +216,7 @@ class _TokenEncoderService {
       }
 
       if (encodeJWTResult.isOk()) {
-        stateUpdate.jwt = encodeJWTResult.value.trim();
+        stateUpdate.jwt = encodeJWTResult.value.jwt.trim();
 
         useDebuggerStore.getState().setStash$({
           asymmetricPublicKey: digitallySignedToken.publicKey,
@@ -379,7 +381,7 @@ class _TokenEncoderService {
       }
 
       if (encodeJWTResult.isOk()) {
-        stateUpdate.jwt = encodeJWTResult.value.trim();
+        stateUpdate.jwt = encodeJWTResult.value.jwt.trim();
       }
 
       return {
@@ -409,7 +411,7 @@ class _TokenEncoderService {
       }
 
       if (encodeJWTResult.isOk()) {
-        stateUpdate.jwt = encodeJWTResult.value.trim();
+        stateUpdate.jwt = encodeJWTResult.value.jwt.trim();
       }
 
       return {
@@ -484,48 +486,61 @@ class _TokenEncoderService {
     payload: DecodedJwtPayloadModel,
     key: string,
     encodingFormat: EncodingValues,
-  ): Promise<Result<string, DebuggerErrorModel>> {
-    if (isHmacAlg(header.alg)) {
-      if (!key) {
-        return err({
-          task: DebuggerTaskValues.ENCODE,
-          input: DebuggerInputValues.KEY,
-          message: "Secret must not be empty.",
-        });
-      }
-
-      const getAlgSizeResult = getAlgSize(header.alg);
-
-      if (getAlgSizeResult.isErr()) {
-        return err({
-          task: DebuggerTaskValues.ENCODE,
-          input: DebuggerInputValues.KEY,
-          message: getAlgSizeResult.error,
-        });
-      }
-
-      const checkHmacSecretLengthResult = checkHmacSecretLength(
-        key,
-        getAlgSizeResult.value.size,
-        encodingFormat,
-      );
-
-      if (checkHmacSecretLengthResult.isErr()) {
-        return err(checkHmacSecretLengthResult.error);
-      }
-
-      return await signWithSymmetricSecretKey(
-        header as CompactJWSHeaderParameters,
-        payload,
-        key,
-        encodingFormat,
-      );
+  ): Promise<Result<EncoderResult, DebuggerErrorModel>> {
+    if (!isHmacAlg(header.alg)) {
+      return err({
+        task: DebuggerTaskValues.ENCODE,
+        input: DebuggerInputValues.HEADER,
+        message: `Invalid MAC algorithm. Only use MAC "alg" parameter values in the header as defined by [RFC 7518 (JSON Web Algorithms)](https://datatracker.ietf.org/doc/html/rfc7518#section-3.1).`,
+      });
     }
 
-    return err({
-      task: DebuggerTaskValues.ENCODE,
-      input: DebuggerInputValues.HEADER,
-      message: `Invalid MAC algorithm. Only use MAC "alg" parameter values in the header as defined by [RFC 7518 (JSON Web Algorithms)](https://datatracker.ietf.org/doc/html/rfc7518#section-3.1).`,
+    if (!key) {
+      return err({
+        task: DebuggerTaskValues.ENCODE,
+        input: DebuggerInputValues.KEY,
+        message: "Secret must not be empty.",
+      });
+    }
+
+    const getAlgSizeResult = getAlgSize(header.alg);
+
+    if (getAlgSizeResult.isErr()) {
+      return err({
+        task: DebuggerTaskValues.ENCODE,
+        input: DebuggerInputValues.KEY,
+        message: getAlgSizeResult.error,
+      });
+    }
+
+    const checkHmacSecretLengthResult = checkHmacSecretLength(
+      key,
+      getAlgSizeResult.value.size,
+      encodingFormat,
+    );
+
+    const signingError = checkHmacSecretLengthResult.isErr()
+      ? [checkHmacSecretLengthResult.error.message]
+      : null;
+
+    const signWithSymmetricSecretKeyResult =  await signWithSymmetricSecretKey(
+      header as CompactJWSHeaderParameters,
+      payload,
+      key,
+      encodingFormat,
+    );
+
+    if (signWithSymmetricSecretKeyResult.isErr()) {
+      return err({
+        task: DebuggerTaskValues.ENCODE,
+        input: DebuggerInputValues.KEY,
+        message: signWithSymmetricSecretKeyResult.error.message,
+      });
+    }
+
+    return ok<EncoderResult>({
+      jwt: signWithSymmetricSecretKeyResult.value,
+      signingErrors: signingError,
     });
   }
 
@@ -534,7 +549,7 @@ class _TokenEncoderService {
     payload: DecodedJwtPayloadModel,
     key: string,
     keyFormat: AsymmetricKeyFormatValues,
-  ): Promise<Result<string, DebuggerErrorModel>> {
+  ): Promise<Result<EncoderResult, DebuggerErrorModel>> {
     if (isDigitalSignatureAlg(header.alg)) {
       if (!key) {
         return err({
@@ -544,12 +559,25 @@ class _TokenEncoderService {
         });
       }
 
-      return await signWithAsymmetricPrivateKey(
+      const jwt = await signWithAsymmetricPrivateKey(
         header as CompactJWSHeaderParameters,
         payload,
         key,
         keyFormat,
       );
+
+      if (jwt.isErr()) {
+        return err({
+          task: DebuggerTaskValues.ENCODE,
+          input: DebuggerInputValues.KEY,
+          message: "Private key must not be empty.",
+        })
+      }
+
+      return ok({
+        jwt: jwt.value,
+        signingErrors: null,
+      });
     }
 
     return err({
@@ -684,9 +712,7 @@ class _TokenEncoderService {
     symmetricSecretKeyEncoding: EncodingValues;
   }): Promise<
     Result<
-      {
-        jwt: string;
-      },
+      EncoderResult,
       EncodingSymmetricSecretKeyErrors
     >
   > {
@@ -767,6 +793,7 @@ class _TokenEncoderService {
 
     return ok({
       jwt: encodeJwtResult.value.jwt.trim(),
+      signingErrors: encodeJwtResult.value.signingErrors,
     });
   }
 
@@ -861,9 +888,7 @@ class _TokenEncoderService {
         },
   ): Promise<
     Result<
-      {
-        jwt: string;
-      },
+      EncoderResult,
       EncodingJwtErrors
     >
   > {
@@ -871,7 +896,7 @@ class _TokenEncoderService {
     const header = params.header;
     const payload = params.payload;
 
-    let encodeJWTResult: Result<string, DebuggerErrorModel> | null = null;
+    let encodeJWTResult: Result<EncoderResult, DebuggerErrorModel> | null = null;
 
     if (algType === SigningAlgCategoryValues.ANY) {
       const symmetricSecretKey = params.symmetricSecretKey;
@@ -998,8 +1023,9 @@ class _TokenEncoderService {
       }
     }
 
-    return ok({
-      jwt: encodeJWTResult.value,
+    return ok<EncoderResult>({
+      jwt: encodeJWTResult.value.jwt,
+      signingErrors: encodeJWTResult.value.signingErrors,
     });
   }
 
@@ -1235,6 +1261,7 @@ class _TokenEncoderService {
     }
 
     stateUpdate.jwt = processSymmetricSecretKeyResult.value.jwt.trim();
+    stateUpdate.signingErrors = processSymmetricSecretKeyResult.value.signingErrors;
 
     return stateUpdate;
   }
@@ -1269,6 +1296,7 @@ class _TokenEncoderService {
     }
 
     stateUpdate.jwt = processSymmetricSecretKeyResult.value.jwt.trim();
+    stateUpdate.signingErrors = processSymmetricSecretKeyResult.value.signingErrors;
 
     return stateUpdate;
   }
