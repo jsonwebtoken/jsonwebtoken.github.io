@@ -48,31 +48,31 @@ export const enIntroductionDictionary: IntroductionDictionaryModel = {
     headings: [
       {
         title: "What is JSON Web Token?",
-        id: "json-web-token",
+        id: "what-is-json-web-token",
       },
       {
         title: "When should you use JSON Web Tokens?",
-        id: "usage",
+        id: "when-to-use-json-web-tokens",
       },
       {
         title: "What is the JSON Web Token structure?",
-        id: "structure",
+        id: "what-is-json-web-token-structure",
       },
       {
         title: "How do JSON Web Tokens work?",
-        id: "work",
+        id: "how-json-web-tokens-work",
       },
       {
         title: "Why should we use JSON Web Tokens?",
-        id: "usage-reason",
+        id: "why-use-json-web-tokens",
       },
       {
         title: "Difference Between Validating and Verifying a JWT",
-        id: "validate-verify",
+        id: "difference-validating-verifying-jwt",
       },
       {
         title: "Difference Between Decoding and Encoding a JWT",
-        id: "decode-encode",
+        id: "difference-decoding-encoding-jwt",
       },
     ],
   },

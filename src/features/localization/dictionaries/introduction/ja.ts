@@ -47,32 +47,33 @@ export const jaIntroductionDictionary: IntroductionDictionaryModel = {
   content: {
     headings: [
       {
-        title: "What is JSON Web Token?",
-        id: "json-web-token",
+        title: "JSON Web Tokenとは？",
+        id: "what-is-json-web-token",
       },
       {
-        title: "When should you use JSON Web Tokens?",
-        id: "usage",
+        title: "JSON Web Tokenはいつ使用すべきか？",
+        id: "when-to-use-json-web-tokens",
       },
       {
-        title: "What is the JSON Web Token structure?",
-        id: "structure",
+        title: "JSON Web Tokenの構成は？",
+        id: "what-is-json-web-token-structure",
       },
       {
-        title: "How do JSON Web Tokens work?",
-        id: "work",
+        title: "JSON Web Tokenの仕組みとは？",
+        id: "how-json-web-tokens-work",
       },
       {
-        title: "Why should we use JSON Web Tokens?",
-        id: "usage-reason",
+        title: "JSON Web Tokenを使用すべき理由とは？",
+        id: "why-use-json-web-tokens",
       },
       {
-        title: "Difference Between Validating and Verifying a JWT",
-        id: "validate-verify",
+        title:
+          "JWTのバリデーション（妥当性確認）とベリフィケーション（検証）の違い",
+        id: "difference-validating-verifying-jwt",
       },
       {
-        title: "Difference Between Decoding and Encoding a JWT",
-        id: "decode-encode",
+        title: "JWTのデコーディングとエンコーディングの違い",
+        id: "difference-decoding-encoding-jwt",
       },
     ],
   },
