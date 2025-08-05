@@ -36,6 +36,7 @@ import { AsymmetricKeyFormatValues } from "@/features/common/values/asymmetric-k
 import { useDebuggerStore } from "@/features/debugger/services/debugger.store";
 import { SigningAlgCategoryValues } from "@/features/common/values/signing-alg-category.values";
 import { EncoderInputsModel } from "@/features/debugger/models/encoder-inputs.model";
+import { EncoderResult } from "@/features/common/models/encoder-result.model";
 
 type EncodingHeaderErrors = {
   headerErrors: string[] | null;
@@ -67,11 +68,6 @@ type EncodingJwtErrors = {
   payloadErrors: string[] | null;
   encodingErrors: string[] | null;
 };
-
-type EncodingResult = {
-  jwt: string;
-  signingErrors: string[] | null;
-}
 
 class _TokenEncoderService {
   async selectEncodingExample(
@@ -490,7 +486,7 @@ class _TokenEncoderService {
     payload: DecodedJwtPayloadModel,
     key: string,
     encodingFormat: EncodingValues,
-  ): Promise<Result<EncodingResult, DebuggerErrorModel>> {
+  ): Promise<Result<EncoderResult, DebuggerErrorModel>> {
     if (!isHmacAlg(header.alg)) {
       return err({
         task: DebuggerTaskValues.ENCODE,
@@ -542,7 +538,7 @@ class _TokenEncoderService {
       });
     }
 
-    return ok<EncodingResult>({
+    return ok<EncoderResult>({
       jwt: signWithSymmetricSecretKeyResult.value,
       signingErrors: signingError,
     });
@@ -553,7 +549,7 @@ class _TokenEncoderService {
     payload: DecodedJwtPayloadModel,
     key: string,
     keyFormat: AsymmetricKeyFormatValues,
-  ): Promise<Result<EncodingResult, DebuggerErrorModel>> {
+  ): Promise<Result<EncoderResult, DebuggerErrorModel>> {
     if (isDigitalSignatureAlg(header.alg)) {
       if (!key) {
         return err({
@@ -716,7 +712,7 @@ class _TokenEncoderService {
     symmetricSecretKeyEncoding: EncodingValues;
   }): Promise<
     Result<
-      EncodingResult,
+      EncoderResult,
       EncodingSymmetricSecretKeyErrors
     >
   > {
@@ -892,7 +888,7 @@ class _TokenEncoderService {
         },
   ): Promise<
     Result<
-      EncodingResult,
+      EncoderResult,
       EncodingJwtErrors
     >
   > {
@@ -900,7 +896,7 @@ class _TokenEncoderService {
     const header = params.header;
     const payload = params.payload;
 
-    let encodeJWTResult: Result<EncodingResult, DebuggerErrorModel> | null = null;
+    let encodeJWTResult: Result<EncoderResult, DebuggerErrorModel> | null = null;
 
     if (algType === SigningAlgCategoryValues.ANY) {
       const symmetricSecretKey = params.symmetricSecretKey;
@@ -1027,7 +1023,7 @@ class _TokenEncoderService {
       }
     }
 
-    return ok<EncodingResult>({
+    return ok<EncoderResult>({
       jwt: encodeJWTResult.value.jwt,
       signingErrors: encodeJWTResult.value.signingErrors,
     });
