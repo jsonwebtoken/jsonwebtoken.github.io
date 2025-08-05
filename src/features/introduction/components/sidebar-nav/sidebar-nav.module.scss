@@ -1,13 +1,19 @@
+@use "@/libs/theme/styles/variables" as *;
+
 .container {
-   position: sticky;
-    color: white;
-    height: 100vh;
-    flex-shrink: 0;
-    top: 0;
-    padding: 100px 30px 0px;
-    border-right: 1px solid white;
-    max-width: 250px;
-    overflow-y: auto
+    display:none;
+    @media #{$breakpoint-dimension-sm} {
+        display: inline-block;
+        height: 100vh;
+        position: sticky;
+        color: var(--color_fg_link);
+        flex-shrink: 0;
+        top: 0;
+        padding: 100px 30px 0px;
+        border-right: 1px solid var(--color_fg_link);
+        max-width: 250px;
+        overflow-y: auto;
+    }
 }
 
 .title {
@@ -16,14 +22,11 @@
  cursor: pointer; 
 }
 
-.list {
-    list-style-type: none;
+.title__active {
+   color: var(--color_fg_selected);
+   border-bottom: 1px solid var(--color_border_selected);
 }
 
-@media (max-width: 768px) {
-    .container {
-        width: 100%;
-        height: auto;
-        position: relative;
-    }
+.list {
+    list-style-type: none;
 }
