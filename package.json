@@ -31,7 +31,6 @@
     "dotenv": "^16.4.5",
     "jose": "^5.2.3",
     "js-cookie": "^3.0.5",
-    "jwt-decode": "^4.0.0",
     "loglevel": "^1.9.1",
     "nanoid": "^5.0.9",
     "negotiator": "^1.0.0",
