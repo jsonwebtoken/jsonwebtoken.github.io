@@ -36,7 +36,8 @@ export const SidebarNavComponent: React.FC<SidebarNavComponentProps> = ({
         });
       },
       {
-        threshold: 0,
+        rootMargin: "0px 0px -40% 0px",
+        threshold: 1,
       }
     );
     const elements = headings
