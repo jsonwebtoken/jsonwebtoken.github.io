@@ -44,4 +44,37 @@ export const jaIntroductionDictionary: IntroductionDictionaryModel = {
     description:
       "JSON Web Tokenとは何か、どのように機能するのか、いつ、なぜ使用する必要があるのかについて学びましょう。",
   },
+  content: {
+    headings: [
+      {
+        title: "JSON Web Tokenとは？",
+        id: "what-is-json-web-token",
+      },
+      {
+        title: "JSON Web Tokenはいつ使用すべきか？",
+        id: "when-to-use-json-web-tokens",
+      },
+      {
+        title: "JSON Web Tokenの構成は？",
+        id: "what-is-json-web-token-structure",
+      },
+      {
+        title: "JSON Web Tokenの仕組みとは？",
+        id: "how-json-web-tokens-work",
+      },
+      {
+        title: "JSON Web Tokenを使用すべき理由とは？",
+        id: "why-use-json-web-tokens",
+      },
+      {
+        title:
+          "JWTのバリデーション（妥当性確認）とベリフィケーション（検証）の違い",
+        id: "difference-validating-verifying-jwt",
+      },
+      {
+        title: "JWTのデコーディングとエンコーディングの違い",
+        id: "difference-decoding-encoding-jwt",
+      },
+    ],
+  },
 };
