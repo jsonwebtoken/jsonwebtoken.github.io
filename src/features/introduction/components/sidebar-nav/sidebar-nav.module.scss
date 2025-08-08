@@ -9,8 +9,9 @@
         color: var(--color_fg_link);
         flex-shrink: 0;
         top: 0;
-        padding: 100px 30px 0px;
-        border-right: 1px solid var(--color_fg_link);
+        padding: 160px 30px 0px;
+        margin-bottom: 100px;
+        border-right: 1px solid var(--color_border_bold);
         max-width: 250px;
         overflow-y: auto;
     }
