@@ -55,6 +55,7 @@ export const JapaneseFont = localFont({
     },
   ],
   variable: "--font-japanese",
+  preload: true
 });
 
 export const getLocalizedSecondaryFont = (language: string) =>
