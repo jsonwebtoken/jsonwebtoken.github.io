@@ -27,7 +27,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Commit and push changes
         run: |
-          git config --global user.name 'javier-okta'
+          git config --global user.name 'javiert-okta'
           git config --global user.email 'javiersebastian.tinocomachado@okta.com'
           git add .
           git commit -m "chore: update stars count [skip ci]" || echo "No changes to commit"
