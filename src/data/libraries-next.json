@@ -3990,6 +3990,46 @@
           ".package(url: \"https://github.com/beatt83/jose-swift.git\", from: \"2.4.0\")"
         ],
         "stars": 21
+      },
+      {
+        "name": "Josep",
+        "description": "JWT for Pascal",
+        "minimumVersion": "0.1.0",
+        "support": {
+          "sign": true,
+          "verify": true,
+          "iss": true,
+          "sub": true,
+          "aud": true,
+          "exp": true,
+          "nbf": true,
+          "iat": true,
+          "jti": true,
+          "typ": true,
+          "hs256": true,
+          "hs384": false,
+          "hs512": false,
+          "rs256": false,
+          "rs384": false,
+          "rs512": false,
+          "es256": false,
+          "es384": false,
+          "es512": false,
+          "es256k": false,
+          "ps256": false,
+          "ps384": false,
+          "ps512": false,
+          "eddsa": false
+        },
+        "language": "Pascal",
+        "authorName": "Nikita Sklyarov",
+        "authorUrl": "https://github.com/nsklyarov",
+        "gitHubRepoPath": "nsklyarov/Josep",
+        "repoUrl": "https://github.com/nsklyarov/Josep",
+        "installCommandMarkdown": [
+          "make deps build run test clean"
+        ],
+        "stars": 0
       }
     ]
   }
