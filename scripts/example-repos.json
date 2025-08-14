@@ -74,7 +74,7 @@
           "Install-Package",
           "[JWT.NET](https://www.nuget.org/packages/JWT)"
         ],
-        "stars": 2109
+        "stars": 2175
       }
     ]
   },
@@ -117,7 +117,7 @@
         "installCommandMarkdown": [
           "pod 'JSONWebToken'"
         ],
-        "stars": 751
+        "stars": 758
       },
       {
         "minimumVersion": null,
@@ -151,7 +151,7 @@
         "installCommandMarkdown": [
           ".package(url: \"https://github.com/vapor/jwt-kit.git\", from: \"4.0.0\")"
         ],
-        "stars": 250
+        "stars": 252
       }
     ]
   }
