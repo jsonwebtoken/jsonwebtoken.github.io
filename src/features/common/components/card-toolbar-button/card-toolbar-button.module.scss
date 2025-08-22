@@ -1,7 +1,16 @@
+.button__tooltipContainer {
+    position: relative;
+    display: inline-block;
+    &:hover {
+      .button__tooltip {
+        opacity: 1;
+      }
+    }
+}
 .button__standard {
   gap: 0.75rem;
+  border: none;
   border-radius: 0.25rem;
-  border: 1px solid var(--color_border_button);
   color: var(--color_fg_on_button_subtle);
   font-variant-numeric: slashed-zero;
   font-feature-settings:
@@ -18,6 +27,12 @@
   &[aria-disabled="true"] {
     opacity: 0.48;
     cursor: not-allowed;
+  }
+
+   &:hover {
+    background-color: var(--color_bg_layer);
+    border: 1px solid var(--color_border_default);
+    transition: all .2s ease-out;
   }
 
   padding: 0 0.75rem;
@@ -46,6 +61,25 @@
   }
 }
 
+.button__tooltip {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 4px 8px;
+    color: var(--color_fg_bold);
+    background-color: var(--color_bg_layer);
+    border: 1px solid var(--color_border_default);
+    border-radius: .5rem;
+    font-size: .75rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s ease-in-out;
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+    z-index: 1000;
+}
+
 .button__icon {
   gap: 0.75rem;
   border-radius: 0.25rem;
@@ -72,10 +106,9 @@
   }
 
   &:hover {
-    background-color: var(--color_bg_layer_alternate-bold);
-    svg {
-      stroke: var(--color_fg_selected);
-    }
+    background-color: var(--color_bg_layer);
+    border: 1px solid var(--color_border_default);
+    transition: all .2s ease-out;
   }
 
   &:focus-visible {

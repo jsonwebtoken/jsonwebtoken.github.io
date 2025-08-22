@@ -85,6 +85,7 @@ export const JwtInputComponent: React.FC<JwtInputComponentProps> = ({
           success: [dictionary.successMessage],
           errors: decodeErrors$,
         }}
+        hasHeaderIcon
         slots={{
           notification: (
             <TokenDecoderSignatureValidationComponent
@@ -98,9 +99,9 @@ export const JwtInputComponent: React.FC<JwtInputComponentProps> = ({
                 value={token}
               />
               <CardToolbarClearButtonComponent
-                languageCode={languageCode}
                 onPress={clearValue}
                 isDisabled={!token}
+                languageCode={languageCode}
               />
             </CardToolbarComponent>
           ),
