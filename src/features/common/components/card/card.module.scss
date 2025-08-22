@@ -6,7 +6,6 @@
   display: flex;
   align-items: center;
   gap: 0.25rem;
-  text-transform: uppercase;
   padding: 0.5rem 0;
   color: var(--color_fg_default);
   font-size: 0.875rem;
@@ -61,10 +60,11 @@
   grid-column: span 6;
   display: flex;
   flex: 1;
+  padding: 0px 2px;
   flex-direction: column;
   border-radius: 0.5rem;
   border: 1px solid var(--color_border_bold);
-  background: var(--color_bg_code-editor);
+  background: var(--color_bg_layer_alternate-bold);
   overflow: hidden;
 
   &[data-type="output"] {
@@ -75,6 +75,12 @@
     border-radius: 0;
     border: none;
   }
+}
+
+.card__heading_title_container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .card__hasFullWidth {
@@ -109,7 +115,6 @@
 
   border-bottom: 1px solid var(--color_border_bold);
   gap: 0.25rem;
-  text-transform: uppercase;
 }
 
 .card__fullTitle {
@@ -143,22 +148,19 @@
 }
 
 .card__titleKey {
-  color: var(--color_fg_default);
-  font-size: 0.875rem;
-  line-height: 1.375rem;
-  font-style: normal;
-  font-weight: 500;
-  letter-spacing: 0.24px;
-  text-transform: uppercase;
+    color: var(--color_fg_default);
+    font-size: .875rem;
+    line-height: 1.375rem;
+    font-weight: 500;
+    letter-spacing: .24px;
 }
 
 .card__titleValue {
   color: var(--color_fg_default);
-  font-size: 0.875rem;
+  font-size: .875rem;
   line-height: 1.375rem;
   font-weight: 500;
-  letter-spacing: 0.24px;
-  text-transform: uppercase;
+  letter-spacing: .24px;
 }
 
 .card__action {
@@ -171,6 +173,13 @@
   height: 3.5rem;
 
   border-top: 1px solid var(--color_border_bold);
+}
+
+.card__content {
+  background-color: var(--color_bg_layer);
+  height: 100%;
+  border-radius: .75rem;
+  box-shadow: 0 0 0 .5px rgba(0,0,0,.12),0 2px 2px -1px rgba(0,0,0,.04),0 4px 4px -2px rgba(0,0,0,.04),0 6px 6px -3px rgba(0,0,0,.04);
 }
 
 .card__body {
@@ -209,7 +218,6 @@
 }
 
 .card__success {
-  background-color: var(--color_bg_state_success_subtle);
 
   span,
   p,
@@ -245,7 +253,6 @@
 }
 
 .card__warning {
-  background-color: var(--color_bg_state_caution_subtle);
 
   span,
   p,
