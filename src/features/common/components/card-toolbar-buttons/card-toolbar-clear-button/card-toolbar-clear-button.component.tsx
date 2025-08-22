@@ -4,6 +4,7 @@ import {
   CardToolbarButtonComponent,
   CardToolbarButtonComponentProps,
 } from "@/features/common/components/card-toolbar-button/card-toolbar-button.component";
+import { ClearIcon } from "../../icons/clear/clear-icon";
 
 interface CardToolbarClearButtonComponentProps
   extends Omit<CardToolbarButtonComponentProps, "variant"> {
@@ -16,8 +17,12 @@ export const CardToolbarClearButtonComponent: React.FC<
   const dictionary = getButtonsUiDictionary(languageCode);
 
   return (
-    <CardToolbarButtonComponent {...props} variant="standard">
-      {dictionary.clearButton.label}
+    <CardToolbarButtonComponent
+      {...props}
+      variant="standard"
+      tooltipText={dictionary.clearButton.label}
+    >
+      <ClearIcon />
     </CardToolbarButtonComponent>
   );
 };
