@@ -1,12 +1,15 @@
 @use "@/libs/theme/styles/variables" as *;
 
 .container {
+  flex: 1 1;
   display: flex;
-  flex-direction: column;
-  transition: background-color 0.13s ease-in-out;
-  padding: 0.5rem 1rem;
+  align-items: center;
+  justify-content: flex-start;
+  padding: .75rem .75rem .5rem;
+  gap: .25rem;
   font-size: .875rem;
-  line-height: 1.125rem;
+  line-height: 1.375rem;
+  color: var(--color_fg_default);
 }
 
 .valid {
