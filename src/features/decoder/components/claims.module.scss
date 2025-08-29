@@ -2,10 +2,10 @@
 @use "@/libs/theme/styles/mixins" as *;
 
 .table {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  overflow-y: auto;
-  overflow-x: auto;
+    display: grid;
+    grid-template-columns: repeat(6,1fr);
+    padding: .25rem;
+    transition: all .3s ease-in-out;
 
   &::-webkit-scrollbar {
     width: 0.75rem;
