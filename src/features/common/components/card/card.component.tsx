@@ -4,6 +4,7 @@ import { clsx } from "clsx";
 import { getLocalizedSecondaryFont, MonoFont } from "@/libs/theme/fonts";
 import { CardMessageComponent } from "@/features/common/components/card-message/card-message.component";
 import { HeaderIcon } from "../icons/header/header-icon";
+import { CheckIcon } from "../icons/check/check-icon";
 
 export interface CardComponentProps extends PropsWithChildren {
   id: string;
@@ -150,7 +151,10 @@ export const CardComponent: React.FC<CardComponentProps> = (props) => {
         >
           {messages.success.map((line, index) => {
             return (
+              <>
+              <CheckIcon />
               <CardMessageComponent key={index}>{line}</CardMessageComponent>
+              </>
             );
           })}
         </div>
