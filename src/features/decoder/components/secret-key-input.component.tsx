@@ -162,13 +162,6 @@ export const SecretKeyInputComponent: React.FC<
             />
           </CardToolbarComponent>
         ),
-        footer: isHmacAlg(alg$) ? (
-          <TokenDecoderEncodingFormatPickerComponent
-            languageCode={languageCode}
-          />
-        ) : (
-          <TokenDecoderKeyFormatPickerComponent languageCode={languageCode} />
-        ),
       }}
     >
       {isHmacAlg(alg$) && (
