@@ -92,7 +92,7 @@ export const enHomeDictionary: HomeDictionaryModel = {
       label: "JWT example generator",
     },
     jwtEditor: {
-      headline: "Encoded value",
+      headline: "Encoded Token",
       label: "JWT editor",
       title: "JSON Web Token (JWT)",
       compactTitle: "JWT",
@@ -105,7 +105,7 @@ export const enHomeDictionary: HomeDictionaryModel = {
           label: "JSON",
         },
         claims: {
-          label: "Claims Table",
+          label: "Claims Breakdown",
         },
       },
     },
@@ -116,7 +116,7 @@ export const enHomeDictionary: HomeDictionaryModel = {
           label: "JSON",
         },
         claims: {
-          label: "Claims Table",
+          label: "Claims Breakdown",
         },
       },
     },
