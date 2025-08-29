@@ -14,40 +14,37 @@
 }
 
 .cardTabs__title {
-  grid-column: 1 / -1;
+  grid-column: 1/-1;
   display: flex;
   align-items: center;
-  gap: 0.25rem;
-  text-transform: uppercase;
+  gap: .25rem;
   color: var(--color_fg_default);
-  font-size: 0.875rem;
-  line-height: 1.375rem;
-  font-weight: 500;
-  letter-spacing: 0.24px;
-  margin-right: 8px;
+  font-size: 1rem;
+  line-height: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -.1px;
 }
 
 .cardTabs {
-  position: relative;
-  grid-column: span 6;
-  display: flex;
-  height: 100%;
-  width: 100%;
-  flex-direction: column;
-  border-radius: 0.5rem;
-  border: 1px solid var(--color_border_bold);
-  background: var(--color_bg_layer_alternate);
-  overflow: hidden;
+    grid-column: span 6;
+    display: flex;
+    flex-direction: column;
+    border-radius: 1rem;
+    border: .5px solid var(--color_border_default);
+    background: var(--color_bg_layer_alternate-bold);
+    padding: .25rem;
+    letter-spacing: -.1px;
+    gap: .25rem;
 }
 
 $cardTabs__tabList__height: 2.5rem;
 
 .cardTabs__tabList {
-  position: relative;
-  display: flex;
-  border-bottom: 1px solid var(--color_border_bold);
-  height: $cardTabs__tabList__height;
-  flex-shrink: 0;
+    position: relative;
+    display: flex;
+    height: 2.5rem;
+    padding: .5rem;
+    gap: .25rem;
 }
 
 .cardTabs__title__container {
@@ -56,23 +53,21 @@ $cardTabs__tabList__height: 2.5rem;
 }
 
 .cardTab__title {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  text-transform: uppercase;
-  padding: 0.5rem 0.75rem;
-  border-bottom: 0.125rem solid transparent;
-  color: var(--color_fg_default);
-  font-size: 0.75rem;
-  line-height: 1.125rem;
-  font-weight: 500;
-  letter-spacing: 0.24px;
-  cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: .25rem;
+    border-radius: .5rem;
+    padding: 0 .5rem;
+    color: var(--color_fg_default);
+    font-size: .875rem;
+    line-height: 1.125rem;
+    font-weight: 500;
+    letter-spacing: -.1px;
+    cursor: pointer;
 
   &[data-selected="true"] {
-    color: var(--color_fg_selected);
-    border-bottom: 0.125rem solid var(--color_border_selected);
+    background-color: var(--color_bg_layer);
+    box-shadow: 0 0 0 1px rgba(0,0,0,.04),0 1px 1px -.5px rgba(0,0,0,.04),inset 0 0 0 1px rgba(0,0,0,.04);
   }
 
   &[data-focus-visible]:after {
@@ -86,6 +81,7 @@ $cardTabs__tabList__height: 2.5rem;
 
 .cardTab__title__full {
   display: none;
+  font-weight: 500;
 
   @media #{$breakpoint-dimension-sm} {
     display: flex;

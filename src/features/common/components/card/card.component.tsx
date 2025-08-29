@@ -3,12 +3,15 @@ import styles from "./card.module.scss";
 import { clsx } from "clsx";
 import { getLocalizedSecondaryFont, MonoFont } from "@/libs/theme/fonts";
 import { CardMessageComponent } from "@/features/common/components/card-message/card-message.component";
+import { HeaderIcon } from "../icons/header/header-icon";
+import { CheckIcon } from "../icons/check/check-icon";
 
 export interface CardComponentProps extends PropsWithChildren {
   id: string;
   languageCode: string;
   title: string;
   compactTitle: string;
+  hasHeaderIcon?: boolean;
   options: Partial<{
     noPadding: boolean;
     fullWidth: boolean;
@@ -44,6 +47,7 @@ export const CardComponent: React.FC<CardComponentProps> = (props) => {
     },
     messages,
     slots,
+    hasHeaderIcon = false,
   } = props;
 
   const cardId = useId();
@@ -64,7 +68,7 @@ export const CardComponent: React.FC<CardComponentProps> = (props) => {
         MonoFont.className,
         styles.card,
         options && options.fullWidth && styles.card__hasFullWidth,
-        options && options.fullHeight && styles.card__hasFullHeight,
+        options && options.fullHeight && styles.card__hasFullHeight
       )}
       data-type={options && options.isOutput ? "output" : "input"}
       data-frameless={options && options.frameless}
@@ -74,21 +78,9 @@ export const CardComponent: React.FC<CardComponentProps> = (props) => {
           {titleKey && (
             <div className={styles.card__headline}>
               {titleKey && !compactTitle && (
-                <h4 id={cardId}>
-                  <span className={styles.card__titleKey}>
-                    {titleKey}
-                    {titleValue && `: `}
-                  </span>
-                  {titleValue && (
-                    <span className={styles.card__titleValue}>
-                      {titleValue}
-                    </span>
-                  )}
-                </h4>
-              )}
-              {titleKey && compactTitle && (
-                <>
-                  <h4 id={cardId} className={styles.card__fullTitle}>
+                <div className={styles.card__heading_title_container}>
+                  {hasHeaderIcon && <HeaderIcon />}
+                  <h4 id={cardId}>
                     <span className={styles.card__titleKey}>
                       {titleKey}
                       {titleValue && `: `}
@@ -99,6 +91,24 @@ export const CardComponent: React.FC<CardComponentProps> = (props) => {
                       </span>
                     )}
                   </h4>
+                </div>
+              )}
+              {titleKey && compactTitle && (
+                <>
+                  <div className={styles.card__heading_title_container}>
+                    {hasHeaderIcon && <HeaderIcon />}
+                    <h4 id={cardId} className={styles.card__fullTitle}>
+                      <span className={styles.card__titleKey}>
+                        {titleKey}
+                        {titleValue && `: `}
+                      </span>
+                      {titleValue && (
+                        <span className={styles.card__titleValue}>
+                          {titleValue}
+                        </span>
+                      )}
+                    </h4>
+                  </div>
                   <h4 id={cardId} className={styles.card__compactTitle}>
                     <span className={styles.card__titleKey}>
                       {compactTitle}
@@ -111,6 +121,16 @@ export const CardComponent: React.FC<CardComponentProps> = (props) => {
           )}
         </>
       )}
+      <div className={styles.card__content}>
+        <div
+          className={styles.card__body}
+          data-no-padding={
+            options && options.noPadding ? options.noPadding : undefined
+          }
+        >
+          {children}
+        </div>
+      </div>
       {messages && messages.errors && messages.errors.length > 0 ? (
         <div
           data-testid={`${id}___statusBar__error`}
@@ -131,11 +151,15 @@ export const CardComponent: React.FC<CardComponentProps> = (props) => {
         >
           {messages.success.map((line, index) => {
             return (
+              <>
+              <CheckIcon />
               <CardMessageComponent key={index}>{line}</CardMessageComponent>
+              </>
             );
           })}
         </div>
       ) : null}
+      {slots?.notification}
       {messages && messages.warnings && messages.warnings.length > 0 && (
         <div
           data-testid={`${id}___statusBar__warning`}
@@ -149,15 +173,6 @@ export const CardComponent: React.FC<CardComponentProps> = (props) => {
           })}
         </div>
       )}
-      {slots?.notification}
-      <div
-        className={styles.card__body}
-        data-no-padding={
-          options && options.noPadding ? options.noPadding : undefined
-        }
-      >
-        {children}
-      </div>
       {slots?.footer && (
         <div className={styles.card__action}>{slots.footer}</div>
       )}
@@ -192,7 +207,7 @@ export const CardWithHeadlineComponent: React.FC<
             id={regionId}
             className={clsx(
               styles.cardHeadline__title,
-              getLocalizedSecondaryFont(languageCode),
+              getLocalizedSecondaryFont(languageCode)
             )}
           >
             {sectionHeadline.title}

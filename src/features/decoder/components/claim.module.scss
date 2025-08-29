@@ -2,12 +2,11 @@
 @use "@/libs/theme/styles/mixins" as *;
 
 .row {
-  position: relative;
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: subgrid;
-
-  border-bottom: 1px solid var(--color_border_bold);
+    position: relative;
+    grid-column: 1/-1;
+    display: grid;
+    grid-template-columns: subgrid;
+    border-bottom: 1px solid var(--color_border_bold);
 
   &:last-child {
     border-bottom: unset;
@@ -40,8 +39,6 @@
   text-wrap: wrap;
   overflow: hidden;
   word-break: break-all;
-  color: var(--color_jwt_payload);
-  background-color: var(--color_bg_layer_alternate-bold);
   font-size: 0.75rem;
   line-height: 1.125rem;
   font-style: normal;
