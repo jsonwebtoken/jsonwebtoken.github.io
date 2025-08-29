@@ -45,7 +45,7 @@
 :root {
   --color_bg_page: var(--functional-gray-950);
   --color_fg_bold: var(--functional-gray-50);
-  --color_fg_default: var(--functional-gray-200);
+  --color_fg_default: var(--functional-gray-500);
   --color_fg_link_primary: var(--cloud);
 
   --color_bg_app_bar: rgba(17, 17, 17, 0.66);
@@ -61,7 +61,7 @@
 
   --color_bg_auth0-cta: linear-gradient(251deg, #1e1e1e 2.29%, #191919 87.03%);
 
-  --color_bg_layer: var(--functional-gray-950);
+  --color_bg_layer: var(--functional-gray-0);
   --color_bg_layer_bold: var(--functional-gray-700);
   --color_bg_layer_boldest: var(--functional-gray-50);
   --color_bg_layer_alternate: var(--functional-gray-850);
@@ -77,11 +77,12 @@
   --color_code_blue2: #7487eb;
   --color_code_blue3: #7487eb;
   --color_code_dark_blue: #fafbfe;
-  --color_code_dark_blue2: #b9c3f5;
+  --color_code_dark_blue2: #3f59e4;
   --color_code_purple: #ccbcfa;
-  --color_code_orange: #f1b99b;
+  --color_code_orange: #e7834e;
   --color_code_inverse: #fefaf8;
   --color_code_teal: #3b8d7e;
+  --color_code_green: #52af6d;
   --color_code_dark_teal: #8ed2c5;
   --color_code_dark_neutral: #808080;
 
@@ -138,9 +139,9 @@
   --color_fg_on_state_caution: #000000;
   --color_fg_on_state_caution_subtle: #e3c423;
 
-  --color_jwt_header: #6dc993;
-  --color_jwt_payload: #e5e5e5;
-  --color_jwt_signature: #8c9bef;
+  --color_jwt_header: #e27133;
+  --color_jwt_payload: #9472f7;
+  --color_jwt_signature: #149750;
   --color_jwt_dot: #ff69e4;
 
   --color_bg_scrollbar: #6b7380;
@@ -148,9 +149,9 @@
 
 html[data-theme="light"],
 html[data-theme="system-light"] {
-  --color_jwt_header: #096256;
-  --color_jwt_payload: #383838;
-  --color_jwt_signature: #2c3ea0;
+  --color_jwt_header: #e27133 ;
+  --color_jwt_payload: #9472f7;
+  --color_jwt_signature: #149750;
   --color_jwt_dot: #cc36b1;
 
   --color_bg_state_info_subtle: #eef0fd;
@@ -195,7 +196,7 @@ html[data-theme="system-light"] {
 
   --color_bg_page: var(--functional-gray-0);
   --color_fg_bold: var(--charcoal2);
-  --color_fg_default: var(--functional-gray-650);
+  --color_fg_default: var(--functional-gray-500);
   --color_fg_link_primary: var(--sky);
 
   --color_bg_app_bar: rgba(241, 241, 241, 0.66);
@@ -241,9 +242,9 @@ html[data-theme="system-light"] {
   --color_code_blue2: #7487eb;
   --color_code_blue3: #7487eb;
   --color_code_dark_blue: #10163a;
-  --color_code_dark_blue2: #263588;
+  --color_code_dark_blue2: #3f59e4;
   --color_code_purple: #9979f5;
-  --color_code_orange: #a35125;
+  --color_code_orange: #e7834e;
   --color_code_inverse: #291409;
   --color_code_teal: #3b8d7e;
   --color_code_dark_teal: #419d8c;
@@ -416,15 +417,18 @@ pre[class*="language-"] {
 
 .token.property,
 .token.tag,
-.token.number,
 .token.constant,
 .token.symbol,
 .token.deleted {
-  color: var(--color_code_orange);
+  color: var(--color_code_dark_blue);
+}
+
+.token.number {
+  color: var(--color_code_dark_blue2)
 }
 
 .token.boolean {
-  color: var(--color_fg_code);
+  color: var(--color_code_orange);
 }
 
 .token.selector,
@@ -433,7 +437,7 @@ pre[class*="language-"] {
 .token.char,
 .token.builtin,
 .token.inserted {
-  color: var(--color_code_dark_blue);
+  color: var(--color_code_green);
 }
 
 .token.operator,
