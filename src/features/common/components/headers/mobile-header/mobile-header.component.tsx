@@ -16,14 +16,12 @@ interface MobileHeaderComponentProps {
   languageCode: string;
   dictionary: LayoutDictionaryModel["header"];
   siteLogo: React.ReactNode;
-  ribbon: React.ReactNode;
 }
 
 export const MobileHeaderComponent: React.FC<MobileHeaderComponentProps> = ({
   languageCode,
   dictionary,
   siteLogo,
-  ribbon,
 }) => {
   const pathname = usePathname();
   const [currentPathname, setCurrentPathname] = useState<string | null>(null);
@@ -81,7 +79,6 @@ export const MobileHeaderComponent: React.FC<MobileHeaderComponentProps> = ({
   return (
     <>
       <header className={styles.header}>
-        {ribbon}
         <BoxComponent
           contentAs="nav"
           containerClassName={styles.container}

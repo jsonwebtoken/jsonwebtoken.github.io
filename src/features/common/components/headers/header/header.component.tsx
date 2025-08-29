@@ -15,14 +15,12 @@ interface HeaderComponentProps {
   languageCode: string;
   dictionary: LayoutDictionaryModel["header"];
   siteLogo: React.ReactNode;
-  ribbon: React.ReactNode;
 }
 
 export const HeaderComponent: React.FC<HeaderComponentProps> = ({
   languageCode,
   dictionary,
   siteLogo,
-  ribbon,
 }) => {
   const pathname = usePathname();
   const pathnameSegments = getPathnameSegments(pathname);
@@ -39,7 +37,6 @@ export const HeaderComponent: React.FC<HeaderComponentProps> = ({
 
   return (
     <header className={styles.header}>
-      {ribbon}
       <BoxComponent
         contentAs="nav"
         containerClassName={styles.container}

@@ -41,7 +41,7 @@
   flex: 1;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
   gap: 3rem;
 }
 
@@ -89,4 +89,8 @@
     outline-offset: 0.125rem;
     border-radius: 0.125rem;
   }
+}
+
+.header_actions {
+
 }

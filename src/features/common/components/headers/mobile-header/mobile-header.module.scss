@@ -1,25 +1,18 @@
 @use "@/libs/theme/styles/variables" as *;
 @use "@/libs/theme/styles/mixins" as *;
 
-.header {
+.container {
+  width: calc(100% - 2rem);
   position: fixed;
-  top: 0;
+  top: 1rem;
   right: 0;
   left: 0;
-
-  z-index: 9001;
-  backdrop-filter: blur(2rem);
-}
-
-.container {
-  @include Container;
-
+  border-radius: 1rem;
+  margin: 0 auto;
   background: var(--color_bg_app_bar);
-  border-bottom: 1px solid rgba(#555, 0.32);
-
-  @media #{$breakpoint-dimension-sm} {
-    display: none;
-  }
+  border: 1px solid var(--color_bg_app_bar_border);
+  backdrop-filter: blur(2rem);
+  z-index: 100;
 }
 
 .wrapper {

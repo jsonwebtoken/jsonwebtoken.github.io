@@ -24,25 +24,11 @@ export const PageHeaderComponent: React.FC<PageHeaderComponentProps> = ({
         languageCode={languageCode}
         dictionary={layoutDictionary.header}
         siteLogo={siteLogo}
-        ribbon={
-          <RibbonComponent
-            themeCode={themeCode}
-            languageCode={languageCode}
-            dictionary={layoutDictionary.ribbon}
-          />
-        }
       />
       <HeaderComponent
         languageCode={languageCode}
         dictionary={layoutDictionary.header}
         siteLogo={siteLogo}
-        ribbon={
-          <RibbonComponent
-            themeCode={themeCode}
-            languageCode={languageCode}
-            dictionary={layoutDictionary.ribbon}
-          />
-        }
       />
     </>
   );

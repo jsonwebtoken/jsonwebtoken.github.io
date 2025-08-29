@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "./error-page.module.scss";
 import { ShellComponent } from "@/features/common/components/shell/shell.component";
-import { RibbonComponent } from "@/features/common/components/bars/ribbon/ribbon.component";
 import { MobileHeaderComponent } from "@/features/common/components/headers/mobile-header/mobile-header.component";
 import { HeaderComponent } from "@/features/common/components/headers/header/header.component";
 import { FooterComponent } from "@/features/common/components/footer/footer.component";
@@ -33,25 +32,11 @@ export const ErrorPageComponent: React.FC<ErrorPageComponentProps> = ({
             languageCode={languageCode}
             dictionary={dictionary.header}
             siteLogo={<SiteLogoComponent languageCode={languageCode} />}
-            ribbon={
-              <RibbonComponent
-                themeCode={themeCode}
-                languageCode={languageCode}
-                dictionary={dictionary.ribbon}
-              />
-            }
           />
           <HeaderComponent
             languageCode={languageCode}
             dictionary={dictionary.header}
             siteLogo={<SiteLogoComponent languageCode={languageCode} />}
-            ribbon={
-              <RibbonComponent
-                themeCode={themeCode}
-                languageCode={languageCode}
-                dictionary={dictionary.ribbon}
-              />
-            }
           />
         </header>
         <main className={styles.main}>{children}</main>

@@ -48,7 +48,8 @@
   --color_fg_default: var(--functional-gray-200);
   --color_fg_link_primary: var(--cloud);
 
-  --color_bg_app_bar: rgba(17, 17, 17, 0.66);
+  --color_bg_app_bar: hsla(0,0%,7%,.04);
+  --color_bg_app_bar_border: hsla(0, 0%, 7%, .12);
   --color_bg_app_bar_plain: rgba(17, 17, 17);
 
   --color_fg_link: var(--functional-gray-50);
