@@ -5,6 +5,7 @@ import { getImageDictionary } from "@/features/localization/services/images-dict
 import { SecondaryFont } from "@/libs/theme/fonts";
 import clsx from "clsx";
 import { JwtLogoComponent } from "../../assets/jwt-logo.component";
+import { JwtWordmarkComponent } from "../../assets/jwt-wordmark.component";
 
 interface SiteBrandComponentProps extends PropsWithChildren {
   path: string;
@@ -23,7 +24,7 @@ export const SiteBrandComponent: React.FC<SiteBrandComponentProps> = ({
         <JwtLogoComponent />
       </div>
       <div className={styles.brand__logoText}>
-
+        <JwtWordmarkComponent />
       </div>
       <div className={clsx(SecondaryFont.className, styles.brand__headline)}>
         <span className={styles.brand__subtitle}>Debugger</span>
