@@ -14,13 +14,11 @@ import { SiteBrandComponent } from "@/features/common/components/site-brand/site
 interface HeaderComponentProps {
   languageCode: string;
   dictionary: LayoutDictionaryModel["header"];
-  siteLogo: React.ReactNode;
 }
 
 export const HeaderComponent: React.FC<HeaderComponentProps> = ({
   languageCode,
   dictionary,
-  siteLogo,
 }) => {
   const pathname = usePathname();
   const pathnameSegments = getPathnameSegments(pathname);
@@ -44,9 +42,7 @@ export const HeaderComponent: React.FC<HeaderComponentProps> = ({
         contentClassName={styles.content}
         aria-label="Main navigation"
       >
-        <SiteBrandComponent path={languagePathPrefix}>
-          {siteLogo}
-        </SiteBrandComponent>
+        <SiteBrandComponent path={languagePathPrefix} languageCode={languageCode} />
         <div className={styles.navTabs}>
           <ul className={styles.navList}>
             {dictionary.links.map((link) => {

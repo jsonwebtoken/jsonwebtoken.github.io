@@ -7,7 +7,6 @@ import { FooterComponent } from "@/features/common/components/footer/footer.comp
 import { LayoutDictionaryModel } from "@/features/localization/models/layout-dictionary.model";
 import { ThemeCookieValues } from "@/features/common/values/theme.values";
 import { getImageDictionary } from "@/features/localization/services/images-dictionary.service";
-import { SiteLogoComponent } from "@/features/common/components/site-logo/site-logo.component";
 
 interface ErrorPageComponentProps {
   languageCode: string;
@@ -22,7 +21,6 @@ export const ErrorPageComponent: React.FC<ErrorPageComponentProps> = ({
   dictionary,
   children,
 }) => {
-  const images = getImageDictionary(languageCode);
 
   return (
     <html lang={languageCode} data-theme={themeCode}>
@@ -31,20 +29,16 @@ export const ErrorPageComponent: React.FC<ErrorPageComponentProps> = ({
           <MobileHeaderComponent
             languageCode={languageCode}
             dictionary={dictionary.header}
-            siteLogo={<SiteLogoComponent languageCode={languageCode} />}
           />
           <HeaderComponent
             languageCode={languageCode}
             dictionary={dictionary.header}
-            siteLogo={<SiteLogoComponent languageCode={languageCode} />}
           />
         </header>
         <main className={styles.main}>{children}</main>
         <FooterComponent
           languageCode={languageCode}
           dictionary={dictionary.footer}
-          auth0Logo={images.logos.auth0}
-          siteLogo={<SiteLogoComponent languageCode={languageCode} />}
         />
       </ShellComponent>
     </html>

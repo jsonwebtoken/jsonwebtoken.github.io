@@ -8,13 +8,11 @@ import { getLayoutDictionary } from "@/features/localization/services/language-d
 interface PageHeaderComponentProps {
   languageCode: string;
   themeCode: ThemeCookieValues;
-  siteLogo: React.ReactNode;
 }
 
 export const PageHeaderComponent: React.FC<PageHeaderComponentProps> = ({
   themeCode,
   languageCode,
-  siteLogo,
 }) => {
   const layoutDictionary = getLayoutDictionary(languageCode);
 
@@ -23,12 +21,10 @@ export const PageHeaderComponent: React.FC<PageHeaderComponentProps> = ({
       <MobileHeaderComponent
         languageCode={languageCode}
         dictionary={layoutDictionary.header}
-        siteLogo={siteLogo}
       />
       <HeaderComponent
         languageCode={languageCode}
         dictionary={layoutDictionary.header}
-        siteLogo={siteLogo}
       />
     </>
   );

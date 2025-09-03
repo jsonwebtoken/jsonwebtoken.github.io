@@ -15,13 +15,11 @@ import { SiteBrandComponent } from "@/features/common/components/site-brand/site
 interface MobileHeaderComponentProps {
   languageCode: string;
   dictionary: LayoutDictionaryModel["header"];
-  siteLogo: React.ReactNode;
 }
 
 export const MobileHeaderComponent: React.FC<MobileHeaderComponentProps> = ({
   languageCode,
   dictionary,
-  siteLogo,
 }) => {
   const pathname = usePathname();
   const [currentPathname, setCurrentPathname] = useState<string | null>(null);
@@ -86,9 +84,7 @@ export const MobileHeaderComponent: React.FC<MobileHeaderComponentProps> = ({
           contentClassName={styles.content}
         >
           <div className={styles.logo}>
-            <SiteBrandComponent path={languagePathPrefix}>
-              {siteLogo}
-            </SiteBrandComponent>
+            <SiteBrandComponent path={languagePathPrefix} languageCode={languageCode}/>
           </div>
           <button
             className={styles.burgerIconWrapper}
