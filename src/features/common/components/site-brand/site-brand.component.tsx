@@ -23,7 +23,7 @@ export const SiteBrandComponent: React.FC<SiteBrandComponentProps> = ({
       <div className={styles.brand__logo}>
         <JwtLogoComponent />
       </div>
-      <div className={styles.brand__logoText}>
+      <div className={styles.brand__wordmark}>
         <JwtWordmarkComponent />
       </div>
       <div className={clsx(SecondaryFont.className, styles.brand__headline)}>

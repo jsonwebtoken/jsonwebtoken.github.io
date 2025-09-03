@@ -1,11 +1,11 @@
 .brand {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    height: 1.5rem;
-    gap: .5rem;
-    position: relative;
-    cursor: pointer;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  height: 1.5rem;
+  gap: 0.5rem;
+  position: relative;
+  cursor: pointer;
 
   svg {
     height: inherit;
@@ -27,11 +27,11 @@
 }
 
 .brand__logo {
-    position: relative;
-    display: flex;
-    align-items: center;
-    height: 1.5rem;
-    animation: rotate 10s linear infinite;
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 1.5rem;
+  animation: rotate 10s linear infinite;
 }
 
 @keyframes rotate {
@@ -43,10 +43,16 @@
   }
 }
 
+.brand__wordmark {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 1rem; 
+}
+
 .brand__headline {
   display: flex;
   flex-direction: column;
-  margin-left: 0.625rem;
   color: var(--color_fg_bold);
 }
 
@@ -60,8 +66,9 @@
 
 .brand__subtitle {
   display: flex;
-  font-size: 0.75rem;
-  line-height: 0.75rem;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: .75rem;
   margin-top: 1px;
-  letter-spacing: 0.02rem;
+  letter-spacing: .02rem;
 }
