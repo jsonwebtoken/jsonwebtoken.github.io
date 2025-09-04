@@ -34,15 +34,17 @@ export const HeaderComponent: React.FC<HeaderComponentProps> = ({
       : createUrlPath([languageCode]);
 
   return (
-    <header className={styles.header}>
-      <BoxComponent
-        contentAs="nav"
-        containerClassName={styles.container}
-        wrapperClassName={styles.wrapper}
-        contentClassName={styles.content}
-        aria-label="Main navigation"
-      >
+    <BoxComponent
+      contentAs="nav"
+      containerClassName={styles.container}
+      wrapperClassName={styles.wrapper}
+      contentClassName={styles.content}
+      aria-label="Main navigation"
+    >
+      <div className={styles.brand}>
         <SiteBrandComponent path={languagePathPrefix} languageCode={languageCode} />
+      </div>
+      <div className={styles.navContainer}>
         <div className={styles.navTabs}>
           <ul className={styles.navList}>
             {dictionary.links.map((link) => {
@@ -70,7 +72,7 @@ export const HeaderComponent: React.FC<HeaderComponentProps> = ({
             })}
           </ul>
         </div>
-      </BoxComponent>
-    </header>
+      </div>
+    </BoxComponent>
   );
 };

@@ -17,7 +17,7 @@ export const PageHeaderComponent: React.FC<PageHeaderComponentProps> = ({
   const layoutDictionary = getLayoutDictionary(languageCode);
 
   return (
-    <>
+    <header>
       <MobileHeaderComponent
         languageCode={languageCode}
         dictionary={layoutDictionary.header}
@@ -26,6 +26,6 @@ export const PageHeaderComponent: React.FC<PageHeaderComponentProps> = ({
         languageCode={languageCode}
         dictionary={layoutDictionary.header}
       />
-    </>
+    </header>
   );
 };

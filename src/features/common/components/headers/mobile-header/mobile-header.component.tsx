@@ -76,7 +76,6 @@ export const MobileHeaderComponent: React.FC<MobileHeaderComponentProps> = ({
 
   return (
     <>
-      <header className={styles.header}>
         <BoxComponent
           contentAs="nav"
           containerClassName={styles.container}
@@ -102,7 +101,6 @@ export const MobileHeaderComponent: React.FC<MobileHeaderComponentProps> = ({
             />
           </button>
         </BoxComponent>
-      </header>
       <section
         className={styles.menu}
         aria-hidden={mobileMenuState === MobileMenuStateValues.CLOSED}
