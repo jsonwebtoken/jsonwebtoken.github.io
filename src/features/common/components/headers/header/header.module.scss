@@ -101,3 +101,13 @@
     border-radius: 0.125rem;
   }
 }
+
+.actions {
+  display: flex;
+  gap: .5rem;
+
+  @media #{$breakpoint-dimension-md} {
+    gap: 1rem;
+    margin-right: 1.5rem;
+  }
+}

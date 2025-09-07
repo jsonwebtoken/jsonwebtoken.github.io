@@ -29,11 +29,7 @@ export const ThemePickerComponent: React.FC<ThemePickerComponentProps> = ({
             <div
               key={option.code}
               className={styles.option}
-              data-active={
-                option.code === selectedOptionCode
-                  ? PicketListItemStateValues.ACTIVE
-                  : PicketListItemStateValues.INACTIVE
-              }
+              data-active={selectedOptionCode === option.code}
               title={option.label}
               onClick={async () => {
                 console.log(option.label)
