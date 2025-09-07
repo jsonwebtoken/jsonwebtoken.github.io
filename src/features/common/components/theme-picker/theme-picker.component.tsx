@@ -11,11 +11,6 @@ interface ThemePickerComponentProps {
   handleSelection: (value: ThemePickerCodeValues) => Promise<void>;
 }
 
-enum PicketListItemStateValues {
-  INACTIVE = "INACTIVE",
-  ACTIVE = "ACTIVE",
-}
-
 export const ThemePickerComponent: React.FC<ThemePickerComponentProps> = ({
   options,
   selectedOptionCode,

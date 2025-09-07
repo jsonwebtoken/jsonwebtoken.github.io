@@ -1,5 +1,5 @@
 export interface StaticImageMetadataModel {
-  src?: string;
+  src: string;
   alt: string;
   width?: number;
   height?: number;
