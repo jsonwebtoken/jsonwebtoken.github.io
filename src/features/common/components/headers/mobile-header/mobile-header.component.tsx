@@ -11,10 +11,12 @@ import { DEFAULT_LANGUAGE_CODE } from "@/features/localization/localization.conf
 import { sitePaths } from "@/features/seo/site-tree";
 import { createUrlPath, getPathnameSegments } from "@/libs/utils/path.utils";
 import { SiteBrandComponent } from "@/features/common/components/site-brand/site-brand.component";
+import { ThemeCookieValues } from "@/features/common/values/theme.values";
 
 interface MobileHeaderComponentProps {
+  themeCode: ThemeCookieValues;
   languageCode: string;
-  dictionary: LayoutDictionaryModel["header"];
+  dictionary: LayoutDictionaryModel;
 }
 
 export const MobileHeaderComponent: React.FC<MobileHeaderComponentProps> = ({
@@ -90,8 +92,8 @@ export const MobileHeaderComponent: React.FC<MobileHeaderComponentProps> = ({
             onClick={toggleMobileMenu}
             aria-label={
               mobileMenuState === MobileMenuStateValues.OPEN
-                ? dictionary.labels.close
-                : dictionary.labels.open
+                ? dictionary.header.labels.close
+                : dictionary.header.labels.open
             }
             aria-expanded={mobileMenuState === MobileMenuStateValues.OPEN}
           >
@@ -110,7 +112,7 @@ export const MobileHeaderComponent: React.FC<MobileHeaderComponentProps> = ({
           contentClassName={styles.menuContent}
         >
           <ul className={styles.menu__list}>
-            {dictionary.links.map((link) => {
+            {dictionary.header.links.map((link) => {
               const linkPath =
                 languageCode === DEFAULT_LANGUAGE_CODE || link.isExternal
                   ? link.path

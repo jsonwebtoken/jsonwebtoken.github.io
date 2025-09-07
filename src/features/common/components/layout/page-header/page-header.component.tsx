@@ -1,5 +1,6 @@
+"use client";
+
 import React from "react";
-import { RibbonComponent } from "@/features/common/components/bars/ribbon/ribbon.component";
 import { MobileHeaderComponent } from "@/features/common/components/headers/mobile-header/mobile-header.component";
 import { HeaderComponent } from "@/features/common/components/headers/header/header.component";
 import { ThemeCookieValues } from "@/features/common/values/theme.values";
@@ -19,12 +20,14 @@ export const PageHeaderComponent: React.FC<PageHeaderComponentProps> = ({
   return (
     <header>
       <MobileHeaderComponent
+        themeCode={themeCode}
         languageCode={languageCode}
-        dictionary={layoutDictionary.header}
+        dictionary={layoutDictionary}
       />
       <HeaderComponent
+        themeCode={themeCode}
         languageCode={languageCode}
-        dictionary={layoutDictionary.header}
+        dictionary={layoutDictionary}
       />
     </header>
   );
