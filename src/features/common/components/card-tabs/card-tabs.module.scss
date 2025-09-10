@@ -95,14 +95,24 @@ $cardTabs__tabList__height: 2.5rem;
 }
 
 .cardTabs__actionButtons {
-  position: absolute;
-  right: 0.75rem;
-  top: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  height: $cardTabs__tabList__height;
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.cardTabs__tooltipContainer {
+    position: relative;
+    display: inline-block;
+    &:hover {
+      .button__tooltip {
+        opacity: 1;
+      }
+    }
 }
 
 .cardTabs__body {
