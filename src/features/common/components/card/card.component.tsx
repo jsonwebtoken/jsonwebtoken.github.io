@@ -65,7 +65,6 @@ export const CardComponent: React.FC<CardComponentProps> = (props) => {
       aria-label={canRenderTitle ? undefined : title}
       heap-ignore="true"
       className={clsx(
-        MonoFont.className,
         styles.card,
         options && options.fullWidth && styles.card__hasFullWidth,
         options && options.fullHeight && styles.card__hasFullHeight
