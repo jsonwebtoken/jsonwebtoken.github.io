@@ -5,7 +5,6 @@ import { DebuggerPickerOptionModel } from "@/features/common/models/debugger-pic
 import { LibraryFilterLabel } from "@/features/libraries/models/library-filters.model";
 import { isGroupedOptionsType } from "./utils";
 
-
 interface PickerLabelProps {
   label: string | null;
 }
@@ -17,12 +16,12 @@ const getGroupLabel = (
   >,
   selected: DebuggerPickerOptionModel
 ): LibraryFilterLabel | undefined => {
-  if(!isGroupedOptionsType(options)) return undefined
+  if (!isGroupedOptionsType(options)) return undefined;
 
   const group = (options as GroupBase<DebuggerPickerOptionModel>[]).find(
     (group) => group.options.some((opt) => opt.value === selected.value)
   );
-  return group ? group.label as LibraryFilterLabel : undefined;
+  return group ? (group.label as LibraryFilterLabel) : undefined;
 };
 
 const PickerLabel: React.FC<PickerLabelProps> = ({ label }) => {
@@ -62,9 +61,7 @@ export const DebuggerPickerComponent: React.FC<
 }) => {
   const [isClient, setIsClient] = useState(false);
 
-  const handleChange = (
-    selection: SingleValue<DebuggerPickerOptionModel>
-  ) => {
+  const handleChange = (selection: SingleValue<DebuggerPickerOptionModel>) => {
     if (!selection) {
       return;
     }
@@ -78,21 +75,21 @@ export const DebuggerPickerComponent: React.FC<
 
   if (!isClient) {
     return (
-      <div className={styles.picker} data-has-label={label !== null}>
+      <>
         <PickerLabel label={label} />
         <div className="react-select-placeholder"></div>
-      </div>
+      </>
     );
   }
 
   return (
-    <div className={styles.picker} data-has-label={label !== null}>
+    <>
       {label && <PickerLabel label={label} />}
       <Select
         aria-label={"Debugger picker"}
         className="react-select-container"
         onChange={handleChange}
-        value={selectedOptionCode}
+        //value={selectedOptionCode}
         options={options}
         menuPortalTarget={document.body}
         classNamePrefix={"react-select"}
@@ -101,8 +98,22 @@ export const DebuggerPickerComponent: React.FC<
         styles={{
           control: (base) => ({
             ...base,
-            minHeight: "1.75rem",
-            height: "1.75rem",
+            alignItems: 'center',
+            cursor: 'pointer',
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'space-between',
+            minHeight: '2.5rem',
+            position: 'relative',
+            transition: '0.2s ease-out',
+            borderRadius: '1rem',
+            boxShadow: 'rgba(0, 0, 0, 0.04) 0px 1px 1px -0.5px, rgba(0, 0, 0, 0.04) 0px 3px 3px -1.5px, rgba(0, 0, 0, 0.04) 0px 0px 0px 1px inset',
+            boxSizing: 'border-box',
+            height: '2.5rem',
+            width: '100%',
+            padding: '0px 0.25rem',
+            minWidth: '240px',
+            outline: '0px !important',
             ...(minWidth ? { minWidth: minWidth } : {}),
           }),
 
@@ -125,6 +136,6 @@ export const DebuggerPickerComponent: React.FC<
           }),
         }}
       ></Select>
-    </div>
+    </>
   );
 };
