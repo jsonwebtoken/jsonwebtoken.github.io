@@ -15,9 +15,7 @@ import {
   algDictionary,
   jwsExampleAlgHeaderParameterValuesDictionary,
 } from "@/features/common/values/jws-alg-header-parameter-values.dictionary";
-import { useButton } from "@react-aria/button";
-import { clsx } from "clsx";
-import { PrimaryFont } from "@/libs/theme/fonts";
+import { useButton } from "@react-aria/button"
 import { DebuggerPickerOptionModel } from "@/features/common/models/debugger-picker-option.model";
 
 enum PickerStates {
@@ -60,11 +58,11 @@ export const WidgetAlgPickerComponent: React.FC<
       elementType: "span",
       preventFocusOnPress: true,
     },
-    buttonRef,
+    buttonRef
   );
 
   const [pickerState, setPickerState] = useState<PickerStates>(
-    PickerStates.IDLE,
+    PickerStates.IDLE
   );
   const [canUseEs512, setCanUseEs512] = useState(false);
   const [canUseEd25519, setCanUseEd25519] = useState(false);
@@ -73,11 +71,11 @@ export const WidgetAlgPickerComponent: React.FC<
   const dictionary = getPickersUiDictionary(languageCode);
 
   const selectEncoderAlg$ = useEncoderStore(
-    (state) => state.selectEncodingExample,
+    (state) => state.selectEncodingExample
   );
 
   const selectDecoderAlg$ = useDecoderStore(
-    (state) => state.selectDecodingExample,
+    (state) => state.selectDecodingExample
   );
 
   const selectExample = (value: string) => {
@@ -94,13 +92,6 @@ export const WidgetAlgPickerComponent: React.FC<
     setPickerState(PickerStates.IDLE);
   };
 
-  const openPicker = () => {
-    setPickerState(PickerStates.PICKING);
-  };
-
-  const closePicker = () => {
-    setPickerState(PickerStates.IDLE);
-  };
 
   useEffect(() => {
     (async function runEs512Check() {
@@ -116,9 +107,9 @@ export const WidgetAlgPickerComponent: React.FC<
     })();
   }, []);
 
-  const noneAlgOptions: DebuggerPickerOptionModel[] = useMemo(() => {
+  /* const noneAlgOptions: DebuggerPickerOptionModel[] = useMemo(() => {
     return Object.entries(
-      jwsExampleAlgHeaderParameterValuesDictionary.unsecured,
+      jwsExampleAlgHeaderParameterValuesDictionary.unsecured
     ).map((entry) => {
       const [key, value] = entry;
 
@@ -127,7 +118,7 @@ export const WidgetAlgPickerComponent: React.FC<
         label: value.name,
       };
     });
-  }, []);
+  }, []); */
 
   const symmetricAlgOptions: DebuggerPickerOptionModel[] = useMemo(() => {
     return Object.entries(jwsExampleAlgHeaderParameterValuesDictionary.mac).map(
@@ -138,13 +129,13 @@ export const WidgetAlgPickerComponent: React.FC<
           value: key,
           label: value.name,
         };
-      },
+      }
     );
   }, []);
 
   const asymmetricAlgOptions: DebuggerPickerOptionModel[] = useMemo(() => {
     const digitalSignatureEntries = Object.entries(
-      jwsExampleAlgHeaderParameterValuesDictionary.digitalSignature,
+      jwsExampleAlgHeaderParameterValuesDictionary.digitalSignature
     );
 
     const asymmetricAlgOptions: DebuggerPickerOptionModel[] = [];
@@ -194,24 +185,21 @@ export const WidgetAlgPickerComponent: React.FC<
   }, [canUseEd25519, canUseEd448, canUseEs512]);
 
   const algOptions = useMemo(() => {
-    return [...noneAlgOptions, ...symmetricAlgOptions, ...asymmetricAlgOptions];
-  }, [asymmetricAlgOptions, noneAlgOptions, symmetricAlgOptions]);
+    return [...symmetricAlgOptions, ...asymmetricAlgOptions];
+  }, [asymmetricAlgOptions, symmetricAlgOptions]);
 
   return (
-    <div role="region" aria-label={label} className={styles.picker}>
-      {pickerState === PickerStates.IDLE && (
-        <button
-          role="button"
-          className={clsx(styles.button, PrimaryFont.className)}
-          onClick={openPicker}
-        >
-          {dictionary.exampleAlgPicker.label}
-        </button>
-      )}
-      {pickerState === PickerStates.PICKING && (
-        <>
+    <div role="region" aria-label={label} className={styles.alg_picker}>
+      <div className={styles.container}>
+        <div className={styles.picker}>
+          <div className={styles.picker__label}>
+            <label className={styles.picker__fullName}>
+              {dictionary.exampleAlgPicker.label}
+            </label>
+          </div>
           <DebuggerPickerComponent
             label={null}
+            data-has-label={label !== null}
             languageCode={languageCode}
             handleSelection={selectExample}
             selectedOptionCode={null}
@@ -219,16 +207,8 @@ export const WidgetAlgPickerComponent: React.FC<
             placeholder={dictionary.exampleAlgPicker.defaultValue}
             minWidth={null}
           />
-          <button
-            {...buttonProps}
-            aria-label={dictionary.exampleAlgPicker.closeButton.label}
-            className={styles.closeButton}
-            onClick={closePicker}
-          >
-            <span>+</span>
-          </button>
-        </>
-      )}
+        </div>
+      </div>
     </div>
   );
 };

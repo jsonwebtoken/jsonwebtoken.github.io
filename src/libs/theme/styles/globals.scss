@@ -55,9 +55,9 @@
   --color_fg_link_hover: var(--functional-gray-50);
   --color_fg_link_pressed: var(--functional-gray-50);
 
-  --color_fg_selected: #99a7f1;
-  --color_border_selected: #99a7f1;
-  --color_border_focus: #99a7f1;
+  --color_fg_selected: var(--functional-gray-850);
+  --color_border_selected: var(--functional-gray-850);
+  --color_border_focus: var(--functional-gray-850);
 
   --color_bg_auth0-cta: linear-gradient(251deg, #1e1e1e 2.29%, #191919 87.03%);
 
@@ -206,9 +206,9 @@ html[data-theme="system-light"] {
   --color_fg_link_hover: var(--charcoal2);
   --color_fg_link_pressed: var(--charcoal2);
 
-  --color_fg_selected: #3f59e4;
-  --color_border_selected: #3f59e4;
-  --color_border_focus: #3f59e4;
+  --color_fg_selected: var(--functional-gray-850);
+  --color_border_selected: var(--functional-gray-850);
+  --color_border_focus: var(--functional-gray-850);
 
   --color_bg_auth0-cta: var(--functional-gray-150);
 
@@ -513,13 +513,19 @@ $picker-list-offset-lg: calc(($picker-list-width-lg - $picker-width-lg) / 2);
 .react-select__control {
   background-color: transparent !important;
   border-color: var(--color_border_button) !important;
+  background-color: var(--color_bg_layer);
+  border: 1px solid var(--color_border_default) !important;
   height: 100% !important;
-  border: 1px solid var(--color_border_inverse_static) !important;
+  &:hover {
+    border-color: var(--color_border_bold) !important;
+    transition: 0.2s ease-out !important;
+  }
 }
 
 .react-select__control--is-focused {
-  border-color: var(--color_border_focus) !important;
-  box-shadow: 0 0 0 1px var(--color_border_focus) !important;
+  transition: 0.2s ease-out;
+  border-color: var(--color_border_default) !important;
+  box-shadow: 0 0 0 3px var(--color_border_default) !important;
 }
 
 .react-select__value-container {
@@ -542,13 +548,16 @@ $picker-list-offset-lg: calc(($picker-list-width-lg - $picker-width-lg) / 2);
 }
 
 .react-select__menu {
-  background-color: var(--color_bg_layer_alternate-bold) !important;
-  color: var(--color_fg_bold) !important;
-  border: 1px solid var(--color_border_bold) !important;
-  font-size: 0.875rem !important;
-  font-family: var(--font-primary), monospace !important;
-  width: max-content !important;
-  min-width: 100% !important;
+    background-color: var(--color_bg_layer) !important;
+    border-radius: 0.75rem !important;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 4px 11px !important;
+    margin-bottom: 8px !important;
+    margin-top: 8px !important;
+    box-sizing: border-box !important;
+    border: 1px solid var(--color_border_default);
+    padding: 0.25rem;
+    overflow: hidden;
+    min-width: 240px;
 }
 
 .react-select__menu-portal {
@@ -581,28 +590,29 @@ $picker-list-offset-lg: calc(($picker-list-width-lg - $picker-width-lg) / 2);
 }
 
 .react-select__option {
-  display: flex !important;
-  align-items: center !important;
-  color: var(--color_fg_default) !important;
-  position: relative !important;
-  height: 2.5rem !important;
-  border-bottom: 1px solid var(--color_border_bold) !important;
-  padding: 0.25rem 1rem !important;
-  background-color: transparent !important;
-  font-family: var(--font-primary), monospace !important;
-
-  gap: 0.5rem !important;
-  font-size: 0.8125rem !important;
-  line-height: 1.3125rem !important;
-  letter-spacing: -0.05px !important;
-
-  &:last-child {
-    border-bottom: unset;
-  }
-
-  &:hover {
-    cursor: pointer;
-  }
+    cursor: pointer !important;
+    display: flex !important;
+    font-size: 0.875rem !important;
+    width: 100% !important;
+    user-select: none !important;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important;
+    background-color: transparent !important;
+    color: var(--color_fg_default) !important;
+    padding: 8px 12px 8px 1.25rem !important;
+    box-sizing: border-box !important;
+    -webkit-box-align: center !important;
+    align-items: center !important;
+    position: relative !important;
+    height: 1.5rem !important;
+    border-radius: 0.5rem !important;
+    font-family: var(--font-primary),monospace !important;
+    line-height: 1.3125rem !important;
+    letter-spacing: -0.05px !important;
+    font-weight: 500 !important;
+    opacity: 1 !important;
+    &:hover {
+      background-color: var(--color_bg_layer_alternate) !important;
+    }
 }
 
 .react-select__option--is-selected {
@@ -628,7 +638,7 @@ $picker-list-offset-lg: calc(($picker-list-width-lg - $picker-width-lg) / 2);
 .react-select__option--is-disabled {
   color: var(--color_fg_bold) !important;
   font-weight: 500;
-  opacity: 0.32;
+  opacity: 0.32 !important;
   cursor: not-allowed !important;
 }
 
