@@ -523,8 +523,9 @@ $picker-list-offset-lg: calc(($picker-list-width-lg - $picker-width-lg) / 2);
 }
 
 .react-select__control--is-focused {
-  border-color: var(--color_border_focus) !important;
-  box-shadow: 0 0 0 1px var(--color_border_focus) !important;
+  transition: 0.2s ease-out;
+  border-color: var(--color_border_default) !important;
+  box-shadow: 0 0 0 3px var(--color_border_default) !important;
 }
 
 .react-select__value-container {
@@ -637,7 +638,7 @@ $picker-list-offset-lg: calc(($picker-list-width-lg - $picker-width-lg) / 2);
 .react-select__option--is-disabled {
   color: var(--color_fg_bold) !important;
   font-weight: 500;
-  opacity: 0.32;
+  opacity: 0.32 !important;
   cursor: not-allowed !important;
 }
 
