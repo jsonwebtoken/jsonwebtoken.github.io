@@ -1,22 +1,19 @@
 @use "@/libs/theme/styles/variables" as *;
 @use "@/libs/theme/styles/mixins" as *;
 
-.header {
+.container {
+  width: calc(100% - 2rem);
   position: fixed;
-  top: 0;
+  top: 1rem;
   right: 0;
   left: 0;
-
-  z-index: 9001;
-  backdrop-filter: blur(2rem);
-}
-
-.container {
-  @include Container;
-
+  border-radius: 1rem;
+  margin: 0 auto;
   background: var(--color_bg_app_bar);
-  border-bottom: 1px solid rgba(#555, 0.32);
-
+  border: 1px solid var(--color_bg_app_bar_border);
+  backdrop-filter: blur(2rem);
+  z-index: 100;
+  
   @media #{$breakpoint-dimension-sm} {
     display: none;
   }
@@ -111,12 +108,8 @@
 }
 
 .menu {
-  position: fixed;
-  top: $main-nav-height-mobile;
-  z-index: 99999;
-  height: calc(100% - $main-nav-height-mobile);
-  width: 100%;
-  overflow: hidden;
+  opacity: 1;
+  transition: all .3s ease-in-out;
 
   &[aria-hidden="false"] {
     display: block;
@@ -134,16 +127,22 @@
 }
 
 .menuContainer {
-  height: 100%;
-  width: 100%;
-  overflow-y: scroll;
-  background: var(--color_bg_page);
+  width: calc(100% - 2rem);
+  position: fixed;
+  left: 1rem;
+  top: 4.5rem;
+  border-radius: 1rem;
+  background: rgba(0, 0, 0, .04);
+  border: 1px solid rgba(0, 0, 0, .04);
+  box-shadow: 0 1px 1px -.5px rgba(0, 0, 0, .04), 0 2px 2px -1px rgba(0, 0, 0, .04), 0 4px 4px -2px rgba(0, 0, 0, .04), 0 8px 8px -4px rgba(0, 0, 0, .04), 0 12px 12px -6px rgba(0, 0, 0, .04);
+  backdrop-filter: blur(2rem);
+  z-index: 100;
 }
 
 .menuContent {
   @include InnerContentFlex;
-  padding: 0 1.5rem 1.5rem;
   width: 100%;
+  padding: .25rem; 
 }
 
 .menu__list {
@@ -156,25 +155,27 @@
   position: relative;
   list-style: none;
   width: 100%;
-  border-bottom: 1px solid $neutrals-functional-300;
   margin: 0;
-  padding: 1.5rem 0.5rem;
 }
 
 .menu__item__link {
-  font-size: 1.25rem;
-  line-height: 1.75rem;
-  letter-spacing: -0.1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: .75rem;
+  width: 100%;
+  font-size: 1rem;
+  letter-spacing: -.1px;
   color: var(--color_fg_bold);
   text-decoration: none;
   font-weight: 500;
-  transition: color 0.2s;
+  transition: color .2s;
   cursor: pointer;
   user-select: none;
-  padding-bottom: 0.25rem;
-  border-bottom: 1px solid transparent;
+  padding: .75rem .5rem;
 
   &[data-active="true"] {
-    border-bottom: 1px solid var(--color_fg_bold);
+    background-color: hsla(0, 0%, 100%, .5);
+    box-shadow: 0 0 1px 2px rgba(0, 0, 0, .04);
   }
 }

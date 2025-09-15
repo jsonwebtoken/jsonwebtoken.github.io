@@ -45,10 +45,11 @@
 :root {
   --color_bg_page: var(--functional-gray-950);
   --color_fg_bold: var(--functional-gray-50);
-  --color_fg_default: var(--functional-gray-200);
+  --color_fg_default: var(--functional-gray-500);
   --color_fg_link_primary: var(--cloud);
 
-  --color_bg_app_bar: rgba(17, 17, 17, 0.66);
+  --color_bg_app_bar: hsla(0,0%,7%,.04);
+  --color_bg_app_bar_border: hsla(0, 0%, 7%, .12);
   --color_bg_app_bar_plain: rgba(17, 17, 17);
 
   --color_fg_link: var(--functional-gray-50);
@@ -195,10 +196,8 @@ html[data-theme="system-light"] {
 
   --color_bg_page: var(--functional-gray-0);
   --color_fg_bold: var(--charcoal2);
-  --color_fg_default: var(--functional-gray-650);
   --color_fg_link_primary: var(--sky);
 
-  --color_bg_app_bar: rgba(241, 241, 241, 0.66);
   --color_bg_app_bar_plain: rgba(241, 241, 241);
 
   --color_fg_link: var(--charcoal2);
