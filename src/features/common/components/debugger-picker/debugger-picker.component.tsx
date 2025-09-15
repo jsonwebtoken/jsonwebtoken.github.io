@@ -55,7 +55,6 @@ export const DebuggerPickerComponent: React.FC<
   label,
   options,
   handleSelection,
-  selectedOptionCode,
   placeholder,
   minWidth,
 }) => {
@@ -89,7 +88,6 @@ export const DebuggerPickerComponent: React.FC<
         aria-label={"Debugger picker"}
         className="react-select-container"
         onChange={handleChange}
-        //value={selectedOptionCode}
         options={options}
         menuPortalTarget={document.body}
         classNamePrefix={"react-select"}
