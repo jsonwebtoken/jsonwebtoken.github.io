@@ -19,6 +19,7 @@ import { CardToolbarComponent } from "@/features/common/components/card-toolbar/
 import { CardToolbarCopyButtonComponent } from "@/features/common/components/card-toolbar-buttons/card-toolbar-copy-button/card-toolbar-copy-button.component";
 import { CardToolbarClearButtonComponent } from "@/features/common/components/card-toolbar-buttons/card-toolbar-clear-button/card-toolbar-clear-button.component";
 import { NOOP_ALG } from "@/features/common/values/constants";
+import { EncodingFormatToggleSwitchComponent } from "./encoding-format-toggle-swith/encoding-format-toggle-switch";
 
 type SecretKeyInputComponentProps = {
   languageCode: string;
@@ -29,27 +30,27 @@ export const SecretKeyInputComponent: React.FC<
   SecretKeyInputComponentProps
 > = ({ languageCode, dictionary }) => {
   const handleSymmetricSecretKeyChange$ = useDecoderStore(
-    (state) => state.handleSymmetricSecretKeyChange,
+    (state) => state.handleSymmetricSecretKeyChange
   );
   const handleAsymmetricPublicKeyChange$ = useDecoderStore(
-    (state) => state.handleAsymmetricPublicKeyChange,
+    (state) => state.handleAsymmetricPublicKeyChange
   );
   const resetControlledSymmetricSecretKey$ = useDecoderStore(
-    (state) => state.resetControlledSymmetricSecretKey,
+    (state) => state.resetControlledSymmetricSecretKey
   );
   const resetControlledAsymmetricPublicKey$ = useDecoderStore(
-    (state) => state.resetControlledAsymmetricPublicKey,
+    (state) => state.resetControlledAsymmetricPublicKey
   );
 
   const alg$ = useDecoderStore((state) => state.alg);
   const verificationInputErrors$ = useDecoderStore(
-    (state) => state.verificationInputErrors,
+    (state) => state.verificationInputErrors
   );
   const controlledSymmetricSecretKey = useDecoderStore(
-    (state) => state.controlledSymmetricSecretKey,
+    (state) => state.controlledSymmetricSecretKey
   );
   const controlledAsymmetricPublicKey = useDecoderStore(
-    (state) => state.controlledAsymmetricPublicKey,
+    (state) => state.controlledAsymmetricPublicKey
   );
 
   const decoderInputs$ = useDebuggerStore((state) => state.decoderInputs$);
@@ -58,7 +59,7 @@ export const SecretKeyInputComponent: React.FC<
     decoderInputs$.algType === SigningAlgCategoryValues.SYMMETRIC &&
       decoderInputs$.symmetricSecretKey
       ? decoderInputs$.symmetricSecretKey
-      : DEFAULT_JWT.secret,
+      : DEFAULT_JWT.secret
   );
   const [publicKey, setPublicKey] = useState<string>("");
 
@@ -87,7 +88,7 @@ export const SecretKeyInputComponent: React.FC<
   };
 
   const handleSymmetricSecretKeyChange = async (
-    e: ChangeEvent<HTMLTextAreaElement>,
+    e: ChangeEvent<HTMLTextAreaElement>
   ) => {
     const key = e.target.value;
 
@@ -99,7 +100,7 @@ export const SecretKeyInputComponent: React.FC<
   };
 
   const handleAsymmetricPublicKeyChange = async (
-    e: ChangeEvent<HTMLTextAreaElement>,
+    e: ChangeEvent<HTMLTextAreaElement>
   ) => {
     const key = e.target.value;
 
@@ -162,6 +163,11 @@ export const SecretKeyInputComponent: React.FC<
             />
           </CardToolbarComponent>
         ),
+        /* footer: isHmacAlg(alg$) ? (
+          <EncodingFormatToggleSwitchComponent languageCode={languageCode} />
+        ) : (
+          <TokenDecoderKeyFormatPickerComponent languageCode={languageCode} />
+        ), */
       }}
     >
       {isHmacAlg(alg$) && (
