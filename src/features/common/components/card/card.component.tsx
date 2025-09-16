@@ -1,10 +1,11 @@
 import React, { PropsWithChildren, useId } from "react";
 import styles from "./card.module.scss";
 import { clsx } from "clsx";
-import { getLocalizedSecondaryFont, MonoFont } from "@/libs/theme/fonts";
+import { getLocalizedSecondaryFont } from "@/libs/theme/fonts";
 import { CardMessageComponent } from "@/features/common/components/card-message/card-message.component";
 import { HeaderIcon } from "../icons/header/header-icon";
 import { CheckIcon } from "../icons/check/check-icon";
+import { EncodingFormatToggleSwitchComponent } from "@/features/decoder/components/encoding-format-toggle-swith/encoding-format-toggle-switch";
 
 export interface CardComponentProps extends PropsWithChildren {
   id: string;
@@ -151,8 +152,8 @@ export const CardComponent: React.FC<CardComponentProps> = (props) => {
           {messages.success.map((line, index) => {
             return (
               <>
-              <CheckIcon />
-              <CardMessageComponent key={index}>{line}</CardMessageComponent>
+                <CheckIcon />
+                <CardMessageComponent key={index}>{line}</CardMessageComponent>
               </>
             );
           })}
@@ -201,27 +202,30 @@ export const CardWithHeadlineComponent: React.FC<
   return (
     <div role="region" aria-labelledby={regionId}>
       {sectionHeadline && (
-        <>
-          <h3
-            id={regionId}
-            className={clsx(
-              styles.cardHeadline__title,
-              getLocalizedSecondaryFont(languageCode)
+        <div className={styles.title__container}>
+          <div>
+            <h3
+              id={regionId}
+              className={clsx(
+                styles.cardHeadline__title,
+                getLocalizedSecondaryFont(languageCode)
+              )}
+            >
+              {sectionHeadline.title}
+              {sectionHeadline.titleTag && (
+                <span className={styles.cardHeadline__titleTag}>
+                  {sectionHeadline.titleTag}
+                </span>
+              )}
+            </h3>
+            {sectionHeadline.description && (
+              <p className={styles.cardHeadline__description}>
+                {sectionHeadline.description}
+              </p>
             )}
-          >
-            {sectionHeadline.title}
-            {sectionHeadline.titleTag && (
-              <span className={styles.cardHeadline__titleTag}>
-                {sectionHeadline.titleTag}
-              </span>
-            )}
-          </h3>
-          {sectionHeadline.description && (
-            <p className={styles.cardHeadline__description}>
-              {sectionHeadline.description}
-            </p>
-          )}
-        </>
+          </div>
+          <EncodingFormatToggleSwitchComponent languageCode={languageCode} />
+        </div>
       )}
       <CardComponent languageCode={languageCode} {...props} />
     </div>
