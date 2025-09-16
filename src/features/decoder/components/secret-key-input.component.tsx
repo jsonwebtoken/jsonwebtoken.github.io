@@ -30,27 +30,27 @@ export const SecretKeyInputComponent: React.FC<
   SecretKeyInputComponentProps
 > = ({ languageCode, dictionary }) => {
   const handleSymmetricSecretKeyChange$ = useDecoderStore(
-    (state) => state.handleSymmetricSecretKeyChange
+    (state) => state.handleSymmetricSecretKeyChange,
   );
   const handleAsymmetricPublicKeyChange$ = useDecoderStore(
-    (state) => state.handleAsymmetricPublicKeyChange
+    (state) => state.handleAsymmetricPublicKeyChange,
   );
   const resetControlledSymmetricSecretKey$ = useDecoderStore(
-    (state) => state.resetControlledSymmetricSecretKey
+    (state) => state.resetControlledSymmetricSecretKey,
   );
   const resetControlledAsymmetricPublicKey$ = useDecoderStore(
-    (state) => state.resetControlledAsymmetricPublicKey
+    (state) => state.resetControlledAsymmetricPublicKey,
   );
 
   const alg$ = useDecoderStore((state) => state.alg);
   const verificationInputErrors$ = useDecoderStore(
-    (state) => state.verificationInputErrors
+    (state) => state.verificationInputErrors,
   );
   const controlledSymmetricSecretKey = useDecoderStore(
-    (state) => state.controlledSymmetricSecretKey
+    (state) => state.controlledSymmetricSecretKey,
   );
   const controlledAsymmetricPublicKey = useDecoderStore(
-    (state) => state.controlledAsymmetricPublicKey
+    (state) => state.controlledAsymmetricPublicKey,
   );
 
   const decoderInputs$ = useDebuggerStore((state) => state.decoderInputs$);
@@ -88,7 +88,7 @@ export const SecretKeyInputComponent: React.FC<
   };
 
   const handleSymmetricSecretKeyChange = async (
-    e: ChangeEvent<HTMLTextAreaElement>
+    e: ChangeEvent<HTMLTextAreaElement>,
   ) => {
     const key = e.target.value;
 
@@ -100,7 +100,7 @@ export const SecretKeyInputComponent: React.FC<
   };
 
   const handleAsymmetricPublicKeyChange = async (
-    e: ChangeEvent<HTMLTextAreaElement>
+    e: ChangeEvent<HTMLTextAreaElement>,
   ) => {
     const key = e.target.value;
 
