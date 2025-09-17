@@ -6,6 +6,9 @@ import { CardMessageComponent } from "@/features/common/components/card-message/
 import { HeaderIcon } from "../icons/header/header-icon";
 import { CheckIcon } from "../icons/check/check-icon";
 import { EncodingFormatToggleSwitchComponent } from "@/features/decoder/components/encoding-format-toggle-swith/encoding-format-toggle-switch";
+import { useDecoderStore } from "@/features/decoder/services/decoder.store";
+import { isHmacAlg } from "../../services/jwt.service";
+import { TokenDecoderKeyFormatPickerComponent } from "@/features/decoder/components/token-decoder-key-format-picker.component";
 
 export interface CardComponentProps extends PropsWithChildren {
   id: string;
@@ -151,10 +154,10 @@ export const CardComponent: React.FC<CardComponentProps> = (props) => {
         >
           {messages.success.map((line, index) => {
             return (
-              <>
+              <div key={index}>
                 <CheckIcon />
                 <CardMessageComponent key={index}>{line}</CardMessageComponent>
-              </>
+              </div>
             );
           })}
         </div>
@@ -198,6 +201,7 @@ export const CardWithHeadlineComponent: React.FC<
   CardWithHeadlineComponentProps
 > = ({ sectionHeadline, languageCode, ...props }) => {
   const regionId = useId();
+  const alg$ = useDecoderStore((state) => state.alg);
 
   return (
     <div role="region" aria-labelledby={regionId}>
@@ -224,7 +228,12 @@ export const CardWithHeadlineComponent: React.FC<
               </p>
             )}
           </div>
-          <EncodingFormatToggleSwitchComponent languageCode={languageCode} />
+
+          {isHmacAlg(alg$) ? (
+            <EncodingFormatToggleSwitchComponent languageCode={languageCode} />
+          ) : (
+            <TokenDecoderKeyFormatPickerComponent languageCode={languageCode} />
+          )}
         </div>
       )}
       <CardComponent languageCode={languageCode} {...props} />
