@@ -40,7 +40,7 @@ interface DebuggerPickerComponentProps {
     GroupBase<DebuggerPickerOptionModel>
   >;
   isGrouped?: boolean;
-  selectedOptionCode: DebuggerPickerOptionModel | null;
+  selectedOptionCode?: DebuggerPickerOptionModel | null;
   handleSelection: (
     selection: string,
     parentLabel?: LibraryFilterLabel
@@ -54,6 +54,7 @@ export const DebuggerPickerComponent: React.FC<
 > = ({
   label,
   options,
+  selectedOptionCode,
   handleSelection,
   placeholder,
   minWidth,
@@ -93,6 +94,7 @@ export const DebuggerPickerComponent: React.FC<
         classNamePrefix={"react-select"}
         isSearchable={false}
         placeholder={placeholder}
+        value={selectedOptionCode}
         styles={{
           control: (base) => ({
             ...base,
