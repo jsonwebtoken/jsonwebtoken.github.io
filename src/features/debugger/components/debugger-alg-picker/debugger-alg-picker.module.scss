@@ -62,6 +62,10 @@
   font-weight: 600;
 }
 
+.picker__container {
+  height: 2rem;
+}
+
 .button {
   color: var(--color_fg_on_button);
   background-color: var(--color_bg_button);
