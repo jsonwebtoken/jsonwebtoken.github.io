@@ -507,7 +507,7 @@ $picker-list-offset-lg: calc(($picker-list-width-lg - $picker-width-lg) / 2);
   background: transparent;
   color: var(--color_fg_bold);
   font-family: var(--font-primary), monospace !important;
-  height: 2rem !important;
+  height: 2rem;
 }
 
 .react-select__control {
@@ -557,7 +557,7 @@ $picker-list-offset-lg: calc(($picker-list-width-lg - $picker-width-lg) / 2);
     border: 1px solid var(--color_border_default);
     padding: 0.25rem;
     overflow: hidden;
-    min-width: 240px;
+    min-width: 6.125rem;
 }
 
 .react-select__menu-portal {
