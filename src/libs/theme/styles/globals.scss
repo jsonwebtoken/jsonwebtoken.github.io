@@ -507,7 +507,6 @@ $picker-list-offset-lg: calc(($picker-list-width-lg - $picker-width-lg) / 2);
   background: transparent;
   color: var(--color_fg_bold);
   font-family: var(--font-primary), monospace !important;
-  height: 2rem;
 }
 
 .react-select__control {
