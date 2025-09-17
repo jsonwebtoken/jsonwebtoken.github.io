@@ -56,6 +56,18 @@
   }
 }
 
+.title__container {
+  grid-column: 1/-1;
+  width: 100%;
+  color: var(--color_fg_bold);
+  font-size: 1.75rem;
+  font-weight: 500;
+  line-height: 1.5;
+  margin-bottom: .5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
 .card {
   isolation: isolate;
   grid-column: span 6;

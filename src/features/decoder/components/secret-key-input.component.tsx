@@ -19,6 +19,7 @@ import { CardToolbarComponent } from "@/features/common/components/card-toolbar/
 import { CardToolbarCopyButtonComponent } from "@/features/common/components/card-toolbar-buttons/card-toolbar-copy-button/card-toolbar-copy-button.component";
 import { CardToolbarClearButtonComponent } from "@/features/common/components/card-toolbar-buttons/card-toolbar-clear-button/card-toolbar-clear-button.component";
 import { NOOP_ALG } from "@/features/common/values/constants";
+import { EncodingFormatToggleSwitchComponent } from "./encoding-format-toggle-swith/encoding-format-toggle-switch";
 
 type SecretKeyInputComponentProps = {
   languageCode: string;
@@ -58,7 +59,7 @@ export const SecretKeyInputComponent: React.FC<
     decoderInputs$.algType === SigningAlgCategoryValues.SYMMETRIC &&
       decoderInputs$.symmetricSecretKey
       ? decoderInputs$.symmetricSecretKey
-      : DEFAULT_JWT.secret,
+      : DEFAULT_JWT.secret
   );
   const [publicKey, setPublicKey] = useState<string>("");
 
@@ -162,6 +163,11 @@ export const SecretKeyInputComponent: React.FC<
             />
           </CardToolbarComponent>
         ),
+        /* footer: isHmacAlg(alg$) ? (
+          <EncodingFormatToggleSwitchComponent languageCode={languageCode} />
+        ) : (
+          <TokenDecoderKeyFormatPickerComponent languageCode={languageCode} />
+        ), */
       }}
     >
       {isHmacAlg(alg$) && (

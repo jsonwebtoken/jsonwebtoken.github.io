@@ -15,7 +15,7 @@ import {
   algDictionary,
   jwsExampleAlgHeaderParameterValuesDictionary,
 } from "@/features/common/values/jws-alg-header-parameter-values.dictionary";
-import { useButton } from "@react-aria/button"
+import { useButton } from "@react-aria/button";
 import { DebuggerPickerOptionModel } from "@/features/common/models/debugger-picker-option.model";
 
 enum PickerStates {
@@ -92,7 +92,6 @@ export const WidgetAlgPickerComponent: React.FC<
     setPickerState(PickerStates.IDLE);
   };
 
-
   useEffect(() => {
     (async function runEs512Check() {
       setCanUseEs512(await isP521Supported());
@@ -107,18 +106,6 @@ export const WidgetAlgPickerComponent: React.FC<
     })();
   }, []);
 
-  /* const noneAlgOptions: DebuggerPickerOptionModel[] = useMemo(() => {
-    return Object.entries(
-      jwsExampleAlgHeaderParameterValuesDictionary.unsecured
-    ).map((entry) => {
-      const [key, value] = entry;
-
-      return {
-        value: key,
-        label: value.name,
-      };
-    });
-  }, []); */
 
   const symmetricAlgOptions: DebuggerPickerOptionModel[] = useMemo(() => {
     return Object.entries(jwsExampleAlgHeaderParameterValuesDictionary.mac).map(
@@ -197,16 +184,17 @@ export const WidgetAlgPickerComponent: React.FC<
               {dictionary.exampleAlgPicker.label}
             </label>
           </div>
-          <DebuggerPickerComponent
-            label={null}
-            data-has-label={label !== null}
-            languageCode={languageCode}
-            handleSelection={selectExample}
-            selectedOptionCode={null}
-            options={algOptions}
-            placeholder={dictionary.exampleAlgPicker.defaultValue}
-            minWidth={null}
-          />
+          <div className={styles.picker__container}>
+            <DebuggerPickerComponent
+              label={null}
+              data-has-label={label !== null}
+              languageCode={languageCode}
+              handleSelection={selectExample}
+              options={algOptions}
+              placeholder={dictionary.exampleAlgPicker.defaultValue}
+              minWidth={null}
+            />
+          </div>
         </div>
       </div>
     </div>
