@@ -154,7 +154,7 @@ export const CardComponent: React.FC<CardComponentProps> = (props) => {
         >
           {messages.success.map((line, index) => {
             return (
-              <div key={index}>
+              <div key={index} style={{ display: "flex" }}>
                 <CheckIcon />
                 <CardMessageComponent key={index}>{line}</CardMessageComponent>
               </div>
