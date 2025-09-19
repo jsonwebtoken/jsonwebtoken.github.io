@@ -22,11 +22,45 @@ export const EbookComponent: React.FC<EbookComponentProps> = ({
       wrapperClassName={styles.wrapper}
       contentClassName={styles.content}
     >
+      <pre className={styles.ebookBanner__code}>
+        <span>
+          {`{\n`}
+          <span>{` "sub"`}</span>
+          <span className={styles.ebookBanner__code_dot}>: </span>
+          <span
+            className={styles.ebookBanner__code_string}
+          >{`"1234567890"`}</span>
+          <span className={styles.ebookBanner__code_dot}>,</span>
+        </span>
+        <span>
+          {" "}
+          {`"name"`}
+          <span className={styles.ebookBanner__code_dot}>: </span>
+          <span
+            className={styles.ebookBanner__code_string}
+          >{`"John Doe"`}</span>
+          <span className={styles.ebookBanner__code_dot}>,</span>
+        </span>
+        <span>
+          {" "}
+          {`"admin"`}
+          <span className={styles.ebookBanner__code_dot}>: </span>
+          <span className={styles.ebookBanner__code_boolean}>true</span>
+          <span className={styles.ebookBanner__code_dot}>,</span>
+        </span>
+        <span>
+          {" "}
+          {`"iat"`}
+          <span className={styles.ebookBanner__code_dot}>: </span>
+          <span className={styles.ebookBanner__code_number}>1516239022</span>
+        </span>
+        {`}`}
+      </pre>
       <div className={styles.ebookBanner__copy}>
         <span
           className={clsx(
             getLocalizedSecondaryFont(languageCode),
-            styles.ebookBanner__title,
+            styles.ebookBanner__title
           )}
         >
           {dictionary.title}
