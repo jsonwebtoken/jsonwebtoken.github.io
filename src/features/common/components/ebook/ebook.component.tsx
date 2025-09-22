@@ -24,8 +24,7 @@ export const EbookComponent: React.FC<EbookComponentProps> = ({
     >
       <pre className={styles.ebookBanner__code}>
         <span>
-          {`{\n`}
-          <span>{` "sub"`}</span>
+          {`{\n       "sub"`}
           <span className={styles.ebookBanner__code_dot}>: </span>
           <span
             className={styles.ebookBanner__code_string}
@@ -34,7 +33,7 @@ export const EbookComponent: React.FC<EbookComponentProps> = ({
         </span>
         <span>
           {" "}
-          {`"name"`}
+          {`      "name"`}
           <span className={styles.ebookBanner__code_dot}>: </span>
           <span
             className={styles.ebookBanner__code_string}
@@ -43,14 +42,14 @@ export const EbookComponent: React.FC<EbookComponentProps> = ({
         </span>
         <span>
           {" "}
-          {`"admin"`}
+          {`      "admin"`}
           <span className={styles.ebookBanner__code_dot}>: </span>
           <span className={styles.ebookBanner__code_boolean}>true</span>
           <span className={styles.ebookBanner__code_dot}>,</span>
         </span>
         <span>
           {" "}
-          {`"iat"`}
+          {`      "iat"`}
           <span className={styles.ebookBanner__code_dot}>: </span>
           <span className={styles.ebookBanner__code_number}>1516239022</span>
         </span>
