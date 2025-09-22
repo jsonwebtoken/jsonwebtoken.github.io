@@ -117,7 +117,7 @@
 }
 
 .ebookBanner__code {
-      pointer-events: none;
+    pointer-events: none;
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -172,6 +172,20 @@
   display: inline;
   position: relative;
   color: var(--color_jwt_signature);
+  padding: .125rem 0;
+}
+
+.ebookBanner__code_boolean {
+  display: inline;
+  position: relative;
+  color: var(--color_jwt_header);
+  padding: .125rem 0;
+}
+
+.ebookBanner__code_number {
+  display: inline;
+  position: relative;
+  color: var(--color_jwt_payload);
   padding: .125rem 0;
 }
 
