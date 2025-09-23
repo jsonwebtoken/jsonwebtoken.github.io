@@ -26,7 +26,7 @@ import {
 } from "./e2e.utils";
 import { MessageStatusValue, MessageTypeValue } from "./e2e.values";
 import { JwtDictionaryModel, JwtSignedWithDigitalModel } from "./e2e.models";
-import jwts from "./jwt.json" with { type: "json" };
+import jwts from "./jwt.json" assert { type: "json" };
 
 const TestJwts = (jwts as JwtDictionaryModel).byAlgorithm;
 
