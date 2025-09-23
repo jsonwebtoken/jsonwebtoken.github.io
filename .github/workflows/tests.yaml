@@ -27,7 +27,7 @@ jobs:
               run: npx playwright install --with-deps
 
             - name: Run Playwright Tests
-              run: NODE_OPTIONS="--no-experimental-strip-types" npx playwright test
+              run: npx playwright test
             
             - name: Upload Playwright Traces
               if: failure()
