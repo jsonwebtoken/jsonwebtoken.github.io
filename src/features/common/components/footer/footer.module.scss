@@ -267,8 +267,5 @@
   padding-bottom: 1rem;
   row-gap: 2rem;
 
-  color: $neutrals-light-100-snow;
-
-  @media #{$breakpoint-dimension-xs} {
-  }
+  color: var(--color_fg_default);
 }

@@ -45,10 +45,11 @@
 :root {
   --color_bg_page: var(--functional-gray-950);
   --color_fg_bold: var(--functional-gray-50);
-  --color_fg_default: var(--functional-gray-200);
+  --color_fg_default: var(--functional-gray-500);
   --color_fg_link_primary: var(--cloud);
 
-  --color_bg_app_bar: hsla(0, 0%, 95%, .04);;
+  --color_bg_app_bar: hsla(0, 0%, 95%, .04);
+  --color_bg_app_bar_border: hsla(0, 0%, 7%, .12);
   --color_bg_app_bar_plain: rgba(17, 17, 17);
 
   --color_fg_link: var(--functional-gray-50);
@@ -114,7 +115,7 @@
   --color_border_button_outline: var(--functional-gray-50);
   --color_fg_on_button_outline: var(--functional-gray-50);
 
-  --color_fg_code: #8ed2c5;
+  --color_fg_code: #fff;
   --color_bg_code-editor: #000;
 
   --color_bg_state_success: #10783f;
@@ -141,7 +142,7 @@
 
   --color_jwt_header: #e27133;
   --color_jwt_payload: #9472f7;
-  --color_jwt_signature: #149750;
+  --color_jwt_signature: #8fc88a;
   --color_jwt_dot: #ff69e4;
 
   --color_bg_scrollbar: #6b7380;
@@ -149,10 +150,10 @@
 
 html[data-theme="light"],
 html[data-theme="system-light"] {
-  --color_jwt_header: #e27133 ;
+  --color_jwt_header: #e27133;
   --color_jwt_payload: #9472f7;
   --color_jwt_signature: #149750;
-  --color_jwt_dot: #cc36b1;
+  --color_jwt_dot: #151619;
 
   --color_bg_state_info_subtle: #eef0fd;
   --color_fg_on_state_info_subtle: #263588;
@@ -176,12 +177,12 @@ html[data-theme="system-light"] {
   --color_bg_state_success_subtle: #e6f4ec;
   --color_border_state_success: #10783f;
 
-  --color_fg_code: #3b8d7e;
+  --color_fg_code: #fff;
   --color_bg_code-editor: #fff;
 
   --color_fg_on_button: var(--charcoal2);
   --color_fg_on_button_subtle: var(--functional-gray-600);
-  --color_fg_on_button_primary: var(--functional-gray-0);
+  --color_fg_on_button_primary: var(--functional-gray-1000);
   --color_bg_button: var(--functional-gray-0);
   --color_bg_button_hover: var(--functional-gray-150);
   --color_bg_button_pressed: #e8e8e8;
@@ -199,7 +200,6 @@ html[data-theme="system-light"] {
   --color_fg_default: var(--functional-gray-500);
   --color_fg_link_primary: var(--sky);
 
-  --color_bg_app_bar: rgba(241, 241, 241, 0.66);
   --color_bg_app_bar_plain: rgba(241, 241, 241);
 
   --color_fg_link: var(--charcoal2);

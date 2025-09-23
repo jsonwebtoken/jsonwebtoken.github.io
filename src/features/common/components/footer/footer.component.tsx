@@ -15,25 +15,23 @@ import { DEFAULT_LANGUAGE_CODE } from "@/features/localization/localization.conf
 import { sitePaths } from "@/features/seo/site-tree";
 import { createUrlPath } from "@/libs/utils/path.utils";
 import { SiteBrandComponent } from "@/features/common/components/site-brand/site-brand.component";
-import { StaticImageMetadataModel } from "@/features/common/models/static-image-metadata.model";
 import { Button } from "react-aria-components";
+import { Auth0LogoComponent } from "../../assets/auth0-logo.component";
+import { getImageDictionary } from "@/features/localization/services/images-dictionary.service";
 
 interface FooterComponentProps {
   languageCode: string;
   dictionary: LayoutDictionaryModel["footer"];
-  auth0Logo: StaticImageMetadataModel;
-  siteLogo: React.ReactNode;
 }
 
 export const FooterComponent: React.FC<FooterComponentProps> = ({
   languageCode,
   dictionary,
-  auth0Logo,
-  siteLogo,
 }) => {
   const [modalState, setModalState] = useState<ModalStateValues>(
     ModalStateValues.CLOSED,
   );
+  const images = getImageDictionary(languageCode);
 
   const languagePathPrefix: string =
     languageCode === DEFAULT_LANGUAGE_CODE
@@ -66,9 +64,7 @@ export const FooterComponent: React.FC<FooterComponentProps> = ({
         contentClassName={styles.content}
       >
         <div className={styles.siteLogo}>
-          <SiteBrandComponent path={languagePathPrefix}>
-            {siteLogo}
-          </SiteBrandComponent>
+          <SiteBrandComponent path={languagePathPrefix} languageCode={languageCode} />
         </div>
         <div className={styles.resources}>
           <span className={clsx(styles.resources__title, MonoFont.className)}>
@@ -162,17 +158,7 @@ export const FooterComponent: React.FC<FooterComponentProps> = ({
             target="_blank"
             href="https://auth0.com/"
           >
-            <Image
-              src={auth0Logo.src}
-              alt={auth0Logo.alt}
-              sizes="100vh"
-              style={{
-                width: "auto",
-                height: "100%",
-              }}
-              height={auth0Logo.height}
-              width={auth0Logo.width}
-            />
+            <Auth0LogoComponent title={images.title}/>
           </Link>
           <span className={styles.bottomSection__copyright}>
             {dictionary.copyright}

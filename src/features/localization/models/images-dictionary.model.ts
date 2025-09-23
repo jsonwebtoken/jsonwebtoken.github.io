@@ -1,8 +1,17 @@
-import { StaticImageMetadataModel } from "@/features/common/models/static-image-metadata.model";
+interface BrandMenuItem {
+  icon: string;
+  label: string;
+}
+interface BrandMenuSection {
+  label: string;
+  items: BrandMenuItem[];
+}
+interface BrandMenu {
+  brand: BrandMenuSection;
+  tools: BrandMenuSection;
+}
 
-export interface ImagesDictionaryModel {
-  logos: {
-    site: StaticImageMetadataModel;
-    auth0: StaticImageMetadataModel;
-  };
+export interface BrandDictionaryModel {
+  title: string;
+  menu: BrandMenu;
 }
