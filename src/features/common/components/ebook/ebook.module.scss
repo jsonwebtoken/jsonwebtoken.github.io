@@ -254,6 +254,12 @@
     letter-spacing: -.2px;
     transition: all .3s ease-in-out;
 
+    &:hover {
+      background: var(--color_fg_on_button_primary);
+      box-shadow: 0 0 0 4px rgba(0,0,0,.2);
+      transition: all .2s ease-out;
+    }
+
   :global(html[lang="ja"]) & {
     @include LocaleLineHeight("ja", 1rem);
   }
