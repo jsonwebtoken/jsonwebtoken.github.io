@@ -1,10 +1,10 @@
-export enum MessageTypeValue {
+export const enum MessageTypeValue {
   SUCCESS = "success",
   WARNING = "warning",
   ERROR = "error",
 }
 
-export enum MessageStatusValue {
+export const enum MessageStatusValue {
   VISIBLE = "visible",
   NOT_VISIBLE = "not-visible",
 }
