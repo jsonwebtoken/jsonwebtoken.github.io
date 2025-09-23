@@ -8,7 +8,6 @@ import {
 import { AssetsComponent } from "@/features/home/components/assets/assets.component";
 import { EbookComponent } from "@/features/common/components/ebook/ebook.component";
 import { StructuredData } from "@/features/seo/components/structured-data.component";
-import { HeroModalStateValues } from "@/features/home/values/hero-modal-state.values";
 import { ClaimDescriptionVisibilityValues } from "@/features/common/values/claim-description-visibility.values";
 import { DebuggerWidgetComponent } from "@/features/debugger/components/debugger-widget/debugger-widget.component";
 import { getAuth0Dictionary } from "@/features/localization/services/ui-language-dictionary.service";
@@ -19,8 +18,6 @@ interface HomePageComponentProps {
   decodedPayloadInitialTabId: string;
   decodedHeaderDescriptionVisibility: ClaimDescriptionVisibilityValues;
   decodedPayloadDescriptionVisibility: ClaimDescriptionVisibilityValues;
-  jwtInfoState: HeroModalStateValues;
-  jwtWarningState: HeroModalStateValues;
   // debuggerInitialMode: DebuggerModeValues;
 }
 
@@ -30,8 +27,6 @@ export const HomePageComponent: React.FC<HomePageComponentProps> = ({
   decodedPayloadInitialTabId,
   decodedHeaderDescriptionVisibility,
   decodedPayloadDescriptionVisibility,
-  jwtInfoState,
-  jwtWarningState,
   // debuggerInitialMode,
 }) => {
   const homeDictionary = getHomeDictionary(languageCode);
@@ -133,15 +128,7 @@ export const HomePageComponent: React.FC<HomePageComponentProps> = ({
       />
       <HeroComponent
         languageCode={languageCode}
-        dictionary={homeDictionary.hero}
-        infoBanner={{
-          dictionary: homeDictionary.info,
-          state: jwtInfoState,
-        }}
-        warningBanner={{
-          dictionary: homeDictionary.warning,
-          state: jwtWarningState,
-        }}
+        dictionary={homeDictionary.info}
       />
       <DebuggerWidgetComponent
         languageCode={languageCode}
