@@ -6,6 +6,7 @@ import { HomeDictionaryModel } from "@/features/localization/models/home-diction
 import { dataTestidDictionary } from "@/libs/testing/data-testid.dictionary";
 import { CardToolbarComponent } from "@/features/common/components/card-toolbar/card-toolbar.component";
 import { CardToolbarCopyButtonComponent } from "@/features/common/components/card-toolbar-buttons/card-toolbar-copy-button/card-toolbar-copy-button.component";
+import styles from "./encoded-jwt-output.module.scss";
 
 type EncodedJwtOutputComponentProps = {
   languageCode: string;
@@ -20,28 +21,32 @@ export const EncodedJwtOutputComponent: React.FC<
   const encodingErrors = useEncoderStore((state) => state.encodingErrors);
 
   return (
-    <CardComponent
-      id={dataTestidDictionary.encoder.jwt.id}
-      languageCode={languageCode}
-      title={dictionary.title}
-      compactTitle={dictionary.title}
-      options={{ noPadding: true, fullHeight: true, isOutput: true }}
-      messages={{
-        warnings: encodingWarnings,
-        errors: encodingErrors,
-      }}
-      slots={{
-        toolbar: (
-          <CardToolbarComponent ariaLabel={"JWT editor toolbar"}>
-            <CardToolbarCopyButtonComponent
-              languageCode={languageCode}
-              value={encodedToken$ || ""}
-            />
-          </CardToolbarComponent>
-        ),
-      }}
-    >
-      <EncodedTokenComponent encodedToken={encodedToken$ || ""} />
-    </CardComponent>
+    <>
+      <h4 className={styles.headline}>{dictionary.heading}</h4>
+      <CardComponent
+        id={dataTestidDictionary.encoder.jwt.id}
+        languageCode={languageCode}
+        title={dictionary.title}
+        hasHeaderIcon
+        compactTitle={dictionary.title}
+        options={{ noPadding: false, fullHeight: true, isOutput: true }}
+        messages={{
+          warnings: encodingWarnings,
+          errors: encodingErrors,
+        }}
+        slots={{
+          toolbar: (
+            <CardToolbarComponent ariaLabel={"JWT editor toolbar"}>
+              <CardToolbarCopyButtonComponent
+                languageCode={languageCode}
+                value={encodedToken$ || ""}
+              />
+            </CardToolbarComponent>
+          ),
+        }}
+      >
+        <EncodedTokenComponent encodedToken={encodedToken$ || ""} />
+      </CardComponent>
+    </>
   );
 };
