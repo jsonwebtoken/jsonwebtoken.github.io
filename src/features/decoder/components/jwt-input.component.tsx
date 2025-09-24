@@ -80,7 +80,7 @@ export const JwtInputComponent: React.FC<JwtInputComponentProps> = ({
         languageCode={languageCode}
         title={dictionary.title}
         compactTitle={dictionary.compactTitle}
-        options={{ fullWidth: true, noPadding: true }}
+        options={{ fullWidth: true, noPadding: false }}
         messages={{
           success: [dictionary.successMessage],
           errors: decodeErrors$,
