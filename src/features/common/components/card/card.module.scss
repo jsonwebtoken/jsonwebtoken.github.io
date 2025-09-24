@@ -70,18 +70,18 @@
 
 .card {
   isolation: isolate;
+  flex: 1 1;
   grid-column: span 6;
   display: flex;
-  flex: 1;
-  padding: 0px 2px;
   flex-direction: column;
-  border-radius: 0.5rem;
+  border-radius: 1rem;
+  border: 1px solid var(--color_border_default);
   background: var(--color_bg_layer_alternate-bold);
-
-  &[data-type="output"] {
-    background: var(--color_bg_layer_alternate);
+  padding:0 0.25rem;
+  letter-spacing: -.1px;
+  &[data-no-padding="true"] {
+    padding: 0;
   }
-
   &[data-frameless="true"] {
     border-radius: 0;
     border: none;
