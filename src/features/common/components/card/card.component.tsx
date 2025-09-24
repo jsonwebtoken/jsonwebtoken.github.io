@@ -74,6 +74,7 @@ export const CardComponent: React.FC<CardComponentProps> = (props) => {
         options && options.fullHeight && styles.card__hasFullHeight
       )}
       data-type={options && options.isOutput ? "output" : "input"}
+      data-no-padding={options ? options.noPadding : undefined}
       data-frameless={options && options.frameless}
     >
       {!options?.hideTitle && (
