@@ -1,13 +1,18 @@
 "use client";
 
-import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
+import React, {
+  ChangeEvent,
+  Fragment,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { HeaderEditorComponent } from "@/features/encoder/components/header-editor.component";
 import {
   CardComponent,
   CardComponentProps,
 } from "@/features/common/components/card/card.component";
 import { PayloadEditorComponent } from "@/features/encoder/components/payload-editor.component";
-import { TokenEncoderEncodingFormatPickerComponent } from "@/features/encoder/components/token-encoder-encoding-format-picker.component";
 import { TokenEncoderKeyFormatPickerComponent } from "@/features/encoder/components/token-encoder-key-format-picker.component";
 import { SigningSecretEditorComponent } from "@/features/encoder/components/signing-secret-editor.component";
 import { SigningPrivateKeyEditorComponent } from "@/features/encoder/components/signing-private-key-editor.component";
@@ -28,6 +33,7 @@ import {
 import { dataTestidDictionary } from "@/libs/testing/data-testid.dictionary";
 import { CardToolbarComponent } from "@/features/common/components/card-toolbar/card-toolbar.component";
 import { CardToolbarClearButtonComponent } from "@/features/common/components/card-toolbar-buttons/card-toolbar-clear-button/card-toolbar-clear-button.component";
+import { EncodingFormatToggleSwitchComponent } from "@/features/decoder/components/encoding-format-toggle-swith/encoding-format-toggle-switch";
 
 type HeaderInputComponentProps = {
   languageCode: string;
@@ -41,32 +47,32 @@ export const TokenEncoderInputComponent: React.FC<
   const headerErrors$ = useEncoderStore((state) =>
     state.headerErrors && state.headerErrors.length > 0
       ? state.headerErrors
-      : null,
+      : null
   );
   const headerWarnings$ = useEncoderStore((state) =>
     state.headerWarnings && state.headerWarnings.length > 0
       ? state.headerWarnings
-      : null,
+      : null
   );
   const payloadErrors$ = useEncoderStore((state) =>
     state.payloadErrors && state.payloadErrors.length > 0
       ? state.payloadErrors
-      : null,
+      : null
   );
   const signingErrors$ = useEncoderStore((state) =>
     state.signingErrors && state.signingErrors.length > 0
       ? state.signingErrors
-      : null,
+      : null
   );
   const controlledHeader$ = useEncoderStore((state) => state.controlledHeader);
   const controlledPayload$ = useEncoderStore(
-    (state) => state.controlledPayload,
+    (state) => state.controlledPayload
   );
   const controlledSymmetricSecretKey$ = useEncoderStore(
-    (state) => state.controlledSymmetricSecretKey,
+    (state) => state.controlledSymmetricSecretKey
   );
   const controlledAsymmetricPrivateKey$ = useEncoderStore(
-    (state) => state.controlledAsymmetricPrivateKey,
+    (state) => state.controlledAsymmetricPrivateKey
   );
 
   const [header, setHeader] = useState<string>(DEFAULT_HEADER);
@@ -95,28 +101,28 @@ export const TokenEncoderInputComponent: React.FC<
   }, [controlledAsymmetricPrivateKey$]);
 
   const handleHeaderChange$ = useEncoderStore(
-    (state) => state.handleHeaderChange,
+    (state) => state.handleHeaderChange
   );
   const resetControlledHeader$ = useEncoderStore(
-    (state) => state.resetControlledHeader,
+    (state) => state.resetControlledHeader
   );
   const handlePayloadChange$ = useEncoderStore(
-    (state) => state.handlePayloadChange,
+    (state) => state.handlePayloadChange
   );
   const resetControlledPayload$ = useEncoderStore(
-    (state) => state.resetControlledPayload,
+    (state) => state.resetControlledPayload
   );
   const handleSymmetricSecretKeyChange$ = useEncoderStore(
-    (state) => state.handleSymmetricSecretKeyChange,
+    (state) => state.handleSymmetricSecretKeyChange
   );
   const resetControlledSymmetricSecretKey$ = useEncoderStore(
-    (state) => state.resetControlledSymmetricSecretKey,
+    (state) => state.resetControlledSymmetricSecretKey
   );
   const handleAsymmetricPrivateKeyChange$ = useEncoderStore(
-    (state) => state.handleAsymmetricPrivateKeyChange,
+    (state) => state.handleAsymmetricPrivateKeyChange
   );
   const resetControlledAsymmetricPrivateKey$ = useEncoderStore(
-    (state) => state.resetControlledAsymmetricPrivateKey,
+    (state) => state.resetControlledAsymmetricPrivateKey
   );
 
   const clearHeader = async () => {
@@ -153,7 +159,7 @@ export const TokenEncoderInputComponent: React.FC<
 
       handleHeaderChange$(cleanValue);
     },
-    [handleHeaderChange$],
+    [handleHeaderChange$]
   );
 
   const handlePayloadChange = useCallback(
@@ -164,11 +170,11 @@ export const TokenEncoderInputComponent: React.FC<
 
       handlePayloadChange$(cleanValue);
     },
-    [handlePayloadChange$],
+    [handlePayloadChange$]
   );
 
   const handleSymmetricSecretKeyChange = async (
-    e: ChangeEvent<HTMLTextAreaElement>,
+    e: ChangeEvent<HTMLTextAreaElement>
   ) => {
     const key = e.target.value;
 
@@ -180,7 +186,7 @@ export const TokenEncoderInputComponent: React.FC<
   };
 
   const handleAsymmetricPrivateKeyChange = async (
-    e: ChangeEvent<HTMLTextAreaElement>,
+    e: ChangeEvent<HTMLTextAreaElement>
   ) => {
     const key = e.target.value;
 
@@ -197,6 +203,7 @@ export const TokenEncoderInputComponent: React.FC<
       languageCode: languageCode,
       title: dictionary.headerEditor.title,
       compactTitle: dictionary.headerEditor.compactTitle,
+      hasHeaderIcon: true,
       children: (
         <HeaderEditorComponent
           header={header}
@@ -219,7 +226,7 @@ export const TokenEncoderInputComponent: React.FC<
           </CardToolbarComponent>
         ),
       },
-      options: { noPadding: true },
+      options: { noPadding: false },
     },
     {
       id: dataTestidDictionary.encoder.payloadEditor.id,
@@ -232,6 +239,7 @@ export const TokenEncoderInputComponent: React.FC<
           handlePayloadChange={handlePayloadChange}
         />
       ),
+      hasHeaderIcon: true,
       messages: {
         success: [dictionary.payloadEditor.successMessage],
         errors: payloadErrors$,
@@ -247,7 +255,7 @@ export const TokenEncoderInputComponent: React.FC<
           </CardToolbarComponent>
         ),
       },
-      options: { noPadding: true },
+      options: { noPadding: false },
     },
   ];
 
@@ -255,6 +263,7 @@ export const TokenEncoderInputComponent: React.FC<
     cards.push({
       id: dataTestidDictionary.encoder.secretKeyEditor.id,
       languageCode: languageCode,
+      hasHeaderIcon: true,
       title: isHmacAlg(alg$)
         ? dictionary.signatureEditor.title.secret
         : dictionary.signatureEditor.title.privateKey,
@@ -262,7 +271,7 @@ export const TokenEncoderInputComponent: React.FC<
         ? dictionary.signatureEditor.compactTitle.secret
         : dictionary.signatureEditor.compactTitle.privateKey,
       options: {
-        noPadding: true,
+        noPadding: false,
       },
       children: (
         <>
@@ -307,13 +316,6 @@ export const TokenEncoderInputComponent: React.FC<
             />
           </CardToolbarComponent>
         ),
-        footer: isHmacAlg(alg$) ? (
-          <TokenEncoderEncodingFormatPickerComponent
-            languageCode={languageCode}
-          />
-        ) : (
-          <TokenEncoderKeyFormatPickerComponent languageCode={languageCode} />
-        ),
       },
     });
   }
@@ -322,7 +324,26 @@ export const TokenEncoderInputComponent: React.FC<
     <>
       <div heap-ignore="true" className={styles.encoderCards}>
         {cards.map((props) => (
-          <CardComponent key={props.title} {...props} />
+          <Fragment key={props.title}>
+            {props.id === dataTestidDictionary.encoder.secretKeyEditor.id ? (
+              <div className={styles.headline_container}>
+                <h4 className={styles.headline}>{props.compactTitle}</h4>
+                {isHmacAlg(alg$) ? (
+                  <EncodingFormatToggleSwitchComponent
+                    languageCode={languageCode}
+                    isEncoding
+                  />
+                ) : (
+                  <TokenEncoderKeyFormatPickerComponent
+                    languageCode={languageCode}
+                  />
+                )}
+              </div>
+            ) : (
+              <h4 className={styles.headline}>{props.compactTitle}</h4>
+            )}
+            <CardComponent {...props} />
+          </Fragment>
         ))}
       </div>
       <div heap-ignore="true" className={styles.encoderCardTabs}>
