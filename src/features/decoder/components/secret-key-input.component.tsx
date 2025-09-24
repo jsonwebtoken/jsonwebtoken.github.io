@@ -1,10 +1,8 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { TokenDecoderEncodingFormatPickerComponent } from "@/features/decoder/components/token-decoder-encoding-format-picker.component";
 import { SignatureVerificationSecretInputComponent } from "@/features/decoder/components/signature-verification-secret-input.component";
 import { SignatureVerificationPublicKeyInputComponent } from "@/features/decoder/components/signature-verification-public-key-input.component";
 import { CardWithHeadlineComponent } from "@/features/common/components/card/card.component";
 import { DEFAULT_JWT } from "@/features/decoder/services/token-decoder.service";
-import { TokenDecoderKeyFormatPickerComponent } from "@/features/decoder/components/token-decoder-key-format-picker.component";
 import { useDecoderStore } from "@/features/decoder/services/decoder.store";
 import { HomeDictionaryModel } from "@/features/localization/models/home-dictionary.model";
 import { useDebuggerStore } from "@/features/debugger/services/debugger.store";
@@ -19,7 +17,7 @@ import { CardToolbarComponent } from "@/features/common/components/card-toolbar/
 import { CardToolbarCopyButtonComponent } from "@/features/common/components/card-toolbar-buttons/card-toolbar-copy-button/card-toolbar-copy-button.component";
 import { CardToolbarClearButtonComponent } from "@/features/common/components/card-toolbar-buttons/card-toolbar-clear-button/card-toolbar-clear-button.component";
 import { NOOP_ALG } from "@/features/common/values/constants";
-import { EncodingFormatToggleSwitchComponent } from "./encoding-format-toggle-swith/encoding-format-toggle-switch";
+
 
 type SecretKeyInputComponentProps = {
   languageCode: string;
@@ -129,6 +127,7 @@ export const SecretKeyInputComponent: React.FC<
           ? dictionary.description.secret
           : dictionary.description.publicKey,
       }}
+      hasHeaderIcon
       languageCode={languageCode}
       messages={{
         errors: verificationInputErrors$,
@@ -138,7 +137,7 @@ export const SecretKeyInputComponent: React.FC<
             : dictionary.editor.successMessage.publicKey,
         ],
       }}
-      options={{ noPadding: true }}
+      options={{ noPadding: false }}
       title={
         isHmacAlg(alg$)
           ? dictionary.editor.title.secret
@@ -162,12 +161,7 @@ export const SecretKeyInputComponent: React.FC<
               isDisabled={isHmacAlg(alg$) ? !secret : !publicKey}
             />
           </CardToolbarComponent>
-        ),
-        /* footer: isHmacAlg(alg$) ? (
-          <EncodingFormatToggleSwitchComponent languageCode={languageCode} />
-        ) : (
-          <TokenDecoderKeyFormatPickerComponent languageCode={languageCode} />
-        ), */
+        )
       }}
     >
       {isHmacAlg(alg$) && (
