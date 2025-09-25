@@ -40,7 +40,7 @@ export const EncodingFormatToggleSwitchComponent: React.FC<
   };
 
   return (
-    <div className={styles.encoder_switch}>
+    <div className={clsx(styles.base_switch, isEncoding && styles.encoder)}>
       <div className={styles.container}>
         <div className={styles.label}>
           <span className={styles.fullLabel}>Base64URL Encoded?</span>

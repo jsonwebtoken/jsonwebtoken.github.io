@@ -1,9 +1,12 @@
 @use "@/libs/theme/styles/variables" as *;
 
-.encoder_switch {
+.base_switch {
   display: flex;
-  width: 100%;
   justify-content: flex-end;
+}
+
+.encoder {
+  width: 100%;
 }
 
 .container {
