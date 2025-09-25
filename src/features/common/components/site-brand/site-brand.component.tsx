@@ -1,7 +1,7 @@
-import React, { PropsWithChildren } from "react";
+import React, { PropsWithChildren, useState } from "react";
 import styles from "./site-brand.module.scss";
 import Link from "next/link";
-import { getImageDictionary } from "@/features/localization/services/images-dictionary.service";
+import { getBrandDictionary } from "@/features/localization/services/brand-dictionary.service";
 import { SecondaryFont } from "@/libs/theme/fonts";
 import clsx from "clsx";
 import { JwtLogoComponent } from "../../assets/jwt-logo.component";
@@ -16,10 +16,18 @@ export const SiteBrandComponent: React.FC<SiteBrandComponentProps> = ({
   path,
   languageCode,
 }) => {
-  const images = getImageDictionary(languageCode);
+  const [isVisible, setIsVisible] = useState(false);
+
+  const brandDictionary = getBrandDictionary(languageCode);
 
   return (
-    <Link className={styles.brand} href={path} title={images.title}>
+    <Link
+      className={styles.brand}
+      href={path}
+      title={brandDictionary.tooltip}
+      onMouseEnter={() => setIsVisible(true)}
+      onMouseLeave={() => setIsVisible(false)}
+    >
       <div className={styles.brand__logo}>
         <JwtLogoComponent />
       </div>
@@ -29,6 +37,11 @@ export const SiteBrandComponent: React.FC<SiteBrandComponentProps> = ({
       <div className={clsx(SecondaryFont.className, styles.brand__headline)}>
         <span className={styles.brand__subtitle}>Debugger</span>
       </div>
+      {isVisible && (
+        <div className={styles.tooltip}>
+          {brandDictionary.tooltip}
+        </div>
+      )}
     </Link>
   );
 };
