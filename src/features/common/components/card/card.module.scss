@@ -56,6 +56,12 @@
   }
 }
 
+.headline__container {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
 .title__container {
   grid-column: 1/-1;
   width: 100%;
