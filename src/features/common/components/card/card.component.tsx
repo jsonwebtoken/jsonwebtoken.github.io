@@ -208,7 +208,7 @@ export const CardWithHeadlineComponent: React.FC<
     <div role="region" aria-labelledby={regionId}>
       {sectionHeadline && (
         <div className={styles.title__container}>
-          <div>
+          <div className={styles.headline__container} >
             <h3
               id={regionId}
               className={clsx(
