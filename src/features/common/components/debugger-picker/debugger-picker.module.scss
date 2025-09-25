@@ -14,14 +14,15 @@ $picker-list-width-lg: 7rem;
 $picker-list-offset-lg: calc(($picker-list-width-lg - $picker-width-lg) / 2);
 
 .picker {
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: transparent;
-    color: var(--color_fg_bold);
-    gap: .75rem;
-    width: 100vh;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: transparent;
+  border: none;
+  color: var(--color_fg_bold);
+  gap: .75rem;
+  width: 100%;
 
   //width: $picker-width-sm;
 
