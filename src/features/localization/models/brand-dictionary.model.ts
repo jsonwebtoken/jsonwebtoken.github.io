@@ -3,19 +3,24 @@ interface ToolsMenuItem {
   url: string,
 }
 export interface BrandMenuItem {
-  type: "COPY" | "DOWNLOAD";
-  icon: string;
-  label: string;
-  assetSrc: string;
+  copyLabel: string,
+  downloadLabel: string,
 }
-interface MenuSection {
+interface BrandMenuSection {
   label: string;
-  items: BrandMenuItem[] | ToolsMenuItem[];
+  svg: BrandMenuItem,
+  symbol: BrandMenuItem,
+  wordmark: BrandMenuItem,
+}
+
+interface ToolsMenuSection {
+  label: string;
+  items: ToolsMenuItem[];
 }
 
 interface BrandMenu {
-  brand: MenuSection;
-  tools: MenuSection;
+  brand: BrandMenuSection;
+  tools: ToolsMenuSection;
 }
 
 export interface BrandDictionaryModel {

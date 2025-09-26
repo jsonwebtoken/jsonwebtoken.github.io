@@ -5,14 +5,18 @@ export const jaBrandDictionary: BrandDictionaryModel = {
   menu: {
     brand: {
       label: "Brand",
-      items: [
-        { icon: "copy-icon.svg", label: "Copy Logo SVG", assetSrc: "logo.svg" },
-        { icon: "download-icon.svg", label: "Download Logo", assetSrc: "logo.svg" },
-        { icon: "copy-icon.svg", label: "Copy Symbol SVG", assetSrc: "symbol.svg" },
-        { icon: "download-icon.svg", label: "Download Symbol", assetSrc: "symbol.svg" },
-        { icon: "copy-icon.svg", label: "Copy Wordmark SVG", assetSrc: "wordmark.svg" },
-        { icon: "download-icon.svg", label: "Download Wordmark", assetSrc: "wordmark.svg" },
-      ],
+      svg: {
+        copyLabel: "Copy Logo SVG",
+        downloadLabel: "Download Logo",
+      },
+      symbol: {
+        copyLabel: "Copy Symbol SVG",
+        downloadLabel: "Download Symbol",
+      },
+      wordmark: {
+        copyLabel: "Copy Wordmark SVG",
+        downloadLabel: "Download Wordmark",
+      },
     },
     tools: {
       label: "Tools",
@@ -20,7 +24,7 @@ export const jaBrandDictionary: BrandDictionaryModel = {
         { label: "Passkeys Playground", url: "https://learnpasskeys.io" },
         { label: "WebAuthn Playground", url: "https://webauthn.me" },
         { label: "OIDC Playground", url: "https://openidconnect.net" },
-        { label: "SAML Tool", url: "https://samltool.io" }
+        { label: "SAML Tool", url: "https://samltool.io" },
       ],
     },
   },
