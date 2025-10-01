@@ -7,6 +7,7 @@ import jwtLogoString from "@/public/img/jwt-logo.svg?raw";
 import jwtSymbolString from "@/public/img/jwt-symbol.svg?raw";
 import jwtWordmarkString from "@/public/img/jwt-wordmark.svg?raw";
 import { Button } from "react-aria-components";
+import { a } from "vitest/dist/suite-dWqIFb_-.js";
 
 interface ContextMenuProps {
   dictionary: BrandDictionaryModel;
@@ -87,6 +88,10 @@ const ContextMenu: FC<ContextMenuProps> = ({
           {dictionary.menu.brand.wordmark.downloadLabel}
         </a>
       </div>
+      <div className={styles.groupLabel}>{dictionary.menu.tools.label}</div>
+      {dictionary.menu.tools.items.map((el) => (
+        <a className={styles.menuItem} key={el.url} href={el.url}>{el.label}</a>
+      ))}
     </div>
   );
 };
