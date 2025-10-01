@@ -10,10 +10,10 @@ import jwtWordmark from "@/public/img/jwt-wordmark.svg?raw";
 interface ContextMenuProps {
   dictionary: BrandDictionaryModel;
   position: { x: number; y: number } | null;
+  setIsCopied: (value: React.SetStateAction<boolean>) => void;
 }
 
-const ContextMenu: FC<ContextMenuProps> = ({ dictionary, position }) => {
-  const [isCopied, setIsCopied] = useState(false);
+const ContextMenu: FC<ContextMenuProps> = ({ dictionary, position, setIsCopied }) => {
   if (!position) return null;
 
   const handleIconCopy = async (svgString: string) => {
@@ -24,10 +24,6 @@ const ContextMenu: FC<ContextMenuProps> = ({ dictionary, position }) => {
     try {
       await navigator.clipboard.writeText(svgString);
       setIsCopied(true);
-
-      setTimeout(() => {
-        setIsCopied(false);
-      }, 2000);
     } catch (err) {
       console.error("Failed to copy SVG: ", err);
     }

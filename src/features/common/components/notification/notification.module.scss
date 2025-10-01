@@ -1,0 +1,46 @@
+.container {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  transform: translateY(0);
+  padding: 0.75rem 1rem;
+  background-color: var(--color_bg_layer_alternate-bold);
+  color: var(--color_fg_bold);
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  z-index: 9010;
+  animation:
+    fadeIn 0.3s,
+    fadeOut 0.3s 1.7s;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.12),
+    0 2px 2px -1px rgba(0, 0, 0, 0.04),
+    0 4px 4px -2px rgba(0, 0, 0, 0.04),
+    0 8px 8px -4px rgba(0, 0, 0, 0.04),
+    0 16px 16px -8px rgba(0, 0, 0, 0.04),
+    0 32px 32px -16px rgba(0, 0, 0, 0.04),
+    inset 0 -1px 1px -0.5px rgba(0, 0, 0, 0.04);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+}

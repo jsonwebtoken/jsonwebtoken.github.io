@@ -25,5 +25,6 @@ interface BrandMenu {
 
 export interface BrandDictionaryModel {
   tooltip: string;
+  alertMessage: string;
   menu: BrandMenu;
 }

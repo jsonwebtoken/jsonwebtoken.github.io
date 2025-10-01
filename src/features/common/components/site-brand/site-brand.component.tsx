@@ -7,6 +7,7 @@ import clsx from "clsx";
 import { JwtLogoComponent } from "../../assets/jwt-logo.component";
 import { JwtWordmarkComponent } from "../../assets/jwt-wordmark.component";
 import ContextMenu from "../context-menu/context-menu";
+import Notification from "../notification/notification.component";
 
 interface SiteBrandComponentProps extends PropsWithChildren {
   path: string;
@@ -17,6 +18,7 @@ export const SiteBrandComponent: React.FC<SiteBrandComponentProps> = ({
   path,
   languageCode,
 }) => {
+  const [isCopied, setIsCopied] = useState(false);
   const [isTooltipVisible, setIsTooltipVisible] = useState(false);
   const [menuPosition, setMenuPosition] = useState<{
     x: number;
@@ -65,7 +67,10 @@ export const SiteBrandComponent: React.FC<SiteBrandComponentProps> = ({
           <div className={styles.tooltip}>{brandDictionary.tooltip}</div>
         )}
       </Link>
-      <ContextMenu dictionary={brandDictionary} position={menuPosition} />
+      <ContextMenu dictionary={brandDictionary} position={menuPosition} setIsCopied={setIsCopied}/>
+      {isCopied && (
+        <Notification message={brandDictionary.alertMessage} onClose={() => setIsCopied(false)}/>
+      )}
     </div>
   );
 };

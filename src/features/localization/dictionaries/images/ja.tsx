@@ -1,6 +1,7 @@
 import { BrandDictionaryModel } from "../../models/brand-dictionary.model";
 
 export const jaBrandDictionary: BrandDictionaryModel = {
+  alertMessage: "SVG copied to clipboard",
   tooltip: "Right-click or long-press for logo options",
   menu: {
     brand: {
