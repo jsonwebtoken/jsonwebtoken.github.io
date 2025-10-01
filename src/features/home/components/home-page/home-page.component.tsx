@@ -148,12 +148,9 @@ export const HomePageComponent: React.FC<HomePageComponentProps> = ({
           dictionary={auth0Dictionary.ebook}
         />
         <AssetsComponent
-          dictionary={jwtDictionary}
+          jwtDictionary={jwtDictionary}
+          auth0Dictionary={auth0Dictionary}
           languageCode={languageCode}
-        />
-        <Auth0CtaComponent
-          languageCode={languageCode}
-          dictionary={auth0Dictionary.banner}
         />
       </aside>
       {/*<CounterComponent />*/}
