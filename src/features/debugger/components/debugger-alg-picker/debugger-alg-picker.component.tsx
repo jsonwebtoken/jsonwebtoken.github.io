@@ -106,6 +106,18 @@ export const WidgetAlgPickerComponent: React.FC<
     })();
   }, []);
 
+  const noneAlgOptions: DebuggerPickerOptionModel[] = useMemo(() => {
+    return Object.entries(
+      jwsExampleAlgHeaderParameterValuesDictionary.unsecured,
+    ).map((entry) => {
+      const [key, value] = entry;
+
+      return {
+        value: key,
+        label: value.name,
+      };
+    });
+  }, []);
 
   const symmetricAlgOptions: DebuggerPickerOptionModel[] = useMemo(() => {
     return Object.entries(jwsExampleAlgHeaderParameterValuesDictionary.mac).map(
@@ -172,8 +184,8 @@ export const WidgetAlgPickerComponent: React.FC<
   }, [canUseEd25519, canUseEd448, canUseEs512]);
 
   const algOptions = useMemo(() => {
-    return [...symmetricAlgOptions, ...asymmetricAlgOptions];
-  }, [asymmetricAlgOptions, symmetricAlgOptions]);
+    return [...noneAlgOptions, ...symmetricAlgOptions, ...asymmetricAlgOptions];
+  }, [noneAlgOptions, asymmetricAlgOptions, symmetricAlgOptions]);
 
   return (
     <div role="region" aria-label={label} className={styles.alg_picker}>
