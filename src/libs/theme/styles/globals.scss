@@ -630,7 +630,7 @@ $picker-list-offset-lg: calc(($picker-list-width-lg - $picker-width-lg) / 2);
     transform: translateY(-50%);
     height: 0.375rem;
     width: 0.375rem;
-    background-color: var(--color_fg_selected);
+    background-color: var(--color_fg_bold);
     border-radius: 50%;
   }
 }
