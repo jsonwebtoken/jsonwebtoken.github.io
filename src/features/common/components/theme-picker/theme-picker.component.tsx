@@ -27,7 +27,6 @@ export const ThemePickerComponent: React.FC<ThemePickerComponentProps> = ({
               data-active={selectedOptionCode === option.code}
               title={option.label}
               onClick={async () => {
-                console.log(option.label)
                 await handleSelection(option.code);
               }}
             >

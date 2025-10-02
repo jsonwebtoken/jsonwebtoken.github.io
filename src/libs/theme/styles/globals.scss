@@ -48,8 +48,8 @@
   --color_fg_default: var(--functional-gray-200);
   --color_fg_link_primary: var(--cloud);
 
-  --color_bg_app_bar: hsla(0, 0%, 95%, .04);
-  --color_bg_app_bar_border: hsla(0, 0%, 7%, .12);
+  --color_bg_app_bar: hsla(0, 0%, 95%, 0.04);
+  --color_bg_app_bar_border: hsla(0, 0%, 95%, 0.12);
   --color_bg_app_bar_plain: rgba(17, 17, 17);
 
   --color_fg_link: var(--functional-gray-50);
@@ -66,7 +66,7 @@
   --color_bg_layer_bold: var(--functional-gray-700);
   --color_bg_layer_boldest: var(--functional-gray-50);
   --color_bg_layer_alternate: var(--functional-gray-850);
-  --color_bg_layer_alternate-bold: var(--functional-gray-800);
+  --color_bg_layer_alternate-bold: var(--functional-gray-850);
   --color_bg_layer_elevated: var(--functional-gray-900);
 
   --color_bg_layer_highlight1: var(--ocean);
@@ -200,8 +200,9 @@ html[data-theme="system-light"] {
   --color_fg_default: var(--functional-gray-500);
   --color_fg_link_primary: var(--sky);
 
-  --color_bg_app_bar: hsla(0,0%,7%,.04);
+  --color_bg_app_bar: hsla(0, 0%, 7%, 0.04);
   --color_bg_app_bar_plain: rgba(241, 241, 241);
+  --color_bg_app_bar_border: hsla(0, 0%, 7%, 0.12);
 
   --color_fg_link: var(--charcoal2);
   --color_fg_link_hover: var(--charcoal2);
