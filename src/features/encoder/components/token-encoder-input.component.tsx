@@ -226,7 +226,7 @@ export const TokenEncoderInputComponent: React.FC<
           </CardToolbarComponent>
         ),
       },
-      options: { noPadding: false },
+      options: { noPadding: true },
     },
     {
       id: dataTestidDictionary.encoder.payloadEditor.id,
@@ -255,7 +255,7 @@ export const TokenEncoderInputComponent: React.FC<
           </CardToolbarComponent>
         ),
       },
-      options: { noPadding: false },
+      options: { noPadding: true },
     },
   ];
 
@@ -271,7 +271,7 @@ export const TokenEncoderInputComponent: React.FC<
         ? dictionary.signatureEditor.compactTitle.secret
         : dictionary.signatureEditor.compactTitle.privateKey,
       options: {
-        noPadding: false,
+        noPadding: true,
       },
       children: (
         <>

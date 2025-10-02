@@ -29,7 +29,7 @@ export const EncodedJwtOutputComponent: React.FC<
         title={dictionary.title}
         hasHeaderIcon
         compactTitle={dictionary.title}
-        options={{ noPadding: false, fullHeight: true, isOutput: true }}
+        options={{ noPadding: true, fullHeight: true, isOutput: true }}
         messages={{
           warnings: encodingWarnings,
           errors: encodingErrors,
