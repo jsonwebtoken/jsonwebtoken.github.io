@@ -15,7 +15,7 @@ import {
   getLang,
   switchToEncoderTab,
 } from "./e2e.utils";
-import jwts from "./jwt.json" assert { type: "json" };
+import jwts from "./jwt.json" with { type: "json" };
 import {
   JwtDictionaryModel,
   JwtSignedWithDigitalModel,
