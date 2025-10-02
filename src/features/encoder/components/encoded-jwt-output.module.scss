@@ -1,0 +1,14 @@
+@use "@/libs/theme/styles/variables" as *;
+@use "@/libs/theme/styles/mixins" as *;
+
+.headline {
+  display: flex;
+  grid-column: 1/-1;
+  width: 100%;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -.1px;
+  color: var(--color_fg_default);
+  padding-bottom: 0.5rem;
+}

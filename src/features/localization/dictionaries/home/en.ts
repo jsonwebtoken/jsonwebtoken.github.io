@@ -76,7 +76,7 @@ export const enHomeDictionary: HomeDictionaryModel = {
       label: "JWT example generator",
     },
     jwtEditor: {
-      headline: "Encoded value",
+      headline: "Encoded Token",
       label: "JWT editor",
       title: "JSON Web Token (JWT)",
       compactTitle: "JWT",
@@ -89,7 +89,7 @@ export const enHomeDictionary: HomeDictionaryModel = {
           label: "JSON",
         },
         claims: {
-          label: "Claims Table",
+          label: "Claims Breakdown",
         },
       },
     },
@@ -100,7 +100,7 @@ export const enHomeDictionary: HomeDictionaryModel = {
           label: "JSON",
         },
         claims: {
-          label: "Claims Table",
+          label: "Claims Breakdown",
         },
       },
     },
@@ -141,18 +141,18 @@ export const enHomeDictionary: HomeDictionaryModel = {
       label: "Header, payload, and signature example generator",
     },
     headerEditor: {
-      title: "Header: Algorithm & Token Type",
+      title: "Algorithm & Token Type",
       compactTitle: "Header",
       successMessage: "Valid header",
     },
     payloadEditor: {
-      title: "Payload: Data",
+      title: "Data",
       compactTitle: "Payload",
       successMessage: "Valid payload",
     },
     signatureEditor: {
       title: {
-        secret: "Sign JWT: Secret",
+        secret: "Secret",
         privateKey: "Sign JWT: Private Key",
       },
       compactTitle: {
@@ -169,7 +169,8 @@ export const enHomeDictionary: HomeDictionaryModel = {
       },
     },
     encodedJwt: {
-      title: "JSON Web Token",
+      title: "Encoded JWT",
+      heading: "JWT Signature"
     },
   },
 };

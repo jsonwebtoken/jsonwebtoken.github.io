@@ -9,7 +9,7 @@ export const enPickersUiDictionary: PickersUiDictionaryModel = {
   exampleAlgPicker: {
     label: "Generate example",
     compactLabel: "Alg",
-    defaultValue: "Select a signing algorithm",
+    defaultValue: "Select signing algorithm",
     description: "Generate a JWT",
     closeButton: {
       label: "Close signing algorithm list",

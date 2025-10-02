@@ -11,6 +11,8 @@ import {
   CardToolbarButtonComponent,
   CardToolbarButtonComponentProps,
 } from "@/features/common/components/card-toolbar-button/card-toolbar-button.component";
+import { EyeOpenIcon } from "../../icons/eye-open/eye-open-icon";
+import { EyeCloseIcon } from "../../icons/eye-close/eye-close-icon";
 
 interface CardToolbarDescriptionButtonComponentProps
   extends Omit<CardToolbarButtonComponentProps, "variant"> {
@@ -26,12 +28,12 @@ export const CardToolbarDescriptionButtonComponent: React.FC<
   const setDescriptionVisibility$ = useDebuggerStore((state) =>
     outputType === "header"
       ? state.setDecodedHeaderDescriptionVisibility$
-      : state.setDecodedPayloadDescriptionVisibility$,
+      : state.setDecodedPayloadDescriptionVisibility$
   );
   const descriptionVisibility$ = useDebuggerStore((state) =>
     outputType === "header"
       ? state.decodedHeaderDescriptionVisibility$
-      : state.decodedPayloadDescriptionVisibility$,
+      : state.decodedPayloadDescriptionVisibility$
   );
 
   const [descVisibility, setDescVisibility] =
@@ -47,7 +49,7 @@ export const CardToolbarDescriptionButtonComponent: React.FC<
       ClaimDescriptionVisibilityValues.HIDDEN,
       {
         secure: true,
-      },
+      }
     );
 
     setDescriptionVisibility$(ClaimDescriptionVisibilityValues.HIDDEN);
@@ -63,7 +65,7 @@ export const CardToolbarDescriptionButtonComponent: React.FC<
       ClaimDescriptionVisibilityValues.VISIBLE,
       {
         secure: true,
-      },
+      }
     );
 
     setDescriptionVisibility$(ClaimDescriptionVisibilityValues.VISIBLE);
@@ -79,15 +81,22 @@ export const CardToolbarDescriptionButtonComponent: React.FC<
     <CardToolbarButtonComponent
       {...props}
       variant="standard"
+      tooltipText={
+        descVisibility === ClaimDescriptionVisibilityValues.VISIBLE
+          ? dictionary.hideDetailsButton.label
+          : dictionary.showDetailsButton.label
+      }
       onPress={
         descVisibility === ClaimDescriptionVisibilityValues.VISIBLE
           ? hideDescription
           : showDescription
       }
     >
-      {descVisibility === ClaimDescriptionVisibilityValues.VISIBLE
-        ? dictionary.hideDetailsButton.label
-        : dictionary.showDetailsButton.label}
+      {descVisibility === ClaimDescriptionVisibilityValues.VISIBLE ? (
+        <EyeCloseIcon />
+      ) : (
+        <EyeOpenIcon />
+      )}
     </CardToolbarButtonComponent>
   );
 };

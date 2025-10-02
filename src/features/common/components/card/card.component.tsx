@@ -1,14 +1,21 @@
 import React, { PropsWithChildren, useId } from "react";
 import styles from "./card.module.scss";
 import { clsx } from "clsx";
-import { getLocalizedSecondaryFont, MonoFont } from "@/libs/theme/fonts";
+import { getLocalizedSecondaryFont } from "@/libs/theme/fonts";
 import { CardMessageComponent } from "@/features/common/components/card-message/card-message.component";
+import { HeaderIcon } from "../icons/header/header-icon";
+import { CheckIcon } from "../icons/check/check-icon";
+import { EncodingFormatToggleSwitchComponent } from "@/features/decoder/components/encoding-format-toggle-swith/encoding-format-toggle-switch";
+import { useDecoderStore } from "@/features/decoder/services/decoder.store";
+import { isHmacAlg } from "../../services/jwt.service";
+import { TokenDecoderKeyFormatPickerComponent } from "@/features/decoder/components/token-decoder-key-format-picker.component";
 
 export interface CardComponentProps extends PropsWithChildren {
   id: string;
   languageCode: string;
   title: string;
   compactTitle: string;
+  hasHeaderIcon?: boolean;
   options: Partial<{
     noPadding: boolean;
     fullWidth: boolean;
@@ -44,6 +51,7 @@ export const CardComponent: React.FC<CardComponentProps> = (props) => {
     },
     messages,
     slots,
+    hasHeaderIcon = false,
   } = props;
 
   const cardId = useId();
@@ -61,12 +69,12 @@ export const CardComponent: React.FC<CardComponentProps> = (props) => {
       aria-label={canRenderTitle ? undefined : title}
       heap-ignore="true"
       className={clsx(
-        MonoFont.className,
         styles.card,
         options && options.fullWidth && styles.card__hasFullWidth,
-        options && options.fullHeight && styles.card__hasFullHeight,
+        options && options.fullHeight && styles.card__hasFullHeight
       )}
       data-type={options && options.isOutput ? "output" : "input"}
+      data-no-padding={options ? options.noPadding : undefined}
       data-frameless={options && options.frameless}
     >
       {!options?.hideTitle && (
@@ -74,21 +82,9 @@ export const CardComponent: React.FC<CardComponentProps> = (props) => {
           {titleKey && (
             <div className={styles.card__headline}>
               {titleKey && !compactTitle && (
-                <h4 id={cardId}>
-                  <span className={styles.card__titleKey}>
-                    {titleKey}
-                    {titleValue && `: `}
-                  </span>
-                  {titleValue && (
-                    <span className={styles.card__titleValue}>
-                      {titleValue}
-                    </span>
-                  )}
-                </h4>
-              )}
-              {titleKey && compactTitle && (
-                <>
-                  <h4 id={cardId} className={styles.card__fullTitle}>
+                <div className={styles.card__heading_title_container}>
+                  {hasHeaderIcon && <HeaderIcon />}
+                  <h4 id={cardId}>
                     <span className={styles.card__titleKey}>
                       {titleKey}
                       {titleValue && `: `}
@@ -99,6 +95,24 @@ export const CardComponent: React.FC<CardComponentProps> = (props) => {
                       </span>
                     )}
                   </h4>
+                </div>
+              )}
+              {titleKey && compactTitle && (
+                <>
+                  <div className={styles.card__heading_title_container}>
+                    {hasHeaderIcon && <HeaderIcon />}
+                    <h4 id={cardId} className={styles.card__fullTitle}>
+                      <span className={styles.card__titleKey}>
+                        {titleKey}
+                        {titleValue && `: `}
+                      </span>
+                      {titleValue && (
+                        <span className={styles.card__titleValue}>
+                          {titleValue}
+                        </span>
+                      )}
+                    </h4>
+                  </div>
                   <h4 id={cardId} className={styles.card__compactTitle}>
                     <span className={styles.card__titleKey}>
                       {compactTitle}
@@ -111,6 +125,16 @@ export const CardComponent: React.FC<CardComponentProps> = (props) => {
           )}
         </>
       )}
+      <div className={styles.card__content}>
+        <div
+          className={styles.card__body}
+          data-no-padding={
+            options && options.noPadding ? options.noPadding : undefined
+          }
+        >
+          {children}
+        </div>
+      </div>
       {messages && messages.errors && messages.errors.length > 0 ? (
         <div
           data-testid={`${id}___statusBar__error`}
@@ -131,11 +155,15 @@ export const CardComponent: React.FC<CardComponentProps> = (props) => {
         >
           {messages.success.map((line, index) => {
             return (
-              <CardMessageComponent key={index}>{line}</CardMessageComponent>
+              <div key={index} style={{ display: "flex" }}>
+                <CheckIcon />
+                <CardMessageComponent key={index}>{line}</CardMessageComponent>
+              </div>
             );
           })}
         </div>
       ) : null}
+      {slots?.notification}
       {messages && messages.warnings && messages.warnings.length > 0 && (
         <div
           data-testid={`${id}___statusBar__warning`}
@@ -149,15 +177,6 @@ export const CardComponent: React.FC<CardComponentProps> = (props) => {
           })}
         </div>
       )}
-      {slots?.notification}
-      <div
-        className={styles.card__body}
-        data-no-padding={
-          options && options.noPadding ? options.noPadding : undefined
-        }
-      >
-        {children}
-      </div>
       {slots?.footer && (
         <div className={styles.card__action}>{slots.footer}</div>
       )}
@@ -183,31 +202,40 @@ export const CardWithHeadlineComponent: React.FC<
   CardWithHeadlineComponentProps
 > = ({ sectionHeadline, languageCode, ...props }) => {
   const regionId = useId();
+  const alg$ = useDecoderStore((state) => state.alg);
 
   return (
     <div role="region" aria-labelledby={regionId}>
       {sectionHeadline && (
-        <>
-          <h3
-            id={regionId}
-            className={clsx(
-              styles.cardHeadline__title,
-              getLocalizedSecondaryFont(languageCode),
+        <div className={styles.title__container}>
+          <div className={styles.headline__container} >
+            <h3
+              id={regionId}
+              className={clsx(
+                styles.cardHeadline__title,
+                getLocalizedSecondaryFont(languageCode)
+              )}
+            >
+              {sectionHeadline.title}
+              {sectionHeadline.titleTag && (
+                <span className={styles.cardHeadline__titleTag}>
+                  {sectionHeadline.titleTag}
+                </span>
+              )}
+            </h3>
+            {sectionHeadline.description && (
+              <p className={styles.cardHeadline__description}>
+                {sectionHeadline.description}
+              </p>
             )}
-          >
-            {sectionHeadline.title}
-            {sectionHeadline.titleTag && (
-              <span className={styles.cardHeadline__titleTag}>
-                {sectionHeadline.titleTag}
-              </span>
-            )}
-          </h3>
-          {sectionHeadline.description && (
-            <p className={styles.cardHeadline__description}>
-              {sectionHeadline.description}
-            </p>
+          </div>
+
+          {isHmacAlg(alg$) ? (
+            <EncodingFormatToggleSwitchComponent languageCode={languageCode} />
+          ) : (
+            <TokenDecoderKeyFormatPickerComponent languageCode={languageCode} />
           )}
-        </>
+        </div>
       )}
       <CardComponent languageCode={languageCode} {...props} />
     </div>

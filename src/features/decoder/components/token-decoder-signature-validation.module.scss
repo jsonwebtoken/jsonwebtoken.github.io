@@ -1,25 +1,25 @@
 @use "@/libs/theme/styles/variables" as *;
 
 .container {
+  flex: 1 1;
   display: flex;
-  flex-direction: column;
-  transition: background-color 0.13s ease-in-out;
-  padding: 0.5rem 1rem;
-  font-size: 0.75rem;
-  line-height: 1.125rem;
+  align-items: center;
+  justify-content: flex-start;
+  padding: .75rem .75rem .5rem;
+  gap: .25rem;
+  font-size: .875rem;
+  line-height: 1.375rem;
+  color: var(--color_fg_default);
 }
 
 .valid {
-  background-color: var(--color_bg_state_success_subtle);
-  color: var(--color_fg_on_state_success_subtle);
+    color: var(--color_fg_on_state_success_subtle);
 }
 
 .invalid {
-  background-color: var(--color_bg_state_danger_subtle);
   color: var(--color_fg_on_state_danger_subtle);
 }
 
 .warning {
-  background-color: var(--color_bg_state_caution_subtle);
   color: var(--color_fg_on_state_caution_subtle);
 }
