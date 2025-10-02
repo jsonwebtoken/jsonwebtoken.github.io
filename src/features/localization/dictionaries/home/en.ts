@@ -54,30 +54,14 @@ export const enHomeDictionary: HomeDictionaryModel = {
     description: null,
   },
   info: {
-    summary: "What is a JWT?",
     description:
       "Decode, verify, and generate JSON Web Tokens, which are an open, industry standard RFC 7519 method for representing claims securely between two parties.",
-    ctaButton: {
-      label: "Learn more about JWT",
-      path: sitePaths.introduction,
-    },
-    secondaryCtaButton: {
-      label: "See JWT libraries",
-      path: sitePaths.libraries,
-    },
     resources: {
       spec: {
         name: "RFC 7519",
         link: "https://tools.ietf.org/html/rfc7519",
       },
     },
-  },
-  warning: {
-    summary: "Warning about using JWTs",
-    title:
-      "For your protection, all JWT debugging and validation happens in the browser.",
-    description:
-      "Be careful where you paste or share JWTs as they can represent credentials that grant access to resources. This site does not store or transmit your JSON Web Tokens outside of the browser.",
   },
   decoder: {
     title: "JWT Decoder",

@@ -21,6 +21,9 @@
   @media #{$breakpoint-dimension-sm} {
     display: block;
   }
+  @media #{$breakpoint-dimension-xl} {
+    max-width: $inner-content-grid-max-width;
+  }
 }
 
 .wrapper {

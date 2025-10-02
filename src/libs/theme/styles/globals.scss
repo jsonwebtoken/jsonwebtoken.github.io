@@ -211,7 +211,7 @@ html[data-theme="system-light"] {
   --color_border_selected: var(--functional-gray-850);
   --color_border_focus: var(--functional-gray-850);
 
-  --color_bg_auth0-cta: var(--functional-gray-150);
+  --color_bg_auth0-cta: var(--functional-gray-950);
 
   --color_bg_layer: var(--functional-gray-0);
   --color_bg_layer_bold: var(--functional-gray-250);
@@ -225,6 +225,8 @@ html[data-theme="system-light"] {
   --color_bg_layer_highlight3: var(--violet);
   --color_bg_layer_highlight4: #a35125;
 
+  --color_button_focus_inverse: hsla(0, 0%, 100%, .24);
+
   --color_border_default: #e8e8e8;
   --color_border_bold: var(--functional-gray-250);
   --color_border_inverse_static: var(--functional-gray-550);
@@ -232,6 +234,7 @@ html[data-theme="system-light"] {
   --color_bg_disabled: var(--functional-gray-150);
 
   --color_fg_disabled: var(--functional-gray-500);
+  --color_fg_default: var(--functional-gray-500);
 
   --color_bg_input: var(--functional-gray-0);
   --color_fg_input_placeholder: var(--functional-gray-500);
