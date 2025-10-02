@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useEffect, useState } from "react";
+import React, { PropsWithChildren, useCallback, useEffect, useState } from "react";
 import styles from "./site-brand.module.scss";
 import Link from "next/link";
 import { getBrandDictionary } from "@/features/localization/services/brand-dictionary.service";
@@ -33,6 +33,10 @@ export const SiteBrandComponent: React.FC<SiteBrandComponentProps> = ({
   const handleCloseMenu = () => {
     setMenuPosition(null);
   };
+
+  const handleNotificationClose = useCallback(() => {
+    setIsCopied(false);
+  }, [])
 
   useEffect(() => {
     // Hide the menu on any click on the document
@@ -69,7 +73,7 @@ export const SiteBrandComponent: React.FC<SiteBrandComponentProps> = ({
       </Link>
       <ContextMenu dictionary={brandDictionary} position={menuPosition} setIsCopied={setIsCopied}/>
       {isCopied && (
-        <Notification message={brandDictionary.alertMessage} onClose={() => setIsCopied(false)}/>
+        <Notification message={brandDictionary.alertMessage} onClose={handleNotificationClose}/>
       )}
     </div>
   );
