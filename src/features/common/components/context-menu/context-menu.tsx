@@ -7,7 +7,8 @@ import jwtLogoString from "@/public/img/jwt-logo.svg?raw";
 import jwtSymbolString from "@/public/img/jwt-symbol.svg?raw";
 import jwtWordmarkString from "@/public/img/jwt-wordmark.svg?raw";
 import { Button } from "react-aria-components";
-import { a } from "vitest/dist/suite-dWqIFb_-.js";
+import { CopyIcon } from "../icons/copy/copy-icon";
+import { DownloadIconComponent } from "../../assets/download-icon.component";
 
 interface ContextMenuProps {
   dictionary: BrandDictionaryModel;
@@ -46,7 +47,7 @@ const ContextMenu: FC<ContextMenuProps> = ({
           className={styles.menuItem}
           onPress={() => handleIconCopy(jwtLogoString)}
         >
-          <div>icon</div>
+          <CopyIcon />
           <span>{dictionary.menu.brand.svg.copyLabel}</span>
         </Button>
         <a
@@ -54,14 +55,14 @@ const ContextMenu: FC<ContextMenuProps> = ({
           href="/img/jwt-logo.svg"
           download="jwt-logo.svg"
         >
-          <div>icon</div>
+          <DownloadIconComponent />
           {dictionary.menu.brand.svg.downloadLabel}
         </a>
         <Button
           className={styles.menuItem}
           onPress={() => handleIconCopy(jwtSymbolString)}
         >
-          <div>icon</div>
+          <CopyIcon />
           <span>{dictionary.menu.brand.symbol.copyLabel}</span>
         </Button>
         <a
@@ -69,14 +70,14 @@ const ContextMenu: FC<ContextMenuProps> = ({
           href="/img/jwt-symbol.svg"
           download="jwt-symbol.svg"
         >
-          <div>icon</div>
+          <DownloadIconComponent />
           {dictionary.menu.brand.symbol.downloadLabel}
         </a>
         <Button
           className={styles.menuItem}
           onPress={() => handleIconCopy(jwtWordmarkString)}
         >
-          <div>icon</div>
+          <CopyIcon />
           <span>{dictionary.menu.brand.wordmark.copyLabel}</span>
         </Button>
         <a
@@ -84,10 +85,11 @@ const ContextMenu: FC<ContextMenuProps> = ({
           href="/img/jwt-wordmark.svg"
           download="jwt-wordmark.svg"
         >
-          <div>icon</div>
+          <DownloadIconComponent />
           {dictionary.menu.brand.wordmark.downloadLabel}
         </a>
       </div>
+      <div className={styles.separator}></div>
       <div className={styles.groupLabel}>{dictionary.menu.tools.label}</div>
       {dictionary.menu.tools.items.map((el) => (
         <a className={styles.menuItem} key={el.url} href={el.url}>{el.label}</a>

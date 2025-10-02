@@ -52,3 +52,10 @@
     background-color: var(--color_bg_layer_alternate-bold);
   }
 }
+
+.separator {
+  width: 100%;
+  height: 1px;
+  background-color: var(--color_border_default);
+  margin: 0.25rem 0;
+}
