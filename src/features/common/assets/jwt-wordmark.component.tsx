@@ -9,20 +9,20 @@ export const JwtWordmarkComponent: React.FC = () => {
     >
       <path
         d="M7 0V12C7 15.3137 4.31371 18 1 18V18"
-        stroke="black"
-        style={{ stroke: 'black', strokeOpacity: 1 }}
+        stroke="currentColor"
+        style={{ strokeOpacity: 1 }}
         strokeWidth="4"
       />
       <path
         d="M13.8932 0V14.5C13.8932 16.433 15.4602 18 17.3932 18V18C19.3262 18 20.8932 16.433 20.8932 14.5V5C20.8932 3.34315 22.2363 2 23.8932 2V2C25.55 2 26.8932 3.34315 26.8932 5V14.5C26.8932 16.433 28.4602 18 30.3932 18V18C32.3262 18 33.8932 16.433 33.8932 14.5V0"
-        stroke="black"
-        style={{ stroke: 'black', strokeOpacity: 1 }}
+        stroke="currentColor"
+        style={{ strokeOpacity: 1 }}
         strokeWidth="4"
       />
       <path
         d="M38.8932 2H44.8932M44.8932 2V20M44.8932 2H50.8932"
-        stroke="black"
-        style={{ stroke: 'black', strokeOpacity: 1 }}
+        stroke="currentColor"
+        style={{ strokeOpacity: 1 }}
         strokeWidth="4"
       />
     </svg>

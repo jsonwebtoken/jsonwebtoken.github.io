@@ -1,35 +1,32 @@
-import { BrandDictionaryModel } from "@/features/localization/models/images-dictionary.model";
+import { BrandDictionaryModel } from "../../models/brand-dictionary.model";
 
 export const enBrandDictionary: BrandDictionaryModel = {
-  title: "Right-click or long-press for logo options",
+  alertMessage: "SVG copied to clipboard",
+  tooltip: "Right-click or long-press for logo options",
   menu: {
     brand: {
       label: "Brand",
-      items: [
-        {icon: "",
-          label: "Copy Logo SVG"
-        },
-        {icon: "",
-          label: "Download Logo"
-        },
-        {icon: "",
-          label: "Copy Symbol SVG"
-        },
-        {icon: "",
-          label: "Download Symbol"
-        },
-        {icon: "",
-          label: "Copy Wordmark SVG"
-        },
-        {icon: "",
-          label: "Download Wordmark"
-        },
-      ]
+      svg: {
+        copyLabel: "Copy Logo SVG",
+        downloadLabel: "Download Logo",
+      },
+      symbol: {
+        copyLabel: "Copy Symbol SVG",
+        downloadLabel: "Download Symbol",
+      },
+      wordmark: {
+        copyLabel: "Copy Wordmark SVG",
+        downloadLabel: "Download Wordmark",
+      },
     },
     tools: {
       label: "Tools",
       items: [
-      ]
-    }
-  }
+        { label: "Passkeys Playground", url: "https://learnpasskeys.io" },
+        { label: "WebAuthn Playground", url: "https://webauthn.me" },
+        { label: "OIDC Playground", url: "https://openidconnect.net" },
+        { label: "SAML Tool", url: "https://samltool.io" },
+      ],
+    },
+  },
 };

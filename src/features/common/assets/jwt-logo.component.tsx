@@ -11,15 +11,15 @@ export const JwtLogoComponent: React.FC = () => {
         fillRule="evenodd"
         clipRule="evenodd"
         d="M18.3683 8.60806V0H13.5682V8.60806L15.9683 11.9041L18.3683 8.60806Z"
-        fill="#191919"
-        style={{ fill: '#191919', fillOpacity: 1 }}
+        fill="currentColor"
+        style={{ fillOpacity: 1 }}
       />
       <path
         fillRule="evenodd"
         clipRule="evenodd"
         d="M13.5682 23.3919V32H18.3683V23.3919L15.9683 20.0959L13.5682 23.3919Z"
-        fill="#191919"
-        style={{ fill: '#191919', fillOpacity: 1 }}
+        fill="currentColor"
+        style={{ fillOpacity: 1 }}
       />
       <path
         fillRule="evenodd"

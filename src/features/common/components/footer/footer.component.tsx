@@ -17,7 +17,7 @@ import { createUrlPath } from "@/libs/utils/path.utils";
 import { SiteBrandComponent } from "@/features/common/components/site-brand/site-brand.component";
 import { Button } from "react-aria-components";
 import { Auth0LogoComponent } from "../../assets/auth0-logo.component";
-import { getImageDictionary } from "@/features/localization/services/images-dictionary.service";
+import { getBrandDictionary } from "@/features/localization/services/brand-dictionary.service";
 
 interface FooterComponentProps {
   languageCode: string;
@@ -31,7 +31,7 @@ export const FooterComponent: React.FC<FooterComponentProps> = ({
   const [modalState, setModalState] = useState<ModalStateValues>(
     ModalStateValues.CLOSED,
   );
-  const images = getImageDictionary(languageCode);
+  const images = getBrandDictionary(languageCode);
 
   const languagePathPrefix: string =
     languageCode === DEFAULT_LANGUAGE_CODE
@@ -158,7 +158,7 @@ export const FooterComponent: React.FC<FooterComponentProps> = ({
             target="_blank"
             href="https://auth0.com/"
           >
-            <Auth0LogoComponent title={images.title}/>
+            <Auth0LogoComponent title={images.tooltip}/>
           </Link>
           <span className={styles.bottomSection__copyright}>
             {dictionary.copyright}
