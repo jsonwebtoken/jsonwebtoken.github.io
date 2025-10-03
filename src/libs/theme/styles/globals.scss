@@ -118,14 +118,15 @@
   --color_fg_code: #fff;
   --color_bg_code-editor: #000;
 
-  --color_bg_state_success: #10783f;
+  --color_bg_state_success: #149750;
   --color_fg_on_state_success: #fff;
   --color_fg_on_state_success_subtle: #98d2b2;
   --color_bg_state_success_subtle: #062a16;
   --color_border_state_success: #67bc8e;
 
   --color_fg_strong: #99a7f1;
-
+  
+  --color_bg_state_danger: #f2ac84;
   --color_bg_state_danger_subtle: #46110e;
   --color_fg_on_state_danger_subtle: #f0b7b4;
   --color_border_state_danger: #e89590;
@@ -159,6 +160,7 @@ html[data-theme="system-light"] {
   --color_fg_on_state_info_subtle: #263588;
   --color_border_state_info: #3f59e4;
 
+  --color_bg_state_danger: #e27133;
   --color_bg_state_danger_subtle: #fbeeed;
   --color_fg_on_state_danger_subtle: #761c17;
   --color_border_state_danger: #c32f26;
@@ -171,7 +173,7 @@ html[data-theme="system-light"] {
 
   --color_fg_strong: #3f59e4;
 
-  --color_bg_state_success: #10783f;
+  --color_bg_state_success: #8fc88a;
   --color_fg_on_state_success: #fff;
   --color_fg_on_state_success_subtle: #149750;
   --color_bg_state_success_subtle: #e6f4ec;
@@ -561,7 +563,8 @@ $picker-list-offset-lg: calc(($picker-list-width-lg - $picker-width-lg) / 2);
     border: 1px solid var(--color_border_default);
     padding: 0.25rem;
     overflow: hidden;
-    min-width: 6.125rem;
+    width: max-content !important;
+    min-width: 100% !important;
 }
 
 .react-select__menu-portal {
