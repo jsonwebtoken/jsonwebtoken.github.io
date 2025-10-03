@@ -7,18 +7,6 @@
 
 .content {
   @include InnerContentGrid;
-
-  padding: 3rem 0 3rem 0;
-  gap: 2rem;
-
-  @media #{$breakpoint-dimension-sm} {
-    padding: 3rem 0 4rem 0;
-  }
-
-  @media #{$breakpoint-dimension-md} {
-    gap: 3rem;
-    padding: 4rem 0 4rem 0;
-  }
 }
 
 .article {

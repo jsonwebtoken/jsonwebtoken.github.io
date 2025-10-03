@@ -1,33 +1,33 @@
 @use "@/libs/theme/styles/variables" as *;
 
 .container {
-    display:none;
-    @media #{$breakpoint-dimension-sm} {
-        display: inline-block;
-        height: 100vh;
-        position: sticky;
-        color: var(--color_fg_link);
-        flex-shrink: 0;
-        top: 0;
-        padding: 160px 30px 0px;
-        margin-bottom: 100px;
-        border-right: 1px solid var(--color_border_bold);
-        max-width: 250px;
-        overflow-y: auto;
-    }
+  display: none;
+  @media #{$breakpoint-dimension-sm} {
+    display: inline-block;
+    height: 100vh;
+    position: sticky;
+    color: var(--color_fg_link);
+    flex-shrink: 0;
+    top: 0;
+    padding: 160px 30px 0px;
+    margin-bottom: 100px;
+    border-right: 1px solid var(--color_border_bold);
+    max-width: 250px;
+    overflow-y: auto;
+  }
 }
 
 .title {
- margin-bottom: 36px; 
- padding-right: 8px;
- cursor: pointer; 
+  margin-bottom: 36px;
+  padding-right: 8px;
+  cursor: pointer;
 }
 
 .title__active {
-   color: var(--color_fg_selected);
-   border-bottom: 1px solid var(--color_border_selected);
+  color: var(--color_fg_selected);
+  border-bottom: 1px solid var(--color_border_selected);
 }
 
 .list {
-    list-style-type: none;
+  list-style-type: none;
 }
