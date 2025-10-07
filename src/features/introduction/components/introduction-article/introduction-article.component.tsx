@@ -8,8 +8,6 @@ import { SidebarNavComponent } from "../sidebar-nav/sidebar-nav.component";
 import { EbookAdComponent } from "../ebook-ad/ebook-ad.component";
 import { getComponentDictionary } from "@/features/localization/services/component-dictionary.service";
 import { IntroductionDictionaryModel } from "@/features/localization/models/introduction-dictionary.model";
-import clsx from "clsx";
-import { getLocalizedSecondaryFont } from "@/libs/theme/fonts";
 import { IntroductionHeroComponent } from "../introduction-hero/introduction-hero.component";
 
 interface IntroductionArticleComponentProps {

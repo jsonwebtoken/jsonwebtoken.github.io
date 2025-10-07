@@ -12,9 +12,8 @@
 .article {
   display: flex;
   flex-direction: column;
-
   grid-column: span 6;
-  max-width: 48.5rem;
+  max-width: 46rem;
   justify-self: center;
 
   @media #{$breakpoint-dimension-sm} {
@@ -35,7 +34,7 @@
     font-size: 2rem;
     line-height: 2.5rem;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 500;
     letter-spacing: -0.05rem;
     margin-bottom: 1.5rem;
     font-family: var(--font-secondary), sans-serif;
@@ -56,13 +55,12 @@
 
   h3 {
     color: var(--color_fg_bold);
-
     font-size: 1.5rem;
     line-height: 2rem;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 500;
     letter-spacing: -0.05rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     font-family: var(--font-secondary), sans-serif;
 
     :global(html[lang="ja"]) & {
@@ -77,11 +75,11 @@
       "clig" off,
       "liga" off;
     font-size: 1rem;
-    line-height: 1.5em;
+    line-height: 1.45;
     font-style: normal;
     font-weight: 400;
     letter-spacing: -0.005rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 
     :global(html[lang="ja"]) & {
       @include LocaleLineHeight("ja", 1.5rem);
@@ -95,12 +93,10 @@
 
   ul,
   ol {
-    list-style-position: inside;
     margin-top: 0;
 
     ul,
     ol {
-      list-style-position: inside;
       margin-left: 1.5rem;
       padding-left: 0;
     }
@@ -109,11 +105,11 @@
   li {
     margin-bottom: 0.75rem;
     font-size: 1rem;
-    line-height: 2rem;
+    line-height: 1.45;
     color: var(--color_fg_default);
     letter-spacing: -0.01px;
-    text-indent: -1.5rem;
-    padding-left: 1.5rem;
+    margin-left: 1rem;
+    padding-left: 1rem;
 
     :global(html[lang="ja"]) & {
       @include LocaleLineHeight("ja", 2rem);
@@ -124,9 +120,9 @@
     &,
     &:hover,
     &:active {
-      color: var(--color_fg_link_primary);
       text-decoration: underline;
-      font-weight: 400;
+      font-weight: 500;
+      text-underline-offset: 0.25rem;
     }
   }
 
@@ -136,41 +132,69 @@
   }
 
   pre {
-    margin-bottom: 2rem;
-    background-color: var(--color_bg_code-editor);
+    margin-bottom: 1rem;
+    background-color: var(--color_bg_layer_alternate);
     color: var(--color_fg_default);
     font-size: 0.875rem;
     line-height: 1.375rem;
     font-style: normal;
     font-weight: 400;
     letter-spacing: 0.15px;
-    padding: 0.75rem;
+    padding: 0.25rem;
     border: 1px solid var(--color_border_bold);
-    border-radius: 0.25rem;
+    border-radius: 1rem;
 
     code {
-      color: var(--color_code_dark_blue2);
+      display: block;
+      width: 100%;
+      color: var(--color_code_gray);
       background-color: var(--color_bg_code-editor);
       font-weight: 500;
-    }
-
-    @media #{$breakpoint-dimension-sm} {
-      border-radius: 0.5rem;
-      padding: 1rem;
+      font-size: 0.875rem;
+      line-height: 1.35;
+      border-radius: 0.75rem;
+      padding: 0.75rem;
+      box-shadow:
+        0 0 0 0.5px rgba(0, 0, 0, 0.12),
+        0 2px 2px -1px rgba(0, 0, 0, 0.04),
+        0 4px 4px -2px rgba(0, 0, 0, 0.04),
+        0 6px 6px -3px rgba(0, 0, 0, 0.04);
     }
   }
 
   blockquote {
-    background-color: var(--color_bg_state_info_subtle);
-    padding: 1rem 1.5rem;
-    margin: 2rem 0 2rem 0;
-    border-radius: 0 0.5rem 0.5rem 0;
-    border-left: 4px solid var(--color_border_state_info);
+    background-color: var(--color_bg_layer);
+    font-size: 0.875rem;
+    padding: 1rem;
+    margin: 2rem 0;
+    border-radius: 1rem;
+    border: 1px solid var(--color_border_default);
+    box-shadow:
+      0 0 0 0.5px rgba(0, 0, 0, 0.12),
+      0 2px 2px -1px rgba(0, 0, 0, 0.04),
+      0 4px 4px -2px rgba(0, 0, 0, 0.04),
+      0 6px 6px -3px rgba(0, 0, 0, 0.04);
 
     & * {
-      color: var(--color_fg_on_state_info_subtle);
+      color: var(--color_fg_default);
       padding: 0;
       margin: 0;
+    }
+
+    p {
+      display: flex;
+      flex-direction: row;
+      font-size: 0.875rem;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    ::before {
+      content: url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 0.5C9.03757 0.5 11.5 2.96243 11.5 6C11.5 9.03757 9.03757 11.5 6 11.5C2.96243 11.5 0.5 9.03757 0.5 6C0.5 2.96243 2.96243 0.5 6 0.5ZM6 5.25C5.72386 5.25 5.5 5.47386 5.5 5.75V8.75H6.5V5.75C6.5 5.47386 6.27614 5.25 6 5.25ZM6 3.125C5.65482 3.125 5.375 3.40482 5.375 3.75C5.375 4.09518 5.65482 4.375 6 4.375C6.34518 4.375 6.625 4.09518 6.625 3.75C6.625 3.40482 6.34518 3.125 6 3.125Z' fill='%235C5650'/%3E%3C/svg%3E%0A");
+      display: block;
+      padding: 0.25rem 0.4rem 0.125rem;
+      border-radius: 9999px;
+      background-color: var(--color_bg_layer_alternate);
     }
   }
 
