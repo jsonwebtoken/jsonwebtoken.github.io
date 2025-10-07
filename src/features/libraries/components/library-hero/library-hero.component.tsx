@@ -64,7 +64,7 @@ export const LibraryHeroComponent: React.FC<LibraryHeroComponentProps> = ({
   const options = useMemo(() => {
     return [
       {
-        label: "ProgrammingLanguage",
+        label: "Language",
         options: [
           {
             value: dictionary.filterPicker.defaultValue.value,

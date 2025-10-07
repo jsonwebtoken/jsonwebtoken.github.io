@@ -44,16 +44,15 @@
 
 .heroTitle {
   color: var(--color_fg_bold);
-
   font-size: 2rem;
   font-style: normal;
-  font-weight: 400;
-  line-height: 2.5rem;
+  font-weight: 500;
+  line-height: 1.15;
   letter-spacing: -0.8px;
 
   @media #{$breakpoint-dimension-xs} {
     font-size: 2.5rem;
-    line-height: 3rem;
+    line-height: 1.15;
   }
 }
 
@@ -65,9 +64,10 @@
 
 .label {
   color: var(--color_fg_bold);
-  font-size: 1rem;
+  font-size: .875rem;
+  font-weight: 700;
   line-height: 1.5rem;
-  letter-spacing: 0.1px;
+  letter-spacing: .1px;
 }
 
 .select__wrapper {
