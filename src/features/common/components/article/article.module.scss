@@ -13,7 +13,7 @@
   display: flex;
   flex-direction: column;
   grid-column: span 6;
-  max-width: 46rem;
+  max-width: 56rem;
   justify-self: center;
 
   @media #{$breakpoint-dimension-sm} {

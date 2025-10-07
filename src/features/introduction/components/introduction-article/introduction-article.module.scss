@@ -4,6 +4,7 @@
 .container {
   @include InnerContentFlex;
   justify-content: start;
+  margin-bottom: 5rem;
 }
 
 .title {
