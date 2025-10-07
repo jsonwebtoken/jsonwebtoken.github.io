@@ -1,10 +1,9 @@
 @use "@/libs/theme/styles/variables" as *;
+@use "@/libs/theme/styles/mixins" as *;
 
 .container {
-  display: flex;
-}
-
-.content {
+  @include InnerContentFlex;
+  justify-content: start;
 }
 
 .title {
