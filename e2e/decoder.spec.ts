@@ -105,32 +105,6 @@ test.describe("Can generate JWT examples", () => {
     await page.goto(E2E_BASE_URL);
   });
 
-  test("Can open and close JWT Decoder example widget", async ({ page }) => {
-    const lang = await getLang(page);
-    expectToBeNonNull(lang);
-
-    const pickersUiDictionary = getPickersUiDictionary(lang);
-
-    const decoderWidget = page.getByTestId(dataTestidDictionary.decoder.id);
-
-    const exampleButton = decoderWidget.getByRole("button", {
-      name: pickersUiDictionary.exampleAlgPicker.label,
-    });
-
-    await exampleButton.click();
-
-    await expect(exampleButton).not.toBeVisible();
-
-    const closeButton = page.getByRole("button", {
-      name: pickersUiDictionary.exampleAlgPicker.closeButton.label,
-    });
-
-    await closeButton.click();
-
-    await expect(exampleButton).toBeVisible();
-    await expect(closeButton).not.toBeVisible();
-  });
-
   test.describe("Can generate a JWT decoder example", () => {
     test.beforeEach(async ({ page }) => {
       const lang = await getLang(page);
@@ -139,14 +113,6 @@ test.describe("Can generate JWT examples", () => {
       const pickersUiDictionary = getPickersUiDictionary(lang);
 
       const decoderWidget = page.getByTestId(dataTestidDictionary.decoder.id);
-
-      const exampleButton = decoderWidget.getByRole("button", {
-        name: pickersUiDictionary.exampleAlgPicker.label,
-      });
-
-      await exampleButton.click();
-
-      await expect(exampleButton).not.toBeVisible();
 
       const pickerIndicator = decoderWidget.getByText(
         pickersUiDictionary.exampleAlgPicker.defaultValue,
