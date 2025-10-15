@@ -553,7 +553,8 @@ $picker-list-offset-lg: calc(($picker-list-width-lg - $picker-width-lg) / 2);
   height: 100% !important;
 }
 
-.react-select__menu {
+.react-select__menu,
+.language-select__menu {
     background-color: var(--color_bg_layer) !important;
     border-radius: 0.75rem !important;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 4px 11px !important;
@@ -570,7 +571,8 @@ $picker-list-offset-lg: calc(($picker-list-width-lg - $picker-width-lg) / 2);
 .react-select__menu-portal {
 }
 
-.react-select__menu-list {
+.react-select__menu-list,
+.language-select__menu-list {
   font-family: var(--font-primary), monospace !important;
   padding: 0 !important;
 
@@ -596,7 +598,8 @@ $picker-list-offset-lg: calc(($picker-list-width-lg - $picker-width-lg) / 2);
   }
 }
 
-.react-select__option {
+.react-select__option,
+.language-select__option {
     cursor: pointer !important;
     display: flex !important;
     font-size: 0.875rem !important;
@@ -622,7 +625,8 @@ $picker-list-offset-lg: calc(($picker-list-width-lg - $picker-width-lg) / 2);
     }
 }
 
-.react-select__option--is-selected {
+.react-select__option--is-selected,
+.language-select__option--is-selected {
   color: var(--color_fg_bold) !important;
   font-weight: 500;
 

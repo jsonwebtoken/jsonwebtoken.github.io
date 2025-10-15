@@ -267,3 +267,14 @@
 
   color: var(--color_fg_default);
 }
+
+.subFooter__languagePicker {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: var(--color_fg_default);
+
+  &:hover {
+    color: (var(--color_fg_bold));
+  }
+}
