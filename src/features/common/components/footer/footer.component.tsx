@@ -1,7 +1,12 @@
 "use client";
 
 import React, { MouseEvent, useState } from "react";
-import Select, { SingleValue, OptionsOrGroups, GroupBase, NonceProvider } from "react-select";
+import Select, {
+  SingleValue,
+  OptionsOrGroups,
+  GroupBase,
+  NonceProvider,
+} from "react-select";
 import { FooterIconsComponent } from "./footer-Icons.component";
 import { MonoFont, SecondaryFont } from "@/libs/theme/fonts";
 import Image from "next/image";
@@ -185,7 +190,12 @@ export const FooterComponent: React.FC<FooterComponentProps> = ({
               aria-label={"Language picker"}
               className={styles.languageSelect__container}
               onChange={handleChange}
-              options={dictionary.languagePicker.options as OptionsOrGroups<UiLanguageModel, GroupBase<UiLanguageModel>>}
+              options={
+                dictionary.languagePicker.options as OptionsOrGroups<
+                  UiLanguageModel,
+                  GroupBase<UiLanguageModel>
+                >
+              }
               menuPortalTarget={document.body}
               classNamePrefix={"language-select"}
               isSearchable={false}
@@ -194,6 +204,8 @@ export const FooterComponent: React.FC<FooterComponentProps> = ({
               styles={{
                 control: (base) => ({
                   ...base,
+                  color: "var(--color_fg_default)",
+                  fontSize: "0.875rem",
                   background: "transparent",
                   border: "none",
                   borderRadius: "0px",
@@ -203,7 +215,6 @@ export const FooterComponent: React.FC<FooterComponentProps> = ({
                   minHeight: "2.5rem",
                   boxSizing: "border-box",
                 }),
-
                 input: (base) => ({
                   ...base,
                   margin: "0px",
@@ -217,14 +228,24 @@ export const FooterComponent: React.FC<FooterComponentProps> = ({
                   alignSelf: "center",
                 }),
                 dropdownIndicator: (base) => ({
+                  ...base,
                   padding: "0px",
                   height: "100%",
                   alignSelf: "center",
                 }),
+                valueContainer: (base) => ({
+                  ...base,
+                  padding: "0px"
+                }),
                 singleValue: (base) => ({
                   ...base,
                   color: "unset",
-                })
+                }),
+                menu: (base) => ({
+                  ...base,
+                  top: "unset",
+                  bottom: "1.75rem",
+                }),
               }}
             ></Select>
           )}
