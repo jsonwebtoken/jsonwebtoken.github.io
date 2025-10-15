@@ -26,6 +26,7 @@ import { Auth0LogoComponent } from "../../assets/auth0-logo.component";
 import { getBrandDictionary } from "@/features/localization/services/brand-dictionary.service";
 import { savePreferredLanguage } from "@/features/localization/services/ui-language.utils";
 import { UiLanguageModel } from "../../models/ui-language.model";
+import { GlobeIconComponent } from "../bars/ribbon/assets/globe-icon.component";
 
 interface FooterComponentProps {
   languageCode: string;
@@ -186,68 +187,72 @@ export const FooterComponent: React.FC<FooterComponentProps> = ({
             {dictionary.copyright}
           </span>
           {dictionary.languagePicker.options.length > 1 && (
-            <Select
-              aria-label={"Language picker"}
-              className={styles.languageSelect__container}
-              onChange={handleChange}
-              options={
-                dictionary.languagePicker.options as OptionsOrGroups<
-                  UiLanguageModel,
-                  GroupBase<UiLanguageModel>
-                >
-              }
-              menuPortalTarget={document.body}
-              classNamePrefix={"language-select"}
-              isSearchable={false}
-              placeholder={currentLanguage.label}
-              value={currentLanguage}
-              styles={{
-                control: (base) => ({
-                  ...base,
-                  color: "var(--color_fg_default)",
-                  fontSize: "0.875rem",
-                  background: "transparent",
-                  border: "none",
-                  borderRadius: "0px",
-                  display: "flex",
-                  alignItems: "center",
-                  cursor: "pointer",
-                  minHeight: "2.5rem",
-                  boxSizing: "border-box",
-                }),
-                input: (base) => ({
-                  ...base,
-                  margin: "0px",
-                }),
-                indicatorSeparator: () => ({
-                  display: "none",
-                }),
-                indicatorsContainer: (base) => ({
-                  ...base,
-                  height: "20px",
-                  alignSelf: "center",
-                }),
-                dropdownIndicator: (base) => ({
-                  ...base,
-                  padding: "0px",
-                  height: "100%",
-                  alignSelf: "center",
-                }),
-                valueContainer: (base) => ({
-                  ...base,
-                  padding: "0px"
-                }),
-                singleValue: (base) => ({
-                  ...base,
-                  color: "unset",
-                }),
-                menu: (base) => ({
-                  ...base,
-                  top: "unset",
-                  bottom: "1.75rem",
-                }),
-              }}
-            ></Select>
+            <div className={styles.subFooter__languagePicker}>
+              <GlobeIconComponent />
+              <Select
+                aria-label={"Language picker"}
+                className={styles.languageSelect__container}
+                onChange={handleChange}
+                options={
+                  dictionary.languagePicker.options as OptionsOrGroups<
+                    UiLanguageModel,
+                    GroupBase<UiLanguageModel>
+                  >
+                }
+                menuPortalTarget={document.body}
+                classNamePrefix={"language-select"}
+                isSearchable={false}
+                placeholder={currentLanguage.label}
+                value={currentLanguage}
+                styles={{
+                  control: (base, state) => ({
+                    ...base,
+                    fontSize: "0.875rem",
+                    background: "transparent",
+                    border: "none",
+                    borderRadius: "0px",
+                    display: "flex",
+                    alignItems: "center",
+                    cursor: "pointer",
+                    minHeight: "2.5rem",
+                    boxSizing: "border-box",
+                    boxShadow: "none",
+                  }),
+                  input: (base) => ({
+                    ...base,
+                    margin: "0px",
+                  }),
+                  indicatorSeparator: () => ({
+                    display: "none",
+                  }),
+                  indicatorsContainer: (base) => ({
+                    ...base,
+                    height: "20px",
+                    alignSelf: "center",
+                  }),
+                  dropdownIndicator: (base) => ({
+                    ...base,
+                    padding: "0px",
+                    height: "100%",
+                    alignSelf: "center",
+                  }),
+                  valueContainer: (base) => ({
+                    ...base,
+                    padding: "0px",
+                  }),
+                  singleValue: (base) => ({
+                    ...base,
+                    color: "unset",
+                  }),
+                  menu: (base) => ({
+                    ...base,
+                    top: "unset",
+                    bottom: "1.75rem",
+                    right: "0",
+                  }),
+                }}
+              />
+            </div>
           )}
         </div>
       </BoxComponent>
