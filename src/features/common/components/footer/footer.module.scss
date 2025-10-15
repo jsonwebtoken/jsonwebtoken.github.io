@@ -274,7 +274,7 @@
   gap: 0.25rem;
   color: var(--color_fg_default);
 
-  &:focus-within {
+  &:hover {
     color: (var(--color_fg_bold));
   }
 }

@@ -235,6 +235,7 @@ export const FooterComponent: React.FC<FooterComponentProps> = ({
                     padding: "0px",
                     height: "100%",
                     alignSelf: "center",
+                    color: "inherit",
                   }),
                   valueContainer: (base) => ({
                     ...base,
