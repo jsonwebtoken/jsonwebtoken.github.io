@@ -12,7 +12,7 @@ export const SystemIconComponent: React.FC = () => {
       <path
         d="M1 4V12C1 13.6569 2.34315 15 4 15H12C13.6569 15 15 13.6569 15 12V4C15 2.34315 13.6569 1 12 1H4C2.34315 1 1 2.34315 1 4Z"
         stroke="currentColor"
-        stroke-width="1.5"
+        strokeWidth="1.5"
       ></path>
       <rect
         x="4"
@@ -20,8 +20,8 @@ export const SystemIconComponent: React.FC = () => {
         width="8"
         height="5"
         stroke="currentColor"
-        stroke-width="1.5"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
       ></rect>
       <rect
         x="11.25"
@@ -34,9 +34,9 @@ export const SystemIconComponent: React.FC = () => {
       <path
         d="M4 12H10"
         stroke="currentColor"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       ></path>
     </svg>
   );
