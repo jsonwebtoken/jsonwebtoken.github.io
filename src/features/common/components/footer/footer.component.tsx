@@ -1,6 +1,6 @@
 "use client";
 
-import React, { MouseEvent, useState } from "react";
+import React, { MouseEvent, useEffect, useState } from "react";
 import Select, {
   SingleValue,
   OptionsOrGroups,
@@ -51,6 +51,12 @@ export const FooterComponent: React.FC<FooterComponentProps> = ({
   const [modalState, setModalState] = useState<ModalStateValues>(
     ModalStateValues.CLOSED
   );
+  const [portalTarget, setPortalTarget] = useState<HTMLElement | null>(null);
+
+  useEffect(() => {
+    setPortalTarget(document.body);
+  }, []);
+
   const images = getBrandDictionary(languageCode);
 
   const languagePathPrefix: string =
@@ -199,7 +205,7 @@ export const FooterComponent: React.FC<FooterComponentProps> = ({
                     GroupBase<UiLanguageModel>
                   >
                 }
-                menuPortalTarget={document.body}
+                menuPortalTarget={portalTarget}
                 classNamePrefix={"language-select"}
                 isSearchable={false}
                 placeholder={currentLanguage.label}

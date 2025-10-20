@@ -192,8 +192,15 @@
   border-radius: .75rem;
   background-size: cover;
   background-position: 50%;
-  background-image: url("/images/en.diagram.png");
   background-repeat: no-repeat;
+
+  :global(html[lang="en"]) & {
+    background-image: url("/images/en.diagram.png");
+  }
+
+  :global(html[lang="ja"]) & {
+    background-image: url("/images/ja.diagram.png");
+  }
 
   @media #{$breakpoint-dimension-md} {
     border-bottom-left-radius: 12rem;
