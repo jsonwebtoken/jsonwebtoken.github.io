@@ -1,8 +1,8 @@
 import { BrandDictionaryModel } from "../../models/brand-dictionary.model";
 
 export const jaBrandDictionary: BrandDictionaryModel = {
-  alertMessage: "SVG copied to clipboard",
-  tooltip: "Right-click or long-press for logo options",
+  alertMessage: "SVG がクリップボードにコピーされました",
+  tooltip: "右クリックまたは長押し (ロゴオプション)",
   menu: {
     brand: {
       label: "Brand",

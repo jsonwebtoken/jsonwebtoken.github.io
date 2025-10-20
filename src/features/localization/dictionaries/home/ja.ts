@@ -80,6 +80,7 @@ export const jaHomeDictionary: HomeDictionaryModel = {
       title: "JSON Web Token (JWT)",
       compactTitle: "JWT",
       successMessage: "有効なJWT",
+      autoFocusLabel: "オートフォーカスを有効にする",
     },
     decodedHeader: {
       title: "デコードされたヘッダー",

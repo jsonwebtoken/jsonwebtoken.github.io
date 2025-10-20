@@ -12,6 +12,7 @@ export interface DecoderDictionaryModel {
     title: string;
     compactTitle: string;
     successMessage: string;
+    autoFocusLabel: string;
   };
   exampleGenerator: {
     label: string;
