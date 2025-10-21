@@ -142,18 +142,18 @@ export const jaHomeDictionary: HomeDictionaryModel = {
       label: "ヘッダー、ペイロード、署名サンプルジェネレーター",
     },
     headerEditor: {
-      title: "ヘッダー：アルゴリズムとトークンタイプ",
+      title: "アルゴリズムとトークンタイプ",
       compactTitle: "ヘッダー",
       successMessage: "有効なヘッダー",
     },
     payloadEditor: {
-      title: "ペイロード：データ",
+      title: "データ",
       compactTitle: "ペイロード",
       successMessage: "有効なペイロード",
     },
     signatureEditor: {
       title: {
-        secret: "JWTに署名：シークレット",
+        secret: "シークレット",
         privateKey: "JWTに署名：秘密鍵",
       },
       compactTitle: {
