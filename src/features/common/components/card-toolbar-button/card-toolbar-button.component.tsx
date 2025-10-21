@@ -36,6 +36,7 @@ export const CardToolbarButtonComponent: React.FC<
           MonoFont.className
         )}
         data-style="compact"
+        aria-label={tooltipText}
       >
         {children}
       </button>

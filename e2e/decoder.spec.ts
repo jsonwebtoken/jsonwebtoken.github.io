@@ -27,6 +27,7 @@ import {
 import { MessageStatusValue, MessageTypeValue } from "./e2e.values";
 import { JwtDictionaryModel, JwtSignedWithDigitalModel } from "./e2e.models";
 import jwts from "./jwt.json" with { type: "json" };
+import { EncodingValues } from "@/features/common/values/encoding.values";
 
 const TestJwts = (jwts as JwtDictionaryModel).byAlgorithm;
 
@@ -39,7 +40,7 @@ test.describe("Can interact with JWT Decoder JWT editor", () => {
     const jwtEditorInput = getDecoderJwtEditorInput(page);
 
     await expect(jwtEditorInput).toHaveValue(
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30"
     );
   });
 
@@ -53,8 +54,13 @@ test.describe("Can interact with JWT Decoder JWT editor", () => {
     await expect(jwtEditorInput).toHaveValue(inputValue);
   });
 
-  test("can copy value in JWT editor", async ({ page, context, browserName }) => {
-    const permissions = browserName === 'firefox' ? [] : ["clipboard-read", "clipboard-write"]
+  test("can copy value in JWT editor", async ({
+    page,
+    context,
+    browserName,
+  }) => {
+    const permissions =
+      browserName === "firefox" ? [] : ["clipboard-read", "clipboard-write"];
     const inputValue = (TestJwts.RS512 as JwtSignedWithDigitalModel).withPemKey
       .jwt;
     await context.grantPermissions(permissions);
@@ -76,7 +82,7 @@ test.describe("Can interact with JWT Decoder JWT editor", () => {
     await copyButton.click();
 
     const clipboardContent = await page.evaluate(() =>
-      navigator.clipboard.readText(),
+      navigator.clipboard.readText()
     );
 
     expect(clipboardContent).toBe(inputValue);
@@ -105,51 +111,14 @@ test.describe("Can generate JWT examples", () => {
     await page.goto(E2E_BASE_URL);
   });
 
-  test("Can open and close JWT Decoder example widget", async ({ page }) => {
-    const lang = await getLang(page);
-    expectToBeNonNull(lang);
-
-    const pickersUiDictionary = getPickersUiDictionary(lang);
-
-    const decoderWidget = page.getByTestId(dataTestidDictionary.decoder.id);
-
-    const exampleButton = decoderWidget.getByRole("button", {
-      name: pickersUiDictionary.exampleAlgPicker.label,
-    });
-
-    await exampleButton.click();
-
-    await expect(exampleButton).not.toBeVisible();
-
-    const closeButton = page.getByRole("button", {
-      name: pickersUiDictionary.exampleAlgPicker.closeButton.label,
-    });
-
-    await closeButton.click();
-
-    await expect(exampleButton).toBeVisible();
-    await expect(closeButton).not.toBeVisible();
-  });
-
   test.describe("Can generate a JWT decoder example", () => {
     test.beforeEach(async ({ page }) => {
       const lang = await getLang(page);
       expectToBeNonNull(lang);
 
       const pickersUiDictionary = getPickersUiDictionary(lang);
-
-      const decoderWidget = page.getByTestId(dataTestidDictionary.decoder.id);
-
-      const exampleButton = decoderWidget.getByRole("button", {
-        name: pickersUiDictionary.exampleAlgPicker.label,
-      });
-
-      await exampleButton.click();
-
-      await expect(exampleButton).not.toBeVisible();
-
-      const pickerIndicator = decoderWidget.getByText(
-        pickersUiDictionary.exampleAlgPicker.defaultValue,
+      const pickerIndicator = page.getByText(
+        pickersUiDictionary.exampleAlgPicker.defaultValue
       );
 
       await pickerIndicator.click();
@@ -174,7 +143,7 @@ test.describe("Can generate JWT examples", () => {
         const targetToken = DefaultTokensValues[option];
 
         const jwtEditor = decoderWidget.getByTestId(
-          dataTestidDictionary.decoder.jwtEditor.id,
+          dataTestidDictionary.decoder.jwtEditor.id
         );
         const jwtEditorInput = jwtEditor.getByRole("textbox");
 
@@ -203,7 +172,7 @@ test.describe("Can generate JWT examples", () => {
         });
 
         const secretKeyEditor = decoderWidget.getByTestId(
-          dataTestidDictionary.decoder.secretKeyEditor.id,
+          dataTestidDictionary.decoder.secretKeyEditor.id
         );
         const secretKeyInput = secretKeyEditor.getByRole("textbox");
 
@@ -217,9 +186,13 @@ test.describe("Can generate JWT examples", () => {
             status: MessageStatusValue.VISIBLE,
           });
 
-          const encodingValue = await secretKeyEditor
-            .locator(".react-select__single-value")
-            .innerText();
+          const isEncodingSwitchChecked = await page
+            .getByRole("switch")
+            .isChecked();
+
+          const encodingValue = isEncodingSwitchChecked
+            ? EncodingValues.BASE64URL
+            : EncodingValues.UTF8;
 
           expect(encodingValue).toBe(symmetricToken.secretEncoding);
 
@@ -236,8 +209,9 @@ test.describe("Can generate JWT examples", () => {
             status: MessageStatusValue.VISIBLE,
           });
 
-          const formatValue = await secretKeyEditor
+          const formatValue = await page
             .locator(".react-select__single-value")
+            .nth(1)
             .innerText();
 
           expect(formatValue).toBe(asymmetricToken.publicKeyFormat);
@@ -270,7 +244,7 @@ test.describe("decode JWTs", () => {
       const decoderWidget = page.getByTestId(dataTestidDictionary.decoder.id);
 
       const jwtEditor = decoderWidget.getByTestId(
-        dataTestidDictionary.decoder.jwtEditor.id,
+        dataTestidDictionary.decoder.jwtEditor.id
       );
       const jwtEditorInput = jwtEditor.getByRole("textbox");
 
@@ -327,14 +301,14 @@ test.describe("decode JWTs", () => {
         });
 
         const secretKeyEditor = decoderWidget.getByTestId(
-          dataTestidDictionary.decoder.secretKeyEditor.id,
+          dataTestidDictionary.decoder.secretKeyEditor.id
         );
         const secretKeyEditorInput = secretKeyEditor.getByRole("textbox");
 
         await secretKeyEditorInput.fill(entryWithUtf8Secret.secret);
 
         await expect(secretKeyEditorInput).toHaveValue(
-          entryWithUtf8Secret.secret,
+          entryWithUtf8Secret.secret
         );
 
         await checkSecretKeyDecoderEditorStatusBarMessage({
@@ -343,9 +317,13 @@ test.describe("decode JWTs", () => {
           status: MessageStatusValue.VISIBLE,
         });
 
-        const encodingValue = await secretKeyEditor
-          .locator(".react-select__single-value")
-          .innerText();
+        const isEncodingSwitchChecked = await page
+          .getByRole("switch")
+          .isChecked();
+
+        const encodingValue = isEncodingSwitchChecked
+          ? EncodingValues.BASE64URL
+          : EncodingValues.UTF8;
 
         expect(encodingValue).toBe(entryWithUtf8Secret.secretEncoding);
 
@@ -388,17 +366,13 @@ test.describe("decode JWTs", () => {
             status: MessageStatusValue.VISIBLE,
           });
 
-          const formatPicker = secretKeyEditor.locator(
-            ".react-select__single-value",
-          );
+          const encodingSwitch = await page.getByTestId(dataTestidDictionary.encoder.switch)
+          expect(encodingSwitch).toBeVisible()
 
-          await formatPicker.click();
-
-          await page
-            .getByRole("option", {
-              name: entryWithBase64urlSecret.secretEncoding,
-            })
-            .click();
+          if (
+            entryWithBase64urlSecret.secretEncoding === EncodingValues.BASE64URL
+          )
+            await encodingSwitch.click();
 
           await secretKeyEditorInput.fill(entryWithBase64urlSecret.secret);
 
@@ -451,7 +425,7 @@ test.describe("decode JWTs", () => {
         });
 
         const secretKeyEditor = decoderWidget.getByTestId(
-          dataTestidDictionary.decoder.secretKeyEditor.id,
+          dataTestidDictionary.decoder.secretKeyEditor.id
         );
         const secretKeyEditorInput = secretKeyEditor.getByRole("textbox");
 
@@ -465,7 +439,7 @@ test.describe("decode JWTs", () => {
           status: MessageStatusValue.VISIBLE,
         });
 
-        const formatValue = await secretKeyEditor
+        const formatValue = await page
           .locator(".react-select__single-value")
           .innerText();
 
@@ -511,8 +485,8 @@ test.describe("decode JWTs", () => {
               status: MessageStatusValue.VISIBLE,
             });
 
-            const formatPicker = secretKeyEditor.locator(
-              ".react-select__single-value",
+            const formatPicker = page.locator(
+              ".react-select__single-value"
             );
 
             await formatPicker.click();
@@ -530,7 +504,7 @@ test.describe("decode JWTs", () => {
             });
 
             await secretKeyEditorInput.fill(
-              JSON.stringify(entrywithJwkKey.publicKey, null, 2),
+              JSON.stringify(entrywithJwkKey.publicKey, null, 2)
             );
 
             await checkJwtEditorStatusBarMessage({
@@ -581,8 +555,8 @@ test.describe("decode JWTs", () => {
               status: MessageStatusValue.VISIBLE,
             });
 
-            const formatPicker = secretKeyEditor.locator(
-              ".react-select__single-value",
+            const formatPicker = page.locator(
+              ".react-select__single-value"
             );
 
             await formatPicker.click();
@@ -594,7 +568,7 @@ test.describe("decode JWTs", () => {
               .click();
 
             await secretKeyEditorInput.fill(
-              JSON.stringify(entrywithJwkKey.publicKey, null, 2),
+              JSON.stringify(entrywithJwkKey.publicKey, null, 2)
             );
 
             await checkJwtEditorStatusBarMessage({
@@ -642,10 +616,10 @@ test("Can decode JWTs signed with a non-supported algorithm", async ({
     kid: "sig",
   };
   const expectedDecodedPayload = {
-    "sub": "1234567890",
-    "name": "John Doe",
-    "admin": true,
-    "iat": 1516239022
+    sub: "1234567890",
+    name: "John Doe",
+    admin: true,
+    iat: 1516239022,
   };
 
   await page.goto(E2E_BASE_URL);
@@ -656,7 +630,7 @@ test("Can decode JWTs signed with a non-supported algorithm", async ({
   const decoderWidget = page.getByTestId(dataTestidDictionary.decoder.id);
 
   const jwtEditor = decoderWidget.getByTestId(
-    dataTestidDictionary.decoder.jwtEditor.id,
+    dataTestidDictionary.decoder.jwtEditor.id
   );
   const jwtEditorInput = jwtEditor.getByRole("textbox");
 
@@ -678,22 +652,22 @@ test("Can decode JWTs signed with a non-supported algorithm", async ({
 
   await expect(
     decoderWidget.getByTestId(
-      dataTestidDictionary.decoder.decodedHeader.json.id,
-    ),
+      dataTestidDictionary.decoder.decodedHeader.json.id
+    )
   ).toHaveText(JSON.stringify(expectedDecodedHeader, null, 2), {
     useInnerText: true,
   });
 
   await expect(
     decoderWidget.getByTestId(
-      dataTestidDictionary.decoder.decodedPayload.json.id,
-    ),
+      dataTestidDictionary.decoder.decodedPayload.json.id
+    )
   ).toHaveText(JSON.stringify(expectedDecodedPayload, null, 2), {
     useInnerText: true,
   });
 
   const secretKeyEditor = decoderWidget.getByTestId(
-    dataTestidDictionary.decoder.secretKeyEditor.id,
+    dataTestidDictionary.decoder.secretKeyEditor.id
   );
 
   await expect(secretKeyEditor).not.toBeVisible();
@@ -711,10 +685,10 @@ test.describe("Decode pieces of JWTs in Base64Url", () => {
       jwtPiece:
         "eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0",
       expectedDecodedOutput: {
-        "sub": "1234567890",
-        "name": "John Doe",
-        "admin": true,
-        "iat": 1516239022
+        sub: "1234567890",
+        name: "John Doe",
+        admin: true,
+        iat: 1516239022,
       },
     },
     {
@@ -737,7 +711,7 @@ test.describe("Decode pieces of JWTs in Base64Url", () => {
       const decoderWidget = page.getByTestId(dataTestidDictionary.decoder.id);
 
       const jwtEditor = decoderWidget.getByTestId(
-        dataTestidDictionary.decoder.jwtEditor.id,
+        dataTestidDictionary.decoder.jwtEditor.id
       );
       const jwtEditorInput = jwtEditor.getByRole("textbox");
 
@@ -759,20 +733,20 @@ test.describe("Decode pieces of JWTs in Base64Url", () => {
 
       await expect(
         decoderWidget.getByTestId(
-          dataTestidDictionary.decoder.decodedHeader.json.id,
-        ),
+          dataTestidDictionary.decoder.decodedHeader.json.id
+        )
       ).toHaveText(JSON.stringify(expectedDecodedOutput, null, 2), {
         useInnerText: true,
       });
 
       await expect(
         decoderWidget.getByTestId(
-          dataTestidDictionary.decoder.decodedPayload.json.id,
-        ),
+          dataTestidDictionary.decoder.decodedPayload.json.id
+        )
       ).toBeEmpty();
 
       const secretKeyEditor = decoderWidget.getByTestId(
-        dataTestidDictionary.decoder.secretKeyEditor.id,
+        dataTestidDictionary.decoder.secretKeyEditor.id
       );
 
       await expect(secretKeyEditor).not.toBeVisible();

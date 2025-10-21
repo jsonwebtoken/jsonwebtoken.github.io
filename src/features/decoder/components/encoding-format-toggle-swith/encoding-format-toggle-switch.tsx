@@ -6,6 +6,7 @@ import { getPickersUiDictionary } from "@/features/localization/services/ui-lang
 import { Switch } from "react-aria-components";
 import clsx from "clsx";
 import { useEncoderStore } from "@/features/encoder/services/encoder.store";
+import { dataTestidDictionary } from "@/libs/testing/data-testid.dictionary";
 
 interface EncodingFormatToggleSwitchComponentProps {
   languageCode: string;
@@ -45,7 +46,10 @@ export const EncodingFormatToggleSwitchComponent: React.FC<
         <div className={styles.label}>
           <span className={styles.fullLabel}>Base64URL Encoded?</span>
         </div>
-        <label className={styles.switch__container}>
+        <label
+          className={styles.switch__container}
+          data-testid={dataTestidDictionary.encoder.switch}
+        >
           <input
             type="checkbox"
             role="switch"
