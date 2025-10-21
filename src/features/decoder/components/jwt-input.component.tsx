@@ -72,7 +72,7 @@ export const JwtInputComponent: React.FC<JwtInputComponentProps> = ({
           isSelected={autoFocusEnabled}
           onChange={(e) => handleCheckboxChange(e)}
         >
-          <span className={styles.checkbox__label}>Enable auto-focus</span>
+          <span className={styles.checkbox__label}>{dictionary.autoFocusLabel}</span>
         </CheckboxComponent>
       </div>
       <CardComponent

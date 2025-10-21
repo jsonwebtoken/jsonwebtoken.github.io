@@ -22,4 +22,7 @@ export interface PickersUiDictionaryModel {
   privateKeyFormatPicker: {
     label: string;
   };
+  base64checkbox: {
+    label: string;
+  };
 }
