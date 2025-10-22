@@ -1,31 +1,31 @@
 import { BrandDictionaryModel } from "../../models/brand-dictionary.model";
 
 export const jaBrandDictionary: BrandDictionaryModel = {
-  alertMessage: "SVG copied to clipboard",
-  tooltip: "Right-click or long-press for logo options",
+  alertMessage: "SVG がクリップボードにコピーされました",
+  tooltip: "右クリックまたは長押し (ロゴオプション)",
   menu: {
     brand: {
-      label: "Brand",
+      label: "ブランド",
       svg: {
-        copyLabel: "Copy Logo SVG",
-        downloadLabel: "Download Logo",
+        copyLabel: "ロゴ SVG をコピー",
+        downloadLabel: "ロゴをダウンロード",
       },
       symbol: {
-        copyLabel: "Copy Symbol SVG",
-        downloadLabel: "Download Symbol",
+        copyLabel: "シンボル SVG をコピー",
+        downloadLabel: "シンボルをダウンロード",
       },
       wordmark: {
-        copyLabel: "Copy Wordmark SVG",
-        downloadLabel: "Download Wordmark",
+        copyLabel: "ワードマーク SVG をコピー",
+        downloadLabel: "ワードマークをダウンロード",
       },
     },
     tools: {
-      label: "Tools",
+      label: "ツール",
       items: [
         { label: "Passkeys Playground", url: "https://learnpasskeys.io" },
         { label: "WebAuthn Playground", url: "https://webauthn.me" },
         { label: "OIDC Playground", url: "https://openidconnect.net" },
-        { label: "SAML Tool", url: "https://samltool.io" },
+        { label: "SAMLツール", url: "https://samltool.io" },
       ],
     },
   },

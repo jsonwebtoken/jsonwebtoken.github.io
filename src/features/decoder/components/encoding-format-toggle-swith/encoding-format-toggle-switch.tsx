@@ -3,7 +3,6 @@ import styles from "./encoding-format-toggle-switch.module.scss";
 import { EncodingValues } from "@/features/common/values/encoding.values";
 import { useDecoderStore } from "@/features/decoder/services/decoder.store";
 import { getPickersUiDictionary } from "@/features/localization/services/ui-language-dictionary.service";
-import { Switch } from "react-aria-components";
 import clsx from "clsx";
 import { useEncoderStore } from "@/features/encoder/services/encoder.store";
 import { dataTestidDictionary } from "@/libs/testing/data-testid.dictionary";
@@ -44,7 +43,7 @@ export const EncodingFormatToggleSwitchComponent: React.FC<
     <div className={clsx(styles.base_switch, isEncoding && styles.encoder)}>
       <div className={styles.container}>
         <div className={styles.label}>
-          <span className={styles.fullLabel}>Base64URL Encoded?</span>
+          <span className={styles.fullLabel}>{dictionary.base64checkbox.label}</span>
         </div>
         <label
           className={styles.switch__container}

@@ -81,6 +81,7 @@ export const enHomeDictionary: HomeDictionaryModel = {
       title: "JSON Web Token (JWT)",
       compactTitle: "JWT",
       successMessage: "Valid JWT",
+      autoFocusLabel: "Enable auto-focus",
     },
     decodedHeader: {
       title: "Decoded Header",
@@ -170,7 +171,7 @@ export const enHomeDictionary: HomeDictionaryModel = {
     },
     encodedJwt: {
       title: "Encoded JWT",
-      heading: "JWT Signature"
+      heading: "JWT Signature",
     },
   },
 };

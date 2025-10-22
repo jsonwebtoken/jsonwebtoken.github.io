@@ -24,4 +24,7 @@ export const enPickersUiDictionary: PickersUiDictionaryModel = {
   privateKeyFormatPicker: {
     label: "Private Key Format",
   },
+  base64checkbox: {
+    label: "Base64URL Encoded",
+  },
 };
