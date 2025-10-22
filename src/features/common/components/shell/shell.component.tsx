@@ -26,6 +26,7 @@ import {
 import { ThemeDetectorComponent } from "@/features/common/components/theme-detector/theme-detector.component";
 import { ThemeCookieValues } from "@/features/common/values/theme.values";
 import { AbTestingScriptComponent } from "@/features/analytics/components/ab-testing-script/ab-testing-script.component";
+import AdobeAnalyticsScript from "@/features/analytics/components/adobe-analytics-script.component";
 
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 
@@ -105,6 +106,7 @@ export const ShellComponent: React.FC<ShellComponentProps> = ({
       <OnetrustScriptComponent
         id={CLIENT_CONFIG.DEVELOPERS_DATA_DOMAIN_ID_ONETRUST}
       />
+      <AdobeAnalyticsScript />
       {children}
       {consentLevel &&
         consentLevel.includes(COOKIE_LEVELS.NECESSARY.toString()) &&
