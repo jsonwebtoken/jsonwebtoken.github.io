@@ -118,6 +118,48 @@ export const LibraryCardComponent: React.FC<LibraryCardComponentProps> = ({
           {library.gitHubRepoPath || library.altRepoPath || name}
         </span>
       </div>
+       <div className={styles.metadata}>
+        {authorUrl ? (
+          <Link
+            href={authorUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.author}
+          >
+            <div className={styles.author__name}>
+              <UserIconComponent />
+              <span>{authorName}</span>
+            </div>
+          </Link>
+        ) : (
+          <div className={styles.author}>
+            <div className={styles.author__name}>
+              <UserIconComponent />
+              <span>{authorName}</span>
+            </div>
+          </div>
+        )}
+        <div className={styles.repo}>
+          {support && (
+            <div className={styles.repo__stars}>
+              <StarIconComponent />
+              <span>{stars}</span>
+            </div>
+          )}
+          <a
+            className={styles.repo__url}
+            href={repoUrl}
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            <GithubIconComponent />
+            <span>{dictionary.viewRepo.label}</span>
+          </a>
+        </div>
+      </div>
+      <div className={clsx(styles.command, MonoFont.className)}>
+        <ReactMarkdown rehypePlugins={[rehypeRaw]}>{command}</ReactMarkdown>
+      </div>
       <div className={styles.content}>
         <ul className={styles.config}>
           <ConfigItemComponent
@@ -187,47 +229,8 @@ export const LibraryCardComponent: React.FC<LibraryCardComponentProps> = ({
           <AlgItemComponent label="EdDSA" isSupported={support.eddsa} />
         </ul>
       </div>
-      <div className={styles.metadata}>
-        {authorUrl ? (
-          <Link
-            href={authorUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.author}
-          >
-            <div className={styles.author__name}>
-              <UserIconComponent />
-              <span>{authorName}</span>
-            </div>
-          </Link>
-        ) : (
-          <div className={styles.author}>
-            <div className={styles.author__name}>
-              <UserIconComponent />
-              <span>{authorName}</span>
-            </div>
-          </div>
-        )}
-        <div className={styles.repo}>
-          {support && (
-            <div className={styles.repo__stars}>
-              <StarIconComponent />
-              <span>{stars}</span>
-            </div>
-          )}
-          <a
-            className={styles.repo__url}
-            href={repoUrl}
-            target="_blank"
-            rel="noreferrer noopener"
-          >
-            <GithubIconComponent />
-            <span>{dictionary.viewRepo.label}</span>
-          </a>
-        </div>
-      </div>
       {minimumVersion && (
-        <div className={clsx(styles.minVersion, MonoFont.className)}>
+        <div className={styles.minVersion}>
           <span>{`${dictionary.minimumVersion.label} ${minimumVersion}`}</span>
           <Link
             target="_blank"
@@ -239,9 +242,6 @@ export const LibraryCardComponent: React.FC<LibraryCardComponentProps> = ({
           </Link>
         </div>
       )}
-      <div className={clsx(styles.command, MonoFont.className)}>
-        <ReactMarkdown rehypePlugins={[rehypeRaw]}>{command}</ReactMarkdown>
-      </div>
     </div>
   );
 };

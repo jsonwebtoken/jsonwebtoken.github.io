@@ -1,4 +1,4 @@
 export interface UiLanguageModel {
-  code: string;
+  value: string;
   label: string;
 }

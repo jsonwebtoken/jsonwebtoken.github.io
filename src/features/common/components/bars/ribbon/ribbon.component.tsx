@@ -14,7 +14,6 @@ import {
 import { RibbonPickerComponent } from "@/features/common/components/bars/ribbon/ribbon-picker/ribbon-picker.component";
 import { LightIconComponent } from "@/features/common/components/bars/ribbon/assets/light-icon.component";
 import { DarkIconComponent } from "@/features/common/components/bars/ribbon/assets/dark-icon.component";
-import { GlobeIconComponent } from "@/features/common/components/bars/ribbon/assets/globe-icon.component";
 import { ThemeModel } from "@/features/common/models/theme.model";
 import { useAppStore } from "@/features/common/services/app.store";
 import { SystemIconComponent } from "@/features/common/components/bars/ribbon/assets/system-icon.component";
@@ -36,10 +35,6 @@ export const RibbonComponent: React.FC<RibbonComponentProps> = ({
   dictionary,
 }) => {
   const theme$ = useAppStore((state) => state.theme$);
-
-  const currentLanguage = dictionary.languagePicker.options.filter(
-    (element) => element.code === languageCode,
-  )[0];
 
   const sanitizedThemePickerCodeValue = useMemo(() => {
     return getSanitizedThemePickerCodeValue(themeCode);
@@ -83,25 +78,6 @@ export const RibbonComponent: React.FC<RibbonComponentProps> = ({
         };
       }),
     [dictionary.themePicker.options],
-  );
-
-  const languageOptions = useMemo(
-    () =>
-      dictionary.languagePicker.options.map((option) => {
-        return {
-          code: option.code,
-          full: {
-            ...option,
-            icon: null,
-          },
-          compact: {
-            ...option,
-            label: option.code.toUpperCase(),
-            icon: null,
-          },
-        };
-      }),
-    [dictionary.languagePicker.options],
   );
 
   const handleThemeSelection = useCallback(
@@ -202,21 +178,6 @@ export const RibbonComponent: React.FC<RibbonComponentProps> = ({
               listLabel: dictionary.themePicker.list.ariaLabel,
             }}
           />
-          {dictionary.languagePicker.options.length > 1 && (
-            <RibbonPickerComponent
-              icon={<GlobeIconComponent />}
-              label={currentLanguage.label}
-              compactLabel={currentLanguage.code.toUpperCase()}
-              languageCode={languageCode}
-              selectedOptionCode={languageCode}
-              handleSelection={handleLanguageSelection}
-              options={languageOptions}
-              aria={{
-                buttonLabel: dictionary.languagePicker.button.ariaLabel,
-                listLabel: dictionary.languagePicker.list.ariaLabel,
-              }}
-            />
-          )}
         </div>
       </BoxComponent>
     </>

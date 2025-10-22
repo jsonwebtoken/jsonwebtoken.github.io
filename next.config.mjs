@@ -3,18 +3,26 @@ import createMDX from "@next/mdx";
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   webpack(config) {
-    config.module.rules.push({
-      test: /\.svg$/,
-      use: {
-        loader: "@svgr/webpack",
-        options: {
-          svgoConfig: {
-            plugins: ["prefixIds"],
+    config.module.rules.push(
+      {
+        test: /\.svg$/,
+        resourceQuery: { not: /raw/ },
+        use: {
+          loader: "@svgr/webpack",
+          options: {
+            svgoConfig: {
+              plugins: ["prefixIds"],
+            },
+            ref: true,
           },
-          ref: true,
         },
       },
-    });
+      {
+        test: /\.svg$/i,
+        resourceQuery: /raw/, // Only apply this rule if '?raw' is present
+        type: "asset/source",
+      }
+    );
 
     return config;
   },

@@ -39,20 +39,6 @@ export const jaLayoutDictionary: LayoutDictionaryModel = {
         },
       ],
     },
-    languagePicker: {
-      button: {
-        ariaLabel: "ページの言語を選択してください",
-      },
-      list: {
-        ariaLabel: "ページ言語の一覧",
-      },
-      options: [
-        {
-          code: "en",
-          label: "English",
-        },
-      ],
-    },
   },
   header: {
     links: [
@@ -162,6 +148,20 @@ export const jaLayoutDictionary: LayoutDictionaryModel = {
         },
       ],
     },
+    languagePicker: {
+      button: {
+        ariaLabel: "ページの言語を選択してください",
+      },
+      list: {
+        ariaLabel: "ページ言語の一覧",
+      },
+      options: [
+        {
+          value: "en",
+          label: "English",
+        },
+      ],
+    },
   },
   errors: {
     notFound: {
@@ -187,8 +187,8 @@ export const jaLayoutDictionary: LayoutDictionaryModel = {
 };
 
 if (withJapanese) {
-  jaLayoutDictionary.ribbon.languagePicker.options.push({
+  jaLayoutDictionary.footer.languagePicker.options.push({
     label: "日本語",
-    code: "ja",
+    value: "ja",
   });
 }

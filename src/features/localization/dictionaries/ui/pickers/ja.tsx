@@ -24,4 +24,7 @@ export const jaPickersUiDictionary: PickersUiDictionaryModel = {
   privateKeyFormatPicker: {
     label: "秘密鍵の形式",
   },
+  base64checkbox: {
+    label: "Base64URLエンコード",
+  },
 };

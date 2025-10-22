@@ -1,25 +1,28 @@
 @use "@/libs/theme/styles/variables" as *;
 @use "@/libs/theme/styles/mixins" as *;
 
-.header {
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-
-  z-index: 9001;
-  backdrop-filter: blur(2rem);
-}
-
 .container {
   @include Container;
+  max-width: calc(100% - 2rem);
   display: none;
-
+  position: fixed;
+  top: 1rem;
+  right: 0;
+  left: 0;
+  border-radius: 1.25rem;
+  margin: 0 auto;
+  box-sizing: border-box;
   background: var(--color_bg_app_bar);
-  border-bottom: 1px solid rgba(#555, 0.32);
+  border: 1px solid var(--color_bg_app_bar);
+  box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.04);
+  backdrop-filter: blur(3rem);
+  z-index: 100;
 
   @media #{$breakpoint-dimension-sm} {
     display: block;
+  }
+  @media #{$breakpoint-dimension-xl} {
+    max-width: $inner-content-grid-max-width;
   }
 }
 
@@ -29,20 +32,37 @@
 }
 
 .content {
-  @include InnerContentFlex;
+  display: flex;
+  width: 100%;
+  margin: 0 auto;
   height: 100%;
   position: relative;
-  grid-column: 1 / -1;
   align-items: center;
   justify-content: space-between;
 }
 
-.navTabs {
-  flex: 1;
+.brand {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  gap: 3rem;
+  height: 1rem;
+  margin-left: 1.5rem;
+  z-index: 100;
+}
+
+.navContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  position: absolute;
+  left: 0;
+}
+
+.navTabs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  padding: 0.25rem;
 }
 
 .navList {
@@ -50,43 +70,53 @@
   padding: 0;
   list-style-type: none;
   margin: 0;
-
   height: 100%;
-
-  @media #{$breakpoint-dimension-sm} {
-    gap: 2rem;
-  }
-
-  @media #{$breakpoint-dimension-md} {
-    gap: 3rem;
-  }
+  gap: 0.25rem;
 }
 
 .navList__item {
   position: relative;
-  border-bottom: 0.125rem solid transparent;
-  color: var(--color_fg_link);
 
   &[data-active="true"] {
-    color: var(--color_fg_selected);
-    border-bottom: 1px solid var(--color_border_selected);
+    a {
+      background-color: var(--color_bg_app_bar);
+      color: var(--color_fg_bold);
+      cursor: default;
+    }
   }
 }
 
-.navList__item,
 .navList__item > a {
   display: flex;
   align-items: center;
-
+  padding: 0.5rem 1rem;
+  color: var(--color_fg_default);
   font-size: 0.875rem;
   font-style: normal;
-  font-weight: 500;
-  line-height: 1.5rem;
-  letter-spacing: 0.2px;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: -0.1px;
+  border-radius: 9999px;
 
   &:focus-visible {
     outline: solid 1px var(--color_border_focus);
     outline-offset: 0.125rem;
     border-radius: 0.125rem;
+  }
+
+  &:hover {
+    background-color: var(--color_bg_app_bar_border);
+    color: var(--color_fg_bold);
+    transition: all 0.1s ease-out;
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+
+  @media #{$breakpoint-dimension-md} {
+    gap: 1rem;
+    margin-right: 1.5rem;
   }
 }

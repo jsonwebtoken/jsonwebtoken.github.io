@@ -8,7 +8,7 @@ type EbookAdComponentProps = {
 
 export const EbookAdComponent: React.FC<EbookAdComponentProps> = ({ copy }) => {
   return (
-    <BoxComponent contentClassName={styles.content}>
+    <BoxComponent contentClassName={styles.content} containerClassName={styles.container}>
       <p className={styles.copy}>{copy}</p>
     </BoxComponent>
   );
