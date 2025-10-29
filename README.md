@@ -65,4 +65,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## License
 
-This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details
+This project is licensed under the Apache License 2.0 - see the [LICENSE](https://github.com/jsonwebtoken/jsonwebtoken.github.io/blob/master/LICENSE) file for details
