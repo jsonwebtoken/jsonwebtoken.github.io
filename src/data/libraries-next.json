@@ -3251,7 +3251,9 @@
           "ps384": true,
           "ps512": true,
           "eddsa": true,
-          "es256k": true
+          "es256k": true,
+          "ed25519": true,
+          "ed448": true
         },
         "authorUrl": "https://github.com/simo5",
         "authorName": "Simo Sorce",
