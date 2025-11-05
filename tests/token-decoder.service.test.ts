@@ -57,7 +57,6 @@ vi.mock("@/features/debugger/services/debugger.store", () => ({
 // Typed Mocks
 const viExtractJwt = vi.mocked(extractJwt);
 const viValidateSymmetricSecret = vi.mocked(validateSymmetricSecret);
-const viValidateAsymmetricKey = vi.mocked(validateAsymmetricKey);
 const viValidateJwtFormat = vi.mocked(validateJwtFormat);
 const viIsHmacAlg = vi.mocked(isHmacAlg);
 const viIsDigitalSignatureAlg = vi.mocked(isDigitalSignatureAlg);
@@ -71,7 +70,7 @@ const viParseStringIntoValidJsonObject = vi.mocked(
 const viVerifyMACedJwt = vi.mocked(verifyMACedJwt);
 const viDownloadPublicKeyIfPossible = vi.mocked(downloadPublicKeyIfPossible);
 
-describe("TokenDecoderService.handleJwtChange", () => {
+describe("handleJwtChange", () => {
   const mockJwt =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
   const mockParams = {
@@ -109,7 +108,6 @@ describe("TokenDecoderService.handleJwtChange", () => {
     );
     viIsSupportedAlg.mockReturnValue(true);
     viValidateSymmetricSecret.mockResolvedValue(ok(new Uint8Array([1, 2, 3])));
-    viValidateAsymmetricKey.mockResolvedValue(ok({} as CryptoKey));
     viGetStringifiedHeaderAndPayload.mockReturnValue(
       ok({
         header: mockStringifiedHeader,
@@ -126,6 +124,31 @@ describe("TokenDecoderService.handleJwtChange", () => {
     viParseStringIntoValidJsonObject.mockReturnValue(
       err("Not JSON"),
     );
+  });
+
+  it("should return a warning if the new token is empty", async () => {
+    const error = {
+      message: "JWT must not be empty.",
+      input: DebuggerInputValues.JWT,
+      task: DebuggerTaskValues.DECODE,
+    };
+
+    viExtractJwt.mockReturnValue("");
+    viValidateJwtFormat.mockReturnValue(err(error));
+
+    const result = await TokenDecoderService.handleJwtChange({
+      ...mockParams,
+      newToken: " ",
+    });
+
+    expect(viExtractJwt).toHaveBeenCalledWith(" ");
+    expect(result.jwt).toBe("");
+    expect(result.signatureStatus).toBe(JwtSignatureStatusValues.WARNING);
+    expect(result.signatureWarnings).toEqual([
+      StringValues.editor.signatureWarning,
+    ]);
+    expect(result.decodedHeader).toBe("");
+    expect(result.decodedPayload).toBe("");
   });
 
   it("should return decoding errors if JWT format is invalid", async () => {
