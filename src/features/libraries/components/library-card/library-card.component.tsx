@@ -185,6 +185,8 @@ export const LibraryCardComponent: React.FC<LibraryCardComponentProps> = ({
           <AlgItemComponent label="PS384" isSupported={support.ps384} />
           <AlgItemComponent label="PS512" isSupported={support.ps512} />
           <AlgItemComponent label="EdDSA" isSupported={support.eddsa} />
+          <AlgItemComponent label="Ed25519" isSupported={support.ed25519} />
+          <AlgItemComponent label="Ed448" isSupported={support.ed448} />
         </ul>
       </div>
       <div className={styles.metadata}>
