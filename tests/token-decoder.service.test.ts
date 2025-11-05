@@ -3,7 +3,6 @@ import { err, ok } from "neverthrow";
 import { extractJwt } from "@/features/common/services/utils";
 import {
   validateSymmetricSecret,
-  validateAsymmetricKey,
   validateJwtFormat,
   isHmacAlg,
   isDigitalSignatureAlg,
