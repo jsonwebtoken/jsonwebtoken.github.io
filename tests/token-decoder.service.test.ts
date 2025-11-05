@@ -30,7 +30,6 @@ vi.mock("@/features/common/services/utils", () => ({
 
 vi.mock("@/features/common/services/jwt.service", () => ({
   validateSymmetricSecret: vi.fn(),
-  validateAsymmetricKey: vi.fn(),
   validateJwtFormat: vi.fn(),
   isHmacAlg: vi.fn(),
   isDigitalSignatureAlg: vi.fn(),
