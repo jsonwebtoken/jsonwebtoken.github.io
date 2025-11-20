@@ -1,23 +1,29 @@
 @use "@/libs/theme/styles/variables" as *;
 @use "@/libs/theme/styles/mixins" as *;
 
+.container {
+  margin-bottom: 1.5rem;
+}
+
 .content {
   @include InnerContentFlex;
   position: relative;
   max-width: $article-max-width;
-
-  background: linear-gradient(290deg, #f4d -18.75%, #3f59e4 98.79%);
-
-  border-radius: 0.5rem;
   padding: 1rem;
-  margin: 1rem auto 2rem auto;
-  color: $Neutral0;
-  font-size: 1rem;
-  line-height: 1.25rem;
+  border-radius: 1rem;
+  border: 1px solid var(--color_border_default);
+  box-shadow:
+    0 0 0 0.5px rgba(0, 0, 0, 0.12),
+    0 2px 2px -1px rgba(0, 0, 0, 0.04),
+    0 4px 4px -2px rgba(0, 0, 0, 0.04),
+    0 6px 6px -3px rgba(0, 0, 0, 0.04);
 }
 
 .copy {
   font-weight: 400;
+  line-height: 1.25rem;
+  font-size: 0.875rem;
+  color: var(--color_fg_default);
 
   & strong {
     font-weight: 500;

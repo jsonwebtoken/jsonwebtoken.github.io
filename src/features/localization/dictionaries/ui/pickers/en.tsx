@@ -9,7 +9,7 @@ export const enPickersUiDictionary: PickersUiDictionaryModel = {
   exampleAlgPicker: {
     label: "Generate example",
     compactLabel: "Alg",
-    defaultValue: "Select a signing algorithm",
+    defaultValue: "Select signing algorithm",
     description: "Generate a JWT",
     closeButton: {
       label: "Close signing algorithm list",
@@ -23,5 +23,8 @@ export const enPickersUiDictionary: PickersUiDictionaryModel = {
   },
   privateKeyFormatPicker: {
     label: "Private Key Format",
+  },
+  base64checkbox: {
+    label: "Base64URL Encoded",
   },
 };

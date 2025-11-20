@@ -15,7 +15,6 @@ export default function NotFound() {
     <ErrorPageComponent
       languageCode={languageCode}
       themeCode={themeCode}
-      dictionary={layoutDictionary}
     >
       <NotFoundComponent metadata={layoutDictionary.errors.notFound} />
     </ErrorPageComponent>

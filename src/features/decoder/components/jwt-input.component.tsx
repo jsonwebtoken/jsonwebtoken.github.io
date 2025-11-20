@@ -72,7 +72,7 @@ export const JwtInputComponent: React.FC<JwtInputComponentProps> = ({
           isSelected={autoFocusEnabled}
           onChange={(e) => handleCheckboxChange(e)}
         >
-          <span className={styles.checkbox__label}>Enable auto-focus</span>
+          <span className={styles.checkbox__label}>{dictionary.autoFocusLabel}</span>
         </CheckboxComponent>
       </div>
       <CardComponent
@@ -85,6 +85,7 @@ export const JwtInputComponent: React.FC<JwtInputComponentProps> = ({
           success: [dictionary.successMessage],
           errors: decodeErrors$,
         }}
+        hasHeaderIcon
         slots={{
           notification: (
             <TokenDecoderSignatureValidationComponent
@@ -98,9 +99,9 @@ export const JwtInputComponent: React.FC<JwtInputComponentProps> = ({
                 value={token}
               />
               <CardToolbarClearButtonComponent
-                languageCode={languageCode}
                 onPress={clearValue}
                 isDisabled={!token}
+                languageCode={languageCode}
               />
             </CardToolbarComponent>
           ),

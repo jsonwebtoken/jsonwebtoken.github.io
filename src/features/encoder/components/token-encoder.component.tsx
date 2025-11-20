@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
+import styles from "./token-encoder.module.scss"
 import { EncodedJwtOutputComponent } from "@/features/encoder/components/encoded-jwt-output.component";
 import { TokenEncoderInputComponent } from "@/features/encoder/components/token-encoder-input.component";
 import { useEncoderStore } from "@/features/encoder/services/encoder.store";
@@ -10,6 +11,7 @@ import { SigningAlgCategoryValues } from "@/features/common/values/signing-alg-c
 import { WidgetComponent } from "@/features/common/components/widget/widget/widget.component";
 import { dataTestidDictionary } from "@/libs/testing/data-testid.dictionary";
 import { DebuggerWidgetValues } from "@/features/common/values/debugger-widget.values";
+import { WidgetAlgPickerComponent } from "@/features/debugger/components/debugger-alg-picker/debugger-alg-picker.component";
 
 interface TokenEncoderComponentProps {
   languageCode: string;
@@ -99,27 +101,37 @@ export const TokenEncoderComponent: React.FC<TokenEncoderComponentProps> = ({
   }, [encoderInputs$, loadEncoderInputs, headlineConfig.isVisible]);
 
   return (
-    <WidgetComponent
-      id={dataTestidDictionary.encoder.id}
-      widget={DebuggerWidgetValues.ENCODER}
-      languageCode={languageCode}
-      headlineConfig={headlineConfig}
-      title={dictionary.title}
-      description={dictionary.description}
-      exampleGenerator={dictionary.exampleGenerator}
-      contentInput={
-        <TokenEncoderInputComponent
+    <>
+      <div className={styles.input__description}>
+        <span>{dictionary.description}</span>
+        <WidgetAlgPickerComponent
+          label={dictionary.exampleGenerator.label}
           languageCode={languageCode}
-          dictionary={dictionary}
+          widget={DebuggerWidgetValues.ENCODER}
         />
-      }
-      contentOutput={
-        <EncodedJwtOutputComponent
-          languageCode={languageCode}
-          dictionary={dictionary.encodedJwt}
-        />
-      }
-      warnings={encodingWarnings$}
-    />
+      </div>
+      <WidgetComponent
+        id={dataTestidDictionary.encoder.id}
+        widget={DebuggerWidgetValues.ENCODER}
+        languageCode={languageCode}
+        headlineConfig={headlineConfig}
+        title={dictionary.title}
+        description={dictionary.description}
+        exampleGenerator={dictionary.exampleGenerator}
+        contentInput={
+          <TokenEncoderInputComponent
+            languageCode={languageCode}
+            dictionary={dictionary}
+          />
+        }
+        contentOutput={
+          <EncodedJwtOutputComponent
+            languageCode={languageCode}
+            dictionary={dictionary.encodedJwt}
+          />
+        }
+        warnings={encodingWarnings$}
+      />
+    </>
   );
 };

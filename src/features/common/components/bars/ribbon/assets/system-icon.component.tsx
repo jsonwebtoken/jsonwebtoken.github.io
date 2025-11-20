@@ -3,22 +3,41 @@ import React from "react";
 export const SystemIconComponent: React.FC = () => {
   return (
     <svg
-      role="img"
-      aria-label="computer monitor"
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
       fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="feather feather-monitor"
+      xmlns="http://www.w3.org/2000/svg"
     >
-      <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-      <line x1="8" y1="21" x2="16" y2="21"></line>
-      <line x1="12" y1="17" x2="12" y2="21"></line>
+      <path
+        d="M1 4V12C1 13.6569 2.34315 15 4 15H12C13.6569 15 15 13.6569 15 12V4C15 2.34315 13.6569 1 12 1H4C2.34315 1 1 2.34315 1 4Z"
+        stroke="currentColor"
+        strokeWidth="1.5"
+      ></path>
+      <rect
+        x="4"
+        y="4"
+        width="8"
+        height="5"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      ></rect>
+      <rect
+        x="11.25"
+        y="11.25"
+        width="1.5"
+        height="1.5"
+        rx="0.75"
+        fill="currentColor"
+      ></rect>
+      <path
+        d="M4 12H10"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      ></path>
     </svg>
   );
 };

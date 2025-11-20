@@ -16,139 +16,53 @@ import iconWithLabelImg from "./jwt-label.icon.png";
 import { createUrlPath } from "@/libs/utils/path.utils";
 import { DEFAULT_LANGUAGE_CODE } from "@/features/localization/localization.config";
 import { Button } from "react-aria-components";
-
-interface DownloadButtonProps {
-  asset: StaticImageData;
-  filename: string;
-}
-
-const DownloadButton: React.FC<DownloadButtonProps> = ({ asset, filename }) => {
-  const downloadSVG = useCallback(
-    (image: StaticImageData, filename: string) => {
-      const link = document.createElement("a");
-      link.href = image.src;
-      link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    },
-    [],
-  );
-
-  return (
-    <Button
-      className={styles.downloadButton}
-      onPress={() => {
-        setTimeout(() => {
-          downloadSVG(asset, filename);
-        }, 0);
-      }}
-    >
-      <DownloadIconComponent />
-    </Button>
-  );
-};
+import { ArrowHeadIconComponent } from "@/features/common/assets/arrow-head-icon.component";
+import { Auth0DictionaryModel } from "@/features/localization/models/auth0-dictionary.model";
+import { Auth0CtaComponent } from "@/features/common/components/auth0-cta/auth0-cta.component";
 
 type AssetsComponentProps = {
   languageCode: string;
-  dictionary: JwtDictionaryModel;
+  jwtDictionary: JwtDictionaryModel;
+  auth0Dictionary: Auth0DictionaryModel;
 };
 
 export const AssetsComponent: React.FC<AssetsComponentProps> = ({
   languageCode,
-  dictionary,
+  jwtDictionary,
+  auth0Dictionary,
 }) => {
   const libraryLinkPath = createUrlPath([
     languageCode === DEFAULT_LANGUAGE_CODE ? "" : languageCode,
-    dictionary.libraries.ctaButton.path
-      ? dictionary.libraries.ctaButton.path
+    jwtDictionary.libraries.ctaButton.path
+      ? jwtDictionary.libraries.ctaButton.path
       : "",
   ]);
 
   return (
-    <BoxComponent
-      containerClassName={styles.container}
-      contentClassName={styles.content}
-    >
+    <div className={styles.content}>
       <div className={clsx(styles.assets__column)}>
         <h4
           className={clsx(
             styles.assets__title,
-            getLocalizedSecondaryFont(languageCode),
+            getLocalizedSecondaryFont(languageCode)
           )}
         >
-          {dictionary.libraries.title}
+          {jwtDictionary.libraries.title}
         </h4>
         <div className={styles.assets__content}>
           <p className={styles.assets__description}>
-            {dictionary.libraries.description}
+            {jwtDictionary.libraries.description}
           </p>
           <Link className={styles.asset__link} href={libraryLinkPath}>
-            {dictionary.libraries.ctaButton.label}
+            {jwtDictionary.libraries.ctaButton.label}
+            <ArrowHeadIconComponent />
           </Link>
         </div>
       </div>
-      <div className={clsx(styles.assets__column)}>
-        <h4
-          className={clsx(
-            styles.assets__title,
-            getLocalizedSecondaryFont(languageCode),
-          )}
-        >
-          {dictionary.assets.badges.title}
-        </h4>
-        <div className={styles.assets__content}>
-          <div className={styles.card}>
-            <Image
-              {...dictionary.assets.badges.images.viewOn}
-              alt={dictionary.assets.badges.images.viewOn.alt}
-            />
-            <DownloadButton
-              filename={"view-on-jwt.badge.png"}
-              asset={viewOnImg}
-            />
-          </div>
-          <div className={styles.card}>
-            <Image
-              {...dictionary.assets.badges.images.compatible}
-              alt={dictionary.assets.badges.images.compatible.alt}
-            />
-            <DownloadButton
-              filename={"jwt-compatible.badge.png"}
-              asset={compatibleImg}
-            />
-          </div>
-        </div>
-      </div>
-      <div className={clsx(styles.assets__column)}>
-        <h4
-          className={clsx(
-            styles.assets__title,
-            getLocalizedSecondaryFont(languageCode),
-          )}
-        >
-          {dictionary.assets.logotype.title}
-        </h4>
-        <div className={styles.assets__content}>
-          <div className={styles.card}>
-            <Image
-              {...dictionary.assets.logotype.images.icon}
-              alt={dictionary.assets.logotype.images.icon.alt}
-            />
-            <DownloadButton filename={"jwt.icon.png"} asset={iconImg} />
-          </div>
-          <div className={styles.card}>
-            <Image
-              {...dictionary.assets.logotype.images.iconWithLabel}
-              alt={dictionary.assets.logotype.images.iconWithLabel.alt}
-            />
-            <DownloadButton
-              filename={"jwt-label.icon.png"}
-              asset={iconWithLabelImg}
-            />
-          </div>
-        </div>
-      </div>
-    </BoxComponent>
+      <Auth0CtaComponent
+        languageCode={languageCode}
+        dictionary={auth0Dictionary.banner}
+      />
+    </div>
   );
 };

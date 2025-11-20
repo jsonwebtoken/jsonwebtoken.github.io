@@ -1,20 +1,32 @@
-import auth0Logo from "@/features/common/assets/auth0-logo.png";
-import jwtLogo from "@/features/common/assets/jwt-flower.png";
-import { ImagesDictionaryModel } from "@/features/localization/models/images-dictionary.model";
+import { BrandDictionaryModel } from "../../models/brand-dictionary.model";
 
-export const jaImagesDictionary: ImagesDictionaryModel = {
-  logos: {
-    site: {
-      src: jwtLogo.src,
-      alt: "異なる色の花びらを持つ花に似たトークン。",
-      width: jwtLogo.width,
-      height: jwtLogo.height,
+export const jaBrandDictionary: BrandDictionaryModel = {
+  alertMessage: "SVG がクリップボードにコピーされました",
+  tooltip: "右クリックまたは長押し (ロゴオプション)",
+  menu: {
+    brand: {
+      label: "ブランド",
+      svg: {
+        copyLabel: "ロゴ SVG をコピー",
+        downloadLabel: "ロゴをダウンロード",
+      },
+      symbol: {
+        copyLabel: "シンボル SVG をコピー",
+        downloadLabel: "シンボルをダウンロード",
+      },
+      wordmark: {
+        copyLabel: "ワードマーク SVG をコピー",
+        downloadLabel: "ワードマークをダウンロード",
+      },
     },
-    auth0: {
-      src: auth0Logo.src,
-      alt: "“Auth0”ロゴ。盾の中央から四方八方に伸びる星が描かれている。",
-      width: auth0Logo.width,
-      height: auth0Logo.height,
+    tools: {
+      label: "ツール",
+      items: [
+        { label: "Passkeys Playground", url: "https://learnpasskeys.io" },
+        { label: "WebAuthn Playground", url: "https://webauthn.me" },
+        { label: "OIDC Playground", url: "https://openidconnect.net" },
+        { label: "SAMLツール", url: "https://samltool.io" },
+      ],
     },
   },
 };

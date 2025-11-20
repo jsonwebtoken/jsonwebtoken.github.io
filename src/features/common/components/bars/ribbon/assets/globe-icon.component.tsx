@@ -3,10 +3,11 @@ import React from "react";
 export const GlobeIconComponent: React.FC = () => {
   return (
     <svg
+      width="24"
+      height="24"
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
     >
       <path
         fillRule="evenodd"
@@ -15,17 +16,20 @@ export const GlobeIconComponent: React.FC = () => {
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
+        stroke="currentColor"
       ></path>
       <path
         d="M2 12H22"
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
+        stroke="currentColor"
       ></path>
       <path
         fillRule="evenodd"
         clipRule="evenodd"
         d="M12 2C14.5013 4.73835 15.9228 8.29203 16 12C15.9228 15.708 14.5013 19.2616 12 22C9.49872 19.2616 8.07725 15.708 8 12C8.07725 8.29203 9.49872 4.73835 12 2V2Z"
+        stroke="currentColor"
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"

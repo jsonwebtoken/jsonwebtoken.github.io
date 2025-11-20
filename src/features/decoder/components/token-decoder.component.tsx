@@ -20,6 +20,8 @@ import { AsymmetricKeyFormatValues } from "@/features/common/values/asymmetric-k
 import { WidgetComponent } from "@/features/common/components/widget/widget/widget.component";
 import { dataTestidDictionary } from "@/libs/testing/data-testid.dictionary";
 import { DebuggerWidgetValues } from "@/features/common/values/debugger-widget.values";
+import { WidgetAlgPickerComponent } from "@/features/debugger/components/debugger-alg-picker/debugger-alg-picker.component";
+import styles from "./token-decoder.module.scss";
 
 interface TokenDecoderComponentProps {
   languageCode: string;
@@ -49,7 +51,7 @@ export const TokenDecoderComponent: React.FC<TokenDecoderComponentProps> = ({
   const loadDecoderInputs = useDecoderStore((state) => state.loadDecoderInputs);
   const handleJwtChange$ = useDecoderStore((state) => state.handleJwtChange);
   const showUseHashWarning$ = useDecoderStore(
-    (state) => state.showUseHashWarning,
+    (state) => state.showUseHashWarning
   );
 
   useEffect(() => {
@@ -184,41 +186,51 @@ export const TokenDecoderComponent: React.FC<TokenDecoderComponentProps> = ({
   }, [decoderInputs$, loadDecoderInputs, headlineConfig.isVisible]);
 
   return (
-    <WidgetComponent
-      id={dataTestidDictionary.decoder.id}
-      widget={DebuggerWidgetValues.DECODER}
-      languageCode={languageCode}
-      headlineConfig={headlineConfig}
-      title={dictionary.title}
-      description={dictionary.description}
-      exampleGenerator={dictionary.exampleGenerator}
-      contentInput={
-        <JwtInputComponent
-          dictionary={dictionary.jwtEditor}
+    <>
+      <div className={styles.input__description}>
+        <span>{dictionary.description}</span>
+        <WidgetAlgPickerComponent
+          label={dictionary.exampleGenerator.label}
           languageCode={languageCode}
+          widget={DebuggerWidgetValues.DECODER}
         />
-      }
-      contentOutput={
-        <>
-          <DecodedHeaderOutputComponent
+      </div>
+      <WidgetComponent
+        id={dataTestidDictionary.decoder.id}
+        widget={DebuggerWidgetValues.DECODER}
+        languageCode={languageCode}
+        headlineConfig={headlineConfig}
+        title={dictionary.title}
+        description={dictionary.description}
+        exampleGenerator={dictionary.exampleGenerator}
+        contentInput={
+          <JwtInputComponent
+            dictionary={dictionary.jwtEditor}
             languageCode={languageCode}
-            dictionary={dictionary.decodedHeader}
-            decodedHeaderInitialTabId={decodedHeaderInitialTabId}
-            descriptionVisibility={decodedHeaderDescriptionVisibility}
           />
-          <DecodedPayloadOutputComponent
-            languageCode={languageCode}
-            dictionary={dictionary.decodedPayload}
-            decodedPayloadInitialTabId={decodedPayloadInitialTabId}
-            descriptionVisibility={decodedPayloadDescriptionVisibility}
-          />
-          <SecretKeyInputComponent
-            languageCode={languageCode}
-            dictionary={dictionary.signatureVerification}
-          />
-        </>
-      }
-      warnings={null}
-    />
+        }
+        contentOutput={
+          <>
+            <DecodedHeaderOutputComponent
+              languageCode={languageCode}
+              dictionary={dictionary.decodedHeader}
+              decodedHeaderInitialTabId={decodedHeaderInitialTabId}
+              descriptionVisibility={decodedHeaderDescriptionVisibility}
+            />
+            <DecodedPayloadOutputComponent
+              languageCode={languageCode}
+              dictionary={dictionary.decodedPayload}
+              decodedPayloadInitialTabId={decodedPayloadInitialTabId}
+              descriptionVisibility={decodedPayloadDescriptionVisibility}
+            />
+            <SecretKeyInputComponent
+              languageCode={languageCode}
+              dictionary={dictionary.signatureVerification}
+            />
+          </>
+        }
+        warnings={null}
+      />
+    </>
   );
 };

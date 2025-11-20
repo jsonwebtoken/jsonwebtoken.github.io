@@ -2,10 +2,10 @@
 @use "@/libs/theme/styles/mixins" as *;
 
 .container {
-  @include Container;
-  position: relative;
-  overflow: hidden;
-  background: var(--color_bg_auth0-cta);
+    width: 100%;
+    position: relative;
+    margin: 4rem 0;
+    overflow: clip;
 
   &:before {
     position: absolute;
@@ -14,99 +14,75 @@
     content: "";
     width: 100%;
     height: 100%;
-
-    background: url("https://cdn.auth0.com/website/passkeys-playground/assets/cta-mobile.png")
-      no-repeat;
-    background-size: cover;
-  }
-
-  @media only screen and (min-width: 480px) {
-    &:before {
-      background: url("https://cdn.auth0.com/website/passkeys-playground/assets/cta-mobile.png")
-        no-repeat;
-      background-size: cover;
-    }
-  }
-
-  @media #{$breakpoint-dimension-sm} {
-    &:before {
-      background: url("/images/auth0-background.svg") no-repeat right
-        center;
-      background-size: cover;
-    }
   }
 
   @media #{$breakpoint-dimension-md} {
-    background: unset;
-
-    &:before {
-      background: none;
-    }
-
-    &:after {
-      display: none;
-      background: none;
-    }
+    overflow: unset;
   }
+
 }
 
 .wrapper {
   @include ExtendedGrid;
   position: relative;
   justify-content: center;
-
-  border-radius: 0;
-  overflow: hidden;
-
-  @media #{$breakpoint-dimension-xl} {
-    border-radius: 1.5rem;
-  }
+  border-radius: 1rem;
 }
 
 .content {
-  @include InnerContentGrid;
+  display: flex;
+  width: calc(100% - 2rem);
+  max-width: 1312px;
+  margin: 0 auto;
   position: relative;
   padding: 1.5rem 0 14rem;
-  isolation: isolate;
+  border-radius: 1rem;
+  border: 1px dashed var(--color_border_bold);
+  background-color: var(--color_bg_layer_alternate);
+  background-image: linear-gradient(90deg,hsla(0,0%,50%,.071) 1px,transparent 0),linear-gradient(180deg,hsla(0,0%,50%,.071) 1px,transparent 0);
+  background-size: 24px 24px; 
+
 
   &:after {
     position: absolute;
     content: "";
-    bottom: -1.5rem;
-    right: 0;
-    background: url("/images/ebook-image.png") center no-repeat;
-    background-size: contain;
-    width: 100%;
-    height: 75%;
+    top: 10rem;
+    left: 18rem;
+    background-image: url("/images/ebook.svg");
+    border-radius: .25rem;
+    transform: rotate(-7.5deg);
+    height: 320px;
+    width: 240px;
+    z-index: 10;
   }
 
-  @media #{$breakpoint-dimension-xs} {
-    padding-bottom: 1.5rem;
-    column-gap: 6rem;
-
-    &:after {
-      position: absolute;
-      content: "";
-      top: 0;
-      right: 0;
-      background: url("/images/ebook-image.png") center no-repeat;
-      background-size: cover;
-      height: 100%;
-      width: 32%;
-      z-index: 10;
-    }
+  &:hover:after {
+    perspective: 100px;
+    transform: rotate(5deg) translateX(-24px) translateY(0) scale(1.1);
+    transition: all .2s ease-in-out;
   }
 
   @media #{$breakpoint-dimension-xs} {
     column-gap: 0;
   }
 
-  @media #{$breakpoint-dimension-md} {
-    background: var(--color_bg_auth0-cta);
-    padding: 2rem 2.5rem;
-    border-radius: 1rem;
-    overflow: hidden;
+  @media #{$breakpoint-dimension-xs} {
+    column-gap: 0;
+  }
 
+  @media only screen and (min-width: 992px) and (min-width: 768px) {
+    width: calc(100% - 4rem);
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  @media #{$breakpoint-dimension-md} {
+    padding: 4rem 2.5rem;
+    border-radius: 1rem;
+    display: grid;
+    max-width: 1312px;
+    margin: 0 auto;
+    transition: all .2s ease-in-out;
+    
     &:before {
       position: absolute;
       bottom: 0;
@@ -114,68 +90,175 @@
       content: "";
       width: 100%;
       height: 100%;
-      background-size: contain;
-
-      background: url("/images/auth0-background.svg") no-repeat right
-        bottom;
-      background-size: cover;
+      border-radius: 1rem;
+      background-color: var(--color_bg_layer_alternate);
+      background-image: linear-gradient(90deg,hsla(0,0%,50%,.071) 1px,transparent 0),linear-gradient(180deg,hsla(0,0%,50%,.071) 1px,transparent 0);
+      background-size: 24px 24px;
     }
-  }
-}
 
-.ebookBanner__copy {
-  grid-column: 1 / span 6;
-  display: flex;
-  flex-direction: column;
-  z-index: 1;
-
-  @media #{$breakpoint-dimension-xs} {
-    grid-column: 1 / span 4;
+    &:after {
+      position: absolute;
+      content: "";
+      top: -1.75rem;
+      left: 4rem;
+      background-image: url("/images/ebook.svg");
+      border-radius: .25rem;
+      transform: rotate(-7.5deg);
+      height: 320px;
+      width: 240px;
+      z-index: 10;
+      transition: all .2s ease-in-out;
+    }
   }
 
   @media #{$breakpoint-dimension-sm} {
-    grid-column: 1 / span 8;
+    width: calc(100% - 4rem);
+  }
+}
+
+.ebookBanner__code {
+    pointer-events: none;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    grid-column: 3/span 3;
+    height: fit-content;
+    transform: translateY(0);
+    top: auto;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-wrap: wrap;
+    padding: 1rem;
+    background: #191919;
+    color: var(--color_fg_code);
+    border-radius: 1.25rem;
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+    border: 1px solid var(--color_border_bold);
+    font-size: .875rem;
+    white-space: pre;
+    word-wrap: break-word;
+    text-overflow: ellipsis;
+    text-wrap-mode: wrap;
+    text-wrap-style: balance;
+    overflow: clip;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.12),0 4px 4px -2px rgba(0,0,0,.04),0 2px 2px -1px rgba(0,0,0,.04);
+    transition: all .4s ease-in-out;
+
+    span {
+      padding: .25rem 0;
+      transition: color .1s ease;  
+    }
+
+    @media #{$breakpoint-dimension-md} {
+      border-radius: 1.25rem;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+}
+
+.ebookBanner__code_dot {
+  display: inline;
+  position: relative;
+  color: var(--color_border_inverse_static);
+  padding: .125rem 0;
+}
+
+.ebookBanner__code_string {
+  display: inline;
+  position: relative;
+  color: var(--color_jwt_signature);
+  padding: .125rem 0;
+}
+
+.ebookBanner__code_boolean {
+  display: inline;
+  position: relative;
+  color: var(--color_jwt_header);
+  padding: .125rem 0;
+}
+
+.ebookBanner__code_number {
+  display: inline;
+  position: relative;
+  color: var(--color_jwt_payload);
+  padding: .125rem 0;
+}
+
+.ebookBanner__copy {
+  grid-column: 1/span 6;
+  display: flex;
+  flex-direction: column;
+  padding: 0 2.5rem;
+  z-index: 1;
+  margin-top: 2rem;
+
+  @media #{$breakpoint-dimension-xs} {
+    grid-column: 1/span 4;
+  }
+
+  @media #{$breakpoint-dimension-sm} {
+    grid-column: 6/span 6;
+  }
+
+  @media #{$breakpoint-dimension-md}  {
+    margin-top: 0;
   }
 }
 
 .ebookBanner__title {
-  color: var(--color_fg_bold);
-
+  width: 100%;
+  margin: 0;
+  text-align: left;
   font-size: 1.5rem;
-  line-height: 2rem;
-  letter-spacing: 0.05px;
+  line-height: 1.15;
   font-weight: 500;
+  color: var(--color_fg_bold);
+  font-feature-settings: lining-nums proportional-nums;
+  font-variant-numeric: lining-nums proportional-nums;
+  font-style: normal;
+
+  @media #{$breakpoint-dimension-lg} {
+    font-size: 2.5rem;
+  }
 }
 
 .ebookBanner__description {
   color: var(--color_fg_default);
   font-size: 1rem;
-  line-height: 1.25rem;
-  margin-top: 0.5rem;
+  line-height: 1.5;
+  margin-top: .5rem;
 }
 
 .ebookBanner__link {
-  margin-top: 1.5rem;
-  display: flex;
-  padding: 0.5rem 1rem;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-  align-self: stretch;
+    width: fit-content;
+    margin-top: 1.5rem;
+    display: flex;
+    padding: .25rem .75rem;
+    justify-content: center;
+    align-items: center;
+    gap: .5rem;
+    align-self: stretch;
+    border-radius: 9999px;
+    background: var(--color_fg_on_button);
+    box-shadow: 0 1px 1px -.5px rgba(0,0,0,.04),0 3px 3px -1.5px rgba(0,0,0,.04),0 6px 6px -3px rgba(0,0,0,.04),0 12px 12px -6px rgba(0,0,0,.04),0 24px 24px -12px rgba(0,0,0,.04),inset 0 0 0 1px rgba(0,0,0,.08);
+    color: var(--color_bg_layer);
+    font-size: .875rem;
+    font-weight: 700;
+    line-height: 1.375rem;
+    font-weight: 500;
+    letter-spacing: -.2px;
+    transition: all .3s ease-in-out;
 
-  border-radius: 0.375rem;
-  background: linear-gradient(
-    120deg,
-    #191919 -29.78%,
-    #4016a0 11.61%,
-    #3f59e4 100.07%
-  );
-
-  color: $neutrals-light-100-snow;
-  font-size: 0.875rem;
-  line-height: 1.375rem;
-  font-weight: 500;
-  letter-spacing: 0.2px;
+    &:hover {
+      background: var(--color_fg_on_button_primary);
+      box-shadow: 0 0 0 4px rgba(0,0,0,.2);
+      transition: all .2s ease-out;
+    }
 
   :global(html[lang="ja"]) & {
     @include LocaleLineHeight("ja", 1rem);
@@ -203,6 +286,6 @@
   svg {
     height: 0.75rem;
     width: 0.75rem;
-    fill: $neutrals-light-100-snow;
+    fill: var(--color_bg_layer);
   }
 }

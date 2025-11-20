@@ -4,9 +4,7 @@ import { getLayoutDictionary } from "@/features/localization/services/language-d
 import { ShellComponent } from "@/features/common/components/shell/shell.component";
 import { FooterComponent } from "@/features/common/components/footer/footer.component";
 import { ThemeCookieValues } from "@/features/common/values/theme.values";
-import { getImageDictionary } from "@/features/localization/services/images-dictionary.service";
 import { PageHeaderComponent } from "@/features/common/components/layout/page-header/page-header.component";
-import { SiteLogoComponent } from "@/features/common/components/site-logo/site-logo.component";
 
 interface LayoutComponentProps extends PropsWithChildren {
   languageCode: string;
@@ -19,7 +17,6 @@ export const PageLayoutComponent: React.FC<LayoutComponentProps> = ({
   children,
 }) => {
   const layoutDictionary = getLayoutDictionary(languageCode);
-  const images = getImageDictionary(languageCode);
 
   return (
     <html lang={languageCode} data-theme={themeCode}>
@@ -74,14 +71,11 @@ export const PageLayoutComponent: React.FC<LayoutComponentProps> = ({
         <PageHeaderComponent
           languageCode={languageCode}
           themeCode={themeCode}
-          siteLogo={<SiteLogoComponent languageCode={languageCode} />}
         />
         <main className={styles.main}>{children}</main>
         <FooterComponent
           languageCode={languageCode}
           dictionary={layoutDictionary.footer}
-          auth0Logo={images.logos.auth0}
-          siteLogo={<SiteLogoComponent languageCode={languageCode} />}
         />
       </ShellComponent>
     </html>

@@ -1,14 +1,12 @@
 .headline {
-  grid-column: 1 / -1;
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  text-transform: uppercase;
-  color: var(--color_fg_default);
-  font-size: 0.875rem;
-  line-height: 1.375rem;
-  font-weight: 500;
-  letter-spacing: 0.24px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -.1px;
+    color: var(--color_fg_default);
 }
 
 .checkbox__label {

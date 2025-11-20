@@ -1,20 +1,32 @@
-import auth0Logo from "@/features/common/assets/auth0-logo.png";
-import jwtLogo from "@/features/common/assets/jwt-flower.png";
-import { ImagesDictionaryModel } from "@/features/localization/models/images-dictionary.model";
+import { BrandDictionaryModel } from "../../models/brand-dictionary.model";
 
-export const enImagesDictionary: ImagesDictionaryModel = {
-  logos: {
-    site: {
-      src: jwtLogo.src,
-      alt: "A token that resembles a flower with petals of a different color.",
-      width: jwtLogo.width,
-      height: jwtLogo.height,
+export const enBrandDictionary: BrandDictionaryModel = {
+  alertMessage: "SVG copied to clipboard",
+  tooltip: "Right-click or long-press for logo options",
+  menu: {
+    brand: {
+      label: "Brand",
+      svg: {
+        copyLabel: "Copy Logo SVG",
+        downloadLabel: "Download Logo",
+      },
+      symbol: {
+        copyLabel: "Copy Symbol SVG",
+        downloadLabel: "Download Symbol",
+      },
+      wordmark: {
+        copyLabel: "Copy Wordmark SVG",
+        downloadLabel: "Download Wordmark",
+      },
     },
-    auth0: {
-      src: auth0Logo.src,
-      alt: "This logo has the word “Auth0” and a shield on its left side. The shield has a four-pointed star inside, which spans across its surface.",
-      width: auth0Logo.width,
-      height: auth0Logo.height,
+    tools: {
+      label: "Tools",
+      items: [
+        { label: "Passkeys Playground", url: "https://learnpasskeys.io" },
+        { label: "WebAuthn Playground", url: "https://webauthn.me" },
+        { label: "OIDC Playground", url: "https://openidconnect.net" },
+        { label: "SAML Tool", url: "https://samltool.io" },
+      ],
     },
   },
 };
