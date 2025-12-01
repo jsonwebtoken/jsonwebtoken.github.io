@@ -444,12 +444,12 @@
           "es256k": true,
           "eddsa": true
         },
-        "authorUrl": "https://github.com/GlitchedPolygons",
+        "authorUrl": "https://codeberg.org/GlitchedPolygons",
         "authorName": "Glitched Polygons",
         "gitHubRepoPath": "GlitchedPolygons/l8w8jwt",
-        "repoUrl": "https://github.com/GlitchedPolygons/l8w8jwt",
+        "repoUrl": "https://codeberg.org/GlitchedPolygons/l8w8jwt",
         "installCommandMarkdown": [
-          "git clone [https://github.com/GlitchedPolygons/l8w8jwt.git](https://github.com/GlitchedPolygons/l8w8jwt)"
+          "git clone [https://codeberg.org/GlitchedPolygons/l8w8jwt.git](https://codeberg.org/GlitchedPolygons/l8w8jwt.git)"
         ],
         "stars": 130
       },
