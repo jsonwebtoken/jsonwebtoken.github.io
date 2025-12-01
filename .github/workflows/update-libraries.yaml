@@ -1,0 +1,36 @@
+name: Update libraries stars count (test)
+on: 
+  push: 
+    branches: [stars-ci-test]
+  workflow_dispatch:
+
+
+jobs: 
+  update-stars:
+    runs-on: ubuntu-latest
+    permissions: 
+      contents: write
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with: 
+          node-version: 20
+      - name: Install dependencies
+        run: npm install node-fetch@2
+      - name: Update stars in libraries-next.json 
+        run: node scripts/updateStars.js
+        env: 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'javiert-okta'
+          git config --global user.email 'javiersebastian.tinocomachado@okta.com'
+          git add .
+          git commit -m "chore: update stars count [skip ci]" || echo "No changes to commit"
+          git push
+        env: 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
