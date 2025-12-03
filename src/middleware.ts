@@ -48,8 +48,6 @@ export function middleware(request: NextRequest) {
     request.nextUrl.searchParams.delete("access_token");
     request.nextUrl.searchParams.delete("value");
 
-    request.nextUrl.searchParams.append("warning", "use_hash");
-
     request.nextUrl.hash = `token=${tokenParam}`;
 
     return NextResponse.redirect(request.nextUrl);

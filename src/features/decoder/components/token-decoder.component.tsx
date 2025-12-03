@@ -8,9 +8,7 @@ import { SecretKeyInputComponent } from "@/features/decoder/components/secret-ke
 import { useDecoderStore } from "@/features/decoder/services/decoder.store";
 import { useRouter } from "next/navigation";
 import {
-  SupportedTokenHashParamValues,
-  WARNING_PARAM_KEY,
-  WARNING_PARAM_VALUE,
+  SupportedTokenHashParamValues
 } from "@/libs/config/project.constants";
 import { HomeDictionaryModel } from "@/features/localization/models/home-dictionary.model";
 import { ClaimDescriptionVisibilityValues } from "@/features/common/values/claim-description-visibility.values";
@@ -90,36 +88,9 @@ export const TokenDecoderComponent: React.FC<TokenDecoderComponentProps> = ({
       });
     };
 
-    const handleWarning = () => {
-      const search = window.location.search;
-
-      const searchParams = new URLSearchParams(search);
-      const warning = searchParams.get(WARNING_PARAM_KEY);
-
-      if (warning === WARNING_PARAM_VALUE) {
-
-        searchParams.delete(WARNING_PARAM_KEY);
-
-        const currentUrl = window.location.href.split("?")[0];
-
-        let newUrl = `${currentUrl}`;
-
-        if (searchParams.size > 0) {
-          newUrl += `?${searchParams.toString()}`;
-        }
-
-        if (window.location.hash) {
-          newUrl += window.location.hash;
-        }
-
-        router.push(newUrl);
-      }
-    };
-
     window.addEventListener("hashchange", handleHashChange);
-
+    
     handleHashChange();
-    handleWarning();
 
     return () => {
       window.removeEventListener("hashchange", handleHashChange);
