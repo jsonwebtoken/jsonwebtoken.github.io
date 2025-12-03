@@ -50,9 +50,6 @@ export const TokenDecoderComponent: React.FC<TokenDecoderComponentProps> = ({
 
   const loadDecoderInputs = useDecoderStore((state) => state.loadDecoderInputs);
   const handleJwtChange$ = useDecoderStore((state) => state.handleJwtChange);
-  const showUseHashWarning$ = useDecoderStore(
-    (state) => state.showUseHashWarning
-  );
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -100,7 +97,6 @@ export const TokenDecoderComponent: React.FC<TokenDecoderComponentProps> = ({
       const warning = searchParams.get(WARNING_PARAM_KEY);
 
       if (warning === WARNING_PARAM_VALUE) {
-        showUseHashWarning$();
 
         searchParams.delete(WARNING_PARAM_KEY);
 
@@ -128,7 +124,7 @@ export const TokenDecoderComponent: React.FC<TokenDecoderComponentProps> = ({
     return () => {
       window.removeEventListener("hashchange", handleHashChange);
     };
-  }, [handleJwtChange$, router, showUseHashWarning$]);
+  }, [handleJwtChange$, router]);
 
   useEffect(() => {
     if (isMounted.current) {
