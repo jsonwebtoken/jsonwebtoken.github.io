@@ -51,6 +51,7 @@ export const TokenDecoderComponent: React.FC<TokenDecoderComponentProps> = ({
 
   useEffect(() => {
     const handleHashChange = () => {
+      console.count("hash handler fired")
       const hash = window.location.hash.substring(1);
 
       if (hash.includes("debugger-io?token=")) {
@@ -67,7 +68,7 @@ export const TokenDecoderComponent: React.FC<TokenDecoderComponentProps> = ({
         }
 
         const newUrl = `${currentUrl}#${SupportedTokenHashParamValues.TOKEN}=${token}`;
-
+        console.log("Logging hash length before replacing///", token.length)
         window.location.replace(newUrl);
 
         return;
@@ -88,12 +89,12 @@ export const TokenDecoderComponent: React.FC<TokenDecoderComponentProps> = ({
       });
     };
 
-    //window.addEventListener("hashchange", handleHashChange);
+    window.addEventListener("hashchange", handleHashChange);
     
     handleHashChange();
 
     return () => {
-      //window.removeEventListener("hashchange", handleHashChange);
+      window.removeEventListener("hashchange", handleHashChange);
     };
   }, [handleJwtChange$, router]);
 
