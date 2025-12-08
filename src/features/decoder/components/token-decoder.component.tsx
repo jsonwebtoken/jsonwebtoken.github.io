@@ -88,12 +88,12 @@ export const TokenDecoderComponent: React.FC<TokenDecoderComponentProps> = ({
       });
     };
 
-    window.addEventListener("hashchange", handleHashChange);
+    //window.addEventListener("hashchange", handleHashChange);
     
     handleHashChange();
 
     return () => {
-      window.removeEventListener("hashchange", handleHashChange);
+      //window.removeEventListener("hashchange", handleHashChange);
     };
   }, [handleJwtChange$, router]);
 
