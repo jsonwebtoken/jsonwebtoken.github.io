@@ -75,15 +75,20 @@ export const TokenDecoderComponent: React.FC<TokenDecoderComponentProps> = ({
       }
 
       if (!hash.includes("=")) {
+        console.log("hash not includes =")
         return;
       }
 
-      const hashParams = new URLSearchParams(hash);
+      
 
+      const hashParams = new URLSearchParams(hash);
+      console.log("Hash param keys!!!", hashParams)
       Object.values(SupportedTokenHashParamValues).forEach((hashParamKey) => {
         const token = hashParams.get(hashParamKey);
 
         if (token) {
+          console.count("handling jwt change")
+          console.log("The token is:///", token)
           handleJwtChange$(token);
         }
       });
