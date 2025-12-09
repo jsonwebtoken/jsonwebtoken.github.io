@@ -334,7 +334,10 @@
           "eddsa": true,
           "ed25519": true,
           "ed448": false,
-          "es256k": false
+          "es256k": false,
+          "ml-dsa-44": false,
+          "ml-dsa-65": false,
+          "ml-dsa-87": false
         },
         "authorUrl": "https://github.com/panva",
         "authorName": "Filip Skokan",
@@ -1106,7 +1109,10 @@
           "eddsa": true,
           "ed25519": true,
           "ed448": false,
-          "es256k": false
+          "es256k": false,
+          "ml-dsa-44": false,
+          "ml-dsa-65": false,
+          "ml-dsa-87": false
         },
         "authorUrl": "https://github.com/panva",
         "authorName": "Filip Skokan",
@@ -2236,7 +2242,10 @@
           "eddsa": true,
           "ed25519": true,
           "ed448": false,
-          "es256k": false
+          "es256k": false,
+          "ml-dsa-44": false,
+          "ml-dsa-65": false,
+          "ml-dsa-87": false
         },
         "authorUrl": "https://github.com/panva",
         "authorName": "Filip Skokan",
