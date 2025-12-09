@@ -35,7 +35,7 @@ export function middleware(request: NextRequest) {
     return;
   }
 
-  /* const tokenParam =
+  const tokenParam =
     request.nextUrl.searchParams.get("token") ||
     request.nextUrl.searchParams.get("id_token") ||
     request.nextUrl.searchParams.get("access_token") ||
@@ -51,7 +51,7 @@ export function middleware(request: NextRequest) {
     request.nextUrl.hash = `token=${tokenParam}`;
 
     return NextResponse.redirect(request.nextUrl);
-  } */
+  }
 
   const libraryFilter = request.nextUrl.searchParams.get("language");
   const isLibrariesPage = pathname === "/libraries";

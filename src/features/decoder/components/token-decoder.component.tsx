@@ -6,8 +6,10 @@ import { DecodedPayloadOutputComponent } from "@/features/decoder/components/dec
 import { JwtInputComponent } from "@/features/decoder/components/jwt-input.component";
 import { SecretKeyInputComponent } from "@/features/decoder/components/secret-key-input.component";
 import { useDecoderStore } from "@/features/decoder/services/decoder.store";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { SupportedTokenHashParamValues } from "@/libs/config/project.constants";
+import { useRouter } from "next/navigation";
+import {
+  SupportedTokenHashParamValues
+} from "@/libs/config/project.constants";
 import { HomeDictionaryModel } from "@/features/localization/models/home-dictionary.model";
 import { ClaimDescriptionVisibilityValues } from "@/features/common/values/claim-description-visibility.values";
 import { useDebuggerStore } from "@/features/debugger/services/debugger.store";
@@ -39,8 +41,6 @@ export const TokenDecoderComponent: React.FC<TokenDecoderComponentProps> = ({
   headlineConfig,
 }) => {
   const isMounted = useRef(false);
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
 
   const router = useRouter();
 
@@ -51,25 +51,8 @@ export const TokenDecoderComponent: React.FC<TokenDecoderComponentProps> = ({
 
   useEffect(() => {
     const handleHashChange = () => {
-      const tokenParam =
-        searchParams.get("token") ||
-        searchParams.get("id_token") ||
-        searchParams.get("access_token") ||
-        searchParams.get("value");
-      const isHomePage = pathname === "/";
-      const hash = tokenParam
-        ? `token=${tokenParam}`
-        : window.location.hash.substring(1);
-
-      if (tokenParam && isHomePage) {
-        const currentParams = new URLSearchParams(searchParams.toString());
-        currentParams.delete("token");
-        currentParams.delete("id_token");
-        currentParams.delete("access_token");
-        currentParams.delete("value");
-        router.replace(`${pathname}#${hash}`);
-      }
-      console.count("hash handler fired");
+      console.count("hash handler fired")
+      const hash = window.location.hash.substring(1);
 
       if (hash.includes("debugger-io?token=")) {
         const debugHash = window.location.hash
@@ -85,32 +68,34 @@ export const TokenDecoderComponent: React.FC<TokenDecoderComponentProps> = ({
         }
 
         const newUrl = `${currentUrl}#${SupportedTokenHashParamValues.TOKEN}=${token}`;
-        console.log("Logging hash length before replacing///", token.length);
+        console.log("Logging hash length before replacing///", token.length)
         window.location.replace(newUrl);
 
         return;
       }
 
       if (!hash.includes("=")) {
-        console.log("hash not includes =");
+        console.log("hash not includes =")
         return;
       }
 
+      
+
       const hashParams = new URLSearchParams(hash);
-      console.log("Hash param keys!!!", hashParams);
+      console.log("Hash param keys!!!", hashParams)
       Object.values(SupportedTokenHashParamValues).forEach((hashParamKey) => {
         const token = hashParams.get(hashParamKey);
 
         if (token) {
-          console.count("handling jwt change");
-          console.log("The token is:///", token);
+          console.count("handling jwt change")
+          console.log("The token is:///", token)
           handleJwtChange$(token);
         }
       });
     };
 
     window.addEventListener("hashchange", handleHashChange);
-
+    
     handleHashChange();
 
     return () => {
