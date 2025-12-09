@@ -2542,7 +2542,10 @@
           "eddsa": true,
           "ed25519": true,
           "ed448": false,
-          "es256k": false
+          "es256k": false,
+          "ml-dsa-44": true,
+          "ml-dsa-65": true,
+          "ml-dsa-87": true
         },
         "authorUrl": "https://github.com/panva",
         "authorName": "Filip Skokan",
