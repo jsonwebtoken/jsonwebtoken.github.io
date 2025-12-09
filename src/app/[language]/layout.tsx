@@ -1,5 +1,3 @@
-"use client"
-
 import React, { useEffect } from "react";
 import { Metadata } from "next";
 import { DEFAULT_LANGUAGE_CODE } from "@/features/localization/localization.config";
@@ -48,11 +46,6 @@ export default function RootLayout({
 
   const initialThemeCookieValue =
     sanitizedThemeCookieValue || ThemeCookieValues.SYSTEM_DARK;
-
-    useEffect(() => {
-      console.log("App mounted ounce");
-      return () => console.log("App unmounted X")
-    },[])
 
   return (
     <PageLayoutComponent
