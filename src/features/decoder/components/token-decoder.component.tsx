@@ -177,7 +177,10 @@ export const TokenDecoderComponent: React.FC<TokenDecoderComponentProps> = ({
         description={dictionary.description}
         exampleGenerator={dictionary.exampleGenerator}
         contentInput={
-          <></>
+          <JwtInputComponent
+            dictionary={dictionary.jwtEditor}
+            languageCode={languageCode}
+          />
         }
         contentOutput={
           <>
@@ -193,10 +196,10 @@ export const TokenDecoderComponent: React.FC<TokenDecoderComponentProps> = ({
               decodedPayloadInitialTabId={decodedPayloadInitialTabId}
               descriptionVisibility={decodedPayloadDescriptionVisibility}
             />
-            <SecretKeyInputComponent
+            {/* <SecretKeyInputComponent
               languageCode={languageCode}
               dictionary={dictionary.signatureVerification}
-            />
+            /> */}
           </>
         }
         warnings={null}
