@@ -184,7 +184,7 @@ export const TokenDecoderComponent: React.FC<TokenDecoderComponentProps> = ({
         }
         contentOutput={
           <>
-            {/* <DecodedHeaderOutputComponent
+            <DecodedHeaderOutputComponent
               languageCode={languageCode}
               dictionary={dictionary.decodedHeader}
               decodedHeaderInitialTabId={decodedHeaderInitialTabId}
@@ -199,7 +199,7 @@ export const TokenDecoderComponent: React.FC<TokenDecoderComponentProps> = ({
             <SecretKeyInputComponent
               languageCode={languageCode}
               dictionary={dictionary.signatureVerification}
-            /> */}
+            />
           </>
         }
         warnings={null}
