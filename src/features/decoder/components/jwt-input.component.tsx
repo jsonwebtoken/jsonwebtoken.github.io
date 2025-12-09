@@ -107,6 +107,13 @@ export const JwtInputComponent: React.FC<JwtInputComponentProps> = ({
           ),
         }}
       >
+        {autoFocusEnabled !== undefined ? (
+          <JwtEditorComponent
+            token={token}
+            handleJwtChange={handleJwtChange}
+            autoFocus={autoFocusEnabled}
+          />
+        ) : null}
       </CardComponent>
     </>
   );

@@ -177,10 +177,7 @@ export const TokenDecoderComponent: React.FC<TokenDecoderComponentProps> = ({
         description={dictionary.description}
         exampleGenerator={dictionary.exampleGenerator}
         contentInput={
-          <JwtInputComponent
-            dictionary={dictionary.jwtEditor}
-            languageCode={languageCode}
-          />
+          <></>
         }
         contentOutput={
           <>
