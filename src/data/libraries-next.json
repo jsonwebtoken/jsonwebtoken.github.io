@@ -332,13 +332,18 @@
           "ps384": true,
           "ps512": true,
           "eddsa": true,
-          "es256k": false
+          "ed25519": true,
+          "ed448": false,
+          "es256k": false,
+          "ml-dsa-44": false,
+          "ml-dsa-65": false,
+          "ml-dsa-87": false
         },
         "authorUrl": "https://github.com/panva",
         "authorName": "Filip Skokan",
         "gitHubRepoPath": "panva/jose",
         "repoUrl": "https://github.com/panva/jose",
-        "installCommandMarkdown": ["bun add jose"],
+        "installCommandMarkdown": ["npm docs jose"],
         "stars": 4980
       }
     ]
@@ -1105,13 +1110,18 @@
           "ps384": true,
           "ps512": true,
           "eddsa": true,
-          "es256k": false
+          "ed25519": true,
+          "ed448": false,
+          "es256k": false,
+          "ml-dsa-44": false,
+          "ml-dsa-65": false,
+          "ml-dsa-87": false
         },
         "authorUrl": "https://github.com/panva",
         "authorName": "Filip Skokan",
         "gitHubRepoPath": "panva/jose",
         "repoUrl": "https://github.com/panva/jose",
-        "installCommandMarkdown": ["see https://deno.land/x/jose"],
+        "installCommandMarkdown": ["npm docs jose"],
         "stars": 4980
       }
     ]
@@ -2233,13 +2243,18 @@
           "ps384": true,
           "ps512": true,
           "eddsa": true,
-          "es256k": false
+          "ed25519": true,
+          "ed448": false,
+          "es256k": false,
+          "ml-dsa-44": false,
+          "ml-dsa-65": false,
+          "ml-dsa-87": false
         },
         "authorUrl": "https://github.com/panva",
         "authorName": "Filip Skokan",
         "gitHubRepoPath": "panva/jose",
         "repoUrl": "https://github.com/panva/jose",
-        "installCommandMarkdown": ["npm install jose"],
+        "installCommandMarkdown": ["npm docs jose"],
         "stars": 4980
       },
       {
@@ -2537,13 +2552,18 @@
           "ps384": true,
           "ps512": true,
           "eddsa": true,
-          "es256k": true
+          "ed25519": true,
+          "ed448": false,
+          "es256k": false,
+          "ml-dsa-44": true,
+          "ml-dsa-65": true,
+          "ml-dsa-87": true
         },
         "authorUrl": "https://github.com/panva",
         "authorName": "Filip Skokan",
         "gitHubRepoPath": "panva/jose",
         "repoUrl": "https://github.com/panva/jose",
-        "installCommandMarkdown": ["npm install jose"],
+        "installCommandMarkdown": ["npm docs jose"],
         "stars": 4980
       },
       {
