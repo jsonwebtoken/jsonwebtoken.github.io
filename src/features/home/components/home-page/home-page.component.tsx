@@ -143,7 +143,7 @@ export const HomePageComponent: React.FC<HomePageComponentProps> = ({
         // debuggerInitialMode={debuggerInitialMode}
       />
       <aside>
-        {/* <EbookComponent
+        <EbookComponent
           languageCode={languageCode}
           dictionary={auth0Dictionary.ebook}
         />
@@ -151,7 +151,7 @@ export const HomePageComponent: React.FC<HomePageComponentProps> = ({
           jwtDictionary={jwtDictionary}
           auth0Dictionary={auth0Dictionary}
           languageCode={languageCode}
-        /> */}
+        />
       </aside>
       {/*<CounterComponent />*/}
     </>

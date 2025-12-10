@@ -143,8 +143,28 @@ export const DebuggerWidgetComponent: React.FC<
           decoderDictionary={decoderDictionary}
           encoderDictionary={encoderDictionary}
         />
-        
-        
+        {activeWidget$ === DebuggerWidgetValues.DECODER && (
+          <TokenDecoderComponent
+            headlineConfig={{ isVisible: false }}
+            languageCode={languageCode}
+            dictionary={decoderDictionary}
+            decodedHeaderInitialTabId={decodedHeaderTabId}
+            decodedPayloadInitialTabId={decodedPayloadTabId}
+            decodedHeaderDescriptionVisibility={
+              decodedHeaderDescriptionVisibility
+            }
+            decodedPayloadDescriptionVisibility={
+              decodedPayloadDescriptionVisibility
+            }
+          />
+        )}
+        {activeWidget$ === DebuggerWidgetValues.ENCODER && (
+          <TokenEncoderComponent
+            headlineConfig={{ isVisible: false }}
+            languageCode={languageCode}
+            dictionary={encoderDictionary}
+          />
+        )}
         <DebuggerFeedbackComponent languageCode={languageCode} />
       </div>
     );
@@ -152,7 +172,7 @@ export const DebuggerWidgetComponent: React.FC<
 
   return (
     <div className={styles.container}>
-      {/* <TokenDecoderComponent
+      <TokenDecoderComponent
         headlineConfig={{
           isVisible: true,
           actions: (
@@ -172,9 +192,9 @@ export const DebuggerWidgetComponent: React.FC<
         decodedPayloadDescriptionVisibility={
           decodedPayloadDescriptionVisibility
         }
-      /> */}
+      />
       <DebuggerFeedbackComponent languageCode={languageCode} />
-     {/*  <TokenEncoderComponent
+      <TokenEncoderComponent
         headlineConfig={{
           isVisible: true,
           actions: (
@@ -188,7 +208,7 @@ export const DebuggerWidgetComponent: React.FC<
         }}
         languageCode={languageCode}
         dictionary={encoderDictionary}
-      /> */}
+      />
     </div>
   );
 };
