@@ -60,7 +60,7 @@
     "@types/react-dom": "^18",
     "@vitest/coverage-istanbul": "^1.4.0",
     "eslint": "^8",
-    "eslint-config-next": "^14.2.3",
+    "eslint-config-next": "^16.0.10",
     "prettier": "^3.2.5",
     "typescript": "^5.4.5",
     "vite-tsconfig-paths": "^4.3.2",
