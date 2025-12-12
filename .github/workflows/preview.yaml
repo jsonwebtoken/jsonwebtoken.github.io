@@ -1,0 +1,90 @@
+name: Vercel Preview Deployment
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+on:
+  push:
+    branches-ignore:
+      - master
+      - production
+jobs:
+  Deploy-Preview:
+    runs-on:
+      labels: ubuntu-latest
+    environment: preview
+    outputs:
+      deploymentUrl: ${{ steps.deploy.outputs.deploymentUrl }}
+    steps:
+      - name: Checkout the Codebase
+        uses: actions/checkout@v4
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+      - name: Deploy on Vercel
+        id: deploy
+        run: |
+          vercel deploy --token=${{ secrets.VERCEL_ACCESS_TOKEN }} > deploy.log
+          URL=$(cat deploy.log | grep -o 'https://[^ ]*.vercel.app' | head -n1)
+          echo "deploymentUrl=$URL" >> $GITHUB_OUTPUT
+      - name: Extract branch name
+        shell: bash
+        run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+        id: extract_branch
+      - name: Assign Custom Domain
+        if: ${{ steps.extract_branch.outputs.branch == 'remove-basepath-2' }}
+        run: |
+          vercel alias set --token=${{ secrets.VERCEL_ACCESS_TOKEN }} ${{ steps.deploy.outputs.deploymentUrl }} ab-test-next-jwt-io.vercel.app --scope=okta
+
+  Add-Comment:
+    runs-on:
+      labels: ubuntu-latest
+    needs: Deploy-Preview
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Comment URL to PR
+        uses: actions/github-script@v6
+        id: comment-deployment-url-script
+        env:
+          DEPLOYMENT_URL: ${{ needs.Deploy-Preview.outputs.deploymentUrl }}
+        with:
+          script: |
+            // Get pull requests that are open for current ref.
+            const pullRequests = await github.rest.pulls.list({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                state: 'open',
+                head: `${context.repo.owner}:${context.ref.replace('refs/heads/', '')}`
+            })
+
+            // Set issue number for following calls from context (if on pull request event) or from above variable.
+            const issueNumber = context.issue.number || pullRequests.data[0].number
+
+            // Retrieve existing bot comments for the PR
+            const {data: comments} = await github.rest.issues.listComments({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber,
+            })
+            const botComment = comments.find(comment => {
+                return comment.user.type === 'Bot' && comment.body.includes('Preview URL at')
+            })
+
+            const output = "Preview URL " + process.env.DEPLOYMENT_URL
+
+            // If we have a comment, update it, otherwise create a new one
+            if (botComment) {
+                github.rest.issues.updateComment({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    comment_id: botComment.id,
+                    body: output
+                })
+            } else {
+                github.rest.issues.createComment({
+                    issue_number: issueNumber,
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    body: output
+                })
+            }

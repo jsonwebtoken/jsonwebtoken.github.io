@@ -1,0 +1,417 @@
+@use "@/libs/theme/styles/variables" as *;
+@use "@/libs/theme/styles/mixins" as *;
+
+.container {
+  @include Container;
+  position: relative;
+  overflow: hidden;
+  background: var(--color_bg_auth0-cta);
+
+  &:before {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    content: "";
+    width: 100%;
+    height: 100%;
+  }
+
+  :global(html[data-theme="light"]) &:before {
+    background-image: url("/images/mobile.light.auth0-flow-bg.svg");
+    background-size: cover;
+  }
+  :global(html[data-theme="system-light"]) &:before {
+    background-image: url("/images/mobile.light.auth0-flow-bg.svg");
+    background-size: cover;
+  }
+  :global(html[data-theme="dark"]) &:before {
+    background-image: url("/images/mobile.dark.auth0-flow-bg.svg");
+    background-size: cover;
+  }
+  :global(html[data-theme="system-dark"]) &:before {
+    background-image: url("/images/mobile.dark.auth0-flow-bg.svg");
+    background-size: cover;
+  }
+
+  @media #{$breakpoint-dimension-sm} {
+    :global(html[data-theme="light"]) &:before {
+      background-image: url("/images/tablet.light.auth0-flow-bg.svg");
+      background-size: cover;
+    }
+    :global(html[data-theme="system-light"]) &:before {
+      background-image: url("/images/tablet.light.auth0-flow-bg.svg");
+      background-size: cover;
+    }
+    :global(html[data-theme="dark"]) &:before {
+      background-image: url("/images/tablet.dark.auth0-flow-bg.svg");
+      background-size: cover;
+    }
+    :global(html[data-theme="system-dark"]) &:before {
+      background-image: url("/images/tablet.dark.auth0-flow-bg.svg");
+      background-size: cover;
+    }
+  }
+
+  @media #{$breakpoint-dimension-md} {
+    padding-bottom: 7.5rem;
+    background: unset;
+
+    &:before {
+      background: none;
+    }
+
+    :global(html[data-theme="light"]) &:before {
+      background-image: none;
+    }
+    :global(html[data-theme="system-light"]) &:before {
+      background-image: none;
+    }
+    :global(html[data-theme="dark"]) &:before {
+      background-image: none;
+    }
+    :global(html[data-theme="system-dark"]) &:before {
+      background-image: none;
+    }
+
+    &:after {
+      display: none;
+      background: none;
+    }
+  }
+}
+
+.wrapper {
+  @include ExtendedGrid;
+  position: relative;
+  justify-content: center;
+
+  border-radius: 0;
+  overflow: hidden;
+
+  @media #{$breakpoint-dimension-md} {
+    background: var(--color_bg_auth0-cta);
+    border-radius: 1.5rem;
+
+    &:before {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      content: "";
+      width: 100%;
+      height: 100%;
+    }
+
+    :global(html[data-theme="light"]) &:before {
+      background: url("/images/light.auth0-flow-bg.svg") no-repeat right
+        bottom;
+      background-size: cover;
+    }
+    :global(html[data-theme="system-light"]) &:before {
+      background: url("/images/light.auth0-flow-bg.svg") no-repeat right
+        bottom;
+      background-size: cover;
+    }
+    :global(html[data-theme="dark"]) &:before {
+      background: url("/images/dark.auth0-flow-bg.svg") no-repeat right
+        bottom;
+      background-size: cover;
+    }
+    :global(html[data-theme="system-dark"]) &:before {
+      background: url("/images/dark.auth0-flow-bg.svg") no-repeat right
+        bottom;
+      background-size: cover;
+    }
+  }
+}
+
+.content {
+  @include InnerContentFlex;
+  justify-content: center;
+
+  @media #{$breakpoint-dimension-sm} {
+    @include InnerContentGrid;
+  }
+}
+
+.cta {
+  z-index: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 2.5rem 0;
+  align-items: center;
+  gap: 2rem;
+
+  @media #{$breakpoint-dimension-sm} {
+    padding: 3rem 0;
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: subgrid;
+  }
+
+  @media #{$breakpoint-dimension-md} {
+    padding: 4rem 0;
+  }
+}
+
+.cta__copy {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+
+  @media #{$breakpoint-dimension-sm} {
+    align-items: unset;
+  }
+
+  @media #{$breakpoint-dimension-md} {
+    align-items: center;
+    flex-direction: row;
+    gap: 2.5rem;
+  }
+}
+
+.cta__text {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  @media #{$breakpoint-dimension-sm} {
+    gap: 1rem;
+  }
+}
+
+.cta__title {
+  width: 100%;
+  margin: 0;
+  text-align: left;
+  font-size: 2.25rem;
+  line-height: 2.75rem;
+  letter-spacing: -0.03rem;
+  font-weight: 400;
+  color: var(--color_fg_bold);
+  font-variant-numeric: lining-nums proportional-nums;
+  font-style: normal;
+
+  :global(html[lang="ja"]) & {
+    @include LocaleLineHeight("ja", 2.25rem);
+  }
+
+  @media #{$breakpoint-dimension-sm} {
+    font-size: 2.5rem;
+    line-height: 3rem;
+    letter-spacing: -0.08rem;
+
+    :global(html[lang="ja"]) & {
+      @include LocaleLineHeight("ja", 2.5rem);
+    }
+  }
+}
+
+.cta__description {
+  color: var(--color_fg_default);
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 400;
+
+  :global(html[lang="ja"]) & {
+    @include LocaleLineHeight("ja", 1rem);
+  }
+
+  @media #{$breakpoint-dimension-sm} {
+    max-width: 40rem;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    letter-spacing: 0.01rem;
+
+    :global(html[lang="ja"]) & {
+      @include LocaleLineHeight("ja", 1.25rem);
+    }
+  }
+
+  @media #{$breakpoint-dimension-md} {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    letter-spacing: 0.1px;
+
+    :global(html[lang="ja"]) & {
+      @include LocaleLineHeight("ja", 1.25rem);
+    }
+  }
+}
+
+.cta__media {
+  position: relative;
+  grid-column: 1 / -1;
+  align-self: center;
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2.4rem;
+
+  overflow: hidden;
+
+  width: 100%;
+
+  background-size: 100%;
+
+  aspect-ratio: 281 / 547;
+
+  :global(html[lang="en"][data-theme="light"]) & {
+    background-image: url("/images/mobile.en.light.auth0-flow.svg");
+  }
+  :global(html[lang="en"][data-theme="dark"]) & {
+    background-image: url("/images/mobile.en.dark.auth0-flow.svg");
+  }
+  :global(html[lang="ja"][data-theme="light"]) & {
+    background-image: url("/images/mobile.ja.light.auth0-flow.svg");
+  }
+  :global(html[lang="ja"][data-theme="dark"]) & {
+    background-image: url("/images/mobile.ja.dark.auth0-flow.svg");
+  }
+
+  :global(html[lang="en"][data-theme="system-light"]) & {
+    background-image: url("/images/mobile.en.light.auth0-flow.svg");
+  }
+  :global(html[lang="en"][data-theme="system-dark"]) & {
+    background-image: url("/images/mobile.en.dark.auth0-flow.svg");
+  }
+  :global(html[lang="ja"][data-theme="system-light"]) & {
+    background-image: url("/images/mobile.ja.light.auth0-flow.svg");
+  }
+  :global(html[lang="ja"][data-theme="system-dark"]) & {
+    background-image: url("/images/mobile.ja.dark.auth0-flow.svg");
+  }
+
+  @media #{$breakpoint-dimension-sm} {
+    aspect-ratio: 672 / 251;
+
+    :global(html[lang="en"][data-theme="light"]) & {
+      background-image: url("/images/tablet.en.light.auth0-flow.svg");
+    }
+    :global(html[lang="en"][data-theme="dark"]) & {
+      background-image: url("/images/tablet.en.dark.auth0-flow.svg");
+    }
+    :global(html[lang="ja"][data-theme="light"]) & {
+      background-image: url("/images/tablet.ja.light.auth0-flow.svg");
+    }
+    :global(html[lang="ja"][data-theme="dark"]) & {
+      background-image: url("/images/tablet.ja.dark.auth0-flow.svg");
+    }
+
+    :global(html[lang="en"][data-theme="system-light"]) & {
+      background-image: url("/images/tablet.en.light.auth0-flow.svg");
+    }
+    :global(html[lang="en"][data-theme="system-dark"]) & {
+      background-image: url("/images/tablet.en.dark.auth0-flow.svg");
+    }
+    :global(html[lang="ja"][data-theme="system-light"]) & {
+      background-image: url("/images/tablet.ja.light.auth0-flow.svg");
+    }
+    :global(html[lang="ja"][data-theme="system-dark"]) & {
+      background-image: url("/images/tablet.ja.dark.auth0-flow.svg");
+    }
+  }
+
+  @media #{$breakpoint-dimension-md} {
+    aspect-ratio: 3216 / 861;
+
+    :global(html[lang="en"][data-theme="light"]) & {
+      background-image: url("/images/en.light.auth0-flow.png");
+    }
+    :global(html[lang="en"][data-theme="dark"]) & {
+      background-image: url("/images/en.dark.auth0-flow.png");
+    }
+    :global(html[lang="ja"][data-theme="light"]) & {
+      background-image: url("/images/ja.light.auth0-flow.png");
+    }
+    :global(html[lang="ja"][data-theme="dark"]) & {
+      background-image: url("/images/ja.dark.auth0-flow.png");
+    }
+
+    :global(html[lang="en"][data-theme="system-light"]) & {
+      background-image: url("/images/en.light.auth0-flow.png");
+    }
+    :global(html[lang="en"][data-theme="system-dark"]) & {
+      background-image: url("/images/en.dark.auth0-flow.png");
+    }
+    :global(html[lang="ja"][data-theme="system-light"]) & {
+      background-image: url("/images/ja.light.auth0-flow.png");
+    }
+    :global(html[lang="ja"][data-theme="system-dark"]) & {
+      background-image: url("/images/ja.dark.auth0-flow.png");
+    }
+  }
+}
+
+.button {
+  display: flex;
+  padding: 1rem 2rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+
+  border: 1px solid var(--color_border_button_outline);
+  border-radius: 0.375rem;
+  background: transparent;
+  backdrop-filter: blur(1.5rem);
+
+  color: var(--color_fg_on_button_outline);
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+
+  width: 100%;
+
+  :global(html[lang="ja"]) & {
+    @include LocaleLineHeight("ja", 1rem);
+  }
+
+  &:focus-visible {
+    outline: solid 1px var(--color_border_focus);
+    outline-offset: 0.125rem;
+    border-radius: 0.125rem;
+  }
+
+  @media #{$breakpoint-dimension-sm} {
+    width: fit-content;
+  }
+}
+
+.button__arrow {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 0.75rem;
+  width: 0.75rem;
+
+  svg {
+    height: 0.75rem;
+    width: 0.75rem;
+
+    path {
+      fill: var(--color_fg_on_button_outline);
+    }
+  }
+
+  @media #{$breakpoint-dimension-sm} {
+    height: 1rem;
+    width: 1rem;
+
+    svg {
+      height: 0.875rem;
+      width: 0.875rem;
+    }
+  }
+
+  &[data-rotation="true"] {
+    animation: rotate 2s linear infinite;
+  }
+}

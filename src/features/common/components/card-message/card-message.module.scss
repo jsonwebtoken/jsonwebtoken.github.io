@@ -1,0 +1,23 @@
+@use "@/libs/theme/styles/variables" as *;
+@use "@/libs/theme/styles/mixins" as *;
+
+.span,
+.p,
+.code {
+  font-size: 0.75rem;
+  line-height: 1.125rem;
+}
+
+.strong {
+  font-weight: 600;
+}
+
+.a {
+  text-decoration: underline;
+
+  &:focus-visible {
+    outline: solid 1px var(--color_border_focus);
+    outline-offset: 0.125rem;
+    border-radius: 0.125rem;
+  }
+}

@@ -1,0 +1,152 @@
+@use "@/libs/theme/styles/variables" as *;
+
+.picker {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.5rem;
+  height: 2rem;
+
+  @media #{$breakpoint-dimension-sm} {
+    justify-content: center;
+  }
+}
+
+.container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  align-self: flex-end;
+  height: 100%;
+  width: fit-content;
+  flex-shrink: 0;
+
+  @media #{$breakpoint-dimension-sm} {
+    align-self: unset;
+  }
+}
+
+.button {
+  color: var(--color_fg_on_button);
+  background-color: var(--color_bg_button);
+  font-size: 0.75rem;
+  line-height: 1.25rem;
+  letter-spacing: 0.1px;
+  outline: none;
+  border: 1px solid var(--color_border_inverse_static);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: solid 1px var(--color_border_focus);
+    outline-offset: 0.125rem;
+    border-radius: 0.125rem;
+  }
+
+  @media only screen and (min-width: 375px) {
+    font-size: 0.875rem;
+    line-height: 1.375rem;
+  }
+}
+
+.label {
+  color: var(--color_fg_default);
+  font-size: 0.875rem;
+  line-height: 1.375rem;
+  font-weight: 500;
+  letter-spacing: 0.1px;
+}
+
+.select {
+  display: flex;
+  padding: 0.125rem 1.75rem 0.125rem 0.875rem;
+  align-items: center;
+  gap: 0.75rem;
+  align-self: stretch;
+
+  border-radius: 0.25rem;
+  border: 1px solid var(--color_border_button);
+
+  color: var(--color_fg_default);
+  font-variant-numeric: slashed-zero;
+  font-feature-settings:
+    "clig" off,
+    "liga" off;
+  font-size: 0.875rem;
+  line-height: 1.375rem;
+  letter-spacing: 0.2px;
+  appearance: none;
+  z-index: 2;
+  background-color: transparent;
+
+  @media #{$breakpoint-dimension-sm} {
+    font-size: 0.875rem;
+    padding: 0.25rem 2rem 0.25rem 1rem;
+  }
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  right: 0.5rem;
+  transform: translateY(-40%);
+
+  z-index: 1;
+
+  svg {
+    height: 1rem;
+    width: 1rem;
+
+    path {
+      fill: var(--color_fg_default);
+    }
+  }
+
+  @media #{$breakpoint-dimension-sm} {
+    transform: translateY(-45%);
+
+    svg {
+      height: 1.25rem;
+      width: 1.25rem;
+    }
+  }
+}
+
+.closeButton {
+  display: flex;
+
+  height: 1rem;
+  width: 1rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+
+  color: var(--color_fg_default);
+  font-variant-numeric: slashed-zero;
+  font-feature-settings:
+    "clig" off,
+    "liga" off;
+  font-size: 1.5rem;
+
+  line-height: 1.375rem;
+  letter-spacing: 0.2px;
+  appearance: none;
+  z-index: 2;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  cursor: pointer;
+
+  span {
+    display: inline-block;
+    transform: rotate(45deg);
+  }
+
+  &:focus-visible {
+    outline: solid 1px var(--color_border_focus);
+    outline-offset: 0.125rem;
+    border-radius: 0.125rem;
+  }
+}

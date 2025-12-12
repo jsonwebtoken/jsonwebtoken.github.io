@@ -1,0 +1,161 @@
+@use "@/libs/theme/styles/variables" as *;
+
+.container {
+  grid-column: span 1;
+  display: flex;
+  flex-direction: column;
+
+  border-radius: 1rem;
+  border: 1px solid var(--color_border_bold);
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  color: var(--color_fg_bold);
+
+  font-size: 1rem;
+  font-style: normal;
+  line-height: 1.25rem;
+
+  border-bottom: 1px solid var(--color_border_bold);
+  background: var(--color_bg_layer_alternate);
+}
+
+.logo {
+  border: 1px solid var(--color_border_bold);
+  border-radius: 50%;
+  padding: 0.25rem;
+  background: white;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--color_border_bold);
+  background: var(--color_bg_layer_alternate);
+}
+
+.minVersion {
+  grid-column: 1 / -1;
+  background-color: var(--color_bg_state_caution_subtle);
+  color: var(--color_fg_on_state_caution_subtle);
+  padding: 0.5rem 1.5rem;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.2px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.minVersion__resourceLabel {
+  text-transform: none;
+  text-decoration: underline;
+  letter-spacing: 0;
+}
+
+.config,
+.algs {
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+  gap: 0.75rem;
+
+  & li {
+    height: 1.5rem;
+
+    code {
+      padding: 1px 0.125rem;
+      border-radius: 0.125rem;
+      color: var(--color_code_dark_blue);
+      background-color: var(--color_bg_layer_bold);
+      font-size: 0.875rem;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 1.25rem; /* 142.857% */
+    }
+  }
+}
+
+.listItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color_fg_default);
+}
+
+.metadata {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+
+  border-bottom: 1px solid var(--color_border_bold);
+  background: var(--color_bg_layer_alternate);
+
+  color: var(--color_fg_default);
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 140%;
+  letter-spacing: 0.18px;
+  white-space: nowrap;
+
+  svg {
+    path {
+      fill: var(--color_fg_default);
+    }
+  }
+}
+
+.author {
+  display: flex;
+}
+
+.author__name {
+  display: flex;
+  align-items: center;
+  line-height: 0;
+  gap: 0.25rem;
+}
+
+.repo {
+  display: flex;
+  gap: 1rem;
+}
+
+.repo__stars {
+  display: flex;
+  align-items: center;
+  line-height: 0;
+  gap: 0.25rem;
+}
+
+.repo__url {
+  display: flex;
+  align-items: center;
+  line-height: 0;
+  gap: 0.25rem;
+}
+
+.command {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+
+  background: var(--color_bg_code-editor);
+  color: var(--color_code_inverse);
+  text-wrap: wrap;
+  overflow: hidden;
+  word-break: break-word;
+
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.25rem;
+}

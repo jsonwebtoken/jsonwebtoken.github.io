@@ -1,0 +1,21 @@
+name: Vercel Preview Community Deployment
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.PREVIEW_VERCEL_PROJECT_ID }}
+on:
+  push:
+    branches:
+      - production
+jobs:
+  Deploy-Production:
+    runs-on:
+      labels: ubuntu-latest
+    steps:
+      - name: Checkout the Codebase
+        uses: actions/checkout@v4
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+      - name: Deploy on Vercel
+        id: deploy
+        run: |
+          vercel deploy --prod --token=${{ secrets.VERCEL_ACCESS_TOKEN }}

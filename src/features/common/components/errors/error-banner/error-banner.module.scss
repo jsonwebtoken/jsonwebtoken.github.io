@@ -1,0 +1,102 @@
+@use "@/libs/theme/styles/variables" as *;
+@use "@/libs/theme/styles/mixins" as *;
+
+.banner {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  z-index: 1;
+}
+
+.banner__header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.banner__title {
+  width: 100%;
+  margin: 0;
+  color: var(--color_fg_default);
+  font-size: 2rem;
+  line-height: 2.5rem;
+  letter-spacing: -0.8px;
+
+  :global(html[lang="ja"]) & {
+    @include LocaleLineHeight("ja", 2rem);
+  }
+
+  @media #{$breakpoint-dimension-sm} {
+    font-size: 2.25rem;
+    line-height: 2.75rem;
+
+    :global(html[lang="ja"]) & {
+      @include LocaleLineHeight("ja", 2.25rem);
+    }
+  }
+}
+
+.banner__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  @media #{$breakpoint-dimension-xs} {
+    flex-direction: row;
+  }
+}
+
+.banner__action {
+  width: fit-content;
+}
+
+.banner__actionLabel {
+  display: flex;
+  padding: 0.75rem 2rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  align-self: stretch;
+
+  border-radius: 0.375rem;
+  background: var(--color_bg_button_primary);
+  color: var(--color_fg_on_button_primary);
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+
+  :global(html[lang="ja"]) & {
+    @include LocaleLineHeight("ja", 1rem);
+  }
+
+  @media #{$breakpoint-dimension-sm} {
+    width: fit-content;
+  }
+}
+
+.banner__actionIcon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 0.75rem;
+  width: 0.75rem;
+
+  svg {
+    height: 0.75rem;
+    width: 0.75rem;
+    fill: var(--color_fg_on_button_primary);
+  }
+
+  @media #{$breakpoint-dimension-sm} {
+    height: 1rem;
+    width: 1rem;
+
+    svg {
+      height: 0.875rem;
+      width: 0.875rem;
+    }
+  }
+}

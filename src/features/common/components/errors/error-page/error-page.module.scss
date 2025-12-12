@@ -1,0 +1,26 @@
+@use "@/libs/theme/styles/variables" as *;
+@use "@/libs/theme/styles/mixins" as *;
+
+.header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+
+  z-index: 9001;
+  backdrop-filter: blur(32px);
+}
+
+.main {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  margin-top: $main-nav-height-mobile;
+
+  @media #{$breakpoint-dimension-md} {
+    margin-top: $main-nav-height;
+    padding: 2rem 0;
+  }
+}

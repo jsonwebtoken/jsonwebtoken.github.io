@@ -1,0 +1,30 @@
+@use "@/libs/theme/styles/variables" as *;
+@use "@/libs/theme/styles/mixins" as *;
+
+.content {
+  @include InnerContentFlex;
+  position: relative;
+  max-width: $article-max-width;
+
+  background: linear-gradient(290deg, #f4d -18.75%, #3f59e4 98.79%);
+
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin: 1rem auto 2rem auto;
+  color: $Neutral0;
+  font-size: 1rem;
+  line-height: 1.25rem;
+}
+
+.copy {
+  font-weight: 400;
+
+  & strong {
+    font-weight: 500;
+  }
+
+  & a {
+    font-weight: 500;
+    text-decoration: underline;
+  }
+}

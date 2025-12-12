@@ -1,0 +1,16 @@
+.container {
+  text-align: center;
+  align-self: center;
+  justify-self: center;
+  margin: 2.4rem auto;
+  cursor: pointer;
+}
+
+.image {
+  width: 50%;
+  margin-bottom: 2rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}

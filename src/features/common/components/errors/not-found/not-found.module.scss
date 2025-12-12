@@ -1,0 +1,94 @@
+@use "@/libs/theme/styles/variables" as *;
+@use "@/libs/theme/styles/mixins" as *;
+
+.container {
+  @include Container;
+  position: relative;
+  overflow: hidden;
+  background: var(--color_bg_auth0-cta);
+
+  &:before {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    content: "";
+    width: 100%;
+    height: 100%;
+
+    background: url("https://cdn.auth0.com/website/passkeys-playground/assets/cta-mobile.png")
+      no-repeat;
+    background-size: cover;
+  }
+
+  @media only screen and (min-width: 480px) {
+    &:before {
+      background: url("https://cdn.auth0.com/website/passkeys-playground/assets/cta-mobile.png")
+        no-repeat;
+      background-size: cover;
+    }
+  }
+
+  @media #{$breakpoint-dimension-sm} {
+    &:before {
+      background: url("/images/auth0-background.svg") no-repeat right center;
+      background-size: cover;
+    }
+  }
+
+  @media #{$breakpoint-dimension-md} {
+    background: unset;
+    min-height: 40rem;
+
+    &:before {
+      background: none;
+    }
+
+    &:after {
+      display: none;
+      background: none;
+    }
+  }
+}
+
+.wrapper {
+  @include ExtendedGrid;
+  position: relative;
+  justify-content: center;
+
+  border-radius: 0;
+  overflow: hidden;
+
+  @media #{$breakpoint-dimension-xl} {
+    border-radius: 1.5rem;
+  }
+}
+
+.content {
+  @include InnerContentFlex;
+  position: relative;
+  padding: 3rem 0 3rem 0;
+
+  @media #{$breakpoint-dimension-xs} {
+    column-gap: 0;
+  }
+
+  @media #{$breakpoint-dimension-md} {
+    background: var(--color_bg_auth0-cta);
+    padding: 2rem 2.5rem;
+    border-radius: 1rem;
+    overflow: hidden;
+
+    &:before {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      content: "";
+      width: 100%;
+      height: 100%;
+      background-size: contain;
+
+      background: url("/images/auth0-background.svg") no-repeat right bottom;
+      background-size: cover;
+    }
+  }
+}

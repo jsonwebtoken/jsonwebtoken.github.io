@@ -1,0 +1,32 @@
+@use "@/libs/theme/styles/variables" as *;
+@use "@/libs/theme/styles/mixins" as *;
+
+.content {
+  @include InnerContentFlex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 0.5rem;
+
+  color: var(--functional-gray-400);
+  font-size: 0.75rem;
+}
+
+.feedback__link {
+  &:hover,
+  &:active {
+    opacity: 1;
+    color: var(--color_fg_link_primary);
+  }
+
+  &:focus-visible {
+    color: var(--color_fg_link_primary);
+    outline: solid 1px var(--color_border_focus);
+    outline-offset: 0.125rem;
+    border-radius: 0.125rem;
+  }
+}
+
+.feedback__spacer {
+  font-size: 0.625rem;
+}
