@@ -71,6 +71,7 @@ export const ShellComponent: React.FC<ShellComponentProps> = ({
   }, [handleConsentChange]);
 
   useEffect(() => {
+    console.log("Shell component mounted!")
     /**
      * At some point, the original jwt.io website used to store tokens and keys in LocalStorage
      * as a feature for people to see the last JWT they used.
@@ -103,7 +104,7 @@ export const ShellComponent: React.FC<ShellComponentProps> = ({
       )}
       data-theme={themeCode}
     >
-      <OnetrustScriptComponent
+      {/* <OnetrustScriptComponent
         id={CLIENT_CONFIG.DEVELOPERS_DATA_DOMAIN_ID_ONETRUST}
       />
       <AdobeAnalyticsScript />
@@ -117,7 +118,7 @@ export const ShellComponent: React.FC<ShellComponentProps> = ({
             <AbTestingScriptComponent />
           </>
         )}
-      <ThemeDetectorComponent />
+      <ThemeDetectorComponent /> */}
     </body>
   );
 };

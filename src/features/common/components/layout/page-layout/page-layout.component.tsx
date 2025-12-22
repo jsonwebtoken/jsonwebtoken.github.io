@@ -67,7 +67,7 @@ export const PageLayoutComponent: React.FC<LayoutComponentProps> = ({
           }}
         />
       </head>
-      {/* <ShellComponent languageCode={languageCode} themeCode={themeCode}>
+      <ShellComponent languageCode={languageCode} themeCode={themeCode}>
         <PageHeaderComponent
           languageCode={languageCode}
           themeCode={themeCode}
@@ -77,7 +77,7 @@ export const PageLayoutComponent: React.FC<LayoutComponentProps> = ({
           languageCode={languageCode}
           dictionary={layoutDictionary.footer}
         />
-      </ShellComponent> */}
+      </ShellComponent>
     </html>
   );
 };
