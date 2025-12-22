@@ -56,11 +56,11 @@ export const ShellComponent: React.FC<ShellComponentProps> = ({
       if (e.data === COOKIE_CONSENT_STATUS.WAITING_FOR_CONSENT) {
         // eslint-disable-next-line new-cap
         window.OneTrust.OnConsentChanged(() =>
-          setConsentLevel(window.OnetrustActiveGroups),
+          setConsentLevel(window.OnetrustActiveGroups)
         );
       }
     },
-    [consentLevel],
+    [consentLevel]
   );
 
   useEffect(() => {
@@ -71,7 +71,7 @@ export const ShellComponent: React.FC<ShellComponentProps> = ({
   }, [handleConsentChange]);
 
   useEffect(() => {
-    console.log("Shell component mounted!")
+    console.log("Shell component mounted!");
     /**
      * At some point, the original jwt.io website used to store tokens and keys in LocalStorage
      * as a feature for people to see the last JWT they used.
@@ -100,14 +100,14 @@ export const ShellComponent: React.FC<ShellComponentProps> = ({
         PrimaryFont.variable,
         SecondaryFont.variable,
         JapaneseFont.variable,
-        MonoFont.variable,
+        MonoFont.variable
       )}
       data-theme={themeCode}
     >
       {/* <OnetrustScriptComponent
         id={CLIENT_CONFIG.DEVELOPERS_DATA_DOMAIN_ID_ONETRUST}
-      />
-      <AdobeAnalyticsScript /> */}
+      /> */}
+      <AdobeAnalyticsScript />
       {children}
       {/* {consentLevel &&
         consentLevel.includes(COOKIE_LEVELS.NECESSARY.toString()) &&
@@ -118,7 +118,8 @@ export const ShellComponent: React.FC<ShellComponentProps> = ({
             <AbTestingScriptComponent />
           </>
         )}
-      <ThemeDetectorComponent /> */}
+       */}
+      <ThemeDetectorComponent />
     </body>
   );
 };
