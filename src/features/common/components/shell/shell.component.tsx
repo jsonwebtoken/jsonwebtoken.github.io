@@ -113,7 +113,7 @@ export const ShellComponent: React.FC<ShellComponentProps> = ({
         process.env.NEXT_PUBLIC_IS_PROD &&
         GTM_ID && (
           <>
-            <GoogleTagManager gtmId={GTM_ID} />
+            {/* <GoogleTagManager gtmId={GTM_ID} /> */}
             <AbTestingScriptComponent />
           </>
         )}

@@ -8,6 +8,7 @@ const dataLayerInfo = {
 
 export const AbTestingScriptComponent: React.FC = () => {
   useEffect(() => {
+    console.log("AB TESTING SCRIPT!")
     if (typeof window === "undefined") {
       return;
     }
