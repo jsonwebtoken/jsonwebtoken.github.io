@@ -107,9 +107,9 @@ export const ShellComponent: React.FC<ShellComponentProps> = ({
       {/* <OnetrustScriptComponent
         id={CLIENT_CONFIG.DEVELOPERS_DATA_DOMAIN_ID_ONETRUST}
       />
-      <AdobeAnalyticsScript />
+      <AdobeAnalyticsScript /> */}
       {children}
-      {consentLevel &&
+      {/* {consentLevel &&
         consentLevel.includes(COOKIE_LEVELS.NECESSARY.toString()) &&
         process.env.NEXT_PUBLIC_IS_PROD &&
         GTM_ID && (
