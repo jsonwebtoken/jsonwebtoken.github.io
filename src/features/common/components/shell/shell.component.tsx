@@ -104,9 +104,9 @@ export const ShellComponent: React.FC<ShellComponentProps> = ({
       )}
       data-theme={themeCode}
     >
-      {/* <OnetrustScriptComponent
+      <OnetrustScriptComponent
         id={CLIENT_CONFIG.DEVELOPERS_DATA_DOMAIN_ID_ONETRUST}
-      /> */}
+      />
       <AdobeAnalyticsScript />
       {children}
       {/* {consentLevel &&
