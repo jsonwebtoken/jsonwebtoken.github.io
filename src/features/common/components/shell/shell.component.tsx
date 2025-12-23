@@ -114,7 +114,7 @@ export const ShellComponent: React.FC<ShellComponentProps> = ({
         GTM_ID && (
           <>
             <GoogleTagManager gtmId={GTM_ID} />
-            {/* <AbTestingScriptComponent /> */}
+            <AbTestingScriptComponent />
           </>
         )}
       <ThemeDetectorComponent />
