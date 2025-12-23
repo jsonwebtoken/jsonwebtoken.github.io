@@ -10,11 +10,6 @@ import { AsymmetricKeyFormatValues } from "@/features/common/values/asymmetric-k
 import { JwtSignatureStatusValues } from "@/features/common/values/jwt-signature-status.values";
 import { DecoderInputsModel } from "@/features/debugger/models/decoder-inputs.model";
 
-export enum HashWarningVisibilityValues {
-  VISIBLE = "VISIBLE",
-  HIDDEN = "HIDDEN",
-}
-
 export const DEFAULT_ALG_TYPE = "HS";
 export const DEFAULT_ALG_SIZE = 256;
 export const DEFAULT_ALG = `${DEFAULT_ALG_TYPE}${DEFAULT_ALG_SIZE}`;
@@ -63,7 +58,6 @@ export type DecoderStoreState = {
   decodingErrors: string[] | null;
   signatureWarnings: string[] | null;
   verificationInputErrors: string[] | null;
-  useHashWarningVisibility: HashWarningVisibilityValues;
 };
 
 type DecoderStoreActions = {
@@ -79,8 +73,6 @@ type DecoderStoreActions = {
   ) => void;
   resetControlledSymmetricSecretKey: () => void;
   resetControlledAsymmetricPublicKey: () => void;
-  showUseHashWarning: () => void;
-  hideUseHashWarning: () => void;
   loadDecoderInputs: (params: DecoderInputsModel) => void;
 };
 
@@ -100,7 +92,6 @@ export const initialState: DecoderStoreState = {
   controlledSymmetricSecretKey: null,
   controlledAsymmetricPublicKey: null,
   verificationInputErrors: null,
-  useHashWarningVisibility: HashWarningVisibilityValues.HIDDEN,
 };
 
 export type DecoderStore = DecoderStoreState & DecoderStoreActions;
@@ -204,16 +195,6 @@ export const useDecoderStore = create<DecoderStore>()(
           format: state.asymmetricPublicKeyFormat,
         },
       })),
-    showUseHashWarning: () => {
-      set({
-        useHashWarningVisibility: HashWarningVisibilityValues.VISIBLE,
-      });
-    },
-    hideUseHashWarning: () => {
-      set({
-        useHashWarningVisibility: HashWarningVisibilityValues.HIDDEN,
-      });
-    },
     loadDecoderInputs: async (params) => {
       const update = await TokenDecoderService.loadDecoderInputs(params);
 

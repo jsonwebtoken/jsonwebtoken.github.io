@@ -26,6 +26,7 @@ import {
 import { ThemeDetectorComponent } from "@/features/common/components/theme-detector/theme-detector.component";
 import { ThemeCookieValues } from "@/features/common/values/theme.values";
 import { AbTestingScriptComponent } from "@/features/analytics/components/ab-testing-script/ab-testing-script.component";
+import AdobeAnalyticsScript from "@/features/analytics/components/adobe-analytics-script.component";
 
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 
@@ -55,11 +56,11 @@ export const ShellComponent: React.FC<ShellComponentProps> = ({
       if (e.data === COOKIE_CONSENT_STATUS.WAITING_FOR_CONSENT) {
         // eslint-disable-next-line new-cap
         window.OneTrust.OnConsentChanged(() =>
-          setConsentLevel(window.OnetrustActiveGroups),
+          setConsentLevel(window.OnetrustActiveGroups)
         );
       }
     },
-    [consentLevel],
+    [consentLevel]
   );
 
   useEffect(() => {
@@ -98,13 +99,14 @@ export const ShellComponent: React.FC<ShellComponentProps> = ({
         PrimaryFont.variable,
         SecondaryFont.variable,
         JapaneseFont.variable,
-        MonoFont.variable,
+        MonoFont.variable
       )}
       data-theme={themeCode}
     >
       <OnetrustScriptComponent
         id={CLIENT_CONFIG.DEVELOPERS_DATA_DOMAIN_ID_ONETRUST}
       />
+      <AdobeAnalyticsScript />
       {children}
       {consentLevel &&
         consentLevel.includes(COOKIE_LEVELS.NECESSARY.toString()) &&

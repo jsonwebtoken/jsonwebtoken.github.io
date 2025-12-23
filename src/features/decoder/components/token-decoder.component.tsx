@@ -8,9 +8,7 @@ import { SecretKeyInputComponent } from "@/features/decoder/components/secret-ke
 import { useDecoderStore } from "@/features/decoder/services/decoder.store";
 import { useRouter } from "next/navigation";
 import {
-  SupportedTokenHashParamValues,
-  WARNING_PARAM_KEY,
-  WARNING_PARAM_VALUE,
+  SupportedTokenHashParamValues
 } from "@/libs/config/project.constants";
 import { HomeDictionaryModel } from "@/features/localization/models/home-dictionary.model";
 import { ClaimDescriptionVisibilityValues } from "@/features/common/values/claim-description-visibility.values";
@@ -50,12 +48,10 @@ export const TokenDecoderComponent: React.FC<TokenDecoderComponentProps> = ({
 
   const loadDecoderInputs = useDecoderStore((state) => state.loadDecoderInputs);
   const handleJwtChange$ = useDecoderStore((state) => state.handleJwtChange);
-  const showUseHashWarning$ = useDecoderStore(
-    (state) => state.showUseHashWarning
-  );
 
   useEffect(() => {
     const handleHashChange = () => {
+      console.count("hash handler fired")
       const hash = window.location.hash.substring(1);
 
       if (hash.includes("debugger-io?token=")) {
@@ -72,9 +68,7 @@ export const TokenDecoderComponent: React.FC<TokenDecoderComponentProps> = ({
         }
 
         const newUrl = `${currentUrl}#${SupportedTokenHashParamValues.TOKEN}=${token}`;
-
         window.location.replace(newUrl);
-
         return;
       }
 
@@ -82,8 +76,9 @@ export const TokenDecoderComponent: React.FC<TokenDecoderComponentProps> = ({
         return;
       }
 
-      const hashParams = new URLSearchParams(hash);
+      
 
+      const hashParams = new URLSearchParams(hash);
       Object.values(SupportedTokenHashParamValues).forEach((hashParamKey) => {
         const token = hashParams.get(hashParamKey);
 
@@ -93,42 +88,14 @@ export const TokenDecoderComponent: React.FC<TokenDecoderComponentProps> = ({
       });
     };
 
-    const handleWarning = () => {
-      const search = window.location.search;
-
-      const searchParams = new URLSearchParams(search);
-      const warning = searchParams.get(WARNING_PARAM_KEY);
-
-      if (warning === WARNING_PARAM_VALUE) {
-        showUseHashWarning$();
-
-        searchParams.delete(WARNING_PARAM_KEY);
-
-        const currentUrl = window.location.href.split("?")[0];
-
-        let newUrl = `${currentUrl}`;
-
-        if (searchParams.size > 0) {
-          newUrl += `?${searchParams.toString()}`;
-        }
-
-        if (window.location.hash) {
-          newUrl += window.location.hash;
-        }
-
-        router.push(newUrl);
-      }
-    };
-
     window.addEventListener("hashchange", handleHashChange);
-
+    
     handleHashChange();
-    handleWarning();
 
     return () => {
       window.removeEventListener("hashchange", handleHashChange);
     };
-  }, [handleJwtChange$, router, showUseHashWarning$]);
+  }, [handleJwtChange$, router]);
 
   useEffect(() => {
     if (isMounted.current) {
