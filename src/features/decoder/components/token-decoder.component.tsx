@@ -51,7 +51,6 @@ export const TokenDecoderComponent: React.FC<TokenDecoderComponentProps> = ({
 
   useEffect(() => {
     const handleHashChange = () => {
-      console.count("hash handler fired")
       const hash = window.location.hash.substring(1);
 
       if (hash.includes("debugger-io?token=")) {

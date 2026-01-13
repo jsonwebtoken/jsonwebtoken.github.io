@@ -9,7 +9,11 @@ export function SafeGTM({ gtmId}: { gtmId: string}) {
     const [canLoad, setCanLoad] = useState(false)
 
     useEffect(() => {
-        /* const hash = window.location.hash
+        /** GTM can make the app crash when large tokens are sent via hash
+         * This code deletes temporaly the hash, loads the GTM and then puts it 
+         * back again
+        */
+        const hash = window.location.hash
         const hasLargeHash = hash.length > MAX_HASH_LENGTH
         let originalHash = ""
         if(hasLargeHash) {
@@ -18,7 +22,7 @@ export function SafeGTM({ gtmId}: { gtmId: string}) {
             setTimeout(() => {
                 window.location.hash = originalHash
             }, 500)
-        } */
+        }
         setCanLoad(true)
     }, [])
 
