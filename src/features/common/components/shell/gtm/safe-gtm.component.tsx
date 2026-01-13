@@ -3,7 +3,7 @@
 import { GoogleTagManager } from "@next/third-parties/google"
 import { useEffect, useState } from "react";
 
-const MAX_URL_LENGTH = 6000;
+const MAX_URL_LENGTH = 4000;
 
 export function SafeGTM({ gtmId}: { gtmId: string}) {
     const [canLoad, setCanLoad] = useState(false)
