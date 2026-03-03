@@ -12,6 +12,7 @@ import { sitePaths } from "@/features/seo/site-tree";
 import { createUrlPath, getPathnameSegments } from "@/libs/utils/path.utils";
 import { SiteBrandComponent } from "@/features/common/components/site-brand/site-brand.component";
 import { ThemeCookieValues } from "@/features/common/values/theme.values";
+import { RibbonComponent } from "../../bars/ribbon/ribbon.component";
 
 interface MobileHeaderComponentProps {
   themeCode: ThemeCookieValues;
@@ -78,14 +79,21 @@ export const MobileHeaderComponent: React.FC<MobileHeaderComponentProps> = ({
 
   return (
     <>
-        <BoxComponent
-          contentAs="nav"
-          containerClassName={styles.container}
-          wrapperClassName={styles.wrapper}
-          contentClassName={styles.content}
-        >
+      <BoxComponent
+        contentAs="nav"
+        containerClassName={styles.container}
+        wrapperClassName={styles.wrapper}
+        contentClassName={styles.content}
+      >
+        <div className={styles.ribbonContainer}>
+          <RibbonComponent dictionary={dictionary.ribbon} />
+        </div>
+        <div className={styles.outerNavContainer}>
           <div className={styles.logo}>
-            <SiteBrandComponent path={languagePathPrefix} languageCode={languageCode}/>
+            <SiteBrandComponent
+              path={languagePathPrefix}
+              languageCode={languageCode}
+            />
           </div>
           <button
             className={styles.burgerIconWrapper}
@@ -102,7 +110,8 @@ export const MobileHeaderComponent: React.FC<MobileHeaderComponentProps> = ({
               aria-hidden={mobileMenuState === MobileMenuStateValues.CLOSED}
             />
           </button>
-        </BoxComponent>
+        </div>
+      </BoxComponent>
       <section
         className={styles.menu}
         aria-hidden={mobileMenuState === MobileMenuStateValues.CLOSED}
