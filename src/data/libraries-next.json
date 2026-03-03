@@ -2468,7 +2468,7 @@
         "installCommandMarkdown": [
           "luarocks install lua-resty-jwt"
         ],
-        "stars": 505
+        "stars": 155
       }
     ]
   },
