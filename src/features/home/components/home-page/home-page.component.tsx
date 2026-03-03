@@ -1,6 +1,6 @@
 import React from "react";
+import styles from "./home-page.module.scss"
 import { HeroComponent } from "@/features/common/components/hero/hero.component";
-import { Auth0CtaComponent } from "@/features/common/components/auth0-cta/auth0-cta.component";
 import {
   getHomeDictionary,
   getJwtDictionary,
@@ -126,6 +126,7 @@ export const HomePageComponent: React.FC<HomePageComponentProps> = ({
           },
         ]}
       />
+      <h1 className={styles.visually_hidden}>{homeDictionary.metadata.title}</h1>
       <HeroComponent
         languageCode={languageCode}
         dictionary={homeDictionary.info}
