@@ -25,6 +25,7 @@ import {
 } from "@/features/common/values/theme.values";
 import { ThemeModel } from "@/features/common/models/theme.model";
 import { savePreferredThemeInCookie } from "@/features/themes/services/theme.client.utils";
+import { RibbonComponent } from "../../bars/ribbon/ribbon.component";
 
 interface HeaderComponentProps {
   themeCode: ThemeCookieValues;
@@ -65,7 +66,7 @@ export const HeaderComponent: React.FC<HeaderComponentProps> = ({
           ),
         };
       }),
-    [dictionary.ribbon.themePicker.options]
+    [dictionary.ribbon.themePicker.options],
   );
 
   const sanitizedThemePickerCodeValue = useMemo(() => {
@@ -76,22 +77,22 @@ export const HeaderComponent: React.FC<HeaderComponentProps> = ({
     dictionary.ribbon.themePicker.options.filter((element) =>
       isSystemThemePreference(themeCode)
         ? isSystemThemePreference(element.code)
-        : element.code === sanitizedThemePickerCodeValue
-    )[0]
+        : element.code === sanitizedThemePickerCodeValue,
+    )[0],
   );
 
   const handleThemeSelection = useCallback(
     async (value: ThemePickerCodeValues) => {
       const themePreference = await savePreferredThemeInCookie(
         value,
-        languageCode
+        languageCode,
       );
 
       if (themePreference) {
         setCurrentTheme(themePreference);
       }
     },
-    [languageCode]
+    [languageCode],
   );
 
   return (
@@ -102,47 +103,52 @@ export const HeaderComponent: React.FC<HeaderComponentProps> = ({
       contentClassName={styles.content}
       aria-label="Main navigation"
     >
-      <div className={styles.brand}>
-        <SiteBrandComponent
-          path={languagePathPrefix}
-          languageCode={languageCode}
-        />
+      <div className={styles.ribbonContainer}>
+        <RibbonComponent dictionary={dictionary.ribbon} />
       </div>
-      <div className={styles.navContainer}>
-        <div className={styles.navTabs}>
-          <ul className={styles.navList}>
-            {dictionary.header.links.map((link) => {
-              const linkPath =
-                languageCode === DEFAULT_LANGUAGE_CODE || link.isExternal
-                  ? link.path
-                  : createUrlPath([languagePathPrefix, link.path]);
-
-              return (
-                <li
-                  className={styles.navList__item}
-                  key={link.label}
-                  data-active={topSegmentPath === link.path}
-                >
-                  <Link
-                    {...(link.isExternal
-                      ? { target: "_blank", rel: "noopener noreferrer" }
-                      : {})}
-                    href={linkPath}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
+      <div className={styles.outerNavContainer}>
+        <div className={styles.brand}>
+          <SiteBrandComponent
+            path={languagePathPrefix}
+            languageCode={languageCode}
+          />
         </div>
-      </div>
-      <div className={styles.actions}>
-        <ThemePickerComponent
-          options={themeOptions}
-          handleSelection={handleThemeSelection}
-          selectedOptionCode={currentTheme.code}
-        />
+        <div className={styles.navContainer}>
+          <div className={styles.navTabs}>
+            <ul className={styles.navList}>
+              {dictionary.header.links.map((link) => {
+                const linkPath =
+                  languageCode === DEFAULT_LANGUAGE_CODE || link.isExternal
+                    ? link.path
+                    : createUrlPath([languagePathPrefix, link.path]);
+
+                return (
+                  <li
+                    className={styles.navList__item}
+                    key={link.label}
+                    data-active={topSegmentPath === link.path}
+                  >
+                    <Link
+                      {...(link.isExternal
+                        ? { target: "_blank", rel: "noopener noreferrer" }
+                        : {})}
+                      href={linkPath}
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </div>
+        <div className={styles.actions}>
+          <ThemePickerComponent
+            options={themeOptions}
+            handleSelection={handleThemeSelection}
+            selectedOptionCode={currentTheme.code}
+          />
+        </div>
       </div>
     </BoxComponent>
   );
