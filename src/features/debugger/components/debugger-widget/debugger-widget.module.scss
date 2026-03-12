@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  padding-bottom: 4rem;
+  padding-bottom: 2rem;
 
   &[data-mode="UNIFIED"] > :nth-child(2) {
     margin-top: -0.5rem;

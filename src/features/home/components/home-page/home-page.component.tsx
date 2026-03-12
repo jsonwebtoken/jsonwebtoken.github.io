@@ -1,6 +1,6 @@
 import React from "react";
+import styles from "./home-page.module.scss"
 import { HeroComponent } from "@/features/common/components/hero/hero.component";
-import { Auth0CtaComponent } from "@/features/common/components/auth0-cta/auth0-cta.component";
 import {
   getHomeDictionary,
   getJwtDictionary,
@@ -8,7 +8,6 @@ import {
 import { AssetsComponent } from "@/features/home/components/assets/assets.component";
 import { EbookComponent } from "@/features/common/components/ebook/ebook.component";
 import { StructuredData } from "@/features/seo/components/structured-data.component";
-import { HeroModalStateValues } from "@/features/home/values/hero-modal-state.values";
 import { ClaimDescriptionVisibilityValues } from "@/features/common/values/claim-description-visibility.values";
 import { DebuggerWidgetComponent } from "@/features/debugger/components/debugger-widget/debugger-widget.component";
 import { getAuth0Dictionary } from "@/features/localization/services/ui-language-dictionary.service";
@@ -19,8 +18,6 @@ interface HomePageComponentProps {
   decodedPayloadInitialTabId: string;
   decodedHeaderDescriptionVisibility: ClaimDescriptionVisibilityValues;
   decodedPayloadDescriptionVisibility: ClaimDescriptionVisibilityValues;
-  jwtInfoState: HeroModalStateValues;
-  jwtWarningState: HeroModalStateValues;
   // debuggerInitialMode: DebuggerModeValues;
 }
 
@@ -30,8 +27,6 @@ export const HomePageComponent: React.FC<HomePageComponentProps> = ({
   decodedPayloadInitialTabId,
   decodedHeaderDescriptionVisibility,
   decodedPayloadDescriptionVisibility,
-  jwtInfoState,
-  jwtWarningState,
   // debuggerInitialMode,
 }) => {
   const homeDictionary = getHomeDictionary(languageCode);
@@ -131,17 +126,10 @@ export const HomePageComponent: React.FC<HomePageComponentProps> = ({
           },
         ]}
       />
+      <h1 className={styles.visually_hidden}>{homeDictionary.metadata.title}</h1>
       <HeroComponent
         languageCode={languageCode}
-        dictionary={homeDictionary.hero}
-        infoBanner={{
-          dictionary: homeDictionary.info,
-          state: jwtInfoState,
-        }}
-        warningBanner={{
-          dictionary: homeDictionary.warning,
-          state: jwtWarningState,
-        }}
+        dictionary={homeDictionary.info}
       />
       <DebuggerWidgetComponent
         languageCode={languageCode}
@@ -161,12 +149,9 @@ export const HomePageComponent: React.FC<HomePageComponentProps> = ({
           dictionary={auth0Dictionary.ebook}
         />
         <AssetsComponent
-          dictionary={jwtDictionary}
+          jwtDictionary={jwtDictionary}
+          auth0Dictionary={auth0Dictionary}
           languageCode={languageCode}
-        />
-        <Auth0CtaComponent
-          languageCode={languageCode}
-          dictionary={auth0Dictionary.banner}
         />
       </aside>
       {/*<CounterComponent />*/}

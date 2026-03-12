@@ -73,7 +73,7 @@ export const JwtEditorComponent: React.FC<JwtEditorComponentProps> = ({
       padding="1rem"
       style={{
         fontFamily: '"Roboto Mono", monospace',
-        fontSize: 14,
+        fontSize: 16,
         lineHeight: 1.4,
         border: "none",
         outline: "none",

@@ -11,19 +11,18 @@ import { DEFAULT_LANGUAGE_CODE } from "@/features/localization/localization.conf
 import { sitePaths } from "@/features/seo/site-tree";
 import { createUrlPath, getPathnameSegments } from "@/libs/utils/path.utils";
 import { SiteBrandComponent } from "@/features/common/components/site-brand/site-brand.component";
+import { ThemeCookieValues } from "@/features/common/values/theme.values";
+import { RibbonComponent } from "../../bars/ribbon/ribbon.component";
 
 interface MobileHeaderComponentProps {
+  themeCode: ThemeCookieValues;
   languageCode: string;
-  dictionary: LayoutDictionaryModel["header"];
-  siteLogo: React.ReactNode;
-  ribbon: React.ReactNode;
+  dictionary: LayoutDictionaryModel;
 }
 
 export const MobileHeaderComponent: React.FC<MobileHeaderComponentProps> = ({
   languageCode,
   dictionary,
-  siteLogo,
-  ribbon,
 }) => {
   const pathname = usePathname();
   const [currentPathname, setCurrentPathname] = useState<string | null>(null);
@@ -80,26 +79,29 @@ export const MobileHeaderComponent: React.FC<MobileHeaderComponentProps> = ({
 
   return (
     <>
-      <header className={styles.header}>
-        {ribbon}
-        <BoxComponent
-          contentAs="nav"
-          containerClassName={styles.container}
-          wrapperClassName={styles.wrapper}
-          contentClassName={styles.content}
-        >
+      <BoxComponent
+        contentAs="nav"
+        containerClassName={styles.container}
+        wrapperClassName={styles.wrapper}
+        contentClassName={styles.content}
+      >
+        <div className={styles.ribbonContainer}>
+          <RibbonComponent dictionary={dictionary.ribbon} />
+        </div>
+        <div className={styles.outerNavContainer}>
           <div className={styles.logo}>
-            <SiteBrandComponent path={languagePathPrefix}>
-              {siteLogo}
-            </SiteBrandComponent>
+            <SiteBrandComponent
+              path={languagePathPrefix}
+              languageCode={languageCode}
+            />
           </div>
           <button
             className={styles.burgerIconWrapper}
             onClick={toggleMobileMenu}
             aria-label={
               mobileMenuState === MobileMenuStateValues.OPEN
-                ? dictionary.labels.close
-                : dictionary.labels.open
+                ? dictionary.header.labels.close
+                : dictionary.header.labels.open
             }
             aria-expanded={mobileMenuState === MobileMenuStateValues.OPEN}
           >
@@ -108,8 +110,8 @@ export const MobileHeaderComponent: React.FC<MobileHeaderComponentProps> = ({
               aria-hidden={mobileMenuState === MobileMenuStateValues.CLOSED}
             />
           </button>
-        </BoxComponent>
-      </header>
+        </div>
+      </BoxComponent>
       <section
         className={styles.menu}
         aria-hidden={mobileMenuState === MobileMenuStateValues.CLOSED}
@@ -119,7 +121,7 @@ export const MobileHeaderComponent: React.FC<MobileHeaderComponentProps> = ({
           contentClassName={styles.menuContent}
         >
           <ul className={styles.menu__list}>
-            {dictionary.links.map((link) => {
+            {dictionary.header.links.map((link) => {
               const linkPath =
                 languageCode === DEFAULT_LANGUAGE_CODE || link.isExternal
                   ? link.path

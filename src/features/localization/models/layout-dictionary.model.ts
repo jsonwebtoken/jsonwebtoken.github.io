@@ -26,7 +26,6 @@ export interface LayoutDictionaryModel {
       };
     };
     themePicker: RibbonPickerModel<ThemeModel>;
-    languagePicker: RibbonPickerModel<UiLanguageModel>;
   };
   header: {
     links: LinkMetadataModel[];
@@ -69,6 +68,7 @@ export interface LayoutDictionaryModel {
         id: string;
       }[];
     };
+    languagePicker: RibbonPickerModel<UiLanguageModel>;
   };
   errors: {
     notFound: {

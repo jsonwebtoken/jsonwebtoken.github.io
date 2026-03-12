@@ -16,12 +16,6 @@ import {
   DECODED_PAYLOAD_DESCRIPTION_KEY,
   DECODED_PAYLOAD_FORMAT_KEY,
 } from "@/features/decoder/config/decoder.config";
-import {
-  JWT_INFO_STATE_KEY,
-  JWT_WARNING_STATE_KEY,
-} from "@/features/home/config/home.config";
-import { HeroModalStateValues } from "@/features/home/values/hero-modal-state.values";
-import { getSanitizedHeroModalStateValue } from "@/features/common/services/hero.utils";
 import { getSanitizedDescriptionVisibilityValue } from "@/features/common/services/decoder.utils";
 import { ClaimDescriptionVisibilityValues } from "@/features/common/values/claim-description-visibility.values";
 import { getSanitizedDebuggerModeValues } from "@/features/common/services/debugger.utils";
@@ -60,15 +54,6 @@ export default function Home({
       cookies().get(DECODED_PAYLOAD_DESCRIPTION_KEY)?.value || null,
     ) || ClaimDescriptionVisibilityValues.VISIBLE;
 
-  const jwtInfoState =
-    getSanitizedHeroModalStateValue(
-      cookies().get(JWT_INFO_STATE_KEY)?.value || null,
-    ) || HeroModalStateValues.OPEN;
-  const jwtWarningState =
-    getSanitizedHeroModalStateValue(
-      cookies().get(JWT_WARNING_STATE_KEY)?.value || null,
-    ) || HeroModalStateValues.OPEN;
-
   const debuggerInitialMode: DebuggerModeValues =
     getSanitizedDebuggerModeValues(
       cookies().get(DEBUGGER_MODE_KEY)?.value || null,
@@ -81,8 +66,6 @@ export default function Home({
       decodedPayloadInitialTabId={decodedPayloadInitialTabId}
       decodedHeaderDescriptionVisibility={decodedHeaderDescriptionVisibility}
       decodedPayloadDescriptionVisibility={decodedPayloadDescriptionVisibility}
-      jwtInfoState={jwtInfoState}
-      jwtWarningState={jwtWarningState}
       // debuggerInitialMode={debuggerInitialMode}
     />
   );

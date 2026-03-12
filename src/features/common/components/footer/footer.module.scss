@@ -7,7 +7,7 @@
 
 .wrapper {
   @include ExtendedGrid;
-  border-top: 0.0625rem solid $neutrals-functional-300;
+  margin: 4rem auto 0;
 }
 
 .content {
@@ -75,11 +75,10 @@
 
 .resources__title {
   color: var(--color_fg_default);
-  font-size: 1rem;
+  font-size: .875rem;
   font-style: normal;
   font-weight: 500;
   line-height: 1.25rem;
-  letter-spacing: 0.0875rem;
   text-transform: uppercase;
 
   :global(html[lang="ja"]) & {
@@ -89,18 +88,17 @@
 
 .resource__list {
   display: grid;
-  row-gap: 1rem;
+  grid-row-gap: .25rem;
+  row-gap: .25rem;
   padding: 0;
-  margin: 1.25rem 0 0 0;
-
+  margin: 1.25rem 0 0;
   list-style: none;
   color: var(--color_fg_bold);
-
   font-size: 1rem;
   font-style: normal;
   font-weight: 500;
   line-height: 1.375rem;
-  letter-spacing: 0.0125rem;
+  letter-spacing: .2px;
 
   :global(html[lang="ja"]) & {
     @include LocaleLineHeight("ja", 1rem);
@@ -113,17 +111,17 @@
   width: 100%;
   margin: 0;
   padding: 0;
-  gap: 0.5rem;
+  gap: .5rem;
   color: var(--color_fg_bold);
-  font-size: 1rem;
+  font-size: .875rem;
   font-style: normal;
   font-weight: 500;
   line-height: 1.375rem;
-  letter-spacing: 0.0125rem;
+  letter-spacing: .2px;
   background-color: transparent;
   border: none;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all .2s ease;
 
   :global(html[lang="ja"]) & {
     @include LocaleLineHeight("ja", 1rem);
@@ -142,18 +140,18 @@
   width: 100%;
   margin: 0;
   padding: 0;
-  gap: 0.5rem;
+  gap: .5rem;
   color: var(--color_fg_bold);
-  font-size: 1rem;
+  font-size: .875rem;
   font-style: normal;
   font-weight: 500;
-  line-height: 1.375rem;
-  letter-spacing: 0.0125rem;
+  line-height: 1.5;
+  letter-spacing: -.1px;
   background-color: transparent;
   border: none;
   cursor: pointer;
   text-decoration: none;
-  transition: all 0.2s ease;
+  transition: all .2s ease;
 
   :global(html[lang="ja"]) & {
     @include LocaleLineHeight("ja", 1rem);
@@ -267,8 +265,16 @@
   padding-bottom: 1rem;
   row-gap: 2rem;
 
-  color: $neutrals-light-100-snow;
+  color: var(--color_fg_default);
+}
 
-  @media #{$breakpoint-dimension-xs} {
+.subFooter__languagePicker {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: var(--color_fg_default);
+
+  &:hover {
+    color: (var(--color_fg_bold));
   }
 }

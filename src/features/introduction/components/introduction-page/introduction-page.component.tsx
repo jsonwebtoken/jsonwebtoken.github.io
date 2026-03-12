@@ -4,10 +4,7 @@ import { generateArticleStructuredData } from "@/features/seo/services/structure
 import { Auth0CtaComponent } from "@/features/common/components/auth0-cta/auth0-cta.component";
 import { getIntroductionDictionary } from "@/features/localization/services/language-dictionary.service";
 import { IntroductionArticleComponent } from "@/features/introduction/components/introduction-article/introduction-article.component";
-import { IntroductionHeroComponent } from "@/features/introduction/components/introduction-hero/introduction-hero.component";
-import { EbookAdComponent } from "@/features/introduction/components/ebook-ad/ebook-ad.component";
 import { getAuth0Dictionary } from "@/features/localization/services/ui-language-dictionary.service";
-import { getComponentDictionary } from "@/features/localization/services/component-dictionary.service";
 
 interface IntroductionPageComponentProps {
   languageCode: string;
@@ -18,7 +15,6 @@ export const IntroductionPageComponent: React.FC<
 > = ({ languageCode }) => {
   const introductionDictionary = getIntroductionDictionary(languageCode);
   const auth0Dictionary = getAuth0Dictionary(languageCode);
-  const componentDictionary = getComponentDictionary(languageCode);
 
   return (
     <>
@@ -121,12 +117,10 @@ export const IntroductionPageComponent: React.FC<
           }),
         ]}
       />
-      <IntroductionHeroComponent
+      <IntroductionArticleComponent
+        introductionDictionary={introductionDictionary}
         languageCode={languageCode}
-        dictionary={introductionDictionary.hero}
       />
-      <EbookAdComponent copy={componentDictionary.ebookAd} />
-      <IntroductionArticleComponent languageCode={languageCode} />
       <Auth0CtaComponent
         languageCode={languageCode}
         dictionary={auth0Dictionary.banner}

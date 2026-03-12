@@ -1,11 +1,24 @@
 @use "@/libs/theme/styles/variables" as *;
+@use "@/libs/theme/styles/mixins" as *;
 
 .container {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+  @include InnerContentFlex;
+  justify-content: start;
+  margin-bottom: 5rem;
+}
 
-    @media #{$breakpoint-dimension-sm} {
-        flex-direction: row;
-    }
+.title {
+  color: var(--color_fg_bold);
+  font-size: 2rem;
+  line-height: 2.5rem;
+  font-weight: 400;
+  letter-spacing: -0.96px;
+
+  @media #{$breakpoint-dimension-xs} {
+    font-size: 2.5rem;
+  }
+
+  @media #{$breakpoint-dimension-sm} {
+    font-size: 3rem;
+  }
 }

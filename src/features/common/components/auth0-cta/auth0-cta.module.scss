@@ -1,11 +1,22 @@
 @use "@/libs/theme/styles/variables" as *;
 @use "@/libs/theme/styles/mixins" as *;
 
-.container {
-  @include Container;
+.cta_container {
   position: relative;
   overflow: hidden;
   background: var(--color_bg_auth0-cta);
+  grid-column: span 8;
+  border-radius: 1rem;
+  max-width: 1008px;
+  border: 1px solid var(--color_border_default);
+  box-shadow: 0 2px 12px -4px rgba(0,0,0,.08),0 2px 1px -.5px rgba(0,0,0,.04),0 2px 4px -4px rgba(0,0,0,.05),inset -.5px -.5px 2px rgba(0,0,0,.04);
+
+  @media #{$breakpoint-dimension-md} {
+    margin: 0 auto;
+    &:before {
+      background: none;
+    }
+  }
 
   &:before {
     position: absolute;
@@ -15,83 +26,20 @@
     width: 100%;
     height: 100%;
   }
-
-  :global(html[data-theme="light"]) &:before {
-    background-image: url("/images/mobile.light.auth0-flow-bg.svg");
-    background-size: cover;
-  }
-  :global(html[data-theme="system-light"]) &:before {
-    background-image: url("/images/mobile.light.auth0-flow-bg.svg");
-    background-size: cover;
-  }
-  :global(html[data-theme="dark"]) &:before {
-    background-image: url("/images/mobile.dark.auth0-flow-bg.svg");
-    background-size: cover;
-  }
-  :global(html[data-theme="system-dark"]) &:before {
-    background-image: url("/images/mobile.dark.auth0-flow-bg.svg");
-    background-size: cover;
-  }
-
-  @media #{$breakpoint-dimension-sm} {
-    :global(html[data-theme="light"]) &:before {
-      background-image: url("/images/tablet.light.auth0-flow-bg.svg");
-      background-size: cover;
-    }
-    :global(html[data-theme="system-light"]) &:before {
-      background-image: url("/images/tablet.light.auth0-flow-bg.svg");
-      background-size: cover;
-    }
-    :global(html[data-theme="dark"]) &:before {
-      background-image: url("/images/tablet.dark.auth0-flow-bg.svg");
-      background-size: cover;
-    }
-    :global(html[data-theme="system-dark"]) &:before {
-      background-image: url("/images/tablet.dark.auth0-flow-bg.svg");
-      background-size: cover;
-    }
-  }
-
-  @media #{$breakpoint-dimension-md} {
-    padding-bottom: 7.5rem;
-    background: unset;
-
-    &:before {
-      background: none;
-    }
-
-    :global(html[data-theme="light"]) &:before {
-      background-image: none;
-    }
-    :global(html[data-theme="system-light"]) &:before {
-      background-image: none;
-    }
-    :global(html[data-theme="dark"]) &:before {
-      background-image: none;
-    }
-    :global(html[data-theme="system-dark"]) &:before {
-      background-image: none;
-    }
-
-    &:after {
-      display: none;
-      background: none;
-    }
-  }
 }
 
-.wrapper {
-  @include ExtendedGrid;
+.cta_wrapper {
+  max-width: 1536px;
+  margin: 0 auto;
   position: relative;
   justify-content: center;
-
-  border-radius: 0;
+  border-radius: 1rem;
   overflow: hidden;
+  width: 100%;
+  height: 100%;
 
   @media #{$breakpoint-dimension-md} {
     background: var(--color_bg_auth0-cta);
-    border-radius: 1.5rem;
-
     &:before {
       position: absolute;
       bottom: 0;
@@ -100,75 +48,55 @@
       width: 100%;
       height: 100%;
     }
-
-    :global(html[data-theme="light"]) &:before {
-      background: url("/images/light.auth0-flow-bg.svg") no-repeat right
-        bottom;
-      background-size: cover;
-    }
-    :global(html[data-theme="system-light"]) &:before {
-      background: url("/images/light.auth0-flow-bg.svg") no-repeat right
-        bottom;
-      background-size: cover;
-    }
-    :global(html[data-theme="dark"]) &:before {
-      background: url("/images/dark.auth0-flow-bg.svg") no-repeat right
-        bottom;
-      background-size: cover;
-    }
-    :global(html[data-theme="system-dark"]) &:before {
-      background: url("/images/dark.auth0-flow-bg.svg") no-repeat right
-        bottom;
-      background-size: cover;
-    }
   }
 }
 
-.content {
-  @include InnerContentFlex;
+.cta_content {
+  display: flex;
   justify-content: center;
+  width: 100%;
+  height: 100%;
 
-  @media #{$breakpoint-dimension-sm} {
-    @include InnerContentGrid;
+  @media #{$breakpoint-dimension-md} {
+    display: grid;
+    grid-template-columns: repeat(12,minmax(0,1fr));
+    width: 100%;
   }
 }
 
-.cta {
+.cta_cta {
   z-index: 1;
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 2.5rem 0;
+  padding: .25rem;
   align-items: center;
   gap: 2rem;
 
-  @media #{$breakpoint-dimension-sm} {
-    padding: 3rem 0;
-    grid-column: 1 / -1;
+  @media #{$breakpoint-dimension-md} {
+    grid-column: 1/-1;
     display: grid;
     grid-template-columns: subgrid;
-  }
-
-  @media #{$breakpoint-dimension-md} {
-    padding: 4rem 0;
   }
 }
 
 .cta__copy {
-  grid-column: 1 / -1;
+  grid-column: 1/-1;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  align-items: center;
+  align-items: flex-start;
+  padding: 2.5rem;
+
+  @media #{$breakpoint-dimension-md} {
+    grid-column: span 6;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
 
   @media #{$breakpoint-dimension-sm} {
     align-items: unset;
-  }
-
-  @media #{$breakpoint-dimension-md} {
-    align-items: center;
-    flex-direction: row;
-    gap: 2.5rem;
   }
 }
 
@@ -176,7 +104,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: .75rem;
 
   @media #{$breakpoint-dimension-sm} {
     gap: 1rem;
@@ -187,26 +115,15 @@
   width: 100%;
   margin: 0;
   text-align: left;
-  font-size: 2.25rem;
-  line-height: 2.75rem;
-  letter-spacing: -0.03rem;
-  font-weight: 400;
-  color: var(--color_fg_bold);
+  font-size: 1.5rem;
+  line-height: 1.15;
+  color: #fff;
+  font-feature-settings: lining-nums proportional-nums;
   font-variant-numeric: lining-nums proportional-nums;
   font-style: normal;
 
-  :global(html[lang="ja"]) & {
-    @include LocaleLineHeight("ja", 2.25rem);
-  }
-
-  @media #{$breakpoint-dimension-sm} {
-    font-size: 2.5rem;
-    line-height: 3rem;
-    letter-spacing: -0.08rem;
-
-    :global(html[lang="ja"]) & {
-      @include LocaleLineHeight("ja", 2.5rem);
-    }
+  @media #{$breakpoint-dimension-lg} {
+    font-size: 2.5rem;    
   }
 }
 
@@ -216,167 +133,42 @@
   line-height: 1.5rem;
   font-weight: 400;
 
-  :global(html[lang="ja"]) & {
-    @include LocaleLineHeight("ja", 1rem);
-  }
-
   @media #{$breakpoint-dimension-sm} {
     max-width: 40rem;
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-    letter-spacing: 0.01rem;
-
-    :global(html[lang="ja"]) & {
-      @include LocaleLineHeight("ja", 1.25rem);
-    }
+    font-size: 1rem;
+    line-height: 1.5rem;
+    letter-spacing: -.01rem;
   }
 
   @media #{$breakpoint-dimension-md} {
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-    letter-spacing: 0.1px;
-
-    :global(html[lang="ja"]) & {
-      @include LocaleLineHeight("ja", 1.25rem);
-    }
+    font-size: 1rem;
+    line-height: 1.5rem;
+    letter-spacing: -.1px;
   }
 }
 
-.cta__media {
-  position: relative;
-  grid-column: 1 / -1;
-  align-self: center;
-  justify-self: center;
+.cta__button {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 2.4rem;
-
-  overflow: hidden;
-
-  width: 100%;
-
-  background-size: 100%;
-
-  aspect-ratio: 281 / 547;
-
-  :global(html[lang="en"][data-theme="light"]) & {
-    background-image: url("/images/mobile.en.light.auth0-flow.svg");
-  }
-  :global(html[lang="en"][data-theme="dark"]) & {
-    background-image: url("/images/mobile.en.dark.auth0-flow.svg");
-  }
-  :global(html[lang="ja"][data-theme="light"]) & {
-    background-image: url("/images/mobile.ja.light.auth0-flow.svg");
-  }
-  :global(html[lang="ja"][data-theme="dark"]) & {
-    background-image: url("/images/mobile.ja.dark.auth0-flow.svg");
-  }
-
-  :global(html[lang="en"][data-theme="system-light"]) & {
-    background-image: url("/images/mobile.en.light.auth0-flow.svg");
-  }
-  :global(html[lang="en"][data-theme="system-dark"]) & {
-    background-image: url("/images/mobile.en.dark.auth0-flow.svg");
-  }
-  :global(html[lang="ja"][data-theme="system-light"]) & {
-    background-image: url("/images/mobile.ja.light.auth0-flow.svg");
-  }
-  :global(html[lang="ja"][data-theme="system-dark"]) & {
-    background-image: url("/images/mobile.ja.dark.auth0-flow.svg");
-  }
-
-  @media #{$breakpoint-dimension-sm} {
-    aspect-ratio: 672 / 251;
-
-    :global(html[lang="en"][data-theme="light"]) & {
-      background-image: url("/images/tablet.en.light.auth0-flow.svg");
-    }
-    :global(html[lang="en"][data-theme="dark"]) & {
-      background-image: url("/images/tablet.en.dark.auth0-flow.svg");
-    }
-    :global(html[lang="ja"][data-theme="light"]) & {
-      background-image: url("/images/tablet.ja.light.auth0-flow.svg");
-    }
-    :global(html[lang="ja"][data-theme="dark"]) & {
-      background-image: url("/images/tablet.ja.dark.auth0-flow.svg");
-    }
-
-    :global(html[lang="en"][data-theme="system-light"]) & {
-      background-image: url("/images/tablet.en.light.auth0-flow.svg");
-    }
-    :global(html[lang="en"][data-theme="system-dark"]) & {
-      background-image: url("/images/tablet.en.dark.auth0-flow.svg");
-    }
-    :global(html[lang="ja"][data-theme="system-light"]) & {
-      background-image: url("/images/tablet.ja.light.auth0-flow.svg");
-    }
-    :global(html[lang="ja"][data-theme="system-dark"]) & {
-      background-image: url("/images/tablet.ja.dark.auth0-flow.svg");
-    }
-  }
-
-  @media #{$breakpoint-dimension-md} {
-    aspect-ratio: 3216 / 861;
-
-    :global(html[lang="en"][data-theme="light"]) & {
-      background-image: url("/images/en.light.auth0-flow.png");
-    }
-    :global(html[lang="en"][data-theme="dark"]) & {
-      background-image: url("/images/en.dark.auth0-flow.png");
-    }
-    :global(html[lang="ja"][data-theme="light"]) & {
-      background-image: url("/images/ja.light.auth0-flow.png");
-    }
-    :global(html[lang="ja"][data-theme="dark"]) & {
-      background-image: url("/images/ja.dark.auth0-flow.png");
-    }
-
-    :global(html[lang="en"][data-theme="system-light"]) & {
-      background-image: url("/images/en.light.auth0-flow.png");
-    }
-    :global(html[lang="en"][data-theme="system-dark"]) & {
-      background-image: url("/images/en.dark.auth0-flow.png");
-    }
-    :global(html[lang="ja"][data-theme="system-light"]) & {
-      background-image: url("/images/ja.light.auth0-flow.png");
-    }
-    :global(html[lang="ja"][data-theme="system-dark"]) & {
-      background-image: url("/images/ja.dark.auth0-flow.png");
-    }
-  }
-}
-
-.button {
-  display: flex;
-  padding: 1rem 2rem;
+  padding: .25rem .75rem;
   justify-content: center;
   align-items: center;
-  gap: 0.5rem;
-  flex-shrink: 0;
-
-  border: 1px solid var(--color_border_button_outline);
-  border-radius: 0.375rem;
-  background: transparent;
-  backdrop-filter: blur(1.5rem);
-
-  color: var(--color_fg_on_button_outline);
-  font-size: 1rem;
-  line-height: 1.5rem;
-  font-style: normal;
+  gap: .5rem;
+  border-radius: 9999px;
+  background: var(--color_bg_layer);
+  border: 1px solid var(--color_border_default);
+  box-shadow: 0 1px 1px -.5px rgba(0,0,0,.04),0 3px 3px -1.5px rgba(0,0,0,.04),0 6px 6px -3px rgba(0,0,0,.04),0 12px 12px -6px rgba(0,0,0,.04),0 24px 24px -12px rgba(0,0,0,.04),inset 0 0 0 1px rgba(0,0,0,.08);
+  color: var(--color_fg_default);
+  font-size: .875rem;
+  font-weight: 700;
+  line-height: 1.375rem;
   font-weight: 500;
-  letter-spacing: 0.2px;
+  letter-spacing: -.2px;
+  transition: all .3s ease-in-out;
 
-  width: 100%;
-
-  :global(html[lang="ja"]) & {
-    @include LocaleLineHeight("ja", 1rem);
-  }
-
-  &:focus-visible {
-    outline: solid 1px var(--color_border_focus);
-    outline-offset: 0.125rem;
-    border-radius: 0.125rem;
+  &:hover {
+    border: 1px solid var(--color_border_bold);
+    box-shadow: 0 0 0 4px var(--color_button_focus_inverse);
+    transition: all .2s ease-out;
   }
 
   @media #{$breakpoint-dimension-sm} {
@@ -384,34 +176,41 @@
   }
 }
 
-.button__arrow {
-  flex-shrink: 0;
+.cta__media {
+  position: relative;
+  grid-column: 1/-1;
+  align-self: center;
+  justify-self: center;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 0.75rem;
-  width: 0.75rem;
+  gap: 2.4rem;
+  min-height: 348px;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  border-radius: .75rem;
+  background-size: cover;
+  background-position: 50%;
+  background-repeat: no-repeat;
 
-  svg {
-    height: 0.75rem;
-    width: 0.75rem;
+  :global(html[lang="en"]) & {
+    background-image: url("/images/en.diagram.png");
+  }
 
-    path {
-      fill: var(--color_fg_on_button_outline);
-    }
+  :global(html[lang="ja"]) & {
+    background-image: url("/images/ja.diagram.png");
+  }
+
+  @media #{$breakpoint-dimension-md} {
+    border-bottom-left-radius: 12rem;
+    grid-column: span 6;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 2.5rem;
   }
 
   @media #{$breakpoint-dimension-sm} {
-    height: 1rem;
-    width: 1rem;
-
-    svg {
-      height: 0.875rem;
-      width: 0.875rem;
-    }
-  }
-
-  &[data-rotation="true"] {
-    animation: rotate 2s linear infinite;
+    align-items: unset;
   }
 }

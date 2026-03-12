@@ -1,22 +1,47 @@
 @use "@/libs/theme/styles/variables" as *;
 
+
+.encoder__switch {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+}
+
 .container {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: .5rem;
 
   @media #{$breakpoint-dimension-sm} {
     align-self: unset;
   }
 }
 
+.picker {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: transparent;
+  border: none;
+  color: var(--color_fg_bold);
+  gap: .75rem;
+  width: 100%;
+}
+
 .label {
-  color: var(--color_fg_default);
-  font-size: 0.875rem;
-  line-height: 1.375rem;
-  font-weight: 500;
-  letter-spacing: 0.1px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0;
+    list-style-type: none;
+    margin: 0;
+    gap: .5rem;
+    font-size: .875rem;
+    line-height: 1.35;
+    width: 100%;
+    height: 100%;
 }
 
 .select {

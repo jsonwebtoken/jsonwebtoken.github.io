@@ -4,7 +4,7 @@
 .content {
   @include InnerContentFlex;
   flex-direction: column;
-
+  align-items: center;
   grid-row-gap: 0;
 }
 
@@ -16,23 +16,35 @@
 
 .tabs {
   display: flex;
-  gap: 1rem;
   list-style: none;
+  background-color: var(--color_bg_app_bar);
+  padding: 0.25rem;
+  border-radius: 9999px;
+}
+
+.titleTab:hover {
+  opacity: 1;
+  background-color: var(--color_bg_app_bar);
+  border-radius: 9999px;
+  transition: all 0.2s ease-out
 }
 
 .titleTab {
   color: var(--color_fg_bold);
-  font-size: 1.5rem;
-  line-height: 2.25rem;
-  letter-spacing: -0.8px;
+  padding: 0.5rem 1rem;
   background-color: transparent;
   outline: none;
   border: none;
   cursor: pointer;
   opacity: 0.48;
+  transition: all .2s ease-out;
 
   &[data-active="true"] {
     opacity: 1;
+    background-color: var(--color_bg_layer);
+    border-radius: 9999px;
+    box-shadow: 0 1px 2px rgba(0,0,0,.1);
+    transition: all .2s ease-out;
   }
 
   :global(html[lang="ja"]) & {
@@ -41,16 +53,18 @@
   }
 
   @media #{$breakpoint-dimension-sm} {
-    font-size: 1.75rem;
-    line-height: 2.25rem;
+    font-size: 0.875rem;
+    line-height: 1.35;
   }
 }
 
-.titleTab:hover {
-  opacity: 1;
-}
+
 
 .titleTab__compactLabel {
+  font-size: .875rem;
+  font-weight: 600;
+  font-family: var(--font-primary);
+  line-height: 1.35;
   @media #{$tablet} {
     display: none;
   }
@@ -58,6 +72,10 @@
 
 .titleTab__fullLabel {
   display: none;
+  font-size: .875rem;
+  font-weight: 600;
+  font-family: var(--font-primary);
+  line-height: 1.35;
 
   @media #{$tablet} {
     display: unset;

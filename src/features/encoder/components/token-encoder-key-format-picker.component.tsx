@@ -15,14 +15,14 @@ export const TokenEncoderKeyFormatPickerComponent: React.FC<
   const dictionary = getPickersUiDictionary(languageCode);
 
   const handlePrivateKeyFormatChange = useEncoderStore(
-    (state) => state.handleAsymmetricPrivateKeyFormatChange,
+    (state) => state.handleAsymmetricPrivateKeyFormatChange
   );
   const controlledAsymmetricPrivateKey$ = useEncoderStore(
-    (state) => state.controlledAsymmetricPrivateKey,
+    (state) => state.controlledAsymmetricPrivateKey
   );
 
   const [keyFormat, setKeyFormat] = useState<AsymmetricKeyFormatValues>(
-    AsymmetricKeyFormatValues.PEM,
+    AsymmetricKeyFormatValues.PEM
   );
 
   useEffect(() => {
@@ -38,28 +38,32 @@ export const TokenEncoderKeyFormatPickerComponent: React.FC<
   };
 
   return (
-    <div className={styles.container}>
-      <DebuggerPickerComponent
-        languageCode={languageCode}
-        label={dictionary.privateKeyFormatPicker.label}
-        handleSelection={onPrivateKeyFormatChange}
-        selectedOptionCode={{
-          value: keyFormat,
-          label: keyFormat,
-        }}
-        options={[
-          {
-            value: AsymmetricKeyFormatValues.PEM,
-            label: AsymmetricKeyFormatValues.PEM,
-          },
-          {
-            value: AsymmetricKeyFormatValues.JWK,
-            label: AsymmetricKeyFormatValues.JWK,
-          },
-        ]}
-        placeholder={null}
-        minWidth="6.125rem"
-      />
+    <div className={styles.encoder__switch}>
+      <div className={styles.container}>
+        <div className={styles.picker}>
+          <DebuggerPickerComponent
+            languageCode={languageCode}
+            label={dictionary.privateKeyFormatPicker.label}
+            handleSelection={onPrivateKeyFormatChange}
+            selectedOptionCode={{
+              value: keyFormat,
+              label: keyFormat,
+            }}
+            options={[
+              {
+                value: AsymmetricKeyFormatValues.PEM,
+                label: AsymmetricKeyFormatValues.PEM,
+              },
+              {
+                value: AsymmetricKeyFormatValues.JWK,
+                label: AsymmetricKeyFormatValues.JWK,
+              },
+            ]}
+            placeholder={null}
+            minWidth="6.125rem"
+          />
+        </div>
+      </div>
     </div>
   );
 };
