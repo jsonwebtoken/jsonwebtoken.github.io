@@ -26,15 +26,19 @@
 
 .content {
   @include InnerContentFlex;
+  display: flex;
+  flex-direction: column;
+  color: $neutrals-light-100-snow;
+}
 
+.outerNavContainer {
+  display: flex;
   height: 100%;
   position: relative;
   grid-column: 1 / -1;
   gap: 1rem;
   align-items: center;
   justify-content: space-between;
-
-  color: $neutrals-light-100-snow;
 }
 
 .logo {
@@ -50,6 +54,12 @@
   @media #{$breakpoint-dimension-xs} {
     display: flex;
   }
+}
+.ribbonContainer {
+  margin-top: 0.25rem;
+  display: flex;
+  padding-bottom: 0.5rem;
+
 }
 
 .burgerIconWrapper {
