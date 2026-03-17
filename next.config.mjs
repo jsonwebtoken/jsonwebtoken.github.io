@@ -2,6 +2,7 @@ import createMDX from "@next/mdx";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  productionBrowserSourceMaps: true,
   webpack(config) {
     config.module.rules.push(
       {

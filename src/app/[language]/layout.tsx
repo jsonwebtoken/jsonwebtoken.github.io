@@ -4,7 +4,6 @@ import { DEFAULT_LANGUAGE_CODE } from "@/features/localization/localization.conf
 import { cookies } from "next/headers";
 import { PREFERRED_THEME_COOKIE_KEY } from "@/features/themes/theme.config";
 import { PageLayoutComponent } from "@/features/common/components/layout/page-layout/page-layout.component";
-import { UseHashWarningComponent } from "@/features/decoder/components/use-hash-warning/use-hash-warning.component";
 import { PageMetadataProps } from "@/features/common/models/page-metadata.props";
 import { getHomeDictionary } from "@/features/localization/services/language-dictionary.service";
 import { generatePageMetadata } from "@/libs/metadata/metadata.service";
@@ -54,7 +53,6 @@ export default function RootLayout({
       themeCode={initialThemeCookieValue}
     >
       {children}
-      <UseHashWarningComponent languageCode={languageCode} />
     </PageLayoutComponent>
   );
 }

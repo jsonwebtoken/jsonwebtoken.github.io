@@ -12,7 +12,6 @@ import { COOKIE_LEVELS } from "@/features/analytics/models/cookie-levels.constan
 import { OnetrustScriptComponent } from "@/features/analytics/components/onetrust-script.component";
 import { CLIENT_CONFIG } from "@/features/analytics/services/config";
 import { COOKIE_CONSENT_STATUS } from "@/features/analytics/models/cookie-consent-status.constants";
-import { GoogleTagManager } from "@next/third-parties/google";
 import styles from "./shell.module.scss";
 import { UiLocalizationService } from "@/features/localization/services/ui-localization.service";
 import { clsx } from "clsx";
@@ -26,6 +25,8 @@ import {
 import { ThemeDetectorComponent } from "@/features/common/components/theme-detector/theme-detector.component";
 import { ThemeCookieValues } from "@/features/common/values/theme.values";
 import { AbTestingScriptComponent } from "@/features/analytics/components/ab-testing-script/ab-testing-script.component";
+import AdobeAnalyticsScript from "@/features/analytics/components/adobe-analytics-script.component";
+import { SafeGTM } from "./gtm/safe-gtm.component";
 
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 
@@ -55,11 +56,11 @@ export const ShellComponent: React.FC<ShellComponentProps> = ({
       if (e.data === COOKIE_CONSENT_STATUS.WAITING_FOR_CONSENT) {
         // eslint-disable-next-line new-cap
         window.OneTrust.OnConsentChanged(() =>
-          setConsentLevel(window.OnetrustActiveGroups),
+          setConsentLevel(window.OnetrustActiveGroups)
         );
       }
     },
-    [consentLevel],
+    [consentLevel]
   );
 
   useEffect(() => {
@@ -98,20 +99,21 @@ export const ShellComponent: React.FC<ShellComponentProps> = ({
         PrimaryFont.variable,
         SecondaryFont.variable,
         JapaneseFont.variable,
-        MonoFont.variable,
+        MonoFont.variable
       )}
       data-theme={themeCode}
     >
       <OnetrustScriptComponent
         id={CLIENT_CONFIG.DEVELOPERS_DATA_DOMAIN_ID_ONETRUST}
       />
+      <AdobeAnalyticsScript />
       {children}
       {consentLevel &&
         consentLevel.includes(COOKIE_LEVELS.NECESSARY.toString()) &&
         process.env.NEXT_PUBLIC_IS_PROD &&
         GTM_ID && (
           <>
-            <GoogleTagManager gtmId={GTM_ID} />
+            <SafeGTM gtmId={GTM_ID} />
             <AbTestingScriptComponent />
           </>
         )}

@@ -10,8 +10,6 @@ export enum SupportedTokenHashParamValues {
   ID_TOKEN = "id_token",
   VALUE = "value",
 }
-export const WARNING_PARAM_KEY = "warning";
-export const WARNING_PARAM_VALUE = "use_hash";
 
 export const EBOOK_URL =
   "https://auth0.com/resources/ebooks/jwt-handbook/?utm_source=jwtio&utm_medium=banner&utm_campaign=jwt-handbook";
