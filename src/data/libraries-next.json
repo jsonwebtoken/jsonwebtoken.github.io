@@ -2122,14 +2122,15 @@
           "es512": true,
           "ps256": true,
           "ps384": true,
-          "ps512": true
+          "ps512": true,
+          "eddsa": true
         },
         "authorUrl": "https://github.com/fusionauth",
         "authorName": "FusionAuth",
         "gitHubRepoPath": "fusionauth/fusionauth-jwt",
         "repoUrl": "https://github.com/fusionauth/fusionauth-jwt",
         "installCommandMarkdown": [
-          "maven: io.fusionauth / fusionauth-jwt / 5.2.2"
+          "maven: io.fusionauth / fusionauth-jwt / 6.0.0"
         ],
         "stars": 159
       },
