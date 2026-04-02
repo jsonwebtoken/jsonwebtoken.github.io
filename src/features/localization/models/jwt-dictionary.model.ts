@@ -7,6 +7,13 @@ export interface JwtDictionaryModel {
     description: string;
     ctaButton: LinkMetadataModel;
   };
+  skills: {
+    title: string;
+    description: string;
+    installAllSkills: string;
+    installSpecificSkill: string;
+    ctaButton: LinkMetadataModel;
+  };
   assets: {
     badges: {
       title: string;

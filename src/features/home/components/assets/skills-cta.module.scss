@@ -1,0 +1,113 @@
+@use "@/libs/theme/styles/variables" as *;
+
+.container {
+  color: var(--color_fg_default);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  border: 1px solid var(--color_border_default);
+  border-radius: 1rem;
+  padding: 2.5rem;
+  background-color: var(--color_bg_layer);
+  box-shadow: 0 2px 12px -4px rgba(0,0,0,.08),0 2px 1px -.5px rgba(0,0,0,.04),0 2px 4px -4px rgba(0,0,0,.05),inset -.5px -.5px 2px rgba(0,0,0,.04);
+
+  @media #{$breakpoint-dimension-md} {
+    flex-direction: row;
+    align-items: center;
+    gap: 3rem;
+    grid-column: 1 / -1;
+  }
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+
+  @media #{$breakpoint-dimension-sm} {
+    gap: 2rem;
+  }
+
+  @media #{$breakpoint-dimension-md} {
+    flex: 1;
+  }
+}
+
+.right {
+  @media #{$breakpoint-dimension-md} {
+    flex: 1;
+    align-self: flex-start;
+  }
+}
+
+.title {
+  width: 100%;
+  margin: 0;
+  text-align: left;
+  font-size: 1.5rem;
+  line-height: 1.15;
+  font-weight: 500;
+  color: var(--color_fg_bold);
+  font-feature-settings: lining-nums proportional-nums;
+  font-variant-numeric: lining-nums proportional-nums;
+  font-style: normal;
+
+  @media #{$breakpoint-dimension-lg} {
+    font-size: 2.5rem;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  @media #{$breakpoint-dimension-sm} {
+    gap: 2rem;
+  }
+}
+
+.description {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.code {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.875em;
+  color: var(--color_fg_bold);
+  background-color: var(--color_bg_layer_alternate);
+  border: 1px solid var(--color_border_default);
+  border-radius: 0.25rem;
+  padding: 0.1em 0.35em;
+}
+
+.link {
+  width: fit-content;
+  display: flex;
+  padding: .25rem .75rem;
+  justify-content: center;
+  align-items: center;
+  gap: .25rem;
+  border-radius: 9999px;
+  background: var(--color_bg_layer);
+  border: 1px solid var(--color_border_default);
+  font-size: .875rem;
+  font-weight: 500;
+  line-height: 1.375rem;
+  letter-spacing: -.2px;
+  transition: all .3s ease-in-out;
+
+  &:focus-visible {
+    outline: solid 1px var(--color_border_focus);
+    outline-offset: 0.125rem;
+    border-radius: 0.125rem;
+  }
+
+  &:hover {
+    border: 1px solid var(--color_border_bold);
+    box-shadow: 0 0 0 4px rgba(0,0,0,.12);
+    transition: all .2s ease-out;
+  }
+
+}

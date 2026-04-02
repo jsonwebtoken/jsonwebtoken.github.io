@@ -11,6 +11,18 @@ export const jaJwtDictionary: JwtDictionaryModel = {
       path: sitePaths.libraries,
     },
   },
+  skills: {
+    title: "Give your AI Agents JWT skills",
+    description:
+      "Use agent skills to decode, encode and validate JSON Web Tokens in your favorite agentic coding harness.",
+    installAllSkills: "Install all skills",
+    installSpecificSkill: "Install a specific skill",
+    ctaButton: {
+      label: "See the skills",
+      path: "https://github.com/jsonwebtoken/jwt-skills",
+      isExternal: true,
+    },
+  },
   assets: {
     badges: {
       title: "バッジ",
