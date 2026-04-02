@@ -25,6 +25,8 @@ export interface LibraryModel {
     ps512?: boolean;
     eddsa?: boolean;
     es256k?: boolean;
+    ed25519?: boolean;
+    ed448?: boolean;
   };
   authorUrl: string | null;
   authorName: string;
