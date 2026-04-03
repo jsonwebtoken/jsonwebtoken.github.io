@@ -12,13 +12,13 @@ export const jaJwtDictionary: JwtDictionaryModel = {
     },
   },
   skills: {
-    title: "Give your AI Agents JWT skills",
+    title: "AIエージェントにJWT Skillsを追加",
     description:
-      "Use agent skills to decode, encode and validate JSON Web Tokens in your favorite agentic coding harness.",
-    installAllSkills: "Install all skills",
-    installSpecificSkill: "Install a specific skill",
+      "Agent Skillsを利用し、エージェントハーネスでJSWON Web Tokensのデコード、エンコード、検証を実現しましょう。",
+    installAllSkills: "すべてのSkillsをインストール",
+    installSpecificSkill: "特定のSkillsをインストール",
     ctaButton: {
-      label: "See the skills",
+      label: "Skillsを確認",
       path: "https://github.com/jsonwebtoken/jwt-skills",
       isExternal: true,
     },
