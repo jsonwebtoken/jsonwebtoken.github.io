@@ -28,8 +28,7 @@
     width: calc(100% - 2rem);
     max-width: 1312px;
     margin: 0 auto;
-    grid-row-gap: unset;
-    row-gap: unset;
+    row-gap: 1rem;
   }
   
 }
@@ -51,6 +50,7 @@
     gap: 2rem;
   }
 }
+
 
 .assets__title {
   width: 100%;

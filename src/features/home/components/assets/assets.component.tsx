@@ -19,6 +19,7 @@ import { Button } from "react-aria-components";
 import { ArrowHeadIconComponent } from "@/features/common/assets/arrow-head-icon.component";
 import { Auth0DictionaryModel } from "@/features/localization/models/auth0-dictionary.model";
 import { Auth0CtaComponent } from "@/features/common/components/auth0-cta/auth0-cta.component";
+import { SkillsCtaComponent } from "./skills-cta.component";
 
 type AssetsComponentProps = {
   languageCode: string;
@@ -62,6 +63,10 @@ export const AssetsComponent: React.FC<AssetsComponentProps> = ({
       <Auth0CtaComponent
         languageCode={languageCode}
         dictionary={auth0Dictionary.banner}
+      />
+      <SkillsCtaComponent
+        languageCode={languageCode}
+        dictionary={jwtDictionary.skills}
       />
     </div>
   );

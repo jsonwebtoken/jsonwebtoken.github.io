@@ -11,6 +11,18 @@ export const jaJwtDictionary: JwtDictionaryModel = {
       path: sitePaths.libraries,
     },
   },
+  skills: {
+    title: "AIエージェントにJWT Skillsを追加",
+    description:
+      "Agent Skillsを利用し、エージェントハーネスでJSWON Web Tokensのデコード、エンコード、検証を実現しましょう。",
+    installAllSkills: "すべてのSkillsをインストール",
+    installSpecificSkill: "特定のSkillsをインストール",
+    ctaButton: {
+      label: "Skillsを確認",
+      path: "https://github.com/jsonwebtoken/jwt-skills",
+      isExternal: true,
+    },
+  },
   assets: {
     badges: {
       title: "バッジ",
