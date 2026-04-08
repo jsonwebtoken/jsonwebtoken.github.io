@@ -2718,6 +2718,40 @@
     "image": "/img/5.svg",
     "bgColor": "rgb(119, 123, 180)",
     "libs": [
+    {
+        "minimumVersion": "1.0.0",
+        "support": {
+          "sign": true,
+          "verify": true,
+          "iss": true,
+          "sub": true,
+          "aud": true,
+          "exp": true,
+          "nbf": true,
+          "iat": true,
+          "jti": false,
+          "hs256": true,
+          "hs384": true,
+          "hs512": true,
+          "rs256": true,
+          "rs384": false,
+          "rs512": false,
+          "es256": false,
+          "es384": false,
+          "es512": false,
+          "ps256": false,
+          "ps384": false,
+          "ps512": false,
+          "eddsa": false,
+          "es256k": false
+        },
+        "authorUrl": "https://github.com/Jushiro012623",
+        "authorName": "Ivan Macabontoc",
+        "gitHubRepoPath": "dracarys-jwt",
+        "repoUrl": "https://github.com/dracarys-jwt",
+        "installCommandMarkdown": ["composer require dracarys/jwt"],
+        "stars": 2
+      },
       {
         "minimumVersion": "2.0.0",
         "support": {
