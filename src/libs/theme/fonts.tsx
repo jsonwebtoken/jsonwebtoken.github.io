@@ -36,26 +36,7 @@ export const MonoFont = Roboto_Mono({
   variable: "--font-mono",
 });
 
-export const JapaneseFont = localFont({
-  src: [
-    {
-      path: "./fonts/NotoSansJP-Regular.otf",
-      weight: "400",
-      style: "normal",
-    },
-    {
-      path: "./fonts/NotoSansJP-Medium.otf",
-      weight: "500",
-      style: "normal",
-    },
-    {
-      path: "./fonts/NotoSansJP-Bold.otf",
-      weight: "600",
-      style: "normal",
-    },
-  ],
-  variable: "--font-japanese",
-});
+export const JapaneseFont = SecondaryFont;
 
 export const getLocalizedSecondaryFont = (language: string) =>
   language === "ja" ? JapaneseFont.className : SecondaryFont.className;
