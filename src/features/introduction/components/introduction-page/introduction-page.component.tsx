@@ -1,10 +1,14 @@
 import React from "react";
 import { StructuredData } from "@/features/seo/components/structured-data.component";
-import { generateArticleStructuredData } from "@/features/seo/services/structured-data.service";
+import {
+  generateArticleStructuredData,
+  generateFaqStructuredData,
+} from "@/features/seo/services/structured-data.service";
 import { Auth0CtaComponent } from "@/features/common/components/auth0-cta/auth0-cta.component";
 import { getIntroductionDictionary } from "@/features/localization/services/language-dictionary.service";
 import { IntroductionArticleComponent } from "@/features/introduction/components/introduction-article/introduction-article.component";
 import { getAuth0Dictionary } from "@/features/localization/services/ui-language-dictionary.service";
+import { AUTH0_ORGANIZATION } from "@/features/seo/constants/organizations.constants";
 
 interface IntroductionPageComponentProps {
   languageCode: string;
@@ -115,6 +119,8 @@ export const IntroductionPageComponent: React.FC<
             datePublished: introductionDictionary.metadata.datePublished,
             dateModified: introductionDictionary.metadata.dateModified,
           }),
+          AUTH0_ORGANIZATION,
+          generateFaqStructuredData(introductionDictionary.faq),
         ]}
       />
       <IntroductionArticleComponent
