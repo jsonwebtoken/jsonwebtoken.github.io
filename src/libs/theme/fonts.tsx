@@ -36,29 +36,11 @@ export const MonoFont = Roboto_Mono({
   variable: "--font-mono",
 });
 
-export const JapaneseFont = localFont({
-  src: [
-    {
-      path: "./fonts/NotoSansJP-Regular.otf",
-      weight: "400",
-      style: "normal",
-    },
-    {
-      path: "./fonts/NotoSansJP-Medium.otf",
-      weight: "500",
-      style: "normal",
-    },
-    {
-      path: "./fonts/NotoSansJP-Bold.otf",
-      weight: "600",
-      style: "normal",
-    },
-  ],
-  variable: "--font-japanese",
-});
+// Japanese fonts are loaded via CSS in public/fonts/japanese-fonts.css
+// to avoid bundling them for non-Japanese users
 
 export const getLocalizedSecondaryFont = (language: string) =>
-  language === "ja" ? JapaneseFont.className : SecondaryFont.className;
+  language === "ja" ? "japanese-font" : SecondaryFont.className;
 
 export const getLocalizedPrimaryFont = (language: string) =>
-  language === "ja" ? JapaneseFont.className : PrimaryFont.className;
+  language === "ja" ? "japanese-font" : PrimaryFont.className;
