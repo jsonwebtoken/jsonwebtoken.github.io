@@ -2,9 +2,11 @@ import { ArticleStructuredDataModel } from "@/features/seo/models/article-struct
 import { ArticleMetadataModel } from "@/features/seo/models/article-metadata.model";
 import { HowToStructuredDataModel } from "@/features/seo/models/how-to-structured-data.model";
 import { HowToMetadataModel } from "@/features/seo/models/how-to-metadata.model";
-import { HowToStep, ListItem } from "schema-dts";
+import { HowToStep, ListItem, Question } from "schema-dts";
 import { BreadcrumbMetadataModel } from "@/features/seo/models/breadcrumb-metadata.model";
 import { BreadcrumbStructuredDataModel } from "@/features/seo/models/breadcrumb-structured-data.model";
+import { FaqMetadataModel } from "@/features/seo/models/faq-metadata.model";
+import { FaqStructuredDataModel } from "@/features/seo/models/faq-structured-data.model";
 import { siteTree } from "@/features/seo/site-tree";
 import { createUrlPath } from "@/libs/utils/path.utils";
 
@@ -71,5 +73,26 @@ export const generateBreadcrumbStructuredData = (
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: itemList,
+  };
+};
+
+export const generateFaqStructuredData = (
+  faq: FaqMetadataModel,
+): FaqStructuredDataModel => {
+  const mainEntity: Question[] = faq.items.map((item) => {
+    return {
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    };
+  });
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: mainEntity,
   };
 };
