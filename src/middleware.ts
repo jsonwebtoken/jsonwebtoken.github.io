@@ -159,7 +159,7 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!api/|favicon.ico|sitemap.xml|robots.txt|llms.txt|google30e29a6679a06e08.html|manifest.webmanifest|_next/static|_next/image|diagrams/|icons/|images/|img/|apple-icon/|icon/).*)",
+    "/((?!api/|favicon.ico|sitemap.xml|robots.txt|llms.txt|google30e29a6679a06e08.html|manifest.webmanifest|_next/static|_next/image|diagrams/|icons/|images/|img/|apple-icon/|icon/|fonts/).*)",
     "/",
   ],
 };

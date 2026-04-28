@@ -18,7 +18,6 @@ import { UiLocalizationService } from "@/features/localization/services/ui-local
 import { clsx } from "clsx";
 import {
   getLocalizedPrimaryFont,
-  JapaneseFont,
   MonoFont,
   PrimaryFont,
   SecondaryFont,
@@ -98,7 +97,6 @@ export const ShellComponent: React.FC<ShellComponentProps> = ({
         styles.container,
         PrimaryFont.variable,
         SecondaryFont.variable,
-        JapaneseFont.variable,
         MonoFont.variable,
       )}
       data-theme={themeCode}

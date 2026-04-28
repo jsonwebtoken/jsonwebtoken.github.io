@@ -21,6 +21,9 @@ export const PageLayoutComponent: React.FC<LayoutComponentProps> = ({
   return (
     <html lang={languageCode} data-theme={themeCode}>
       <head>
+        {languageCode === "ja" && (
+          <link rel="stylesheet" href="/fonts/japanese-fonts.css" />
+        )}
         <script
           dangerouslySetInnerHTML={{
             __html: `
