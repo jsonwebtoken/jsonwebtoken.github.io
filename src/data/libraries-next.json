@@ -2745,7 +2745,7 @@
         "authorUrl": "https://github.com/Jushiro012623",
         "authorName": "Ivan Macabontoc",
         "gitHubRepoPath": "dracarys-jwt",
-        "repoUrl": "https://github.com/dracarys-jwt",
+        "repoUrl": "https://github.com/Jushiro012623/dracarys-jwt",
         "installCommandMarkdown": ["composer require dracarys/jwt"],
         "stars": 2
       },
