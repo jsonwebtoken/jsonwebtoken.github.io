@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "./home-page.module.scss"
 import { HeroComponent } from "@/features/common/components/hero/hero.component";
 import {
   getHomeDictionary,
@@ -126,9 +125,9 @@ export const HomePageComponent: React.FC<HomePageComponentProps> = ({
           },
         ]}
       />
-      <h1 className={styles.visually_hidden}>{homeDictionary.metadata.title}</h1>
       <HeroComponent
         languageCode={languageCode}
+        title={homeDictionary.hero.title}
         dictionary={homeDictionary.info}
       />
       <DebuggerWidgetComponent
