@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev -p 1234",
+    "dev": "next dev -p 3000",
     "generate:library-data": "tsx src/scripts/generate-library-data.ts",
     "build": "next build",
     "start": "next start",
