@@ -22,13 +22,35 @@
 .hero {
   z-index: 1;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   width: 100%;
   padding: 1.25rem 0;
   text-align: center;
 
   @media #{$breakpoint-dimension-sm} {
     padding: 0.5rem 0;
+  }
+}
+
+.title {
+  width: 100%;
+  max-width: 42rem;
+  margin: 0;
+  color: var(--color_fg_bold);
+  font-size: 2rem;
+  line-height: 1.15;
+  font-weight: 500;
+  letter-spacing: -0.8px;
+  text-wrap-style: balance;
+
+  @media #{$breakpoint-dimension-xs} {
+    font-size: 2.5rem;
+  }
+
+  @media #{$breakpoint-dimension-sm} {
+    font-size: 3rem;
   }
 }
 
