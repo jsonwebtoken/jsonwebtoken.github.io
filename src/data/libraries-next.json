@@ -2786,6 +2786,39 @@
         "stars": 7206
       },
       {
+        "minimumVersion": "1.0.0",
+        "support": {
+          "sign": true,
+          "verify": true,
+          "iss": true,
+          "sub": true,
+          "aud": true,
+          "exp": true,
+          "nbf": true,
+          "iat": true,
+          "jti": true,
+          "hs256": true,
+          "hs384": true,
+          "hs512": true,
+          "rs256": true,
+          "rs384": true,
+          "rs512": true,
+          "eddsa": true,
+          "es256": true,
+          "es384": true,
+          "es512": true,
+          "ps256": true,
+          "ps384": true,
+          "ps512": true
+        },
+        "authorUrl": "https://github.com/lcobucci",
+        "authorName": "Luís Cobucci",
+        "gitHubRepoPath": "lcobucci/jwt-rsassa-pss",
+        "repoUrl": "https://github.com/lcobucci/jwt-rsassa-pss",
+        "installCommandMarkdown": ["composer require lcobucci/jwt-rsassa-pss lcobucci/jwt"],
+        "stars": 0
+      },
+      {
         "minimumVersion": null,
         "support": {
           "sign": true,
