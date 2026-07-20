@@ -122,6 +122,7 @@ test.describe("Can generate JWT examples", () => {
       );
 
       await pickerIndicator.click();
+      await page.getByRole("listbox").waitFor({ state: "visible" });
     });
 
     const options = Object.keys(DefaultTokensValues);
@@ -138,7 +139,7 @@ test.describe("Can generate JWT examples", () => {
         expectToBeNonNull(lang);
 
         const decoderWidget = page.getByTestId(dataTestidDictionary.decoder.id);
-        await page.getByRole("option", { name: option }).click();
+        await page.getByRole("listbox").getByRole("option", { name: option }).click();
 
         const targetToken = DefaultTokensValues[option];
 

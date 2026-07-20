@@ -242,6 +242,7 @@ test.describe("Generate JWT encoding examples", () => {
       );
 
       await pickerIndicator.click();
+      await page.getByRole("listbox").waitFor({ state: "visible" });
     });
 
     const options = Object.keys(DefaultTokensValues);
@@ -255,7 +256,7 @@ test.describe("Generate JWT encoding examples", () => {
         }
 
         const encoder = page.getByTestId(dataTestidDictionary.encoder.id);
-        await page.getByRole("option", { name: option }).click();
+        await page.getByRole("listbox").getByRole("option", { name: option }).click();
 
         const jwtOutput = encoder
           .getByTestId(dataTestidDictionary.encoder.jwt.id)
