@@ -351,17 +351,17 @@
     "bgColor": "rgb(81, 128, 210)",
     "libs": [
       {
-        "minimumVersion": null,
+        "minimumVersion": "3.4.0",
         "support": {
           "sign": true,
           "verify": true,
-          "iss": false,
-          "sub": false,
-          "aud": false,
-          "exp": false,
-          "nbf": false,
-          "iat": false,
-          "jti": false,
+          "iss": true,
+          "sub": true,
+          "aud": true,
+          "exp": true,
+          "nbf": true,
+          "iat": true,
+          "jti": true,
           "hs256": true,
           "hs384": true,
           "hs512": true,
@@ -371,16 +371,18 @@
           "es256": true,
           "es384": true,
           "es512": true,
-          "ps256": false,
-          "ps384": false,
-          "ps512": false
+          "ps256": true,
+          "ps384": true,
+          "ps512": true
         },
         "authorUrl": "https://github.com/benmcollins",
         "authorName": "benmcollins",
         "gitHubRepoPath": "benmcollins/libjwt",
         "repoUrl": "https://github.com/benmcollins/libjwt",
-        "installCommandMarkdown": ["add-apt-repository ppa:ben-collins/libjwt"],
-        "stars": 335
+        "installCommandMarkdown": [
+          "git clone [https://github.com/bencollins/libjwt.git](https://github.com/benmcollins/libjwt) && cd libjwt && mkdir build && cd build && cmake .. && cmake --build . --target install"
+        ],
+        "stars": 407
       },
       {
         "minimumVersion": null,
