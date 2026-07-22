@@ -34,6 +34,6 @@ jobs:
               uses: actions/upload-artifact@v4
               with:
                 name: playwright-traces
-                path: playwright-report/**/trace.zip
+                path: test-results/**/trace.zip
 
         
