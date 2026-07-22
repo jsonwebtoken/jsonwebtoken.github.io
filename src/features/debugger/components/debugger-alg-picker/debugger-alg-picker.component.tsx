@@ -64,9 +64,14 @@ export const WidgetAlgPickerComponent: React.FC<
   const [pickerState, setPickerState] = useState<PickerStates>(
     PickerStates.IDLE
   );
-  const [canUseEs512, setCanUseEs512] = useState(false);
-  const [canUseEd25519, setCanUseEd25519] = useState(false);
-  const [canUseEd448, setCanUseEd448] = useState(false);
+  const [capabilities, setCapabilities] = useState({
+    canUseEs512: false,
+    canUseEd25519: false,
+    canUseEd448: false,
+    isLoading: true,
+  });
+
+  const { canUseEs512, canUseEd25519, canUseEd448, isLoading } = capabilities;
 
   const dictionary = getPickersUiDictionary(languageCode);
 
@@ -93,16 +98,19 @@ export const WidgetAlgPickerComponent: React.FC<
   };
 
   useEffect(() => {
-    (async function runEs512Check() {
-      setCanUseEs512(await isP521Supported());
-    })();
+    (async function checkCapabilities() {
+      const [canUseEs512, canUseEd25519, canUseEd448] = await Promise.all([
+        isP521Supported(),
+        isEd25519Supported(),
+        isEd448Supported(),
+      ]);
 
-    (async function runEd25519Check() {
-      setCanUseEd25519(await isEd25519Supported());
-    })();
-
-    (async function runEd448Check() {
-      setCanUseEd448(await isEd448Supported());
+      setCapabilities({
+        canUseEs512,
+        canUseEd25519,
+        canUseEd448,
+        isLoading: false,
+      });
     })();
   }, []);
 
@@ -188,7 +196,12 @@ export const WidgetAlgPickerComponent: React.FC<
   }, [noneAlgOptions, asymmetricAlgOptions, symmetricAlgOptions]);
 
   return (
-    <div role="region" aria-label={label} className={styles.alg_picker}>
+    <div
+      role="region"
+      aria-label={label}
+      aria-busy={isLoading}
+      className={styles.alg_picker}
+    >
       <div className={styles.container}>
         <div className={styles.picker}>
           <div className={styles.picker__label}>
