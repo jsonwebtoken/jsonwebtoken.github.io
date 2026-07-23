@@ -235,14 +235,20 @@ test.describe("Generate JWT encoding examples", () => {
       const lang = await getLang(page);
       expectToBeNonNull(lang);
 
+      const algorithmPicker = page.getByRole("combobox", {
+        name: "Debugger picker",
+      });
+      const algorithmPickerRegion = page
+        .getByRole("region")
+        .filter({ has: algorithmPicker });
       const pickersUiDictionary = getPickersUiDictionary(lang);
-
       const pickerIndicator = page.getByText(
         pickersUiDictionary.exampleAlgPicker.defaultValue
       );
 
+      await expect(algorithmPickerRegion).toHaveAttribute("aria-busy", "false");
       await pickerIndicator.click();
-      await page.getByRole("listbox").waitFor({ state: "visible" });
+      await expect(page.getByRole("listbox")).toBeVisible();
     });
 
     const options = Object.keys(DefaultTokensValues);
