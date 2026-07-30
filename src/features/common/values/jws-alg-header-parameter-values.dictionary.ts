@@ -4,6 +4,15 @@ export interface JwsAlgHeaderParameterModel {
   curves?: string[];
 }
 
+export const mlDsaAlgorithms = ["ML-DSA-44", "ML-DSA-65", "ML-DSA-87"] as const;
+
+export type MlDsaAlgorithm = (typeof mlDsaAlgorithms)[number];
+
+export const isMlDsaAlgorithm = (
+  algorithm: string,
+): algorithm is MlDsaAlgorithm =>
+  mlDsaAlgorithms.includes(algorithm as MlDsaAlgorithm);
+
 export interface JwsAlgHeaderParameterValuesDictionaryModel {
   unsecured: {
     [index: string]: JwsAlgHeaderParameterModel;
@@ -27,6 +36,9 @@ export interface JwsAlgHeaderParameterValuesDictionaryModel {
     PS384: JwsAlgHeaderParameterModel;
     PS512: JwsAlgHeaderParameterModel;
     Ed25519: JwsAlgHeaderParameterModel;
+    "ML-DSA-44": JwsAlgHeaderParameterModel;
+    "ML-DSA-65": JwsAlgHeaderParameterModel;
+    "ML-DSA-87": JwsAlgHeaderParameterModel;
   };
 }
 
@@ -60,6 +72,18 @@ export const jwsExampleAlgHeaderParameterValuesDictionary: JwsAlgHeaderParameter
         name: "Ed25519",
         description: "Edwards-curve Digital Signature Algorithm",
       },
+      "ML-DSA-44": {
+        name: "ML-DSA-44",
+        description: "Module-Lattice-Based Digital Signature Algorithm",
+      },
+      "ML-DSA-65": {
+        name: "ML-DSA-65",
+        description: "Module-Lattice-Based Digital Signature Algorithm",
+      },
+      "ML-DSA-87": {
+        name: "ML-DSA-87",
+        description: "Module-Lattice-Based Digital Signature Algorithm",
+      },
     },
   };
 
@@ -87,6 +111,9 @@ export interface JwsExampleAlgHeaderParameterValuesDictionaryModel {
     PS512: JwsAlgHeaderParameterModel;
     EdDSA: JwsAlgHeaderParameterModel;
     Ed25519: JwsAlgHeaderParameterModel;
+    "ML-DSA-44": JwsAlgHeaderParameterModel;
+    "ML-DSA-65": JwsAlgHeaderParameterModel;
+    "ML-DSA-87": JwsAlgHeaderParameterModel;
   };
 }
 
@@ -123,6 +150,18 @@ export const jwsAlgHeaderParameterValuesDictionary: JwsExampleAlgHeaderParameter
       Ed25519: {
         name: "Ed25519",
         description: "Edwards-curve Digital Signature Algorithm",
+      },
+      "ML-DSA-44": {
+        name: "ML-DSA-44",
+        description: "Module-Lattice-Based Digital Signature Algorithm",
+      },
+      "ML-DSA-65": {
+        name: "ML-DSA-65",
+        description: "Module-Lattice-Based Digital Signature Algorithm",
+      },
+      "ML-DSA-87": {
+        name: "ML-DSA-87",
+        description: "Module-Lattice-Based Digital Signature Algorithm",
       },
     },
   };

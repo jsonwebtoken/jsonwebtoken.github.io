@@ -2,6 +2,7 @@ import { DefaultTokensValues } from "@/features/common/values/default-tokens.val
 import {
   generateKeyPairSync,
   JsonWebKeyInput,
+  KeyObject,
   PrivateKeyInput,
   randomBytes,
 } from "crypto";
@@ -23,6 +24,7 @@ import { writeFileSync } from "node:fs";
 import { join } from "path";
 import { createPrivateKey } from "node:crypto";
 import { AsymmetricKeyFormatValues } from "@/features/common/values/asymmetric-key-format.values";
+import { isMlDsaAlgorithm } from "@/features/common/values/jws-alg-header-parameter-values.dictionary";
 import {
   JwtDictionaryEntryModel,
   JwtSignedWithDigitalModel,
@@ -102,6 +104,13 @@ interface KeyPair {
   privateJWK: any;
 }
 
+const generateMlDsaKeyPair = generateKeyPairSync as unknown as (
+  type: string,
+) => {
+  publicKey: KeyObject;
+  privateKey: KeyObject;
+};
+
 async function generateKeys(algorithm: string): Promise<KeyPair> {
   let keyPair;
 
@@ -139,6 +148,9 @@ async function generateKeys(algorithm: string): Promise<KeyPair> {
   if (algorithm === "Ed25519") {
     keyPair = generateKeyPairSync("ed25519");
   }
+  if (isMlDsaAlgorithm(algorithm)) {
+    keyPair = generateMlDsaKeyPair(algorithm.toLowerCase());
+  }
 
   if (!keyPair) {
     throw new Error(`Unsupported algorithm: ${algorithm}`);
@@ -146,6 +158,11 @@ async function generateKeys(algorithm: string): Promise<KeyPair> {
 
   const publicJWK = await exportJWK(keyPair.publicKey);
   const privateJWK = await exportJWK(keyPair.privateKey);
+
+  if (isMlDsaAlgorithm(algorithm)) {
+    publicJWK.alg = algorithm;
+    privateJWK.alg = algorithm;
+  }
 
   const publicKeyPEM = keyPair.publicKey
     .export({ type: "spki", format: "pem" })

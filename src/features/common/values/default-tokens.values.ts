@@ -3,6 +3,7 @@
 
 import { EncodingValues } from "@/features/common/values/encoding.values";
 import { AsymmetricKeyFormatValues } from "@/features/common/values/asymmetric-key-format.values";
+import { MlDsaDefaultTokensValues } from "@/features/common/values/ml-dsa-default-tokens.values";
 
 const rsaPrivateKey = `-----BEGIN PRIVATE KEY-----
 MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQC7VJTUt9Us8cKj
@@ -276,4 +277,5 @@ export const DefaultTokensValues: DefaultTokensModel = {
     privateKeyFormat: AsymmetricKeyFormatValues.PEM,
     jwk: edJwk,
   },
+  ...MlDsaDefaultTokensValues,
 };

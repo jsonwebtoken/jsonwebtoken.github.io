@@ -13,6 +13,7 @@ import {
   E2E_BASE_URL,
   expectToBeNonNull,
   getLang,
+  hasMlDsaSupport,
   switchToEncoderTab,
 } from "./e2e.utils";
 import jwts from "./jwt.json" with { type: "json" };
@@ -28,6 +29,7 @@ import {
 } from "@/features/common/services/jwt.service";
 import { MessageStatusValue, MessageTypeValue } from "./e2e.values";
 import { EncodingValues } from "@/features/common/values/encoding.values";
+import { isMlDsaAlgorithm } from "@/features/common/values/jws-alg-header-parameter-values.dictionary";
 
 const TestJwts = (jwts as JwtDictionaryModel).byAlgorithm;
 
@@ -257,12 +259,18 @@ test.describe("Generate JWT encoding examples", () => {
       test(`can generate a JWT encoding example for ${option}`, async ({
         page,
       }) => {
-        if (option === "Ed25519") {
-          return;
+        if (isMlDsaAlgorithm(option)) {
+          test.skip(
+            !(await hasMlDsaSupport(page, option)),
+            "ML-DSA is not supported by this browser",
+          );
         }
 
         const encoder = page.getByTestId(dataTestidDictionary.encoder.id);
-        await page.getByRole("listbox").getByRole("option", { name: option }).click();
+        await page
+          .getByRole("listbox")
+          .getByRole("option", { name: option })
+          .dispatchEvent("click");
 
         const jwtOutput = encoder
           .getByTestId(dataTestidDictionary.encoder.jwt.id)
@@ -301,8 +309,11 @@ test.describe("encode JWTs", () => {
 
   options.forEach((option) => {
     test(`Can encode and sign a JWT with ${option}`, async ({ page }) => {
-      if (option === "Ed25519") {
-        return;
+      if (isMlDsaAlgorithm(option)) {
+        test.skip(
+          !(await hasMlDsaSupport(page, option)),
+          "ML-DSA is not supported by this browser",
+        );
       }
 
       const encoderWidget = page.getByTestId(dataTestidDictionary.encoder.id);

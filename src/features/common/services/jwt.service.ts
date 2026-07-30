@@ -45,7 +45,9 @@ import {
 } from "@/features/common/models/debugger-error.model";
 import {
   algDictionary,
+  isMlDsaAlgorithm,
   jwsAlgHeaderParameterValuesDictionary,
+  type MlDsaAlgorithm,
 } from "@/features/common/values/jws-alg-header-parameter-values.dictionary";
 import {
   JwtHeaderDecoderSchema,
@@ -84,6 +86,11 @@ export function isDigitalSignatureAlg(algorithm: string): boolean {
   return !!alg;
 }
 
+export const isMlDsaSupported = (algorithm: MlDsaAlgorithm): boolean => {
+  // @ts-expect-error -- SubtleCrypto.supports is not yet in TypeScript's DOM types.
+  return SubtleCrypto.supports?.("generateKey", algorithm) ?? false;
+};
+
 export const getAlgSize = (value: string): Result<{ size: number }, string> => {
   const algorithm = value;
 
@@ -103,7 +110,7 @@ export const getAlgSize = (value: string): Result<{ size: number }, string> => {
     return err(`Can't calculate length for Unsecured JWT.`);
   }
 
-  if (isEdwardsCurveAlgorithm) {
+  if (isEdwardsCurveAlgorithm || isMlDsaAlgorithm(algorithm)) {
     return err(`Can't calculate length from ${algorithm} algorithm.`);
   }
 
@@ -856,7 +863,15 @@ export const getSymmetricSecretKeyByteArray = (
   return ok(safeTextEncodeResult.value);
 };
 
-export const getJwk = ({ alg, use, key_ops, ext, ...jwk }: JWK): JWK => jwk;
+export const getJwk = ({ use, key_ops, ext, ...jwk }: JWK): JWK => {
+  if (jwk.kty === "AKP") {
+    return jwk;
+  }
+
+  const { alg, ...key } = jwk;
+
+  return key;
+};
 
 const safePrivateKeyFromPem = fromThrowable(
   nodeForge.pki.privateKeyFromPem,
@@ -988,7 +1003,7 @@ export const getAsymmetricKeyCryptoKey = async (
     const parsedKey = safeJsonParseResult.value;
     const jwk = getJwk(parsedKey);
 
-    if (!("kty" in jwk) && !("d" in jwk)) {
+    if (!("kty" in jwk) && !("d" in jwk) && !("priv" in jwk)) {
       return err(
         `The provided key is not a valid JWK. Ensure it is a correctly formatted JSON Web Key (JWK) as defined on [RFC 7517](https://datatracker.ietf.org/doc/html/rfc7517#section-4).`,
       );
@@ -1000,9 +1015,13 @@ export const getAsymmetricKeyCryptoKey = async (
       );
     }
 
-    if (!("d" in jwk)) {
+    const privateKeyParameter = jwk.kty === "AKP" ? "priv" : "d";
+
+    if (!(privateKeyParameter in jwk)) {
       return err(
-        `Private key is not a private JWK. The 'd' parameter must be present as defined on [RFC 7518](https://datatracker.ietf.org/doc/html/rfc7518#section-6).`,
+        jwk.kty === "AKP"
+          ? `Private key is not a private JWK. The 'priv' parameter must be present as defined in [RFC 9964](https://www.rfc-editor.org/rfc/rfc9964.html#section-3).`
+          : `Private key is not a private JWK. The 'd' parameter must be present as defined on [RFC 7518](https://datatracker.ietf.org/doc/html/rfc7518#section-6).`,
       );
     }
 
