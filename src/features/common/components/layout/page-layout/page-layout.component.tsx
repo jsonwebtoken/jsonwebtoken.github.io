@@ -6,6 +6,11 @@ import { FooterComponent } from "@/features/common/components/footer/footer.comp
 import { ThemeCookieValues } from "@/features/common/values/theme.values";
 import { PageHeaderComponent } from "@/features/common/components/layout/page-header/page-header.component";
 
+// WebCrypto PQC origin trial:
+// https://developer.chrome.com/origintrials/#/view_trial/1379790335835635713
+const WEB_CRYPTO_PQC_ORIGIN_TRIAL_TOKEN =
+  "AnishhJF49gYd6FyezhA4gjpUPHOtlKPeoII1gtrsUrI6G1WVbIvL1AkNsBe9GQgen/8TIHHpWa8I8nFjbZObwMAAABneyJvcmlnaW4iOiJodHRwczovL3d3dy5qd3QuaW86NDQzIiwiZmVhdHVyZSI6IldlYkNyeXB0b0FkZGl0aW9uYWxBbGdvcml0aG1zMjAyNjA2IiwiZXhwaXJ5IjoxNzkyNDU0NDAwfQ==";
+
 interface LayoutComponentProps extends PropsWithChildren {
   languageCode: string;
   themeCode: ThemeCookieValues;
@@ -21,6 +26,10 @@ export const PageLayoutComponent: React.FC<LayoutComponentProps> = ({
   return (
     <html lang={languageCode} data-theme={themeCode}>
       <head>
+        <meta
+          httpEquiv="origin-trial"
+          content={WEB_CRYPTO_PQC_ORIGIN_TRIAL_TOKEN}
+        />
         {languageCode === "ja" && (
           <link rel="stylesheet" href="/fonts/japanese-fonts.css" />
         )}
