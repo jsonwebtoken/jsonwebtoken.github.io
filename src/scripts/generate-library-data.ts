@@ -1,6 +1,5 @@
 import { readFile, rename, writeFile } from "node:fs/promises";
 import { join } from "node:path";
-import { Octokit } from "octokit";
 import { format } from "prettier";
 
 import "dotenv/config";
@@ -14,6 +13,7 @@ const DATA_FILE_PATH = join(
   "data",
   "libraries-next.json",
 );
+const GITHUB_API_URL = "https://api.github.com";
 const REQUEST_CONCURRENCY = 8;
 
 type LibraryDictionary = Record<string, LibraryCategoryModel>;
@@ -36,12 +36,6 @@ function getRequiredEnvironmentVariable(name: string): string {
   }
 
   return value;
-}
-
-function createOctokit(): Octokit {
-  return new Octokit({
-    auth: getRequiredEnvironmentVariable("GITHUB_TOKEN"),
-  });
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -126,25 +120,51 @@ function collectLibrariesByRepository(
   return Array.from(repositories.values());
 }
 
-async function authenticateGitHubToken(octokit: Octokit): Promise<void> {
+async function requestGitHubApi(
+  token: string,
+  path: string,
+): Promise<Response> {
+  const response = await fetch(new URL(path, GITHUB_API_URL), {
+    headers: {
+      Accept: "application/vnd.github+json",
+      Authorization: `Bearer ${token}`,
+      "User-Agent": "jsonwebtoken.github.io",
+      "X-GitHub-Api-Version": "2022-11-28",
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(
+      `GitHub API request failed with ${response.status} ${response.statusText}`,
+    );
+  }
+
+  return response;
+}
+
+async function authenticateGitHubToken(token: string): Promise<void> {
   try {
-    await octokit.rest.rateLimit.get();
+    await requestGitHubApi(token, "/rate_limit");
   } catch (cause) {
     throw new Error("Unable to authenticate GITHUB_TOKEN", { cause });
   }
 }
 
 async function getStarCount(
-  octokit: Octokit,
+  token: string,
   repository: GitHubRepository,
 ): Promise<number> {
   try {
-    const response = await octokit.rest.repos.get({
-      owner: repository.owner,
-      repo: repository.repo,
-    });
+    const owner = encodeURIComponent(repository.owner);
+    const repo = encodeURIComponent(repository.repo);
+    const response = await requestGitHubApi(token, `/repos/${owner}/${repo}`);
+    const data: unknown = await response.json();
 
-    return response.data.stargazers_count;
+    if (!isRecord(data) || typeof data.stargazers_count !== "number") {
+      throw new Error("GitHub API response has no star count");
+    }
+
+    return data.stargazers_count;
   } catch (cause) {
     throw new Error(`Unable to get the star count for ${repository.fullName}`, {
       cause,
@@ -153,7 +173,7 @@ async function getStarCount(
 }
 
 async function getStarCounts(
-  octokit: Octokit,
+  token: string,
   repositories: RepositoryLibraries[],
 ): Promise<Map<string, number>> {
   const starCounts = new Map<string, number>();
@@ -166,7 +186,7 @@ async function getStarCounts(
     const batch = repositories.slice(index, index + REQUEST_CONCURRENCY);
     const results = await Promise.allSettled(
       batch.map(async (repository) => {
-        const stars = await getStarCount(octokit, repository);
+        const stars = await getStarCount(token, repository);
 
         return [repository.fullName, stars] as const;
       }),
@@ -228,11 +248,11 @@ async function writeLibraryDictionary(
 async function main(): Promise<void> {
   const dictionary = await readLibraryDictionary();
   const repositories = collectLibrariesByRepository(dictionary);
-  const octokit = createOctokit();
+  const token = getRequiredEnvironmentVariable("GITHUB_TOKEN");
 
-  await authenticateGitHubToken(octokit);
+  await authenticateGitHubToken(token);
 
-  const starCounts = await getStarCounts(octokit, repositories);
+  const starCounts = await getStarCounts(token, repositories);
   const updatedLibraries = updateStarCounts(repositories, starCounts);
   const failedRepositories = repositories.length - starCounts.size;
 
@@ -244,7 +264,7 @@ async function main(): Promise<void> {
 
   if (failedRepositories > 0) {
     console.warn(
-      `Retained existing star counts for ${failedRepositories} GitHub repositories.`,
+      `Skipped ${failedRepositories} GitHub repositories whose star counts could not be fetched.`,
     );
   }
 }
