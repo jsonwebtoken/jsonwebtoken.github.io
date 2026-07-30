@@ -1,4 +1,4 @@
-import { createRemoteJWKSet, exportJWK, KeyLike } from "jose";
+import { createRemoteJWKSet, exportJWK, type CryptoKey } from "jose";
 import {
   DecodedJwtHeaderModel,
   DecodedJwtPayloadModel,
@@ -79,7 +79,7 @@ const safeCreateUrl = (url: string): Result<URL, string> => {
   }
 };
 
-const safeExportJWK = (key: KeyLike | Uint8Array) => {
+const safeExportJWK = (key: CryptoKey | Uint8Array) => {
   return fromPromise(exportJWK(key), (e) => {
     console.error(e);
 

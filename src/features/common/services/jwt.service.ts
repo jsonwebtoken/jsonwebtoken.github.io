@@ -16,8 +16,8 @@ import {
   CompactSign,
   CompactVerifyResult,
   importPKCS8,
+  type CryptoKey,
   type JWK,
-  KeyLike,
 } from "jose";
 import nodeForge from "node-forge";
 import { EncodingValues } from "@/features/common/values/encoding.values";
@@ -615,9 +615,9 @@ export async function validateAsymmetricKey({
   asymmetricPublicKeyFormat,
 }: {
   alg: string;
-  asymmetricPublicKey: KeyLike | string;
+  asymmetricPublicKey: CryptoKey | string;
   asymmetricPublicKeyFormat: AsymmetricKeyFormatValues;
-}): Promise<Result<KeyLike | Uint8Array, DebuggerErrorModel>> {
+}): Promise<Result<CryptoKey | Uint8Array, DebuggerErrorModel>> {
   const spki = `-----BEGIN PUBLIC KEY-----`;
   const pkcs1 = `-----BEGIN RSA PUBLIC KEY-----`;
   const x509 = `-----BEGIN CERTIFICATE-----`;
@@ -783,7 +783,7 @@ export async function validateAsymmetricKey({
 type VerifyDigitallySignedJwtParams = {
   jwt: string;
   alg: string;
-  asymmetricPublicKey: KeyLike | string;
+  asymmetricPublicKey: CryptoKey | string;
   asymmetricPublicKeyFormat: AsymmetricKeyFormatValues;
 };
 
@@ -924,7 +924,7 @@ export const getAsymmetricKeyCryptoKey = async (
   key: string,
   alg: string,
   keyFormat: AsymmetricKeyFormatValues,
-): Promise<Result<KeyLike | Uint8Array, string>> => {
+): Promise<Result<CryptoKey | Uint8Array, string>> => {
   if (keyFormat === AsymmetricKeyFormatValues.PEM) {
     if (key.startsWith("-----BEGIN RSA PRIVATE KEY-----")) {
       const safePrivateKeyFromPemResult = safePrivateKeyFromPem(key);
@@ -1043,7 +1043,7 @@ const signValue = (compactSign: CompactSign, key: Uint8Array) => {
 
 const signValueWithPrivateKey = (
   compactSign: CompactSign,
-  key: KeyLike | Uint8Array,
+  key: CryptoKey | Uint8Array,
 ) => {
   return fromPromise(compactSign.sign(key), (e) => {
     console.error(e);

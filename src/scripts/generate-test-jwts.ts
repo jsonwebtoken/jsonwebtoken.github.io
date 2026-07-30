@@ -16,7 +16,6 @@ import {
   CompactJWSHeaderParameters,
   CompactSign,
   exportJWK,
-  KeyLike,
   UnsecuredJWT,
 } from "jose";
 import { EncodingValues } from "@/features/common/values/encoding.values";
@@ -69,7 +68,7 @@ async function createJWT({
 }: {
   header: CompactJWSHeaderParameters;
   payload: object;
-  secret: Uint8Array | KeyLike;
+  secret: Uint8Array;
 }): Promise<string> {
   try {
     const jwsPayload = JSON.stringify(payload);

@@ -11,7 +11,7 @@ import {
   importJWK,
   importSPKI,
   importX509,
-  KeyLike,
+  type CryptoKey,
 } from "jose";
 import nodeForge from "node-forge";
 import base64url from "base64url";
@@ -205,7 +205,7 @@ export const safeImportJWK = fromAsyncThrowable(importJWK, (e) => {
   });
 });
 
-export const safeCompactVerify = (jws: string, key: Uint8Array | KeyLike) => {
+export const safeCompactVerify = (jws: string, key: Uint8Array | CryptoKey) => {
   return fromPromise(compactVerify(jws, key), (e) => {
     if (e instanceof Error) {
       if (e.name === "JWSSignatureVerificationFailed") {
