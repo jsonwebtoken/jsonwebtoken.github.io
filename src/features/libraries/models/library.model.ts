@@ -27,6 +27,9 @@ export interface LibraryModel {
     es256k?: boolean;
     ed25519?: boolean;
     ed448?: boolean;
+    "ml-dsa-44"?: boolean;
+    "ml-dsa-65"?: boolean;
+    "ml-dsa-87"?: boolean;
   };
   authorUrl: string | null;
   authorName: string;

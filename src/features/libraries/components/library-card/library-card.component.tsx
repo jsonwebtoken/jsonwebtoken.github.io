@@ -229,6 +229,18 @@ export const LibraryCardComponent: React.FC<LibraryCardComponentProps> = ({
           <AlgItemComponent label="EdDSA" isSupported={support.eddsa} />
           <AlgItemComponent label="Ed25519" isSupported={support.ed25519} />
           <AlgItemComponent label="Ed448" isSupported={support.ed448} />
+          <AlgItemComponent
+            label="ML-DSA-44"
+            isSupported={support["ml-dsa-44"]}
+          />
+          <AlgItemComponent
+            label="ML-DSA-65"
+            isSupported={support["ml-dsa-65"]}
+          />
+          <AlgItemComponent
+            label="ML-DSA-87"
+            isSupported={support["ml-dsa-87"]}
+          />
         </ul>
       </div>
       {minimumVersion && (
