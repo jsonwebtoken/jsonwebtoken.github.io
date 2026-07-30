@@ -343,6 +343,53 @@ class _TokenDecoderService {
     return stateUpdate;
   }
 
+  async loadDecoderUrlInputs({
+    alg,
+    symmetricSecretKey,
+    symmetricSecretKeyEncoding,
+    asymmetricPublicKey,
+    asymmetricPublicKeyFormat,
+    jwt,
+    publicKey,
+    publicKeyFormat,
+  }: {
+    alg: string;
+    symmetricSecretKey: string;
+    symmetricSecretKeyEncoding: EncodingValues;
+    asymmetricPublicKey: string;
+    asymmetricPublicKeyFormat: AsymmetricKeyFormatValues;
+    jwt: string;
+    publicKey?: string;
+    publicKeyFormat?: AsymmetricKeyFormatValues;
+  }): Promise<Partial<DecoderStoreState>> {
+    const cleanJwtInput = extractJwt(jwt);
+    const validateJwtFormatResult = validateJwtFormat(cleanJwtInput);
+
+    if (
+      publicKey?.trim() &&
+      publicKeyFormat &&
+      validateJwtFormatResult.isOk() &&
+      validateJwtFormatResult.value.type === JwtTypeValues.DigitallySigned
+    ) {
+      return this.loadDecoderInputs({
+        algType: SigningAlgCategoryValues.ASYMMETRIC,
+        alg: validateJwtFormatResult.value.signingAlgorithm,
+        jwt: cleanJwtInput,
+        asymmetricPublicKey: publicKey,
+        asymmetricPublicKeyFormat: publicKeyFormat,
+      });
+    }
+
+    return this.handleJwtChange({
+      alg,
+      symmetricSecretKey,
+      symmetricSecretKeyEncoding,
+      asymmetricPublicKey,
+      asymmetricPublicKeyFormat,
+      newToken: jwt,
+    });
+  }
+
   async handleJwtChange({
     alg,
     symmetricSecretKey,

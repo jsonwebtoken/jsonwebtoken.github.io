@@ -39,6 +39,8 @@ export const DEFAULT_PAYLOAD = {
 
 export const DEFAULT_DECODED_PAYLOAD = JSON.stringify(DEFAULT_PAYLOAD, null, 2);
 
+let latestJwtChangeRequestId = 0;
+
 export type DecoderStoreState = {
   jwt: string;
   alg: string;
@@ -67,21 +69,26 @@ export type DecoderStoreState = {
 };
 
 type DecoderStoreActions = {
-  selectDecodingExample: (algorithm: string) => void;
-  handleJwtChange: (newToken: string) => void;
+  selectDecodingExample: (algorithm: string) => Promise<void>;
+  handleJwtChange: (newToken: string) => Promise<void>;
+  loadDecoderUrlInputs: (params: {
+    jwt: string;
+    publicKey?: string;
+    publicKeyFormat?: AsymmetricKeyFormatValues;
+  }) => Promise<void>;
   handleSymmetricSecretKeyChange: (newSymmetricSecretKey: string) => void;
   handleSymmetricSecretKeyEncodingChange: (
-    newSymmetricSecretKey: EncodingValues
+    newSymmetricSecretKey: EncodingValues,
   ) => void;
   handleAsymmetricPublicKeyChange: (newAsymmetricPublicKey: string) => void;
   handleAsymmetricPublicKeyFormatChange: (
-    newFormat: AsymmetricKeyFormatValues
+    newFormat: AsymmetricKeyFormatValues,
   ) => void;
   resetControlledSymmetricSecretKey: () => void;
   resetControlledAsymmetricPublicKey: () => void;
   showUseHashWarning: () => void;
   hideUseHashWarning: () => void;
-  loadDecoderInputs: (params: DecoderInputsModel) => void;
+  loadDecoderInputs: (params: DecoderInputsModel) => Promise<void>;
 };
 
 export const initialState: DecoderStoreState = {
@@ -109,11 +116,20 @@ export const useDecoderStore = create<DecoderStore>()(
   subscribeWithSelector((set, get) => ({
     ...initialState,
     selectDecodingExample: async (algorithm) => {
+      const requestId = ++latestJwtChangeRequestId;
       const update = await TokenDecoderService.selectDecodingExample(algorithm);
 
-      set(update);
+      if (requestId !== latestJwtChangeRequestId) {
+        return;
+      }
+
+      set({
+        ...update,
+        isLoading: false,
+      });
     },
     handleJwtChange: async (newToken) => {
+      const requestId = ++latestJwtChangeRequestId;
       const {
         alg,
         symmetricSecretKey,
@@ -136,6 +152,46 @@ export const useDecoderStore = create<DecoderStore>()(
         asymmetricPublicKeyFormat,
         newToken,
       });
+
+      if (requestId !== latestJwtChangeRequestId) {
+        return;
+      }
+
+      set({
+        ...update,
+        isLoading: false,
+      });
+    },
+    loadDecoderUrlInputs: async ({ jwt, publicKey, publicKeyFormat }) => {
+      const requestId = ++latestJwtChangeRequestId;
+      const {
+        alg,
+        symmetricSecretKey,
+        symmetricSecretKeyEncoding,
+        asymmetricPublicKey,
+        asymmetricPublicKeyFormat,
+      } = get();
+
+      set({
+        isLoading: true,
+        decodedHeader: "",
+        decodedPayload: "",
+      });
+
+      const update = await TokenDecoderService.loadDecoderUrlInputs({
+        alg,
+        symmetricSecretKey,
+        symmetricSecretKeyEncoding,
+        asymmetricPublicKey,
+        asymmetricPublicKeyFormat,
+        jwt,
+        publicKey,
+        publicKeyFormat,
+      });
+
+      if (requestId !== latestJwtChangeRequestId) {
+        return;
+      }
 
       set({
         ...update,
@@ -215,9 +271,17 @@ export const useDecoderStore = create<DecoderStore>()(
       });
     },
     loadDecoderInputs: async (params) => {
+      const requestId = ++latestJwtChangeRequestId;
       const update = await TokenDecoderService.loadDecoderInputs(params);
 
-      set(update);
+      if (requestId !== latestJwtChangeRequestId) {
+        return;
+      }
+
+      set({
+        ...update,
+        isLoading: false,
+      });
     },
-  }))
+  })),
 );
