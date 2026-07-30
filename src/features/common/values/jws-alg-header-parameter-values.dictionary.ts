@@ -129,8 +129,6 @@ export const jwsAlgHeaderParameterValuesDictionary: JwsExampleAlgHeaderParameter
 
 export const algDictionary = {
   NONE: "none",
-  ES512: "ES512",
-  ECDSA: "ECDSA",
   EdDSA: "EdDSA",
   Ed25519: "Ed25519",
 };

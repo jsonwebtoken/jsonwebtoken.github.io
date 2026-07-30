@@ -1,19 +1,12 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import styles from "./debugger-alg-picker.module.scss";
 import { getPickersUiDictionary } from "@/features/localization/services/ui-language-dictionary.service";
 import { useEncoderStore } from "@/features/encoder/services/encoder.store";
-import {
-  isEd25519Supported,
-  isP521Supported,
-} from "@/features/common/services/jwt.service";
 import { useDecoderStore } from "@/features/decoder/services/decoder.store";
 import { useDebuggerStore } from "@/features/debugger/services/debugger.store";
 import { DebuggerWidgetValues } from "@/features/common/values/debugger-widget.values";
 import { DebuggerPickerComponent } from "@/features/common/components/debugger-picker/debugger-picker.component";
-import {
-  algDictionary,
-  jwsExampleAlgHeaderParameterValuesDictionary,
-} from "@/features/common/values/jws-alg-header-parameter-values.dictionary";
+import { jwsExampleAlgHeaderParameterValuesDictionary } from "@/features/common/values/jws-alg-header-parameter-values.dictionary";
 import { useButton } from "@react-aria/button";
 import { DebuggerPickerOptionModel } from "@/features/common/models/debugger-picker-option.model";
 
@@ -63,13 +56,6 @@ export const WidgetAlgPickerComponent: React.FC<
   const [pickerState, setPickerState] = useState<PickerStates>(
     PickerStates.IDLE,
   );
-  const [capabilities, setCapabilities] = useState({
-    canUseEs512: false,
-    canUseEd25519: false,
-    isLoading: true,
-  });
-
-  const { canUseEs512, canUseEd25519, isLoading } = capabilities;
 
   const dictionary = getPickersUiDictionary(languageCode);
 
@@ -94,21 +80,6 @@ export const WidgetAlgPickerComponent: React.FC<
 
     setPickerState(PickerStates.IDLE);
   };
-
-  useEffect(() => {
-    (async function checkCapabilities() {
-      const [canUseEs512, canUseEd25519] = await Promise.all([
-        isP521Supported(),
-        isEd25519Supported(),
-      ]);
-
-      setCapabilities({
-        canUseEs512,
-        canUseEd25519,
-        isLoading: false,
-      });
-    })();
-  }, []);
 
   const noneAlgOptions: DebuggerPickerOptionModel[] = useMemo(() => {
     return Object.entries(
@@ -137,45 +108,17 @@ export const WidgetAlgPickerComponent: React.FC<
   }, []);
 
   const asymmetricAlgOptions: DebuggerPickerOptionModel[] = useMemo(() => {
-    const digitalSignatureEntries = Object.entries(
+    return Object.entries(
       jwsExampleAlgHeaderParameterValuesDictionary.digitalSignature,
-    );
-
-    const asymmetricAlgOptions: DebuggerPickerOptionModel[] = [];
-
-    for (let i = 0; i < digitalSignatureEntries.length; i++) {
-      const entry = digitalSignatureEntries[i];
-
+    ).map((entry) => {
       const [key, value] = entry;
 
-      if (key === algDictionary.ES512) {
-        asymmetricAlgOptions.push({
-          value: key,
-          label: value.name,
-          isDisabled: !canUseEs512,
-        });
-
-        continue;
-      }
-
-      if (key === algDictionary.Ed25519) {
-        asymmetricAlgOptions.push({
-          value: key,
-          label: value.name,
-          isDisabled: !canUseEd25519,
-        });
-
-        continue;
-      }
-
-      asymmetricAlgOptions.push({
+      return {
         value: key,
         label: value.name,
-      });
-    }
-
-    return asymmetricAlgOptions;
-  }, [canUseEd25519, canUseEs512]);
+      };
+    });
+  }, []);
 
   const algOptions = useMemo(() => {
     return [...noneAlgOptions, ...symmetricAlgOptions, ...asymmetricAlgOptions];
@@ -185,7 +128,7 @@ export const WidgetAlgPickerComponent: React.FC<
     <div
       role="region"
       aria-label={label}
-      aria-busy={isLoading}
+      aria-busy={false}
       className={styles.alg_picker}
     >
       <div className={styles.container}>

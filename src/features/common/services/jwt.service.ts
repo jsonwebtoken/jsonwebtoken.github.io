@@ -1388,36 +1388,3 @@ export const checkHmacSecretLength = (
     message: `A key of ${algSize} bits or larger MUST be used with HS${algSize} as specified on [RFC 7518](https://datatracker.ietf.org/doc/html/rfc7518#section-3.2).`,
   });
 };
-
-export const isP521Supported = async (): Promise<boolean> => {
-  try {
-    await window.crypto.subtle.generateKey(
-      {
-        name: algDictionary.ECDSA,
-        namedCurve: "P-521",
-      },
-      true,
-      ["sign", "verify"],
-    );
-
-    return true;
-  } catch (e) {
-    return false;
-  }
-};
-
-export const isEd25519Supported = async (): Promise<boolean> => {
-  try {
-    await window.crypto.subtle.generateKey(
-      {
-        name: algDictionary.Ed25519,
-      },
-      true,
-      ["sign", "verify"],
-    );
-
-    return true;
-  } catch (e) {
-    return false;
-  }
-};
