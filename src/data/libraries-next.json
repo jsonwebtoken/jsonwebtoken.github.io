@@ -3001,7 +3001,7 @@
         "stars": 284
       },
       {
-        "minimumVersion": null,
+        "minimumVersion": "3.3.0",
         "support": {
           "sign": true,
           "verify": true,
@@ -3012,25 +3012,28 @@
           "nbf": true,
           "iat": true,
           "jti": true,
+          "typ": true,
           "hs256": true,
           "hs384": true,
           "hs512": true,
           "rs256": true,
           "rs384": true,
           "rs512": true,
-          "es256": false,
-          "es384": false,
-          "es512": false,
-          "ps256": false,
-          "ps384": false,
-          "ps512": false
+          "es256": true,
+          "es384": true,
+          "es512": true,
+          "ps256": true,
+          "ps384": true,
+          "ps512": true,
+          "eddsa": true,
+          "es256k": true
         },
         "authorUrl": "https://github.com/miladrahimi",
         "authorName": "Milad Rahimi",
         "gitHubRepoPath": "miladrahimi/php-jwt",
         "repoUrl": "https://github.com/miladrahimi/php-jwt",
         "installCommandMarkdown": ["composer require miladrahimi/php-jwt"],
-        "stars": 60
+        "stars": 71
       },
       {
         "minimumVersion": "7.2.1",
