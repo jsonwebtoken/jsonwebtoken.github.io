@@ -504,17 +504,22 @@ test.describe("decode JWTs", () => {
               status: MessageStatusValue.VISIBLE,
             });
 
-            const formatPicker = page.locator(
-              ".react-select__single-value"
-            );
-
-            await formatPicker.click();
-
+            const pemFormatPickerControl = page
+              .locator(".react-select__single-value")
+              .filter({ hasText: entry.publicKeyFormat })
+              .locator(
+                'xpath=ancestor::div[contains(@class, "react-select__control")]'
+              );
+            await pemFormatPickerControl.dispatchEvent("mousedown", {
+              button: 0,
+            });
             await page
+              .getByRole("listbox")
               .getByRole("option", {
                 name: entrywithJwkKey.publicKeyFormat,
+                exact: true,
               })
-              .click();
+              .dispatchEvent("click");
 
             await expect
               .poll(async () => {
@@ -569,13 +574,22 @@ test.describe("decode JWTs", () => {
             expect(decodedHeader).toBe(entrywithJwkKey.header);
             expect(decodedPayload).toBe(entrywithJwkKey.payload);
 
-            await formatPicker.click();
-
+            const jwkFormatPickerControl = page
+              .locator(".react-select__single-value")
+              .filter({ hasText: entrywithJwkKey.publicKeyFormat })
+              .locator(
+                'xpath=ancestor::div[contains(@class, "react-select__control")]'
+              );
+            await jwkFormatPickerControl.dispatchEvent("mousedown", {
+              button: 0,
+            });
             await page
+              .getByRole("listbox")
               .getByRole("option", {
                 name: entry.publicKeyFormat,
+                exact: true,
               })
-              .click();
+              .dispatchEvent("click");
 
             await expect(secretKeyEditorInput).toHaveValue(entry.publicKey);
 
@@ -609,17 +623,22 @@ test.describe("decode JWTs", () => {
               status: MessageStatusValue.VISIBLE,
             });
 
-            const formatPicker = page.locator(
-              ".react-select__single-value"
-            );
-
-            await formatPicker.click();
-
+            const pemFormatPickerControl = page
+              .locator(".react-select__single-value")
+              .filter({ hasText: entry.publicKeyFormat })
+              .locator(
+                'xpath=ancestor::div[contains(@class, "react-select__control")]'
+              );
+            await pemFormatPickerControl.dispatchEvent("mousedown", {
+              button: 0,
+            });
             await page
+              .getByRole("listbox")
               .getByRole("option", {
                 name: entrywithJwkKey.publicKeyFormat,
+                exact: true,
               })
-              .click();
+              .dispatchEvent("click");
 
             await secretKeyEditorInput.fill(
               JSON.stringify(entrywithJwkKey.publicKey),

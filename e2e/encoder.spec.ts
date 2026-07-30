@@ -463,16 +463,20 @@ test.describe("encode JWTs", () => {
           );
         }
 
-        const formatPicker = page.locator(
-          ".react-select__single-value"
-        );
-        await formatPicker.click();
-
+        const pemFormatPickerControl = page
+          .locator(".react-select__single-value")
+          .filter({ hasText: tokenWithPemKey.privateKeyFormat })
+          .locator(
+            'xpath=ancestor::div[contains(@class, "react-select__control")]'
+          );
+        await pemFormatPickerControl.dispatchEvent("mousedown", { button: 0 });
         await page
+          .getByRole("listbox")
           .getByRole("option", {
             name: tokenWithJwkKey.privateKeyFormat,
+            exact: true,
           })
-          .click();
+          .dispatchEvent("click");
 
         await expect
           .poll(async () => {
@@ -498,13 +502,20 @@ test.describe("encode JWTs", () => {
           );
         }
 
-        await formatPicker.click();
-
+        const jwkFormatPickerControl = page
+          .locator(".react-select__single-value")
+          .filter({ hasText: tokenWithJwkKey.privateKeyFormat })
+          .locator(
+            'xpath=ancestor::div[contains(@class, "react-select__control")]'
+          );
+        await jwkFormatPickerControl.dispatchEvent("mousedown", { button: 0 });
         await page
+          .getByRole("listbox")
           .getByRole("option", {
             name: tokenWithPemKey.privateKeyFormat,
+            exact: true,
           })
-          .click();
+          .dispatchEvent("click");
 
         await expect(secretKeyEditorInput).toHaveValue(
           tokenWithPemKey.privateKey
