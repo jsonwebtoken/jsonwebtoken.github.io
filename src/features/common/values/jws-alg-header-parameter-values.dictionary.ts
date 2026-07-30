@@ -57,7 +57,7 @@ export const jwsExampleAlgHeaderParameterValuesDictionary: JwsAlgHeaderParameter
       PS384: { name: "PS384", description: "HMAC using SHA-256" },
       PS512: { name: "PS512", description: "HMAC using SHA-256" },
       Ed25519: {
-        name: "EdDSA (Ed25519)",
+        name: "Ed25519",
         description: "Edwards-curve Digital Signature Algorithm",
       },
     },
@@ -86,6 +86,7 @@ export interface JwsExampleAlgHeaderParameterValuesDictionaryModel {
     PS384: JwsAlgHeaderParameterModel;
     PS512: JwsAlgHeaderParameterModel;
     EdDSA: JwsAlgHeaderParameterModel;
+    Ed25519: JwsAlgHeaderParameterModel;
   };
 }
 
@@ -117,6 +118,10 @@ export const jwsAlgHeaderParameterValuesDictionary: JwsExampleAlgHeaderParameter
       PS512: { name: "PS512", description: "HMAC using SHA-256" },
       EdDSA: {
         name: "EdDSA",
+        description: "Edwards-curve Digital Signature Algorithm",
+      },
+      Ed25519: {
+        name: "Ed25519",
         description: "Edwards-curve Digital Signature Algorithm",
       },
     },

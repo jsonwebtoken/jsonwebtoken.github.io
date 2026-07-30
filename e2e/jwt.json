@@ -366,16 +366,16 @@
     "Ed25519": {
       "type": "digital",
       "withPemKey": {
-        "header": "{\n  \"alg\": \"EdDSA\",\n  \"type\": \"JWT\"\n}",
+        "header": "{\n  \"alg\": \"Ed25519\",\n  \"type\": \"JWT\"\n}",
         "payload": "{\n  \"name\": \"Eric Arthur Blair\",\n  \"given_name\": \"Eric\",\n  \"middle_name\": \"Arthur\",\n  \"family_name\": \"Blair\",\n  \"nickname\": \"George Orwell\",\n  \"preferred_username\": \"Orwell\",\n  \"profile\": \"https://en.wikipedia.org/wiki/George_Orwell\",\n  \"picture\": \"https://upload.wikimedia.org/wikipedia/commons/7/7e/George_Orwell_press_photo.jpg\",\n  \"website\": \"https://www.orwellfoundation.com/the-orwell-foundation/orwell/books-by-orwell/\",\n  \"birthdate\": -2099242800,\n  \"locale\": \"en-GB\",\n  \"updated_at\": 441781200,\n  \"zoneinfo\": \"Europe/London\"\n}",
         "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAjz/HpwFQrkra31uAtkUHyFv36FccSdMncXP2LKV0cUc=\n-----END PUBLIC KEY-----",
         "publicKeyFormat": "PEM",
         "privateKey": "-----BEGIN PRIVATE KEY-----\nMC4CAQAwBQYDK2VwBCIEIE0t8fJoUmw1UA6ep5r5WpOIcA+uGPv+MOt5y5xbwZWa\n-----END PRIVATE KEY-----",
         "privateKeyFormat": "PEM",
-        "jwt": "eyJhbGciOiJFZERTQSIsInR5cGUiOiJKV1QifQ.eyJuYW1lIjoiRXJpYyBBcnRodXIgQmxhaXIiLCJnaXZlbl9uYW1lIjoiRXJpYyIsIm1pZGRsZV9uYW1lIjoiQXJ0aHVyIiwiZmFtaWx5X25hbWUiOiJCbGFpciIsIm5pY2tuYW1lIjoiR2VvcmdlIE9yd2VsbCIsInByZWZlcnJlZF91c2VybmFtZSI6Ik9yd2VsbCIsInByb2ZpbGUiOiJodHRwczovL2VuLndpa2lwZWRpYS5vcmcvd2lraS9HZW9yZ2VfT3J3ZWxsIiwicGljdHVyZSI6Imh0dHBzOi8vdXBsb2FkLndpa2ltZWRpYS5vcmcvd2lraXBlZGlhL2NvbW1vbnMvNy83ZS9HZW9yZ2VfT3J3ZWxsX3ByZXNzX3Bob3RvLmpwZyIsIndlYnNpdGUiOiJodHRwczovL3d3dy5vcndlbGxmb3VuZGF0aW9uLmNvbS90aGUtb3J3ZWxsLWZvdW5kYXRpb24vb3J3ZWxsL2Jvb2tzLWJ5LW9yd2VsbC8iLCJiaXJ0aGRhdGUiOi0yMDk5MjQyODAwLCJsb2NhbGUiOiJlbi1HQiIsInVwZGF0ZWRfYXQiOjQ0MTc4MTIwMCwiem9uZWluZm8iOiJFdXJvcGUvTG9uZG9uIn0.axG8VrQJ6QF7nLMj5MISmuXc0mZYm3VdcKk2BpU3vYgD0hi91gegw_rb3MFZu3gJHY0K2L5EUYPFM93KklPEBQ"
+        "jwt": "eyJhbGciOiJFZDI1NTE5IiwidHlwZSI6IkpXVCJ9.eyJuYW1lIjoiRXJpYyBBcnRodXIgQmxhaXIiLCJnaXZlbl9uYW1lIjoiRXJpYyIsIm1pZGRsZV9uYW1lIjoiQXJ0aHVyIiwiZmFtaWx5X25hbWUiOiJCbGFpciIsIm5pY2tuYW1lIjoiR2VvcmdlIE9yd2VsbCIsInByZWZlcnJlZF91c2VybmFtZSI6Ik9yd2VsbCIsInByb2ZpbGUiOiJodHRwczovL2VuLndpa2lwZWRpYS5vcmcvd2lraS9HZW9yZ2VfT3J3ZWxsIiwicGljdHVyZSI6Imh0dHBzOi8vdXBsb2FkLndpa2ltZWRpYS5vcmcvd2lraXBlZGlhL2NvbW1vbnMvNy83ZS9HZW9yZ2VfT3J3ZWxsX3ByZXNzX3Bob3RvLmpwZyIsIndlYnNpdGUiOiJodHRwczovL3d3dy5vcndlbGxmb3VuZGF0aW9uLmNvbS90aGUtb3J3ZWxsLWZvdW5kYXRpb24vb3J3ZWxsL2Jvb2tzLWJ5LW9yd2VsbC8iLCJiaXJ0aGRhdGUiOi0yMDk5MjQyODAwLCJsb2NhbGUiOiJlbi1HQiIsInVwZGF0ZWRfYXQiOjQ0MTc4MTIwMCwiem9uZWluZm8iOiJFdXJvcGUvTG9uZG9uIn0.ymupeGgBkXyS4CeWt1q_N3q9SIXcDVL-wbW0-7asb8jVvSjxaoXjiU3BGsE-KoUsTrwLJvLyNEAGW_JfMejeAA"
       },
       "withJwkKey": {
-        "header": "{\n  \"alg\": \"EdDSA\",\n  \"type\": \"JWT\"\n}",
+        "header": "{\n  \"alg\": \"Ed25519\",\n  \"type\": \"JWT\"\n}",
         "payload": "{\n  \"name\": \"Eric Arthur Blair\",\n  \"given_name\": \"Eric\",\n  \"middle_name\": \"Arthur\",\n  \"family_name\": \"Blair\",\n  \"nickname\": \"George Orwell\",\n  \"preferred_username\": \"Orwell\",\n  \"profile\": \"https://en.wikipedia.org/wiki/George_Orwell\",\n  \"picture\": \"https://upload.wikimedia.org/wikipedia/commons/7/7e/George_Orwell_press_photo.jpg\",\n  \"website\": \"https://www.orwellfoundation.com/the-orwell-foundation/orwell/books-by-orwell/\",\n  \"birthdate\": -2099242800,\n  \"locale\": \"en-GB\",\n  \"updated_at\": 441781200,\n  \"zoneinfo\": \"Europe/London\"\n}",
         "publicKey": {
           "crv": "Ed25519",
@@ -390,7 +390,7 @@
           "kty": "OKP"
         },
         "privateKeyFormat": "JWK",
-        "jwt": "eyJhbGciOiJFZERTQSIsInR5cGUiOiJKV1QifQ.eyJuYW1lIjoiRXJpYyBBcnRodXIgQmxhaXIiLCJnaXZlbl9uYW1lIjoiRXJpYyIsIm1pZGRsZV9uYW1lIjoiQXJ0aHVyIiwiZmFtaWx5X25hbWUiOiJCbGFpciIsIm5pY2tuYW1lIjoiR2VvcmdlIE9yd2VsbCIsInByZWZlcnJlZF91c2VybmFtZSI6Ik9yd2VsbCIsInByb2ZpbGUiOiJodHRwczovL2VuLndpa2lwZWRpYS5vcmcvd2lraS9HZW9yZ2VfT3J3ZWxsIiwicGljdHVyZSI6Imh0dHBzOi8vdXBsb2FkLndpa2ltZWRpYS5vcmcvd2lraXBlZGlhL2NvbW1vbnMvNy83ZS9HZW9yZ2VfT3J3ZWxsX3ByZXNzX3Bob3RvLmpwZyIsIndlYnNpdGUiOiJodHRwczovL3d3dy5vcndlbGxmb3VuZGF0aW9uLmNvbS90aGUtb3J3ZWxsLWZvdW5kYXRpb24vb3J3ZWxsL2Jvb2tzLWJ5LW9yd2VsbC8iLCJiaXJ0aGRhdGUiOi0yMDk5MjQyODAwLCJsb2NhbGUiOiJlbi1HQiIsInVwZGF0ZWRfYXQiOjQ0MTc4MTIwMCwiem9uZWluZm8iOiJFdXJvcGUvTG9uZG9uIn0.axG8VrQJ6QF7nLMj5MISmuXc0mZYm3VdcKk2BpU3vYgD0hi91gegw_rb3MFZu3gJHY0K2L5EUYPFM93KklPEBQ"
+        "jwt": "eyJhbGciOiJFZDI1NTE5IiwidHlwZSI6IkpXVCJ9.eyJuYW1lIjoiRXJpYyBBcnRodXIgQmxhaXIiLCJnaXZlbl9uYW1lIjoiRXJpYyIsIm1pZGRsZV9uYW1lIjoiQXJ0aHVyIiwiZmFtaWx5X25hbWUiOiJCbGFpciIsIm5pY2tuYW1lIjoiR2VvcmdlIE9yd2VsbCIsInByZWZlcnJlZF91c2VybmFtZSI6Ik9yd2VsbCIsInByb2ZpbGUiOiJodHRwczovL2VuLndpa2lwZWRpYS5vcmcvd2lraS9HZW9yZ2VfT3J3ZWxsIiwicGljdHVyZSI6Imh0dHBzOi8vdXBsb2FkLndpa2ltZWRpYS5vcmcvd2lraXBlZGlhL2NvbW1vbnMvNy83ZS9HZW9yZ2VfT3J3ZWxsX3ByZXNzX3Bob3RvLmpwZyIsIndlYnNpdGUiOiJodHRwczovL3d3dy5vcndlbGxmb3VuZGF0aW9uLmNvbS90aGUtb3J3ZWxsLWZvdW5kYXRpb24vb3J3ZWxsL2Jvb2tzLWJ5LW9yd2VsbC8iLCJiaXJ0aGRhdGUiOi0yMDk5MjQyODAwLCJsb2NhbGUiOiJlbi1HQiIsInVwZGF0ZWRfYXQiOjQ0MTc4MTIwMCwiem9uZWluZm8iOiJFdXJvcGUvTG9uZG9uIn0.ymupeGgBkXyS4CeWt1q_N3q9SIXcDVL-wbW0-7asb8jVvSjxaoXjiU3BGsE-KoUsTrwLJvLyNEAGW_JfMejeAA"
       }
     }
   }

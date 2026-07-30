@@ -25,7 +25,6 @@ import { EncodingValues } from "@/features/common/values/encoding.values";
 import { err, ok, Result } from "neverthrow";
 import { DebuggerErrorModel } from "@/features/common/models/debugger-error.model";
 import {
-  getAlgName,
   safeJsonParse,
   safeJsonStringify,
 } from "@/features/common/services/utils";
@@ -83,7 +82,7 @@ class _TokenEncoderService {
 
     const jwt = DefaultTokensValues[algorithmPickerOptionValue];
 
-    const algorithm = getAlgName(algorithmPickerOptionValue);
+    const algorithm = algorithmPickerOptionValue;
 
     const header = isNoneAlg(algorithm)
       ? {

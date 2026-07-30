@@ -1,9 +1,16 @@
 import { describe, expect, test } from "vitest";
-import { DefaultTokensValues } from "@/features/common/values/default-tokens.values";
-import { validateJwtFormat } from "@/features/common/services/jwt.service";
+import {
+  DefaultTokensValues,
+  DefaultTokenWithKeysModel,
+} from "@/features/common/values/default-tokens.values";
+import {
+  validateJwtFormat,
+  verifyDigitallySignedJwt,
+} from "@/features/common/services/jwt.service";
 import { JwtTypeValues } from "@/features/common/values/jwt-type.values";
 import { DebuggerTaskValues } from "@/features/common/values/debugger-task.values";
 import { DebuggerInputValues } from "@/features/common/values/debugger-input.values";
+import { AsymmetricKeyFormatValues } from "@/features/common/values/asymmetric-key-format.values";
 
 describe("validateJwtFormat", () => {
   const tokenHS256 = DefaultTokensValues.HS256.token;
@@ -275,5 +282,48 @@ describe("validateJwtFormat", () => {
         message: `This tool only supports a JWT that uses the JWS Compact Serialization, which must have three base64url-encoded segments separated by two period ('.') characters as defined on [RFC 7515](https://datatracker.ietf.org/doc/html/rfc7515#section-3.3)`,
       })
     );
+  });
+});
+
+describe("Ed25519", () => {
+  const token = DefaultTokensValues.Ed25519 as DefaultTokenWithKeysModel;
+  const legacyEdDsaToken =
+    "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.JkKWCY39IdWEQttmdqR7VdsvT-_QxheW_eb0S5wr_j83ltux_JDUIXs7a3Dtn3xuqzuhetiuJrWIvy5TzimeCg";
+
+  test("uses the Ed25519 identifier for new examples", () => {
+    const result = validateJwtFormat(token.token);
+
+    expect(result.isOk()).toBe(true);
+    expect(result.unwrapOr(null)).toMatchObject({
+      signingAlgorithm: "Ed25519",
+      decoded: {
+        header: {
+          alg: "Ed25519",
+        },
+      },
+    });
+  });
+
+  test("continues to validate and verify pasted EdDSA tokens", async () => {
+    const validationResult = validateJwtFormat(legacyEdDsaToken);
+
+    expect(validationResult.isOk()).toBe(true);
+    expect(validationResult.unwrapOr(null)).toMatchObject({
+      signingAlgorithm: "EdDSA",
+      decoded: {
+        header: {
+          alg: "EdDSA",
+        },
+      },
+    });
+
+    const verificationResult = await verifyDigitallySignedJwt({
+      jwt: legacyEdDsaToken,
+      alg: "EdDSA",
+      asymmetricPublicKey: token.publicKey,
+      asymmetricPublicKeyFormat: AsymmetricKeyFormatValues.PEM,
+    });
+
+    expect(verificationResult.unwrapOr(false)).toBe(true);
   });
 });

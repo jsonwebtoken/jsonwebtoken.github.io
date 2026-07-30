@@ -21,7 +21,6 @@ import {
 import { EncodingValues } from "@/features/common/values/encoding.values";
 import { writeFileSync } from "node:fs";
 import { join } from "path";
-import { getAlgName } from "@/features/common/services/utils";
 import { createPrivateKey } from "node:crypto";
 import { AsymmetricKeyFormatValues } from "@/features/common/values/asymmetric-key-format.values";
 import {
@@ -166,10 +165,9 @@ async function generateKeys(algorithm: string): Promise<KeyPair> {
 (async function () {
   for (let i = 0; i < algs.length; i++) {
     const alg = algs[i];
-    const cleanAlg = getAlgName(alg);
 
     const header = {
-      alg: cleanAlg,
+      alg,
       type: "JWT",
     };
 
@@ -257,7 +255,7 @@ async function generateKeys(algorithm: string): Promise<KeyPair> {
       } as JwtDictionaryEntryModel;
     }
 
-    if (isDigitalSignatureAlg(cleanAlg)) {
+    if (isDigitalSignatureAlg(alg)) {
       const { privateKey, privateJWK, publicKey, publicJWK } =
         await generateKeys(alg);
 

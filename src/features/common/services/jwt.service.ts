@@ -22,7 +22,6 @@ import {
 import nodeForge from "node-forge";
 import { EncodingValues } from "@/features/common/values/encoding.values";
 import {
-  getAlgName,
   getOperationException,
   safeBase64url,
   safeBase64urlToBuffer,
@@ -82,11 +81,11 @@ export function isHmacAlg(algorithm: string): boolean {
 export function isDigitalSignatureAlg(algorithm: string): boolean {
   const alg = jwsAlgHeaderParameterValuesDictionary.digitalSignature[algorithm];
 
-  return !!alg || algorithm === algDictionary.EdDSA;
+  return !!alg;
 }
 
 export const getAlgSize = (value: string): Result<{ size: number }, string> => {
-  const algorithm = getAlgName(value);
+  const algorithm = value;
 
   if (!isSupportedAlg(algorithm)) {
     return err(
@@ -96,15 +95,16 @@ export const getAlgSize = (value: string): Result<{ size: number }, string> => {
 
   const algRegex = /^([a-zA-Z]+)(\d+)$/;
   const match = algorithm.match(algRegex);
-  const isEdDSA = algorithm === algDictionary.EdDSA;
+  const isEdwardsCurveAlgorithm =
+    algorithm === algDictionary.EdDSA || algorithm === algDictionary.Ed25519;
   const isNone = algorithm === algDictionary.NONE;
 
   if (isNone) {
     return err(`Can't calculate length for Unsecured JWT.`);
   }
 
-  if (isEdDSA) {
-    return err(`Can't calculate length from EdDSA algorithm.`);
+  if (isEdwardsCurveAlgorithm) {
+    return err(`Can't calculate length from ${algorithm} algorithm.`);
   }
 
   if (!match) {

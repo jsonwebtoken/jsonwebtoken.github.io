@@ -6,7 +6,6 @@ import {
 } from "@/features/common/values/default-tokens.values";
 import {
   extractJwt,
-  getAlgName,
   operationExceptionDictionary,
 } from "@/features/common/services/utils";
 import {
@@ -72,7 +71,7 @@ class _TokenDecoderService {
     const defaultToken =
       DefaultTokensValues[algorithmPickerOptionValue] || DEFAULT_JWT;
 
-    const algorithm = getAlgName(algorithmPickerOptionValue);
+    const algorithm = algorithmPickerOptionValue;
 
     if (isNoneAlg(algorithm)) {
       const token = defaultToken as DefaultUnsecuredTokenModel;

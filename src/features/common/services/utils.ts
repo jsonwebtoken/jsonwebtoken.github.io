@@ -15,7 +15,6 @@ import {
 } from "jose";
 import nodeForge from "node-forge";
 import base64url from "base64url";
-import { algDictionary } from "@/features/common/values/jws-alg-header-parameter-values.dictionary";
 
 export const extractJwt = (value: string): string => {
   if (!value) {
@@ -242,7 +241,3 @@ export const safePublicKeyToPem = fromThrowable(
     return "Unable to transform public key to PEM string.";
   },
 );
-
-export const getAlgName = (value: string) => {
-  return value === algDictionary.Ed25519 ? algDictionary.EdDSA : value;
-};
