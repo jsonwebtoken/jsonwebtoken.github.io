@@ -1,203 +1,255 @@
+import { readFile, rename, writeFile } from "node:fs/promises";
+import { join } from "node:path";
 import { Octokit } from "octokit";
-import { join } from "path";
-import { createAppAuth } from "@octokit/auth-app";
-import { err, ok, Result } from "neverthrow";
+import { format } from "prettier";
 
 import "dotenv/config";
-import { writeFileSync } from "node:fs";
-import { LibraryCategoryModel } from "@/features/libraries/models/library-category.model";
-import { safeDecodeBase64url } from "@/features/common/services/utils";
 
-// TODO: we need to update this with the repository that's going to be public with only the JSON files
-const owner = "auth0-developer-hub";
-const repository = "jsonwebtoken.github.io";
-const branch = "chore/update-footer-links";
+import type { LibraryCategoryModel } from "@/features/libraries/models/library-category.model";
+import type { LibraryModel } from "@/features/libraries/models/library.model";
 
-const octokit = new Octokit({
-  authStrategy: createAppAuth,
-  auth: {
-    appId: process.env.GITHUB_APP_ID,
-    privateKey: process.env.GITHUB_APP_PRIVATE_KEY,
-    installationId: process.env.GITHUB_INSTALLATION_ID,
-  },
-});
+const DATA_FILE_PATH = join(
+  process.cwd(),
+  "src",
+  "data",
+  "libraries-next.json",
+);
+const REQUEST_CONCURRENCY = 8;
 
-function numericCompare(a: string, b: string): number {
-  const lhs = parseInt(a, 10);
-  const rhs = parseInt(b, 10);
+type LibraryDictionary = Record<string, LibraryCategoryModel>;
 
-  return lhs - rhs;
+interface GitHubRepository {
+  owner: string;
+  repo: string;
+  fullName: string;
 }
 
-async function authenticateGitHubApp(): Promise<Result<boolean, string>> {
+interface RepositoryLibraries extends GitHubRepository {
+  libraries: LibraryModel[];
+}
+
+function getRequiredEnvironmentVariable(name: string): string {
+  const value = process.env[name];
+
+  if (!value) {
+    throw new Error(`Missing required environment variable: ${name}`);
+  }
+
+  return value;
+}
+
+function createOctokit(): Octokit {
+  return new Octokit({
+    auth: getRequiredEnvironmentVariable("GITHUB_TOKEN"),
+  });
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function assertLibraryDictionary(
+  value: unknown,
+): asserts value is LibraryDictionary {
+  if (!isRecord(value)) {
+    throw new Error("Library data must be a JSON object");
+  }
+
+  for (const [categoryName, category] of Object.entries(value)) {
+    if (!isRecord(category) || !Array.isArray(category.libs)) {
+      throw new Error(`Invalid library category: ${categoryName}`);
+    }
+  }
+}
+
+async function readLibraryDictionary(): Promise<LibraryDictionary> {
+  let source: string;
+
   try {
-    await octokit.rest.apps.getAuthenticated();
+    source = await readFile(DATA_FILE_PATH, "utf8");
+  } catch (cause) {
+    throw new Error(`Unable to read ${DATA_FILE_PATH}`, { cause });
+  }
 
-    return ok(true);
-  } catch (error) {
-    console.error(error);
+  let dictionary: unknown;
 
-    return err("Something went wrong when authenticating the GitHub App");
+  try {
+    dictionary = JSON.parse(source);
+  } catch (cause) {
+    throw new Error(`Unable to parse ${DATA_FILE_PATH}`, { cause });
+  }
+
+  assertLibraryDictionary(dictionary);
+
+  return dictionary;
+}
+
+function parseGitHubRepositoryPath(gitHubRepoPath: string): GitHubRepository {
+  const [owner, repo] = gitHubRepoPath.split("/");
+
+  if (!owner || !repo) {
+    throw new Error(`Invalid GitHub repository path: ${gitHubRepoPath}`);
+  }
+
+  return {
+    owner,
+    repo,
+    fullName: `${owner}/${repo}`,
+  };
+}
+
+function collectLibrariesByRepository(
+  dictionary: LibraryDictionary,
+): RepositoryLibraries[] {
+  const repositories = new Map<string, RepositoryLibraries>();
+
+  for (const category of Object.values(dictionary)) {
+    for (const library of category.libs) {
+      if (!library.gitHubRepoPath) {
+        continue;
+      }
+
+      const repository = parseGitHubRepositoryPath(library.gitHubRepoPath);
+      const existing = repositories.get(repository.fullName);
+
+      if (existing) {
+        existing.libraries.push(library);
+      } else {
+        repositories.set(repository.fullName, {
+          ...repository,
+          libraries: [library],
+        });
+      }
+    }
+  }
+
+  return Array.from(repositories.values());
+}
+
+async function authenticateGitHubToken(octokit: Octokit): Promise<void> {
+  try {
+    await octokit.rest.rateLimit.get();
+  } catch (cause) {
+    throw new Error("Unable to authenticate GITHUB_TOKEN", { cause });
   }
 }
 
-async function getLanguageJsonFilePaths(): Promise<Result<string[], string>> {
-  const path = "views/website/libraries";
+async function getStarCount(
+  octokit: Octokit,
+  repository: GitHubRepository,
+): Promise<number> {
+  try {
+    const response = await octokit.rest.repos.get({
+      owner: repository.owner,
+      repo: repository.repo,
+    });
 
-  const response = await octokit.rest.repos.getContent({
-    owner: owner,
-    repo: repository,
-    ref: branch,
-    path: path,
-  });
+    return response.data.stargazers_count;
+  } catch (cause) {
+    throw new Error(`Unable to get the star count for ${repository.fullName}`, {
+      cause,
+    });
+  }
+}
 
-  const { data } = response;
+async function getStarCounts(
+  octokit: Octokit,
+  repositories: RepositoryLibraries[],
+): Promise<Map<string, number>> {
+  const starCounts = new Map<string, number>();
 
-  if (!Array.isArray(data)) {
-    return err("Unable to get language JSON file paths.");
+  for (
+    let index = 0;
+    index < repositories.length;
+    index += REQUEST_CONCURRENCY
+  ) {
+    const batch = repositories.slice(index, index + REQUEST_CONCURRENCY);
+    const results = await Promise.allSettled(
+      batch.map(async (repository) => {
+        const stars = await getStarCount(octokit, repository);
+
+        return [repository.fullName, stars] as const;
+      }),
+    );
+
+    for (const result of results) {
+      if (result.status === "fulfilled") {
+        const [repository, stars] = result.value;
+        starCounts.set(repository, stars);
+      } else {
+        console.warn(
+          result.reason instanceof Error
+            ? result.reason.message
+            : "Unable to get a repository star count",
+        );
+      }
+    }
   }
 
-  return ok(
-    data.filter((file) => file.name.endsWith(".json")).map((file) => file.path),
+  return starCounts;
+}
+
+function updateStarCounts(
+  repositories: RepositoryLibraries[],
+  starCounts: Map<string, number>,
+): number {
+  let updatedLibraries = 0;
+
+  for (const repository of repositories) {
+    const stars = starCounts.get(repository.fullName);
+
+    if (stars === undefined) {
+      continue;
+    }
+
+    for (const library of repository.libraries) {
+      library.stars = stars;
+      updatedLibraries += 1;
+    }
+  }
+
+  return updatedLibraries;
+}
+
+async function writeLibraryDictionary(
+  dictionary: LibraryDictionary,
+): Promise<void> {
+  const temporaryFilePath = `${DATA_FILE_PATH}.${process.pid}.tmp`;
+  const output = await format(JSON.stringify(dictionary), { parser: "json" });
+
+  try {
+    await writeFile(temporaryFilePath, output, "utf8");
+    await rename(temporaryFilePath, DATA_FILE_PATH);
+  } catch (cause) {
+    throw new Error(`Unable to write ${DATA_FILE_PATH}`, { cause });
+  }
+}
+
+async function main(): Promise<void> {
+  const dictionary = await readLibraryDictionary();
+  const repositories = collectLibrariesByRepository(dictionary);
+  const octokit = createOctokit();
+
+  await authenticateGitHubToken(octokit);
+
+  const starCounts = await getStarCounts(octokit, repositories);
+  const updatedLibraries = updateStarCounts(repositories, starCounts);
+  const failedRepositories = repositories.length - starCounts.size;
+
+  await writeLibraryDictionary(dictionary);
+
+  console.log(
+    `Updated ${updatedLibraries} library entries from ${starCounts.size} GitHub repositories.`,
   );
-}
 
-async function getContentLanguage(
-  filePath: string,
-): Promise<Result<LibraryCategoryModel, string>> {
-  const contentResponse = await octokit.rest.repos.getContent({
-    owner: owner,
-    repo: repository,
-    ref: branch,
-    path: filePath,
-  });
-
-  const { data } = contentResponse;
-
-  if (Array.isArray(data)) {
-    return err(`Invalid content response`);
-  }
-
-  if (data.type !== "file") {
-    return err(`Invalid data type in content response`);
-  }
-
-  const { content } = data;
-
-  const safeDecodeBase64urlResult = safeDecodeBase64url(content);
-
-  if (safeDecodeBase64urlResult.isErr()) {
-    return err(safeDecodeBase64urlResult.error);
-  }
-
-  const decodedContentData = safeDecodeBase64urlResult.value;
-
-  return ok(JSON.parse(decodedContentData));
-}
-
-async function getCategories(): Promise<
-  Result<LibraryCategoryModel[], string>
-> {
-  const getLanguageJsonFilePathsResult = await getLanguageJsonFilePaths();
-
-  if (getLanguageJsonFilePathsResult.isErr()) {
-    return err(getLanguageJsonFilePathsResult.error);
-  }
-
-  const filePaths = getLanguageJsonFilePathsResult.value.sort(numericCompare);
-
-  const categories: LibraryCategoryModel[] = [];
-
-  for (let i = 0; i < filePaths.length; i++) {
-    const filePath = filePaths[i];
-
-    const result = await getContentLanguage(filePath);
-
-    if (result.isErr()) {
-      return err(`No language data available for path: ${filePath}`);
-    }
-
-    categories.push(result.value);
-  }
-
-  categories.sort((a: LibraryCategoryModel, b: LibraryCategoryModel) => {
-    const nameA = a.name.toUpperCase(); // ignore upper and lowercase
-    const nameB = b.name.toUpperCase(); // ignore upper and lowercase
-
-    if (nameA < nameB) {
-      return -1;
-    }
-    if (nameA > nameB) {
-      return 1;
-    }
-
-    return 0;
-  });
-
-  return ok(categories);
-}
-
-async function aggregateLibraryStars() {
-  const isAuthenticated = await authenticateGitHubApp();
-
-  if (isAuthenticated.isOk()) {
-    const getCategoriesResult = await getCategories();
-
-    if (getCategoriesResult.isErr()) {
-      console.error(getCategoriesResult.error);
-
-      return;
-    }
-
-    const categories = getCategoriesResult.value;
-
-    for (let i = 0; i < categories.length; i++) {
-      const category = categories[i];
-
-      if (!category) {
-        continue;
-      }
-
-      for (let j = 0; j < category.libs.length; j++) {
-        const lib = category.libs[j];
-
-        if (!lib) {
-          continue;
-        }
-
-        const { gitHubRepoPath } = lib;
-
-        if (!gitHubRepoPath) {
-          continue;
-        }
-
-        const [owner, repo] = gitHubRepoPath.split("/");
-
-        const response = await octokit.rest.repos.get({ owner, repo });
-
-        lib.stars = response.data.stargazers_count;
-      }
-    }
-
-    const dictionary: { [index: string]: LibraryCategoryModel } = {};
-
-    for (let i = 0; i < categories.length; i++) {
-      const category = categories[i];
-
-      if (dictionary[category.name]) {
-        continue;
-      }
-
-      dictionary[category.name] = category;
-    }
-
-    writeFileSync(
-      join(process.cwd(), "src", "data", "libraries.json"),
-      JSON.stringify(dictionary, null, 2),
+  if (failedRepositories > 0) {
+    console.warn(
+      `Retained existing star counts for ${failedRepositories} GitHub repositories.`,
     );
   }
 }
 
-(async () => {
-  await aggregateLibraryStars();
-})();
+main().catch((error: unknown) => {
+  console.error(error instanceof Error ? error.message : error);
+  process.exitCode = 1;
+});
