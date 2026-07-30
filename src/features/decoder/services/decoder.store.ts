@@ -83,7 +83,7 @@ type DecoderStoreActions = {
   handleAsymmetricPublicKeyChange: (newAsymmetricPublicKey: string) => void;
   handleAsymmetricPublicKeyFormatChange: (
     newFormat: AsymmetricKeyFormatValues,
-  ) => void;
+  ) => Promise<void>;
   resetControlledSymmetricSecretKey: () => void;
   resetControlledAsymmetricPublicKey: () => void;
   showUseHashWarning: () => void;
@@ -232,15 +232,28 @@ export const useDecoderStore = create<DecoderStore>()(
       set(update);
     },
     handleAsymmetricPublicKeyFormatChange: async (newFormat) => {
-      const { jwt, alg, asymmetricPublicKey } = get();
+      const { jwt, alg, asymmetricPublicKey, asymmetricPublicKeyFormat } =
+        get();
 
       const update =
         await TokenDecoderService.handleAsymmetricPublicKeyFormatChange({
           jwt,
           alg,
           asymmetricPublicKey,
-          asymmetricPublicKeyFormat: newFormat,
+          sourceFormat: asymmetricPublicKeyFormat,
+          targetFormat: newFormat,
         });
+
+      const currentState = get();
+
+      if (
+        currentState.jwt !== jwt ||
+        currentState.alg !== alg ||
+        currentState.asymmetricPublicKey !== asymmetricPublicKey ||
+        currentState.asymmetricPublicKeyFormat !== asymmetricPublicKeyFormat
+      ) {
+        return;
+      }
 
       set(update);
     },

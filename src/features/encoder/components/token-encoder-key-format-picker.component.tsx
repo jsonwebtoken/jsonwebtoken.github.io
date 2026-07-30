@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "./token-encoder-key-format-picker.module.scss";
 import { useEncoderStore } from "@/features/encoder/services/encoder.store";
 import { getPickersUiDictionary } from "@/features/localization/services/ui-language-dictionary.service";
@@ -15,25 +15,13 @@ export const TokenEncoderKeyFormatPickerComponent: React.FC<
   const dictionary = getPickersUiDictionary(languageCode);
 
   const handlePrivateKeyFormatChange = useEncoderStore(
-    (state) => state.handleAsymmetricPrivateKeyFormatChange
+    (state) => state.handleAsymmetricPrivateKeyFormatChange,
   );
-  const controlledAsymmetricPrivateKey$ = useEncoderStore(
-    (state) => state.controlledAsymmetricPrivateKey
+  const keyFormat = useEncoderStore(
+    (state) => state.asymmetricPrivateKeyFormat,
   );
-
-  const [keyFormat, setKeyFormat] = useState<AsymmetricKeyFormatValues>(
-    AsymmetricKeyFormatValues.PEM
-  );
-
-  useEffect(() => {
-    if (controlledAsymmetricPrivateKey$) {
-      setKeyFormat(controlledAsymmetricPrivateKey$.format);
-    }
-  }, [controlledAsymmetricPrivateKey$]);
 
   const onPrivateKeyFormatChange = (value: string) => {
-    setKeyFormat(value as AsymmetricKeyFormatValues);
-
     handlePrivateKeyFormatChange(value as AsymmetricKeyFormatValues);
   };
 

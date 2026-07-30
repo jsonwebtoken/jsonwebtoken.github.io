@@ -474,15 +474,15 @@ test.describe("encode JWTs", () => {
           })
           .click();
 
-        await checkSecretKeyEncoderEditorStatusBarMessage({
-          page,
-          type: MessageTypeValue.ERROR,
-          status: MessageStatusValue.VISIBLE,
-        });
-
-        await secretKeyEditorInput.fill(
-          JSON.stringify(tokenWithJwkKey.privateKey, null, 2)
-        );
+        await expect
+          .poll(async () => {
+            try {
+              return JSON.parse(await secretKeyEditorInput.inputValue());
+            } catch {
+              return null;
+            }
+          })
+          .toStrictEqual(tokenWithJwkKey.privateKey);
 
         await checkSecretKeyEncoderEditorStatusBarMessage({
           page,
@@ -497,6 +497,24 @@ test.describe("encode JWTs", () => {
             /^[A-Za-z0-9_-]*\.[A-Za-z0-9_-]*\.[A-Za-z0-9_-]*$/
           );
         }
+
+        await formatPicker.click();
+
+        await page
+          .getByRole("option", {
+            name: tokenWithPemKey.privateKeyFormat,
+          })
+          .click();
+
+        await expect(secretKeyEditorInput).toHaveValue(
+          tokenWithPemKey.privateKey
+        );
+
+        await checkSecretKeyEncoderEditorStatusBarMessage({
+          page,
+          type: MessageTypeValue.SUCCESS,
+          status: MessageStatusValue.VISIBLE,
+        });
 
         return;
       }

@@ -14,6 +14,7 @@ import {
 import { TokenDecoderService } from "@/features/decoder/services/token-decoder.service";
 
 const rs256 = DefaultTokensValues.RS256 as DefaultTokenWithKeysModel;
+const rs256PublicJwk = rs256.jwk as { n: string; e: string };
 
 const deferred = <T>() => {
   let resolve!: (value: T) => void;
@@ -299,5 +300,73 @@ describe("loadDecoderUrlInputs", () => {
       jwt: "newer.jwt",
       isLoading: false,
     });
+  });
+});
+
+describe("handleAsymmetricPublicKeyFormatChange", () => {
+  beforeEach(() => {
+    useDecoderStore.setState({
+      ...initialState,
+      jwt: rs256.token,
+      alg: "RS256",
+      asymmetricPublicKey: rs256.publicKey,
+      asymmetricPublicKeyFormat: AsymmetricKeyFormatValues.PEM,
+      signatureStatus: JwtSignatureStatusValues.VALID,
+    });
+  });
+
+  test("re-encodes the public key and verifies atomically", async () => {
+    await useDecoderStore
+      .getState()
+      .handleAsymmetricPublicKeyFormatChange(AsymmetricKeyFormatValues.JWK);
+
+    const jwkState = useDecoderStore.getState();
+
+    expect(JSON.parse(jwkState.asymmetricPublicKey)).toStrictEqual({
+      kty: "RSA",
+      n: rs256PublicJwk.n,
+      e: rs256PublicJwk.e,
+    });
+    expect(jwkState).toMatchObject({
+      asymmetricPublicKeyFormat: AsymmetricKeyFormatValues.JWK,
+      controlledAsymmetricPublicKey: {
+        value: jwkState.asymmetricPublicKey,
+        format: AsymmetricKeyFormatValues.JWK,
+      },
+      signatureStatus: JwtSignatureStatusValues.VALID,
+      verificationInputErrors: null,
+    });
+
+    await useDecoderStore
+      .getState()
+      .handleAsymmetricPublicKeyFormatChange(AsymmetricKeyFormatValues.PEM);
+
+    expect(useDecoderStore.getState()).toMatchObject({
+      asymmetricPublicKey: rs256.publicKey,
+      asymmetricPublicKeyFormat: AsymmetricKeyFormatValues.PEM,
+      controlledAsymmetricPublicKey: {
+        value: rs256.publicKey,
+        format: AsymmetricKeyFormatValues.PEM,
+      },
+      signatureStatus: JwtSignatureStatusValues.VALID,
+      verificationInputErrors: null,
+    });
+  });
+
+  test("keeps the current key and format when conversion fails", async () => {
+    useDecoderStore.setState({
+      asymmetricPublicKey: "not a PEM key",
+    });
+
+    await useDecoderStore
+      .getState()
+      .handleAsymmetricPublicKeyFormatChange(AsymmetricKeyFormatValues.JWK);
+
+    expect(useDecoderStore.getState()).toMatchObject({
+      asymmetricPublicKey: "not a PEM key",
+      asymmetricPublicKeyFormat: AsymmetricKeyFormatValues.PEM,
+      signatureStatus: JwtSignatureStatusValues.VALID,
+    });
+    expect(useDecoderStore.getState().verificationInputErrors).not.toBeNull();
   });
 });

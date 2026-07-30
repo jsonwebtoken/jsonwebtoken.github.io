@@ -516,15 +516,15 @@ test.describe("decode JWTs", () => {
               })
               .click();
 
-            await checkSecretKeyDecoderEditorStatusBarMessage({
-              page,
-              type: MessageTypeValue.ERROR,
-              status: MessageStatusValue.VISIBLE,
-            });
-
-            await secretKeyEditorInput.fill(
-              JSON.stringify(entrywithJwkKey.publicKey, null, 2)
-            );
+            await expect
+              .poll(async () => {
+                try {
+                  return JSON.parse(await secretKeyEditorInput.inputValue());
+                } catch {
+                  return null;
+                }
+              })
+              .toStrictEqual(entrywithJwkKey.publicKey);
 
             await checkJwtEditorStatusBarMessage({
               page,
@@ -553,6 +553,22 @@ test.describe("decode JWTs", () => {
 
             expect(decodedHeader).toBe(entrywithJwkKey.header);
             expect(decodedPayload).toBe(entrywithJwkKey.payload);
+
+            await formatPicker.click();
+
+            await page
+              .getByRole("option", {
+                name: entry.publicKeyFormat,
+              })
+              .click();
+
+            await expect(secretKeyEditorInput).toHaveValue(entry.publicKey);
+
+            await checkSecretKeyDecoderEditorStatusBarMessage({
+              page,
+              type: MessageTypeValue.SUCCESS,
+              status: MessageStatusValue.VISIBLE,
+            });
           }
 
           if (

@@ -15,6 +15,9 @@ import {
   CompactJWSHeaderParameters,
   CompactSign,
   CompactVerifyResult,
+  exportJWK,
+  exportPKCS8,
+  exportSPKI,
   importPKCS8,
   type CryptoKey,
   type JWK,
@@ -620,10 +623,12 @@ export async function validateAsymmetricKey({
   alg,
   asymmetricPublicKey,
   asymmetricPublicKeyFormat,
+  extractable,
 }: {
   alg: string;
   asymmetricPublicKey: CryptoKey | string;
   asymmetricPublicKeyFormat: AsymmetricKeyFormatValues;
+  extractable?: boolean;
 }): Promise<Result<CryptoKey | Uint8Array, DebuggerErrorModel>> {
   const spki = `-----BEGIN PUBLIC KEY-----`;
   const pkcs1 = `-----BEGIN RSA PUBLIC KEY-----`;
@@ -646,6 +651,7 @@ export async function validateAsymmetricKey({
         const safeImportX509Result = await safeImportX509(
           asymmetricPublicKey,
           alg,
+          extractable === undefined ? undefined : { extractable },
         );
 
         if (safeImportX509Result.isErr()) {
@@ -665,6 +671,7 @@ export async function validateAsymmetricKey({
         const safeImportSPKIResult = await safeImportSPKI(
           asymmetricPublicKey,
           alg,
+          extractable === undefined ? undefined : { extractable },
         );
 
         if (safeImportSPKIResult.isErr()) {
@@ -706,7 +713,11 @@ export async function validateAsymmetricKey({
 
         const spkiKey = PublicKeyToPemResult.value;
 
-        const safeImportSPKIResult = await safeImportSPKI(spkiKey, alg);
+        const safeImportSPKIResult = await safeImportSPKI(
+          spkiKey,
+          alg,
+          extractable === undefined ? undefined : { extractable },
+        );
 
         if (safeImportSPKIResult.isErr()) {
           return err({
@@ -746,7 +757,11 @@ export async function validateAsymmetricKey({
         });
       }
 
-      const safeImportJWKResult = await safeImportJWK(parsedPublicKey, alg);
+      const safeImportJWKResult = await safeImportJWK(
+        parsedPublicKey,
+        alg,
+        extractable === undefined ? undefined : { extractable },
+      );
 
       if (safeImportJWKResult.isErr()) {
         return err({
@@ -939,6 +954,7 @@ export const getAsymmetricKeyCryptoKey = async (
   key: string,
   alg: string,
   keyFormat: AsymmetricKeyFormatValues,
+  extractable?: boolean,
 ): Promise<Result<CryptoKey | Uint8Array, string>> => {
   if (keyFormat === AsymmetricKeyFormatValues.PEM) {
     if (key.startsWith("-----BEGIN RSA PRIVATE KEY-----")) {
@@ -979,7 +995,11 @@ export const getAsymmetricKeyCryptoKey = async (
     }
 
     if (key.startsWith("-----BEGIN")) {
-      const safeImportPKCS8Result = await safeImportPKCS8(key, alg);
+      const safeImportPKCS8Result = await safeImportPKCS8(
+        key,
+        alg,
+        extractable === undefined ? undefined : { extractable },
+      );
 
       if (safeImportPKCS8Result.isErr()) {
         return err(safeImportPKCS8Result.error);
@@ -1025,7 +1045,11 @@ export const getAsymmetricKeyCryptoKey = async (
       );
     }
 
-    const safeImportJWKResult = await safeImportJWK(jwk, alg);
+    const safeImportJWKResult = await safeImportJWK(
+      jwk,
+      alg,
+      extractable === undefined ? undefined : { extractable },
+    );
 
     if (safeImportJWKResult.isErr()) {
       return err(safeImportJWKResult.error);
@@ -1037,6 +1061,130 @@ export const getAsymmetricKeyCryptoKey = async (
   }
 
   return err("Missing or incorrect private key format.");
+};
+
+const safeExportJWK = fromAsyncThrowable(exportJWK, (e) =>
+  getOperationException({
+    e,
+    defaultMessage: "Cannot export key as JWK.",
+  }),
+);
+
+const safeExportPKCS8 = fromAsyncThrowable(exportPKCS8, (e) =>
+  getOperationException({
+    e,
+    defaultMessage: "Cannot export private key as PEM-encoded PKCS#8.",
+  }),
+);
+
+const safeExportSPKI = fromAsyncThrowable(exportSPKI, (e) =>
+  getOperationException({
+    e,
+    defaultMessage: "Cannot export public key as PEM-encoded SPKI.",
+  }),
+);
+
+const exportAsymmetricKey = async ({
+  key,
+  keyType,
+  targetFormat,
+}: {
+  key: CryptoKey | Uint8Array;
+  keyType: "private" | "public";
+  targetFormat: AsymmetricKeyFormatValues;
+}): Promise<Result<string, string>> => {
+  if (key instanceof Uint8Array) {
+    return err("Symmetric keys cannot be converted to an asymmetric format.");
+  }
+
+  if (targetFormat === AsymmetricKeyFormatValues.JWK) {
+    const exportResult = await safeExportJWK(key);
+
+    if (exportResult.isErr()) {
+      return err(exportResult.error);
+    }
+
+    const stringifyResult = safeJsonStringify(getJwk(exportResult.value));
+
+    return stringifyResult.isErr()
+      ? err(stringifyResult.error)
+      : ok(stringifyResult.value);
+  }
+
+  const exportResult =
+    keyType === "private"
+      ? await safeExportPKCS8(key)
+      : await safeExportSPKI(key);
+
+  return exportResult.isErr()
+    ? err(exportResult.error)
+    : ok(exportResult.value);
+};
+
+export const convertAsymmetricPrivateKeyFormat = async ({
+  alg,
+  key,
+  sourceFormat,
+  targetFormat,
+}: {
+  alg: string;
+  key: string;
+  sourceFormat: AsymmetricKeyFormatValues;
+  targetFormat: AsymmetricKeyFormatValues;
+}): Promise<Result<string, string>> => {
+  if (!key || sourceFormat === targetFormat) {
+    return ok(key);
+  }
+
+  const importResult = await getAsymmetricKeyCryptoKey(
+    key,
+    alg,
+    sourceFormat,
+    true,
+  );
+
+  if (importResult.isErr()) {
+    return err(importResult.error);
+  }
+
+  return exportAsymmetricKey({
+    key: importResult.value,
+    keyType: "private",
+    targetFormat,
+  });
+};
+
+export const convertAsymmetricPublicKeyFormat = async ({
+  alg,
+  key,
+  sourceFormat,
+  targetFormat,
+}: {
+  alg: string;
+  key: string;
+  sourceFormat: AsymmetricKeyFormatValues;
+  targetFormat: AsymmetricKeyFormatValues;
+}): Promise<Result<string, string>> => {
+  if (!key || sourceFormat === targetFormat) {
+    return ok(key);
+  }
+
+  const importResult = await validateAsymmetricKey({
+    alg,
+    asymmetricPublicKey: key,
+    asymmetricPublicKeyFormat: sourceFormat,
+    extractable: true,
+  });
+
+  if (importResult.isErr()) {
+    return err(importResult.error.message);
+  }
+
+  return exportAsymmetricKey({
+    key: importResult.value,
+    keyType: "public",
+    targetFormat,
+  });
 };
 
 const createCompactSignObject = fromThrowable(

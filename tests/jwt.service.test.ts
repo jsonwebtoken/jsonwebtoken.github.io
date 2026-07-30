@@ -4,6 +4,8 @@ import {
   DefaultTokenWithKeysModel,
 } from "@/features/common/values/default-tokens.values";
 import {
+  convertAsymmetricPrivateKeyFormat,
+  convertAsymmetricPublicKeyFormat,
   getAsymmetricKeyCryptoKey,
   getJwk,
   isMlDsaSupported,
@@ -329,6 +331,75 @@ describe("Ed25519", () => {
     });
 
     expect(verificationResult.unwrapOr(false)).toBe(true);
+  });
+});
+
+describe("asymmetric key format conversion", () => {
+  const token = DefaultTokensValues.RS256 as DefaultTokenWithKeysModel;
+  const publicJwk = token.jwk as { n: string; e: string };
+
+  test("converts private keys between PEM and JWK", async () => {
+    const jwkResult = await convertAsymmetricPrivateKeyFormat({
+      alg: "RS256",
+      key: token.privateKey,
+      sourceFormat: AsymmetricKeyFormatValues.PEM,
+      targetFormat: AsymmetricKeyFormatValues.JWK,
+    });
+
+    expect(jwkResult.isOk()).toBe(true);
+    expect(JSON.parse(jwkResult._unsafeUnwrap())).toMatchObject({
+      kty: "RSA",
+      d: expect.any(String),
+      n: expect.any(String),
+      e: expect.any(String),
+    });
+
+    const pemResult = await convertAsymmetricPrivateKeyFormat({
+      alg: "RS256",
+      key: jwkResult._unsafeUnwrap(),
+      sourceFormat: AsymmetricKeyFormatValues.JWK,
+      targetFormat: AsymmetricKeyFormatValues.PEM,
+    });
+
+    expect(pemResult._unsafeUnwrap()).toMatch(
+      /^-----BEGIN PRIVATE KEY-----[\s\S]+-----END PRIVATE KEY-----$/,
+    );
+  });
+
+  test("converts public keys between PEM and JWK", async () => {
+    const jwkResult = await convertAsymmetricPublicKeyFormat({
+      alg: "RS256",
+      key: token.publicKey,
+      sourceFormat: AsymmetricKeyFormatValues.PEM,
+      targetFormat: AsymmetricKeyFormatValues.JWK,
+    });
+
+    expect(jwkResult.isOk()).toBe(true);
+    expect(JSON.parse(jwkResult._unsafeUnwrap())).toStrictEqual({
+      kty: "RSA",
+      n: publicJwk.n,
+      e: publicJwk.e,
+    });
+
+    const pemResult = await convertAsymmetricPublicKeyFormat({
+      alg: "RS256",
+      key: jwkResult._unsafeUnwrap(),
+      sourceFormat: AsymmetricKeyFormatValues.JWK,
+      targetFormat: AsymmetricKeyFormatValues.PEM,
+    });
+
+    expect(pemResult._unsafeUnwrap()).toBe(token.publicKey);
+  });
+
+  test("does not relabel an invalid key", async () => {
+    const result = await convertAsymmetricPublicKeyFormat({
+      alg: "RS256",
+      key: "not a PEM key",
+      sourceFormat: AsymmetricKeyFormatValues.PEM,
+      targetFormat: AsymmetricKeyFormatValues.JWK,
+    });
+
+    expect(result.isErr()).toBe(true);
   });
 });
 
