@@ -141,10 +141,6 @@ async function generateKeys(algorithm: string): Promise<KeyPair> {
   if (algorithm === "Ed25519") {
     keyPair = generateKeyPairSync("ed25519");
   }
-  if (algorithm === "Ed448") {
-    // Support for Ed448
-    keyPair = generateKeyPairSync("ed448");
-  }
 
   if (!keyPair) {
     throw new Error(`Unsupported algorithm: ${algorithm}`);

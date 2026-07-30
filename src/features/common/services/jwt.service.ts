@@ -1421,19 +1421,3 @@ export const isEd25519Supported = async (): Promise<boolean> => {
     return false;
   }
 };
-
-export const isEd448Supported = async (): Promise<boolean> => {
-  try {
-    await window.crypto.subtle.generateKey(
-      {
-        name: algDictionary.Ed448,
-      },
-      true,
-      ["sign", "verify"],
-    );
-
-    return true;
-  } catch (e) {
-    return false;
-  }
-};

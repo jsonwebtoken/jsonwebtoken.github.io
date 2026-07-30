@@ -4,7 +4,6 @@ import { getPickersUiDictionary } from "@/features/localization/services/ui-lang
 import { useEncoderStore } from "@/features/encoder/services/encoder.store";
 import {
   isEd25519Supported,
-  isEd448Supported,
   isP521Supported,
 } from "@/features/common/services/jwt.service";
 import { useDecoderStore } from "@/features/decoder/services/decoder.store";
@@ -58,29 +57,28 @@ export const WidgetAlgPickerComponent: React.FC<
       elementType: "span",
       preventFocusOnPress: true,
     },
-    buttonRef
+    buttonRef,
   );
 
   const [pickerState, setPickerState] = useState<PickerStates>(
-    PickerStates.IDLE
+    PickerStates.IDLE,
   );
   const [capabilities, setCapabilities] = useState({
     canUseEs512: false,
     canUseEd25519: false,
-    canUseEd448: false,
     isLoading: true,
   });
 
-  const { canUseEs512, canUseEd25519, canUseEd448, isLoading } = capabilities;
+  const { canUseEs512, canUseEd25519, isLoading } = capabilities;
 
   const dictionary = getPickersUiDictionary(languageCode);
 
   const selectEncoderAlg$ = useEncoderStore(
-    (state) => state.selectEncodingExample
+    (state) => state.selectEncodingExample,
   );
 
   const selectDecoderAlg$ = useDecoderStore(
-    (state) => state.selectDecodingExample
+    (state) => state.selectDecodingExample,
   );
 
   const selectExample = (value: string) => {
@@ -99,16 +97,14 @@ export const WidgetAlgPickerComponent: React.FC<
 
   useEffect(() => {
     (async function checkCapabilities() {
-      const [canUseEs512, canUseEd25519, canUseEd448] = await Promise.all([
+      const [canUseEs512, canUseEd25519] = await Promise.all([
         isP521Supported(),
         isEd25519Supported(),
-        isEd448Supported(),
       ]);
 
       setCapabilities({
         canUseEs512,
         canUseEd25519,
-        canUseEd448,
         isLoading: false,
       });
     })();
@@ -136,13 +132,13 @@ export const WidgetAlgPickerComponent: React.FC<
           value: key,
           label: value.name,
         };
-      }
+      },
     );
   }, []);
 
   const asymmetricAlgOptions: DebuggerPickerOptionModel[] = useMemo(() => {
     const digitalSignatureEntries = Object.entries(
-      jwsExampleAlgHeaderParameterValuesDictionary.digitalSignature
+      jwsExampleAlgHeaderParameterValuesDictionary.digitalSignature,
     );
 
     const asymmetricAlgOptions: DebuggerPickerOptionModel[] = [];
@@ -172,16 +168,6 @@ export const WidgetAlgPickerComponent: React.FC<
         continue;
       }
 
-      if (key === algDictionary.Ed448) {
-        asymmetricAlgOptions.push({
-          value: key,
-          label: value.name,
-          isDisabled: !canUseEd448,
-        });
-
-        continue;
-      }
-
       asymmetricAlgOptions.push({
         value: key,
         label: value.name,
@@ -189,7 +175,7 @@ export const WidgetAlgPickerComponent: React.FC<
     }
 
     return asymmetricAlgOptions;
-  }, [canUseEd25519, canUseEd448, canUseEs512]);
+  }, [canUseEd25519, canUseEs512]);
 
   const algOptions = useMemo(() => {
     return [...noneAlgOptions, ...symmetricAlgOptions, ...asymmetricAlgOptions];

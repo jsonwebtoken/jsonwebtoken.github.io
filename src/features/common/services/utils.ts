@@ -244,7 +244,5 @@ export const safePublicKeyToPem = fromThrowable(
 );
 
 export const getAlgName = (value: string) => {
-  return value === algDictionary.Ed25519 || value === algDictionary.Ed448
-    ? algDictionary.EdDSA
-    : value;
+  return value === algDictionary.Ed25519 ? algDictionary.EdDSA : value;
 };
