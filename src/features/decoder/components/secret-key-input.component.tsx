@@ -17,7 +17,7 @@ import { CardToolbarComponent } from "@/features/common/components/card-toolbar/
 import { CardToolbarCopyButtonComponent } from "@/features/common/components/card-toolbar-buttons/card-toolbar-copy-button/card-toolbar-copy-button.component";
 import { CardToolbarClearButtonComponent } from "@/features/common/components/card-toolbar-buttons/card-toolbar-clear-button/card-toolbar-clear-button.component";
 import { NOOP_ALG } from "@/features/common/values/constants";
-
+import { formatPublicKeyInput } from "@/features/decoder/services/public-key-input.service";
 
 type SecretKeyInputComponentProps = {
   languageCode: string;
@@ -41,6 +41,9 @@ export const SecretKeyInputComponent: React.FC<
   );
 
   const alg$ = useDecoderStore((state) => state.alg);
+  const asymmetricPublicKeyFormat$ = useDecoderStore(
+    (state) => state.asymmetricPublicKeyFormat,
+  );
   const verificationInputErrors$ = useDecoderStore(
     (state) => state.verificationInputErrors,
   );
@@ -69,7 +72,12 @@ export const SecretKeyInputComponent: React.FC<
 
   useEffect(() => {
     if (controlledAsymmetricPublicKey) {
-      setPublicKey(controlledAsymmetricPublicKey.value.trim());
+      setPublicKey(
+        formatPublicKeyInput(
+          controlledAsymmetricPublicKey.value,
+          controlledAsymmetricPublicKey.format,
+        ),
+      );
     }
   }, [controlledAsymmetricPublicKey]);
 
@@ -97,12 +105,11 @@ export const SecretKeyInputComponent: React.FC<
     handleSymmetricSecretKeyChange$(cleanValue);
   };
 
-  const handleAsymmetricPublicKeyChange = async (
-    e: ChangeEvent<HTMLTextAreaElement>,
-  ) => {
-    const key = e.target.value;
-
-    const cleanValue = key.trim();
+  const handleAsymmetricPublicKeyChange = async (key: string) => {
+    const cleanValue = formatPublicKeyInput(
+      key,
+      asymmetricPublicKeyFormat$,
+    );
 
     setPublicKey(cleanValue);
 
@@ -173,6 +180,7 @@ export const SecretKeyInputComponent: React.FC<
       {isDigitalSignatureAlg(alg$) && (
         <SignatureVerificationPublicKeyInputComponent
           publicKey={publicKey}
+          publicKeyFormat={asymmetricPublicKeyFormat$}
           handlePublicKeyChange={handleAsymmetricPublicKeyChange}
           placeholder={dictionary.editor.placeholder.publicKey}
         />

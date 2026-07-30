@@ -526,6 +526,21 @@ test.describe("decode JWTs", () => {
               })
               .toStrictEqual(entrywithJwkKey.publicKey);
 
+            await expect
+              .poll(async () => {
+                const value = await secretKeyEditorInput.inputValue();
+
+                try {
+                  return value === JSON.stringify(JSON.parse(value), null, 2);
+                } catch {
+                  return false;
+                }
+              })
+              .toBe(true);
+            await expect(
+              secretKeyEditor.locator("pre .token.property").first(),
+            ).toBeVisible();
+
             await checkJwtEditorStatusBarMessage({
               page,
               type: MessageTypeValue.SUCCESS,
@@ -607,8 +622,14 @@ test.describe("decode JWTs", () => {
               .click();
 
             await secretKeyEditorInput.fill(
-              JSON.stringify(entrywithJwkKey.publicKey, null, 2)
+              JSON.stringify(entrywithJwkKey.publicKey),
             );
+            await expect(secretKeyEditorInput).toHaveValue(
+              JSON.stringify(entrywithJwkKey.publicKey, null, 2),
+            );
+            await expect(
+              secretKeyEditor.locator("pre .token.property").first(),
+            ).toBeVisible();
 
             await checkJwtEditorStatusBarMessage({
               page,

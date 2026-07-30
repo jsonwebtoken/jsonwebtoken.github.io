@@ -69,8 +69,26 @@ const expectPublicKeyLoaded = async ({
   const publicKeyRegion = page
     .getByRole("region")
     .filter({ has: publicKeyEditor });
+  const expectedPublicKey =
+    publicKeyFormat === "JWK"
+      ? JSON.stringify(JSON.parse(publicKey), null, 2)
+      : publicKey;
 
-  await expect(publicKeyEditor.getByRole("textbox")).toHaveValue(publicKey);
+  await expect(publicKeyEditor.getByRole("textbox")).toHaveValue(
+    expectedPublicKey,
+  );
+
+  if (publicKeyFormat === "JWK") {
+    await expect(
+      publicKeyEditor.locator("pre .token.property").first(),
+    ).toBeVisible();
+    await expect(
+      publicKeyEditor.locator("pre .token.string").first(),
+    ).toBeVisible();
+  } else {
+    await expect(publicKeyEditor.locator("pre")).toHaveCount(0);
+  }
+
   await expect(
     publicKeyEditor.getByTestId(
       dataTestidDictionary.decoder.secretKeyEditor.statusBar.success.id,
