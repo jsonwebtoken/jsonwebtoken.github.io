@@ -14,6 +14,10 @@ import { GithubIconComponent } from "@/features/libraries/components/github-icon
 import rehypeRaw from "rehype-raw";
 import { LibrariesDictionaryModel } from "@/features/localization/models/libraries-dictionary.model";
 import Link from "next/link";
+import {
+  libraryAlgorithmDefinitions,
+  librarySupportDefinitions,
+} from "@/features/libraries/values/library-support.values";
 
 interface ConfigItemComponentProps {
   isSupported: boolean | undefined;
@@ -118,7 +122,7 @@ export const LibraryCardComponent: React.FC<LibraryCardComponentProps> = ({
           {library.gitHubRepoPath || library.altRepoPath || name}
         </span>
       </div>
-       <div className={styles.metadata}>
+      <div className={styles.metadata}>
         {authorUrl ? (
           <Link
             href={authorUrl}
@@ -162,85 +166,23 @@ export const LibraryCardComponent: React.FC<LibraryCardComponentProps> = ({
       </div>
       <div className={styles.content}>
         <ul className={styles.config}>
-          <ConfigItemComponent
-            label="Sign"
-            isSupported={support.sign}
-          ></ConfigItemComponent>
-          <ConfigItemComponent
-            label="Verify"
-            isSupported={support.verify}
-          ></ConfigItemComponent>
-
-          <ConfigItemComponent
-            isSupported={support.iss}
-            code="iss"
-            label="check"
-          ></ConfigItemComponent>
-          <ConfigItemComponent
-            isSupported={support.sub}
-            code="sub"
-            label="check"
-          ></ConfigItemComponent>
-          <ConfigItemComponent
-            isSupported={support.aud}
-            code="aud"
-            label="check"
-          ></ConfigItemComponent>
-          <ConfigItemComponent
-            isSupported={support.exp}
-            code="exp"
-            label="check"
-          ></ConfigItemComponent>
-          <ConfigItemComponent
-            isSupported={support.nbf}
-            code="nbf"
-            label="check"
-          ></ConfigItemComponent>
-          <ConfigItemComponent
-            isSupported={support.iat}
-            code="iat"
-            label="check"
-          ></ConfigItemComponent>
-          <ConfigItemComponent
-            isSupported={support.jti}
-            code="jti"
-            label="check"
-          ></ConfigItemComponent>
-          <ConfigItemComponent
-            isSupported={support.typ}
-            code="typ"
-            label="check"
-          ></ConfigItemComponent>
+          {librarySupportDefinitions.map(({ value, cardLabel, code }) => (
+            <ConfigItemComponent
+              key={value}
+              isSupported={support[value]}
+              code={code ?? undefined}
+              label={cardLabel}
+            />
+          ))}
         </ul>
         <ul className={styles.algs}>
-          <AlgItemComponent label="HS256" isSupported={support.hs256} />
-          <AlgItemComponent label="HS384" isSupported={support.hs384} />
-          <AlgItemComponent label="HS512" isSupported={support.hs512} />
-          <AlgItemComponent label="RS256" isSupported={support.rs256} />
-          <AlgItemComponent label="RS384" isSupported={support.rs384} />
-          <AlgItemComponent label="RS512" isSupported={support.rs512} />
-          <AlgItemComponent label="ES256" isSupported={support.es256} />
-          <AlgItemComponent label="ES256K" isSupported={support.es256k} />
-          <AlgItemComponent label="ES384" isSupported={support.es384} />
-          <AlgItemComponent label="ES512" isSupported={support.es512} />
-          <AlgItemComponent label="PS256" isSupported={support.ps256} />
-          <AlgItemComponent label="PS384" isSupported={support.ps384} />
-          <AlgItemComponent label="PS512" isSupported={support.ps512} />
-          <AlgItemComponent label="EdDSA" isSupported={support.eddsa} />
-          <AlgItemComponent label="Ed25519" isSupported={support.ed25519} />
-          <AlgItemComponent label="Ed448" isSupported={support.ed448} />
-          <AlgItemComponent
-            label="ML-DSA-44"
-            isSupported={support["ml-dsa-44"]}
-          />
-          <AlgItemComponent
-            label="ML-DSA-65"
-            isSupported={support["ml-dsa-65"]}
-          />
-          <AlgItemComponent
-            label="ML-DSA-87"
-            isSupported={support["ml-dsa-87"]}
-          />
+          {libraryAlgorithmDefinitions.map(({ value, label }) => (
+            <AlgItemComponent
+              key={value}
+              label={label}
+              isSupported={support[value]}
+            />
+          ))}
         </ul>
       </div>
       {minimumVersion && (
