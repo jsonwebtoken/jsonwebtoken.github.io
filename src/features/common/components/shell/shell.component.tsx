@@ -28,6 +28,8 @@ import { AbTestingScriptComponent } from "@/features/analytics/components/ab-tes
 import AdobeAnalyticsScript from "@/features/analytics/components/adobe-analytics-script.component";
 
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
+const ONETRUST_DISABLED =
+  process.env.NEXT_PUBLIC_DISABLE_ONETRUST === "true";
 
 interface ShellComponentProps extends PropsWithChildren {
   languageCode: string;
@@ -101,9 +103,11 @@ export const ShellComponent: React.FC<ShellComponentProps> = ({
       )}
       data-theme={themeCode}
     >
-      <OnetrustScriptComponent
-        id={CLIENT_CONFIG.DEVELOPERS_DATA_DOMAIN_ID_ONETRUST}
-      />
+      {!ONETRUST_DISABLED && (
+        <OnetrustScriptComponent
+          id={CLIENT_CONFIG.DEVELOPERS_DATA_DOMAIN_ID_ONETRUST}
+        />
+      )}
       <AdobeAnalyticsScript />
       {children}
       {consentLevel &&

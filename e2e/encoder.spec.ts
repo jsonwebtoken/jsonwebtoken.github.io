@@ -1,8 +1,5 @@
 import { expect, test } from "@playwright/test";
-import {
-  getButtonsUiDictionary,
-  getPickersUiDictionary,
-} from "@/features/localization/services/ui-language-dictionary.service";
+import { getButtonsUiDictionary } from "@/features/localization/services/ui-language-dictionary.service";
 import { DefaultTokensValues } from "@/features/common/values/default-tokens.values";
 import { dataTestidDictionary } from "@/libs/testing/data-testid.dictionary";
 import {
@@ -235,22 +232,18 @@ test.describe("Generate JWT encoding examples", () => {
 
   test.describe("Can generate a JWT example", () => {
     test.beforeEach(async ({ page }) => {
-      const lang = await getLang(page);
-      expectToBeNonNull(lang);
-
       const algorithmPicker = page.getByRole("combobox", {
         name: "Debugger picker",
       });
       const algorithmPickerRegion = page
         .getByRole("region")
         .filter({ has: algorithmPicker });
-      const pickersUiDictionary = getPickersUiDictionary(lang);
-      const pickerIndicator = page.getByText(
-        pickersUiDictionary.exampleAlgPicker.defaultValue
+      const pickerControl = algorithmPicker.locator(
+        'xpath=ancestor::div[contains(@class, "react-select__control")]',
       );
 
       await expect(algorithmPickerRegion).toHaveAttribute("aria-busy", "false");
-      await pickerIndicator.click();
+      await pickerControl.dispatchEvent("mousedown", { button: 0 });
       await expect(page.getByRole("listbox")).toBeVisible();
     });
 
