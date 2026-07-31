@@ -19,6 +19,10 @@ import { siteTree } from "@/features/seo/site-tree";
 import { getAuth0Dictionary } from "@/features/localization/services/ui-language-dictionary.service";
 import { LibraryModel } from "@/features/libraries/models/library.model";
 import { LibrariesDictionaryModel } from "@/features/localization/models/libraries-dictionary.model";
+import {
+  libraryAlgorithmDefinitions,
+  librarySupportDefinitions,
+} from "@/features/libraries/values/library-support.values";
 
 export async function generateMetadata({
   params: { language },
@@ -55,31 +59,19 @@ export default function Libraries({
   const support = searchParams?.support;
   const query = programmingLanguage ?? algorithm ?? support ?? "";
   const dictionary = JSON.parse(source) as LibraryDictionaryModel;
-  const allOptions = Object.keys(Object.values(dictionary)[0].libs[0].support);
-  const indexAlgorithmStart = allOptions.findIndex(
-    (option) => option === "hs256"
-  );
 
   const categoryOptions: { id: string; name: string }[] = Object.values(
-    dictionary
+    dictionary,
   ).map((library) => ({
     id: library.id,
     name: library.name,
   }));
 
-  const supportOptions: { value: string; label: string }[] = allOptions
-    .slice(0, indexAlgorithmStart)
-    .map((key) => ({
-      value: key,
-      label: key.toUpperCase(),
-    }));
+  const supportOptions: { value: string; label: string }[] =
+    librarySupportDefinitions.map(({ value, label }) => ({ value, label }));
 
-  const algorithmOptions: { value: string; label: string }[] = allOptions
-    .slice(indexAlgorithmStart)
-    .map((key) => ({
-      value: key,
-      label: key.toUpperCase(),
-    }));
+  const algorithmOptions: { value: string; label: string }[] =
+    libraryAlgorithmDefinitions.map(({ value, label }) => ({ value, label }));
 
   const categories: LibraryCategoryModel[] =
     programmingLanguage && programmingLanguage !== "all"
@@ -91,7 +83,7 @@ export default function Libraries({
   const filteredCategories = categoryToFilter
     ? categories.map((category) => {
         const filteredLibs = category.libs.filter(
-          (lib) => lib.support[categoryToFilter]
+          (lib) => lib.support[categoryToFilter],
         );
         return {
           ...category,

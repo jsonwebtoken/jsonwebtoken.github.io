@@ -23,11 +23,13 @@ import {
   getDecoderJwtEditor,
   getDecoderJwtEditorInput,
   getLang,
+  hasMlDsaSupport,
 } from "./e2e.utils";
 import { MessageStatusValue, MessageTypeValue } from "./e2e.values";
 import { JwtDictionaryModel, JwtSignedWithDigitalModel } from "./e2e.models";
 import jwts from "./jwt.json" with { type: "json" };
 import { EncodingValues } from "@/features/common/values/encoding.values";
+import { isMlDsaAlgorithm } from "@/features/common/values/jws-alg-header-parameter-values.dictionary";
 
 const TestJwts = (jwts as JwtDictionaryModel).byAlgorithm;
 
@@ -138,15 +140,21 @@ test.describe("Can generate JWT examples", () => {
       test(`can generate a JWT decoder example for ${option}`, async ({
         page,
       }) => {
-        if (option === "Ed25519") {
-          return;
+        if (isMlDsaAlgorithm(option)) {
+          test.skip(
+            !(await hasMlDsaSupport(page, option)),
+            "ML-DSA is not supported by this browser",
+          );
         }
 
         const lang = await getLang(page);
         expectToBeNonNull(lang);
 
         const decoderWidget = page.getByTestId(dataTestidDictionary.decoder.id);
-        await page.getByRole("listbox").getByRole("option", { name: option }).click();
+        await page
+          .getByRole("listbox")
+          .getByRole("option", { name: option })
+          .dispatchEvent("click");
 
         const targetToken = DefaultTokensValues[option];
 
@@ -242,8 +250,11 @@ test.describe("decode JWTs", () => {
 
   options.forEach((option) => {
     test(`Can input a JWT signed with ${option}`, async ({ page }) => {
-      if (option === "Ed25519") {
-        return;
+      if (isMlDsaAlgorithm(option)) {
+        test.skip(
+          !(await hasMlDsaSupport(page, option)),
+          "ML-DSA is not supported by this browser",
+        );
       }
 
       const lang = await getLang(page);
@@ -493,27 +504,47 @@ test.describe("decode JWTs", () => {
               status: MessageStatusValue.VISIBLE,
             });
 
-            const formatPicker = page.locator(
-              ".react-select__single-value"
-            );
-
-            await formatPicker.click();
-
+            const pemFormatPickerControl = page
+              .locator(".react-select__single-value")
+              .filter({ hasText: entry.publicKeyFormat })
+              .locator(
+                'xpath=ancestor::div[contains(@class, "react-select__control")]'
+              );
+            await pemFormatPickerControl.dispatchEvent("mousedown", {
+              button: 0,
+            });
             await page
+              .getByRole("listbox")
               .getByRole("option", {
                 name: entrywithJwkKey.publicKeyFormat,
+                exact: true,
               })
-              .click();
+              .dispatchEvent("click");
 
-            await checkSecretKeyDecoderEditorStatusBarMessage({
-              page,
-              type: MessageTypeValue.ERROR,
-              status: MessageStatusValue.VISIBLE,
-            });
+            await expect
+              .poll(async () => {
+                try {
+                  return JSON.parse(await secretKeyEditorInput.inputValue());
+                } catch {
+                  return null;
+                }
+              })
+              .toStrictEqual(entrywithJwkKey.publicKey);
 
-            await secretKeyEditorInput.fill(
-              JSON.stringify(entrywithJwkKey.publicKey, null, 2)
-            );
+            await expect
+              .poll(async () => {
+                const value = await secretKeyEditorInput.inputValue();
+
+                try {
+                  return value === JSON.stringify(JSON.parse(value), null, 2);
+                } catch {
+                  return false;
+                }
+              })
+              .toBe(true);
+            await expect(
+              secretKeyEditor.locator("pre .token.property").first(),
+            ).toBeVisible();
 
             await checkJwtEditorStatusBarMessage({
               page,
@@ -542,9 +573,38 @@ test.describe("decode JWTs", () => {
 
             expect(decodedHeader).toBe(entrywithJwkKey.header);
             expect(decodedPayload).toBe(entrywithJwkKey.payload);
+
+            const jwkFormatPickerControl = page
+              .locator(".react-select__single-value")
+              .filter({ hasText: entrywithJwkKey.publicKeyFormat })
+              .locator(
+                'xpath=ancestor::div[contains(@class, "react-select__control")]'
+              );
+            await jwkFormatPickerControl.dispatchEvent("mousedown", {
+              button: 0,
+            });
+            await page
+              .getByRole("listbox")
+              .getByRole("option", {
+                name: entry.publicKeyFormat,
+                exact: true,
+              })
+              .dispatchEvent("click");
+
+            await expect(secretKeyEditorInput).toHaveValue(entry.publicKey);
+
+            await checkSecretKeyDecoderEditorStatusBarMessage({
+              page,
+              type: MessageTypeValue.SUCCESS,
+              status: MessageStatusValue.VISIBLE,
+            });
           }
 
-          if (option.includes("ES") || option.includes("PS")) {
+          if (
+            option.includes("ES") ||
+            option.includes("PS") ||
+            isMlDsaAlgorithm(option)
+          ) {
             await checkJwtEditorStatusBarMessage({
               page,
               type: MessageTypeValue.SUCCESS,
@@ -563,21 +623,32 @@ test.describe("decode JWTs", () => {
               status: MessageStatusValue.VISIBLE,
             });
 
-            const formatPicker = page.locator(
-              ".react-select__single-value"
-            );
-
-            await formatPicker.click();
-
+            const pemFormatPickerControl = page
+              .locator(".react-select__single-value")
+              .filter({ hasText: entry.publicKeyFormat })
+              .locator(
+                'xpath=ancestor::div[contains(@class, "react-select__control")]'
+              );
+            await pemFormatPickerControl.dispatchEvent("mousedown", {
+              button: 0,
+            });
             await page
+              .getByRole("listbox")
               .getByRole("option", {
                 name: entrywithJwkKey.publicKeyFormat,
+                exact: true,
               })
-              .click();
+              .dispatchEvent("click");
 
             await secretKeyEditorInput.fill(
-              JSON.stringify(entrywithJwkKey.publicKey, null, 2)
+              JSON.stringify(entrywithJwkKey.publicKey),
             );
+            await expect(secretKeyEditorInput).toHaveValue(
+              JSON.stringify(entrywithJwkKey.publicKey, null, 2),
+            );
+            await expect(
+              secretKeyEditor.locator("pre .token.property").first(),
+            ).toBeVisible();
 
             await checkJwtEditorStatusBarMessage({
               page,

@@ -61,7 +61,7 @@ type EncoderStoreActions = {
   handleAsymmetricPrivateKeyChange: (newPrivateKey: string) => void;
   handleAsymmetricPrivateKeyFormatChange: (
     newFormat: AsymmetricKeyFormatValues,
-  ) => void;
+  ) => Promise<void>;
   resetControlledHeader: () => void;
   setControlledPayload: (value: string) => void;
   setControlledHeader: (value: string) => void;
@@ -211,15 +211,35 @@ export const useEncoderStore = create<EncoderStore>()(
       set(update);
     },
     handleAsymmetricPrivateKeyFormatChange: async (newFormat) => {
-      const { header, payload, asymmetricPrivateKey } = get();
+      const {
+        alg,
+        header,
+        payload,
+        asymmetricPrivateKey,
+        asymmetricPrivateKeyFormat,
+      } = get();
 
       const update =
         await TokenEncoderService.handleAsymmetricPrivateKeyFormatChange({
+          alg,
           header,
           payload,
           asymmetricPrivateKey,
-          asymmetricPrivateKeyFormat: newFormat,
+          sourceFormat: asymmetricPrivateKeyFormat,
+          targetFormat: newFormat,
         });
+
+      const currentState = get();
+
+      if (
+        currentState.alg !== alg ||
+        currentState.header !== header ||
+        currentState.payload !== payload ||
+        currentState.asymmetricPrivateKey !== asymmetricPrivateKey ||
+        currentState.asymmetricPrivateKeyFormat !== asymmetricPrivateKeyFormat
+      ) {
+        return;
+      }
 
       set(update);
     },

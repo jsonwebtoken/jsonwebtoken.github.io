@@ -6,10 +6,10 @@ import {
 } from "@/features/common/values/default-tokens.values";
 import {
   extractJwt,
-  getAlgName,
   operationExceptionDictionary,
 } from "@/features/common/services/utils";
 import {
+  convertAsymmetricPublicKeyFormat,
   getStringifiedHeaderAndPayload,
   isDigitalSignatureAlg,
   isHmacAlg,
@@ -72,7 +72,7 @@ class _TokenDecoderService {
     const defaultToken =
       DefaultTokensValues[algorithmPickerOptionValue] || DEFAULT_JWT;
 
-    const algorithm = getAlgName(algorithmPickerOptionValue);
+    const algorithm = algorithmPickerOptionValue;
 
     if (isNoneAlg(algorithm)) {
       const token = defaultToken as DefaultUnsecuredTokenModel;
@@ -341,6 +341,53 @@ class _TokenDecoderService {
     }
 
     return stateUpdate;
+  }
+
+  async loadDecoderUrlInputs({
+    alg,
+    symmetricSecretKey,
+    symmetricSecretKeyEncoding,
+    asymmetricPublicKey,
+    asymmetricPublicKeyFormat,
+    jwt,
+    publicKey,
+    publicKeyFormat,
+  }: {
+    alg: string;
+    symmetricSecretKey: string;
+    symmetricSecretKeyEncoding: EncodingValues;
+    asymmetricPublicKey: string;
+    asymmetricPublicKeyFormat: AsymmetricKeyFormatValues;
+    jwt: string;
+    publicKey?: string;
+    publicKeyFormat?: AsymmetricKeyFormatValues;
+  }): Promise<Partial<DecoderStoreState>> {
+    const cleanJwtInput = extractJwt(jwt);
+    const validateJwtFormatResult = validateJwtFormat(cleanJwtInput);
+
+    if (
+      publicKey?.trim() &&
+      publicKeyFormat &&
+      validateJwtFormatResult.isOk() &&
+      validateJwtFormatResult.value.type === JwtTypeValues.DigitallySigned
+    ) {
+      return this.loadDecoderInputs({
+        algType: SigningAlgCategoryValues.ASYMMETRIC,
+        alg: validateJwtFormatResult.value.signingAlgorithm,
+        jwt: cleanJwtInput,
+        asymmetricPublicKey: publicKey,
+        asymmetricPublicKeyFormat: publicKeyFormat,
+      });
+    }
+
+    return this.handleJwtChange({
+      alg,
+      symmetricSecretKey,
+      symmetricSecretKeyEncoding,
+      asymmetricPublicKey,
+      asymmetricPublicKeyFormat,
+      newToken: jwt,
+    });
   }
 
   async handleJwtChange({
@@ -884,15 +931,37 @@ class _TokenDecoderService {
     jwt,
     alg,
     asymmetricPublicKey,
-    asymmetricPublicKeyFormat,
+    sourceFormat,
+    targetFormat,
   }: {
     jwt: string;
     alg: string;
     asymmetricPublicKey: string;
-    asymmetricPublicKeyFormat: AsymmetricKeyFormatValues;
+    sourceFormat: AsymmetricKeyFormatValues;
+    targetFormat: AsymmetricKeyFormatValues;
   }): Promise<Partial<DecoderStoreState>> {
+    const conversionResult = await convertAsymmetricPublicKeyFormat({
+      alg,
+      key: asymmetricPublicKey,
+      sourceFormat,
+      targetFormat,
+    });
+
+    if (conversionResult.isErr()) {
+      return {
+        verificationInputErrors: [conversionResult.error],
+      };
+    }
+
+    const convertedPublicKey = conversionResult.value;
     const stateUpdate: Partial<DecoderStoreState> = {
-      asymmetricPublicKeyFormat: asymmetricPublicKeyFormat,
+      asymmetricPublicKey: convertedPublicKey,
+      asymmetricPublicKeyFormat: targetFormat,
+      controlledAsymmetricPublicKey: {
+        id: new Date().valueOf(),
+        value: convertedPublicKey,
+        format: targetFormat,
+      },
       verificationInputErrors: null,
       signatureStatus: JwtSignatureStatusValues.UNKNOWN,
       signatureWarnings: null,
@@ -902,8 +971,8 @@ class _TokenDecoderService {
       await this.handleAsymmetricPublicKeyHelper({
         jwt: jwt,
         alg: alg,
-        asymmetricPublicKey: asymmetricPublicKey,
-        asymmetricPublicKeyFormat: asymmetricPublicKeyFormat,
+        asymmetricPublicKey: convertedPublicKey,
+        asymmetricPublicKeyFormat: targetFormat,
       });
 
     if (handleAsymmetricPublicKeyHelperResult.isErr()) {

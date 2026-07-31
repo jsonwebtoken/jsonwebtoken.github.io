@@ -2144,7 +2144,7 @@
           "ps256": true,
           "ps384": true,
           "ps512": true,
-          "EdDSA": true
+          "eddsa": true
         },
         "authorUrl": "https://github.com/inverno-io",
         "authorName": "Inverno Framework",

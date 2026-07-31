@@ -1,9 +1,22 @@
-import { describe, expect, test } from "vitest";
-import { DefaultTokensValues } from "@/features/common/values/default-tokens.values";
-import { validateJwtFormat } from "@/features/common/services/jwt.service";
+import { afterEach, describe, expect, test, vi } from "vitest";
+import {
+  DefaultTokensValues,
+  DefaultTokenWithKeysModel,
+} from "@/features/common/values/default-tokens.values";
+import {
+  convertAsymmetricPrivateKeyFormat,
+  convertAsymmetricPublicKeyFormat,
+  getAsymmetricKeyCryptoKey,
+  getJwk,
+  isMlDsaSupported,
+  validateJwtFormat,
+  verifyDigitallySignedJwt,
+} from "@/features/common/services/jwt.service";
 import { JwtTypeValues } from "@/features/common/values/jwt-type.values";
 import { DebuggerTaskValues } from "@/features/common/values/debugger-task.values";
 import { DebuggerInputValues } from "@/features/common/values/debugger-input.values";
+import { AsymmetricKeyFormatValues } from "@/features/common/values/asymmetric-key-format.values";
+import { mlDsaAlgorithms } from "@/features/common/values/jws-alg-header-parameter-values.dictionary";
 
 describe("validateJwtFormat", () => {
   const tokenHS256 = DefaultTokensValues.HS256.token;
@@ -48,7 +61,7 @@ describe("validateJwtFormat", () => {
         },
         signingAlgorithm: "HS256",
         type: JwtTypeValues.MACed,
-      })
+      }),
     );
 
     const result2 = validateJwtFormat(tokenHS384);
@@ -67,7 +80,7 @@ describe("validateJwtFormat", () => {
             iat: 1516239022,
           },
         },
-      })
+      }),
     );
 
     const result3 = validateJwtFormat(tokenHS512);
@@ -86,7 +99,7 @@ describe("validateJwtFormat", () => {
             iat: 1516239022,
           },
         },
-      })
+      }),
     );
 
     const result4 = validateJwtFormat(tokenRS256);
@@ -108,7 +121,7 @@ describe("validateJwtFormat", () => {
             iat: 1516239022,
           },
         },
-      })
+      }),
     );
 
     const result5 = validateJwtFormat(tokenRS384);
@@ -127,7 +140,7 @@ describe("validateJwtFormat", () => {
             iat: 1516239022,
           },
         },
-      })
+      }),
     );
 
     const result6 = validateJwtFormat(tokenRS512);
@@ -146,7 +159,7 @@ describe("validateJwtFormat", () => {
             iat: 1516239022,
           },
         },
-      })
+      }),
     );
 
     const result7 = validateJwtFormat(unsecured);
@@ -166,7 +179,7 @@ describe("validateJwtFormat", () => {
             "http://example.com/is_root": true,
           },
         },
-      })
+      }),
     );
   });
 
@@ -179,7 +192,7 @@ describe("validateJwtFormat", () => {
         task: DebuggerTaskValues.DECODE,
         input: DebuggerInputValues.JWT,
         message: `This tool only supports a JWT that uses the JWS Compact Serialization, which must have three base64url-encoded segments separated by two period ('.') characters as defined on [RFC 7515](https://datatracker.ietf.org/doc/html/rfc7515#section-3.3)`,
-      })
+      }),
     );
 
     const result2 = validateJwtFormat(invalidToken2);
@@ -190,7 +203,7 @@ describe("validateJwtFormat", () => {
         task: DebuggerTaskValues.DECODE,
         input: DebuggerInputValues.JWT,
         message: `This tool only supports a JWT that uses the JWS Compact Serialization, which must have three base64url-encoded segments separated by two period ('.') characters as defined on [RFC 7515](https://datatracker.ietf.org/doc/html/rfc7515#section-3.3)`,
-      })
+      }),
     );
 
     const result3 = validateJwtFormat(invalidToken3);
@@ -201,7 +214,7 @@ describe("validateJwtFormat", () => {
         task: DebuggerTaskValues.DECODE,
         input: DebuggerInputValues.JWT,
         message: `This tool only supports a JWT that uses the JWS Compact Serialization, which must have three base64url-encoded segments separated by two period ('.') characters as defined on [RFC 7515](https://datatracker.ietf.org/doc/html/rfc7515#section-3.3)`,
-      })
+      }),
     );
 
     const result4 = validateJwtFormat(invalidToken4);
@@ -212,7 +225,7 @@ describe("validateJwtFormat", () => {
         task: DebuggerTaskValues.DECODE,
         input: DebuggerInputValues.JWT,
         message: `This tool only supports a JWT that uses the JWS Compact Serialization, which must have three base64url-encoded segments separated by two period ('.') characters as defined on [RFC 7515](https://datatracker.ietf.org/doc/html/rfc7515#section-3.3)`,
-      })
+      }),
     );
 
     const result5 = validateJwtFormat(invalidToken5);
@@ -223,7 +236,7 @@ describe("validateJwtFormat", () => {
         task: DebuggerTaskValues.DECODE,
         input: DebuggerInputValues.JWT,
         message: `JWT must not be empty.`,
-      })
+      }),
     );
 
     const result6 = validateJwtFormat(invalidToken6);
@@ -234,7 +247,7 @@ describe("validateJwtFormat", () => {
         task: DebuggerTaskValues.DECODE,
         input: DebuggerInputValues.JWT,
         message: `This tool only supports a JWT that uses the JWS Compact Serialization, which must have three base64url-encoded segments separated by two period ('.') characters as defined on [RFC 7515](https://datatracker.ietf.org/doc/html/rfc7515#section-3.3)`,
-      })
+      }),
     );
 
     const result7 = validateJwtFormat(invalidToken7);
@@ -251,7 +264,7 @@ describe("validateJwtFormat", () => {
           },
           payload: "test",
         },
-      })
+      }),
     );
 
     const result8 = validateJwtFormat(invalidToken8);
@@ -262,7 +275,7 @@ describe("validateJwtFormat", () => {
         task: DebuggerTaskValues.DECODE,
         input: DebuggerInputValues.JWT,
         message: `This tool only supports a JWT that uses the JWS Compact Serialization, which must have three base64url-encoded segments separated by two period ('.') characters as defined on [RFC 7515](https://datatracker.ietf.org/doc/html/rfc7515#section-3.3)`,
-      })
+      }),
     );
 
     const result9 = validateJwtFormat(invalidToken9);
@@ -273,7 +286,215 @@ describe("validateJwtFormat", () => {
         task: DebuggerTaskValues.DECODE,
         input: DebuggerInputValues.JWT,
         message: `This tool only supports a JWT that uses the JWS Compact Serialization, which must have three base64url-encoded segments separated by two period ('.') characters as defined on [RFC 7515](https://datatracker.ietf.org/doc/html/rfc7515#section-3.3)`,
-      })
+      }),
+    );
+  });
+});
+
+describe("Ed25519", () => {
+  const token = DefaultTokensValues.Ed25519 as DefaultTokenWithKeysModel;
+  const legacyEdDsaToken =
+    "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.JkKWCY39IdWEQttmdqR7VdsvT-_QxheW_eb0S5wr_j83ltux_JDUIXs7a3Dtn3xuqzuhetiuJrWIvy5TzimeCg";
+
+  test("uses the Ed25519 identifier for new examples", () => {
+    const result = validateJwtFormat(token.token);
+
+    expect(result.isOk()).toBe(true);
+    expect(result.unwrapOr(null)).toMatchObject({
+      signingAlgorithm: "Ed25519",
+      decoded: {
+        header: {
+          alg: "Ed25519",
+        },
+      },
+    });
+  });
+
+  test("continues to validate and verify pasted EdDSA tokens", async () => {
+    const validationResult = validateJwtFormat(legacyEdDsaToken);
+
+    expect(validationResult.isOk()).toBe(true);
+    expect(validationResult.unwrapOr(null)).toMatchObject({
+      signingAlgorithm: "EdDSA",
+      decoded: {
+        header: {
+          alg: "EdDSA",
+        },
+      },
+    });
+
+    const verificationResult = await verifyDigitallySignedJwt({
+      jwt: legacyEdDsaToken,
+      alg: "EdDSA",
+      asymmetricPublicKey: token.publicKey,
+      asymmetricPublicKeyFormat: AsymmetricKeyFormatValues.PEM,
+    });
+
+    expect(verificationResult.unwrapOr(false)).toBe(true);
+  });
+});
+
+describe("asymmetric key format conversion", () => {
+  const token = DefaultTokensValues.RS256 as DefaultTokenWithKeysModel;
+  const publicJwk = token.jwk as { n: string; e: string };
+
+  test("converts private keys between PEM and JWK", async () => {
+    const jwkResult = await convertAsymmetricPrivateKeyFormat({
+      alg: "RS256",
+      key: token.privateKey,
+      sourceFormat: AsymmetricKeyFormatValues.PEM,
+      targetFormat: AsymmetricKeyFormatValues.JWK,
+    });
+
+    expect(jwkResult.isOk()).toBe(true);
+    expect(JSON.parse(jwkResult._unsafeUnwrap())).toMatchObject({
+      kty: "RSA",
+      d: expect.any(String),
+      n: expect.any(String),
+      e: expect.any(String),
+    });
+
+    const pemResult = await convertAsymmetricPrivateKeyFormat({
+      alg: "RS256",
+      key: jwkResult._unsafeUnwrap(),
+      sourceFormat: AsymmetricKeyFormatValues.JWK,
+      targetFormat: AsymmetricKeyFormatValues.PEM,
+    });
+
+    expect(pemResult._unsafeUnwrap()).toMatch(
+      /^-----BEGIN PRIVATE KEY-----[\s\S]+-----END PRIVATE KEY-----$/,
+    );
+  });
+
+  test("converts public keys between PEM and JWK", async () => {
+    const jwkResult = await convertAsymmetricPublicKeyFormat({
+      alg: "RS256",
+      key: token.publicKey,
+      sourceFormat: AsymmetricKeyFormatValues.PEM,
+      targetFormat: AsymmetricKeyFormatValues.JWK,
+    });
+
+    expect(jwkResult.isOk()).toBe(true);
+    expect(JSON.parse(jwkResult._unsafeUnwrap())).toStrictEqual({
+      kty: "RSA",
+      n: publicJwk.n,
+      e: publicJwk.e,
+    });
+
+    const pemResult = await convertAsymmetricPublicKeyFormat({
+      alg: "RS256",
+      key: jwkResult._unsafeUnwrap(),
+      sourceFormat: AsymmetricKeyFormatValues.JWK,
+      targetFormat: AsymmetricKeyFormatValues.PEM,
+    });
+
+    expect(pemResult._unsafeUnwrap()).toBe(token.publicKey);
+  });
+
+  test("does not relabel an invalid key", async () => {
+    const result = await convertAsymmetricPublicKeyFormat({
+      alg: "RS256",
+      key: "not a PEM key",
+      sourceFormat: AsymmetricKeyFormatValues.PEM,
+      targetFormat: AsymmetricKeyFormatValues.JWK,
+    });
+
+    expect(result.isErr()).toBe(true);
+  });
+});
+
+describe("ML-DSA", () => {
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
+  test("recognizes all three algorithm identifiers", () => {
+    for (const algorithm of mlDsaAlgorithms) {
+      const header = Buffer.from(
+        JSON.stringify({ alg: algorithm, typ: "JWT" }),
+      ).toString("base64url");
+      const payload = Buffer.from(JSON.stringify({ sub: "1234" })).toString(
+        "base64url",
+      );
+      const result = validateJwtFormat(`${header}.${payload}.AA`);
+
+      expect(result.isOk()).toBe(true);
+      expect(result.unwrapOr(null)).toMatchObject({
+        signingAlgorithm: algorithm,
+        type: JwtTypeValues.DigitallySigned,
+      });
+    }
+  });
+
+  test("detects support separately for each algorithm", () => {
+    const supports = vi.fn(
+      (_operation: "generateKey", algorithm: string) =>
+        algorithm !== "ML-DSA-65",
+    );
+    vi.stubGlobal("SubtleCrypto", { supports });
+
+    expect(isMlDsaSupported("ML-DSA-44")).toBe(true);
+    expect(isMlDsaSupported("ML-DSA-65")).toBe(false);
+    expect(isMlDsaSupported("ML-DSA-87")).toBe(true);
+    expect(supports).toHaveBeenNthCalledWith(1, "generateKey", "ML-DSA-44");
+    expect(supports).toHaveBeenNthCalledWith(2, "generateKey", "ML-DSA-65");
+    expect(supports).toHaveBeenNthCalledWith(3, "generateKey", "ML-DSA-87");
+  });
+
+  test("reports unsupported when SubtleCrypto.supports is unavailable", () => {
+    vi.stubGlobal("SubtleCrypto", {});
+
+    for (const algorithm of mlDsaAlgorithms) {
+      expect(isMlDsaSupported(algorithm)).toBe(false);
+    }
+  });
+
+  test("preserves AKP algorithm parameters while normalizing JWKs", () => {
+    expect(
+      getJwk({
+        kty: "AKP",
+        alg: "ML-DSA-44",
+        pub: "public",
+        priv: "private",
+        use: "sig",
+        key_ops: ["sign"],
+        ext: true,
+      }),
+    ).toStrictEqual({
+      kty: "AKP",
+      alg: "ML-DSA-44",
+      pub: "public",
+      priv: "private",
+    });
+
+    expect(
+      getJwk({
+        kty: "RSA",
+        alg: "RS256",
+        n: "modulus",
+        e: "AQAB",
+      }),
+    ).toStrictEqual({
+      kty: "RSA",
+      n: "modulus",
+      e: "AQAB",
+    });
+  });
+
+  test("requires the AKP private seed parameter", async () => {
+    const result = await getAsymmetricKeyCryptoKey(
+      JSON.stringify({
+        kty: "AKP",
+        alg: "ML-DSA-44",
+        pub: "public",
+      }),
+      "ML-DSA-44",
+      AsymmetricKeyFormatValues.JWK,
+    );
+
+    expect(result.isErr()).toBe(true);
+    expect(result._unsafeUnwrapErr()).toContain(
+      "The 'priv' parameter must be present",
     );
   });
 });
