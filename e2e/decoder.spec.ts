@@ -1,8 +1,5 @@
 import { expect, test } from "@playwright/test";
-import {
-  getButtonsUiDictionary,
-  getPickersUiDictionary,
-} from "@/features/localization/services/ui-language-dictionary.service";
+import { getButtonsUiDictionary } from "@/features/localization/services/ui-language-dictionary.service";
 import {
   DefaultTokensValues,
   DefaultTokenWithKeysModel,
@@ -30,6 +27,7 @@ import { JwtDictionaryModel, JwtSignedWithDigitalModel } from "./e2e.models";
 import jwts from "./jwt.json" with { type: "json" };
 import { EncodingValues } from "@/features/common/values/encoding.values";
 import { isMlDsaAlgorithm } from "@/features/common/values/jws-alg-header-parameter-values.dictionary";
+import { AsymmetricKeyFormatValues } from "@/features/common/values/asymmetric-key-format.values";
 
 const TestJwts = (jwts as JwtDictionaryModel).byAlgorithm;
 
@@ -115,22 +113,18 @@ test.describe("Can generate JWT examples", () => {
 
   test.describe("Can generate a JWT decoder example", () => {
     test.beforeEach(async ({ page }) => {
-      const lang = await getLang(page);
-      expectToBeNonNull(lang);
-
       const algorithmPicker = page.getByRole("combobox", {
         name: "Debugger picker",
       });
       const algorithmPickerRegion = page
         .getByRole("region")
         .filter({ has: algorithmPicker });
-      const pickersUiDictionary = getPickersUiDictionary(lang);
-      const pickerIndicator = page.getByText(
-        pickersUiDictionary.exampleAlgPicker.defaultValue
+      const pickerControl = algorithmPicker.locator(
+        'xpath=ancestor::div[contains(@class, "react-select__control")]',
       );
 
       await expect(algorithmPickerRegion).toHaveAttribute("aria-busy", "false");
-      await pickerIndicator.click();
+      await pickerControl.dispatchEvent("mousedown", { button: 0 });
       await expect(page.getByRole("listbox")).toBeVisible();
     });
 
@@ -244,6 +238,52 @@ test.describe("Can generate JWT examples", () => {
 test.describe("decode JWTs", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto(E2E_BASE_URL);
+  });
+
+  test("detects pasted public key formats", async ({ page }) => {
+    const token = DefaultTokensValues.ES256 as DefaultTokenWithKeysModel;
+    const { kty, crv, x, y } = token.jwk as JsonWebKey;
+    const publicKey = { kty, crv, x, y };
+    const decoderWidget = page.getByTestId(dataTestidDictionary.decoder.id);
+    const secretKeyEditor = decoderWidget.getByTestId(
+      dataTestidDictionary.decoder.secretKeyEditor.id,
+    );
+    const secretKeyEditorInput = secretKeyEditor.getByRole("textbox");
+
+    await getDecoderJwtEditorInput(page).fill(token.token);
+    await expect(
+      page
+        .locator(".react-select__single-value")
+        .filter({ hasText: AsymmetricKeyFormatValues.PEM }),
+    ).toBeVisible();
+
+    await secretKeyEditorInput.fill(JSON.stringify(publicKey));
+    await expect(secretKeyEditorInput).toHaveValue(
+      JSON.stringify(publicKey, null, 2),
+    );
+    await expect(
+      page
+        .locator(".react-select__single-value")
+        .filter({ hasText: AsymmetricKeyFormatValues.JWK }),
+    ).toBeVisible();
+    await checkSecretKeyDecoderEditorStatusBarMessage({
+      page,
+      type: MessageTypeValue.SUCCESS,
+      status: MessageStatusValue.VISIBLE,
+    });
+
+    await secretKeyEditorInput.fill(token.publicKey);
+    await expect(secretKeyEditorInput).toHaveValue(token.publicKey);
+    await expect(
+      page
+        .locator(".react-select__single-value")
+        .filter({ hasText: AsymmetricKeyFormatValues.PEM }),
+    ).toBeVisible();
+    await checkSecretKeyDecoderEditorStatusBarMessage({
+      page,
+      type: MessageTypeValue.SUCCESS,
+      status: MessageStatusValue.VISIBLE,
+    });
   });
 
   const options = Object.keys(DefaultTokensValues);

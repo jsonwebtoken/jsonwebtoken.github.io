@@ -34,6 +34,7 @@ import { dataTestidDictionary } from "@/libs/testing/data-testid.dictionary";
 import { CardToolbarComponent } from "@/features/common/components/card-toolbar/card-toolbar.component";
 import { CardToolbarClearButtonComponent } from "@/features/common/components/card-toolbar-buttons/card-toolbar-clear-button/card-toolbar-clear-button.component";
 import { EncodingFormatToggleSwitchComponent } from "@/features/decoder/components/encoding-format-toggle-swith/encoding-format-toggle-switch";
+import { formatAsymmetricKeyInput } from "@/features/common/services/asymmetric-key-input.service";
 
 type HeaderInputComponentProps = {
   languageCode: string;
@@ -74,6 +75,9 @@ export const TokenEncoderInputComponent: React.FC<
   const controlledAsymmetricPrivateKey$ = useEncoderStore(
     (state) => state.controlledAsymmetricPrivateKey
   );
+  const asymmetricPrivateKeyFormat$ = useEncoderStore(
+    (state) => state.asymmetricPrivateKeyFormat
+  );
 
   const [header, setHeader] = useState<string>(DEFAULT_HEADER);
   const [payload, setPayload] = useState<string>(DEFAULT_PAYLOAD);
@@ -96,7 +100,12 @@ export const TokenEncoderInputComponent: React.FC<
 
   useEffect(() => {
     if (controlledAsymmetricPrivateKey$) {
-      setPrivateKey(controlledAsymmetricPrivateKey$.value);
+      setPrivateKey(
+        formatAsymmetricKeyInput(
+          controlledAsymmetricPrivateKey$.value,
+          controlledAsymmetricPrivateKey$.format,
+        ),
+      );
     }
   }, [controlledAsymmetricPrivateKey$]);
 
@@ -190,7 +199,10 @@ export const TokenEncoderInputComponent: React.FC<
   ) => {
     const key = e.target.value;
 
-    const cleanValue = key.trim();
+    const cleanValue = formatAsymmetricKeyInput(
+      key,
+      asymmetricPrivateKeyFormat$,
+    );
 
     setPrivateKey(cleanValue);
 

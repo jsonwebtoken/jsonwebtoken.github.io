@@ -947,13 +947,26 @@ class _TokenDecoderService {
       targetFormat,
     });
 
+    let convertedPublicKey: string;
+
     if (conversionResult.isErr()) {
-      return {
-        verificationInputErrors: [conversionResult.error],
-      };
+      const targetFormatValidationResult = await validateAsymmetricKey({
+        alg,
+        asymmetricPublicKey,
+        asymmetricPublicKeyFormat: targetFormat,
+      });
+
+      if (targetFormatValidationResult.isErr()) {
+        return {
+          verificationInputErrors: [conversionResult.error],
+        };
+      }
+
+      convertedPublicKey = asymmetricPublicKey;
+    } else {
+      convertedPublicKey = conversionResult.value;
     }
 
-    const convertedPublicKey = conversionResult.value;
     const stateUpdate: Partial<DecoderStoreState> = {
       asymmetricPublicKey: convertedPublicKey,
       asymmetricPublicKeyFormat: targetFormat,

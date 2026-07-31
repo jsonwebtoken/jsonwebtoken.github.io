@@ -12,6 +12,9 @@ import {
   DEFAULT_SYMMETRIC_SECRET,
 } from "@/features/encoder/services/encoder.config";
 import { EncoderInputsModel } from "@/features/debugger/models/encoder-inputs.model";
+import { detectAsymmetricKeyFormat } from "@/features/common/services/asymmetric-key-input.service";
+
+let latestAsymmetricPrivateKeyRequestId = 0;
 
 export type EncoderStoreState = {
   jwt: string | null;
@@ -197,20 +200,50 @@ export const useEncoderStore = create<EncoderStore>()(
       set(update);
     },
     handleAsymmetricPrivateKeyChange: async (newPrivateKey) => {
+      const requestId = ++latestAsymmetricPrivateKeyRequestId;
       const { header, payload, asymmetricPrivateKeyFormat } = get();
+      const detectedFormat = detectAsymmetricKeyFormat(newPrivateKey);
+      const nextFormat = detectedFormat ?? asymmetricPrivateKeyFormat;
+
+      set({
+        asymmetricPrivateKey: newPrivateKey,
+        ...(nextFormat !== asymmetricPrivateKeyFormat
+          ? {
+              asymmetricPrivateKeyFormat: nextFormat,
+              controlledAsymmetricPrivateKey: {
+                id: new Date().valueOf(),
+                value: newPrivateKey,
+                format: nextFormat,
+              },
+            }
+          : {}),
+      });
 
       const update = await TokenEncoderService.handleAsymmetricPrivateKeyChange(
         {
           header,
           payload,
           asymmetricPrivateKey: newPrivateKey,
-          asymmetricPrivateKeyFormat,
+          asymmetricPrivateKeyFormat: nextFormat,
         },
       );
+
+      const currentState = get();
+
+      if (
+        requestId !== latestAsymmetricPrivateKeyRequestId ||
+        currentState.header !== header ||
+        currentState.payload !== payload ||
+        currentState.asymmetricPrivateKey !== newPrivateKey ||
+        currentState.asymmetricPrivateKeyFormat !== nextFormat
+      ) {
+        return;
+      }
 
       set(update);
     },
     handleAsymmetricPrivateKeyFormatChange: async (newFormat) => {
+      const requestId = ++latestAsymmetricPrivateKeyRequestId;
       const {
         alg,
         header,
@@ -232,6 +265,7 @@ export const useEncoderStore = create<EncoderStore>()(
       const currentState = get();
 
       if (
+        requestId !== latestAsymmetricPrivateKeyRequestId ||
         currentState.alg !== alg ||
         currentState.header !== header ||
         currentState.payload !== payload ||

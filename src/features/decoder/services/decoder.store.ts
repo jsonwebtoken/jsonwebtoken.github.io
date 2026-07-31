@@ -9,6 +9,7 @@ import { subscribeWithSelector } from "zustand/middleware";
 import { AsymmetricKeyFormatValues } from "@/features/common/values/asymmetric-key-format.values";
 import { JwtSignatureStatusValues } from "@/features/common/values/jwt-signature-status.values";
 import { DecoderInputsModel } from "@/features/debugger/models/decoder-inputs.model";
+import { detectAsymmetricKeyFormat } from "@/features/common/services/asymmetric-key-input.service";
 
 export enum HashWarningVisibilityValues {
   VISIBLE = "VISIBLE",
@@ -40,6 +41,7 @@ export const DEFAULT_PAYLOAD = {
 export const DEFAULT_DECODED_PAYLOAD = JSON.stringify(DEFAULT_PAYLOAD, null, 2);
 
 let latestJwtChangeRequestId = 0;
+let latestAsymmetricPublicKeyRequestId = 0;
 
 export type DecoderStoreState = {
   jwt: string;
@@ -220,18 +222,48 @@ export const useDecoderStore = create<DecoderStore>()(
     },
 
     handleAsymmetricPublicKeyChange: async (newAsymmetricPublicKey) => {
+      const requestId = ++latestAsymmetricPublicKeyRequestId;
       const { jwt, alg, asymmetricPublicKeyFormat } = get();
+      const detectedFormat = detectAsymmetricKeyFormat(newAsymmetricPublicKey);
+      const nextFormat = detectedFormat ?? asymmetricPublicKeyFormat;
+
+      set({
+        asymmetricPublicKey: newAsymmetricPublicKey,
+        ...(nextFormat !== asymmetricPublicKeyFormat
+          ? {
+              asymmetricPublicKeyFormat: nextFormat,
+              controlledAsymmetricPublicKey: {
+                id: new Date().valueOf(),
+                value: newAsymmetricPublicKey,
+                format: nextFormat,
+              },
+            }
+          : {}),
+      });
 
       const update = await TokenDecoderService.handleAsymmetricPublicKeyChange({
         jwt,
         alg,
-        asymmetricPublicKeyFormat,
+        asymmetricPublicKeyFormat: nextFormat,
         asymmetricPublicKey: newAsymmetricPublicKey,
       });
+
+      const currentState = get();
+
+      if (
+        requestId !== latestAsymmetricPublicKeyRequestId ||
+        currentState.jwt !== jwt ||
+        currentState.alg !== alg ||
+        currentState.asymmetricPublicKey !== newAsymmetricPublicKey ||
+        currentState.asymmetricPublicKeyFormat !== nextFormat
+      ) {
+        return;
+      }
 
       set(update);
     },
     handleAsymmetricPublicKeyFormatChange: async (newFormat) => {
+      const requestId = ++latestAsymmetricPublicKeyRequestId;
       const { jwt, alg, asymmetricPublicKey, asymmetricPublicKeyFormat } =
         get();
 
@@ -247,6 +279,7 @@ export const useDecoderStore = create<DecoderStore>()(
       const currentState = get();
 
       if (
+        requestId !== latestAsymmetricPublicKeyRequestId ||
         currentState.jwt !== jwt ||
         currentState.alg !== alg ||
         currentState.asymmetricPublicKey !== asymmetricPublicKey ||

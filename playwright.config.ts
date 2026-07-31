@@ -72,7 +72,7 @@ export default defineConfig({
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'npm run dev',
+    command: 'NEXT_PUBLIC_DISABLE_ONETRUST=true npm run dev',
     port: 1234,
     timeout: 60 * 1000,
     reuseExistingServer: !process.env.CI,
