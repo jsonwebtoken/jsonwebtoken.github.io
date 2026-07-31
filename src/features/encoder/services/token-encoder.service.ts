@@ -13,6 +13,7 @@ import {
   convertAsymmetricPrivateKeyFormat,
   createUnsecuredJwt,
   getAlgSize,
+  getAsymmetricKeyCryptoKey,
   getValidatedEncoderHeader,
   isDigitalSignatureAlg,
   isHmacAlg,
@@ -1350,13 +1351,26 @@ class _TokenEncoderService {
       targetFormat: params.targetFormat,
     });
 
+    let asymmetricPrivateKey: string;
+
     if (conversionResult.isErr()) {
-      return {
-        signingErrors: [conversionResult.error],
-      };
+      const targetFormatValidationResult = await getAsymmetricKeyCryptoKey(
+        params.asymmetricPrivateKey,
+        params.alg,
+        params.targetFormat,
+      );
+
+      if (targetFormatValidationResult.isErr()) {
+        return {
+          signingErrors: [conversionResult.error],
+        };
+      }
+
+      asymmetricPrivateKey = params.asymmetricPrivateKey;
+    } else {
+      asymmetricPrivateKey = conversionResult.value;
     }
 
-    const asymmetricPrivateKey = conversionResult.value;
     const stateUpdate: Partial<EncoderStoreState> = {
       jwt: "",
       exampleAlg: "",

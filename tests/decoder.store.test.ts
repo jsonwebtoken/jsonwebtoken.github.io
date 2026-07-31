@@ -15,6 +15,19 @@ import { TokenDecoderService } from "@/features/decoder/services/token-decoder.s
 
 const rs256 = DefaultTokensValues.RS256 as DefaultTokenWithKeysModel;
 const rs256PublicJwk = rs256.jwk as { n: string; e: string };
+const es256 = DefaultTokensValues.ES256 as DefaultTokenWithKeysModel;
+const es256Jwk = es256.jwk as {
+  kty: string;
+  crv: string;
+  x: string;
+  y: string;
+};
+const es256PublicJwk = {
+  kty: es256Jwk.kty,
+  crv: es256Jwk.crv,
+  x: es256Jwk.x,
+  y: es256Jwk.y,
+};
 
 const deferred = <T>() => {
   let resolve!: (value: T) => void;
@@ -303,8 +316,106 @@ describe("loadDecoderUrlInputs", () => {
   });
 });
 
+describe("handleAsymmetricPublicKeyChange", () => {
+  beforeEach(() => {
+    vi.restoreAllMocks();
+    useDecoderStore.setState({
+      ...initialState,
+      jwt: es256.token,
+      alg: "ES256",
+    });
+  });
+
+  test("detects a JWK pasted while PEM is selected", async () => {
+    const publicKey = JSON.stringify(es256PublicJwk, null, 2);
+
+    await useDecoderStore.getState().handleAsymmetricPublicKeyChange(publicKey);
+
+    expect(useDecoderStore.getState()).toMatchObject({
+      asymmetricPublicKey: publicKey,
+      asymmetricPublicKeyFormat: AsymmetricKeyFormatValues.JWK,
+      controlledAsymmetricPublicKey: {
+        value: publicKey,
+        format: AsymmetricKeyFormatValues.JWK,
+      },
+      signatureStatus: JwtSignatureStatusValues.VALID,
+      verificationInputErrors: null,
+    });
+  });
+
+  test("detects PEM pasted while JWK is selected", async () => {
+    useDecoderStore.setState({
+      asymmetricPublicKeyFormat: AsymmetricKeyFormatValues.JWK,
+    });
+
+    await useDecoderStore
+      .getState()
+      .handleAsymmetricPublicKeyChange(es256.publicKey);
+
+    expect(useDecoderStore.getState()).toMatchObject({
+      asymmetricPublicKey: es256.publicKey,
+      asymmetricPublicKeyFormat: AsymmetricKeyFormatValues.PEM,
+      controlledAsymmetricPublicKey: {
+        value: es256.publicKey,
+        format: AsymmetricKeyFormatValues.PEM,
+      },
+      signatureStatus: JwtSignatureStatusValues.VALID,
+      verificationInputErrors: null,
+    });
+  });
+
+  test("does not let an earlier key change overwrite a newer one", async () => {
+    const earlier = deferred<Partial<DecoderStoreState>>();
+    const newer = deferred<Partial<DecoderStoreState>>();
+    const publicJwk = JSON.stringify(es256PublicJwk, null, 2);
+    const handleAsymmetricPublicKeyChange = vi.spyOn(
+      TokenDecoderService,
+      "handleAsymmetricPublicKeyChange",
+    );
+
+    handleAsymmetricPublicKeyChange
+      .mockReturnValueOnce(earlier.promise)
+      .mockReturnValueOnce(newer.promise);
+
+    const earlierChange = useDecoderStore
+      .getState()
+      .handleAsymmetricPublicKeyChange(publicJwk);
+    const newerChange = useDecoderStore
+      .getState()
+      .handleAsymmetricPublicKeyChange(es256.publicKey);
+
+    expect(useDecoderStore.getState()).toMatchObject({
+      asymmetricPublicKey: es256.publicKey,
+      asymmetricPublicKeyFormat: AsymmetricKeyFormatValues.PEM,
+      controlledAsymmetricPublicKey: {
+        value: es256.publicKey,
+        format: AsymmetricKeyFormatValues.PEM,
+      },
+    });
+
+    newer.resolve({
+      asymmetricPublicKey: es256.publicKey,
+      signatureStatus: JwtSignatureStatusValues.VALID,
+    });
+    await newerChange;
+
+    earlier.resolve({
+      asymmetricPublicKey: publicJwk,
+      signatureStatus: JwtSignatureStatusValues.INVALID,
+    });
+    await earlierChange;
+
+    expect(useDecoderStore.getState()).toMatchObject({
+      asymmetricPublicKey: es256.publicKey,
+      asymmetricPublicKeyFormat: AsymmetricKeyFormatValues.PEM,
+      signatureStatus: JwtSignatureStatusValues.VALID,
+    });
+  });
+});
+
 describe("handleAsymmetricPublicKeyFormatChange", () => {
   beforeEach(() => {
+    vi.restoreAllMocks();
     useDecoderStore.setState({
       ...initialState,
       jwt: rs256.token,
@@ -350,6 +461,88 @@ describe("handleAsymmetricPublicKeyFormatChange", () => {
       },
       signatureStatus: JwtSignatureStatusValues.VALID,
       verificationInputErrors: null,
+    });
+  });
+
+  test("accepts a public key already in the target format", async () => {
+    const publicKey = JSON.stringify(es256PublicJwk, null, 2);
+
+    useDecoderStore.setState({
+      jwt: es256.token,
+      alg: "ES256",
+      asymmetricPublicKey: publicKey,
+      signatureStatus: JwtSignatureStatusValues.INVALID,
+    });
+
+    await useDecoderStore
+      .getState()
+      .handleAsymmetricPublicKeyFormatChange(AsymmetricKeyFormatValues.JWK);
+
+    expect(useDecoderStore.getState()).toMatchObject({
+      asymmetricPublicKey: publicKey,
+      asymmetricPublicKeyFormat: AsymmetricKeyFormatValues.JWK,
+      controlledAsymmetricPublicKey: {
+        value: publicKey,
+        format: AsymmetricKeyFormatValues.JWK,
+      },
+      signatureStatus: JwtSignatureStatusValues.VALID,
+      verificationInputErrors: null,
+    });
+  });
+
+  test("does not let an earlier key change overwrite a newer format change", async () => {
+    const earlier = deferred<Partial<DecoderStoreState>>();
+    const newer = deferred<Partial<DecoderStoreState>>();
+    const convertedPublicKey = "converted earlier key";
+
+    vi.spyOn(
+      TokenDecoderService,
+      "handleAsymmetricPublicKeyChange",
+    ).mockReturnValueOnce(earlier.promise);
+    vi.spyOn(
+      TokenDecoderService,
+      "handleAsymmetricPublicKeyFormatChange",
+    ).mockReturnValueOnce(newer.promise);
+
+    const earlierChange = useDecoderStore
+      .getState()
+      .handleAsymmetricPublicKeyChange("earlier key");
+    const newerChange = useDecoderStore
+      .getState()
+      .handleAsymmetricPublicKeyFormatChange(AsymmetricKeyFormatValues.JWK);
+
+    expect(
+      TokenDecoderService.handleAsymmetricPublicKeyFormatChange,
+    ).toHaveBeenCalledWith({
+      jwt: rs256.token,
+      alg: "RS256",
+      asymmetricPublicKey: "earlier key",
+      sourceFormat: AsymmetricKeyFormatValues.PEM,
+      targetFormat: AsymmetricKeyFormatValues.JWK,
+    });
+
+    newer.resolve({
+      asymmetricPublicKey: convertedPublicKey,
+      asymmetricPublicKeyFormat: AsymmetricKeyFormatValues.JWK,
+      controlledAsymmetricPublicKey: {
+        id: 1,
+        value: convertedPublicKey,
+        format: AsymmetricKeyFormatValues.JWK,
+      },
+      signatureStatus: JwtSignatureStatusValues.VALID,
+    });
+    await newerChange;
+
+    earlier.resolve({
+      asymmetricPublicKey: "earlier key",
+      signatureStatus: JwtSignatureStatusValues.INVALID,
+    });
+    await earlierChange;
+
+    expect(useDecoderStore.getState()).toMatchObject({
+      asymmetricPublicKey: convertedPublicKey,
+      asymmetricPublicKeyFormat: AsymmetricKeyFormatValues.JWK,
+      signatureStatus: JwtSignatureStatusValues.VALID,
     });
   });
 

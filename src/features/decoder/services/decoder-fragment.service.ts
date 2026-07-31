@@ -1,4 +1,5 @@
 import { AsymmetricKeyFormatValues } from "@/features/common/values/asymmetric-key-format.values";
+import { detectAsymmetricKeyFormat } from "@/features/common/services/asymmetric-key-input.service";
 
 const TOKEN_PARAM_PRIORITY = [
   "id_token",
@@ -19,24 +20,6 @@ export type DecoderFragmentResult = {
   publicKey?: string;
   publicKeyFormat?: AsymmetricKeyFormatValues;
   normalizedHash?: string;
-};
-
-const inferPublicKeyFormat = (publicKey: string): AsymmetricKeyFormatValues => {
-  try {
-    const parsedPublicKey: unknown = JSON.parse(publicKey);
-
-    if (
-      parsedPublicKey !== null &&
-      typeof parsedPublicKey === "object" &&
-      !Array.isArray(parsedPublicKey)
-    ) {
-      return AsymmetricKeyFormatValues.JWK;
-    }
-  } catch {
-    // Non-JSON public keys are handled as PEM.
-  }
-
-  return AsymmetricKeyFormatValues.PEM;
 };
 
 const normalizeLegacyFragment = (
@@ -96,7 +79,8 @@ export const parseDecoderFragment = (hash: string): DecoderFragmentResult => {
 
   if (publicKey) {
     result.publicKey = publicKey;
-    result.publicKeyFormat = inferPublicKeyFormat(publicKey);
+    result.publicKeyFormat =
+      detectAsymmetricKeyFormat(publicKey) ?? AsymmetricKeyFormatValues.PEM;
   }
 
   if (usesLegacySyntax) {

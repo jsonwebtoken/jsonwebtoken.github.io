@@ -30,6 +30,7 @@ import { JwtDictionaryModel, JwtSignedWithDigitalModel } from "./e2e.models";
 import jwts from "./jwt.json" with { type: "json" };
 import { EncodingValues } from "@/features/common/values/encoding.values";
 import { isMlDsaAlgorithm } from "@/features/common/values/jws-alg-header-parameter-values.dictionary";
+import { AsymmetricKeyFormatValues } from "@/features/common/values/asymmetric-key-format.values";
 
 const TestJwts = (jwts as JwtDictionaryModel).byAlgorithm;
 
@@ -244,6 +245,52 @@ test.describe("Can generate JWT examples", () => {
 test.describe("decode JWTs", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto(E2E_BASE_URL);
+  });
+
+  test("detects pasted public key formats", async ({ page }) => {
+    const token = DefaultTokensValues.ES256 as DefaultTokenWithKeysModel;
+    const { kty, crv, x, y } = token.jwk as JsonWebKey;
+    const publicKey = { kty, crv, x, y };
+    const decoderWidget = page.getByTestId(dataTestidDictionary.decoder.id);
+    const secretKeyEditor = decoderWidget.getByTestId(
+      dataTestidDictionary.decoder.secretKeyEditor.id,
+    );
+    const secretKeyEditorInput = secretKeyEditor.getByRole("textbox");
+
+    await getDecoderJwtEditorInput(page).fill(token.token);
+    await expect(
+      page
+        .locator(".react-select__single-value")
+        .filter({ hasText: AsymmetricKeyFormatValues.PEM }),
+    ).toBeVisible();
+
+    await secretKeyEditorInput.fill(JSON.stringify(publicKey));
+    await expect(secretKeyEditorInput).toHaveValue(
+      JSON.stringify(publicKey, null, 2),
+    );
+    await expect(
+      page
+        .locator(".react-select__single-value")
+        .filter({ hasText: AsymmetricKeyFormatValues.JWK }),
+    ).toBeVisible();
+    await checkSecretKeyDecoderEditorStatusBarMessage({
+      page,
+      type: MessageTypeValue.SUCCESS,
+      status: MessageStatusValue.VISIBLE,
+    });
+
+    await secretKeyEditorInput.fill(token.publicKey);
+    await expect(secretKeyEditorInput).toHaveValue(token.publicKey);
+    await expect(
+      page
+        .locator(".react-select__single-value")
+        .filter({ hasText: AsymmetricKeyFormatValues.PEM }),
+    ).toBeVisible();
+    await checkSecretKeyDecoderEditorStatusBarMessage({
+      page,
+      type: MessageTypeValue.SUCCESS,
+      status: MessageStatusValue.VISIBLE,
+    });
   });
 
   const options = Object.keys(DefaultTokensValues);
