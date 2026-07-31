@@ -140,7 +140,7 @@ export const LibraryCardComponent: React.FC<LibraryCardComponentProps> = ({
           </div>
         )}
         <div className={styles.repo}>
-          {support && (
+          {stars != null && (
             <div className={styles.repo__stars}>
               <StarIconComponent />
               <span>{stars}</span>

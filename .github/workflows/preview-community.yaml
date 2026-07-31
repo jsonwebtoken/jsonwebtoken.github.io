@@ -2,6 +2,8 @@ name: Vercel Preview Community Deployment
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.PREVIEW_VERCEL_PROJECT_ID }}
+permissions:
+  contents: read
 on:
   push:
     branches:
@@ -13,6 +15,16 @@ jobs:
     steps:
       - name: Checkout the Codebase
         uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install dependencies
+        run: npm ci
+      - name: Refresh library star counts
+        run: npm run generate:library-data
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
       - name: Deploy on Vercel
