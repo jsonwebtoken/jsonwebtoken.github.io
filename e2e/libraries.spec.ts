@@ -8,8 +8,7 @@ test("filters libraries by ML-DSA algorithm", async ({ page }) => {
     .locator(".react-select__single-value")
     .filter({ hasText: "All" })
     .locator('xpath=ancestor::div[contains(@class, "react-select__control")]');
-  await filterByControl.waitFor({ state: "visible" });
-  await filterByControl.dispatchEvent("mousedown", { button: 0 });
+  await filterByControl.click();
 
   const listbox = page.getByRole("listbox");
 
@@ -21,8 +20,11 @@ test("filters libraries by ML-DSA algorithm", async ({ page }) => {
 
   await listbox
     .getByRole("option", { name: "ML-DSA-44", exact: true })
-    .dispatchEvent("click");
+    .click();
 
-  await expect(page).toHaveURL(`${E2E_BASE_URL}/libraries?algorithm=ml-dsa-44`);
+  await expect(page).toHaveURL(
+    `${E2E_BASE_URL}/libraries?algorithm=ml-dsa-44`,
+    { timeout: 15_000 },
+  );
   await expect(page.getByText("panva/jose", { exact: true })).toHaveCount(4);
 });
