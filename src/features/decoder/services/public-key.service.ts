@@ -79,6 +79,43 @@ const safeCreateUrl = (url: string): Result<URL, string> => {
   }
 };
 
+const safeCreateIssuerUrl = (issuer: string): Result<URL, string> => {
+  const safeCreateUrlResult = safeCreateUrl(issuer);
+
+  if (safeCreateUrlResult.isErr()) {
+    return err(safeCreateUrlResult.error);
+  }
+
+  const issuerUrl = safeCreateUrlResult.value;
+
+  if (issuerUrl.protocol !== "https:" || issuerUrl.search || issuerUrl.hash) {
+    return err("Invalid issuer URL");
+  }
+
+  return ok(issuerUrl);
+};
+
+const getAuthorizationServerMetadataUrl = (issuerUrl: URL): URL => {
+  const metadataUrl = new URL(issuerUrl.origin);
+  const issuerPath =
+    issuerUrl.pathname === "/" ? "" : issuerUrl.pathname.replace(/\/+$/, "");
+
+  metadataUrl.pathname = `/.well-known/oauth-authorization-server${issuerPath}`;
+
+  return metadataUrl;
+};
+
+const getOpenIdConfigurationUrl = (issuerUrl: URL): URL => {
+  const metadataUrl = new URL(issuerUrl);
+
+  metadataUrl.pathname = `${metadataUrl.pathname.replace(
+    /\/+$/,
+    "",
+  )}/.well-known/openid-configuration`;
+
+  return metadataUrl;
+};
+
 const safeExportJWK = (key: CryptoKey | Uint8Array) => {
   return fromPromise(exportJWK(key), (e) => {
     console.error(e);
@@ -140,27 +177,23 @@ const safeFetch = (url: string) => {
   });
 };
 
-const safeFetchPublicKeyFromJwtIssuer = async (
-  payload: DecodedJwtPayloadModel,
+const getPublicKeyFromMetadata = async (
+  issuer: string,
   header: DecodedJwtHeaderModel,
+  metadataUrl: URL,
 ): Promise<Result<string, string>> => {
-  if (!payload.iss) {
-    return err(`Payload does not have an "iss" claim.`);
-  }
-
-  const url =
-    payload.iss +
-    (payload.iss.charAt(payload.iss.length - 1) === "/"
-      ? ".well-known/openid-configuration"
-      : "/.well-known/openid-configuration");
-
-  const fetchResult = await safeFetch(url);
+  const fetchResult = await safeFetch(metadataUrl.href);
 
   if (fetchResult.isErr()) {
     return err(fetchResult.error);
   }
 
   const response = fetchResult.value;
+
+  if (response.status !== 200) {
+    return err(`Unable to fetch metadata from URL: ${metadataUrl.href}`);
+  }
+
   const text = await response.text();
 
   const safeJsonParseResult = safeJsonParse(text);
@@ -171,13 +204,28 @@ const safeFetchPublicKeyFromJwtIssuer = async (
 
   const data = safeJsonParseResult.value;
 
+  if (data?.issuer !== issuer) {
+    return err(
+      `Issuer metadata from URL ${metadataUrl.href} does not match ${issuer}`,
+    );
+  }
+
   if (!data || !data.jwks_uri || typeof data.jwks_uri !== "string") {
-    return err(`Could not get jwks_uri from URL: ${url}`);
+    return err(`Could not get jwks_uri from URL: ${metadataUrl.href}`);
+  }
+
+  const safeCreateJwksUrlResult = safeCreateUrl(data.jwks_uri);
+
+  if (
+    safeCreateJwksUrlResult.isErr() ||
+    safeCreateJwksUrlResult.value.protocol !== "https:"
+  ) {
+    return err(`Invalid jwks_uri from URL: ${metadataUrl.href}`);
   }
 
   const getKeyFromJwkKeySetUrlResult = await getKeyFromJwkKeySetUrl(
     header,
-    data.jwks_uri,
+    safeCreateJwksUrlResult.value.href,
   );
 
   if (getKeyFromJwkKeySetUrlResult.isErr()) {
@@ -185,6 +233,38 @@ const safeFetchPublicKeyFromJwtIssuer = async (
   }
 
   return ok(getKeyFromJwkKeySetUrlResult.value);
+};
+
+const safeFetchPublicKeyFromJwtIssuer = async (
+  payload: DecodedJwtPayloadModel,
+  header: DecodedJwtHeaderModel,
+): Promise<Result<string, string>> => {
+  if (!payload.iss) {
+    return err(`Payload does not have an "iss" claim.`);
+  }
+
+  const safeCreateIssuerUrlResult = safeCreateIssuerUrl(payload.iss);
+
+  if (safeCreateIssuerUrlResult.isErr()) {
+    return err(safeCreateIssuerUrlResult.error);
+  }
+
+  const issuerUrl = safeCreateIssuerUrlResult.value;
+  const authorizationServerMetadataResult = await getPublicKeyFromMetadata(
+    payload.iss,
+    header,
+    getAuthorizationServerMetadataUrl(issuerUrl),
+  );
+
+  if (authorizationServerMetadataResult.isOk()) {
+    return ok(authorizationServerMetadataResult.value);
+  }
+
+  return getPublicKeyFromMetadata(
+    payload.iss,
+    header,
+    getOpenIdConfigurationUrl(issuerUrl),
+  );
 };
 
 export async function downloadPublicKeyIfPossible(
@@ -257,7 +337,7 @@ export async function downloadPublicKeyIfPossible(
   if (typeof payload === "object" && "iss" in payload && payload.iss) {
     const invalidIssuerUrlErrorMessage = `Unable to retrieve public key from issuer (iss) '${payload.iss}'. Expected a valid HTTPS URL. Please enter public key manually to verify the JWT signature.`;
 
-    const safeCreateUrlResult = safeCreateUrl(payload.iss);
+    const safeCreateUrlResult = safeCreateIssuerUrl(payload.iss);
 
     if (safeCreateUrlResult.isErr()) {
       console.error(safeCreateUrlResult.error);
