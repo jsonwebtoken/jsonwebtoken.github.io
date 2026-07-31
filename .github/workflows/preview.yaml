@@ -5,10 +5,6 @@ env:
 on:
   pull_request:
     branches: [master]
-  push:
-    branches-ignore:
-      - master
-      - production
 jobs:
   Deploy-Preview:
     runs-on:
