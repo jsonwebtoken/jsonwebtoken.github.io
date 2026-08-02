@@ -1,5 +1,6 @@
 import { enBrandDictionary } from "@/features/localization/dictionaries/images/en";
 import { jaBrandDictionary } from "@/features/localization/dictionaries/images/ja";
+import { trBrandDictionary } from "@/features/localization/dictionaries/images/tr";
 import { BrandDictionaryModel } from "../models/brand-dictionary.model";
 
 const brandDictionaries: {
@@ -7,6 +8,7 @@ const brandDictionaries: {
 } = {
   en: enBrandDictionary,
   ja: jaBrandDictionary,
+  tr: trBrandDictionary,
 };
 
 export const getBrandDictionary = (language: string) =>
