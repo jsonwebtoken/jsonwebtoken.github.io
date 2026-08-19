@@ -11,11 +11,10 @@ import {
   importJWK,
   importSPKI,
   importX509,
-  KeyLike,
+  type CryptoKey,
 } from "jose";
 import nodeForge from "node-forge";
 import base64url from "base64url";
-import { algDictionary } from "@/features/common/values/jws-alg-header-parameter-values.dictionary";
 
 export const extractJwt = (value: string): string => {
   if (!value) {
@@ -205,7 +204,7 @@ export const safeImportJWK = fromAsyncThrowable(importJWK, (e) => {
   });
 });
 
-export const safeCompactVerify = (jws: string, key: Uint8Array | KeyLike) => {
+export const safeCompactVerify = (jws: string, key: Uint8Array | CryptoKey) => {
   return fromPromise(compactVerify(jws, key), (e) => {
     if (e instanceof Error) {
       if (e.name === "JWSSignatureVerificationFailed") {
@@ -242,9 +241,3 @@ export const safePublicKeyToPem = fromThrowable(
     return "Unable to transform public key to PEM string.";
   },
 );
-
-export const getAlgName = (value: string) => {
-  return value === algDictionary.Ed25519 || value === algDictionary.Ed448
-    ? algDictionary.EdDSA
-    : value;
-};

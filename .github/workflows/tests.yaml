@@ -22,18 +22,16 @@ jobs:
 
             - name: Run Vitest
               run: npx vitest run
-            
+
             - name: Install Playwright Browsers
               run: npx playwright install --with-deps
 
             - name: Run Playwright Tests
               run: NODE_OPTIONS="--no-experimental-strip-types" npx playwright test
-            
+
             - name: Upload Playwright Traces
               if: failure()
               uses: actions/upload-artifact@v4
               with:
                 name: playwright-traces
-                path: playwright-report/**/trace.zip
-
-        
+                path: test-results/**/trace.zip

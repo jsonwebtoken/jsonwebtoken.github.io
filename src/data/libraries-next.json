@@ -38,8 +38,7 @@
         "installCommandMarkdown": [
           "Install-Package",
           "[System.IdentityModel.Tokens.Jwt](https://www.nuget.org/packages/System.IdentityModel.Tokens.Jwt/)"
-        ],
-        "stars": 1021
+        ]
       },
       {
         "minimumVersion": null,
@@ -73,8 +72,7 @@
         "installCommandMarkdown": [
           "Install-Package",
           "[JWT.NET](https://www.nuget.org/packages/JWT)"
-        ],
-        "stars": 2102
+        ]
       },
       {
         "minimumVersion": null,
@@ -108,8 +106,7 @@
         "installCommandMarkdown": [
           "Install-Package",
           "[jose-jwt](https://www.nuget.org/packages/jose-jwt/)"
-        ],
-        "stars": 912
+        ]
       },
       {
         "minimumVersion": null,
@@ -140,8 +137,7 @@
         "installCommandMarkdown": [
           "Install-Package",
           "[jose-rt](https://www.nuget.org/packages/jose-rt/)"
-        ],
-        "stars": 18
+        ]
       },
       {
         "minimumVersion": null,
@@ -175,8 +171,7 @@
         "installCommandMarkdown": [
           "Install-Package",
           "[Trivial](https://www.nuget.org/packages/Trivial)"
-        ],
-        "stars": 34
+        ]
       },
       {
         "minimumVersion": null,
@@ -210,8 +205,7 @@
         "repoUrl": "https://github.com/ycrumeyrolle/jwt",
         "installCommandMarkdown": [
           "Install-Package [JsonWebToken](https://www.nuget.org/packages/JsonWebToken)"
-        ],
-        "stars": 80
+        ]
       }
     ]
   },
@@ -253,8 +247,7 @@
         "repoUrl": "https://github.com/pintov/1c-jwt",
         "installCommandMarkdown": [
           "git clone https://github.com/pintov/1c-jwt"
-        ],
-        "stars": 85
+        ]
       }
     ]
   },
@@ -294,8 +287,7 @@
         "authorName": "reznikmm",
         "gitHubRepoPath": "reznikmm/jwt",
         "repoUrl": "https://github.com/reznikmm/jwt",
-        "installCommandMarkdown": ["alr get jwt"],
-        "stars": 10
+        "installCommandMarkdown": ["alr get jwt"]
       }
     ]
   },
@@ -332,14 +324,18 @@
           "ps384": true,
           "ps512": true,
           "eddsa": true,
-          "es256k": false
+          "ed25519": true,
+          "ed448": false,
+          "es256k": false,
+          "ml-dsa-44": true,
+          "ml-dsa-65": true,
+          "ml-dsa-87": true
         },
         "authorUrl": "https://github.com/panva",
         "authorName": "Filip Skokan",
         "gitHubRepoPath": "panva/jose",
         "repoUrl": "https://github.com/panva/jose",
-        "installCommandMarkdown": ["bun add jose"],
-        "stars": 4980
+        "installCommandMarkdown": ["npm docs jose"]
       }
     ]
   },
@@ -351,17 +347,17 @@
     "bgColor": "rgb(81, 128, 210)",
     "libs": [
       {
-        "minimumVersion": null,
+        "minimumVersion": "3.4.0",
         "support": {
           "sign": true,
           "verify": true,
-          "iss": false,
-          "sub": false,
-          "aud": false,
-          "exp": false,
-          "nbf": false,
-          "iat": false,
-          "jti": false,
+          "iss": true,
+          "sub": true,
+          "aud": true,
+          "exp": true,
+          "nbf": true,
+          "iat": true,
+          "jti": true,
           "hs256": true,
           "hs384": true,
           "hs512": true,
@@ -371,16 +367,17 @@
           "es256": true,
           "es384": true,
           "es512": true,
-          "ps256": false,
-          "ps384": false,
-          "ps512": false
+          "ps256": true,
+          "ps384": true,
+          "ps512": true
         },
         "authorUrl": "https://github.com/benmcollins",
         "authorName": "benmcollins",
         "gitHubRepoPath": "benmcollins/libjwt",
         "repoUrl": "https://github.com/benmcollins/libjwt",
-        "installCommandMarkdown": ["add-apt-repository ppa:ben-collins/libjwt"],
-        "stars": 335
+        "installCommandMarkdown": [
+          "git clone [https://github.com/bencollins/libjwt.git](https://github.com/benmcollins/libjwt) && cd libjwt && mkdir build && cd build && cmake .. && cmake --build . --target install"
+        ]
       },
       {
         "minimumVersion": null,
@@ -413,8 +410,7 @@
         "repoUrl": "https://github.com/cisco/cjose",
         "installCommandMarkdown": [
           "git clone [https://github.com/cisco/cjose.git](https://github.com/cisco/cjose) && cd cjose && ./configure && make"
-        ],
-        "stars": 101
+        ]
       },
       {
         "minimumVersion": null,
@@ -450,8 +446,7 @@
         "repoUrl": "https://github.com/GlitchedPolygons/l8w8jwt",
         "installCommandMarkdown": [
           "git clone [https://github.com/GlitchedPolygons/l8w8jwt.git](https://github.com/GlitchedPolygons/l8w8jwt)"
-        ],
-        "stars": 130
+        ]
       },
       {
         "minimumVersion": null,
@@ -484,8 +479,7 @@
         "repoUrl": "https://github.com/TomzBench/jsmn-web-tokens",
         "installCommandMarkdown": [
           "git clone [https://github.com/TomzBench/jsmn-web-tokens.git](https://github.com/TomzBench/jsmn-web-tokens) && cd jsmn-web-tokens && cmake . && cmake --build . --target install"
-        ],
-        "stars": 9
+        ]
       },
       {
         "minimumVersion": null,
@@ -521,8 +515,7 @@
         "repoUrl": "https://github.com/babelouest/rhonabwy",
         "installCommandMarkdown": [
           "[Download release package](https://github.com/babelouest/rhonabwy/releases/latest) or [install from source](https://github.com/babelouest/rhonabwy)"
-        ],
-        "stars": 43
+        ]
       },
       {
         "minimumVersion": "2.0.0",
@@ -558,8 +551,7 @@
         "repoUrl": "https://github.com/xmidt-org/cjwt",
         "installCommandMarkdown": [
           "git clone [https://github.com/xmidt-org/cjwt.git](https://github.com/xmidt-org/cjwt)"
-        ],
-        "stars": 15
+        ]
       }
     ]
   },
@@ -600,8 +592,7 @@
         "authorName": "Artur Troian",
         "gitHubRepoPath": "troian/jwtpp",
         "repoUrl": "https://github.com/troian/jwtpp",
-        "installCommandMarkdown": ["git clone https://github.com/troian/jwtpp"],
-        "stars": 65
+        "installCommandMarkdown": ["git clone https://github.com/troian/jwtpp"]
       },
       {
         "minimumVersion": null,
@@ -637,8 +628,7 @@
         "repoUrl": "https://github.com/Thalhammer/jwt-cpp",
         "installCommandMarkdown": [
           "git clone https://github.com/Thalhammer/jwt-cpp"
-        ],
-        "stars": 804
+        ]
       },
       {
         "minimumVersion": null,
@@ -671,8 +661,7 @@
         "repoUrl": "https://github.com/arun11299/cpp-jwt",
         "installCommandMarkdown": [
           "git clone https://github.com/arun11299/cpp-jwt"
-        ],
-        "stars": 381
+        ]
       },
       {
         "minimumVersion": null,
@@ -706,8 +695,7 @@
         "repoUrl": "https://github.com/pokowaka/jwt-cpp",
         "installCommandMarkdown": [
           "git clone https://github.com/pokowaka/jwt-cpp"
-        ],
-        "stars": 99
+        ]
       },
       {
         "minimumVersion": null,
@@ -740,8 +728,7 @@
         "repoUrl": "https://github.com/pocoproject/poco",
         "installCommandMarkdown": [
           "git clone https://github.com/pocoproject/poco.git"
-        ],
-        "stars": 7992
+        ]
       }
     ]
   },
@@ -783,8 +770,7 @@
         "repoUrl": "https://github.com/jcberquist/jwt-cfml",
         "installCommandMarkdown": [
           "git clone https://github.com/jcberquist/jwt-cfml"
-        ],
-        "stars": 33
+        ]
       }
     ]
   },
@@ -824,8 +810,7 @@
         "authorName": "Andrey Antukh",
         "gitHubRepoPath": "funcool/buddy",
         "repoUrl": "https://github.com/funcool/buddy/",
-        "installCommandMarkdown": ["lein: [funcool/buddy \"2.0.0\"]"],
-        "stars": 825
+        "installCommandMarkdown": ["lein: [funcool/buddy \"2.0.0\"]"]
       }
     ]
   },
@@ -870,8 +855,7 @@
         "repoUrl": "https://github.com/crystal-community/jwt",
         "installCommandMarkdown": [
           "git clone https://github.com/crystal-community/jwt.git"
-        ],
-        "stars": 211
+        ]
       }
     ]
   },
@@ -911,8 +895,7 @@
         "authorName": "olehlong",
         "gitHubRepoPath": "olehlong/jwtd",
         "repoUrl": "https://github.com/olehlong/jwtd",
-        "installCommandMarkdown": ["dub fetch jwtd"],
-        "stars": 29
+        "installCommandMarkdown": ["dub fetch jwtd"]
       },
       {
         "minimumVersion": null,
@@ -943,8 +926,7 @@
         "authorName": "zolamk",
         "gitHubRepoPath": "zolamk/jwt",
         "repoUrl": "https://github.com/zolamk/jwt",
-        "installCommandMarkdown": ["dub fetch jwt"],
-        "stars": 4
+        "installCommandMarkdown": ["dub fetch jwt"]
       }
     ]
   },
@@ -987,8 +969,7 @@
         "authorName": "Jonas Roussel",
         "gitHubRepoPath": "jonasroussel/dart_jsonwebtoken",
         "repoUrl": "https://github.com/jonasroussel/dart_jsonwebtoken",
-        "installCommandMarkdown": ["dart pub add dart_jsonwebtoken"],
-        "stars": 81
+        "installCommandMarkdown": ["dart pub add dart_jsonwebtoken"]
       }
     ]
   },
@@ -1033,8 +1014,7 @@
         "repoUrl": "https://github.com/paolo-rossi/delphi-jose-jwt",
         "installCommandMarkdown": [
           "git clone https://github.com/paolo-rossi/delphi-jose-jwt"
-        ],
-        "stars": 435
+        ]
       },
       {
         "minimumVersion": null,
@@ -1067,8 +1047,7 @@
         "repoUrl": "https://github.com/synopse/mORMot",
         "installCommandMarkdown": [
           "git clone https://github.com/synopse/mORMot"
-        ],
-        "stars": 777
+        ]
       }
     ]
   },
@@ -1105,14 +1084,18 @@
           "ps384": true,
           "ps512": true,
           "eddsa": true,
-          "es256k": false
+          "ed25519": true,
+          "ed448": false,
+          "es256k": false,
+          "ml-dsa-44": true,
+          "ml-dsa-65": true,
+          "ml-dsa-87": true
         },
         "authorUrl": "https://github.com/panva",
         "authorName": "Filip Skokan",
         "gitHubRepoPath": "panva/jose",
         "repoUrl": "https://github.com/panva/jose",
-        "installCommandMarkdown": ["see https://deno.land/x/jose"],
-        "stars": 4980
+        "installCommandMarkdown": ["npm docs jose"]
       }
     ]
   },
@@ -1154,8 +1137,7 @@
         "repoUrl": "https://github.com/garyf/json_web_token_ex",
         "installCommandMarkdown": [
           "defp deps, do: [{:json_web_token, \"~&gt; 0.2.5\"}]"
-        ],
-        "stars": 141
+        ]
       },
       {
         "minimumVersion": null,
@@ -1187,8 +1169,7 @@
         "authorName": "bryanjos",
         "gitHubRepoPath": "bryanjos/joken",
         "repoUrl": "https://github.com/bryanjos/joken",
-        "installCommandMarkdown": ["defp deps, do: [{:joken, \"~&gt; 1.2\"}]"],
-        "stars": 748
+        "installCommandMarkdown": ["defp deps, do: [{:joken, \"~&gt; 1.2\"}]"]
       },
       {
         "minimumVersion": null,
@@ -1218,8 +1199,7 @@
         "repoUrl": "https://github.com/ueberauth/guardian",
         "installCommandMarkdown": [
           "defp deps, do: [{:guardian, \"~&gt; 1.0    \"}]"
-        ],
-        "stars": 3390
+        ]
       }
     ]
   },
@@ -1261,8 +1241,7 @@
         "repoUrl": "https://github.com/G-Corp/jwerl",
         "installCommandMarkdown": [
           "git clone https://github.com/G-Corp/jwerl.git"
-        ],
-        "stars": 44
+        ]
       }
     ]
   },
@@ -1305,8 +1284,7 @@
         "repoUrl": "https://github.com/golang-jwt/jwt",
         "installCommandMarkdown": [
           "go get [github.com/golang-jwt/jwt/v5](https://pkg.go.dev/github.com/golang-jwt/jwt/v5)"
-        ],
-        "stars": 6587
+        ]
       },
       {
         "minimumVersion": null,
@@ -1339,8 +1317,7 @@
         "repoUrl": "https://github.com/dvsekhvalnov/jose2go",
         "installCommandMarkdown": [
           "go get [github.com/dvsekhvalnov/jose2go](https://godoc.org/github.com/dvsekhvalnov/jose2go)"
-        ],
-        "stars": 184
+        ]
       },
       {
         "minimumVersion": null,
@@ -1373,8 +1350,7 @@
         "repoUrl": "https://github.com/SermoDigital/jose",
         "installCommandMarkdown": [
           "go get [github.com/SermoDigital/jose](https://godoc.org/github.com/SermoDigital/jose)"
-        ],
-        "stars": 914
+        ]
       },
       {
         "minimumVersion": null,
@@ -1407,8 +1383,7 @@
         "repoUrl": "https://github.com/robbert229/jwt",
         "installCommandMarkdown": [
           "go get [github.com/robbert229/jwt](https://godoc.org/github.com/robbert229/jwt)"
-        ],
-        "stars": 105
+        ]
       },
       {
         "minimumVersion": null,
@@ -1441,8 +1416,7 @@
         "repoUrl": "https://github.com/square/go-jose",
         "installCommandMarkdown": [
           "go get [github.com/square/go-jose](https://godoc.org/github.com/square/go-jose)"
-        ],
-        "stars": 1980
+        ]
       },
       {
         "minimumVersion": null,
@@ -1477,8 +1451,7 @@
         "repoUrl": "https://github.com/lestrrat-go/jwx",
         "installCommandMarkdown": [
           "go get [github.com/lestrrat-go/jwx](https://godoc.org/github.com/lestrrat-go/jwx)"
-        ],
-        "stars": 1819
+        ]
       },
       {
         "minimumVersion": null,
@@ -1508,8 +1481,7 @@
         "repoUrl": "https://github.com/adam-hanna/jwt-auth",
         "installCommandMarkdown": [
           "go get [github.com/adam-hanna/jwt-auth](https://godoc.org/github.com/adam-hanna/jwt-auth)"
-        ],
-        "stars": 233
+        ]
       },
       {
         "minimumVersion": null,
@@ -1542,8 +1514,7 @@
         "repoUrl": "https://github.com/nickvellios/gojwt",
         "installCommandMarkdown": [
           "go get [github.com/nickvellios/gojwt](https://godoc.org/github.com/nickvellios/gojwt)"
-        ],
-        "stars": 12
+        ]
       },
       {
         "minimumVersion": null,
@@ -1576,8 +1547,7 @@
         "repoUrl": "https://github.com/gbrlsnchs/jwt",
         "installCommandMarkdown": [
           "GO111MODULE=on go get [github.com/gbrlsnchs/jwt/v3](https://godoc.org/github.com/gbrlsnchs/jwt)"
-        ],
-        "stars": 452
+        ]
       },
       {
         "minimumVersion": null,
@@ -1611,8 +1581,7 @@
         "repoUrl": "https://github.com/pascaldekloe/jwt",
         "installCommandMarkdown": [
           "go get [github.com/pascaldekloe/jwt](https://godoc.org/github.com/pascaldekloe/jwt)"
-        ],
-        "stars": 351
+        ]
       },
       {
         "minimumVersion": null,
@@ -1645,8 +1614,7 @@
         "repoUrl": "https://github.com/brianvoe/sjwt",
         "installCommandMarkdown": [
           "go get [github.com/brianvoe/sjwt](https://godoc.org/github.com/brianvoe/sjwt)"
-        ],
-        "stars": 118
+        ]
       },
       {
         "minimumVersion": "1.12",
@@ -1678,8 +1646,7 @@
         "authorName": "Oleg Kovalov",
         "gitHubRepoPath": "cristalhq/jwt",
         "repoUrl": "https://github.com/cristalhq/jwt",
-        "installCommandMarkdown": ["go get github.com/cristalhq/jwt"],
-        "stars": 648
+        "installCommandMarkdown": ["go get github.com/cristalhq/jwt"]
       },
       {
         "minimumVersion": null,
@@ -1714,8 +1681,7 @@
         "repoUrl": "https://github.com/gilbsgilbs/jwit",
         "installCommandMarkdown": [
           "go get [github.com/gilbsgilbs/jwit](https://pkg.go.dev/github.com/gilbsgilbs/jwit)"
-        ],
-        "stars": 5
+        ]
       },
       {
         "minimumVersion": null,
@@ -1749,8 +1715,7 @@
         "repoUrl": "https://github.com/kataras/jwt",
         "installCommandMarkdown": [
           "go get [github.com/kataras/jwt](https://pkg.go.dev/github.com/kataras/jwt)"
-        ],
-        "stars": 194
+        ]
       }
     ]
   },
@@ -1792,8 +1757,7 @@
         "repoUrl": "https://github.com/kaleidos/grails-security-stateless",
         "installCommandMarkdown": [
           "compile \"org.grails.plugins:security-stateless:0.0.9\""
-        ],
-        "stars": 17
+        ]
       }
     ]
   },
@@ -1838,8 +1802,7 @@
         "repoUrl": "https://github.com/matteobaccan/HarbourJwt",
         "installCommandMarkdown": [
           "see https://github.com/matteobaccan/HarbourJwt"
-        ],
-        "stars": 4
+        ]
       }
     ]
   },
@@ -1911,8 +1874,7 @@
         "authorName": "Fraser Tweedale",
         "gitHubRepoPath": "frasertweedale/hs-jose",
         "repoUrl": "https://github.com/frasertweedale/hs-jose",
-        "installCommandMarkdown": ["cabal install jose"],
-        "stars": 122
+        "installCommandMarkdown": ["cabal install jose"]
       }
     ]
   },
@@ -1952,8 +1914,7 @@
         "authorName": "Kevin Leung",
         "gitHubRepoPath": "kevinresol/jsonwebtoken",
         "repoUrl": "https://github.com/kevinresol/jsonwebtoken",
-        "installCommandMarkdown": ["haxelib install jsonwebtoken"],
-        "stars": 26
+        "installCommandMarkdown": ["haxelib install jsonwebtoken"]
       }
     ]
   },
@@ -1993,8 +1954,7 @@
         "authorName": "Auth0",
         "gitHubRepoPath": "auth0/java-jwt",
         "repoUrl": "https://github.com/auth0/java-jwt",
-        "installCommandMarkdown": ["maven: com.auth0 / java-jwt / 3.3.0"],
-        "stars": 5735
+        "installCommandMarkdown": ["maven: com.auth0 / java-jwt / 3.3.0"]
       },
       {
         "minimumVersion": null,
@@ -2096,8 +2056,7 @@
         "repoUrl": "https://github.com/jwtk/jjwt",
         "installCommandMarkdown": [
           "maven: io.jsonwebtoken / jjwt-root / 0.11.1"
-        ],
-        "stars": 9940
+        ]
       },
       {
         "minimumVersion": null,
@@ -2130,8 +2089,7 @@
         "repoUrl": "https://github.com/fusionauth/fusionauth-jwt",
         "installCommandMarkdown": [
           "maven: io.fusionauth / fusionauth-jwt / 5.2.2"
-        ],
-        "stars": 159
+        ]
       },
       {
         "minimumVersion": null,
@@ -2159,8 +2117,7 @@
         "authorName": "Vert.x",
         "gitHubRepoPath": "vert-x3/vertx-auth",
         "repoUrl": "https://github.com/vert-x3/vertx-auth",
-        "installCommandMarkdown": ["maven: io.vertx / vertx-auth-jwt / 3.5.1"],
-        "stars": 10
+        "installCommandMarkdown": ["maven: io.vertx / vertx-auth-jwt / 3.5.1"]
       },
       {
         "minimumVersion": null,
@@ -2187,7 +2144,7 @@
           "ps256": true,
           "ps384": true,
           "ps512": true,
-          "EdDSA": true
+          "eddsa": true
         },
         "authorUrl": "https://github.com/inverno-io",
         "authorName": "Inverno Framework",
@@ -2195,8 +2152,7 @@
         "repoUrl": "https://github.com/inverno-io/inverno-mods/tree/master/inverno-security-jose",
         "installCommandMarkdown": [
           "maven: io.inverno.mod / inverno-security-jose / 1.5.2"
-        ],
-        "stars": 11
+        ]
       }
     ]
   },
@@ -2233,14 +2189,18 @@
           "ps384": true,
           "ps512": true,
           "eddsa": true,
-          "es256k": false
+          "ed25519": true,
+          "ed448": false,
+          "es256k": false,
+          "ml-dsa-44": true,
+          "ml-dsa-65": true,
+          "ml-dsa-87": true
         },
         "authorUrl": "https://github.com/panva",
         "authorName": "Filip Skokan",
         "gitHubRepoPath": "panva/jose",
         "repoUrl": "https://github.com/panva/jose",
-        "installCommandMarkdown": ["npm install jose"],
-        "stars": 4980
+        "installCommandMarkdown": ["npm docs jose"]
       },
       {
         "minimumVersion": "3.2.0",
@@ -2268,8 +2228,7 @@
         "authorName": "Kenji Urushima",
         "gitHubRepoPath": "kjur/jsrsasign",
         "repoUrl": "https://github.com/kjur/jsrsasign",
-        "installCommandMarkdown": ["npm install jsrsasign"],
-        "stars": 3218
+        "installCommandMarkdown": ["npm install jsrsasign"]
       },
       {
         "minimumVersion": "0.9.4",
@@ -2302,8 +2261,7 @@
         "authorName": "Cisco Systems",
         "gitHubRepoPath": "cisco/node-jose",
         "repoUrl": "https://github.com/cisco/node-jose",
-        "installCommandMarkdown": ["npm install node-jose"],
-        "stars": 693
+        "installCommandMarkdown": ["npm install node-jose"]
       }
     ]
   },
@@ -2345,8 +2303,7 @@
         "repoUrl": "https://github.com/tjcelaya/jwt.q",
         "installCommandMarkdown": [
           "git clone https://github.com/tjcelaya/jwt.q"
-        ],
-        "stars": 7
+        ]
       }
     ]
   },
@@ -2386,8 +2343,7 @@
         "authorName": "PhilJay",
         "gitHubRepoPath": "PhilJay/JWT",
         "repoUrl": "https://github.com/PhilJay/JWT",
-        "installCommandMarkdown": ["maven: com.github.PhilJay / JWT / 1.1.5"],
-        "stars": 57
+        "installCommandMarkdown": ["maven: com.github.PhilJay / JWT / 1.1.5"]
       },
       {
         "minimumVersion": null,
@@ -2421,8 +2377,7 @@
         "repoUrl": "https://github.com/nefilim/kJWT",
         "installCommandMarkdown": [
           "maven GAV: io.github.nefilim.kjwt:kjwt-core:0.3.0"
-        ],
-        "stars": 78
+        ]
       }
     ]
   },
@@ -2467,8 +2422,7 @@
         "repoUrl": "https://github.com/cdbattags/lua-resty-jwt",
         "installCommandMarkdown": [
           "luarocks install lua-resty-jwt"
-        ],
-        "stars": 155
+        ]
       }
     ]
   },
@@ -2511,8 +2465,7 @@
         "authorName": "Auth0",
         "gitHubRepoPath": "auth0/node-jsonwebtoken",
         "repoUrl": "https://github.com/auth0/node-jsonwebtoken",
-        "installCommandMarkdown": ["npm install jsonwebtoken"],
-        "stars": 17446
+        "installCommandMarkdown": ["npm install jsonwebtoken"]
       },
       {
         "minimumVersion": null,
@@ -2540,14 +2493,18 @@
           "ps384": true,
           "ps512": true,
           "eddsa": true,
-          "es256k": true
+          "ed25519": true,
+          "ed448": false,
+          "es256k": false,
+          "ml-dsa-44": true,
+          "ml-dsa-65": true,
+          "ml-dsa-87": true
         },
         "authorUrl": "https://github.com/panva",
         "authorName": "Filip Skokan",
         "gitHubRepoPath": "panva/jose",
         "repoUrl": "https://github.com/panva/jose",
-        "installCommandMarkdown": ["npm install jose"],
-        "stars": 4980
+        "installCommandMarkdown": ["npm docs jose"]
       },
       {
         "minimumVersion": null,
@@ -2581,8 +2538,7 @@
         "authorName": "AWS",
         "gitHubRepoPath": "awslabs/aws-jwt-verify",
         "repoUrl": "https://github.com/awslabs/aws-jwt-verify",
-        "installCommandMarkdown": ["npm install aws-jwt-verify"],
-        "stars": 587
+        "installCommandMarkdown": ["npm install aws-jwt-verify"]
       }
     ]
   },
@@ -2622,8 +2578,7 @@
         "authorName": "yourkarma & lolgear",
         "gitHubRepoPath": "yourkarma/JWT",
         "repoUrl": "https://github.com/yourkarma/JWT",
-        "installCommandMarkdown": ["pod 'JWT'"],
-        "stars": 349
+        "installCommandMarkdown": ["pod 'JWT'"]
       }
     ]
   },
@@ -2663,8 +2618,7 @@
         "authorName": "Ulrik Strid",
         "gitHubRepoPath": "ulrikstrid/reason-jose",
         "repoUrl": "https://github.com/ulrikstrid/reason-jose",
-        "installCommandMarkdown": ["opam install jose"],
-        "stars": 53
+        "installCommandMarkdown": ["opam install jose"]
       }
     ]
   },
@@ -2706,8 +2660,7 @@
         "authorName": "Karel Miko",
         "gitHubRepoPath": "DCIT/perl-Crypt-JWT",
         "repoUrl": "https://github.com/DCIT/perl-Crypt-JWT",
-        "installCommandMarkdown": ["cpanm Crypt::JWT"],
-        "stars": 54
+        "installCommandMarkdown": ["cpanm Crypt::JWT"]
       }
     ]
   },
@@ -2749,8 +2702,7 @@
         "authorName": "Firebase",
         "gitHubRepoPath": "firebase/php-jwt",
         "repoUrl": "https://github.com/firebase/php-jwt",
-        "installCommandMarkdown": ["composer require firebase/php-jwt"],
-        "stars": 9259
+        "installCommandMarkdown": ["composer require firebase/php-jwt"]
       },
       {
         "minimumVersion": "4.1.0",
@@ -2782,8 +2734,7 @@
         "authorName": "Luís Cobucci",
         "gitHubRepoPath": "lcobucci/jwt",
         "repoUrl": "https://github.com/lcobucci/jwt",
-        "installCommandMarkdown": ["composer require lcobucci/jwt"],
-        "stars": 7206
+        "installCommandMarkdown": ["composer require lcobucci/jwt"]
       },
       {
         "minimumVersion": "1.0.0",
@@ -2847,8 +2798,7 @@
         "authorName": "Emarref",
         "gitHubRepoPath": "emarref/jwt",
         "repoUrl": "https://github.com/emarref/jwt",
-        "installCommandMarkdown": ["composer require emarref/jwt"],
-        "stars": 93
+        "installCommandMarkdown": ["composer require emarref/jwt"]
       },
       {
         "minimumVersion": null,
@@ -2879,8 +2829,7 @@
         "authorName": "Nov Matake",
         "gitHubRepoPath": "nov/jose-php",
         "repoUrl": "https://github.com/nov/jose-php",
-        "installCommandMarkdown": ["composer require gree/jose"],
-        "stars": 137
+        "installCommandMarkdown": ["composer require gree/jose"]
       },
       {
         "minimumVersion": null,
@@ -2913,8 +2862,7 @@
         "authorName": "Spomky",
         "gitHubRepoPath": "web-token/jwt-framework",
         "repoUrl": "https://github.com/web-token/jwt-framework",
-        "installCommandMarkdown": ["composer require web-token/jwt-framework"],
-        "stars": 864
+        "installCommandMarkdown": ["composer require web-token/jwt-framework"]
       },
       {
         "minimumVersion": null,
@@ -2942,8 +2890,7 @@
         "authorName": "Vaibhav Pandey",
         "gitHubRepoPath": "vaibhavpandeyvpz/jweety",
         "repoUrl": "https://github.com/vaibhavpandeyvpz/jweety",
-        "installCommandMarkdown": ["composer require vaibhavpandeyvpz/jweety"],
-        "stars": 9
+        "installCommandMarkdown": ["composer require vaibhavpandeyvpz/jweety"]
       },
       {
         "minimumVersion": null,
@@ -2976,8 +2923,7 @@
         "repoUrl": "https://github.com/cdoco/php-jwt",
         "installCommandMarkdown": [
           "git clone https://github.com/cdoco/php-jwt"
-        ],
-        "stars": 230
+        ]
       },
       {
         "minimumVersion": null,
@@ -3008,11 +2954,10 @@
         "authorName": "Jitendra Adhikari",
         "gitHubRepoPath": "adhocore/jwt",
         "repoUrl": "https://github.com/adhocore/jwt",
-        "installCommandMarkdown": ["composer require adhocore/jwt"],
-        "stars": 284
+        "installCommandMarkdown": ["composer require adhocore/jwt"]
       },
       {
-        "minimumVersion": null,
+        "minimumVersion": "3.3.0",
         "support": {
           "sign": true,
           "verify": true,
@@ -3023,25 +2968,27 @@
           "nbf": true,
           "iat": true,
           "jti": true,
+          "typ": true,
           "hs256": true,
           "hs384": true,
           "hs512": true,
           "rs256": true,
           "rs384": true,
           "rs512": true,
-          "es256": false,
-          "es384": false,
-          "es512": false,
-          "ps256": false,
-          "ps384": false,
-          "ps512": false
+          "es256": true,
+          "es384": true,
+          "es512": true,
+          "ps256": true,
+          "ps384": true,
+          "ps512": true,
+          "eddsa": true,
+          "es256k": true
         },
         "authorUrl": "https://github.com/miladrahimi",
         "authorName": "Milad Rahimi",
         "gitHubRepoPath": "miladrahimi/php-jwt",
         "repoUrl": "https://github.com/miladrahimi/php-jwt",
-        "installCommandMarkdown": ["composer require miladrahimi/php-jwt"],
-        "stars": 60
+        "installCommandMarkdown": ["composer require miladrahimi/php-jwt"]
       },
       {
         "minimumVersion": "7.2.1",
@@ -3069,8 +3016,7 @@
         "authorName": "Radosław Nowakowski",
         "gitHubRepoPath": "nowakowskir/php-jwt",
         "repoUrl": "https://github.com/nowakowskir/php-jwt",
-        "installCommandMarkdown": ["composer require nowakowskir/php-jwt"],
-        "stars": 37
+        "installCommandMarkdown": ["composer require nowakowskir/php-jwt"]
       }
     ]
   },
@@ -3110,8 +3056,7 @@
         "authorName": "Michel Pelletier",
         "gitHubRepoPath": "michelp/pgjwt",
         "repoUrl": "https://github.com/michelp/pgjwt",
-        "installCommandMarkdown": ["CREATE EXTENSION pgjwt;"],
-        "stars": 354
+        "installCommandMarkdown": ["CREATE EXTENSION pgjwt;"]
       }
     ]
   },
@@ -3151,8 +3096,7 @@
         "authorName": "Svyatoslav Pidgorny",
         "gitHubRepoPath": "SP3269/posh-jwt",
         "repoUrl": "https://github.com/SP3269/posh-jwt",
-        "installCommandMarkdown": ["Install-Module JWT"],
-        "stars": 44
+        "installCommandMarkdown": ["Install-Module JWT"]
       },
       {
         "minimumVersion": "6.0.0",
@@ -3183,8 +3127,7 @@
         "authorName": "Alexander Piepenhagen",
         "gitHubRepoPath": "DigitalAXPP/jwtPS",
         "repoUrl": "https://github.com/DigitalAXPP/jwtPS",
-        "installCommandMarkdown": ["Install-Module jwtPS"],
-        "stars": 16
+        "installCommandMarkdown": ["Install-Module jwtPS"]
       }
     ]
   },
@@ -3226,8 +3169,7 @@
         "authorName": "José Padilla",
         "gitHubRepoPath": "jpadilla/pyjwt",
         "repoUrl": "https://github.com/jpadilla/pyjwt/",
-        "installCommandMarkdown": ["pip install pyjwt"],
-        "stars": 4964
+        "installCommandMarkdown": ["pip install pyjwt"]
       },
       {
         "minimumVersion": null,
@@ -3258,8 +3200,7 @@
         "authorName": "Michael Davis",
         "gitHubRepoPath": "mpdavis/python-jose",
         "repoUrl": "https://github.com/mpdavis/python-jose/",
-        "installCommandMarkdown": ["pip install python-jose"],
-        "stars": 1493
+        "installCommandMarkdown": ["pip install python-jose"]
       },
       {
         "minimumVersion": null,
@@ -3287,14 +3228,15 @@
           "ps384": true,
           "ps512": true,
           "eddsa": true,
-          "es256k": true
+          "es256k": true,
+          "ed25519": true,
+          "ed448": true
         },
         "authorUrl": "https://github.com/simo5",
         "authorName": "Simo Sorce",
         "gitHubRepoPath": "latchset/jwcrypto",
         "repoUrl": "https://github.com/latchset/jwcrypto/",
-        "installCommandMarkdown": ["pip install jwcrypto"],
-        "stars": 420
+        "installCommandMarkdown": ["pip install jwcrypto"]
       },
       {
         "minimumVersion": null,
@@ -3327,8 +3269,7 @@
         "authorName": "Hsiaoming Yang",
         "gitHubRepoPath": "lepture/authlib",
         "repoUrl": "https://github.com/lepture/authlib",
-        "installCommandMarkdown": ["pip install authlib"],
-        "stars": 4334
+        "installCommandMarkdown": ["pip install authlib"]
       }
     ]
   },
@@ -3368,8 +3309,7 @@
         "authorName": "Lindsay & Rudat",
         "gitHubRepoPath": "progrium/ruby-jwt",
         "repoUrl": "https://github.com/progrium/ruby-jwt",
-        "installCommandMarkdown": ["gem install jwt"],
-        "stars": 3561
+        "installCommandMarkdown": ["gem install jwt"]
       },
       {
         "minimumVersion": null,
@@ -3400,8 +3340,7 @@
         "authorName": "Fleshman",
         "gitHubRepoPath": "garyf/json_web_token",
         "repoUrl": "https://github.com/garyf/json_web_token",
-        "installCommandMarkdown": ["gem install json_web_token"],
-        "stars": 60
+        "installCommandMarkdown": ["gem install json_web_token"]
       },
       {
         "minimumVersion": null,
@@ -3434,8 +3373,7 @@
         "authorName": "Nov Matake",
         "gitHubRepoPath": "nov/json-jwt",
         "repoUrl": "https://github.com/nov/json-jwt",
-        "installCommandMarkdown": ["gem install json-jwt"],
-        "stars": 296
+        "installCommandMarkdown": ["gem install json-jwt"]
       },
       {
         "minimumVersion": null,
@@ -3463,8 +3401,7 @@
         "authorName": "Andrew Bennett",
         "gitHubRepoPath": "potatosalad/ruby-jose",
         "repoUrl": "https://github.com/potatosalad/ruby-jose",
-        "installCommandMarkdown": ["gem install jose"],
-        "stars": 63
+        "installCommandMarkdown": ["gem install jose"]
       }
     ]
   },
@@ -3506,8 +3443,7 @@
         "repoUrl": "https://github.com/GildedHonour/rust-jwt",
         "installCommandMarkdown": [
           "cargo: name = \"frank_jwt\" version = \"*\""
-        ],
-        "stars": 250
+        ]
       },
       {
         "minimumVersion": null,
@@ -3540,8 +3476,7 @@
         "repoUrl": "https://github.com/Keats/jsonwebtoken",
         "installCommandMarkdown": [
           "cargo: name = \"jsonwebtoken\" version = \"*\""
-        ],
-        "stars": 1583
+        ]
       },
       {
         "minimumVersion": null,
@@ -3576,8 +3511,7 @@
         "repoUrl": "https://github.com/JadedBlueEyes/jsonwebtoken",
         "installCommandMarkdown": [
           "cargo: name = \"jsonwebtoken-rustcrypto\" version = \"*\""
-        ],
-        "stars": 4
+        ]
       },
       {
         "minimumVersion": null,
@@ -3608,8 +3542,7 @@
         "authorName": "Yong Wen Chua",
         "gitHubRepoPath": "lawliet89/biscuit",
         "repoUrl": "https://github.com/lawliet89/biscuit",
-        "installCommandMarkdown": ["Cargo.toml: biscuit = \"*\""],
-        "stars": 181
+        "installCommandMarkdown": ["Cargo.toml: biscuit = \"*\""]
       },
       {
         "minimumVersion": null,
@@ -3640,8 +3573,7 @@
         "authorName": "Robert Bragg",
         "gitHubRepoPath": "rib/jsonwebtokens",
         "repoUrl": "https://github.com/rib/jsonwebtokens",
-        "installCommandMarkdown": ["Cargo.toml: jsonwebtokens = \"*\""],
-        "stars": 44
+        "installCommandMarkdown": ["Cargo.toml: jsonwebtokens = \"*\""]
       }
     ]
   },
@@ -3683,8 +3615,7 @@
         "repoUrl": "https://github.com/jasongoodwin/authentikat-jwt",
         "installCommandMarkdown": [
           "sbt: \"com.jason-goodwin\" %% \"authentikat-jwt\" % \"0.4.5\""
-        ],
-        "stars": 134
+        ]
       },
       {
         "minimumVersion": null,
@@ -3715,8 +3646,7 @@
         "authorName": "pauldijou",
         "gitHubRepoPath": "pauldijou/jwt-scala",
         "repoUrl": "https://github.com/pauldijou/jwt-scala",
-        "installCommandMarkdown": ["sbt: \"pdi\" %% \"jwt-core\" % \"0.14.1\""],
-        "stars": 663
+        "installCommandMarkdown": ["sbt: \"pdi\" %% \"jwt-core\" % \"0.14.1\""]
       },
       {
         "minimumVersion": null,
@@ -3749,8 +3679,7 @@
         "repoUrl": "https://github.com/iain-logan/jwt",
         "installCommandMarkdown": [
           "libraryDependencies += \"io.igl\" %% \"jwt\" % \"1.2.2\""
-        ],
-        "stars": 48
+        ]
       },
       {
         "minimumVersion": null,
@@ -3783,8 +3712,7 @@
         "repoUrl": "https://github.com/janjaali/spray-jwt",
         "installCommandMarkdown": [
           "libraryDependencies += \"com.github.janjaali\" %% \"spray-jwt\" % \"1.0.0\""
-        ],
-        "stars": 3
+        ]
       },
       {
         "minimumVersion": null,
@@ -3817,8 +3745,7 @@
         "repoUrl": "https://github.com/blackdoor/jose",
         "installCommandMarkdown": [
           "sbt: libraryDependencies += &quot;black.door&quot; %% &quot;jose&quot; % &quot;0.2.2&quot;\nmill: ivy&quot;black.door::jose:0.2.2&quot;"
-        ],
-        "stars": 15
+        ]
       }
     ]
   },
@@ -3858,8 +3785,7 @@
         "authorName": "Kyle Fuller",
         "gitHubRepoPath": "kylef/JSONWebToken.swift",
         "repoUrl": "https://github.com/kylef/JSONWebToken.swift",
-        "installCommandMarkdown": ["pod 'JSONWebToken'"],
-        "stars": 763
+        "installCommandMarkdown": ["pod 'JSONWebToken'"]
       },
       {
         "minimumVersion": null,
@@ -3892,8 +3818,7 @@
         "repoUrl": "https://github.com/vapor/jwt-kit",
         "installCommandMarkdown": [
           ".package(url: \"https://github.com/vapor/jwt-kit.git\", from: \"4.0.0\")"
-        ],
-        "stars": 169
+        ]
       },
       {
         "minimumVersion": null,
@@ -3924,8 +3849,7 @@
         "authorName": "Wstunes",
         "gitHubRepoPath": "Wstunes/SwiftyJWT",
         "repoUrl": "https://github.com/Wstunes/SwiftyJWT",
-        "installCommandMarkdown": ["pod 'SwiftyJWT'"],
-        "stars": 48
+        "installCommandMarkdown": ["pod 'SwiftyJWT'"]
       },
       {
         "minimumVersion": null,
@@ -3958,8 +3882,7 @@
         "repoUrl": "https://github.com/IBM-Swift/Swift-JWT",
         "installCommandMarkdown": [
           ".package(url:\"https://github.com/IBM-Swift/Swift-JWT\", from: \"3.5.0\")"
-        ],
-        "stars": 548
+        ]
       },
       {
         "minimumVersion": null,
@@ -3990,8 +3913,7 @@
         "authorName": "Airside",
         "gitHubRepoPath": "airsidemobile/JOSESwift",
         "repoUrl": "https://github.com/airsidemobile/JOSESwift",
-        "installCommandMarkdown": ["pod 'JOSESwift'"],
-        "stars": 191
+        "installCommandMarkdown": ["pod 'JOSESwift'"]
       },
       {
         "minimumVersion": null,
@@ -4027,8 +3949,7 @@
         "repoUrl": "https://github.com/beatt83/jose-swift",
         "installCommandMarkdown": [
           ".package(url: \"https://github.com/beatt83/jose-swift.git\", from: \"2.4.0\")"
-        ],
-        "stars": 21
+        ]
       },
       {
         "minimumVersion": null,
@@ -4064,8 +3985,7 @@
         "repoUrl": "https://github.com/amosavian/JWSETKit",
         "installCommandMarkdown": [
           ".package(url: \"https://github.com/amosavian/JWSETKit\", from: \"2.0.0\")"
-        ],
-        "stars": 67
+        ]
       }
     ]
   }

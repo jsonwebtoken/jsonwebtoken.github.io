@@ -5,10 +5,10 @@ import { DecodedHeaderOutputComponent } from "@/features/decoder/components/deco
 import { DecodedPayloadOutputComponent } from "@/features/decoder/components/decoded-payload-output.component";
 import { JwtInputComponent } from "@/features/decoder/components/jwt-input.component";
 import { SecretKeyInputComponent } from "@/features/decoder/components/secret-key-input.component";
+import { parseDecoderFragment } from "@/features/decoder/services/decoder-fragment.service";
 import { useDecoderStore } from "@/features/decoder/services/decoder.store";
 import { useRouter } from "next/navigation";
 import {
-  SupportedTokenHashParamValues,
   WARNING_PARAM_KEY,
   WARNING_PARAM_VALUE,
 } from "@/libs/config/project.constants";
@@ -49,48 +49,29 @@ export const TokenDecoderComponent: React.FC<TokenDecoderComponentProps> = ({
   const decoderInputs$ = useDebuggerStore((state) => state.decoderInputs$);
 
   const loadDecoderInputs = useDecoderStore((state) => state.loadDecoderInputs);
-  const handleJwtChange$ = useDecoderStore((state) => state.handleJwtChange);
+  const loadDecoderUrlInputs = useDecoderStore(
+    (state) => state.loadDecoderUrlInputs,
+  );
   const showUseHashWarning$ = useDecoderStore(
-    (state) => state.showUseHashWarning
+    (state) => state.showUseHashWarning,
   );
 
   useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash.substring(1);
+    const handleHashChange = async () => {
+      const { jwt, publicKey, publicKeyFormat, normalizedHash } =
+        parseDecoderFragment(window.location.hash);
 
-      if (hash.includes("debugger-io?token=")) {
-        const debugHash = window.location.hash
-          .substring(1)
-          .replace("debugger-io?", "");
-        const debugHashParams = new URLSearchParams(debugHash);
-        const token = debugHashParams.get(SupportedTokenHashParamValues.TOKEN);
-
-        const currentUrl = window.location.href.split("#")[0];
-
-        if (!(currentUrl && token)) {
-          return;
-        }
-
-        const newUrl = `${currentUrl}#${SupportedTokenHashParamValues.TOKEN}=${token}`;
-
-        window.location.replace(newUrl);
-
+      if (!jwt) {
         return;
       }
 
-      if (!hash.includes("=")) {
-        return;
+      if (normalizedHash) {
+        const url = new URL(window.location.href);
+        url.hash = normalizedHash;
+        window.history.replaceState(window.history.state, "", url.toString());
       }
 
-      const hashParams = new URLSearchParams(hash);
-
-      Object.values(SupportedTokenHashParamValues).forEach((hashParamKey) => {
-        const token = hashParams.get(hashParamKey);
-
-        if (token) {
-          handleJwtChange$(token);
-        }
-      });
+      await loadDecoderUrlInputs({ jwt, publicKey, publicKeyFormat });
     };
 
     const handleWarning = () => {
@@ -128,7 +109,7 @@ export const TokenDecoderComponent: React.FC<TokenDecoderComponentProps> = ({
     return () => {
       window.removeEventListener("hashchange", handleHashChange);
     };
-  }, [handleJwtChange$, router, showUseHashWarning$]);
+  }, [loadDecoderUrlInputs, router, showUseHashWarning$]);
 
   useEffect(() => {
     if (isMounted.current) {
