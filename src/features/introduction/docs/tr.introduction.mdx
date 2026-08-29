@@ -1,0 +1,172 @@
+import { MdxAnchorComponent } from "@/features/common/components/markdown/mdx-anchor.component";
+import { MarkdownImage } from "@/features/common/components/markdown/markdown-image";
+
+<h2 id={props.headings[0].id}>{props.headings[0].title}</h2>
+
+JSON Web Token (JWT), taraflar arasında bilgilerin güvenli bir şekilde JSON nesnesi olarak iletilmesi için kompakt ve bağımsız bir yol tanımlayan açık bir standarttır (<MdxAnchorComponent type="external" href="https://tools.ietf.org/html/rfc7519">RFC 7519</MdxAnchorComponent>). Bu bilgiler dijital olarak imzalandığı için doğrulanabilir ve güvenilirdir. JWT'ler bir gizli anahtar ile (**HMAC** algoritması kullanılarak) veya **RSA** ya da **ECDSA** kullanılarak bir açık/özel anahtar çifti ile imzalanabilir.
+
+JWT'ler taraflar arasında gizlilik sağlamak için şifrelenebilir olsa da, burada *imzalı* token'lara odaklanacağız. İmzalı token'lar, içerdikleri taleplerin *bütünlüğünü* doğrulayabilirken, şifreli token'lar bu talepleri diğer taraflardan *gizler*. Token'lar açık/özel anahtar çiftleri kullanılarak imzalandığında, imza aynı zamanda yalnızca özel anahtarı tutan tarafın onu imzaladığını da kanıtlar.
+
+<h2 id={props.headings[1].id}>{props.headings[1].title}</h2>
+JSON Web Token'ların faydalı olduğu bazı senaryolar:
+
+- **Yetkilendirme**: JWT kullanımının en yaygın senaryosudur. Kullanıcı giriş yaptıktan sonra, sonraki her istek JWT içerecektir; bu da kullanıcının o token ile izin verilen rotalara, servislere ve kaynaklara erişmesini sağlar. Tek Oturum Açma (Single Sign On), küçük boyutu ve farklı alan adlarında kolayca kullanılabilmesi nedeniyle günümüzde JWT'yi yaygın olarak kullanan bir özelliktir.
+- **Bilgi Alışverişi**: JSON Web Token'lar, taraflar arasında güvenli bilgi iletimi için iyi bir yoldur. JWT'ler imzalanabildiğinden (örneğin açık/özel anahtar çiftleri kullanılarak), gönderenlerin söyledikleri kişi olduklarından emin olabilirsiniz. Ayrıca imza, başlık ve yük kullanılarak hesaplandığından, içeriğin değiştirilmediğini de doğrulayabilirsiniz.
+
+<h2 id={props.headings[2].id}>{props.headings[2].title}</h2>
+Kompakt formunda, JSON Web Token'lar noktalarla (`.`) ayrılmış üç bölümden oluşur:
+
+- Başlık (Header)
+- Yük (Payload)
+- İmza (Signature)
+
+Bu nedenle, bir JWT genellikle şu şekilde görünür:
+
+```
+xxxxx.yyyyy.zzzzz
+```
+
+Farklı bölümleri inceleyelim.
+
+### Başlık (Header)
+
+Başlık *genellikle* iki bölümden oluşur: token'ın türü (JWT) ve kullanılan imzalama algoritması (HMAC SHA256 veya RSA gibi).
+
+Örneğin:
+
+```
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+```
+
+Ardından bu JSON, JWT'nin ilk bölümünü oluşturmak üzere **Base64Url** ile kodlanır.
+
+### Yük (Payload)
+
+Token'ın ikinci bölümü, talepleri (claims) içeren yüktür. Talepler, bir varlık (genellikle kullanıcı) ve ek veriler hakkında ifadelerdir.
+Üç tür talep vardır: *kayıtlı*, *genel* ve *özel* talepler.
+
+- <MdxAnchorComponent type="external" href="https://tools.ietf.org/html/rfc7519#section-4.1">**Kayıtlı talepler**</MdxAnchorComponent>: Zorunlu olmamakla birlikte, faydalı ve birlikte çalışılabilir talepler sağlamak için önerilen, önceden tanımlanmış talepler kümesidir. Bunlardan bazıları: **iss** (issuer / yayıncı), **exp** (expiration time / son kullanma zamanı), **sub** (subject / konu), **aud** (audience / hedef kitle) ve [diğerleri](https://tools.ietf.org/html/rfc7519#section-4.1).
+> Talep adlarının yalnızca üç karakter uzunluğunda olduğuna dikkat edin; JWT kompakt olması için tasarlanmıştır.
+- <MdxAnchorComponent type="external" href="https://tools.ietf.org/html/rfc7519#section-4.2">**Genel talepler**</MdxAnchorComponent>: JWT kullananlar tarafından isteğe bağlı olarak tanımlanabilir. Ancak çakışmaları önlemek için [IANA JSON Web Token Kayıt Defteri](https://www.iana.org/assignments/jwt/jwt.xhtml)'nde veya çakışmaya dayanıklı bir ad alanı içeren bir URI olarak tanımlanmalıdırlar.
+- <MdxAnchorComponent type="external" href="https://tools.ietf.org/html/rfc7519#section-4.3">**Özel talepler**</MdxAnchorComponent>: Kullanımları konusunda anlaşan taraflar arasında bilgi paylaşmak için oluşturulan, *kayıtlı* veya *genel* olmayan özel taleplerdir.
+
+Örnek bir yük şu şekilde olabilir:
+
+```
+{
+  "sub": "1234567890",
+  "name": "John Doe",
+  "admin": true
+}
+```
+
+Yük daha sonra JSON Web Token'ın ikinci bölümünü oluşturmak üzere **Base64Url** ile kodlanır.
+
+> İmzalı token'lar için bu bilgilerin, kurcalamaya karşı korunmuş olsa da herkes tarafından okunabilir olduğunu unutmayın. Şifrelenmediği sürece JWT'nin yük veya başlık bölümlerine gizli bilgiler koymayın.
+
+### İmza (Signature)
+İmza bölümünü oluşturmak için kodlanmış başlığı, kodlanmış yükü, bir gizli anahtarı ve başlıkta belirtilen algoritmayı alıp imzalamanız gerekir.
+
+Örneğin, HMAC SHA256 algoritmasını kullanmak istiyorsanız imza şu şekilde oluşturulur:
+
+```
+HMACSHA256(
+  base64UrlEncode(header) + "." +
+  base64UrlEncode(payload),
+  secret)
+```
+
+İmza, mesajın yol boyunca değiştirilmediğini doğrulamak için kullanılır ve özel anahtar ile imzalanan token'larda, JWT'yi gönderenin söylediği kişi olduğunu da doğrulayabilir.
+
+### Hepsini Bir Araya Getirmek
+
+Çıktı, noktalarla ayrılmış üç Base64-URL dizesinden oluşur. HTML ve HTTP ortamlarında kolayca iletilebilir ve SAML gibi XML tabanlı standartlara kıyasla daha kompakttır.
+
+Aşağıda, önceki başlık ve yükün kodlandığı ve bir gizli anahtar ile imzalandığı bir JWT gösterilmektedir.
+
+<MarkdownImage src="https://cdn.auth0.com/content/jwt/encoded-jwt3.png" alt="Kodlanmış JWT" />
+
+JWT ile denemeler yapmak ve bu kavramları uygulamaya koymak istiyorsanız, JWT'lerin kodunu çözmek, doğrulamak ve oluşturmak için <MdxAnchorComponent type="internal" href="/">jwt.io Hata Ayıklayıcı</MdxAnchorComponent>'yı kullanabilirsiniz.
+
+<MarkdownImage src="https://cdn.auth0.com/website/jwt/introduction/debugger.png" alt="JWT.io Hata Ayıklayıcı" />
+
+<h2 id={props.headings[3].id}>{props.headings[3].title}</h2>
+Kimlik doğrulamada, kullanıcı kimlik bilgileriyle başarılı bir şekilde giriş yaptığında bir JSON Web Token döndürülür. Token'lar kimlik bilgisi olduğundan, güvenlik sorunlarını önlemek için büyük özen gösterilmelidir. Genel olarak token'ları gerekenden uzun süre saklamamalısınız.
+
+Ayrıca, <MdxAnchorComponent type="external" href="https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html#local-storage">güvenlik eksikliği nedeniyle hassas oturum verilerini tarayıcı depolamasında saklamamalısınız</MdxAnchorComponent>.
+
+Kullanıcı korumalı bir rota veya kaynağa erişmek istediğinde, kullanıcı aracısı JWT'yi genellikle **Authorization** başlığında **Bearer** şeması kullanarak göndermelidir. Başlığın içeriği şu şekilde görünmelidir:
+
+```
+Authorization: Bearer <token>
+```
+
+Bu, bazı durumlarda durumsuz (stateless) bir yetkilendirme mekanizması olabilir. Sunucunun korumalı rotaları, `Authorization` başlığında geçerli bir JWT olup olmadığını kontrol eder ve varsa kullanıcının korumalı kaynaklara erişmesine izin verilir. JWT gerekli verileri içeriyorsa, belirli işlemler için veritabanı sorgusu yapma ihtiyacı azalabilir; ancak bu her zaman böyle olmayabilir.
+
+JWT token'larını HTTP başlıkları aracılığıyla gönderiyorsanız, çok büyük olmalarını engellemeye dikkat etmelisiniz. Bazı sunucular başlıklarda 8 KB'den fazlasını kabul etmez. Bir JWT token'ına, kullanıcının tüm izinleri gibi çok fazla bilgi yerleştirmeye çalışıyorsanız, <MdxAnchorComponent type="external" href="https://fga.dev">Auth0 Fine-Grained Authorization</MdxAnchorComponent> gibi alternatif bir çözüme ihtiyacınız olabilir.
+
+Token `Authorization` başlığında gönderiliyorsa, çerez kullanmadığı için Çapraz Köken Kaynak Paylaşımı (CORS) sorun olmaz.
+
+Aşağıdaki diyagram, bir JWT'nin nasıl elde edildiğini ve API'lere veya kaynaklara erişmek için nasıl kullanıldığını göstermektedir:
+
+<MarkdownImage src="https://cdn.auth0.com/website/jwt/introduction/client-credentials-grant.png" alt="JSON Web Token nasıl çalışır" />
+
+1. Uygulama veya istemci, yetkilendirme sunucusundan yetkilendirme ister. Bu, farklı yetkilendirme akışlarından biri aracılığıyla gerçekleştirilir. Örneğin, tipik bir <MdxAnchorComponent type="external" href="http://openid.net/connect/">OpenID Connect</MdxAnchorComponent> uyumlu web uygulaması, <MdxAnchorComponent type="external" href="http://openid.net/specs/openid-connect-core-1_0.html#CodeFlowAuth">yetkilendirme kodu akışını</MdxAnchorComponent> kullanarak `/oauth/authorize` uç noktasından geçer.
+2. Yetkilendirme verildiğinde, yetkilendirme sunucusu uygulamaya bir erişim token'ı döndürür.
+3. Uygulama, korumalı bir kaynağa (örneğin bir API) erişmek için erişim token'ını kullanır.
+
+İmzalı token'larda, token içindeki tüm bilgilerin kullanıcılar veya diğer taraflar tarafından görülebildiğini (ancak değiştiremediklerini) unutmayın. Bu, token içine gizli bilgiler koymamanız gerektiği anlamına gelir.
+
+<h2 id={props.headings[4].id}>{props.headings[4].title}</h2>
+
+**JSON Web Token'ların (JWT)**, **Simple Web Token'lara (SWT)** ve **Security Assertion Markup Language Token'larına (SAML)** kıyasla avantajlarından bahsedelim.
+
+JSON, XML'den daha az ayrıntılı olduğundan, kodlandığında boyutu da daha küçüktür; bu da JWT'yi SAML'den daha kompakt yapar. Bu, JWT'yi HTML ve HTTP ortamlarında iletmek için iyi bir seçenek haline getirir.
+
+Güvenlik açısından, SWT yalnızca HMAC algoritması kullanılarak paylaşılan bir gizli anahtar ile simetrik olarak imzalanabilir. Ancak JWT ve SAML token'ları, imzalama için X.509 sertifikası biçiminde bir açık/özel anahtar çifti kullanabilir. XML Dijital İmza ile güvenlik açıkları oluşturmadan XML imzalamak, JSON imzalamanın basitliğiyle karşılaştırıldığında oldukça zordur.
+
+JSON ayrıştırıcıları, doğrudan nesnelere eşleştikleri için çoğu programlama dilinde yaygındır. Buna karşılık XML'in doğal bir belge-nesne eşleştirmesi yoktur. Bu, JWT ile çalışmayı SAML ifadelerine göre daha kolay hale getirir.
+
+Kullanım açısından JWT, internet ölçeğinde kullanılmaktadır. Bu, JSON Web Token'ın birden fazla platformda, özellikle mobil cihazlarda istemci tarafında işlenmesinin kolaylığını vurgular.
+
+<MarkdownImage src="https://cdn.auth0.com/content/jwt/comparing-jwt-vs-saml2.png" alt="Kodlanmış JWT ve kodlanmış SAML uzunluklarının karşılaştırması" />
+
+_Kodlanmış JWT ve kodlanmış SAML uzunluklarının karşılaştırması_
+
+JSON Web Token'lar hakkında daha fazla bilgi edinmek ve hatta kendi uygulamalarınızda kimlik doğrulaması yapmak için kullanmaya başlamak istiyorsanız, Auth0'daki <MdxAnchorComponent type="external" href="http://auth0.com/learn/json-web-tokens">JSON Web Token tanıtım sayfasına</MdxAnchorComponent> göz atın.
+
+<h2 id={props.headings[5].id}>{props.headings[5].title}</h2>
+
+JSON Web Token (JWT) doğrulama ve onaylama güvenlik için çok önemlidir, ancak JWT güvenliğinin biraz farklı yönlerini ele alırlar: doğrulama (validation), token'ın düzgün biçimlendirilmiş olduğunu ve uygulanabilir talepler içerdiğini garanti eder; onaylama (verification) ise token'ın gerçek ve değiştirilmemiş olduğunu garanti eder.
+
+Doğrulama ve onaylamanın nasıl farklılaştığını daha ayrıntılı inceleyelim:
+
+**JWT doğrulama (validation)** genel olarak JWT'nin yapısını, formatını ve içeriğini kontrol etmeyi ifade eder:
+
+- **Yapı**: Token'ın noktalarla ayrılmış standart üç bölüme (başlık, yük, imza) sahip olduğunun kontrol edilmesi.
+- **Format**: Her bölümün doğru şekilde kodlandığının (Base64URL) ve yükün beklenen talepleri içerdiğinin doğrulanması.
+- **İçerik**: Yük içindeki taleplerin doğru olup olmadığının kontrol edilmesi. Son kullanma zamanı (exp), yayın zamanı (iat), öncesi geçerli değil (nbf) gibi talepler kontrol edilerek token'ın süresinin dolmadığından, zamanından önce kullanılmadığından vb. emin olunur.
+
+**JWT onaylama (verification)** ise token'ın gerçekliğini ve bütünlüğünü doğrulamayı içerir:
+
+- **İmza Onaylaması**: Onaylamanın temel yönüdür; JWT'nin imza bölümü, başlık ve yüke karşı kontrol edilir. Bu, başlıkta belirtilen algoritma (HMAC, RSA veya ECDSA gibi) ile bir gizli anahtar veya açık anahtar kullanılarak yapılır. İmza beklenenle eşleşmiyorsa, token kurcalanmış olabilir veya güvenilir bir kaynaktan gelmiyordur.
+- **Yayıncı Onaylaması**: iss talebinin beklenen yayıncı ile eşleşip eşleşmediğinin kontrol edilmesi.
+- **Hedef Kitle Kontrolü**: aud talebinin beklenen hedef kitle ile eşleştiğinin kontrol edilmesi.
+
+Pratik açıdan:
+
+Bir JWT'yi doğrularsınız (validate): token'ın anlamlı olduğundan, beklenen standartlara uyduğundan ve doğru verileri içerdiğinden emin olmak için.
+
+Bir JWT'yi onaylarsınız (verify): token'ın kötü niyetli olarak değiştirilmediğinden ve güvenilir bir kaynaktan geldiğinden emin olmak için.
+
+Birçok sistemde, bu adımlar genellikle kapsamlı güvenlik kontrolleri için hem doğrulamayı hem de onaylamayı kapsayan "JWT onaylama" olarak birleştirilir. Bununla birlikte, aralarındaki ayrım önemini korumaktadır.
+
+
+<h2 id={props.headings[6].id}>{props.headings[6].title}</h2>
+
+JWT kodlama, başlık ve yükü kompakt, URL dostu bir formata dönüştürmeyi içerir. İmzalama algoritmasını ve token türünü belirten başlık ile konu, son kullanma zamanı ve yayın zamanı gibi talepleri içeren yük, önce JSON'a dönüştürülür, ardından Base64URL ile kodlanır. Bu kodlanmış bölümler bir nokta ile birleştirilir, ardından başlıkta belirtilen algoritma ile bir gizli anahtar veya özel anahtar kullanılarak bir imza oluşturulur. Bu imza da Base64URL ile kodlanarak, iletim veya depolama için uygun bir formatta son JWT dizesini oluşturur.
+
+JWT kod çözme, Base64URL ile kodlanmış başlık ve yükü tekrar JSON'a dönüştürerek bu işlemi tersine çevirir; böylece herkes bir anahtara ihtiyaç duymadan bu bölümleri okuyabilir. Ancak bu bağlamda "kod çözme" genellikle token'ın imzasının onaylanmasını da kapsar. Bu onaylama adımı, çözülmüş başlık ve yükü başlangıçta kullanılan aynı algoritma ve anahtarla yeniden imzalamayı, ardından bu yeni imzayı JWT'de bulunan imza ile karşılaştırmayı içerir. Eşleşirlerse, token'ın bütünlüğü ve gerçekliği doğrulanmış olur ve yayınlandığından bu yana kurcalanmadığı garanti edilir.

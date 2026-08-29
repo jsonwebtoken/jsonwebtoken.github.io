@@ -5,37 +5,37 @@ import { ThemePickerCodeValues } from "@/features/common/values/theme.values";
 
 const withJapanese = process.env.NEXT_PUBLIC_WITH_JAPANESE === "enabled";
 
-export const jaLayoutDictionary: LayoutDictionaryModel = {
+export const trLayoutDictionary: LayoutDictionaryModel = {
   ribbon: {
     cta: {
-      title: "より詳しくJSON Web Token (JWT) を知るには？",
-      description: "「JWTハンドブック」をダウンロード",
+      title: "JSON Web Token ile hızınızı artırın.",
+      description: "JWT El Kitabını ücretsiz edinin",
       link: {
-        url: "https://auth0.com/resources/ebooks/jp-jwt-handbook",
+        url: "https://auth0.com/resources/ebooks/jwt-handbook?utm_source=jwt&utm_medium=microsites&utm_campaign=jwt",
         icon: {
-          label: "北東を指す矢",
+          label: "Sağ üste doğru ok işareti",
         },
       },
     },
     themePicker: {
       button: {
-        ariaLabel: "ページのテーマを選択してください",
+        ariaLabel: "Sayfa temasını seçin",
       },
       list: {
-        ariaLabel: "ページテーマの一覧",
+        ariaLabel: "Sayfa temaları listesi",
       },
       options: [
         {
           code: ThemePickerCodeValues.SYSTEM,
-          label: "自動",
+          label: "Sistem",
         },
         {
           code: ThemePickerCodeValues.DARK,
-          label: "ダーク",
+          label: "Koyu",
         },
         {
           code: ThemePickerCodeValues.LIGHT,
-          label: "ライト",
+          label: "Açık",
         },
       ],
     },
@@ -43,40 +43,40 @@ export const jaLayoutDictionary: LayoutDictionaryModel = {
   header: {
     links: [
       {
-        label: "デバッガー",
+        label: "Hata Ayıklayıcı",
         path: sitePaths.home,
       },
       {
-        label: "JWTの概要",
+        label: "Giriş",
         path: sitePaths.introduction,
       },
       {
-        label: "ライブラリ",
+        label: "Kütüphaneler",
         path: sitePaths.libraries,
       },
       {
-        label: "コミュニティ",
+        label: "Sor",
         path: sitePaths.ask,
         isExternal: true,
       },
     ],
     labels: {
-      close: "メニューを閉じる",
-      open: "メニューと開く",
+      close: "Menüyü kapat",
+      open: "Menüyü aç",
     },
   },
   footer: {
     site: {
       url: BASE_URL,
-      label: "JWTデバッガー",
+      label: "JWT Hata Ayıklayıcı",
     },
-    copyright: `Copyright © ${new Date().getFullYear()} Okta. All rights reserved.`,
+    copyright: `Telif Hakkı © ${new Date().getFullYear()} Okta. Tüm hakları saklıdır.`,
     resources: {
-      title: "Auth0が運営する姉妹サイト",
+      title: "AUTH0 TARAFINDAN SUNULMAKTADIR",
       links: [
         {
           label: "Passkeys Playground",
-          path: "https://learnpasskeys.io/ja",
+          path: "https://learnpasskeys.io/",
         },
         {
           label: "WebAuthn Playground",
@@ -87,35 +87,35 @@ export const jaLayoutDictionary: LayoutDictionaryModel = {
           path: "https://openidconnect.net/",
         },
         {
-          label: "SAMLツール",
+          label: "SAML Aracı",
           path: "https://samltool.io/",
         },
       ],
     },
     legal: {
-      title: "リーガル",
+      title: "YASAL",
       links: [
         {
-          label: "プライバシーポリシー",
+          label: "Gizlilik Politikası",
           path: "https://www.okta.com/privacy-policy/",
         },
         {
-          label: "セキュリティ",
+          label: "Güvenlik",
           path: "https://trust.okta.com/",
         },
       ],
       modalTriggers: [
         {
-          text: "Your Privacy Choices",
+          text: "Gizlilik Tercihleriniz",
           icon: {
             url: "https://cdn.auth0.com/website/footer/ccpa.svg",
-            alt: "薬の錠剤を模したボタンは2つに分かれており、右側にはXマーク、左側にはチェックマークがある。",
+            alt: "Bir hap şeklindeki buton iki parçaya bölünmüştür: sağ tarafta bir X işareti; sol tarafta bir onay işareti bulunur.",
           },
         },
       ],
     },
     social: {
-      title: "ソーシャル",
+      title: "SOSYAL MEDYA",
       links: {
         youtube: {
           label: "YouTube",
@@ -127,7 +127,7 @@ export const jaLayoutDictionary: LayoutDictionaryModel = {
         },
         twitter: {
           label: "Twitter",
-          path: "https://x.com/auth0_jp",
+          path: "https://x.com/auth0",
         },
         linkedin: {
           label: "LinkedIn",
@@ -136,9 +136,9 @@ export const jaLayoutDictionary: LayoutDictionaryModel = {
       },
     },
     modal: {
-      title: "Your Privacy Choices",
+      title: "Gizlilik Tercihleriniz",
       content:
-        "Depending on your state of residence, including if you are a California resident, you have the right to opt out of certain sharing of personal information with third-party ad partners. We may share personal information with third-party ad partners, such as through cookies or by providing lists of email addresses for potential customers, so that we can reach them across the web with relevant ads.",
+        "İkamet ettiğiniz eyalete bağlı olarak, Kaliforniya'da ikamet edenler dahil, kişisel bilgilerinizin üçüncü taraf reklam ortaklarıyla belirli paylaşımları konusunda vazgeçme hakkınız bulunmaktadır. Kişisel bilgilerinizi, çerezler aracılığıyla veya potansiyel müşterilerin e-posta adres listelerini sağlayarak üçüncü taraf reklam ortaklarıyla paylaşabiliriz; böylece web üzerinde ilgili reklamlarla size ulaşabiliriz.",
       list: [
         {
           id: "cookies",
@@ -150,35 +150,39 @@ export const jaLayoutDictionary: LayoutDictionaryModel = {
     },
     languagePicker: {
       button: {
-        ariaLabel: "ページの言語を選択してください",
+        ariaLabel: "Sayfa dilini seçin",
       },
       list: {
-        ariaLabel: "ページ言語の一覧",
+        ariaLabel: "Sayfa dilleri listesi",
       },
       options: [
         {
           value: "en",
           label: "English",
         },
+        {
+          value: "tr",
+          label: "Türkçe",
+        },
       ],
     },
   },
   errors: {
     notFound: {
-      message: "申し訳ございませんが、お探しのページは存在しません。",
+      message: "Üzgünüz, aradığınız sayfa bulunamadı.",
       link: {
         path: "/",
-        label: "ホームへ ",
+        label: "Ana sayfaya dön",
       },
     },
     unexpectedError: {
-      message: "申し訳ございませんが、エラーが発生しました。",
+      message: "Üzgünüz, bir hata oluştu.",
       actions: {
         tryAgain: {
-          label: "もう一度入力してください",
+          label: "Tekrar dene",
         },
         report: {
-          label: "問題を報告する",
+          label: "Bu hatayı bildir",
           path: "https://community.auth0.com/new-topic?category=jwt&tags=issue,jwt&title=%5BIssue%5D%20&body=%28Please%20report%20any%20issue%20that%20you%20may%20have%20encountered%20while%20using%20the%20JWT%20Debugger%20site.%20To%20delete%20this%20post%20draft%2C%20click%20the%20Close%20button%20below%20and%20then%20click%20Discard.%29",
         },
       },
@@ -186,13 +190,8 @@ export const jaLayoutDictionary: LayoutDictionaryModel = {
   },
 };
 
-jaLayoutDictionary.footer.languagePicker.options.push({
-  label: "Türkçe",
-  value: "tr",
-});
-
 if (withJapanese) {
-  jaLayoutDictionary.footer.languagePicker.options.push({
+  trLayoutDictionary.footer.languagePicker.options.push({
     label: "日本語",
     value: "ja",
   });
