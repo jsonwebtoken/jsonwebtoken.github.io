@@ -197,6 +197,9 @@ export const FooterComponent: React.FC<FooterComponentProps> = ({
               <GlobeIconComponent />
               <Select
                 aria-label={"Language picker"}
+                // Pins react-select's generated DOM ids; without it the SSR and
+                // client renders draw different numbers off its global counter.
+                instanceId="language-select"
                 className={styles.languageSelect__container}
                 onChange={handleChange}
                 options={

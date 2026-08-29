@@ -5,8 +5,8 @@ import { PREFERRED_THEME_COOKIE_KEY } from "@/features/themes/theme.config";
 import { getSanitizedThemeCookieValue } from "@/features/themes/services/theme.utils";
 import { ThemeCookieValues } from "@/features/common/values/theme.values";
 
-export const getThemeCodeFromCookies = (): ThemeCookieValues => {
-  const preferredThemeCookie = cookies().get(PREFERRED_THEME_COOKIE_KEY);
+export const getThemeCodeFromCookies = async (): Promise<ThemeCookieValues> => {
+  const preferredThemeCookie = (await cookies()).get(PREFERRED_THEME_COOKIE_KEY);
 
   if (!preferredThemeCookie) {
     return ThemeCookieValues.SYSTEM_DARK;

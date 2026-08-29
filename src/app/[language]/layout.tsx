@@ -18,8 +18,9 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({
-  params: { language },
+  params,
 }: PageMetadataProps): Promise<Metadata> {
+  const { language } = await params;
   const dictionary = getHomeDictionary(language);
 
   return generatePageMetadata({
@@ -30,16 +31,16 @@ export async function generateMetadata({
   });
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
   params,
 }: {
   children: React.ReactNode;
-  params: { language: string };
+  params: Promise<{ language: string }>;
 }) {
-  const { language: languageCode = DEFAULT_LANGUAGE_CODE } = params;
+  const { language: languageCode = DEFAULT_LANGUAGE_CODE } = await params;
 
-  const preferredThemeCookie = cookies().get(PREFERRED_THEME_COOKIE_KEY);
+  const preferredThemeCookie = (await cookies()).get(PREFERRED_THEME_COOKIE_KEY);
 
   const sanitizedThemeCookieValue = getSanitizedThemeCookieValue(
     preferredThemeCookie?.value || null,

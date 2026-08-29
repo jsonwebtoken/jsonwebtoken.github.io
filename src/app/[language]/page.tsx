@@ -23,8 +23,9 @@ import { DebuggerModeValues } from "@/features/common/values/debugger-mode.value
 import { dataTestidDictionary } from "@/libs/testing/data-testid.dictionary";
 
 export async function generateMetadata({
-  params: { language },
+  params,
 }: PageMetadataProps): Promise<Metadata> {
+  const { language } = await params;
   const dictionary = getHomeDictionary(language);
 
   return generatePageMetadata({
@@ -34,29 +35,30 @@ export async function generateMetadata({
   });
 }
 
-export default function Home({
-  params: { language = DEFAULT_LANGUAGE_CODE },
-}: PageProps) {
+export default async function Home({ params }: PageProps) {
+  const { language = DEFAULT_LANGUAGE_CODE } = await params;
+  const cookieStore = await cookies();
+
   const decodedHeaderInitialTabId =
-    cookies().get(DECODED_HEADER_FORMAT_KEY)?.value ||
+    cookieStore.get(DECODED_HEADER_FORMAT_KEY)?.value ||
     dataTestidDictionary.decoder.decodedHeader.json.id;
 
   const decodedPayloadInitialTabId =
-    cookies().get(DECODED_PAYLOAD_FORMAT_KEY)?.value ||
+    cookieStore.get(DECODED_PAYLOAD_FORMAT_KEY)?.value ||
     dataTestidDictionary.decoder.decodedPayload.json.id;
 
   const decodedHeaderDescriptionVisibility =
     getSanitizedDescriptionVisibilityValue(
-      cookies().get(DECODED_HEADER_DESCRIPTION_KEY)?.value || null,
+      cookieStore.get(DECODED_HEADER_DESCRIPTION_KEY)?.value || null,
     ) || ClaimDescriptionVisibilityValues.VISIBLE;
   const decodedPayloadDescriptionVisibility =
     getSanitizedDescriptionVisibilityValue(
-      cookies().get(DECODED_PAYLOAD_DESCRIPTION_KEY)?.value || null,
+      cookieStore.get(DECODED_PAYLOAD_DESCRIPTION_KEY)?.value || null,
     ) || ClaimDescriptionVisibilityValues.VISIBLE;
 
   const debuggerInitialMode: DebuggerModeValues =
     getSanitizedDebuggerModeValues(
-      cookies().get(DEBUGGER_MODE_KEY)?.value || null,
+      cookieStore.get(DEBUGGER_MODE_KEY)?.value || null,
     ) || DebuggerModeValues.SPLIT;
 
   return (
