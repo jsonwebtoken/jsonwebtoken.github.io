@@ -12,6 +12,9 @@ jobs:
     runs-on:
       labels: ubuntu-latest
     environment: preview
+    permissions:
+      contents: read
+      id-token: write
     outputs:
       deploymentUrl: ${{ steps.deploy.outputs.deploymentUrl }}
     steps:
@@ -22,7 +25,8 @@ jobs:
       - name: Deploy on Vercel
         id: deploy
         run: |
-          vercel deploy --token=${{ secrets.VERCEL_ACCESS_TOKEN }} > deploy.log
+          vercel deploy \
+            --token=${{ secrets.VERCEL_ACCESS_TOKEN }} > deploy.log
           URL=$(cat deploy.log | grep -o 'https://[^ ]*.vercel.app' | head -n1)
           echo "deploymentUrl=$URL" >> $GITHUB_OUTPUT
       - name: Extract branch name
