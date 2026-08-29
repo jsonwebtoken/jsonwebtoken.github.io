@@ -55,7 +55,6 @@ export const ShellComponent: React.FC<ShellComponentProps> = ({
       }
 
       if (e.data === COOKIE_CONSENT_STATUS.WAITING_FOR_CONSENT) {
-        // eslint-disable-next-line new-cap
         window.OneTrust.OnConsentChanged(() =>
           setConsentLevel(window.OnetrustActiveGroups),
         );

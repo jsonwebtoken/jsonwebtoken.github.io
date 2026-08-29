@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import styles from "./debugger-alg-picker.module.scss";
 import { getPickersUiDictionary } from "@/features/localization/services/ui-language-dictionary.service";
 import { useEncoderStore } from "@/features/encoder/services/encoder.store";
@@ -14,11 +14,42 @@ import {
 import { useButton } from "@react-aria/button";
 import { DebuggerPickerOptionModel } from "@/features/common/models/debugger-picker-option.model";
 import { isMlDsaSupported } from "@/features/common/services/jwt.service";
+import { useClientValue } from "@/features/common/hooks/use-client-value";
 
 enum PickerStates {
   IDLE = "IDLE",
   PICKING = "PICKING",
 }
+
+type MlDsaSupport = {
+  isLoading: boolean;
+  algorithms: Record<MlDsaAlgorithm, boolean>;
+};
+
+const SERVER_ML_DSA_SUPPORT: MlDsaSupport = {
+  isLoading: true,
+  algorithms: {
+    "ML-DSA-44": false,
+    "ML-DSA-65": false,
+    "ML-DSA-87": false,
+  },
+};
+
+// Cached so useSyncExternalStore always sees the same reference.
+let clientMlDsaSupport: MlDsaSupport | null = null;
+
+const getClientMlDsaSupport = (): MlDsaSupport => {
+  clientMlDsaSupport ??= {
+    isLoading: false,
+    algorithms: {
+      "ML-DSA-44": isMlDsaSupported("ML-DSA-44"),
+      "ML-DSA-65": isMlDsaSupported("ML-DSA-65"),
+      "ML-DSA-87": isMlDsaSupported("ML-DSA-87"),
+    },
+  };
+
+  return clientMlDsaSupport;
+};
 
 interface DebuggerAlgPickerComponentProps {
   languageCode: string;
@@ -61,28 +92,10 @@ export const WidgetAlgPickerComponent: React.FC<
   const [pickerState, setPickerState] = useState<PickerStates>(
     PickerStates.IDLE,
   );
-  const [mlDsaSupport, setMlDsaSupport] = useState<{
-    isLoading: boolean;
-    algorithms: Record<MlDsaAlgorithm, boolean>;
-  }>({
-    isLoading: true,
-    algorithms: {
-      "ML-DSA-44": false,
-      "ML-DSA-65": false,
-      "ML-DSA-87": false,
-    },
-  });
-
-  useEffect(() => {
-    setMlDsaSupport({
-      isLoading: false,
-      algorithms: {
-        "ML-DSA-44": isMlDsaSupported("ML-DSA-44"),
-        "ML-DSA-65": isMlDsaSupported("ML-DSA-65"),
-        "ML-DSA-87": isMlDsaSupported("ML-DSA-87"),
-      },
-    });
-  }, []);
+  const mlDsaSupport = useClientValue(
+    getClientMlDsaSupport,
+    SERVER_ML_DSA_SUPPORT,
+  );
 
   const dictionary = getPickersUiDictionary(languageCode);
 

@@ -84,30 +84,45 @@ export const TokenEncoderInputComponent: React.FC<
   const [secret, setSecret] = useState<string>(DEFAULT_SYMMETRIC_SECRET);
   const [privateKey, setPrivateKey] = useState<string>("");
 
-  useEffect(() => {
+  const [syncedHeader, setSyncedHeader] = useState(controlledHeader$);
+  const [syncedPayload, setSyncedPayload] = useState(controlledPayload$);
+  const [syncedSecret, setSyncedSecret] = useState(
+    controlledSymmetricSecretKey$
+  );
+  const [syncedPrivateKey, setSyncedPrivateKey] = useState(
+    controlledAsymmetricPrivateKey$
+  );
+
+  if (controlledHeader$ !== syncedHeader) {
+    setSyncedHeader(controlledHeader$);
     setHeader(controlledHeader$.value);
-  }, [controlledHeader$]);
+  }
 
-  useEffect(() => {
+  if (controlledPayload$ !== syncedPayload) {
+    setSyncedPayload(controlledPayload$);
     setPayload(controlledPayload$.value);
-  }, [controlledPayload$]);
+  }
 
-  useEffect(() => {
-    if (controlledSymmetricSecretKey$) {
-      setSecret(controlledSymmetricSecretKey$.value);
-    }
-  }, [controlledSymmetricSecretKey$]);
+  if (
+    controlledSymmetricSecretKey$ &&
+    controlledSymmetricSecretKey$ !== syncedSecret
+  ) {
+    setSyncedSecret(controlledSymmetricSecretKey$);
+    setSecret(controlledSymmetricSecretKey$.value);
+  }
 
-  useEffect(() => {
-    if (controlledAsymmetricPrivateKey$) {
-      setPrivateKey(
-        formatAsymmetricKeyInput(
-          controlledAsymmetricPrivateKey$.value,
-          controlledAsymmetricPrivateKey$.format,
-        ),
-      );
-    }
-  }, [controlledAsymmetricPrivateKey$]);
+  if (
+    controlledAsymmetricPrivateKey$ &&
+    controlledAsymmetricPrivateKey$ !== syncedPrivateKey
+  ) {
+    setSyncedPrivateKey(controlledAsymmetricPrivateKey$);
+    setPrivateKey(
+      formatAsymmetricKeyInput(
+        controlledAsymmetricPrivateKey$.value,
+        controlledAsymmetricPrivateKey$.format,
+      ),
+    );
+  }
 
   const handleHeaderChange$ = useEncoderStore(
     (state) => state.handleHeaderChange

@@ -2,6 +2,8 @@ import createMDX from "@next/mdx";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Next 16 writes AGENTS.md/CLAUDE.md on `next dev`; keep them out of the tree.
+  agentRules: false,
   // Playwright runs both browser projects against one long-lived dev server.
   // Retain route entries so later Firefox tests do not reference evicted chunks.
   ...(process.env.CI

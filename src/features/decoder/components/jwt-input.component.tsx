@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { CardComponent } from "@/features/common/components/card/card.component";
 import { JwtEditorComponent } from "@/features/decoder/components/jwt-editor.component";
 import { DEFAULT_JWT } from "@/features/decoder/services/token-decoder.service";
@@ -15,6 +15,13 @@ import { CardToolbarCopyButtonComponent } from "@/features/common/components/car
 import { CardToolbarClearButtonComponent } from "@/features/common/components/card-toolbar-buttons/card-toolbar-clear-button/card-toolbar-clear-button.component";
 import styles from "./jwt-input.module.scss";
 import { CheckboxComponent } from "@/features/common/components/checkbox/checkbox.component";
+import { useClientValue } from "@/features/common/hooks/use-client-value";
+
+const getStoredAutofocus = (): boolean => {
+  const saved = localStorage.getItem("autofocus-enabled");
+
+  return saved ? !!JSON.parse(saved) : false;
+};
 
 type JwtInputComponentProps = {
   languageCode: string;
@@ -28,6 +35,16 @@ export const JwtInputComponent: React.FC<JwtInputComponentProps> = ({
   const [autoFocusEnabled, setAutofocusEnabled] = useState<boolean | undefined>(
     undefined
   );
+  const storedAutofocus = useClientValue<boolean | undefined>(
+    getStoredAutofocus,
+    undefined
+  );
+  const [syncedAutofocus, setSyncedAutofocus] = useState(storedAutofocus);
+
+  if (storedAutofocus !== syncedAutofocus) {
+    setSyncedAutofocus(storedAutofocus);
+    setAutofocusEnabled(storedAutofocus);
+  }
   const handleJwtChange$ = useDecoderStore((state) => state.handleJwtChange);
   const jwt$ = useDecoderStore((state) => state.jwt);
   const decodeErrors$ = useDecoderStore((state) => state.decodingErrors);
@@ -37,6 +54,12 @@ export const JwtInputComponent: React.FC<JwtInputComponentProps> = ({
   const [token, setToken] = useState<string>(
     decoderInputs$.jwt || DEFAULT_JWT.token
   );
+  const [syncedJwt, setSyncedJwt] = useState(jwt$);
+
+  if (jwt$ !== syncedJwt) {
+    setSyncedJwt(jwt$);
+    setToken(jwt$);
+  }
 
   const clearValue = async () => {
     handleJwtChange$("");
@@ -54,15 +77,6 @@ export const JwtInputComponent: React.FC<JwtInputComponentProps> = ({
     localStorage.setItem("autofocus-enabled", JSON.stringify(selected));
     setAutofocusEnabled(selected);
   };
-
-  useEffect(() => {
-    const saved = localStorage.getItem("autofocus-enabled");
-    setAutofocusEnabled(saved ? !!JSON.parse(saved) : false);
-  }, []);
-
-  useEffect(() => {
-    setToken(jwt$);
-  }, [jwt$]);
 
   return (
     <>

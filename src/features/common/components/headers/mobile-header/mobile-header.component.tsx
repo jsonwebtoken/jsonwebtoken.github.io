@@ -42,12 +42,10 @@ export const MobileHeaderComponent: React.FC<MobileHeaderComponentProps> = ({
       : createUrlPath([languageCode]);
 
   const closeMobileMenu = useCallback(() => {
-    document.body.classList.remove("mobile-scroll-lock");
     setMobileMenuState(MobileMenuStateValues.CLOSED);
   }, []);
 
   const openMobileMenu = useCallback(() => {
-    document.body.classList.add("mobile-scroll-lock");
     setMobileMenuState(MobileMenuStateValues.OPEN);
   }, []);
 
@@ -70,12 +68,19 @@ export const MobileHeaderComponent: React.FC<MobileHeaderComponentProps> = ({
     [closeMobileMenu],
   );
 
+  if (currentPathname !== pathname) {
+    setCurrentPathname(pathname);
+    setMobileMenuState(MobileMenuStateValues.CLOSED);
+  }
+
   useEffect(() => {
-    if (currentPathname !== pathname) {
-      closeMobileMenu();
-      setCurrentPathname(pathname);
-    }
-  }, [closeMobileMenu, currentPathname, pathname]);
+    document.body.classList.toggle(
+      "mobile-scroll-lock",
+      mobileMenuState === MobileMenuStateValues.OPEN,
+    );
+
+    return () => document.body.classList.remove("mobile-scroll-lock");
+  }, [mobileMenuState]);
 
   return (
     <>
