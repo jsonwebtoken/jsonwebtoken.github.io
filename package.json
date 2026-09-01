@@ -9,6 +9,7 @@
     "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "playwright:test-ui": "NODE_OPTIONS=\"--no-experimental-strip-types\" npx playwright test --ui"
