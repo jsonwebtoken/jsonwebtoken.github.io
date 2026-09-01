@@ -36,10 +36,8 @@ const nextConfig = {
       }
     );
 
-    // @next/mdx registers its loader as a plain top-level rule, so .mdx modules
-    // never get an App Router layer and miss Next's React aliasing. They then load
-    // node_modules' JSX runtime, which reads internals off Next's precompiled
-    // React and blows up with "ReactCurrentDispatcher of undefined" in dev.
+    // @next/mdx registers its loader without an App Router layer, so .mdx misses
+    // Next's React aliasing and dev crashes on "ReactCurrentDispatcher of undefined".
     const mdxRule = config.module.rules.find(
       (rule) => rule?.test?.toString() === /\.mdx$/.toString()
     );

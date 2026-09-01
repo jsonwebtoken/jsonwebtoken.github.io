@@ -46,9 +46,6 @@ jobs:
     needs: test
     runs-on:
       labels: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write
     steps:
       - name: Checkout the Codebase
         uses: actions/checkout@v4
@@ -67,5 +64,4 @@ jobs:
       - name: Deploy on Vercel
         id: deploy
         run: |
-          vercel deploy --prod \
-            --token=${{ secrets.VERCEL_ACCESS_TOKEN }}
+          vercel deploy --prod --token=${{ secrets.VERCEL_ACCESS_TOKEN }}

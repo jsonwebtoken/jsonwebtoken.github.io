@@ -1,22 +1,16 @@
 #!/usr/bin/env node
 import { execSync } from "node:child_process";
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync, rmSync, writeFileSync } from "node:fs";
 
 const JF_URL = "https://a0us.jfrog.io";
 const OIDC_PROVIDER_NAME = "vercel";
 const ARTIFACTORY_NPM_HOST = "a0us.jfrog.io/artifactory/api/npm/npm";
 const PUBLIC_NPM_HOST = "registry.npmjs.org";
 const BUILD_NPMRC_PATH = ".npmrc.oidc";
+const EXCHANGE_TIMEOUT_MS = 15_000;
+const MAX_ERROR_BODY_LENGTH = 500;
 
-async function exchangeVercelOidcTokenForArtifactoryToken() {
-  const oidcToken = process.env.VERCEL_OIDC_TOKEN;
-  if (!oidcToken) {
-    throw new Error(
-      "VERCEL_OIDC_TOKEN is not set. Enable OIDC Federation for this " +
-        "environment in Vercel Project Settings > Security > OIDC Federation."
-    );
-  }
-
+async function exchangeVercelOidcTokenForArtifactoryToken(oidcToken) {
   const res = await fetch(`${JF_URL}/access/api/v1/oidc/token`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -26,11 +20,18 @@ async function exchangeVercelOidcTokenForArtifactoryToken() {
       subject_token: oidcToken,
       provider_name: OIDC_PROVIDER_NAME,
     }),
+    signal: AbortSignal.timeout(EXCHANGE_TIMEOUT_MS),
   });
 
   if (!res.ok) {
+    const body = await res.text();
+    const truncated =
+      body.length > MAX_ERROR_BODY_LENGTH
+        ? `${body.slice(0, MAX_ERROR_BODY_LENGTH)}… [truncated]`
+        : body;
+
     throw new Error(
-      `JFrog OIDC token exchange failed (${res.status}): ${await res.text()}`
+      `JFrog OIDC token exchange failed: ${res.status} ${res.statusText} — ${truncated}`
     );
   }
 
@@ -51,10 +52,8 @@ function pointLockfileAtArtifactory() {
   writeFileSync("package-lock.json", rewritten);
 }
 
-// Written fresh for this build only, under --userconfig, so the Artifactory
-// registry override never leaks into a plain `npm ci` elsewhere (e.g. the
-// GitHub Actions test workflows, which install straight from the public
-// registry and have no access to this token).
+// Kept out of the default .npmrc so the registry override never leaks into
+// installs outside this build (e.g. the GitHub Actions workflows).
 function writeBuildScopedNpmrc(npmToken) {
   writeFileSync(
     BUILD_NPMRC_PATH,
@@ -63,12 +62,43 @@ function writeBuildScopedNpmrc(npmToken) {
   );
 }
 
-const npmToken = await exchangeVercelOidcTokenForArtifactoryToken();
+async function main() {
+  const vercelEnv = process.env.VERCEL_ENV;
 
-// Only this ephemeral Vercel build checkout is rewritten to fetch through
-// Artifactory; the committed lockfile (used by GitHub Actions' npm ci) is
-// untouched and keeps resolving against the public registry.
-pointLockfileAtArtifactory();
-writeBuildScopedNpmrc(npmToken);
+  if (!vercelEnv) {
+    execSync("npm ci", { stdio: "inherit" });
 
-execSync(`npm ci --userconfig ${BUILD_NPMRC_PATH}`, { stdio: "inherit" });
+    return;
+  }
+
+  const oidcToken = process.env.VERCEL_OIDC_TOKEN;
+  if (!oidcToken) {
+    throw new Error(
+      `VERCEL_OIDC_TOKEN is not set in ${vercelEnv}. Enable OIDC Federation in ` +
+        "Vercel Project Settings > Security > Secure Backend Access with OIDC Federation."
+    );
+  }
+
+  console.log(
+    `Exchanging Vercel OIDC token for a JFrog access token (provider: ${OIDC_PROVIDER_NAME}, env: ${vercelEnv})...`
+  );
+
+  const npmToken = await exchangeVercelOidcTokenForArtifactoryToken(oidcToken);
+
+  console.log("JFrog access token acquired.");
+
+  // Safe to mutate: the Vercel build checkout is ephemeral and never committed.
+  pointLockfileAtArtifactory();
+  writeBuildScopedNpmrc(npmToken);
+
+  try {
+    execSync(`npm ci --userconfig ${BUILD_NPMRC_PATH}`, { stdio: "inherit" });
+  } finally {
+    rmSync(BUILD_NPMRC_PATH, { force: true });
+  }
+}
+
+main().catch((error) => {
+  console.error(error.message ?? error);
+  process.exit(1);
+});
