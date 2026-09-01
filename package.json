@@ -32,7 +32,7 @@
     "jose": "^6.2.5",
     "js-cookie": "^3.0.5",
     "loglevel": "^1.9.1",
-    "nanoid": "^5.0.9",
+    "nanoid": "^5.1.16",
     "negotiator": "^1.0.0",
     "neverthrow": "^8.1.1",
     "next": "14.2.35",
