@@ -64,22 +64,33 @@ export const SecretKeyInputComponent: React.FC<
   );
   const [publicKey, setPublicKey] = useState<string>("");
 
-  useEffect(() => {
-    if (controlledSymmetricSecretKey) {
-      setSecret(controlledSymmetricSecretKey.value.trim());
-    }
-  }, [controlledSymmetricSecretKey]);
+  const [syncedSecretKey, setSyncedSecretKey] = useState(
+    controlledSymmetricSecretKey,
+  );
+  const [syncedPublicKey, setSyncedPublicKey] = useState(
+    controlledAsymmetricPublicKey,
+  );
 
-  useEffect(() => {
-    if (controlledAsymmetricPublicKey) {
-      setPublicKey(
-        formatPublicKeyInput(
-          controlledAsymmetricPublicKey.value,
-          controlledAsymmetricPublicKey.format,
-        ),
-      );
-    }
-  }, [controlledAsymmetricPublicKey]);
+  if (
+    controlledSymmetricSecretKey &&
+    controlledSymmetricSecretKey !== syncedSecretKey
+  ) {
+    setSyncedSecretKey(controlledSymmetricSecretKey);
+    setSecret(controlledSymmetricSecretKey.value.trim());
+  }
+
+  if (
+    controlledAsymmetricPublicKey &&
+    controlledAsymmetricPublicKey !== syncedPublicKey
+  ) {
+    setSyncedPublicKey(controlledAsymmetricPublicKey);
+    setPublicKey(
+      formatPublicKeyInput(
+        controlledAsymmetricPublicKey.value,
+        controlledAsymmetricPublicKey.format,
+      ),
+    );
+  }
 
   const clearValue = async () => {
     if (isHmacAlg(alg$)) {

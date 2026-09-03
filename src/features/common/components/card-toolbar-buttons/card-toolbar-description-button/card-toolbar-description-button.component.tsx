@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ClaimDescriptionVisibilityValues } from "@/features/common/values/claim-description-visibility.values";
 import { getButtonsUiDictionary } from "@/features/localization/services/ui-language-dictionary.service";
 import { useDebuggerStore } from "@/features/debugger/services/debugger.store";
@@ -38,6 +38,14 @@ export const CardToolbarDescriptionButtonComponent: React.FC<
 
   const [descVisibility, setDescVisibility] =
     useState<ClaimDescriptionVisibilityValues>(initialVisibility);
+  const [syncedVisibility, setSyncedVisibility] = useState(
+    descriptionVisibility$
+  );
+
+  if (descriptionVisibility$ && descriptionVisibility$ !== syncedVisibility) {
+    setSyncedVisibility(descriptionVisibility$);
+    setDescVisibility(descriptionVisibility$);
+  }
 
   const hideDescription = () => {
     setDescriptionVisibility$(ClaimDescriptionVisibilityValues.HIDDEN);
@@ -70,12 +78,6 @@ export const CardToolbarDescriptionButtonComponent: React.FC<
 
     setDescriptionVisibility$(ClaimDescriptionVisibilityValues.VISIBLE);
   };
-
-  useEffect(() => {
-    if (descriptionVisibility$) {
-      setDescVisibility(descriptionVisibility$);
-    }
-  }, [descriptionVisibility$]);
 
   return (
     <CardToolbarButtonComponent

@@ -24,7 +24,9 @@ export const PageLayoutComponent: React.FC<LayoutComponentProps> = ({
   const layoutDictionary = getLayoutDictionary(languageCode);
 
   return (
-    <html lang={languageCode} data-theme={themeCode}>
+    // The inline script below rewrites data-theme before hydration, so this
+    // element's attributes are expected to differ from the server render.
+    <html lang={languageCode} data-theme={themeCode} suppressHydrationWarning>
       <head>
         <meta
           httpEquiv="origin-trial"

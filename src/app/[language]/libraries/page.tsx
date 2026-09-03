@@ -25,8 +25,9 @@ import {
 } from "@/features/libraries/values/library-support.values";
 
 export async function generateMetadata({
-  params: { language },
+  params,
 }: PageMetadataProps): Promise<Metadata> {
+  const { language } = await params;
   const dictionary: LibrariesDictionaryModel = getLibrariesDictionary(language);
 
   return generatePageMetadata({
@@ -36,17 +37,20 @@ export async function generateMetadata({
   });
 }
 
-export default function Libraries({
-  params: { language: languageCode = DEFAULT_LANGUAGE_CODE },
+export default async function Libraries({
+  params,
   searchParams,
 }: {
-  params: { language: string };
-  searchParams?: {
+  params: Promise<{ language: string }>;
+  searchParams?: Promise<{
     programming_language?: string;
     algorithm?: keyof LibraryModel["support"];
     support?: keyof LibraryModel["support"];
-  };
+  }>;
 }) {
+  const { language: languageCode = DEFAULT_LANGUAGE_CODE } = await params;
+  const resolvedSearchParams = await searchParams;
+
   const librariesDictionary = getLibrariesDictionary(languageCode);
   const auth0Dictionary = getAuth0Dictionary(languageCode);
 
@@ -54,9 +58,9 @@ export default function Libraries({
     encoding: "utf-8",
   });
 
-  const programmingLanguage = searchParams?.programming_language;
-  const algorithm = searchParams?.algorithm;
-  const support = searchParams?.support;
+  const programmingLanguage = resolvedSearchParams?.programming_language;
+  const algorithm = resolvedSearchParams?.algorithm;
+  const support = resolvedSearchParams?.support;
   const query = programmingLanguage ?? algorithm ?? support ?? "";
   const dictionary = JSON.parse(source) as LibraryDictionaryModel;
 

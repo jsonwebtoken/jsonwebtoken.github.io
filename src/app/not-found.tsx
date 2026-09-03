@@ -5,9 +5,9 @@ import { getThemeCodeFromCookies } from "@/features/themes/services/theme.servic
 import { ErrorPageComponent } from "@/features/common/components/errors/error-page/error-page.component";
 import { NotFoundComponent } from "@/features/common/components/errors/not-found/not-found.component";
 
-export default function NotFound() {
-  const languageCode = getLanguageCodeFromHeaders();
-  const themeCode = getThemeCodeFromCookies();
+export default async function NotFound() {
+  const languageCode = await getLanguageCodeFromHeaders();
+  const themeCode = await getThemeCodeFromCookies();
 
   const layoutDictionary = getLayoutDictionary(languageCode);
 

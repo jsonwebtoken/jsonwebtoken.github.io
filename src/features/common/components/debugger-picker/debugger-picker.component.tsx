@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "./debugger-picker.module.scss";
 import Select, { SingleValue, OptionsOrGroups, GroupBase } from "react-select";
+import { useClientValue } from "@/features/common/hooks/use-client-value";
 import { DebuggerPickerOptionModel } from "@/features/common/models/debugger-picker-option.model";
 import { LibraryFilterLabel } from "@/features/libraries/models/library-filters.model";
 import { isGroupedOptionsType } from "./utils";
@@ -59,7 +60,7 @@ export const DebuggerPickerComponent: React.FC<
   placeholder,
   minWidth,
 }) => {
-  const [isClient, setIsClient] = useState(false);
+  const isClient = useClientValue(() => true, false);
 
   const handleChange = (selection: SingleValue<DebuggerPickerOptionModel>) => {
     if (!selection) {
@@ -68,10 +69,6 @@ export const DebuggerPickerComponent: React.FC<
     const groupLabel = getGroupLabel(options, selection);
     handleSelection(selection.value, groupLabel);
   };
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
 
   if (!isClient) {
     return (

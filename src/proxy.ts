@@ -10,7 +10,7 @@ import {
 import { createUrlPath, isSupportedLanguage } from "@/libs/utils/path.utils";
 import dictionary from "@/data/libraries-next.json";
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   const isDefaultLanguageCodeInPathname =

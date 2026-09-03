@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styles from "./token-decoder-encoding-format-picker.module.scss";
 import { EncodingValues } from "@/features/common/values/encoding.values";
 import { useDecoderStore } from "@/features/decoder/services/decoder.store";
@@ -23,12 +23,17 @@ export const TokenDecoderEncodingFormatPickerComponent: React.FC<
 
   const [secretEncodingFormat, setSecretEncodingFormat] =
     useState<EncodingValues>(EncodingValues.UTF8);
+  const [syncedSecretKey, setSyncedSecretKey] = useState(
+    controlledSymmetricSecretKey,
+  );
 
-  useEffect(() => {
-    if (controlledSymmetricSecretKey) {
-      setSecretEncodingFormat(controlledSymmetricSecretKey.encoding);
-    }
-  }, [controlledSymmetricSecretKey]);
+  if (
+    controlledSymmetricSecretKey &&
+    controlledSymmetricSecretKey !== syncedSecretKey
+  ) {
+    setSyncedSecretKey(controlledSymmetricSecretKey);
+    setSecretEncodingFormat(controlledSymmetricSecretKey.encoding);
+  }
 
   const onSecretEncodingFormatChange = (value: string) => {
     setSecretEncodingFormat(value as EncodingValues);

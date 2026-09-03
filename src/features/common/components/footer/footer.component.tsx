@@ -1,12 +1,13 @@
 "use client";
 
-import React, { MouseEvent, useEffect, useState } from "react";
+import React, { MouseEvent, useState } from "react";
 import Select, {
   SingleValue,
   OptionsOrGroups,
   GroupBase,
   NonceProvider,
 } from "react-select";
+import { useClientValue } from "@/features/common/hooks/use-client-value";
 import { FooterIconsComponent } from "./footer-Icons.component";
 import { MonoFont, SecondaryFont } from "@/libs/theme/fonts";
 import Image from "next/image";
@@ -51,11 +52,10 @@ export const FooterComponent: React.FC<FooterComponentProps> = ({
   const [modalState, setModalState] = useState<ModalStateValues>(
     ModalStateValues.CLOSED
   );
-  const [portalTarget, setPortalTarget] = useState<HTMLElement | null>(null);
-
-  useEffect(() => {
-    setPortalTarget(document.body);
-  }, []);
+  const portalTarget = useClientValue<HTMLElement | null>(
+    () => document.body,
+    null
+  );
 
   const images = getBrandDictionary(languageCode);
 
@@ -197,6 +197,9 @@ export const FooterComponent: React.FC<FooterComponentProps> = ({
               <GlobeIconComponent />
               <Select
                 aria-label={"Language picker"}
+                // Pins react-select's generated DOM ids; without it the SSR and
+                // client renders draw different numbers off its global counter.
+                instanceId="language-select"
                 className={styles.languageSelect__container}
                 onChange={handleChange}
                 options={
