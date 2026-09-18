@@ -1079,7 +1079,7 @@
           "rs512": true,
           "es256": true,
           "es384": true,
-          "es512": false,
+          "es512": true,
           "ps256": true,
           "ps384": true,
           "ps512": true,
