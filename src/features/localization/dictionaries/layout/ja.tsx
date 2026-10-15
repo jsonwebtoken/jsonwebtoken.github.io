@@ -186,6 +186,11 @@ export const jaLayoutDictionary: LayoutDictionaryModel = {
   },
 };
 
+jaLayoutDictionary.footer.languagePicker.options.push({
+  label: "Türkçe",
+  value: "tr",
+});
+
 if (withJapanese) {
   jaLayoutDictionary.footer.languagePicker.options.push({
     label: "日本語",
