@@ -16,7 +16,7 @@ import {
   isNoneAlg,
   isSupportedAlg,
   parseStringIntoValidJsonObject,
-  validateAsymmetricKey,
+  validatePublicKeyInput,
   validateJwtFormat,
   validateSymmetricSecret,
   verifyDigitallySignedJwt,
@@ -64,6 +64,12 @@ type HandleAsymmetricPublicKeyHelperError = Pick<
   DecoderStoreState,
   "signatureStatus" | "verificationInputErrors" | "signatureWarnings"
 >;
+
+const hasProvidedJwks = (
+  publicKey: string,
+  format: AsymmetricKeyFormatValues,
+): boolean =>
+  format === AsymmetricKeyFormatValues.JWKS && publicKey.trim() !== "";
 
 class _TokenDecoderService {
   async selectDecodingExample(
@@ -166,7 +172,7 @@ class _TokenDecoderService {
         format: params.asymmetricPublicKeyFormat,
       };
 
-      const validateAsymmetricKeyResult = await validateAsymmetricKey({
+      const validateAsymmetricKeyResult = await validatePublicKeyInput({
         alg: params.alg,
         asymmetricPublicKey: params.asymmetricPublicKey,
         asymmetricPublicKeyFormat: params.asymmetricPublicKeyFormat,
@@ -436,7 +442,7 @@ class _TokenDecoderService {
     }
 
     if (isDigitalSignatureAlg(alg)) {
-      const validateAsymmetricKeyResult = await validateAsymmetricKey({
+      const validateAsymmetricKeyResult = await validatePublicKeyInput({
         alg,
         asymmetricPublicKey: initialAsymmetricPublicKey,
         asymmetricPublicKeyFormat: initialAsymmetricPublicKeyFormat,
@@ -575,6 +581,21 @@ class _TokenDecoderService {
       return stateUpdate;
     }
 
+    if (
+      type === JwtTypeValues.DigitallySigned &&
+      hasProvidedJwks(
+        initialAsymmetricPublicKey,
+        initialAsymmetricPublicKeyFormat,
+      )
+    ) {
+      return this.verifyWithProvidedJwks({
+        jwt: cleanJwtInput,
+        alg: decoded.header.alg,
+        jwks: initialAsymmetricPublicKey,
+        stateUpdate,
+      });
+    }
+
     if (type === JwtTypeValues.DigitallySigned) {
       const downloadPublicKeyResult = await downloadPublicKeyIfPossible({
         header: decoded.header,
@@ -656,6 +677,33 @@ class _TokenDecoderService {
     }
 
     return stateUpdate;
+  }
+
+  private async verifyWithProvidedJwks({
+    jwt,
+    alg,
+    jwks,
+    stateUpdate,
+  }: {
+    jwt: string;
+    alg: string;
+    jwks: string;
+    stateUpdate: Partial<DecoderStoreState>;
+  }): Promise<Partial<DecoderStoreState>> {
+    const verificationResult = await verifyDigitallySignedJwt({
+      jwt,
+      alg,
+      asymmetricPublicKey: jwks,
+      asymmetricPublicKeyFormat: AsymmetricKeyFormatValues.JWKS,
+    });
+
+    return verificationResult.isErr()
+      ? {
+          ...stateUpdate,
+          signatureStatus: JwtSignatureStatusValues.INVALID,
+          verificationInputErrors: [verificationResult.error.message],
+        }
+      : { ...stateUpdate, signatureStatus: JwtSignatureStatusValues.VALID };
   }
 
   async handleSymmetricSecretKeyHelper(params: {
@@ -818,7 +866,7 @@ class _TokenDecoderService {
     >
   > {
     if (!jwt) {
-      const validateAsymmetricKeyResult = await validateAsymmetricKey({
+      const validateAsymmetricKeyResult = await validatePublicKeyInput({
         alg,
         asymmetricPublicKey,
         asymmetricPublicKeyFormat,
@@ -950,7 +998,7 @@ class _TokenDecoderService {
     let convertedPublicKey: string;
 
     if (conversionResult.isErr()) {
-      const targetFormatValidationResult = await validateAsymmetricKey({
+      const targetFormatValidationResult = await validatePublicKeyInput({
         alg,
         asymmetricPublicKey,
         asymmetricPublicKeyFormat: targetFormat,

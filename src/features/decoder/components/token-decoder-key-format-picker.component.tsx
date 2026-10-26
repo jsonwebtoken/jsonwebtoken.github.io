@@ -42,6 +42,10 @@ export const TokenDecoderKeyFormatPickerComponent: React.FC<
             value: AsymmetricKeyFormatValues.JWK,
             label: AsymmetricKeyFormatValues.JWK,
           },
+          {
+            value: AsymmetricKeyFormatValues.JWKS,
+            label: AsymmetricKeyFormatValues.JWKS,
+          },
         ]}
         placeholder={null}
         minWidth="6.125rem"
