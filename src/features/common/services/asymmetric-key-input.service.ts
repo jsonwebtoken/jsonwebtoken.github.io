@@ -8,6 +8,13 @@ export const isJsonKeyFormat = (format: AsymmetricKeyFormatValues): boolean =>
   format === AsymmetricKeyFormatValues.JWK ||
   format === AsymmetricKeyFormatValues.JWKS;
 
+export const toPrivateKeyFormat = (
+  publicKeyFormat: AsymmetricKeyFormatValues | undefined,
+): AsymmetricKeyFormatValues | undefined =>
+  publicKeyFormat === AsymmetricKeyFormatValues.JWKS
+    ? AsymmetricKeyFormatValues.PEM
+    : publicKeyFormat;
+
 export const detectAsymmetricKeyFormat = (
   value: string,
 ): AsymmetricKeyFormatValues | null => {

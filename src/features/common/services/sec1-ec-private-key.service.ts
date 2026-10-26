@@ -106,11 +106,7 @@ const toPkcs8Der = ({
 
   return toDerBytes(
     createSequence([
-      createNode(
-        asn1.Type.INTEGER,
-        false,
-        String.fromCharCode(PKCS8_VERSION),
-      ),
+      createNode(asn1.Type.INTEGER, false, String.fromCharCode(PKCS8_VERSION)),
       algorithmIdentifier,
       createNode(asn1.Type.OCTETSTRING, false, toDerBytes(ecPrivateKey)),
     ]),
@@ -118,10 +114,7 @@ const toPkcs8Der = ({
 };
 
 const toPem = (der: string): string =>
-  pem
-    .encode({ type: PKCS8_PEM_TYPE, body: der })
-    .replace(/\r\n/g, "\n")
-    .trim();
+  pem.encode({ type: PKCS8_PEM_TYPE, body: der }).replace(/\r\n/g, "\n").trim();
 
 export const convertSec1EcPrivateKeyToPkcs8 = (
   key: string,

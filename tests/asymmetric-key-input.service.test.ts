@@ -1,5 +1,8 @@
 import { describe, expect, test } from "vitest";
-import { detectAsymmetricKeyFormat } from "@/features/common/services/asymmetric-key-input.service";
+import {
+  detectAsymmetricKeyFormat,
+  toPrivateKeyFormat,
+} from "@/features/common/services/asymmetric-key-input.service";
 import { AsymmetricKeyFormatValues } from "@/features/common/values/asymmetric-key-format.values";
 
 describe("detectAsymmetricKeyFormat", () => {
@@ -26,4 +29,23 @@ describe("detectAsymmetricKeyFormat", () => {
       expect(detectAsymmetricKeyFormat(value)).toBeNull();
     },
   );
+});
+
+describe("toPrivateKeyFormat", () => {
+  test("maps JWKS, which has no private key form, to PEM", () => {
+    expect(toPrivateKeyFormat(AsymmetricKeyFormatValues.JWKS)).toBe(
+      AsymmetricKeyFormatValues.PEM,
+    );
+  });
+
+  test.each([AsymmetricKeyFormatValues.PEM, AsymmetricKeyFormatValues.JWK])(
+    "keeps %s unchanged",
+    (format) => {
+      expect(toPrivateKeyFormat(format)).toBe(format);
+    },
+  );
+
+  test("keeps an unset format unset", () => {
+    expect(toPrivateKeyFormat(undefined)).toBeUndefined();
+  });
 });
