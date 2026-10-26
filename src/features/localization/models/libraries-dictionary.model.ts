@@ -14,6 +14,9 @@ export interface LibrariesDictionaryModel {
     viewRepo: {
       label: string;
     };
+    archived: {
+      label: string;
+    };
     minimumVersion: {
       label: string;
       resource: {

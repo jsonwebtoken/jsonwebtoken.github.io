@@ -57,6 +57,10 @@ export const jaLibrariesDictionary: LibrariesDictionaryModel = {
     viewRepo: {
       label: "リポジトリを表示",
     },
+    archived: {
+      label:
+        "アーカイブ済みのリポジトリです。読み取り専用で、メンテナンスされていません。",
+    },
     minimumVersion: {
       label: "最小バージョン",
       resource: {

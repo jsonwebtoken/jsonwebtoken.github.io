@@ -37,3 +37,29 @@ describe("library support definitions", () => {
     });
   });
 });
+
+describe("library repository status", () => {
+  const libs = Object.values(dictionary).flatMap(({ libs }) => libs);
+
+  test("only marks a library as archived with an explicit true", () => {
+    const flags = libs
+      .map(({ archived }) => archived)
+      .filter((archived) => archived !== undefined);
+
+    expect(flags.length).toBeGreaterThan(0);
+    expect(flags.every((archived) => archived === true)).toBe(true);
+  });
+
+  test.each([
+    "zolamk/jwt",
+    "olehlong/jwtd",
+    "square/go-jose",
+    "nov/jose-php",
+    "robbert229/jwt",
+    "babelouest/rhonabwy",
+  ])("flags %s as archived", (gitHubRepoPath) => {
+    const library = libs.find((lib) => lib.gitHubRepoPath === gitHubRepoPath);
+
+    expect(library?.archived).toBe(true);
+  });
+});

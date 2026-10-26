@@ -24,6 +24,11 @@ interface GitHubRepository {
   fullName: string;
 }
 
+interface RepositoryMetadata {
+  stars: number;
+  archived: boolean;
+}
+
 interface RepositoryLibraries extends GitHubRepository {
   libraries: LibraryModel[];
 }
@@ -150,33 +155,37 @@ async function authenticateGitHubToken(token: string): Promise<void> {
   }
 }
 
-async function getStarCount(
+async function getRepositoryMetadata(
   token: string,
   repository: GitHubRepository,
-): Promise<number> {
+): Promise<RepositoryMetadata> {
   try {
     const owner = encodeURIComponent(repository.owner);
     const repo = encodeURIComponent(repository.repo);
     const response = await requestGitHubApi(token, `/repos/${owner}/${repo}`);
     const data: unknown = await response.json();
 
-    if (!isRecord(data) || typeof data.stargazers_count !== "number") {
-      throw new Error("GitHub API response has no star count");
+    if (
+      !isRecord(data) ||
+      typeof data.stargazers_count !== "number" ||
+      typeof data.archived !== "boolean"
+    ) {
+      throw new Error("GitHub API response has no star count or archived flag");
     }
 
-    return data.stargazers_count;
+    return { stars: data.stargazers_count, archived: data.archived };
   } catch (cause) {
-    throw new Error(`Unable to get the star count for ${repository.fullName}`, {
+    throw new Error(`Unable to get the metadata for ${repository.fullName}`, {
       cause,
     });
   }
 }
 
-async function getStarCounts(
+async function getRepositoriesMetadata(
   token: string,
   repositories: RepositoryLibraries[],
-): Promise<Map<string, number>> {
-  const starCounts = new Map<string, number>();
+): Promise<Map<string, RepositoryMetadata>> {
+  const metadataByRepository = new Map<string, RepositoryMetadata>();
 
   for (
     let index = 0;
@@ -186,44 +195,57 @@ async function getStarCounts(
     const batch = repositories.slice(index, index + REQUEST_CONCURRENCY);
     const results = await Promise.allSettled(
       batch.map(async (repository) => {
-        const stars = await getStarCount(token, repository);
+        const metadata = await getRepositoryMetadata(token, repository);
 
-        return [repository.fullName, stars] as const;
+        return [repository.fullName, metadata] as const;
       }),
     );
 
     for (const result of results) {
       if (result.status === "fulfilled") {
-        const [repository, stars] = result.value;
-        starCounts.set(repository, stars);
+        const [repository, metadata] = result.value;
+        metadataByRepository.set(repository, metadata);
       } else {
         console.warn(
           result.reason instanceof Error
             ? result.reason.message
-            : "Unable to get a repository star count",
+            : "Unable to get repository metadata",
         );
       }
     }
   }
 
-  return starCounts;
+  return metadataByRepository;
 }
 
-function updateStarCounts(
+function applyRepositoryMetadata(
+  library: LibraryModel,
+  { stars, archived }: RepositoryMetadata,
+): void {
+  library.stars = stars;
+
+  if (archived) {
+    library.archived = true;
+  } else {
+    delete library.archived;
+  }
+}
+
+function updateRepositoryMetadata(
   repositories: RepositoryLibraries[],
-  starCounts: Map<string, number>,
+  metadataByRepository: Map<string, RepositoryMetadata>,
 ): number {
   let updatedLibraries = 0;
 
   for (const repository of repositories) {
-    const stars = starCounts.get(repository.fullName);
+    const metadata = metadataByRepository.get(repository.fullName);
 
-    if (stars === undefined) {
+    if (metadata === undefined) {
       continue;
     }
 
     for (const library of repository.libraries) {
-      library.stars = stars;
+      applyRepositoryMetadata(library, metadata);
       updatedLibraries += 1;
     }
   }
@@ -252,19 +274,25 @@ async function main(): Promise<void> {
 
   await authenticateGitHubToken(token);
 
-  const starCounts = await getStarCounts(token, repositories);
-  const updatedLibraries = updateStarCounts(repositories, starCounts);
-  const failedRepositories = repositories.length - starCounts.size;
+  const metadataByRepository = await getRepositoriesMetadata(
+    token,
+    repositories,
+  );
+  const updatedLibraries = updateRepositoryMetadata(
+    repositories,
+    metadataByRepository,
+  );
+  const failedRepositories = repositories.length - metadataByRepository.size;
 
   await writeLibraryDictionary(dictionary);
 
   console.log(
-    `Updated ${updatedLibraries} library entries from ${starCounts.size} GitHub repositories.`,
+    `Updated ${updatedLibraries} library entries from ${metadataByRepository.size} GitHub repositories.`,
   );
 
   if (failedRepositories > 0) {
     console.warn(
-      `Skipped ${failedRepositories} GitHub repositories whose star counts could not be fetched.`,
+      `Skipped ${failedRepositories} GitHub repositories whose metadata could not be fetched.`,
     );
   }
 }

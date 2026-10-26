@@ -40,6 +40,17 @@
   padding: 1.5rem 1.5rem 2.5rem;
 }
 
+.archived {
+  margin: .5rem .5rem 0;
+  padding: .5rem;
+  border-radius: .5rem;
+  color: var(--color_fg_on_state_caution_subtle);
+  background: var(--color_bg_layer_alternate);
+  font-size: .875rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
 .minVersion {
   grid-column: 1/-1;
   color: var(--color_fg_on_state_caution_subtle);
