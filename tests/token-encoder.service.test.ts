@@ -6,6 +6,7 @@ import {
   DefaultTokenWithSecretModel,
 } from "@/features/common/values/default-tokens.values";
 import { EncoderResult } from "@/features/common/models/encoder-result.model";
+import { AsymmetricKeyFormatValues } from "@/features/common/values/asymmetric-key-format.values";
 
 describe("processSymmetricSecretKey", () => {
   describe("should encode a JWT for SYMMETRIC type with HMAC algorithm", () => {
@@ -55,5 +56,26 @@ describe("processSymmetricSecretKey", () => {
         [`A key of ${algSize} bits or larger MUST be used with HS${algSize} as specified on [RFC 7518](https://datatracker.ietf.org/doc/html/rfc7518#section-3.2).`]
       );
     });
+  });
+});
+
+describe("processAsymmetricPrivateKey", () => {
+  const baseParams = {
+    header: JSON.stringify({ alg: "ES256", typ: "JWT" }),
+    payload: JSON.stringify({ sub: "1234567890" }),
+    asymmetricPrivateKeyFormat: AsymmetricKeyFormatValues.PEM,
+  };
+
+  test("reports the real reason a private key cannot be used", async () => {
+    const result = await TokenEncoderService.processAsymmetricPrivateKey({
+      ...baseParams,
+      asymmetricPrivateKey:
+        "-----BEGIN EC PRIVATE KEY-----\nAAAA\n-----END EC PRIVATE KEY-----",
+    });
+
+    expect(result.isErr()).toBe(true);
+    expect(JSON.stringify(result._unsafeUnwrapErr())).toContain(
+      "Cannot convert the SEC1 EC private key to PKCS#8.",
+    );
   });
 });

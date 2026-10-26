@@ -23,6 +23,10 @@ import {
   type JWK,
 } from "jose";
 import nodeForge from "node-forge";
+import {
+  convertSec1EcPrivateKeyToPkcs8,
+  isSec1EcPrivateKey,
+} from "@/features/common/services/sec1-ec-private-key.service";
 import { EncodingValues } from "@/features/common/values/encoding.values";
 import {
   getOperationException,
@@ -992,6 +996,16 @@ export const getAsymmetricKeyCryptoKey = async (
       }
 
       key = safePrivateKeyInfoToPemResult.value;
+    }
+
+    if (isSec1EcPrivateKey(key)) {
+      const convertSec1EcPrivateKeyResult = convertSec1EcPrivateKeyToPkcs8(key);
+
+      if (convertSec1EcPrivateKeyResult.isErr()) {
+        return err(convertSec1EcPrivateKeyResult.error);
+      }
+
+      key = convertSec1EcPrivateKeyResult.value;
     }
 
     if (key.startsWith("-----BEGIN")) {
