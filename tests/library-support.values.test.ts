@@ -23,4 +23,17 @@ describe("library support definitions", () => {
     expect(new Set(definedValues).size).toBe(definedValues.length);
     expect(Array.from(dataValues).sort()).toEqual([...definedValues].sort());
   });
+
+  test("lists the ECDSA and EdDSA support added in aws-jwt-verify v5", () => {
+    const awsJwtVerify = dictionary["node-js"]?.libs.find(
+      ({ gitHubRepoPath }) => gitHubRepoPath === "awslabs/aws-jwt-verify",
+    );
+
+    expect(awsJwtVerify?.support).toMatchObject({
+      es256: true,
+      es384: true,
+      es512: true,
+      eddsa: true,
+    });
+  });
 });
