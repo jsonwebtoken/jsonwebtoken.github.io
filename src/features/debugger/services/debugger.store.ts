@@ -16,6 +16,7 @@ import { ClaimDescriptionVisibilityValues } from "@/features/common/values/claim
 import { DecoderInputsModel } from "@/features/debugger/models/decoder-inputs.model";
 import { EncoderInputsModel } from "@/features/debugger/models/encoder-inputs.model";
 import { NOOP_ALG } from "@/features/common/values/constants";
+import { toPrivateKeyFormat } from "@/features/common/services/asymmetric-key-input.service";
 
 export enum DebuggerOutputModalValues {
   OPEN = "open",
@@ -664,8 +665,9 @@ export const useDebuggerStore = create<DebuggerStore>()(
               algType: SigningAlgCategoryValues.ASYMMETRIC,
               alg: decoderState.alg,
               asymmetricPrivateKey: debuggerStash.asymmetricPrivateKey,
-              asymmetricPrivateKeyFormat:
+              asymmetricPrivateKeyFormat: toPrivateKeyFormat(
                 debuggerStash.asymmetricPublicKeyFormat,
+              ),
             };
           }
 

@@ -104,6 +104,7 @@ export const LibraryCardComponent: React.FC<LibraryCardComponentProps> = ({
     stars,
     repoUrl,
     minimumVersion,
+    archived,
   } = library;
 
   const command = installCommandMarkdown.join("<br />");
@@ -161,6 +162,11 @@ export const LibraryCardComponent: React.FC<LibraryCardComponentProps> = ({
           </a>
         </div>
       </div>
+      {archived && (
+        <div className={styles.archived} role="note">
+          {dictionary.archived.label}
+        </div>
+      )}
       <div className={clsx(styles.command, MonoFont.className)}>
         <ReactMarkdown rehypePlugins={[rehypeRaw]}>{command}</ReactMarkdown>
       </div>

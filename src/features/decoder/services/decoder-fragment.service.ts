@@ -1,5 +1,5 @@
 import { AsymmetricKeyFormatValues } from "@/features/common/values/asymmetric-key-format.values";
-import { detectAsymmetricKeyFormat } from "@/features/common/services/asymmetric-key-input.service";
+import { detectPublicKeyFormat } from "@/features/decoder/services/public-key-input.service";
 
 const TOKEN_PARAM_PRIORITY = [
   "id_token",
@@ -80,7 +80,7 @@ export const parseDecoderFragment = (hash: string): DecoderFragmentResult => {
   if (publicKey) {
     result.publicKey = publicKey;
     result.publicKeyFormat =
-      detectAsymmetricKeyFormat(publicKey) ?? AsymmetricKeyFormatValues.PEM;
+      detectPublicKeyFormat(publicKey) ?? AsymmetricKeyFormatValues.PEM;
   }
 
   if (usesLegacySyntax) {

@@ -512,6 +512,7 @@
         "authorUrl": "https://babelouest.github.io/",
         "authorName": "babelouest",
         "gitHubRepoPath": "babelouest/rhonabwy",
+        "archived": true,
         "repoUrl": "https://github.com/babelouest/rhonabwy",
         "installCommandMarkdown": [
           "[Download release package](https://github.com/babelouest/rhonabwy/releases/latest) or [install from source](https://github.com/babelouest/rhonabwy)"
@@ -894,6 +895,7 @@
         "authorUrl": "https://github.com/olehlong",
         "authorName": "olehlong",
         "gitHubRepoPath": "olehlong/jwtd",
+        "archived": true,
         "repoUrl": "https://github.com/olehlong/jwtd",
         "installCommandMarkdown": ["dub fetch jwtd"]
       },
@@ -925,6 +927,7 @@
         "authorUrl": "https://github.com/zolamk",
         "authorName": "zolamk",
         "gitHubRepoPath": "zolamk/jwt",
+        "archived": true,
         "repoUrl": "https://github.com/zolamk/jwt",
         "installCommandMarkdown": ["dub fetch jwt"]
       }
@@ -1380,6 +1383,7 @@
         "authorUrl": "https://github.com/robbert229",
         "authorName": "robbert229",
         "gitHubRepoPath": "robbert229/jwt",
+        "archived": true,
         "repoUrl": "https://github.com/robbert229/jwt",
         "installCommandMarkdown": [
           "go get [github.com/robbert229/jwt](https://godoc.org/github.com/robbert229/jwt)"
@@ -1413,6 +1417,7 @@
         "authorUrl": "https://github.com/square",
         "authorName": "DV",
         "gitHubRepoPath": "square/go-jose",
+        "archived": true,
         "repoUrl": "https://github.com/square/go-jose",
         "installCommandMarkdown": [
           "go get [github.com/square/go-jose](https://godoc.org/github.com/square/go-jose)"
@@ -1544,6 +1549,7 @@
         "authorUrl": "https://github.com/gbrlsnchs",
         "authorName": "Gabriel Sanches",
         "gitHubRepoPath": "gbrlsnchs/jwt",
+        "archived": true,
         "repoUrl": "https://github.com/gbrlsnchs/jwt",
         "installCommandMarkdown": [
           "GO111MODULE=on go get [github.com/gbrlsnchs/jwt/v3](https://godoc.org/github.com/gbrlsnchs/jwt)"
@@ -2525,13 +2531,13 @@
           "rs256": true,
           "rs384": true,
           "rs512": true,
-          "es256": false,
-          "es384": false,
-          "es512": false,
+          "es256": true,
+          "es384": true,
+          "es512": true,
           "ps256": false,
           "ps384": false,
           "ps512": false,
-          "eddsa": false,
+          "eddsa": true,
           "es256k": false
         },
         "authorUrl": "https://github.com/orgs/awslabs",
@@ -2764,6 +2770,7 @@
         "authorUrl": "https://github.com/emarref",
         "authorName": "Emarref",
         "gitHubRepoPath": "emarref/jwt",
+        "archived": true,
         "repoUrl": "https://github.com/emarref/jwt",
         "installCommandMarkdown": ["composer require emarref/jwt"]
       },
@@ -2795,6 +2802,7 @@
         "authorUrl": "https://github.com/nov",
         "authorName": "Nov Matake",
         "gitHubRepoPath": "nov/jose-php",
+        "archived": true,
         "repoUrl": "https://github.com/nov/jose-php",
         "installCommandMarkdown": ["composer require gree/jose"]
       },
@@ -3643,6 +3651,7 @@
         "authorUrl": "https://github.com/iain-logan",
         "authorName": "iain-logan",
         "gitHubRepoPath": "iain-logan/jwt",
+        "archived": true,
         "repoUrl": "https://github.com/iain-logan/jwt",
         "installCommandMarkdown": [
           "libraryDependencies += \"io.igl\" %% \"jwt\" % \"1.2.2\""

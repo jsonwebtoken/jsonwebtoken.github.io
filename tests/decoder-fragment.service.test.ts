@@ -83,6 +83,22 @@ describe("parseDecoderFragment", () => {
   });
 
   test.each([
+    ["a JWKS", JSON.stringify({ keys: [{ kty: "RSA", e: "AQAB", n: "x" }] })],
+    ["a JWKS URI", "https://issuer.example/.well-known/jwks.json"],
+  ])("infers JWKS for %s", (_description, publicKey) => {
+    const params = new URLSearchParams({
+      token: "header.payload.signature",
+      publicKey,
+    });
+
+    expect(parseDecoderFragment(`#${params.toString()}`)).toEqual({
+      jwt: "header.payload.signature",
+      publicKey,
+      publicKeyFormat: AsymmetricKeyFormatValues.JWKS,
+    });
+  });
+
+  test.each([
     ["an invalid JSON value", "{invalid"],
     ["a JSON array", "[]"],
     ["JSON null", "null"],

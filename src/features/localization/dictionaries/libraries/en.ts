@@ -57,6 +57,9 @@ export const enLibrariesDictionary: LibrariesDictionaryModel = {
     viewRepo: {
       label: "View repo",
     },
+    archived: {
+      label: "Archived repository: read-only and no longer maintained.",
+    },
     minimumVersion: {
       label: "Minimum version",
       resource: {

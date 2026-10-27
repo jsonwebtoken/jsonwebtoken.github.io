@@ -4,6 +4,7 @@ import { highlight, languages } from "prismjs";
 import "prismjs/components/prism-json";
 import { EditorComponent } from "@/features/common/components/code-editor/editor.component";
 import { AsymmetricKeyFormatValues } from "@/features/common/values/asymmetric-key-format.values";
+import { isJsonKeyFormat } from "@/features/common/services/asymmetric-key-input.service";
 
 interface SignatureVerificationPublicKeyInputComponentProps {
   publicKey: string;
@@ -20,7 +21,7 @@ export const SignatureVerificationPublicKeyInputComponent: React.FC<
   handlePublicKeyChange,
   placeholder,
 }) => {
-  if (publicKeyFormat === AsymmetricKeyFormatValues.JWK) {
+  if (isJsonKeyFormat(publicKeyFormat)) {
     return (
       <EditorComponent
         value={publicKey}

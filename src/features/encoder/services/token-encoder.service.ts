@@ -568,11 +568,7 @@ class _TokenEncoderService {
       );
 
       if (jwt.isErr()) {
-        return err({
-          task: DebuggerTaskValues.ENCODE,
-          input: DebuggerInputValues.KEY,
-          message: "Private key must not be empty.",
-        })
+        return err(jwt.error);
       }
 
       return ok({

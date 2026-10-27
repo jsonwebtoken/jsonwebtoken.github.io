@@ -10,4 +10,5 @@ export interface LibraryModel {
   repoUrl: string;
   installCommandMarkdown: string[];
   stars?: number | null;
+  archived?: boolean;
 }

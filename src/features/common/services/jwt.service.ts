@@ -23,6 +23,16 @@ import {
   type JWK,
 } from "jose";
 import nodeForge from "node-forge";
+import {
+  extractSingleJwk,
+  validateJwksInput,
+  verifyJwtWithJwks,
+  wrapKeyInJwks,
+} from "@/features/common/services/jwks.service";
+import {
+  convertSec1EcPrivateKeyToPkcs8,
+  isSec1EcPrivateKey,
+} from "@/features/common/services/sec1-ec-private-key.service";
 import { EncodingValues } from "@/features/common/values/encoding.values";
 import {
   getOperationException,
@@ -802,6 +812,15 @@ export async function validateAsymmetricKey({
   }
 }
 
+export const validatePublicKeyInput = async (params: {
+  alg: string;
+  asymmetricPublicKey: string;
+  asymmetricPublicKeyFormat: AsymmetricKeyFormatValues;
+}): Promise<Result<unknown, DebuggerErrorModel>> =>
+  params.asymmetricPublicKeyFormat === AsymmetricKeyFormatValues.JWKS
+    ? validateJwksInput(params.asymmetricPublicKey)
+    : validateAsymmetricKey(params);
+
 type VerifyDigitallySignedJwtParams = {
   jwt: string;
   alg: string;
@@ -817,6 +836,13 @@ export async function verifyDigitallySignedJwt({
 }: VerifyDigitallySignedJwtParams): Promise<
   Result<boolean, DebuggerErrorModel>
 > {
+  if (asymmetricPublicKeyFormat === AsymmetricKeyFormatValues.JWKS) {
+    return verifyJwtWithJwks({
+      jwt,
+      jwksInput: String(asymmetricPublicKey),
+    });
+  }
+
   const validateAsymmetricKeyResult = await validateAsymmetricKey({
     alg,
     asymmetricPublicKey,
@@ -994,6 +1020,16 @@ export const getAsymmetricKeyCryptoKey = async (
       key = safePrivateKeyInfoToPemResult.value;
     }
 
+    if (isSec1EcPrivateKey(key)) {
+      const convertSec1EcPrivateKeyResult = convertSec1EcPrivateKeyToPkcs8(key);
+
+      if (convertSec1EcPrivateKeyResult.isErr()) {
+        return err(convertSec1EcPrivateKeyResult.error);
+      }
+
+      key = convertSec1EcPrivateKeyResult.value;
+    }
+
     if (key.startsWith("-----BEGIN")) {
       const safeImportPKCS8Result = await safeImportPKCS8(
         key,
@@ -1167,6 +1203,32 @@ export const convertAsymmetricPublicKeyFormat = async ({
 }): Promise<Result<string, string>> => {
   if (!key || sourceFormat === targetFormat) {
     return ok(key);
+  }
+
+  if (sourceFormat === AsymmetricKeyFormatValues.JWKS) {
+    const singleJwkResult = extractSingleJwk(key);
+
+    return singleJwkResult.isErr()
+      ? err(singleJwkResult.error)
+      : convertAsymmetricPublicKeyFormat({
+          alg,
+          key: singleJwkResult.value,
+          sourceFormat: AsymmetricKeyFormatValues.JWK,
+          targetFormat,
+        });
+  }
+
+  if (targetFormat === AsymmetricKeyFormatValues.JWKS) {
+    const jwkResult = await convertAsymmetricPublicKeyFormat({
+      alg,
+      key,
+      sourceFormat,
+      targetFormat: AsymmetricKeyFormatValues.JWK,
+    });
+
+    return jwkResult.isErr()
+      ? err(jwkResult.error)
+      : wrapKeyInJwks(jwkResult.value);
   }
 
   const importResult = await validateAsymmetricKey({

@@ -121,7 +121,7 @@ export const enHomeDictionary: HomeDictionaryModel = {
         placeholder: {
           secret: "Valid secret",
           publicKey:
-            "Public Key in SPKI, PKCS #1, X.509 Certificate, or JWK string format.",
+            "Public Key in SPKI, PKCS #1, X.509 Certificate, or JWK string format. Choose JWKS to enter a JWKS URI or JWKS JSON.",
         },
       },
     },

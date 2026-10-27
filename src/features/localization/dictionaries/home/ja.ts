@@ -120,7 +120,7 @@ export const jaHomeDictionary: HomeDictionaryModel = {
         placeholder: {
           secret: "有効なシークレット",
           publicKey:
-            "SPKI、PKCS #1、X.509証明書、またはJWK文字列形式の公開鍵。",
+            "SPKI、PKCS #1、X.509証明書、またはJWK文字列形式の公開鍵。JWKS URIまたはJWKS JSONを入力するには、JWKSを選択してください。",
         },
       },
     },

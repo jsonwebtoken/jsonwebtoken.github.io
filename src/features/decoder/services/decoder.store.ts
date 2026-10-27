@@ -9,7 +9,8 @@ import { subscribeWithSelector } from "zustand/middleware";
 import { AsymmetricKeyFormatValues } from "@/features/common/values/asymmetric-key-format.values";
 import { JwtSignatureStatusValues } from "@/features/common/values/jwt-signature-status.values";
 import { DecoderInputsModel } from "@/features/debugger/models/decoder-inputs.model";
-import { detectAsymmetricKeyFormat } from "@/features/common/services/asymmetric-key-input.service";
+import { isJwksUri } from "@/features/common/services/jwks.service";
+import { detectPublicKeyFormat } from "@/features/decoder/services/public-key-input.service";
 
 export enum HashWarningVisibilityValues {
   VISIBLE = "VISIBLE",
@@ -39,6 +40,11 @@ export const DEFAULT_PAYLOAD = {
 };
 
 export const DEFAULT_DECODED_PAYLOAD = JSON.stringify(DEFAULT_PAYLOAD, null, 2);
+
+const JWKS_URI_DEBOUNCE_MS = 400;
+
+const wait = (milliseconds: number) =>
+  new Promise<void>((resolve) => setTimeout(resolve, milliseconds));
 
 let latestJwtChangeRequestId = 0;
 let latestAsymmetricPublicKeyRequestId = 0;
@@ -224,7 +230,7 @@ export const useDecoderStore = create<DecoderStore>()(
     handleAsymmetricPublicKeyChange: async (newAsymmetricPublicKey) => {
       const requestId = ++latestAsymmetricPublicKeyRequestId;
       const { jwt, alg, asymmetricPublicKeyFormat } = get();
-      const detectedFormat = detectAsymmetricKeyFormat(newAsymmetricPublicKey);
+      const detectedFormat = detectPublicKeyFormat(newAsymmetricPublicKey);
       const nextFormat = detectedFormat ?? asymmetricPublicKeyFormat;
 
       set({
@@ -240,6 +246,14 @@ export const useDecoderStore = create<DecoderStore>()(
             }
           : {}),
       });
+
+      if (isJwksUri(newAsymmetricPublicKey)) {
+        await wait(JWKS_URI_DEBOUNCE_MS);
+
+        if (requestId !== latestAsymmetricPublicKeyRequestId) {
+          return;
+        }
+      }
 
       const update = await TokenDecoderService.handleAsymmetricPublicKeyChange({
         jwt,
