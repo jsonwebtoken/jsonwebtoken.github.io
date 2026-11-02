@@ -2924,7 +2924,7 @@
         "installCommandMarkdown": ["composer require adhocore/jwt"]
       },
       {
-        "minimumVersion": "3.3.0",
+        "minimumVersion": "3.4.0",
         "support": {
           "sign": true,
           "verify": true,
@@ -2949,7 +2949,9 @@
           "ps384": true,
           "ps512": true,
           "eddsa": true,
-          "es256k": true
+          "es256k": true,
+          "ed25519": true,
+          "ed448": true
         },
         "authorUrl": "https://github.com/miladrahimi",
         "authorName": "Milad Rahimi",
