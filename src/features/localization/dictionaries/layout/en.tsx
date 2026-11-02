@@ -186,6 +186,11 @@ export const enLayoutDictionary: LayoutDictionaryModel = {
   },
 };
 
+enLayoutDictionary.footer.languagePicker.options.push({
+  label: "Türkçe",
+  value: "tr",
+});
+
 if (withJapanese) {
   enLayoutDictionary.footer.languagePicker.options.push({
     label: "日本語",
