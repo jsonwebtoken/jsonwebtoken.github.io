@@ -24,3 +24,21 @@
     display: none;
   }
 }
+.headline_container {
+  display: flex;
+  grid-column: 1/-1;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.headline {
+  display: flex;
+  grid-column: 1/-1;
+  width: 100%;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -.1px;
+  color: var(--color_fg_default);
+}

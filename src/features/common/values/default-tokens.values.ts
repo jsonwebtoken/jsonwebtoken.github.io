@@ -3,6 +3,7 @@
 
 import { EncodingValues } from "@/features/common/values/encoding.values";
 import { AsymmetricKeyFormatValues } from "@/features/common/values/asymmetric-key-format.values";
+import { MlDsaDefaultTokensValues } from "@/features/common/values/ml-dsa-default-tokens.values";
 
 const rsaPrivateKey = `-----BEGIN PRIVATE KEY-----
 MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQC7VJTUt9Us8cKj
@@ -269,11 +270,12 @@ export const DefaultTokensValues: DefaultTokensModel = {
   },
   Ed25519: {
     token:
-      "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.JkKWCY39IdWEQttmdqR7VdsvT-_QxheW_eb0S5wr_j83ltux_JDUIXs7a3Dtn3xuqzuhetiuJrWIvy5TzimeCg",
+      "eyJhbGciOiJFZDI1NTE5IiwidHlwIjoiSldUIn0.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.IiFCYED1bkN9FL4H3UG884v2Wxmp_0SDfaaaRipa2N1QcjevsxA0WNRYnFMqPHf4tpNw93fL7PZs4az9kH0NBQ",
     privateKey: edPrivateKey,
     publicKey: edPublicKey,
     publicKeyFormat: AsymmetricKeyFormatValues.PEM,
     privateKeyFormat: AsymmetricKeyFormatValues.PEM,
     jwk: edJwk,
   },
+  ...MlDsaDefaultTokensValues,
 };

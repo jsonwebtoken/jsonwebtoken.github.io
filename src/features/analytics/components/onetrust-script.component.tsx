@@ -18,7 +18,6 @@ export const OnetrustScriptComponent: React.FC<OneTrustScriptProps> = ({
     />
     <Script
       id="consent-wrapper"
-      // eslint-disable-next-line react/no-danger
       dangerouslySetInnerHTML={{
         __html: `
     function OptanonWrapper() {

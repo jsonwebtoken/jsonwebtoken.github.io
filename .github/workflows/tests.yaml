@@ -7,6 +7,28 @@ on:
         branches: [master]
 
 jobs:
+    quality:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                node-version: '24'
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Run ESLint
+              run: npm run lint
+
+            - name: Check types
+              run: npm run typecheck
+
+            - name: Build
+              run: npm run build
+
     test:
         runs-on: ubuntu-latest
         steps:
@@ -15,25 +37,23 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@v4
               with:
-                node-version: '22'
+                node-version: '24'
 
             - name: Install dependencies
               run: npm ci
 
             - name: Run Vitest
               run: npx vitest run
-            
+
             - name: Install Playwright Browsers
               run: npx playwright install --with-deps
 
             - name: Run Playwright Tests
               run: NODE_OPTIONS="--no-experimental-strip-types" npx playwright test
-            
+
             - name: Upload Playwright Traces
               if: failure()
               uses: actions/upload-artifact@v4
               with:
                 name: playwright-traces
-                path: playwright-report/**/trace.zip
-
-        
+                path: test-results/**/trace.zip

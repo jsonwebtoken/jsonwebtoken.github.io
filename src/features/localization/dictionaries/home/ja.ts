@@ -54,30 +54,14 @@ export const jaHomeDictionary: HomeDictionaryModel = {
     description: null,
   },
   info: {
-    summary: "JWTとは？",
     description:
       "JSON Web Tokenをデコード、検証、生成します。JSON Web Tokenは、2つの当事者間でクレームを安全に表現するための、オープンな業界標準（RFC 7519）です。",
-    ctaButton: {
-      label: "JWTの詳細情報",
-      path: sitePaths.introduction,
-    },
-    secondaryCtaButton: {
-      label: "JWTライブラリを見る",
-      path: sitePaths.libraries,
-    },
     resources: {
       spec: {
         name: "RFC 7519",
         link: "https://tools.ietf.org/html/rfc7519",
       },
     },
-  },
-  warning: {
-    summary: "JWTを使用する際の注意事項",
-    title:
-      "セキュリティを確保するため、すべてのJWTのデバッグと検証はブラウザ内で行われます。",
-    description:
-      "JWTはリソースへのアクセス権を示す認証情報として機能する可能性があるため、貼り付けや共有を行う際には十分注意してください。このサイトでは、JSON Web Tokenをブラウザの外部に保存したり送信したりすることはありません。",
   },
   decoder: {
     title: "JWTデコーダー",
@@ -96,6 +80,7 @@ export const jaHomeDictionary: HomeDictionaryModel = {
       title: "JSON Web Token (JWT)",
       compactTitle: "JWT",
       successMessage: "有効なJWT",
+      autoFocusLabel: "オートフォーカスを有効にする",
     },
     decodedHeader: {
       title: "デコードされたヘッダー",
@@ -157,18 +142,18 @@ export const jaHomeDictionary: HomeDictionaryModel = {
       label: "ヘッダー、ペイロード、署名サンプルジェネレーター",
     },
     headerEditor: {
-      title: "ヘッダー：アルゴリズムとトークンタイプ",
+      title: "アルゴリズムとトークンタイプ",
       compactTitle: "ヘッダー",
       successMessage: "有効なヘッダー",
     },
     payloadEditor: {
-      title: "ペイロード：データ",
+      title: "データ",
       compactTitle: "ペイロード",
       successMessage: "有効なペイロード",
     },
     signatureEditor: {
       title: {
-        secret: "JWTに署名：シークレット",
+        secret: "シークレット",
         privateKey: "JWTに署名：秘密鍵",
       },
       compactTitle: {

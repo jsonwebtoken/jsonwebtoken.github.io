@@ -9,8 +9,10 @@ import {
   PREFERRED_LANGUAGE_COOKIE_KEY,
 } from "@/features/localization/localization.config";
 
-export const getLanguageCodeFromHeaders = (): string => {
-  const preferredLanguageCookie = cookies().get(PREFERRED_LANGUAGE_COOKIE_KEY);
+export const getLanguageCodeFromHeaders = async (): Promise<string> => {
+  const preferredLanguageCookie = (await cookies()).get(
+    PREFERRED_LANGUAGE_COOKIE_KEY,
+  );
 
   if (preferredLanguageCookie) {
     const preferredLanguage = preferredLanguageCookie.value;
@@ -21,7 +23,7 @@ export const getLanguageCodeFromHeaders = (): string => {
 
   try {
     const languages = new Negotiator({
-      headers: Object.fromEntries(headers()),
+      headers: Object.fromEntries(await headers()),
     }).languages();
 
     return match(languages, LANGUAGE_CODES, DEFAULT_LANGUAGE_CODE);

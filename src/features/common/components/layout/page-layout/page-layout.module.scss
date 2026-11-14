@@ -9,7 +9,7 @@
 
   margin-top: $main-nav-height-mobile;
 
-  @media #{$breakpoint-dimension-md} {
+  @media #{$breakpoint-dimension-sm} {
     margin-top: $main-nav-height;
   }
 }

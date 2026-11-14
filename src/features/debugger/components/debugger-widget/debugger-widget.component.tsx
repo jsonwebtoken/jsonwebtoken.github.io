@@ -77,39 +77,46 @@ export const DebuggerWidgetComponent: React.FC<
     initialDecodedPayloadDescriptionVisibility,
   );
 
-  useEffect(() => {
-    if (decodedHeaderTabId$ === null) {
-      return;
-    }
+  const [syncedHeaderTabId, setSyncedHeaderTabId] =
+    useState(decodedHeaderTabId$);
+  const [syncedPayloadTabId, setSyncedPayloadTabId] = useState(
+    decodedPayloadTabId$,
+  );
+  const [syncedHeaderVisibility, setSyncedHeaderVisibility] = useState(
+    decodedHeaderDescriptionVisibility$,
+  );
+  const [syncedPayloadVisibility, setSyncedPayloadVisibility] = useState(
+    decodedPayloadDescriptionVisibility$,
+  );
 
+  if (decodedHeaderTabId$ !== null && decodedHeaderTabId$ !== syncedHeaderTabId) {
+    setSyncedHeaderTabId(decodedHeaderTabId$);
     setDecodedHeaderTabId(decodedHeaderTabId$);
-  }, [decodedHeaderTabId$]);
+  }
 
-  useEffect(() => {
-    if (decodedPayloadTabId$ === null) {
-      return;
-    }
-
+  if (
+    decodedPayloadTabId$ !== null &&
+    decodedPayloadTabId$ !== syncedPayloadTabId
+  ) {
+    setSyncedPayloadTabId(decodedPayloadTabId$);
     setDecodedPayloadTabId(decodedPayloadTabId$);
-  }, [decodedPayloadTabId$]);
+  }
 
-  useEffect(() => {
-    if (decodedHeaderDescriptionVisibility$ === null) {
-      return;
-    }
-
+  if (
+    decodedHeaderDescriptionVisibility$ !== null &&
+    decodedHeaderDescriptionVisibility$ !== syncedHeaderVisibility
+  ) {
+    setSyncedHeaderVisibility(decodedHeaderDescriptionVisibility$);
     setDecodedHeaderDescriptionVisibility(decodedHeaderDescriptionVisibility$);
-  }, [decodedHeaderDescriptionVisibility$]);
+  }
 
-  useEffect(() => {
-    if (decodedPayloadDescriptionVisibility$ === null) {
-      return;
-    }
-
-    setDecodedPayloadDescriptionVisibility(
-      decodedPayloadDescriptionVisibility$,
-    );
-  }, [decodedPayloadDescriptionVisibility$]);
+  if (
+    decodedPayloadDescriptionVisibility$ !== null &&
+    decodedPayloadDescriptionVisibility$ !== syncedPayloadVisibility
+  ) {
+    setSyncedPayloadVisibility(decodedPayloadDescriptionVisibility$);
+    setDecodedPayloadDescriptionVisibility(decodedPayloadDescriptionVisibility$);
+  }
 
   // useEffect(() => {
   //   setMode$(debuggerInitialMode, activeWidget$);

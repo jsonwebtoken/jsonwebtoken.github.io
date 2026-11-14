@@ -37,6 +37,7 @@ yarn-error.log*
 
 .npmrc
 **/.npmrc
+.npmrc.oidc
 
 
 # Created by https://www.toptal.com/developers/gitignore/api/macos,windows,visualstudiocode,webstorm,intellij,node

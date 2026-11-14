@@ -10,8 +10,9 @@ import { createUrlPath } from "@/libs/utils/path.utils";
 import { siteTree } from "@/features/seo/site-tree";
 
 export async function generateMetadata({
-  params: { language },
+  params,
 }: PageMetadataProps): Promise<Metadata> {
+  const { language } = await params;
   const dictionary = getIntroductionDictionary(language);
 
   return generatePageMetadata({
@@ -21,8 +22,8 @@ export async function generateMetadata({
   });
 }
 
-export default function Introduction({
-  params: { language: languageCode = DEFAULT_LANGUAGE_CODE },
-}: PageProps) {
+export default async function Introduction({ params }: PageProps) {
+  const { language: languageCode = DEFAULT_LANGUAGE_CODE } = await params;
+
   return <IntroductionPageComponent languageCode={languageCode} />;
 }

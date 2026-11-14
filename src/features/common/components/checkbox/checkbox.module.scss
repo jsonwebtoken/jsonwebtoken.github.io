@@ -2,6 +2,7 @@
   --selected-color: var(--color_bg_state_success);
   --selected-color-pressed: var(--color_fg_on_state_success_subtle);
   --checkmark-color: var(--color_border_state_success);
+  width: 250px;
 
   display: flex;
   /* This is needed so the HiddenInput is positioned correctly */

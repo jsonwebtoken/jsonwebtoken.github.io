@@ -1,29 +1,55 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import styles from "./debugger-alg-picker.module.scss";
 import { getPickersUiDictionary } from "@/features/localization/services/ui-language-dictionary.service";
 import { useEncoderStore } from "@/features/encoder/services/encoder.store";
-import {
-  isEd25519Supported,
-  isEd448Supported,
-  isP521Supported,
-} from "@/features/common/services/jwt.service";
 import { useDecoderStore } from "@/features/decoder/services/decoder.store";
 import { useDebuggerStore } from "@/features/debugger/services/debugger.store";
 import { DebuggerWidgetValues } from "@/features/common/values/debugger-widget.values";
 import { DebuggerPickerComponent } from "@/features/common/components/debugger-picker/debugger-picker.component";
 import {
-  algDictionary,
+  isMlDsaAlgorithm,
   jwsExampleAlgHeaderParameterValuesDictionary,
+  type MlDsaAlgorithm,
 } from "@/features/common/values/jws-alg-header-parameter-values.dictionary";
 import { useButton } from "@react-aria/button";
-import { clsx } from "clsx";
-import { PrimaryFont } from "@/libs/theme/fonts";
 import { DebuggerPickerOptionModel } from "@/features/common/models/debugger-picker-option.model";
+import { isMlDsaSupported } from "@/features/common/services/jwt.service";
+import { useClientValue } from "@/features/common/hooks/use-client-value";
 
 enum PickerStates {
   IDLE = "IDLE",
   PICKING = "PICKING",
 }
+
+type MlDsaSupport = {
+  isLoading: boolean;
+  algorithms: Record<MlDsaAlgorithm, boolean>;
+};
+
+const SERVER_ML_DSA_SUPPORT: MlDsaSupport = {
+  isLoading: true,
+  algorithms: {
+    "ML-DSA-44": false,
+    "ML-DSA-65": false,
+    "ML-DSA-87": false,
+  },
+};
+
+// Cached so useSyncExternalStore always sees the same reference.
+let clientMlDsaSupport: MlDsaSupport | null = null;
+
+const getClientMlDsaSupport = (): MlDsaSupport => {
+  clientMlDsaSupport ??= {
+    isLoading: false,
+    algorithms: {
+      "ML-DSA-44": isMlDsaSupported("ML-DSA-44"),
+      "ML-DSA-65": isMlDsaSupported("ML-DSA-65"),
+      "ML-DSA-87": isMlDsaSupported("ML-DSA-87"),
+    },
+  };
+
+  return clientMlDsaSupport;
+};
 
 interface DebuggerAlgPickerComponentProps {
   languageCode: string;
@@ -66,9 +92,10 @@ export const WidgetAlgPickerComponent: React.FC<
   const [pickerState, setPickerState] = useState<PickerStates>(
     PickerStates.IDLE,
   );
-  const [canUseEs512, setCanUseEs512] = useState(false);
-  const [canUseEd25519, setCanUseEd25519] = useState(false);
-  const [canUseEd448, setCanUseEd448] = useState(false);
+  const mlDsaSupport = useClientValue(
+    getClientMlDsaSupport,
+    SERVER_ML_DSA_SUPPORT,
+  );
 
   const dictionary = getPickersUiDictionary(languageCode);
 
@@ -93,28 +120,6 @@ export const WidgetAlgPickerComponent: React.FC<
 
     setPickerState(PickerStates.IDLE);
   };
-
-  const openPicker = () => {
-    setPickerState(PickerStates.PICKING);
-  };
-
-  const closePicker = () => {
-    setPickerState(PickerStates.IDLE);
-  };
-
-  useEffect(() => {
-    (async function runEs512Check() {
-      setCanUseEs512(await isP521Supported());
-    })();
-
-    (async function runEd25519Check() {
-      setCanUseEd25519(await isEd25519Supported());
-    })();
-
-    (async function runEd448Check() {
-      setCanUseEd448(await isEd448Supported());
-    })();
-  }, []);
 
   const noneAlgOptions: DebuggerPickerOptionModel[] = useMemo(() => {
     return Object.entries(
@@ -143,92 +148,50 @@ export const WidgetAlgPickerComponent: React.FC<
   }, []);
 
   const asymmetricAlgOptions: DebuggerPickerOptionModel[] = useMemo(() => {
-    const digitalSignatureEntries = Object.entries(
+    return Object.entries(
       jwsExampleAlgHeaderParameterValuesDictionary.digitalSignature,
-    );
-
-    const asymmetricAlgOptions: DebuggerPickerOptionModel[] = [];
-
-    for (let i = 0; i < digitalSignatureEntries.length; i++) {
-      const entry = digitalSignatureEntries[i];
-
+    ).map((entry) => {
       const [key, value] = entry;
 
-      if (key === algDictionary.ES512) {
-        asymmetricAlgOptions.push({
-          value: key,
-          label: value.name,
-          isDisabled: !canUseEs512,
-        });
-
-        continue;
-      }
-
-      if (key === algDictionary.Ed25519) {
-        asymmetricAlgOptions.push({
-          value: key,
-          label: value.name,
-          isDisabled: !canUseEd25519,
-        });
-
-        continue;
-      }
-
-      if (key === algDictionary.Ed448) {
-        asymmetricAlgOptions.push({
-          value: key,
-          label: value.name,
-          isDisabled: !canUseEd448,
-        });
-
-        continue;
-      }
-
-      asymmetricAlgOptions.push({
+      return {
         value: key,
         label: value.name,
-      });
-    }
-
-    return asymmetricAlgOptions;
-  }, [canUseEd25519, canUseEd448, canUseEs512]);
+        isDisabled: isMlDsaAlgorithm(key) && !mlDsaSupport.algorithms[key],
+      };
+    });
+  }, [mlDsaSupport.algorithms]);
 
   const algOptions = useMemo(() => {
     return [...noneAlgOptions, ...symmetricAlgOptions, ...asymmetricAlgOptions];
-  }, [asymmetricAlgOptions, noneAlgOptions, symmetricAlgOptions]);
+  }, [noneAlgOptions, asymmetricAlgOptions, symmetricAlgOptions]);
 
   return (
-    <div role="region" aria-label={label} className={styles.picker}>
-      {pickerState === PickerStates.IDLE && (
-        <button
-          role="button"
-          className={clsx(styles.button, PrimaryFont.className)}
-          onClick={openPicker}
-        >
-          {dictionary.exampleAlgPicker.label}
-        </button>
-      )}
-      {pickerState === PickerStates.PICKING && (
-        <>
-          <DebuggerPickerComponent
-            label={null}
-            languageCode={languageCode}
-            handleSelection={selectExample}
-            selectedOptionCode={null}
-            options={algOptions}
-            placeholder={dictionary.exampleAlgPicker.defaultValue}
-            minWidth={null}
-          />
-          <button
-            {...buttonProps}
-            aria-label={dictionary.exampleAlgPicker.closeButton.label}
-            className={styles.closeButton}
-            onClick={closePicker}
-          >
-            <span>+</span>
-          </button>
-        </>
-      )}
+    <div
+      role="region"
+      aria-label={label}
+      aria-busy={mlDsaSupport.isLoading}
+      className={styles.alg_picker}
+    >
+      <div className={styles.container}>
+        <div className={styles.picker}>
+          <div className={styles.picker__label}>
+            <label className={styles.picker__fullName}>
+              {dictionary.exampleAlgPicker.label}
+            </label>
+          </div>
+          <div className={styles.picker__container}>
+            <DebuggerPickerComponent
+              label={null}
+              data-has-label={label !== null}
+              languageCode={languageCode}
+              handleSelection={selectExample}
+              options={algOptions}
+              placeholder={dictionary.exampleAlgPicker.defaultValue}
+              minWidth={null}
+            />
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

@@ -42,5 +42,6 @@ export interface EncoderDictionaryModel {
   };
   encodedJwt: {
     title: string;
+    heading?: string;
   };
 }

@@ -1,10 +1,8 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { TokenDecoderEncodingFormatPickerComponent } from "@/features/decoder/components/token-decoder-encoding-format-picker.component";
 import { SignatureVerificationSecretInputComponent } from "@/features/decoder/components/signature-verification-secret-input.component";
 import { SignatureVerificationPublicKeyInputComponent } from "@/features/decoder/components/signature-verification-public-key-input.component";
 import { CardWithHeadlineComponent } from "@/features/common/components/card/card.component";
 import { DEFAULT_JWT } from "@/features/decoder/services/token-decoder.service";
-import { TokenDecoderKeyFormatPickerComponent } from "@/features/decoder/components/token-decoder-key-format-picker.component";
 import { useDecoderStore } from "@/features/decoder/services/decoder.store";
 import { HomeDictionaryModel } from "@/features/localization/models/home-dictionary.model";
 import { useDebuggerStore } from "@/features/debugger/services/debugger.store";
@@ -19,6 +17,7 @@ import { CardToolbarComponent } from "@/features/common/components/card-toolbar/
 import { CardToolbarCopyButtonComponent } from "@/features/common/components/card-toolbar-buttons/card-toolbar-copy-button/card-toolbar-copy-button.component";
 import { CardToolbarClearButtonComponent } from "@/features/common/components/card-toolbar-buttons/card-toolbar-clear-button/card-toolbar-clear-button.component";
 import { NOOP_ALG } from "@/features/common/values/constants";
+import { formatPublicKeyInput } from "@/features/decoder/services/public-key-input.service";
 
 type SecretKeyInputComponentProps = {
   languageCode: string;
@@ -42,6 +41,9 @@ export const SecretKeyInputComponent: React.FC<
   );
 
   const alg$ = useDecoderStore((state) => state.alg);
+  const asymmetricPublicKeyFormat$ = useDecoderStore(
+    (state) => state.asymmetricPublicKeyFormat,
+  );
   const verificationInputErrors$ = useDecoderStore(
     (state) => state.verificationInputErrors,
   );
@@ -58,21 +60,37 @@ export const SecretKeyInputComponent: React.FC<
     decoderInputs$.algType === SigningAlgCategoryValues.SYMMETRIC &&
       decoderInputs$.symmetricSecretKey
       ? decoderInputs$.symmetricSecretKey
-      : DEFAULT_JWT.secret,
+      : DEFAULT_JWT.secret
   );
   const [publicKey, setPublicKey] = useState<string>("");
 
-  useEffect(() => {
-    if (controlledSymmetricSecretKey) {
-      setSecret(controlledSymmetricSecretKey.value.trim());
-    }
-  }, [controlledSymmetricSecretKey]);
+  const [syncedSecretKey, setSyncedSecretKey] = useState(
+    controlledSymmetricSecretKey,
+  );
+  const [syncedPublicKey, setSyncedPublicKey] = useState(
+    controlledAsymmetricPublicKey,
+  );
 
-  useEffect(() => {
-    if (controlledAsymmetricPublicKey) {
-      setPublicKey(controlledAsymmetricPublicKey.value.trim());
-    }
-  }, [controlledAsymmetricPublicKey]);
+  if (
+    controlledSymmetricSecretKey &&
+    controlledSymmetricSecretKey !== syncedSecretKey
+  ) {
+    setSyncedSecretKey(controlledSymmetricSecretKey);
+    setSecret(controlledSymmetricSecretKey.value.trim());
+  }
+
+  if (
+    controlledAsymmetricPublicKey &&
+    controlledAsymmetricPublicKey !== syncedPublicKey
+  ) {
+    setSyncedPublicKey(controlledAsymmetricPublicKey);
+    setPublicKey(
+      formatPublicKeyInput(
+        controlledAsymmetricPublicKey.value,
+        controlledAsymmetricPublicKey.format,
+      ),
+    );
+  }
 
   const clearValue = async () => {
     if (isHmacAlg(alg$)) {
@@ -98,12 +116,11 @@ export const SecretKeyInputComponent: React.FC<
     handleSymmetricSecretKeyChange$(cleanValue);
   };
 
-  const handleAsymmetricPublicKeyChange = async (
-    e: ChangeEvent<HTMLTextAreaElement>,
-  ) => {
-    const key = e.target.value;
-
-    const cleanValue = key.trim();
+  const handleAsymmetricPublicKeyChange = async (key: string) => {
+    const cleanValue = formatPublicKeyInput(
+      key,
+      asymmetricPublicKeyFormat$,
+    );
 
     setPublicKey(cleanValue);
 
@@ -128,6 +145,7 @@ export const SecretKeyInputComponent: React.FC<
           ? dictionary.description.secret
           : dictionary.description.publicKey,
       }}
+      hasHeaderIcon
       languageCode={languageCode}
       messages={{
         errors: verificationInputErrors$,
@@ -137,7 +155,7 @@ export const SecretKeyInputComponent: React.FC<
             : dictionary.editor.successMessage.publicKey,
         ],
       }}
-      options={{ noPadding: true }}
+      options={{ noPadding: false }}
       title={
         isHmacAlg(alg$)
           ? dictionary.editor.title.secret
@@ -161,14 +179,7 @@ export const SecretKeyInputComponent: React.FC<
               isDisabled={isHmacAlg(alg$) ? !secret : !publicKey}
             />
           </CardToolbarComponent>
-        ),
-        footer: isHmacAlg(alg$) ? (
-          <TokenDecoderEncodingFormatPickerComponent
-            languageCode={languageCode}
-          />
-        ) : (
-          <TokenDecoderKeyFormatPickerComponent languageCode={languageCode} />
-        ),
+        )
       }}
     >
       {isHmacAlg(alg$) && (
@@ -180,6 +191,7 @@ export const SecretKeyInputComponent: React.FC<
       {isDigitalSignatureAlg(alg$) && (
         <SignatureVerificationPublicKeyInputComponent
           publicKey={publicKey}
+          publicKeyFormat={asymmetricPublicKeyFormat$}
           handlePublicKeyChange={handleAsymmetricPublicKeyChange}
           placeholder={dictionary.editor.placeholder.publicKey}
         />

@@ -1,0 +1,5 @@
+@use "@/libs/theme/styles/variables" as *;
+
+.check {
+    color: var(--color_bg_state_success);
+}

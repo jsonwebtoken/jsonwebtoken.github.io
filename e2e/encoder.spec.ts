@@ -1,8 +1,5 @@
 import { expect, test } from "@playwright/test";
-import {
-  getButtonsUiDictionary,
-  getPickersUiDictionary,
-} from "@/features/localization/services/ui-language-dictionary.service";
+import { getButtonsUiDictionary } from "@/features/localization/services/ui-language-dictionary.service";
 import { DefaultTokensValues } from "@/features/common/values/default-tokens.values";
 import { dataTestidDictionary } from "@/libs/testing/data-testid.dictionary";
 import {
@@ -13,6 +10,7 @@ import {
   E2E_BASE_URL,
   expectToBeNonNull,
   getLang,
+  hasMlDsaSupport,
   switchToEncoderTab,
 } from "./e2e.utils";
 import jwts from "./jwt.json" with { type: "json" };
@@ -27,6 +25,9 @@ import {
   isNoneAlg,
 } from "@/features/common/services/jwt.service";
 import { MessageStatusValue, MessageTypeValue } from "./e2e.values";
+import { EncodingValues } from "@/features/common/values/encoding.values";
+import { isMlDsaAlgorithm } from "@/features/common/values/jws-alg-header-parameter-values.dictionary";
+import { AsymmetricKeyFormatValues } from "@/features/common/values/asymmetric-key-format.values";
 
 const TestJwts = (jwts as JwtDictionaryModel).byAlgorithm;
 
@@ -41,7 +42,7 @@ test.describe("Can interact with header editor in JWT Encoder", () => {
     const encoderWidget = page.getByTestId(dataTestidDictionary.encoder.id);
 
     const headerEditor = encoderWidget.getByTestId(
-      dataTestidDictionary.encoder.headerEditor.id,
+      dataTestidDictionary.encoder.headerEditor.id
     );
     const headerEditorInput = headerEditor.getByRole("textbox");
 
@@ -65,7 +66,7 @@ test.describe("Can interact with header editor in JWT Encoder", () => {
     const encoderWidget = page.getByTestId(dataTestidDictionary.encoder.id);
 
     const headerEditor = encoderWidget.getByTestId(
-      dataTestidDictionary.encoder.headerEditor.id,
+      dataTestidDictionary.encoder.headerEditor.id
     );
     const headerEditorInput = headerEditor.getByRole("textbox");
 
@@ -83,7 +84,7 @@ test.describe("Can interact with header editor in JWT Encoder", () => {
     const encoder = page.getByTestId(dataTestidDictionary.encoder.id);
 
     const headerEditor = encoder.getByTestId(
-      dataTestidDictionary.encoder.headerEditor.id,
+      dataTestidDictionary.encoder.headerEditor.id
     );
     const headerEditorInput = headerEditor.getByRole("textbox");
 
@@ -107,7 +108,7 @@ test.describe("can interact with payload editor in JWT encoder", () => {
     const encoderWidget = page.getByTestId(dataTestidDictionary.encoder.id);
 
     const payloadEditor = encoderWidget.getByTestId(
-      dataTestidDictionary.encoder.payloadEditor.id,
+      dataTestidDictionary.encoder.payloadEditor.id
     );
     const payloadEditorInput = payloadEditor.getByRole("textbox");
 
@@ -131,7 +132,7 @@ test.describe("can interact with payload editor in JWT encoder", () => {
     const encoderWidget = page.getByTestId(dataTestidDictionary.encoder.id);
 
     const payloadEditor = encoderWidget.getByTestId(
-      dataTestidDictionary.encoder.payloadEditor.id,
+      dataTestidDictionary.encoder.payloadEditor.id
     );
     const payloadEditorInput = payloadEditor.getByRole("textbox");
 
@@ -149,7 +150,7 @@ test.describe("can interact with payload editor in JWT encoder", () => {
     const encoder = page.getByTestId(dataTestidDictionary.encoder.id);
 
     const payloadEditor = encoder.getByTestId(
-      dataTestidDictionary.encoder.payloadEditor.id,
+      dataTestidDictionary.encoder.payloadEditor.id
     );
     const payloadEditorInput = payloadEditor.getByRole("textbox");
 
@@ -173,7 +174,7 @@ test.describe("can interact with secret editor in JWT encoder", () => {
     const encoderWidget = page.getByTestId(dataTestidDictionary.encoder.id);
 
     const secretKeyEditor = encoderWidget.getByTestId(
-      dataTestidDictionary.encoder.secretKeyEditor.id,
+      dataTestidDictionary.encoder.secretKeyEditor.id
     );
     const secretKeyEditorInput = secretKeyEditor.getByRole("textbox");
 
@@ -191,7 +192,7 @@ test.describe("can interact with secret editor in JWT encoder", () => {
     const encoderWidget = page.getByTestId(dataTestidDictionary.encoder.id);
 
     const secretKeyEditor = encoderWidget.getByTestId(
-      dataTestidDictionary.encoder.secretKeyEditor.id,
+      dataTestidDictionary.encoder.secretKeyEditor.id
     );
     const secretKeyEditorInput = secretKeyEditor.getByRole("textbox");
 
@@ -209,7 +210,7 @@ test.describe("can interact with secret editor in JWT encoder", () => {
     const encoder = page.getByTestId(dataTestidDictionary.encoder.id);
 
     const secretKeyEditor = encoder.getByTestId(
-      dataTestidDictionary.encoder.secretKeyEditor.id,
+      dataTestidDictionary.encoder.secretKeyEditor.id
     );
     const secretKeyEditorInput = secretKeyEditor.getByRole("textbox");
 
@@ -229,54 +230,21 @@ test.describe("Generate JWT encoding examples", () => {
     await switchToEncoderTab(page);
   });
 
-  test("Can open and close encoder example widget", async ({ page }) => {
-    const lang = await getLang(page);
-    expectToBeNonNull(lang);
-
-    const pickersUiDictionary = getPickersUiDictionary(lang);
-
-    const encoder = page.getByTestId(dataTestidDictionary.encoder.id);
-
-    const exampleButton = encoder.getByRole("button", {
-      name: pickersUiDictionary.exampleAlgPicker.label,
-    });
-
-    await exampleButton.click();
-
-    await expect(exampleButton).not.toBeVisible();
-
-    const closeButton = page.getByRole("button", {
-      name: pickersUiDictionary.exampleAlgPicker.closeButton.label,
-    });
-
-    await closeButton.click();
-
-    await expect(exampleButton).toBeVisible();
-    await expect(closeButton).not.toBeVisible();
-  });
-
   test.describe("Can generate a JWT example", () => {
     test.beforeEach(async ({ page }) => {
-      const lang = await getLang(page);
-      expectToBeNonNull(lang);
-
-      const pickersUiDictionary = getPickersUiDictionary(lang);
-
-      const encoder = page.getByTestId(dataTestidDictionary.encoder.id);
-
-      const exampleButton = encoder.getByRole("button", {
-        name: pickersUiDictionary.exampleAlgPicker.label,
+      const algorithmPicker = page.getByRole("combobox", {
+        name: "Debugger picker",
       });
-
-      await exampleButton.click();
-
-      await expect(exampleButton).not.toBeVisible();
-
-      const pickerIndicator = encoder.getByText(
-        pickersUiDictionary.exampleAlgPicker.defaultValue,
+      const algorithmPickerRegion = page
+        .getByRole("region")
+        .filter({ has: algorithmPicker });
+      const pickerControl = algorithmPicker.locator(
+        'xpath=ancestor::div[contains(@class, "react-select__control")]',
       );
 
-      await pickerIndicator.click();
+      await expect(algorithmPickerRegion).toHaveAttribute("aria-busy", "false");
+      await pickerControl.dispatchEvent("mousedown", { button: 0 });
+      await expect(page.getByRole("listbox")).toBeVisible();
     });
 
     const options = Object.keys(DefaultTokensValues);
@@ -285,12 +253,18 @@ test.describe("Generate JWT encoding examples", () => {
       test(`can generate a JWT encoding example for ${option}`, async ({
         page,
       }) => {
-        if (option === "Ed25519") {
-          return;
+        if (isMlDsaAlgorithm(option)) {
+          test.skip(
+            !(await hasMlDsaSupport(page, option)),
+            "ML-DSA is not supported by this browser",
+          );
         }
 
         const encoder = page.getByTestId(dataTestidDictionary.encoder.id);
-        await page.getByRole("option", { name: option }).click();
+        await page
+          .getByRole("listbox")
+          .getByRole("option", { name: option })
+          .dispatchEvent("click");
 
         const jwtOutput = encoder
           .getByTestId(dataTestidDictionary.encoder.jwt.id)
@@ -311,7 +285,7 @@ test.describe("Generate JWT encoding examples", () => {
         }
 
         await expect(jwtOutput).toHaveValue(
-          /^[A-Za-z0-9_-]*\.[A-Za-z0-9_-]*\.[A-Za-z0-9_-]*$/,
+          /^[A-Za-z0-9_-]*\.[A-Za-z0-9_-]*\.[A-Za-z0-9_-]*$/
         );
       });
     });
@@ -325,24 +299,88 @@ test.describe("encode JWTs", () => {
     await switchToEncoderTab(page);
   });
 
+  test("detects pasted private key formats", async ({ page }) => {
+    const token = TestJwts.ES256 as JwtSignedWithDigitalModel;
+    const encoderWidget = page.getByTestId(dataTestidDictionary.encoder.id);
+    const headerEditorInput = encoderWidget
+      .getByTestId(dataTestidDictionary.encoder.headerEditor.id)
+      .getByRole("textbox");
+    const payloadEditorInput = encoderWidget
+      .getByTestId(dataTestidDictionary.encoder.payloadEditor.id)
+      .getByRole("textbox");
+    const secretKeyEditorInput = encoderWidget
+      .getByTestId(dataTestidDictionary.encoder.secretKeyEditor.id)
+      .getByRole("textbox");
+    const jwtOutput = encoderWidget
+      .getByTestId(dataTestidDictionary.encoder.jwt.id)
+      .getByRole("textbox");
+
+    await headerEditorInput.fill(token.withJwkKey.header);
+    await payloadEditorInput.fill(token.withJwkKey.payload);
+    await expect(
+      page
+        .locator(".react-select__single-value")
+        .filter({ hasText: AsymmetricKeyFormatValues.PEM }),
+    ).toBeVisible();
+
+    await secretKeyEditorInput.fill(
+      JSON.stringify(token.withJwkKey.privateKey),
+    );
+    await expect(secretKeyEditorInput).toHaveValue(
+      JSON.stringify(token.withJwkKey.privateKey, null, 2),
+    );
+    await expect(
+      page
+        .locator(".react-select__single-value")
+        .filter({ hasText: AsymmetricKeyFormatValues.JWK }),
+    ).toBeVisible();
+    await checkSecretKeyEncoderEditorStatusBarMessage({
+      page,
+      type: MessageTypeValue.SUCCESS,
+      status: MessageStatusValue.VISIBLE,
+    });
+    await expect(jwtOutput).toHaveValue(
+      /^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/,
+    );
+
+    await secretKeyEditorInput.fill(token.withPemKey.privateKey);
+    await expect(secretKeyEditorInput).toHaveValue(token.withPemKey.privateKey);
+    await expect(
+      page
+        .locator(".react-select__single-value")
+        .filter({ hasText: AsymmetricKeyFormatValues.PEM }),
+    ).toBeVisible();
+    await checkSecretKeyEncoderEditorStatusBarMessage({
+      page,
+      type: MessageTypeValue.SUCCESS,
+      status: MessageStatusValue.VISIBLE,
+    });
+    await expect(jwtOutput).toHaveValue(
+      /^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/,
+    );
+  });
+
   const options = Object.keys(DefaultTokensValues);
 
   options.forEach((option) => {
     test(`Can encode and sign a JWT with ${option}`, async ({ page }) => {
-      if (option === "Ed25519") {
-        return;
+      if (isMlDsaAlgorithm(option)) {
+        test.skip(
+          !(await hasMlDsaSupport(page, option)),
+          "ML-DSA is not supported by this browser",
+        );
       }
 
       const encoderWidget = page.getByTestId(dataTestidDictionary.encoder.id);
 
       const headerEditor = encoderWidget.getByTestId(
-        dataTestidDictionary.encoder.headerEditor.id,
+        dataTestidDictionary.encoder.headerEditor.id
       );
       const payloadEditor = encoderWidget.getByTestId(
-        dataTestidDictionary.encoder.payloadEditor.id,
+        dataTestidDictionary.encoder.payloadEditor.id
       );
       const secretKeyEditor = encoderWidget.getByTestId(
-        dataTestidDictionary.encoder.secretKeyEditor.id,
+        dataTestidDictionary.encoder.secretKeyEditor.id
       );
       const jwtOutput = encoderWidget
         .getByTestId(dataTestidDictionary.encoder.jwt.id)
@@ -415,16 +453,13 @@ test.describe("encode JWTs", () => {
 
         await expect(jwtOutput).toHaveValue(tokenWithUtf8Secret.jwt);
 
-        const formatPicker = secretKeyEditor.locator(
-          ".react-select__single-value",
-        );
-        await formatPicker.click();
-
-        await page
-          .getByRole("option", {
-            name: tokenWithBase64urlSecret.secretEncoding,
-          })
-          .click();
+        const encodingSwitch = await page.getByTestId(dataTestidDictionary.encoder.switch)
+        expect(encodingSwitch).toBeVisible()
+        
+        if (
+          tokenWithBase64urlSecret.secretEncoding === EncodingValues.BASE64URL
+        )
+          await encodingSwitch.click();
 
         await checkSecretKeyEncoderEditorStatusBarMessage({
           page,
@@ -479,30 +514,34 @@ test.describe("encode JWTs", () => {
           await expect(jwtOutput).toHaveValue(tokenWithPemKey.jwt);
         } else {
           await expect(jwtOutput).toHaveValue(
-            /^[A-Za-z0-9_-]*\.[A-Za-z0-9_-]*\.[A-Za-z0-9_-]*$/,
+            /^[A-Za-z0-9_-]*\.[A-Za-z0-9_-]*\.[A-Za-z0-9_-]*$/
           );
         }
 
-        const formatPicker = secretKeyEditor.locator(
-          ".react-select__single-value",
-        );
-        await formatPicker.click();
-
+        const pemFormatPickerControl = page
+          .locator(".react-select__single-value")
+          .filter({ hasText: tokenWithPemKey.privateKeyFormat })
+          .locator(
+            'xpath=ancestor::div[contains(@class, "react-select__control")]'
+          );
+        await pemFormatPickerControl.dispatchEvent("mousedown", { button: 0 });
         await page
+          .getByRole("listbox")
           .getByRole("option", {
             name: tokenWithJwkKey.privateKeyFormat,
+            exact: true,
           })
-          .click();
+          .dispatchEvent("click");
 
-        await checkSecretKeyEncoderEditorStatusBarMessage({
-          page,
-          type: MessageTypeValue.ERROR,
-          status: MessageStatusValue.VISIBLE,
-        });
-
-        await secretKeyEditorInput.fill(
-          JSON.stringify(tokenWithJwkKey.privateKey, null, 2),
-        );
+        await expect
+          .poll(async () => {
+            try {
+              return JSON.parse(await secretKeyEditorInput.inputValue());
+            } catch {
+              return null;
+            }
+          })
+          .toStrictEqual(tokenWithJwkKey.privateKey);
 
         await checkSecretKeyEncoderEditorStatusBarMessage({
           page,
@@ -514,9 +553,34 @@ test.describe("encode JWTs", () => {
           await expect(jwtOutput).toHaveValue(tokenWithJwkKey.jwt);
         } else {
           await expect(jwtOutput).toHaveValue(
-            /^[A-Za-z0-9_-]*\.[A-Za-z0-9_-]*\.[A-Za-z0-9_-]*$/,
+            /^[A-Za-z0-9_-]*\.[A-Za-z0-9_-]*\.[A-Za-z0-9_-]*$/
           );
         }
+
+        const jwkFormatPickerControl = page
+          .locator(".react-select__single-value")
+          .filter({ hasText: tokenWithJwkKey.privateKeyFormat })
+          .locator(
+            'xpath=ancestor::div[contains(@class, "react-select__control")]'
+          );
+        await jwkFormatPickerControl.dispatchEvent("mousedown", { button: 0 });
+        await page
+          .getByRole("listbox")
+          .getByRole("option", {
+            name: tokenWithPemKey.privateKeyFormat,
+            exact: true,
+          })
+          .dispatchEvent("click");
+
+        await expect(secretKeyEditorInput).toHaveValue(
+          tokenWithPemKey.privateKey
+        );
+
+        await checkSecretKeyEncoderEditorStatusBarMessage({
+          page,
+          type: MessageTypeValue.SUCCESS,
+          status: MessageStatusValue.VISIBLE,
+        });
 
         return;
       }

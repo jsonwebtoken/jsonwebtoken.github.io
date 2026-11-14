@@ -22,7 +22,6 @@ export default function GlobalError({
     <ErrorPageComponent
       languageCode={languageCode}
       themeCode={themeCode}
-      dictionary={layoutDictionary}
     >
       <UnexpectedErrorComponent
         metadata={layoutDictionary.errors.unexpectedError}

@@ -1,2 +1,32 @@
 @use "@/libs/theme/styles/variables" as *;
 @use "@/libs/theme/styles/mixins" as *;
+
+.input__description {
+    display: flex;
+    width: calc(100% - 2rem);
+    max-width: 1312px;
+    flex-direction: column;
+    grid-row-gap: 0;
+    margin: 0 auto 2rem;
+    color: var(--color_fg_default);
+    font-size: .875rem;
+    line-height: 1.375rem;
+    margin-bottom: .5rem;
+
+  & strong {
+    font-weight: 500;
+  }
+
+  @media #{$breakpoint-dimension-sm} {
+    width: calc(100% - 4rem);
+     grid-column: span 12;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  @media #{$breakpoint-dimension-lg} {
+    width: calc(100% - 8rem);
+  }
+ 
+}

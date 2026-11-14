@@ -1,38 +1,10 @@
 @use "@/libs/theme/styles/variables" as *;
 @use "@/libs/theme/styles/mixins" as *;
 
-.container {
-  @include Container;
-
-  background: var(--color_bg_app_bar);
-  border-bottom: 1px solid;
-  border-image-slice: 1;
-  border-image-source: linear-gradient(
-    135deg,
-    rgb(76, 183, 163) 0%,
-    rgb(63, 89, 228) 50%,
-    rgb(64, 22, 160) 100%
-  );
-}
-
-.wrapper {
-  @include ExtendedGrid;
-  height: $ribbon-height;
-}
-
-.content {
-  position: relative;
-  @include InnerContentFlex;
-  height: 100%;
-  grid-column: 1 / -1;
-  align-items: center;
-  justify-content: space-between;
-
-  color: $neutrals-light-100-snow;
-}
-
 .cta {
   display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 0.75rem;
   line-height: 1.25rem;
   color: $Neutral0;
@@ -88,11 +60,3 @@
   }
 }
 
-.actions {
-  display: flex;
-  gap: 0.5rem;
-
-  @media #{$breakpoint-dimension-md} {
-    gap: 1rem;
-  }
-}

@@ -74,6 +74,7 @@ export const dataTestidDictionary = {
   },
   encoder: {
     id: "encoder",
+    switch: 'encoder_switch',
     headerEditor: {
       id: "encoder__headerEditor",
       statusBar: {

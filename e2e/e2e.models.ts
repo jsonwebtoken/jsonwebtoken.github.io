@@ -70,5 +70,8 @@ export interface JwtDictionaryModel {
     PS384: JwtDictionaryEntryModel;
     PS512: JwtDictionaryEntryModel;
     Ed25519: JwtDictionaryEntryModel;
+    "ML-DSA-44": JwtDictionaryEntryModel;
+    "ML-DSA-65": JwtDictionaryEntryModel;
+    "ML-DSA-87": JwtDictionaryEntryModel;
   };
 }

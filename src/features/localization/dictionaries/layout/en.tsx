@@ -39,20 +39,6 @@ export const enLayoutDictionary: LayoutDictionaryModel = {
         },
       ],
     },
-    languagePicker: {
-      button: {
-        ariaLabel: "Select page language",
-      },
-      list: {
-        ariaLabel: "list of page languages",
-      },
-      options: [
-        {
-          code: "en",
-          label: "English",
-        },
-      ],
-    },
   },
   header: {
     links: [
@@ -162,6 +148,20 @@ export const enLayoutDictionary: LayoutDictionaryModel = {
         },
       ],
     },
+    languagePicker: {
+      button: {
+        ariaLabel: "Select page language",
+      },
+      list: {
+        ariaLabel: "list of page languages",
+      },
+      options: [
+        {
+          value: "en",
+          label: "English",
+        },
+      ],
+    },
   },
   errors: {
     notFound: {
@@ -187,8 +187,8 @@ export const enLayoutDictionary: LayoutDictionaryModel = {
 };
 
 if (withJapanese) {
-  enLayoutDictionary.ribbon.languagePicker.options.push({
+  enLayoutDictionary.footer.languagePicker.options.push({
     label: "日本語",
-    code: "ja",
+    value: "ja",
   });
 }

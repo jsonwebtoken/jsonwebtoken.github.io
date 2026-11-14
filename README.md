@@ -22,31 +22,36 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 
 ## Generate Data for Libraries page
 
-First, create a GitHub Application.
+If GitHub CLI is already authenticated, update the library star counts using
+your existing credentials:
 
-Generate a private key for the GitHub application.
+```bash
+GITHUB_TOKEN="$(gh auth token)" npm run generate:library-data
+```
 
-Install the application.
-
-Generate a `.env` file based on the `.env.example` file:
+Alternatively, generate a `.env` file based on the `.env.example` file:
 
 ```bash
 cp .env.example .env
 ```
 
-Then, you'll need to add the values with your private key, app id and installation id into the `.env`file:
+Then, add your personal GitHub access token to the `.env` file:
 
 ```bash
-GITHUB_APP_ID=
-GITHUB_APP_PRIVATE_KEY=
-GITHUB_INSTALLATION_ID=
+GITHUB_TOKEN=
 ```
 
-Run the `libraries.js` script to generate the `libraries.json` file:
+Then run the generator:
 
 ```bash
-node libraries.js
+npm run generate:library-data
 ```
+
+Both commands update `src/data/libraries-next.json`.
+
+Production deployments refresh the star counts automatically using the
+workflow's built-in GitHub token. The production workflow also runs every
+Monday at 06:00 UTC.
 
 ## Learn More
 

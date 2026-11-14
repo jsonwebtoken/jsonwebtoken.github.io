@@ -54,30 +54,14 @@ export const enHomeDictionary: HomeDictionaryModel = {
     description: null,
   },
   info: {
-    summary: "What is a JWT?",
     description:
       "Decode, verify, and generate JSON Web Tokens, which are an open, industry standard RFC 7519 method for representing claims securely between two parties.",
-    ctaButton: {
-      label: "Learn more about JWT",
-      path: sitePaths.introduction,
-    },
-    secondaryCtaButton: {
-      label: "See JWT libraries",
-      path: sitePaths.libraries,
-    },
     resources: {
       spec: {
         name: "RFC 7519",
         link: "https://tools.ietf.org/html/rfc7519",
       },
     },
-  },
-  warning: {
-    summary: "Warning about using JWTs",
-    title:
-      "For your protection, all JWT debugging and validation happens in the browser.",
-    description:
-      "Be careful where you paste or share JWTs as they can represent credentials that grant access to resources. This site does not store or transmit your JSON Web Tokens outside of the browser.",
   },
   decoder: {
     title: "JWT Decoder",
@@ -92,11 +76,12 @@ export const enHomeDictionary: HomeDictionaryModel = {
       label: "JWT example generator",
     },
     jwtEditor: {
-      headline: "Encoded value",
+      headline: "Encoded Token",
       label: "JWT editor",
       title: "JSON Web Token (JWT)",
       compactTitle: "JWT",
       successMessage: "Valid JWT",
+      autoFocusLabel: "Enable auto-focus",
     },
     decodedHeader: {
       title: "Decoded Header",
@@ -105,7 +90,7 @@ export const enHomeDictionary: HomeDictionaryModel = {
           label: "JSON",
         },
         claims: {
-          label: "Claims Table",
+          label: "Claims Breakdown",
         },
       },
     },
@@ -116,7 +101,7 @@ export const enHomeDictionary: HomeDictionaryModel = {
           label: "JSON",
         },
         claims: {
-          label: "Claims Table",
+          label: "Claims Breakdown",
         },
       },
     },
@@ -157,18 +142,18 @@ export const enHomeDictionary: HomeDictionaryModel = {
       label: "Header, payload, and signature example generator",
     },
     headerEditor: {
-      title: "Header: Algorithm & Token Type",
+      title: "Algorithm & Token Type",
       compactTitle: "Header",
       successMessage: "Valid header",
     },
     payloadEditor: {
-      title: "Payload: Data",
+      title: "Data",
       compactTitle: "Payload",
       successMessage: "Valid payload",
     },
     signatureEditor: {
       title: {
-        secret: "Sign JWT: Secret",
+        secret: "Secret",
         privateKey: "Sign JWT: Private Key",
       },
       compactTitle: {
@@ -185,7 +170,8 @@ export const enHomeDictionary: HomeDictionaryModel = {
       },
     },
     encodedJwt: {
-      title: "JSON Web Token",
+      title: "Encoded JWT",
+      heading: "JWT Signature",
     },
   },
 };

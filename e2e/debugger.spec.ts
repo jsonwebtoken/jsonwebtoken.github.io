@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
 import { dataTestidDictionary } from "@/libs/testing/data-testid.dictionary";
+import { getPickersUiDictionary } from "@/features/localization/services/ui-language-dictionary.service";
 import {
   checkHeaderEditorStatusBarMessage,
   checkJwtEditorNotificationBarMessage,
@@ -8,9 +9,11 @@ import {
   E2E_BASE_URL,
   expectToBeNonNull,
   getLang,
+  hasMlDsaSupport,
   switchToEncoderTab,
 } from "./e2e.utils";
 import { MessageStatusValue, MessageTypeValue } from "./e2e.values";
+import { mlDsaAlgorithms } from "@/features/common/values/jws-alg-header-parameter-values.dictionary";
 
 test("Can load decoded header and decoded payload from the JWT Decoder as inputs into the JWT Encoder", async ({
   page,
@@ -189,4 +192,34 @@ test("Can decode a single jwt piece and load it as input into the jwt encoded he
   );
 
   await expect(encoderSecretKeyEditor).not.toBeVisible();
+});
+
+test("ML-DSA examples are enabled only when the browser supports them", async ({
+  browserName,
+  page,
+}) => {
+  await page.goto(E2E_BASE_URL);
+
+  const algorithmPicker = page.getByRole("combobox", {
+    name: "Debugger picker",
+  });
+  const algorithmPickerRegion = page
+    .getByRole("region")
+    .filter({ has: algorithmPicker });
+  const lang = await getLang(page);
+  expectToBeNonNull(lang);
+  const pickersUiDictionary = getPickersUiDictionary(lang);
+  await expect(algorithmPickerRegion).toHaveAttribute("aria-busy", "false");
+  await page
+    .getByText(pickersUiDictionary.exampleAlgPicker.defaultValue)
+    .click();
+
+  for (const algorithm of mlDsaAlgorithms) {
+    const isSupported = await hasMlDsaSupport(page, algorithm);
+
+    expect(isSupported).toBe(browserName === "chromium");
+    await expect(
+      page.getByRole("option", { name: algorithm, exact: true }),
+    ).toHaveAttribute("aria-disabled", String(!isSupported));
+  }
 });

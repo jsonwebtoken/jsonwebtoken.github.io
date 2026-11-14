@@ -18,7 +18,6 @@ import { UiLocalizationService } from "@/features/localization/services/ui-local
 import { clsx } from "clsx";
 import {
   getLocalizedPrimaryFont,
-  JapaneseFont,
   MonoFont,
   PrimaryFont,
   SecondaryFont,
@@ -29,6 +28,8 @@ import { AbTestingScriptComponent } from "@/features/analytics/components/ab-tes
 import AdobeAnalyticsScript from "@/features/analytics/components/adobe-analytics-script.component";
 
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
+const ONETRUST_DISABLED =
+  process.env.NEXT_PUBLIC_DISABLE_ONETRUST === "true";
 
 interface ShellComponentProps extends PropsWithChildren {
   languageCode: string;
@@ -54,7 +55,6 @@ export const ShellComponent: React.FC<ShellComponentProps> = ({
       }
 
       if (e.data === COOKIE_CONSENT_STATUS.WAITING_FOR_CONSENT) {
-        // eslint-disable-next-line new-cap
         window.OneTrust.OnConsentChanged(() =>
           setConsentLevel(window.OnetrustActiveGroups),
         );
@@ -98,14 +98,15 @@ export const ShellComponent: React.FC<ShellComponentProps> = ({
         styles.container,
         PrimaryFont.variable,
         SecondaryFont.variable,
-        JapaneseFont.variable,
         MonoFont.variable,
       )}
       data-theme={themeCode}
     >
-      <OnetrustScriptComponent
-        id={CLIENT_CONFIG.DEVELOPERS_DATA_DOMAIN_ID_ONETRUST}
-      />
+      {!ONETRUST_DISABLED && (
+        <OnetrustScriptComponent
+          id={CLIENT_CONFIG.DEVELOPERS_DATA_DOMAIN_ID_ONETRUST}
+        />
+      )}
       <AdobeAnalyticsScript />
       {children}
       {consentLevel &&

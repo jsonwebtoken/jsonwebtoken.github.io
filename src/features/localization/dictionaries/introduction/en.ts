@@ -76,4 +76,43 @@ export const enIntroductionDictionary: IntroductionDictionaryModel = {
       },
     ],
   },
+  faq: {
+    items: [
+      {
+        question: "What is JSON Web Token?",
+        answer:
+          "JSON Web Token (JWT) is an open standard (RFC 7519) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed using a secret (with the HMAC algorithm) or a public/private key pair using RSA or ECDSA.",
+      },
+      {
+        question: "When should you use JSON Web Tokens?",
+        answer:
+          "JWTs are useful for Authorization (allowing users to access routes, services, and resources after login using Single Sign-On) and Information Exchange (securely transmitting information between parties with verified signatures that ensure the content hasn't been tampered with).",
+      },
+      {
+        question: "What is the JSON Web Token structure?",
+        answer:
+          "A JWT consists of three parts separated by dots: Header (contains the token type and signing algorithm), Payload (contains the claims - statements about the user and additional data), and Signature (ensures the token hasn't been altered). Each part is Base64Url encoded, resulting in the format: xxxxx.yyyyy.zzzzz",
+      },
+      {
+        question: "How do JSON Web Tokens work?",
+        answer:
+          "When a user logs in, they receive a JWT. For subsequent requests, the token is sent in the Authorization header using the Bearer schema. The server verifies the token's signature and grants access to protected resources. This stateless mechanism allows the token to be used across different domains.",
+      },
+      {
+        question: "Why should we use JSON Web Tokens?",
+        answer:
+          "JWTs are more compact than SAML tokens (XML-based), making them ideal for HTML and HTTP environments. JSON is simpler to parse than XML and maps directly to objects in most programming languages. JWTs support asymmetric signing and work seamlessly across different platforms and devices.",
+      },
+      {
+        question: "What is the difference between validating and verifying a JWT?",
+        answer:
+          "Validation checks the token's structure, format, and claims (like expiration time and required fields). Verification confirms the cryptographic signature to ensure the token was issued by a trusted party and hasn't been tampered with. Both steps are essential for secure JWT processing.",
+      },
+      {
+        question: "What is the difference between decoding and encoding a JWT?",
+        answer:
+          "Encoding is the process of creating a JWT: converting the header and payload to JSON, Base64Url encoding them, and generating the signature. Decoding reverses this process: splitting the token, Base64Url decoding each part, and parsing the JSON. Decoding alone doesn't verify the signature.",
+      },
+    ],
+  },
 };

@@ -1,11 +1,21 @@
 import { expect, Page } from "@playwright/test";
 import { dataTestidDictionary } from "@/libs/testing/data-testid.dictionary";
+import type { MlDsaAlgorithm } from "@/features/common/values/jws-alg-header-parameter-values.dictionary";
 import { MessageStatusValue, MessageTypeValue } from "./e2e.values";
 
 export const E2E_BASE_URL = "http://localhost:1234";
 
 export const getLang = async (page: Page) =>
   await page.locator("html").getAttribute("lang");
+
+export const hasMlDsaSupport = async (
+  page: Page,
+  algorithm: MlDsaAlgorithm,
+): Promise<boolean> =>
+  await page.evaluate((algorithm) => {
+    // @ts-expect-error -- SubtleCrypto.supports is not yet in TypeScript's DOM types.
+    return SubtleCrypto.supports?.("generateKey", algorithm) ?? false;
+  }, algorithm);
 
 export function expectToBeDefined<T>(value: T | undefined): asserts value is T {
   expect(value).toBeDefined();

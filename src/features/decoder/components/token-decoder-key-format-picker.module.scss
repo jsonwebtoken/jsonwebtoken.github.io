@@ -12,11 +12,17 @@
 }
 
 .label {
-  color: var(--color_fg_default);
-  font-size: 0.875rem;
-  line-height: 1.375rem;
-  font-weight: 500;
-  letter-spacing: 0.1px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0;
+  list-style-type: none;
+  margin: 0;
+  gap: .5rem;
+  font-size: .875rem;
+  line-height: 1.35;
+  width: 100%;
+  height: 100%;
 }
 
 .select {

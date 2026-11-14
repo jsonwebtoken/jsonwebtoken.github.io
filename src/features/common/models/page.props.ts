@@ -1,3 +1,3 @@
 export interface PageProps {
-  params: { language: string };
+  params: Promise<{ language: string }>;
 }

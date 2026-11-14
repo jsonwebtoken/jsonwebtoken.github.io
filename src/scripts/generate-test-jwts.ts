@@ -2,6 +2,7 @@ import { DefaultTokensValues } from "@/features/common/values/default-tokens.val
 import {
   generateKeyPairSync,
   JsonWebKeyInput,
+  KeyObject,
   PrivateKeyInput,
   randomBytes,
 } from "crypto";
@@ -16,15 +17,14 @@ import {
   CompactJWSHeaderParameters,
   CompactSign,
   exportJWK,
-  KeyLike,
   UnsecuredJWT,
 } from "jose";
 import { EncodingValues } from "@/features/common/values/encoding.values";
 import { writeFileSync } from "node:fs";
 import { join } from "path";
-import { getAlgName } from "@/features/common/services/utils";
 import { createPrivateKey } from "node:crypto";
 import { AsymmetricKeyFormatValues } from "@/features/common/values/asymmetric-key-format.values";
+import { isMlDsaAlgorithm } from "@/features/common/values/jws-alg-header-parameter-values.dictionary";
 import {
   JwtDictionaryEntryModel,
   JwtSignedWithDigitalModel,
@@ -69,7 +69,7 @@ async function createJWT({
 }: {
   header: CompactJWSHeaderParameters;
   payload: object;
-  secret: Uint8Array | KeyLike;
+  secret: Uint8Array;
 }): Promise<string> {
   try {
     const jwsPayload = JSON.stringify(payload);
@@ -103,6 +103,13 @@ interface KeyPair {
   publicJWK: any;
   privateJWK: any;
 }
+
+const generateMlDsaKeyPair = generateKeyPairSync as unknown as (
+  type: string,
+) => {
+  publicKey: KeyObject;
+  privateKey: KeyObject;
+};
 
 async function generateKeys(algorithm: string): Promise<KeyPair> {
   let keyPair;
@@ -141,9 +148,8 @@ async function generateKeys(algorithm: string): Promise<KeyPair> {
   if (algorithm === "Ed25519") {
     keyPair = generateKeyPairSync("ed25519");
   }
-  if (algorithm === "Ed448") {
-    // Support for Ed448
-    keyPair = generateKeyPairSync("ed448");
+  if (isMlDsaAlgorithm(algorithm)) {
+    keyPair = generateMlDsaKeyPair(algorithm.toLowerCase());
   }
 
   if (!keyPair) {
@@ -152,6 +158,11 @@ async function generateKeys(algorithm: string): Promise<KeyPair> {
 
   const publicJWK = await exportJWK(keyPair.publicKey);
   const privateJWK = await exportJWK(keyPair.privateKey);
+
+  if (isMlDsaAlgorithm(algorithm)) {
+    publicJWK.alg = algorithm;
+    privateJWK.alg = algorithm;
+  }
 
   const publicKeyPEM = keyPair.publicKey
     .export({ type: "spki", format: "pem" })
@@ -171,10 +182,9 @@ async function generateKeys(algorithm: string): Promise<KeyPair> {
 (async function () {
   for (let i = 0; i < algs.length; i++) {
     const alg = algs[i];
-    const cleanAlg = getAlgName(alg);
 
     const header = {
-      alg: cleanAlg,
+      alg,
       type: "JWT",
     };
 
@@ -262,7 +272,7 @@ async function generateKeys(algorithm: string): Promise<KeyPair> {
       } as JwtDictionaryEntryModel;
     }
 
-    if (isDigitalSignatureAlg(cleanAlg)) {
+    if (isDigitalSignatureAlg(alg)) {
       const { privateKey, privateJWK, publicKey, publicJWK } =
         await generateKeys(alg);
 

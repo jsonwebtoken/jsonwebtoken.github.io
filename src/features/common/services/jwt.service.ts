@@ -15,14 +15,16 @@ import {
   CompactJWSHeaderParameters,
   CompactSign,
   CompactVerifyResult,
+  exportJWK,
+  exportPKCS8,
+  exportSPKI,
   importPKCS8,
+  type CryptoKey,
   type JWK,
-  KeyLike,
 } from "jose";
 import nodeForge from "node-forge";
 import { EncodingValues } from "@/features/common/values/encoding.values";
 import {
-  getAlgName,
   getOperationException,
   safeBase64url,
   safeBase64urlToBuffer,
@@ -46,7 +48,9 @@ import {
 } from "@/features/common/models/debugger-error.model";
 import {
   algDictionary,
+  isMlDsaAlgorithm,
   jwsAlgHeaderParameterValuesDictionary,
+  type MlDsaAlgorithm,
 } from "@/features/common/values/jws-alg-header-parameter-values.dictionary";
 import {
   JwtHeaderDecoderSchema,
@@ -82,11 +86,16 @@ export function isHmacAlg(algorithm: string): boolean {
 export function isDigitalSignatureAlg(algorithm: string): boolean {
   const alg = jwsAlgHeaderParameterValuesDictionary.digitalSignature[algorithm];
 
-  return !!alg || algorithm === algDictionary.EdDSA;
+  return !!alg;
 }
 
+export const isMlDsaSupported = (algorithm: MlDsaAlgorithm): boolean => {
+  // @ts-expect-error -- SubtleCrypto.supports is not yet in TypeScript's DOM types.
+  return SubtleCrypto.supports?.("generateKey", algorithm) ?? false;
+};
+
 export const getAlgSize = (value: string): Result<{ size: number }, string> => {
-  const algorithm = getAlgName(value);
+  const algorithm = value;
 
   if (!isSupportedAlg(algorithm)) {
     return err(
@@ -96,15 +105,16 @@ export const getAlgSize = (value: string): Result<{ size: number }, string> => {
 
   const algRegex = /^([a-zA-Z]+)(\d+)$/;
   const match = algorithm.match(algRegex);
-  const isEdDSA = algorithm === algDictionary.EdDSA;
+  const isEdwardsCurveAlgorithm =
+    algorithm === algDictionary.EdDSA || algorithm === algDictionary.Ed25519;
   const isNone = algorithm === algDictionary.NONE;
 
   if (isNone) {
     return err(`Can't calculate length for Unsecured JWT.`);
   }
 
-  if (isEdDSA) {
-    return err(`Can't calculate length from EdDSA algorithm.`);
+  if (isEdwardsCurveAlgorithm || isMlDsaAlgorithm(algorithm)) {
+    return err(`Can't calculate length from ${algorithm} algorithm.`);
   }
 
   if (!match) {
@@ -613,11 +623,13 @@ export async function validateAsymmetricKey({
   alg,
   asymmetricPublicKey,
   asymmetricPublicKeyFormat,
+  extractable,
 }: {
   alg: string;
-  asymmetricPublicKey: KeyLike | string;
+  asymmetricPublicKey: CryptoKey | string;
   asymmetricPublicKeyFormat: AsymmetricKeyFormatValues;
-}): Promise<Result<KeyLike | Uint8Array, DebuggerErrorModel>> {
+  extractable?: boolean;
+}): Promise<Result<CryptoKey | Uint8Array, DebuggerErrorModel>> {
   const spki = `-----BEGIN PUBLIC KEY-----`;
   const pkcs1 = `-----BEGIN RSA PUBLIC KEY-----`;
   const x509 = `-----BEGIN CERTIFICATE-----`;
@@ -639,6 +651,7 @@ export async function validateAsymmetricKey({
         const safeImportX509Result = await safeImportX509(
           asymmetricPublicKey,
           alg,
+          extractable === undefined ? undefined : { extractable },
         );
 
         if (safeImportX509Result.isErr()) {
@@ -658,6 +671,7 @@ export async function validateAsymmetricKey({
         const safeImportSPKIResult = await safeImportSPKI(
           asymmetricPublicKey,
           alg,
+          extractable === undefined ? undefined : { extractable },
         );
 
         if (safeImportSPKIResult.isErr()) {
@@ -699,7 +713,11 @@ export async function validateAsymmetricKey({
 
         const spkiKey = PublicKeyToPemResult.value;
 
-        const safeImportSPKIResult = await safeImportSPKI(spkiKey, alg);
+        const safeImportSPKIResult = await safeImportSPKI(
+          spkiKey,
+          alg,
+          extractable === undefined ? undefined : { extractable },
+        );
 
         if (safeImportSPKIResult.isErr()) {
           return err({
@@ -739,7 +757,11 @@ export async function validateAsymmetricKey({
         });
       }
 
-      const safeImportJWKResult = await safeImportJWK(parsedPublicKey, alg);
+      const safeImportJWKResult = await safeImportJWK(
+        parsedPublicKey,
+        alg,
+        extractable === undefined ? undefined : { extractable },
+      );
 
       if (safeImportJWKResult.isErr()) {
         return err({
@@ -783,7 +805,7 @@ export async function validateAsymmetricKey({
 type VerifyDigitallySignedJwtParams = {
   jwt: string;
   alg: string;
-  asymmetricPublicKey: KeyLike | string;
+  asymmetricPublicKey: CryptoKey | string;
   asymmetricPublicKeyFormat: AsymmetricKeyFormatValues;
 };
 
@@ -856,7 +878,15 @@ export const getSymmetricSecretKeyByteArray = (
   return ok(safeTextEncodeResult.value);
 };
 
-export const getJwk = ({ alg, use, key_ops, ext, ...jwk }: JWK): JWK => jwk;
+export const getJwk = ({ use, key_ops, ext, ...jwk }: JWK): JWK => {
+  if (jwk.kty === "AKP") {
+    return jwk;
+  }
+
+  const { alg, ...key } = jwk;
+
+  return key;
+};
 
 const safePrivateKeyFromPem = fromThrowable(
   nodeForge.pki.privateKeyFromPem,
@@ -924,7 +954,8 @@ export const getAsymmetricKeyCryptoKey = async (
   key: string,
   alg: string,
   keyFormat: AsymmetricKeyFormatValues,
-): Promise<Result<KeyLike | Uint8Array, string>> => {
+  extractable?: boolean,
+): Promise<Result<CryptoKey | Uint8Array, string>> => {
   if (keyFormat === AsymmetricKeyFormatValues.PEM) {
     if (key.startsWith("-----BEGIN RSA PRIVATE KEY-----")) {
       const safePrivateKeyFromPemResult = safePrivateKeyFromPem(key);
@@ -964,7 +995,11 @@ export const getAsymmetricKeyCryptoKey = async (
     }
 
     if (key.startsWith("-----BEGIN")) {
-      const safeImportPKCS8Result = await safeImportPKCS8(key, alg);
+      const safeImportPKCS8Result = await safeImportPKCS8(
+        key,
+        alg,
+        extractable === undefined ? undefined : { extractable },
+      );
 
       if (safeImportPKCS8Result.isErr()) {
         return err(safeImportPKCS8Result.error);
@@ -988,7 +1023,7 @@ export const getAsymmetricKeyCryptoKey = async (
     const parsedKey = safeJsonParseResult.value;
     const jwk = getJwk(parsedKey);
 
-    if (!("kty" in jwk) && !("d" in jwk)) {
+    if (!("kty" in jwk) && !("d" in jwk) && !("priv" in jwk)) {
       return err(
         `The provided key is not a valid JWK. Ensure it is a correctly formatted JSON Web Key (JWK) as defined on [RFC 7517](https://datatracker.ietf.org/doc/html/rfc7517#section-4).`,
       );
@@ -1000,13 +1035,21 @@ export const getAsymmetricKeyCryptoKey = async (
       );
     }
 
-    if (!("d" in jwk)) {
+    const privateKeyParameter = jwk.kty === "AKP" ? "priv" : "d";
+
+    if (!(privateKeyParameter in jwk)) {
       return err(
-        `Private key is not a private JWK. The 'd' parameter must be present as defined on [RFC 7518](https://datatracker.ietf.org/doc/html/rfc7518#section-6).`,
+        jwk.kty === "AKP"
+          ? `Private key is not a private JWK. The 'priv' parameter must be present as defined in [RFC 9964](https://www.rfc-editor.org/rfc/rfc9964.html#section-3).`
+          : `Private key is not a private JWK. The 'd' parameter must be present as defined on [RFC 7518](https://datatracker.ietf.org/doc/html/rfc7518#section-6).`,
       );
     }
 
-    const safeImportJWKResult = await safeImportJWK(jwk, alg);
+    const safeImportJWKResult = await safeImportJWK(
+      jwk,
+      alg,
+      extractable === undefined ? undefined : { extractable },
+    );
 
     if (safeImportJWKResult.isErr()) {
       return err(safeImportJWKResult.error);
@@ -1018,6 +1061,130 @@ export const getAsymmetricKeyCryptoKey = async (
   }
 
   return err("Missing or incorrect private key format.");
+};
+
+const safeExportJWK = fromAsyncThrowable(exportJWK, (e) =>
+  getOperationException({
+    e,
+    defaultMessage: "Cannot export key as JWK.",
+  }),
+);
+
+const safeExportPKCS8 = fromAsyncThrowable(exportPKCS8, (e) =>
+  getOperationException({
+    e,
+    defaultMessage: "Cannot export private key as PEM-encoded PKCS#8.",
+  }),
+);
+
+const safeExportSPKI = fromAsyncThrowable(exportSPKI, (e) =>
+  getOperationException({
+    e,
+    defaultMessage: "Cannot export public key as PEM-encoded SPKI.",
+  }),
+);
+
+const exportAsymmetricKey = async ({
+  key,
+  keyType,
+  targetFormat,
+}: {
+  key: CryptoKey | Uint8Array;
+  keyType: "private" | "public";
+  targetFormat: AsymmetricKeyFormatValues;
+}): Promise<Result<string, string>> => {
+  if (key instanceof Uint8Array) {
+    return err("Symmetric keys cannot be converted to an asymmetric format.");
+  }
+
+  if (targetFormat === AsymmetricKeyFormatValues.JWK) {
+    const exportResult = await safeExportJWK(key);
+
+    if (exportResult.isErr()) {
+      return err(exportResult.error);
+    }
+
+    const stringifyResult = safeJsonStringify(getJwk(exportResult.value));
+
+    return stringifyResult.isErr()
+      ? err(stringifyResult.error)
+      : ok(stringifyResult.value);
+  }
+
+  const exportResult =
+    keyType === "private"
+      ? await safeExportPKCS8(key)
+      : await safeExportSPKI(key);
+
+  return exportResult.isErr()
+    ? err(exportResult.error)
+    : ok(exportResult.value);
+};
+
+export const convertAsymmetricPrivateKeyFormat = async ({
+  alg,
+  key,
+  sourceFormat,
+  targetFormat,
+}: {
+  alg: string;
+  key: string;
+  sourceFormat: AsymmetricKeyFormatValues;
+  targetFormat: AsymmetricKeyFormatValues;
+}): Promise<Result<string, string>> => {
+  if (!key || sourceFormat === targetFormat) {
+    return ok(key);
+  }
+
+  const importResult = await getAsymmetricKeyCryptoKey(
+    key,
+    alg,
+    sourceFormat,
+    true,
+  );
+
+  if (importResult.isErr()) {
+    return err(importResult.error);
+  }
+
+  return exportAsymmetricKey({
+    key: importResult.value,
+    keyType: "private",
+    targetFormat,
+  });
+};
+
+export const convertAsymmetricPublicKeyFormat = async ({
+  alg,
+  key,
+  sourceFormat,
+  targetFormat,
+}: {
+  alg: string;
+  key: string;
+  sourceFormat: AsymmetricKeyFormatValues;
+  targetFormat: AsymmetricKeyFormatValues;
+}): Promise<Result<string, string>> => {
+  if (!key || sourceFormat === targetFormat) {
+    return ok(key);
+  }
+
+  const importResult = await validateAsymmetricKey({
+    alg,
+    asymmetricPublicKey: key,
+    asymmetricPublicKeyFormat: sourceFormat,
+    extractable: true,
+  });
+
+  if (importResult.isErr()) {
+    return err(importResult.error.message);
+  }
+
+  return exportAsymmetricKey({
+    key: importResult.value,
+    keyType: "public",
+    targetFormat,
+  });
 };
 
 const createCompactSignObject = fromThrowable(
@@ -1043,7 +1210,7 @@ const signValue = (compactSign: CompactSign, key: Uint8Array) => {
 
 const signValueWithPrivateKey = (
   compactSign: CompactSign,
-  key: KeyLike | Uint8Array,
+  key: CryptoKey | Uint8Array,
 ) => {
   return fromPromise(compactSign.sign(key), (e) => {
     console.error(e);
@@ -1387,53 +1554,4 @@ export const checkHmacSecretLength = (
     input: DebuggerInputValues.KEY,
     message: `A key of ${algSize} bits or larger MUST be used with HS${algSize} as specified on [RFC 7518](https://datatracker.ietf.org/doc/html/rfc7518#section-3.2).`,
   });
-};
-
-export const isP521Supported = async (): Promise<boolean> => {
-  try {
-    await window.crypto.subtle.generateKey(
-      {
-        name: algDictionary.ECDSA,
-        namedCurve: "P-521",
-      },
-      true,
-      ["sign", "verify"],
-    );
-
-    return true;
-  } catch (e) {
-    return false;
-  }
-};
-
-export const isEd25519Supported = async (): Promise<boolean> => {
-  try {
-    await window.crypto.subtle.generateKey(
-      {
-        name: algDictionary.Ed25519,
-      },
-      true,
-      ["sign", "verify"],
-    );
-
-    return true;
-  } catch (e) {
-    return false;
-  }
-};
-
-export const isEd448Supported = async (): Promise<boolean> => {
-  try {
-    await window.crypto.subtle.generateKey(
-      {
-        name: algDictionary.Ed448,
-      },
-      true,
-      ["sign", "verify"],
-    );
-
-    return true;
-  } catch (e) {
-    return false;
-  }
 };

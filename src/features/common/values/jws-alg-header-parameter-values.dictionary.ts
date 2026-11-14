@@ -4,6 +4,15 @@ export interface JwsAlgHeaderParameterModel {
   curves?: string[];
 }
 
+export const mlDsaAlgorithms = ["ML-DSA-44", "ML-DSA-65", "ML-DSA-87"] as const;
+
+export type MlDsaAlgorithm = (typeof mlDsaAlgorithms)[number];
+
+export const isMlDsaAlgorithm = (
+  algorithm: string,
+): algorithm is MlDsaAlgorithm =>
+  mlDsaAlgorithms.includes(algorithm as MlDsaAlgorithm);
+
 export interface JwsAlgHeaderParameterValuesDictionaryModel {
   unsecured: {
     [index: string]: JwsAlgHeaderParameterModel;
@@ -27,7 +36,9 @@ export interface JwsAlgHeaderParameterValuesDictionaryModel {
     PS384: JwsAlgHeaderParameterModel;
     PS512: JwsAlgHeaderParameterModel;
     Ed25519: JwsAlgHeaderParameterModel;
-    Ed448: JwsAlgHeaderParameterModel;
+    "ML-DSA-44": JwsAlgHeaderParameterModel;
+    "ML-DSA-65": JwsAlgHeaderParameterModel;
+    "ML-DSA-87": JwsAlgHeaderParameterModel;
   };
 }
 
@@ -58,12 +69,20 @@ export const jwsExampleAlgHeaderParameterValuesDictionary: JwsAlgHeaderParameter
       PS384: { name: "PS384", description: "HMAC using SHA-256" },
       PS512: { name: "PS512", description: "HMAC using SHA-256" },
       Ed25519: {
-        name: "EdDSA (Ed25519)",
+        name: "Ed25519",
         description: "Edwards-curve Digital Signature Algorithm",
       },
-      Ed448: {
-        name: "EdDSA (Ed448)",
-        description: "Edwards-curve Digital Signature Algorithm",
+      "ML-DSA-44": {
+        name: "ML-DSA-44",
+        description: "Module-Lattice-Based Digital Signature Algorithm",
+      },
+      "ML-DSA-65": {
+        name: "ML-DSA-65",
+        description: "Module-Lattice-Based Digital Signature Algorithm",
+      },
+      "ML-DSA-87": {
+        name: "ML-DSA-87",
+        description: "Module-Lattice-Based Digital Signature Algorithm",
       },
     },
   };
@@ -91,6 +110,10 @@ export interface JwsExampleAlgHeaderParameterValuesDictionaryModel {
     PS384: JwsAlgHeaderParameterModel;
     PS512: JwsAlgHeaderParameterModel;
     EdDSA: JwsAlgHeaderParameterModel;
+    Ed25519: JwsAlgHeaderParameterModel;
+    "ML-DSA-44": JwsAlgHeaderParameterModel;
+    "ML-DSA-65": JwsAlgHeaderParameterModel;
+    "ML-DSA-87": JwsAlgHeaderParameterModel;
   };
 }
 
@@ -124,14 +147,27 @@ export const jwsAlgHeaderParameterValuesDictionary: JwsExampleAlgHeaderParameter
         name: "EdDSA",
         description: "Edwards-curve Digital Signature Algorithm",
       },
+      Ed25519: {
+        name: "Ed25519",
+        description: "Edwards-curve Digital Signature Algorithm",
+      },
+      "ML-DSA-44": {
+        name: "ML-DSA-44",
+        description: "Module-Lattice-Based Digital Signature Algorithm",
+      },
+      "ML-DSA-65": {
+        name: "ML-DSA-65",
+        description: "Module-Lattice-Based Digital Signature Algorithm",
+      },
+      "ML-DSA-87": {
+        name: "ML-DSA-87",
+        description: "Module-Lattice-Based Digital Signature Algorithm",
+      },
     },
   };
 
 export const algDictionary = {
   NONE: "none",
-  ES512: "ES512",
-  ECDSA: "ECDSA",
   EdDSA: "EdDSA",
   Ed25519: "Ed25519",
-  Ed448: "Ed448",
 };

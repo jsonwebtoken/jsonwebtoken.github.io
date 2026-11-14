@@ -5,6 +5,7 @@ import { clsx } from "clsx";
 import { useDecoderStore } from "@/features/decoder/services/decoder.store";
 import { JwtSignatureStatusValues } from "@/features/common/values/jwt-signature-status.values";
 import { CardMessageComponent } from "@/features/common/components/card-message/card-message.component";
+import { CheckIcon } from "@/features/common/components/icons/check/check-icon";
 
 interface TokenDecoderSignatureValidationComponentProps {
   id: string;
@@ -35,6 +36,7 @@ export const TokenDecoderSignatureValidationComponent: React.FC<
         role="status"
         className={clsx(styles.container, styles.valid)}
       >
+        <CheckIcon />
         {StringValues.editor.signatureVerified}
       </div>
     );

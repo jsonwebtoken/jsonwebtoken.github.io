@@ -129,16 +129,20 @@ const CardTabs: React.FC<CardTabsProps> = ({
                           <span className={styles.cardTab__title__compact}>
                             {compactTitle}
                           </span>
+                          {activeCard.slots?.toolbar && (
+                            <div className={styles.cardTabs__actionButtons}>
+                              <div
+                                className={styles.cardTabs__tooltipContainer}
+                              >
+                                {activeCard.slots.toolbar}
+                              </div>
+                            </div>
+                          )}
                         </Tab>
                       </React.Fragment>
                     );
                   })}
                 </TabList>
-                {activeCard.slots?.toolbar && (
-                  <div className={styles.cardTabs__actionButtons}>
-                    {activeCard.slots.toolbar}
-                  </div>
-                )}
               </>
               {cards.map((card) => {
                 return (
@@ -181,7 +185,7 @@ const CardTabs: React.FC<CardTabsProps> = ({
           onSelectionChange={(e) => {
             handleActiveCardChange(e.toString());
           }}
-          className={clsx(MonoFont.className, styles.cardTabs)}
+          className={styles.cardTabs}
         >
           <>
             <TabList className={styles.cardTabs__tabList}>
@@ -197,16 +201,18 @@ const CardTabs: React.FC<CardTabsProps> = ({
                       <span className={styles.cardTab__title__compact}>
                         {compactTitle}
                       </span>
+                      {activeCard.slots?.toolbar && (
+                        <div className={styles.cardTabs__actionButtons}>
+                          <div className={styles.cardTabs__tooltipContainer}>
+                            {activeCard.slots.toolbar}
+                          </div>
+                        </div>
+                      )}
                     </Tab>
                   </React.Fragment>
                 );
               })}
             </TabList>
-            {activeCard.slots?.toolbar && (
-              <div className={styles.cardTabs__actionButtons}>
-                {activeCard.slots.toolbar}
-              </div>
-            )}
           </>
           {cards.map((card) => {
             return (

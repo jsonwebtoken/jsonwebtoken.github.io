@@ -4,6 +4,8 @@ import {
   CardToolbarButtonComponentProps,
 } from "@/features/common/components/card-toolbar-button/card-toolbar-button.component";
 import { getButtonsUiDictionary } from "@/features/localization/services/ui-language-dictionary.service";
+import { CopyIcon } from "../../icons/copy/copy-icon";
+import { CheckIcon } from "../../icons/check/check-icon";
 
 interface CardToolbarCopyButtonComponentProps
   extends Omit<PropsWithChildren<CardToolbarButtonComponentProps>, "variant"> {
@@ -15,7 +17,6 @@ export const CardToolbarCopyButtonComponent: React.FC<
   CardToolbarCopyButtonComponentProps
 > = ({ languageCode, value, isDisabled, ...props }) => {
   const dictionary = getButtonsUiDictionary(languageCode);
-
   const [isCopied, setIsCopied] = useState(false);
 
   const resetCopy = () => {
@@ -36,10 +37,13 @@ export const CardToolbarCopyButtonComponent: React.FC<
       onPress={copyValue}
       onBlur={resetCopy}
       variant="standard"
+      tooltipText={
+        isCopied
+          ? dictionary.copyButton.done.label
+          : dictionary.copyButton.idle.label
+      }
     >
-      {isCopied
-        ? dictionary.copyButton.done.label
-        : dictionary.copyButton.idle.label}
+      {isCopied ? <CheckIcon /> : <CopyIcon />}
     </CardToolbarButtonComponent>
   );
 };

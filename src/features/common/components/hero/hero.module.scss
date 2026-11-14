@@ -6,89 +6,79 @@
   position: relative;
   overflow: hidden;
 
-  @media #{$breakpoint-dimension-xxs} {
-    &:before {
-      background-size: cover;
-    }
-  }
-
   @media #{$breakpoint-dimension-md} {
-    background-color: unset;
-
-    :global(body[data-theme="light"]) & {
-      background-color: unset;
-    }
-    :global(body[data-theme="system-light"]) & {
-      background-color: unset;
-    }
-
-    &:before {
-      background: unset;
-    }
-
-    :global(body[data-theme="light"]) &:before {
-      background: unset;
-    }
-    :global(body[data-theme="system-light"]) &:before {
-      background: unset;
-    }
-
-    &:after {
-      display: none;
-      background: none;
-    }
+    margin-bottom: 2rem;
   }
-}
-
-.wrapper {
-  @include ExtendedGrid;
-  justify-content: center;
-
-  border-radius: 0;
-  overflow: hidden;
 }
 
 .content {
   @include InnerContentFlex;
-  justify-content: center;
-  overflow: hidden;
   flex-direction: column;
-
-  @media #{$breakpoint-dimension-sm} {
-    @include InnerContentGrid;
-  }
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
 .hero {
   z-index: 1;
-  width: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
   padding: 1.25rem 0;
-  gap: 1rem;
+  text-align: center;
 
   @media #{$breakpoint-dimension-sm} {
-    grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: subgrid;
-    gap: 1rem;
+    padding: 0.5rem 0;
   }
 }
 
-.hero__title {
-  grid-column: 1 / -1;
+.title {
   width: 100%;
+  max-width: 42rem;
   margin: 0;
-  flex-direction: column;
-  align-items: center;
-  font-size: 1.5rem;
-  line-height: 2rem;
   color: var(--color_fg_bold);
-  font-variant-numeric: lining-nums proportional-nums;
-  padding: 0.5rem 0;
-  text-align: center;
+  font-size: 2rem;
+  line-height: 1.15;
+  font-weight: 500;
+  letter-spacing: -0.8px;
+  text-wrap-style: balance;
 
-  :global(html[lang="ja"]) & {
-    @include LocaleLineHeight("ja", 1.5rem);
+  @media #{$breakpoint-dimension-xs} {
+    font-size: 2.5rem;
+  }
+
+  @media #{$breakpoint-dimension-sm} {
+    font-size: 3rem;
+  }
+}
+
+.modal {
+  max-width: 608px;
+  padding: 2.5rem 0;
+}
+
+.modal__text {
+  color: var(--color_fg_default);
+  font-size: .875rem;
+  letter-spacing: .21px;
+  line-height: 1.25rem;;
+
+  a {
+    text-decoration: underline;
+    font-weight: 500;
+  }
+}
+
+.divider {
+  display: none;
+
+  @media #{$breakpoint-dimension-md} {
+    display: block;
+    width: 40rem;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--color_border_default), transparent);
+    border: 0;
   }
 }

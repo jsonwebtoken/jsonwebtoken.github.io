@@ -10,8 +10,10 @@ import {
 } from "@/features/common/models/decoded-token.model";
 import {
   checkHmacSecretLength,
+  convertAsymmetricPrivateKeyFormat,
   createUnsecuredJwt,
   getAlgSize,
+  getAsymmetricKeyCryptoKey,
   getValidatedEncoderHeader,
   isDigitalSignatureAlg,
   isHmacAlg,
@@ -25,7 +27,6 @@ import { EncodingValues } from "@/features/common/values/encoding.values";
 import { err, ok, Result } from "neverthrow";
 import { DebuggerErrorModel } from "@/features/common/models/debugger-error.model";
 import {
-  getAlgName,
   safeJsonParse,
   safeJsonStringify,
 } from "@/features/common/services/utils";
@@ -83,7 +84,7 @@ class _TokenEncoderService {
 
     const jwt = DefaultTokensValues[algorithmPickerOptionValue];
 
-    const algorithm = getAlgName(algorithmPickerOptionValue);
+    const algorithm = algorithmPickerOptionValue;
 
     const header = isNoneAlg(algorithm)
       ? {
@@ -1336,15 +1337,50 @@ class _TokenEncoderService {
   }
 
   async handleAsymmetricPrivateKeyFormatChange(params: {
+    alg: string;
     header: string;
     payload: string;
     asymmetricPrivateKey: string;
-    asymmetricPrivateKeyFormat: AsymmetricKeyFormatValues;
+    sourceFormat: AsymmetricKeyFormatValues;
+    targetFormat: AsymmetricKeyFormatValues;
   }): Promise<Partial<EncoderStoreState>> {
+    const conversionResult = await convertAsymmetricPrivateKeyFormat({
+      alg: params.alg,
+      key: params.asymmetricPrivateKey,
+      sourceFormat: params.sourceFormat,
+      targetFormat: params.targetFormat,
+    });
+
+    let asymmetricPrivateKey: string;
+
+    if (conversionResult.isErr()) {
+      const targetFormatValidationResult = await getAsymmetricKeyCryptoKey(
+        params.asymmetricPrivateKey,
+        params.alg,
+        params.targetFormat,
+      );
+
+      if (targetFormatValidationResult.isErr()) {
+        return {
+          signingErrors: [conversionResult.error],
+        };
+      }
+
+      asymmetricPrivateKey = params.asymmetricPrivateKey;
+    } else {
+      asymmetricPrivateKey = conversionResult.value;
+    }
+
     const stateUpdate: Partial<EncoderStoreState> = {
       jwt: "",
       exampleAlg: "",
-      asymmetricPrivateKeyFormat: params.asymmetricPrivateKeyFormat,
+      asymmetricPrivateKey,
+      asymmetricPrivateKeyFormat: params.targetFormat,
+      controlledAsymmetricPrivateKey: {
+        id: new Date().valueOf(),
+        value: asymmetricPrivateKey,
+        format: params.targetFormat,
+      },
       encodingWarnings: null,
       signingErrors: null,
     };
@@ -1353,8 +1389,8 @@ class _TokenEncoderService {
       await this.processAsymmetricPrivateKey({
         header: params.header,
         payload: params.payload,
-        asymmetricPrivateKey: params.asymmetricPrivateKey,
-        asymmetricPrivateKeyFormat: params.asymmetricPrivateKeyFormat,
+        asymmetricPrivateKey,
+        asymmetricPrivateKeyFormat: params.targetFormat,
       });
 
     if (processAsymmetricPrivateKeyResult.isErr()) {

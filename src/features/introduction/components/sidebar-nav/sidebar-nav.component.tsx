@@ -1,12 +1,12 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { getIntroductionDictionary } from "@/features/localization/services/language-dictionary.service";
 import styles from "./sidebar-nav.module.scss";
 import clsx from "clsx";
+import { IntroductionDictionaryModel } from "@/features/localization/models/introduction-dictionary.model";
 
 interface SidebarNavComponentProps {
-  languageCode: string;
+  introductionDictionary: IntroductionDictionaryModel;
 }
 
 const scrollToElementWithOffset = (id: string, offset = 0) => {
@@ -18,9 +18,8 @@ const scrollToElementWithOffset = (id: string, offset = 0) => {
 };
 
 export const SidebarNavComponent: React.FC<SidebarNavComponentProps> = ({
-  languageCode,
+  introductionDictionary,
 }) => {
-  const introductionDictionary = getIntroductionDictionary(languageCode);
   const headings = introductionDictionary.content.headings;
   const [activeId, setActiveId] = useState<string | null>(null);
 

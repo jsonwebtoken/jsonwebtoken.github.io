@@ -1,0 +1,42 @@
+# jwt.io
+
+> JWT.IO allows you to decode, verify, and generate JSON Web Tokens.
+
+## About
+
+jwt.io is the go-to resource for JSON Web Tokens (JWTs). It provides:
+- An interactive JWT debugger to decode and verify tokens
+- A comprehensive library directory for JWT implementations
+- Educational content explaining JWT concepts
+
+Maintained by Auth0.
+
+## Quick Links
+
+- Debugger: https://jwt.io
+- Libraries: https://jwt.io/libraries
+- Introduction: https://jwt.io/introduction
+
+## JWT Overview
+
+A JSON Web Token consists of three Base64Url-encoded parts:
+1. Header - algorithm and token type
+2. Payload - claims (registered, public, private)
+3. Signature - ensures token integrity
+
+Format: xxxxx.yyyyy.zzzzz
+
+## For AI Agents
+
+Claude Code users can install JWT skills for token operations:
+- `/jwt-decode` - Decode and inspect JWTs
+- `/jwt-encode` - Create and sign JWTs
+- `/jwt-validate` - Verify JWT signatures and claims
+
+Install: `npx skills add jsonwebtoken/jwt-skills`
+Repository: https://github.com/jsonwebtoken/jwt-skills
+
+## Resources
+
+- RFC 7519: https://datatracker.ietf.org/doc/html/rfc7519
+- Source: https://github.com/jsonwebtoken/jsonwebtoken.github.io

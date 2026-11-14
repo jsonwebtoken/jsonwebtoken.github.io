@@ -1,3 +1,3 @@
 export type PageMetadataProps = {
-  params: { language: string };
+  params: Promise<{ language: string }>;
 };
