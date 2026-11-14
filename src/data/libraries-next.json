@@ -2983,7 +2983,6 @@
         "authorName": "Radosław Nowakowski",
         "gitHubRepoPath": "nowakowskir/php-jwt",
         "repoUrl": "https://github.com/nowakowskir/php-jwt",
-        "installCommandMarkdown": ["composer require nowakowskir/php-jwt"]
       }
     ]
   },
